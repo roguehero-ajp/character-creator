@@ -1,1 +1,19 @@
 /*abilities*/
+
+{
+  "strength": {
+    "title": "Strength",
+    "description": "Measures physical power.",
+    "usedFor": [
+      "Athletics",
+      "Melee attacks",
+      "Carrying capacity",
+      "Jump distance"
+    ],
+    "recommendedClasses": [
+      "Barbarian",
+      "Fighter",
+      "Paladin"
+    ]
+  }
+}
