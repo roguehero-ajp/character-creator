@@ -7,6 +7,14 @@ The goal of this project is to become the easiest place on the internet to creat
 
 Rather than simply generating character sheets, this project aims to teach players how their characters work through an intuitive interface, helpful explanations, and eventually support for multiple game systems.
 
+## Design Philosophy
+
+Character creation shouldn't require flipping through three books and watching four YouTube videos...I struggle with this sort of thing.
+
+This project is being built with the ideo to make tabletop RPGs easier to learn without taking away the oomph that makes them fun.
+
+Every feature should make creating a character faster, clearer, and more enjoyable.
+
 ## Planned Game Systems
 
 - Dungeons & Dragons 5e (2024)
