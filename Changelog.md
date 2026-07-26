@@ -34,3 +34,17 @@ All notable changes to this project will be documented in this file.
 - JSON character import.
 - JSON character export.
 - Printing improvements.
+# Version 0.1.1
+
+## July 26, 2026
+
+### Added
+- Initial project folder structure.
+- CSS modules.
+- JavaScript modules.
+- Data directory.
+- Asset directory.
+- Image directory.
+
+### Notes
+This marks the transition from a single HTML document to a modular application architecture.
