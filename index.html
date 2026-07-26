@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced D&D Character Sheet</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- html2pdf library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    /* Document & Theme Variables */
+    :root {
+      --bg-app: #2c3e50;
+      --bg-sheet: #f4ecd8;
+      --text-main: #2c221e;
+      --border-color: #5c4033;
+      --accent-color: #8b4513;
+      --input-bg: rgba(255, 255, 255, 0.6);
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .theme-standard {
+      --bg-sheet: #f4ecd8;
+      --text-main: #2c221e;
+      --border-color: #5c4033;
+      --accent-color: #8b4513;
+      --input-bg: rgba(255, 255, 255, 0.6);
+    }
+
+    .theme-gritty {
+      --bg-sheet: #1a1a1a;
+      --text-main: #f0f0f0;
+      --border-color: #4a4a4a;
+      --accent-color: #a93226;
+      --input-bg: rgba(40, 40, 40, 0.8);
+    }
+
+    .theme-fantasy {
+      --bg-sheet: #1b263b;
+      --text-main: #f1c40f;
+      --border-color: #415a77;
+      --accent-color: #778da9;
+      --input-bg: rgba(27, 38, 59, 0.7);
+    }
+
+    .theme-whimsical {
+      --bg-sheet: #fefae0;
+      --text-main: #283618;
+      --border-color: #dda15e;
+      --accent-color: #bc6c25;
+      --input-bg: rgba(254, 250, 224, 0.9);
+    }
+
+    .theme-hellscape {
+      --bg-sheet: #2b0909;
+      --text-main: #f5b041;
+      --border-color: #922b21;
+      --accent-color: #e74c3c;
+      --input-bg: rgba(43, 9, 9, 0.8);
+    }
+
+    .theme-bw {
+      --bg-sheet: #ffffff;
+      --text-main: #000000;
+      --border-color: #000000;
+      --accent-color: #000000;
+      --input-bg: #ffffff;
+    }
+
+    /* Remove number input spinner arrows */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      max-width: 100%;
+    }
+
+    body {
+      font-family: 'Lora', serif;
+      background-color: var(--bg-app);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .app-container {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      max-width: 1150px;
+      justify-content: center;
+    }
+
+    /* Control Panel Sidebar */
+    .controls {
+      width: 220px;
+      background: #1a252f;
+      color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      position: sticky;
+      top: 20px;
+      flex-shrink: 0;
+    }
+
+    .controls h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      border-bottom: 1px solid #415a77;
+      padding-bottom: 6px;
+      text-align: center;
+    }
+
+    .controls label {
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .controls select, .controls button {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .controls select {
+      background: #fff;
+      color: #333;
+    }
+
+    .controls button {
+      background: #27ae60;
+      color: #fff;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .controls button:hover {
+      background: #219653;
+    }
+
+    .controls button.export {
+      background: #c0392b;
+    }
+
+    .controls button.export:hover {
+      background: #a93226;
+    }
+
+    /* Document Container & Pages */
+    .document-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .sheet-page {
+      width: 816px;
+      height: 1045px; 
+      max-height: 1045px;
+      background-color: var(--bg-sheet);
+      border: 2px solid var(--border-color);
+      padding: 20px;
+      box-shadow: 0 10px 25px var(--shadow-color);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow: hidden;
+      box-sizing: border-box;
+      
+      /* Explicit Page Break Rules */
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Only break before new pages */
+    .sheet-page + .sheet-page {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    /* Export Mode Styles */
+    .document-container.exporting {
+      gap: 0 !important;
+      padding: 0 !important;
+    }
+
+    .document-container.exporting .sheet-page {
+      box-shadow: none !important;
+      margin: 0 !important;
+      border: 1px solid transparent !important;
+    }
+
+    /* Two-Column Stack Layout for Page 1 */
+    .sheet-page.two-column-layout {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
+
+    .master-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .left-stack {
+      width: 330px;
+      flex: 0 0 330px;
+    }
+
+    .right-stack {
+      width: 436px;
+      flex: 0 0 436px;
+    }
+
+    /* Typography & Inputs */
+    h2.fantasy-header, h3.fantasy-header {
+      font-family: 'Cinzel', serif;
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: var(--accent-color);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 2px;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+    }
+
+    .fantasy-input {
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      font-family: inherit;
+      padding: 3px 6px;
+      border-radius: 3px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .fantasy-input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--border-color);
+    }
+
+    .center-text {
+      text-align: center;
+    }
+
+    .big-text {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    /* Header Grid Elements */
+    .name-container {
+      border: 1px solid var(--border-color);
+      padding: 6px 8px;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      height: 105px;
+      min-height: 105px;
+      max-height: 105px;
+    }
+
+    .big-input {
+      font-size: 14px;
+      font-weight: bold;
+      font-family: 'Cinzel', serif;
+      padding: 2px 6px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      border: 1px solid var(--border-color);
+      padding: 8px;
+      border-radius: 4px;
+      min-width: 0;
+      width: 436px;
+    }
+
+    .detail-box {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* Controlled Multiclass Container */
+    #class-level-container {
+      max-height: 95px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* Combat Blocks */
+    .left-combat-block, .right-combat-block {
+      display: flex;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .combat-box {
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: rgba(0,0,0,0.02);
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ac-box {
+      background: rgba(139, 69, 19, 0.1);
+    }
+
+    .hp-box {
+      flex: 1.4;
+      overflow: hidden;
+    }
+
+    .heart-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      fill: rgba(192, 57, 43, 0.15);
+      z-index: 0;
+    }
+
+    .hp-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hp-inputs {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      width: 100%;
+    }
+
+    /* Sheet Main Body Layout */
+    .left-column {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+      width: 330px;
+    }
+
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+      width: 436px;
+    }
+
+    /* Stats & Saves */
+    .stats-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      width: 100%;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed rgba(92, 64, 51, 0.3);
+      padding-bottom: 1px;
+    }
+
+    .stat-row label {
+      font-size: 10.5px;
+      font-weight: bold;
+    }
+
+    .stat-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stat-mod {
+      font-size: 12px;
+      font-weight: bold;
+      width: 24px;
+      text-align: right;
+      color: var(--accent-color);
+    }
+
+    .stat-val {
+      width: 36px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 11px;
+    }
+
+    /* Death Saves */
+    .death-saves-box {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .death-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9px;
+      text-transform: uppercase;
+      font-family: 'Cinzel', serif;
+    }
+
+    .theme-gritty .death-label { color: #f0f0f0; }
+    .theme-fantasy .death-label { color: #f1c40f; }
+    .theme-hellscape .death-label { color: #f5b041; }
+
+    .death-circles {
+      display: flex;
+      gap: 4px;
+    }
+
+    .death-check {
+      width: 12px;
+      height: 12px;
+      accent-color: var(--accent-color);
+      cursor: pointer;
+    }
+
+    /* Saving Throws & Skills Lists */
+    .saves-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      width: 100%;
+      font-size: 10px;
+    }
+
+    .saves-list label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: inherit;
+      font-size: 10px;
+      text-transform: none;
+      font-weight: normal;
+      color: var(--text-main);
+    }
+
+    .save-check, .skill-check {
+      accent-color: var(--accent-color);
+      cursor: pointer;
+      width: 11px;
+      height: 11px;
+    }
+
+    .save-mod, .skill-mod {
+      margin-left: auto;
+      width: 24px;
+      text-align: center;
+      font-size: 9.5px;
+      padding: 1px;
+      background: var(--input-bg);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 2px;
+    }
+
+    .stat-hint {
+      font-size: 8.5px;
+      color: var(--text-main);
+      opacity: 0.7;
+    }
+
+    /* Attacks & Spellcasting */
+    .attacks-box {
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .header-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 2fr;
+      gap: 4px;
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px;
+      text-transform: uppercase;
+      font-weight: bold;
+      text-align: center;
+      color: var(--border-color);
+      min-width: 0;
+    }
+
+    .attack-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 2fr;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .attack-row input {
+      font-size: 10.5px;
+      padding: 2px 4px;
+      min-width: 0;
+    }
+
+    .extra-attacks {
+      resize: none;
+      height: 44px;
+      font-size: 10.5px;
+      min-width: 0;
+    }
+
+    /* Class Abilities / Feats */
+    .abilities-box {
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .abilities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px 6px;
+      min-width: 0;
+    }
+
+    .ability-input {
+      font-size: 9.5px;
+      padding: 2px 4px;
+      min-width: 0;
+    }
+
+    /* Equipment & Currencies */
+    .equipment-box {
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 5px;
+      display: flex;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .money-column {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      width: 55px;
+      flex-shrink: 0;
+    }
+
+    .money-field {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border-color);
+      border-radius: 2px;
+      overflow: hidden;
+      background: var(--input-bg);
+    }
+
+    .money-field label {
+      background: var(--accent-color);
+      color: #fff;
+      font-size: 8.5px;
+      padding: 2px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .money-field input {
+      border: none;
+      text-align: center;
+      font-size: 9.5px;
+      padding: 1px;
+      background: transparent;
+      color: var(--text-main);
+      width: 33px;
+    }
+
+    .inventory-text {
+      flex: 1;
+      resize: none;
+      height: 105px;
+      font-size: 10.5px;
+      min-width: 0;
+    }
+
+    /* Page 2 & General Elements */
+    .full-width-body {
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      display: flex;
+    }
+
+    .flair-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .flair-ornament {
+      color: var(--accent-color);
+      font-size: 10px;
+    }
+
+    .flair-quote {
+      font-style: italic;
+      font-size: 11px;
+      width: 70%;
+    }
+
+    .flex-row-sections {
+      display: flex;
+      gap: 8px;
+      height: 140px;
+    }
+
+    .half-width {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .trait-section {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .trait-box {
+      flex: 1;
+      resize: none;
+      font-size: 10.5px;
+      padding: 5px;
+      min-width: 0;
+    }
+
+    .flex-grow-section {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* Spells Pages Expanded Layout */
+    .spell-tier {
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .spell-tier-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed rgba(92, 64, 51, 0.4);
+      padding-bottom: 2px;
+    }
+
+    .spell-guide-tip {
+      font-size: 8px;
+      opacity: 0.7;
+    }
+
+    .spell-box {
+      resize: none;
+      flex: 1;
+      font-size: 10.5px;
+      padding: 5px;
+      min-width: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Control Panel Sidebar -->
+    <div class="controls">
+      <h3>Controls</h3>
+      <div>
+        <label for="theme-select">Theme</label>
+        <select id="theme-select">
+          <option value="theme-standard">Standard Parchment</option>
+          <option value="theme-gritty">Gritty Dark</option>
+          <option value="theme-fantasy">Arcane Fantasy</option>
+          <option value="theme-whimsical">Whimsical Woods</option>
+          <option value="theme-hellscape">Hellscape Red</option>
+          <option value="theme-bw">Standard Black & White</option>
+        </select>
+      </div>
+      <div>
+        <label for="stat-method">Stat Generation</label>
+        <select id="stat-method">
+          <option value="manual">Manual Entry</option>
+          <option value="4d6">4d6 Drop Lowest</option>
+          <option value="3d6">3d6 Straight</option>
+        </select>
+      </div>
+      <button id="roll-btn">Roll Stats</button>
+
+      <hr style="border-color: #415a77; margin: 5px 0;">
+      <h3 style="font-size: 13px; border:none; padding:0; text-align: center;">Multi-Class Options</h3>
+      <button type="button" id="multiclass-btn">Add Multi-Class</button>
+      <button type="button" id="remove-multiclass-btn" style="background: rgba(192,57,43,0.7);">Remove Last Class</button>
+
+      <hr style="border-color: #415a77; margin: 5px 0;">
+      <button id="export-btn" class="export">Export to PDF</button>
+    </div>
+
+    <!-- Document Container -->
+    <div class="document-container" id="character-document">
+
+      <!-- PAGE 1: Two-Column Stack Layout -->
+      <div class="sheet-page two-column-layout" id="page-1">
+        
+        <!-- Left Master Stack -->
+        <div class="master-stack left-stack">
+          
+          <!-- Character Name & Campaign Name Box -->
+          <div class="name-container">
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <label>Character Name</label>
+              <input type="text" class="fantasy-input big-input" placeholder="Hero Name">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <label>Campaign Name</label>
+              <input type="text" class="fantasy-input" placeholder="Campaign Name">
+            </div>
+          </div>
+
+          <!-- Left Combat Block (AC, Initiative, Speed) -->
+          <div class="left-combat-block" style="display: flex; gap: 6px;">
+            <div class="combat-box ac-box">
+              <label>Armor Class</label>
+              <input type="text" class="fantasy-input center-text big-text" value="10">
+            </div>
+            <div class="combat-box">
+              <label>Initiative</label>
+              <input type="text" id="initiative" class="fantasy-input center-text big-text" value="+0" readonly>
+            </div>
+            <div class="combat-box">
+              <label>Speed</label>
+              <input type="text" id="speed-input" class="fantasy-input center-text" value="30 ft">
+            </div>
+          </div>
+
+          <!-- Left Column Body -->
+          <div class="left-column">
+            
+            <!-- Stats & Saves Grid -->
+            <div class="stats-grid">
+              <div class="stat-row">
+                <div class="stat-group">
+                  <span class="stat-mod" id="str-mod">+0</span>
+                  <label>Strength</label>
+                </div>
+                <input type="number" id="str" class="fantasy-input stat-val center-text" value="10">
+              </div>
+              <div class="stat-row">
+                <div class="stat-group">
+                  <span class="stat-mod" id="dex-mod">+0</span>
+                  <label>Dexterity</label>
+                </div>
+                <input type="number" id="dex" class="fantasy-input stat-val center-text" value="10">
+              </div>
+              <div class="stat-row">
+                <div class="stat-group">
+                  <span class="stat-mod" id="con-mod">+0</span>
+                  <label>Constitution</label>
+                </div>
+                <input type="number" id="con" class="fantasy-input stat-val center-text" value="10">
+              </div>
+              <div class="stat-row">
+                <div class="stat-group">
+                  <span class="stat-mod" id="int-mod">+0</span>
+                  <label>Intelligence</label>
+                </div>
+                <input type="number" id="int" class="fantasy-input stat-val center-text" value="10">
+              </div>
+              <div class="stat-row">
+                <div class="stat-group">
+                  <span class="stat-mod" id="wis-mod">+0</span>
+                  <label>Wisdom</label>
+                </div>
+                <input type="number" id="wis" class="fantasy-input stat-val center-text" value="10">
+              </div>
+              <div class="stat-row">
+                <div class="stat-group">
+                  <span class="stat-mod" id="cha-mod">+0</span>
+                  <label>Charisma</label>
+                </div>
+                <input type="number" id="cha" class="fantasy-input stat-val center-text" value="10">
+              </div>
+            </div>
+
+            <!-- Death Saves -->
+            <div class="combat-box death-saves-box">
+              <h3 class="fantasy-header" style="width: 100%; margin-bottom: 2px;">Death Saves</h3>
+              <div class="death-row" style="width: 100%;">
+                <span class="death-label">Successes</span>
+                <div class="death-circles">
+                  <input type="checkbox" class="death-check">
+                  <input type="checkbox" class="death-check">
+                  <input type="checkbox" class="death-check">
+                </div>
+              </div>
+              <div class="death-row" style="width: 100%;">
+                <span class="death-label">Failures</span>
+                <div class="death-circles">
+                  <input type="checkbox" class="death-check">
+                  <input type="checkbox" class="death-check">
+                  <input type="checkbox" class="death-check">
+                </div>
+              </div>
+            </div>
+
+            <!-- Saving Throws -->
+            <div class="attacks-box">
+              <h3 class="fantasy-header">Saving Throws</h3>
+              <div class="saves-list">
+                <label><input type="checkbox" class="save-check" data-stat="str"> Strength <input type="text" class="fantasy-input save-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="save-check" data-stat="dex"> Dexterity <input type="text" class="fantasy-input save-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="save-check" data-stat="con"> Constitution <input type="text" class="fantasy-input save-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="save-check" data-stat="int"> Intelligence <input type="text" class="fantasy-input save-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="save-check" data-stat="wis"> Wisdom <input type="text" class="fantasy-input save-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="save-check" data-stat="cha"> Charisma <input type="text" class="fantasy-input save-mod" readonly value="+0"></label>
+              </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="attacks-box skills-box-container">
+              <h3 class="fantasy-header">Skills</h3>
+              <div class="saves-list">
+                <label><input type="checkbox" class="skill-check"> Acrobatics <span class="stat-hint">(Dex)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Animal Handling <span class="stat-hint">(Wis)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Arcana <span class="stat-hint">(Int)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Athletics <span class="stat-hint">(Str)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Deception <span class="stat-hint">(Cha)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> History <span class="stat-hint">(Int)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Insight <span class="stat-hint">(Wis)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Intimidation <span class="stat-hint">(Cha)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Investigation <span class="stat-hint">(Int)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Medicine <span class="stat-hint">(Wis)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Nature <span class="stat-hint">(Int)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check" id="perception-skill-check"> Perception <span class="stat-hint">(Wis)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Performance <span class="stat-hint">(Cha)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Persuasion <span class="stat-hint">(Cha)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Religion <span class="stat-hint">(Int)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Sleight of Hand <span class="stat-hint">(Dex)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Stealth <span class="stat-hint">(Dex)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+                <label><input type="checkbox" class="skill-check"> Survival <span class="stat-hint">(Wis)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
+              </div>
+            </div>
+
+            <!-- Racial Abilities -->
+            <div class="attacks-box">
+              <h3 class="fantasy-header">Racial Abilities</h3>
+              <textarea class="fantasy-input extra-attacks" id="racial-abilities-input" placeholder="Racial traits..." style="height: 50px;"></textarea>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Right Master Stack -->
+        <div class="master-stack right-stack">
+          
+          <!-- Details Grid & Multiclass Container -->
+          <div class="details-grid">
+            <div class="detail-box" style="grid-column: span 2;">
+              <div style="display: flex; gap: 4px; margin-bottom: 2px;">
+                <label style="flex: 1.2;">Class</label>
+                <label style="flex: 0.8;">Level</label>
+              </div>
+              <div id="class-level-container">
+                <div class="class-level-row" style="display: flex; gap: 4px;">
+                  <div class="detail-box" style="flex: 1.2;">
+                    <select class="fantasy-input char-class-select">
+                      <option value="Barbarian">Barbarian</option>
+                      <option value="Bard">Bard</option>
+                      <option value="Cleric">Cleric</option>
+                      <option value="Druid">Druid</option>
+                      <option value="Fighter" selected>Fighter</option>
+                      <option value="Monk">Monk</option>
+                      <option value="Paladin">Paladin</option>
+                      <option value="Ranger">Ranger</option>
+                      <option value="Rogue">Rogue</option>
+                      <option value="Sorcerer">Sorcerer</option>
+                      <option value="Warlock">Warlock</option>
+                      <option value="Wizard">Wizard</option>
+                      <option value="Artificer">Artificer</option>
+                    </select>
+                  </div>
+                  <div class="detail-box" style="flex: 0.8;">
+                    <select class="fantasy-input char-level-select">
+                      <option value="1" selected>1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                      <option value="17">17</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">20</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-box">
+              <label>Race</label>
+              <select class="fantasy-input" id="char-race">
+                <option value="">--Select Race--</option>
+                <option value="Aarakocra">Aarakocra</option>
+                <option value="Dragonborn">Dragonborn</option>
+                <option value="Dwarf">Dwarf</option>
+                <option value="Elf">Elf</option>
+                <option value="Wood Elf">Wood Elf</option>
+                <option value="Gnome">Gnome</option>
+                <option value="Half-Elf">Half-Elf</option>
+                <option value="Half-Orc">Half-Orc</option>
+                <option value="Halfling">Halfling</option>
+                <option value="Human">Human</option>
+                <option value="Tiefling">Tiefling</option>
+              </select>
+            </div>
+
+            <!-- Empty slot beside race that holds Half-Elf bonus drops when applicable -->
+            <div class="detail-box" style="justify-content: center;">
+              <div id="half-elf-bonuses" style="display: none; flex-direction: column; gap: 2px;">
+                <label>Half-Elf Stat Boosts (+1 to two)</label>
+                <div style="display: flex; gap: 4px;">
+                  <select class="fantasy-input" id="half-elf-stat1" style="font-size: 9.5px; padding: 2px;">
+                    <option value="str">Str</option>
+                    <option value="dex">Dex</option>
+                    <option value="con">Con</option>
+                    <option value="int">Int</option>
+                    <option value="wis">Wis</option>
+                    <option value="cha" selected>Cha</option>
+                  </select>
+                  <select class="fantasy-input" id="half-elf-stat2" style="font-size: 9.5px; padding: 2px;">
+                    <option value="str">Str</option>
+                    <option value="dex">Dex</option>
+                    <option value="con">Con</option>
+                    <option value="int" selected>Int</option>
+                    <option value="wis">Wis</option>
+                    <option value="cha">Cha</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-box">
+              <label>Background</label>
+              <input type="text" class="fantasy-input" placeholder="Background">
+            </div>
+            <div class="detail-box">
+              <label>Player Name</label>
+              <input type="text" class="fantasy-input" placeholder="Player">
+            </div>
+            <div class="detail-box">
+              <label>Alignment</label>
+              <input type="text" class="fantasy-input" placeholder="Alignment">
+            </div>
+            <div class="detail-box">
+              <label>Experience Points</label>
+              <input type="text" class="fantasy-input" placeholder="0">
+            </div>
+          </div>
+
+          <!-- Right Combat Block (HP, Hit Dice, Prof Bonus, Perception) -->
+          <div class="right-combat-block" style="display: flex; gap: 6px;">
+            <div class="combat-box hp-box">
+              <svg class="heart-bg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <div class="hp-content">
+                <label>Hit Point Maximum & Current</label>
+                <div class="hp-inputs">
+                  <input type="text" id="hp-input" class="fantasy-input center-text big-text" value="10">
+                  <span>/</span>
+                  <!-- Current HP box left blank (no placeholder) -->
+                  <input type="text" class="fantasy-input center-text big-text" placeholder="">
+                </div>
+              </div>
+            </div>
+            <div class="combat-box">
+              <label>Hit Dice</label>
+              <div style="display: flex; flex-direction: column; gap: 2px; width: 100%;">
+                <div style="display: flex; gap: 2px;">
+                  <input type="text" id="hit-dice-1" class="fantasy-input center-text" value="1d10" readonly style="font-size: 9.5px; padding: 2px; flex: 1;">
+                  <input type="text" id="hit-dice-2" class="fantasy-input center-text" value="" readonly style="font-size: 9.5px; padding: 2px; flex: 1;">
+                </div>
+                <div style="display: flex; gap: 2px;">
+                  <input type="text" id="hit-dice-3" class="fantasy-input center-text" value="" readonly style="font-size: 9.5px; padding: 2px; flex: 1;">
+                  <input type="text" id="hit-dice-4" class="fantasy-input center-text" value="" readonly style="font-size: 9.5px; padding: 2px; flex: 1;">
+                </div>
+              </div>
+            </div>
+            <div class="combat-box">
+              <label>Prof. Bonus</label>
+              <input type="text" id="prof-bonus" class="fantasy-input center-text big-text" value="+2" readonly>
+            </div>
+            <div class="combat-box">
+              <label>Passive Perc.</label>
+              <input type="text" id="passive-perception" class="fantasy-input center-text big-text" value="10" readonly>
+            </div>
+          </div>
+
+          <!-- Right Column Body -->
+          <div class="right-column">
+            
+            <!-- Attacks & Spellcasting -->
+            <div class="attacks-box">
+              <h3 class="fantasy-header">Attacks & Spellcasting</h3>
+              <div class="header-row">
+                <span>Name</span><span>Atk Bonus</span><span>Damage/Type</span><span>Notes</span>
+              </div>
+              <div class="attack-row"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"></div>
+              <div class="attack-row"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"></div>
+              <div class="attack-row"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"></div>
+              <textarea class="fantasy-input extra-attacks" placeholder="Additional attacks, weapon notes, or spellcasting actions..."></textarea>
+            </div>
+
+            <!-- Spellcasting Ability Summary -->
+            <div class="attacks-box">
+              <h3 class="fantasy-header">Spellcasting Stats</h3>
+              <div style="display: flex; gap: 6px;">
+                <div class="detail-box" style="flex: 1;">
+                  <label>Spellcasting Ability</label>
+                  <select class="fantasy-input" id="spell-ability">
+                    <!-- Changed option text to "Non-caster" -->
+                    <option value="none">Non-caster</option>
+                    <option value="int">Intelligence</option>
+                    <option value="wis">Wisdom</option>
+                    <option value="cha">Charisma</option>
+                  </select>
+                </div>
+                <div class="detail-box" style="flex: 1;">
+                  <label>Spell Save DC</label>
+                  <input type="text" id="spell-dc" class="fantasy-input center-text" readonly value="-">
+                </div>
+                <div class="detail-box" style="flex: 1;">
+                  <label>Spell Attack Bonus</label>
+                  <input type="text" id="spell-atk" class="fantasy-input center-text" readonly value="-">
+                </div>
+              </div>
+            </div>
+
+            <!-- Class Abilities / Feats -->
+            <div class="abilities-box">
+              <h3 class="fantasy-header">Class Abilities & Feats (20 Slots)</h3>
+              <div class="abilities-grid">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 1">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 2">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 3">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 4">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 5">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 6">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 7">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 8">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 9">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 10">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 11">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 12">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 13">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 14">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 15">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 16">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 17">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 18">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 19">
+                <input type="text" class="fantasy-input ability-input" placeholder="Ability 20">
+              </div>
+            </div>
+
+            <!-- Equipment & Currencies -->
+            <div class="equipment-box">
+              <div class="money-column">
+                <div class="money-field"><label>CP</label><input type="text" value="0"></div>
+                <div class="money-field"><label>SP</label><input type="text" value="0"></div>
+                <div class="money-field"><label>EP</label><input type="text" value="0"></div>
+                <div class="money-field"><label>GP</label><input type="text" value="10"></div>
+                <div class="money-field"><label>PP</label><input type="text" value="0"></div>
+              </div>
+              <textarea class="fantasy-input inventory-text" placeholder="Equipment inventory list..."></textarea>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PAGE 2: Backstory & Traits -->
+      <div class="sheet-page" id="page-2">
+        <h2 class="fantasy-header">Character Background & Details</h2>
+        <div class="sheet-body full-width-body">
+          <div class="flair-container">
+            <span class="flair-ornament">✦ ✧ ✦</span>
+            <input type="text" class="fantasy-input center-text flair-quote" placeholder="Personal Motto / Creed">
+            <span class="flair-ornament">✦ ✧ ✦</span>
+          </div>
+          
+          <div class="flex-row-sections">
+            <div class="half-width trait-section">
+              <h3 class="fantasy-header">Personality Traits</h3>
+              <textarea class="fantasy-input trait-box" placeholder="Character traits..."></textarea>
+            </div>
+            <div class="half-width trait-section">
+              <h3 class="fantasy-header">Ideals</h3>
+              <textarea class="fantasy-input trait-box" placeholder="Character ideals..."></textarea>
+            </div>
+          </div>
+
+          <div class="flex-row-sections">
+            <div class="half-width trait-section">
+              <h3 class="fantasy-header">Bonds</h3>
+              <textarea class="fantasy-input trait-box" placeholder="Character bonds..."></textarea>
+            </div>
+            <div class="half-width trait-section">
+              <h3 class="fantasy-header">Flaws</h3>
+              <textarea class="fantasy-input trait-box" placeholder="Character flaws..."></textarea>
+            </div>
+          </div>
+
+          <div class="flex-grow-section trait-section" style="height: 180px;">
+            <h3 class="fantasy-header">Backstory & Appearance</h3>
+            <textarea class="fantasy-input trait-box" style="height: 100%;" placeholder="Detailed character backstory, physical description, allies and organizations..."></textarea>
+          </div>
+
+          <!-- Notes section updated with flex: 1 to extend down to the absolute end of page 2 -->
+          <div class="flex-grow-section trait-section" style="flex: 1; display: flex; flex-direction: column;">
+            <h3 class="fantasy-header">Notes</h3>
+            <textarea class="fantasy-input trait-box" style="flex: 1; height: 100%;" placeholder="Campaign notes, reminders, loot, or miscellaneous details..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 3: Spells & Magic (Levels 0 - 5) -->
+      <div class="sheet-page" id="page-3">
+        <h2 class="fantasy-header">Spellcasting & Magic (Cantrips - 5th Level)</h2>
+        <div class="sheet-body full-width-body" style="gap: 6px;">
+          
+          <div class="spell-tier">
+            <div class="spell-tier-header">
+              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">Cantrips (Level 0)</h3>
+              <span class="spell-guide-tip">At-Will Spells</span>
+            </div>
+            <textarea class="fantasy-input spell-box" placeholder="Cantrip Name | Casting Time | Range | Components | Duration | Effect/Details"></textarea>
+          </div>
+
+          <div class="spell-tier">
+            <div class="spell-tier-header">
+              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">1st Level Spells</h3>
+              <span class="spell-guide-tip">Slots: [ ] [ ] [ ] [ ]</span>
+            </div>
+            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"></textarea>
+          </div>
+
+          <div class="spell-tier">
+            <div class="spell-tier-header">
+              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">2nd Level Spells</h3>
+              <span class="spell-guide-tip">Slots: [ ] [ ] [ ]</span>
+            </div>
+            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"></textarea>
+          </div>
+
+          <div class="spell-tier">
+            <div class="spell-tier-header">
+              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">3rd Level Spells</h3>
+              <span class="spell-guide-tip">Slots: [ ] [ ] [ ]</span>
+            </div>
+            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"></textarea>
+          </div>
+
+          <div class="spell-tier">
+            <div class="spell-tier-header">
+              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">4th Level Spells</h3>
+              <span class="spell-guide-tip">Slots: [ ] [ ] [ ]</span>
+            </div>
+            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"></textarea>
+          </div>
+
+          <div class="spell-tier">
+            <div class="spell-tier-header">
+              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">5th Level Spells</h3>
+              <span class="spell-guide-tip">Slots: [ ] [ ] [ ]</span>
+            </div>
+            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PAGE 4: High-Level Spells & Arcane Resources (Levels 6 - 9) -->
+      <div class="sheet-page" id="page-4">
+        <h2 class="fantasy-header">High-Level Spellcasting & Resources (6th - 9th Level)</h2>
+        <div class="sheet-body full-width-body" style="gap: 8px;">
+          
+          <div class="spell-tier">
+            <div class="spell-tier-header">
+              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">6th Level Spells</h3>
+              <span class="spell-guide-tip">Slots: [ ]</span>
+            </div>
+            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"></textarea>
+          </div>
+
+          <div class="spell-tier">
+            <div class="spell-tier-header">
+              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">7th Level Spells</h3>
+              <span class="spell-guide-tip">Slots: [ ]</span>
+            </div>
+            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"></textarea>
+          </div>
+
+          <div class="spell-tier">
+            <div class="spell-tier-header">
+              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">8th Level Spells</h3>
+              <span class="spell-guide-tip">Slots: [ ]</span>
+            </div>
+            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"></textarea>
+          </div>
+
+          <div class="spell-tier">
+            <div class="spell-tier-header">
+              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">9th Level Spells</h3>
+              <span class="spell-guide-tip">Slots: [ ]</span>
+            </div>
+            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"></textarea>
+          </div>
+
+          <div class="attacks-box" style="flex: 1.2;">
+            <h3 class="fantasy-header">Sorcery Points / Arcane Pool & Metamagic Features</h3>
+            <textarea class="fantasy-input extra-attacks" style="height: 100%; min-height: 70px;" placeholder="Track Sorcery Points, Metamagic options, magical items, or special features..."></textarea>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- Theme Switching ---
+      const themeSelect = document.getElementById('theme-select');
+      const characterDocument = document.getElementById('character-document');
+
+      themeSelect?.addEventListener('change', (e) => {
+        characterDocument.className = `document-container ${e.target.value}`;
+      });
+
+      // --- Stat Generation ---
+      const rollBtn = document.getElementById('roll-btn');
+      const statMethodSelect = document.getElementById('stat-method');
+
+      function rollDice(count, sides) {
+        let rolls = [];
+        for (let i = 0; i < count; i++) {
+          rolls.push(Math.floor(Math.random() * sides) + 1);
+        }
+        return rolls;
+      }
+
+      function generateStatValue(method) {
+        if (method === '4d6') {
+          let rolls = rollDice(4, 6).sort((a, b) => a - b);
+          rolls.shift();
+          return rolls.reduce((a, b) => a + b, 0);
+        } else if (method === '3d6') {
+          return rollDice(3, 6).reduce((a, b) => a + b, 0);
+        }
+        return 10;
+      }
+
+      rollBtn?.addEventListener('click', () => {
+        const method = statMethodSelect.value;
+        if (method === 'manual') {
+          alert('Select 4d6 Drop Lowest or 3d6 Straight to generate stats automatically.');
+          return;
+        }
+        statInputs.forEach(stat => {
+          const input = document.getElementById(stat);
+          if (input) {
+            const val = generateStatValue(method);
+            input.dataset.base = val;
+            input.value = val;
+          }
+        });
+        applyRacialBonuses();
+        calculateHP();
+      });
+
+      // --- Ability Score & Modifier Calculations ---
+      const statInputs = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+      
+      function calculateModifier(score) {
+        const num = parseInt(score) || 10;
+        const mod = Math.floor((num - 10) / 2);
+        return mod >= 0 ? `+${mod}` : `${mod}`;
+      }
+
+      function updateModifiers() {
+        statInputs.forEach(stat => {
+          const input = document.getElementById(stat);
+          const modSpan = document.getElementById(`${stat}-mod`);
+          if (input && modSpan) {
+            modSpan.textContent = calculateModifier(input.value);
+          }
+        });
+        updateDerivedStats();
+        calculateHP();
+      }
+
+      statInputs.forEach(stat => {
+        const input = document.getElementById(stat);
+        if (input) {
+          input.addEventListener('input', (e) => {
+            e.target.dataset.base = e.target.value;
+            updateModifiers();
+          });
+        }
+      });
+
+      // --- Racial Stat Bonuses & Speeds ---
+      const racialBonusesData = {
+        "Aarakocra": { dex: 2, wis: 1 },
+        "Dragonborn": { str: 2, cha: 1 },
+        "Dwarf": { con: 2 },
+        "Elf": { dex: 2, wis: 1 },
+        "Wood Elf": { dex: 2, wis: 1 },
+        "Gnome": { int: 2 },
+        "Half-Elf": { cha: 2, custom: 2 },
+        "Half-Orc": { str: 2, con: 1 },
+        "Halfling": { dex: 2 },
+        "Human": { str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1 },
+        "Tiefling": { cha: 2, int: 1 }
+      };
+
+      const racialSpeeds = {
+        "Aarakocra": "30 ft / 50 ft fly",
+        "Dragonborn": "30 ft",
+        "Dwarf": "25 ft",
+        "Elf": "30 ft",
+        "Wood Elf": "35 ft",
+        "Gnome": "25 ft",
+        "Half-Elf": "30 ft",
+        "Half-Orc": "30 ft",
+        "Halfling": "25 ft",
+        "Human": "30 ft",
+        "Tiefling": "30 ft"
+      };
+
+      const racialAbilitiesText = {
+        "Aarakocra": "• Flight\n• Talons",
+        "Dragonborn": "• Draconic Ancestry\n• Breath Weapon\n• Damage Resistance",
+        "Dwarf": "• Darkvision\n• Dwarven Resilience\n• Stonecunning",
+        "Elf": "• Darkvision\n• Keen Senses\n• Fey Ancestry\n• Trance",
+        "Wood Elf": "• Darkvision\n• Keen Senses\n• Fey Ancestry\n• Mask of the Wild",
+        "Gnome": "• Darkvision\n• Gnome Cunning",
+        "Half-Elf": "• Darkvision\n• Fey Ancestry\n• Skill Versatility",
+        "Half-Orc": "• Darkvision\n• Menacing\n• Relentless Endurance",
+        "Halfling": "• Lucky\n• Brave\n• Nimbleness",
+        "Human": "• Extra Language",
+        "Tiefling": "• Darkvision\n• Hellish Resistance\n• Infernal Legacy"
+      };
+
+      const charRaceSelect = document.getElementById('char-race');
+      const racialAbilitiesInput = document.getElementById('racial-abilities-input');
+      const speedInput = document.getElementById('speed-input');
+      const halfElfContainer = document.getElementById('half-elf-bonuses');
+      const halfElfStat1 = document.getElementById('half-elf-stat1');
+      const halfElfStat2 = document.getElementById('half-elf-stat2');
+
+      function applyRacialBonuses() {
+        const selectedRace = charRaceSelect.value;
+        
+        statInputs.forEach(stat => {
+          const input = document.getElementById(stat);
+          if (input) {
+            if (!input.dataset.base || input.dataset.base === "") {
+              input.dataset.base = input.value || "10";
+            }
+            input.value = input.dataset.base;
+          }
+        });
+
+        if (!selectedRace) {
+          updateModifiers();
+          return;
+        }
+
+        if (speedInput) {
+          speedInput.value = racialSpeeds[selectedRace] || "30 ft";
+        }
+
+        const bonuses = racialBonusesData[selectedRace] || {};
+        for (const [stat, bonus] of Object.entries(bonuses)) {
+          if (stat !== 'custom') {
+            const input = document.getElementById(stat);
+            if (input) {
+              input.value = parseInt(input.value || 10) + bonus;
+            }
+          }
+        }
+
+        if (selectedRace === 'Half-Elf') {
+          const s1 = halfElfStat1.value;
+          const s2 = halfElfStat2.value;
+          if (s1) {
+            const inp1 = document.getElementById(s1);
+            if (inp1) inp1.value = parseInt(inp1.value || 10) + 1;
+          }
+          if (s2 && s2 !== s1) {
+            const inp2 = document.getElementById(s2);
+            if (inp2) inp2.value = parseInt(inp2.value || 10) + 1;
+          }
+        }
+
+        updateModifiers();
+      }
+
+      charRaceSelect?.addEventListener('change', function() {
+        const selectedRace = this.value;
+        racialAbilitiesInput.value = racialAbilitiesText[selectedRace] || '';
+        
+        if (selectedRace === 'Half-Elf') {
+          halfElfContainer.style.display = 'flex';
+        } else {
+          halfElfContainer.style.display = 'none';
+        }
+        applyRacialBonuses();
+      });
+
+      halfElfStat1?.addEventListener('change', applyRacialBonuses);
+      halfElfStat2?.addEventListener('change', applyRacialBonuses);
+
+      // --- Derived Stats & HP ---
+      const classHitDiceMap = {
+        "Barbarian": "d12",
+        "Fighter": "d10", "Paladin": "d10", "Ranger": "d10",
+        "Bard": "d8", "Cleric": "d8", "Druid": "d8", "Monk": "d8", "Rogue": "d8", "Warlock": "d8", "Artificer": "d8",
+        "Sorcerer": "d6", "Wizard": "d6"
+      };
+
+      const classHitDiceValues = {
+        "Barbarian": 12,
+        "Fighter": 10, "Paladin": 10, "Ranger": 10,
+        "Bard": 8, "Cleric": 8, "Druid": 8, "Monk": 8, "Rogue": 8, "Warlock": 8, "Artificer": 8,
+        "Sorcerer": 6, "Wizard": 6
+      };
+
+      function updateDerivedStats() {
+        const dexMod = parseInt(document.getElementById('dex-mod')?.textContent) || 0;
+        const wisMod = parseInt(document.getElementById('wis-mod')?.textContent) || 0;
+        const profBonus = parseInt(document.getElementById('prof-bonus')?.value) || 2;
+
+        const initiativeInput = document.getElementById('initiative');
+        if (initiativeInput) {
+          initiativeInput.value = dexMod >= 0 ? `+${dexMod}` : `${dexMod}`;
+        }
+
+        const perceptionCheckbox = document.getElementById('perception-skill-check');
+        const passivePerception = 10 + wisMod + (perceptionCheckbox?.checked ? profBonus : 0);
+        const passivePerceptionInput = document.getElementById('passive-perception');
+        if (passivePerceptionInput) {
+          passivePerceptionInput.value = passivePerception;
+        }
+
+        updateSpellcastingStats(profBonus);
+        updateSavesAndSkills();
+        updateHitDice();
+      }
+
+      function updateHitDice() {
+        const hitDiceCounts = {};
+        document.querySelectorAll('.class-level-row').forEach(row => {
+          const classSelect = row.querySelector('.char-class-select');
+          const levelSelect = row.querySelector('.char-level-select');
+          if (classSelect && levelSelect) {
+            const className = classSelect.value;
+            const level = parseInt(levelSelect.value) || 1;
+            const die = classHitDiceMap[className] || 'd8';
+            hitDiceCounts[die] = (hitDiceCounts[die] || 0) + level;
+          }
+        });
+
+        let hitDiceParts = [];
+        for (const [die, count] of Object.entries(hitDiceCounts)) {
+          hitDiceParts.push(`${count}${die}`);
+        }
+
+        const hd1 = document.getElementById('hit-dice-1');
+        const hd2 = document.getElementById('hit-dice-2');
+        const hd3 = document.getElementById('hit-dice-3');
+        const hd4 = document.getElementById('hit-dice-4');
+
+        const hdInputs = [hd1, hd2, hd3, hd4];
+        hdInputs.forEach((input, index) => {
+          if (input) {
+            input.value = hitDiceParts[index] || '';
+          }
+        });
+      }
+
+      function calculateHP() {
+        const conMod = parseInt(document.getElementById('con-mod')?.textContent) || 0;
+        let totalHP = 0;
+        let firstClassProcessed = false;
+
+        document.querySelectorAll('.class-level-row').forEach(row => {
+          const classSelect = row.querySelector('.char-class-select');
+          const levelSelect = row.querySelector('.char-level-select');
+          if (!classSelect || !levelSelect) return;
+
+          const className = classSelect.value;
+          const level = parseInt(levelSelect.value) || 1;
+          const maxDie = classHitDiceValues[className] || 8;
+          const avgDie = Math.floor(maxDie / 2) + 1;
+
+          for (let l = 1; l <= level; l++) {
+            if (!firstClassProcessed) {
+              totalHP += maxDie + conMod;
+              firstClassProcessed = true;
+            } else {
+              totalHP += avgDie + conMod;
+            }
+          }
+        });
+
+        const totalLevel = Array.from(document.querySelectorAll('.char-level-select')).reduce((sum, sel) => sum + (parseInt(sel.value) || 1), 0);
+        const minHP = totalLevel * 1; 
+        if (totalHP < minHP) totalHP = minHP;
+
+        const hpInput = document.getElementById('hp-input');
+        if (hpInput) {
+          hpInput.value = totalHP;
+        }
+      }
+
+      // --- Saving Throws & Skills Auto-Calculation ---
+      const skillStatMap = {
+        'Acrobatics': 'dex',
+        'Animal Handling': 'wis',
+        'Arcana': 'int',
+        'Athletics': 'str',
+        'Deception': 'cha',
+        'History': 'int',
+        'Insight': 'wis',
+        'Intimidation': 'cha',
+        'Investigation': 'int',
+        'Medicine': 'wis',
+        'Nature': 'int',
+        'Perception': 'wis',
+        'Performance': 'cha',
+        'Persuasion': 'cha',
+        'Religion': 'int',
+        'Sleight of Hand': 'dex',
+        'Stealth': 'dex',
+        'Survival': 'wis'
+      };
+
+      function updateSavesAndSkills() {
+        const profBonus = parseInt(document.getElementById('prof-bonus')?.value) || 2;
+
+        document.querySelectorAll('.save-check').forEach(checkbox => {
+          const stat = checkbox.dataset.stat;
+          const modInput = checkbox.parentElement.querySelector('.save-mod');
+          const baseMod = parseInt(document.getElementById(`${stat}-mod`)?.textContent) || 0;
+          const total = baseMod + (checkbox.checked ? profBonus : 0);
+          if (modInput) {
+            modInput.value = total >= 0 ? `+${total}` : `${total}`;
+          }
+        });
+
+        document.querySelectorAll('.skills-box-container .saves-list label').forEach(label => {
+          const checkbox = label.querySelector('.skill-check');
+          if (!checkbox) return;
+          
+          const textContent = label.textContent;
+          let matchedStat = 'dex';
+          for (const [skillName, statKey] of Object.entries(skillStatMap)) {
+            if (textContent.includes(skillName)) {
+              matchedStat = statKey;
+              break;
+            }
+          }
+          const modInput = label.querySelector('.skill-mod');
+          const baseMod = parseInt(document.getElementById(`${matchedStat}-mod`)?.textContent) || 0;
+          const total = baseMod + (checkbox.checked ? profBonus : 0);
+          if (modInput) {
+            modInput.value = total >= 0 ? `+${total}` : `${total}`;
+          }
+        });
+      }
+
+      document.querySelectorAll('.save-check, .skill-check').forEach(el => {
+        el.addEventListener('change', updateDerivedStats);
+      });
+
+      // --- Spellcasting DC & Attack Bonus ---
+      function updateSpellcastingStats(profBonus) {
+        const spellAbilitySelect = document.getElementById('spell-ability');
+        const spellDcInput = document.getElementById('spell-dc');
+        const spellAtkInput = document.getElementById('spell-atk');
+
+        if (!spellAbilitySelect || !spellDcInput || !spellAtkInput) return;
+
+        const ability = spellAbilitySelect.value;
+        if (ability === 'none') {
+          spellDcInput.value = '-';
+          spellAtkInput.value = '-';
+          return;
+        }
+
+        const abilityMod = parseInt(document.getElementById(`${ability}-mod`)?.textContent) || 0;
+        const saveDc = 8 + profBonus + abilityMod;
+        const atkBonus = profBonus + abilityMod;
+
+        spellDcInput.value = saveDc;
+        spellAtkInput.value = atkBonus >= 0 ? `+${atkBonus}` : `${atkBonus}`;
+      }
+
+      document.getElementById('spell-ability')?.addEventListener('change', updateDerivedStats);
+
+      // --- Multiclassing Handlers ---
+      const multiclassBtn = document.getElementById('multiclass-btn');
+      const removeMulticlassBtn = document.getElementById('remove-multiclass-btn');
+      const classLevelContainer = document.getElementById('class-level-container');
+
+      const allAvailableClasses = [
+        "Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", 
+        "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard", "Artificer"
+      ];
+
+      function updateClassDropdowns() {
+        const selectedClasses = Array.from(document.querySelectorAll('.char-class-select')).map(s => s.value);
+        document.querySelectorAll('.char-class-select').forEach(select => {
+          const currentVal = select.value;
+          Array.from(select.options).forEach(opt => {
+            if (selectedClasses.includes(opt.value) && opt.value !== currentVal) {
+              opt.disabled = true;
+            } else {
+              opt.disabled = false;
+            }
+          });
+        });
+      }
+
+      function updateLevelDropdowns() {
+        const levelSelects = document.querySelectorAll('.char-level-select');
+        const totalLevels = Array.from(levelSelects).reduce((sum, sel) => sum + (parseInt(sel.value) || 0), 0);
+
+        levelSelects.forEach(select => {
+          const currentValue = parseInt(select.value) || 1;
+          const otherSum = totalLevels - currentValue;
+          const maxAllowed = Math.max(1, 20 - otherSum);
+
+          let html = '';
+          for (let i = 1; i <= maxAllowed; i++) {
+            html += `<option value="${i}" ${i === currentValue ? 'selected' : ''}>${i}</option>`;
+          }
+          select.innerHTML = html;
+
+          if (currentValue > maxAllowed) {
+            select.value = maxAllowed;
+          }
+        });
+      }
+
+      multiclassBtn?.addEventListener('click', () => {
+        const rows = classLevelContainer.querySelectorAll('.class-level-row');
+        if (rows.length >= 13) {
+          return;
+        }
+
+        const selectedClasses = Array.from(document.querySelectorAll('.char-class-select')).map(s => s.value);
+        const nextClass = allAvailableClasses.find(c => !selectedClasses.includes(c)) || allAvailableClasses[0];
+
+        const optionsHtml = allAvailableClasses.map(cls => 
+          `<option value="${cls}" ${cls === nextClass ? 'selected' : ''}>${cls}</option>`
+        ).join('');
+
+        let currentTotal = 0;
+        document.querySelectorAll('.char-level-select').forEach(sel => {
+          currentTotal += parseInt(sel.value) || 0;
+        });
+        const maxLevelForNew = Math.max(1, 20 - currentTotal);
+
+        let levelOptionsHtml = '';
+        for (let i = 1; i <= maxLevelForNew; i++) {
+          levelOptionsHtml += `<option value="${i}" ${i === 1 ? 'selected' : ''}>${i}</option>`;
+        }
+
+        const newRow = document.createElement('div');
+        newRow.className = 'class-level-row';
+        newRow.style.cssText = 'display: flex; gap: 4px;';
+        newRow.innerHTML = `
+          <div class="detail-box" style="flex: 1.2;">
+            <select class="fantasy-input char-class-select">
+              ${optionsHtml}
+            </select>
+          </div>
+          <div class="detail-box" style="flex: 0.8;">
+            <select class="fantasy-input char-level-select">
+              ${levelOptionsHtml}
+            </select>
+          </div>
+        `;
+        classLevelContainer.appendChild(newRow);
+        setupLevelListeners();
+        updateClassDropdowns();
+        updateLevelDropdowns();
+        updateTotalLevelAndProficiency();
+        calculateHP();
+      });
+
+      removeMulticlassBtn?.addEventListener('click', () => {
+        const rows = classLevelContainer.querySelectorAll('.class-level-row');
+        if (rows.length > 1) {
+          classLevelContainer.removeChild(rows[rows.length - 1]);
+          updateLevelDropdowns();
+          updateTotalLevelAndProficiency();
+          updateClassDropdowns();
+          calculateHP();
+        }
+      });
+
+      function setupLevelListeners() {
+        document.querySelectorAll('.char-level-select').forEach(select => {
+          select.removeEventListener('change', handleLevelChange);
+          select.addEventListener('change', handleLevelChange);
+        });
+        document.querySelectorAll('.char-class-select').forEach(select => {
+          select.removeEventListener('change', handleClassChange);
+          select.addEventListener('change', handleClassChange);
+        });
+      }
+
+      function handleLevelChange(e) {
+        updateLevelDropdowns();
+        updateTotalLevelAndProficiency();
+        calculateHP();
+      }
+
+      function handleClassChange(e) {
+        updateClassDropdowns();
+        updateTotalLevelAndProficiency();
+        calculateHP();
+      }
+
+      function updateTotalLevelAndProficiency() {
+        let totalLevel = 0;
+        document.querySelectorAll('.char-level-select').forEach(select => {
+          totalLevel += parseInt(select.value) || 0;
+        });
+
+        let prof = 2;
+        if (totalLevel >= 17) prof = 6;
+        else if (totalLevel >= 13) prof = 5;
+        else if (totalLevel >= 9) prof = 4;
+        else if (totalLevel >= 5) prof = 3;
+
+        const profBonusInput = document.getElementById('prof-bonus');
+        if (profBonusInput) {
+          profBonusInput.value = `+${prof}`;
+        }
+
+        updateDerivedStats();
+        calculateHP();
+      }
+
+      setupLevelListeners();
+      updateClassDropdowns();
+      updateLevelDropdowns();
+
+      // --- PDF Export Fixes ---
+      const exportBtn = document.getElementById('export-btn');
+      exportBtn?.addEventListener('click', () => {
+        window.scrollTo(0, 0);
+
+        const element = document.getElementById('character-document');
+        element.classList.add('exporting');
+
+        const opt = {
+          margin:       0,
+          filename:     'character-sheet.pdf',
+          image:        { type: 'jpeg', quality: 0.98 },
+          html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+          jsPDF:        { unit: 'px', format: [816, 1056], orientation: 'portrait' },
+          pagebreak:    { mode: 'css' }
+        };
+
+        html2pdf().from(element).set(opt).save().then(() => {
+          element.classList.remove('exporting');
+        });
+      });
+
+      // Initial calculation pass
+      updateModifiers();
+      calculateHP();
+    });
+  </script>
+</body>
+</html>
