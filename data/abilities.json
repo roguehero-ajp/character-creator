@@ -1,19 +1,111 @@
-/*abilities*/
-
 {
   "strength": {
     "title": "Strength",
-    "description": "Measures physical power.",
+    "summary": "Measures raw physical power.",
     "usedFor": [
       "Athletics",
-      "Melee attacks",
-      "Carrying capacity",
-      "Jump distance"
+      "Melee attack rolls",
+      "Melee weapon damage",
+      "Jump distance",
+      "Carrying capacity"
     ],
-    "recommendedClasses": [
+    "bestFor": [
       "Barbarian",
       "Fighter",
       "Paladin"
-    ]
+    ],
+    "beginnerTip": "Strength matters most for characters who fight up close with heavy weapons or do a lot of climbing, lifting, or grappling.",
+    "difficulty": "Easy"
+  },
+  "dexterity": {
+    "title": "Dexterity",
+    "summary": "Measures agility, reflexes, and balance.",
+    "usedFor": [
+      "Armor Class in light armor",
+      "Initiative",
+      "Stealth",
+      "Acrobatics",
+      "Sleight of Hand",
+      "Ranged attacks"
+    ],
+    "bestFor": [
+      "Rogue",
+      "Ranger",
+      "Monk"
+    ],
+    "beginnerTip": "Dexterity helps you act earlier in combat and avoid getting hit. It is one of the most broadly useful abilities in the game.",
+    "difficulty": "Easy"
+  },
+  "constitution": {
+    "title": "Constitution",
+    "summary": "Measures toughness, stamina, and endurance.",
+    "usedFor": [
+      "Hit points",
+      "Constitution saving throws",
+      "Concentration checks"
+    ],
+    "bestFor": [
+      "Barbarian",
+      "Fighter",
+      "Cleric"
+    ],
+    "beginnerTip": "Constitution is the stat that keeps you alive longer. If you want your character to survive hard fights, do not neglect it.",
+    "difficulty": "Easy"
+  },
+  "intelligence": {
+    "title": "Intelligence",
+    "summary": "Measures reasoning, memory, and learned knowledge.",
+    "usedFor": [
+      "Arcana",
+      "History",
+      "Investigation",
+      "Nature",
+      "Religion"
+    ],
+    "bestFor": [
+      "Wizard",
+      "Artificer",
+      "Knowledge-focused characters"
+    ],
+    "beginnerTip": "Intelligence is great for scholarly or investigative characters, but many builds can function fine without it.",
+    "difficulty": "Medium"
+  },
+  "wisdom": {
+    "title": "Wisdom",
+    "summary": "Measures awareness, intuition, and perception.",
+    "usedFor": [
+      "Perception",
+      "Insight",
+      "Survival",
+      "Animal Handling",
+      "Medicine",
+      "Wisdom saving throws"
+    ],
+    "bestFor": [
+      "Cleric",
+      "Druid",
+      "Ranger"
+    ],
+    "beginnerTip": "Wisdom is one of the most important abilities for noticing danger and resisting mental tricks.",
+    "difficulty": "Easy"
+  },
+  "charisma": {
+    "title": "Charisma",
+    "summary": "Measures force of personality, confidence, and presence.",
+    "usedFor": [
+      "Deception",
+      "Intimidation",
+      "Performance",
+      "Persuasion",
+      "Spellcasting for some classes"
+    ],
+    "bestFor": [
+      "Bard",
+      "Paladin",
+      "Warlock",
+      "Sorcerer"
+    ],
+    "beginnerTip": "Charisma is important if your character talks a lot, leads the group, or casts spells using force of personality.",
+    "difficulty": "Easy"
   }
 }
