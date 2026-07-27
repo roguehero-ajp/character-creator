@@ -1058,9 +1058,20 @@ Started: July 2026
               <input type="text" class="fantasy-input" placeholder="Player">
             </div>
             <div class="detail-box">
-              <label>Alignment</label>
-              <input type="text" class="fantasy-input" placeholder="Alignment">
-            </div>
+              <label for="alignment-select">Alignment</label>
+              <select id="alignment-select" class="fantasy-input">
+                <option value="" selected>--Select Alignment--</option>
+                <option value="lawful-good">Lawful Good</option>
+                <option value="neutral-good">Neutral Good</option>
+                <option value="chaotic-good">Chaotic Good</option>
+                <option value="lawful-neutral">Lawful Neutral</option>
+                <option value="true-neutral">True Neutral</option>
+                <option value="chaotic-neutral">Chaotic Neutral</option>
+                <option value="lawful-evil">Lawful Evil</option>
+                <option value="neutral-evil">Neutral Evil</option>
+                <option value="chaotic-evil">Chaotic Evil</option>
+             </select>
+          </div>
             <div class="detail-box">
               <label>Experience Points</label>
               <input type="text" class="fantasy-input" placeholder="0">
@@ -1070,7 +1081,6 @@ Started: July 2026
           <!-- Right Combat Block (HP, Hit Dice, Prof Bonus, Perception) -->
           <div class="right-combat-block" style="display: flex; gap: 6px;">
             <div class="combat-box hp-box">
-              <svg class="heart-bg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
               <div class="hp-content">
                 <label>Hit Point Maximum & Current</label>
                 <div class="hp-inputs">
