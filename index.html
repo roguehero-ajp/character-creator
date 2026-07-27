@@ -260,6 +260,19 @@
       background: rgba(255,255,255,0.03);
     }
 
+    .game-primary {
+      background: linear-gradient(180deg, rgba(39, 174, 96, 0.26), rgba(39, 174, 96, 0.14));
+      border-color: rgba(39, 174, 96, 0.45);
+    }
+
+    .game-primary:hover {
+      background: linear-gradient(180deg, rgba(39, 174, 96, 0.36), rgba(39, 174, 96, 0.20));
+    }
+
+    .game-primary .status-open {
+      color: #9ff8b7;
+    }
+
     .game span:first-child { font-weight: 700; }
     .game small { color: var(--muted); }
 
@@ -396,7 +409,7 @@
         <section class="card" id="games">
           <h3 class="section-title">Character Builders</h3>
           <div class="game-list">
-            <a class="game" href="builder.html">
+            <a class="game game-primary" href="builder.html">
               <span>Dungeons &amp; Dragons 2024</span>
               <small class="status-open">Available</small>
             </a>
