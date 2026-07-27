@@ -1,39 +1,117 @@
-# Character Creator Roadmap
+========================================
+MY RPG SOURCE ROADMAP
+========================================
 
-## Version 0.2
+PHASE 1 - D&D 2024 CHARACTER BUILDER
 
-- [ ] Browser autosave
-- [ ] JSON import/export
-- [ ] Better printing
-- [ ] Improved layout
+✓ Printable Character Sheet
 
----
+✓ PDF Export
 
-## Version 0.3
+✓ Improved Printing Layout
 
-- [ ] Ability tooltips
-- [ ] Skill tooltips
-- [ ] Mobile support
-- [ ] UI polish
+✓ GitHub Repository
 
----
+✓ GitHub Pages Deployment
 
-## Version 0.4
+✓ Responsive Layout
 
-- [ ] Character portraits
-- [ ] Better themes
-- [ ] Homepage
+✓ Knowledge Cards (Abilities)
 
----
+✓ Knowledge Cards (Skills)
 
-## Version 0.5
+----------------------------------------
 
-- [ ] D&D 2024 support
-- [ ] Campaign notes
-- [ ] Encounter tracker
+CURRENT PRIORITIES
 
----
+☐ Knowledge Cards (Combat)
 
-## Version 1.0
+☐ Knowledge Cards (Saving Throws)
 
-- [ ] Public launch
+☐ Knowledge Cards (Conditions)
+
+☐ Knowledge Cards (Equipment)
+
+☐ Knowledge Cards (Weapons)
+
+☐ Knowledge Cards (Currency)
+
+☐ Codex Slide-Out System
+
+☐ Landing Page
+
+☐ Site Branding
+
+☐ Logo
+
+----------------------------------------
+
+QUALITY OF LIFE
+
+☐ Browser Autosave
+
+☐ Import Character
+
+☐ Export Character (.json)
+
+☐ Character Validation
+
+☐ Theme Selector
+
+☐ Accessibility Improvements
+
+☐ Mobile Polish
+
+----------------------------------------
+
+LONG TERM
+
+☐ D&D 2014
+
+☐ Pathfinder
+
+☐ Call of Cthulhu
+
+☐ Cyberpunk RED
+
+☐ Shadowrun
+
+☐ Vampire
+
+☐ Werewolf
+
+☐ Mage
+
+☐ Changeling
+
+☐ Wraith
+
+----------------------------------------
+
+EVENTUAL FEATURES
+
+☐ Animated Dice Roller
+
+☐ Encounter Builder
+
+☐ NPC Generator
+
+☐ Treasure Generator
+
+☐ Monster Reference
+
+☐ Campaign Manager
+
+☐ Random Character Generator
+
+☐ Initiative Tracker
+
+☐ Spell Database
+
+☐ Monster Database
+
+☐ Adventure Generator
+
+☐ World Building Tools
+
+========================================
