@@ -1,1 +1,82 @@
-/*tooltips*/
+.knowledge-tooltip {
+  position: fixed;
+  z-index: 9999;
+  width: min(320px, calc(100vw - 24px));
+  background: rgba(20, 20, 20, 0.96);
+  color: #f4ecd8;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+  padding: 12px 12px 10px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px) scale(0.98);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+  font-family: inherit;
+}
+
+.knowledge-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.knowledge-tooltip .kt-title {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #f1c40f;
+  margin-bottom: 4px;
+  letter-spacing: 0.3px;
+}
+
+.knowledge-tooltip .kt-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  opacity: 0.9;
+  margin-bottom: 8px;
+}
+
+.knowledge-tooltip .kt-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(241, 196, 15, 0.14);
+  border: 1px solid rgba(241, 196, 15, 0.2);
+}
+
+.knowledge-tooltip .kt-section {
+  margin-top: 8px;
+}
+
+.knowledge-tooltip .kt-section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #dda15e;
+  margin-bottom: 4px;
+}
+
+.knowledge-tooltip ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.knowledge-tooltip p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.tooltip-trigger {
+  cursor: help;
+  text-decoration: underline dotted rgba(92, 64, 51, 0.55);
+  text-underline-offset: 2px;
+}
+
+.tooltip-trigger:hover {
+  text-decoration-color: rgba(192, 57, 43, 0.85);
+}
