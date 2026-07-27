@@ -2,310 +2,310 @@
   "acrobatics": {
     "title": "Acrobatics",
     "ability": "Dexterity",
-    "summary": "Keeping balance, tumbling, and moving with control.",
-    "usedFor": [
-      "Balancing on narrow surfaces",
-      "Escaping restraints",
-      "Dramatic tumbles and movement tricks"
+    "whatItMeans": "Acrobatics covers balance, tumbling, and movement that requires body control.",
+    "whatItAffects": [
+      "Keeping balance on narrow surfaces",
+      "Escaping awkward physical positions",
+      "Dramatic movement and flips"
     ],
+    "exampleInPlay": "A character might use Acrobatics to keep their footing on a slick roof or slip free from a tight squeeze.",
+    "whyItMatters": "This skill helps characters move with control when the environment is trying to make movement difficult.",
     "bestFor": [
       "Rogue",
       "Monk",
       "Performers"
-    ],
-    "beginnerTip": "Acrobatics is often used when your character tries to stay balanced or move through tight spaces with grace.",
-    "difficulty": "Easy"
+    ]
   },
   "animal-handling": {
     "title": "Animal Handling",
     "ability": "Wisdom",
-    "summary": "Calming, training, and understanding animals.",
-    "usedFor": [
-      "Calming a panicked mount",
-      "Handling strange beasts",
+    "whatItMeans": "Animal Handling covers calming, guiding, and understanding animals.",
+    "whatItAffects": [
+      "Calming frightened animals",
+      "Handling mounts",
       "Reading animal behavior"
     ],
+    "exampleInPlay": "A character might use Animal Handling to calm a panicked horse or keep a pack animal from bolting.",
+    "whyItMatters": "This skill matters when animals are part of the challenge or part of the solution.",
     "bestFor": [
       "Ranger",
       "Druid",
-      "Country or wilderness characters"
-    ],
-    "beginnerTip": "This skill helps when animals are the problem or the solution.",
-    "difficulty": "Easy"
+      "Wilderness characters"
+    ]
   },
   "arcana": {
     "title": "Arcana",
     "ability": "Intelligence",
-    "summary": "Knowledge of magic, spells, and magical phenomena.",
-    "usedFor": [
+    "whatItMeans": "Arcana covers magical theory, spells, and strange supernatural knowledge.",
+    "whatItAffects": [
       "Identifying magical effects",
-      "Recognizing spell traditions",
-      "Understanding arcane lore"
+      "Recognizing arcane symbols",
+      "Understanding spell traditions"
     ],
+    "exampleInPlay": "A character might use Arcana to identify a glowing rune or recognize the school of magic behind a spell effect.",
+    "whyItMatters": "Arcana is the classic skill for characters who study magic or investigate magical phenomena.",
     "bestFor": [
       "Wizard",
       "Artificer",
       "Magic scholars"
-    ],
-    "beginnerTip": "Arcana is the classic 'I know weird magic stuff' skill.",
-    "difficulty": "Medium"
+    ]
   },
   "athletics": {
     "title": "Athletics",
     "ability": "Strength",
-    "summary": "Physical feats like climbing, jumping, grappling, and swimming.",
-    "usedFor": [
-      "Climbing walls",
-      "Swimming against a current",
-      "Grappling enemies",
-      "Jumping farther"
+    "whatItMeans": "Athletics covers climbing, swimming, jumping, grappling, and other physical exertion.",
+    "whatItAffects": [
+      "Climbing",
+      "Swimming",
+      "Grappling",
+      "Jumping farther or higher"
     ],
+    "exampleInPlay": "A character might use Athletics to haul themselves up a cliff, wrestle an enemy, or swim against a strong current.",
+    "whyItMatters": "Athletics is the main skill for doing things with muscle and stamina.",
     "bestFor": [
-      "Fighter",
       "Barbarian",
-      "Front-line warriors"
-    ],
-    "beginnerTip": "Athletics is the skill for 'I do it with muscle.'",
-    "difficulty": "Easy"
+      "Fighter",
+      "Front-line characters"
+    ]
   },
   "deception": {
     "title": "Deception",
     "ability": "Charisma",
-    "summary": "Lying, bluffing, and disguising the truth.",
-    "usedFor": [
-      "Lies",
-      "False identities",
+    "whatItMeans": "Deception covers lying, bluffing, disguise of intent, and falsehoods told convincingly.",
+    "whatItAffects": [
+      "Lying to NPCs",
+      "Creating false impressions",
       "Misleading enemies"
     ],
-    "bestFor": [
-      "Bard",
-      "Rogue",
-      "Sneaky talkers"
-    ],
-    "beginnerTip": "Use Deception when your character is trying to convincingly bend the truth.",
-    "difficulty": "Easy"
-  },
-  "history": {
-    "title": "History",
-    "ability": "Intelligence",
-    "summary": "Knowledge of the past, civilizations, and legends.",
-    "usedFor": [
-      "Ancient kingdoms",
-      "Famous wars",
-      "Traditions and lore"
-    ],
-    "bestFor": [
-      "Wizard",
-      "Bard",
-      "Lore-heavy characters"
-    ],
-    "beginnerTip": "History helps you know what happened before the current adventure started.",
-    "difficulty": "Easy"
-  },
-  "insight": {
-    "title": "Insight",
-    "ability": "Wisdom",
-    "summary": "Reading motives, feelings, and hidden intent.",
-    "usedFor": [
-      "Detecting lies",
-      "Reading emotions",
-      "Noticing motives"
-    ],
-    "bestFor": [
-      "Cleric",
-      "Paladin",
-      "Socially aware characters"
-    ],
-    "beginnerTip": "Insight tells you what someone might really mean, not just what they say.",
-    "difficulty": "Easy"
-  },
-  "intimidation": {
-    "title": "Intimidation",
-    "ability": "Charisma",
-    "summary": "Scaring others into compliance or hesitation.",
-    "usedFor": [
-      "Threatening enemies",
-      "Browbeating suspects",
-      "Projecting dangerous vibes"
-    ],
-    "bestFor": [
-      "Barbarian",
-      "Paladin",
-      "Fearsome characters"
-    ],
-    "beginnerTip": "Intimidation works best when your character can back up the threat with presence, power, or reputation.",
-    "difficulty": "Easy"
-  },
-  "investigation": {
-    "title": "Investigation",
-    "ability": "Intelligence",
-    "summary": "Finding clues, solving puzzles, and analyzing details.",
-    "usedFor": [
-      "Searching rooms carefully",
-      "Connecting clues",
-      "Examining evidence"
-    ],
-    "bestFor": [
-      "Wizard",
-      "Rogue",
-      "Detective-style characters"
-    ],
-    "beginnerTip": "Investigation is for careful thinking and looking closely, not just noticing something at a glance.",
-    "difficulty": "Medium"
-  },
-  "medicine": {
-    "title": "Medicine",
-    "ability": "Wisdom",
-    "summary": "Understanding injuries, wounds, and basic treatment.",
-    "usedFor": [
-      "Stabilizing creatures",
-      "Diagnosing injuries",
-      "Recognizing illness"
-    ],
-    "bestFor": [
-      "Cleric",
-      "Druid",
-      "Healers"
-    ],
-    "beginnerTip": "Medicine is useful when someone is hurt and you want to know what is wrong before magic or rest comes into play.",
-    "difficulty": "Easy"
-  },
-  "nature": {
-    "title": "Nature",
-    "ability": "Intelligence",
-    "summary": "Knowledge of plants, animals, weather, and the natural world.",
-    "usedFor": [
-      "Identifying plants",
-      "Understanding animals",
-      "Reading natural terrain"
-    ],
-    "bestFor": [
-      "Druid",
-      "Ranger",
-      "Wilderness experts"
-    ],
-    "beginnerTip": "Nature is the skill for knowing what the wild world is doing and why.",
-    "difficulty": "Easy"
-  },
-  "perception": {
-    "title": "Perception",
-    "ability": "Wisdom",
-    "summary": "Noticing hidden details, sounds, movement, and danger.",
-    "usedFor": [
-      "Spotting ambushes",
-      "Noticing hidden doors",
-      "Hearing suspicious noises"
-    ],
-    "bestFor": [
-      "Ranger",
-      "Cleric",
-      "Anyone who wants to avoid surprises"
-    ],
-    "beginnerTip": "Perception is one of the most rolled skills in the game. High Perception means you notice more before trouble lands on your head.",
-    "difficulty": "Easy"
-  },
-  "performance": {
-    "title": "Performance",
-    "ability": "Charisma",
-    "summary": "Playing music, acting, storytelling, and entertaining a crowd.",
-    "usedFor": [
-      "Songs",
-      "Speeches",
-      "Acting",
-      "Entertainment"
-    ],
-    "bestFor": [
-      "Bard",
-      "Entertainers",
-      "Showboats"
-    ],
-    "beginnerTip": "Performance is not just music. It can cover any time your character is trying to impress an audience.",
-    "difficulty": "Easy"
-  },
-  "persuasion": {
-    "title": "Persuasion",
-    "ability": "Charisma",
-    "summary": "Convincing, negotiating, and appealing to others.",
-    "usedFor": [
-      "Negotiation",
-      "Diplomacy",
-      "Making a good argument"
-    ],
-    "bestFor": [
-      "Bard",
-      "Paladin",
-      "Face characters"
-    ],
-    "beginnerTip": "Persuasion is the skill for talking people into helping you instead of just doing what you say.",
-    "difficulty": "Easy"
-  },
-  "religion": {
-    "title": "Religion",
-    "ability": "Intelligence",
-    "summary": "Knowledge of gods, rituals, faiths, and sacred lore.",
-    "usedFor": [
-      "Identifying religious symbols",
-      "Understanding divine traditions",
-      "Recognizing holy rites"
-    ],
-    "bestFor": [
-      "Cleric",
-      "Paladin",
-      "Theology-minded characters"
-    ],
-    "beginnerTip": "Religion covers the stories and rules of gods, cults, holy orders, and sacred traditions.",
-    "difficulty": "Easy"
-  },
-  "sleight-of-hand": {
-    "title": "Sleight of Hand",
-    "ability": "Dexterity",
-    "summary": "Manual trickery, picking pockets, and delicate hand work.",
-    "usedFor": [
-      "Pickpocketing",
-      "Palming objects",
-      "Hidden hand tricks"
-    ],
+    "exampleInPlay": "A character might use Deception to pretend they belong somewhere or conceal a bad decision with a confident story.",
+    "whyItMatters": "Deception is useful for characters who need to mislead people without immediately raising suspicion.",
     "bestFor": [
       "Rogue",
       "Bard",
       "Tricksters"
+    ]
+  },
+  "history": {
+    "title": "History",
+    "ability": "Intelligence",
+    "whatItMeans": "History covers the past, old empires, legends, wars, rulers, and cultural memory.",
+    "whatItAffects": [
+      "Ancient kingdoms",
+      "Important events",
+      "Famous people and places"
     ],
-    "beginnerTip": "This is your 'fast hands and subtle fingers' skill.",
-    "difficulty": "Easy"
+    "exampleInPlay": "A character might use History to recognize a royal crest, remember the name of an old battle, or identify a ruin from its architecture.",
+    "whyItMatters": "History helps characters understand the world by knowing what came before.",
+    "bestFor": [
+      "Wizard",
+      "Bard",
+      "Lore-focused characters"
+    ]
+  },
+  "insight": {
+    "title": "Insight",
+    "ability": "Wisdom",
+    "whatItMeans": "Insight covers reading motives, emotional cues, and hidden intent.",
+    "whatItAffects": [
+      "Detecting lies",
+      "Sensing emotional shifts",
+      "Noticing what someone really wants"
+    ],
+    "exampleInPlay": "A character might use Insight to tell whether a merchant is nervous, hiding something, or telling the truth poorly.",
+    "whyItMatters": "Insight helps characters understand people beneath the words they are saying.",
+    "bestFor": [
+      "Cleric",
+      "Paladin",
+      "Socially aware characters"
+    ]
+  },
+  "intimidation": {
+    "title": "Intimidation",
+    "ability": "Charisma",
+    "whatItMeans": "Intimidation covers threats, menace, forceful presence, and frightening others into hesitation.",
+    "whatItAffects": [
+      "Threatening enemies",
+      "Pressuring suspects",
+      "Using presence to scare or dominate"
+    ],
+    "exampleInPlay": "A character might use Intimidation to make a guard think twice before standing in the way.",
+    "whyItMatters": "Intimidation works when a character wants people to back off without needing a long argument.",
+    "bestFor": [
+      "Barbarian",
+      "Paladin",
+      "Fearsome characters"
+    ]
+  },
+  "investigation": {
+    "title": "Investigation",
+    "ability": "Intelligence",
+    "whatItMeans": "Investigation covers careful searching, clue gathering, and analysis of details.",
+    "whatItAffects": [
+      "Finding hidden clues",
+      "Solving puzzles",
+      "Studying evidence"
+    ],
+    "exampleInPlay": "A character might use Investigation to inspect a room for hidden compartments or connect clues from a crime scene.",
+    "whyItMatters": "Investigation is about thinking carefully and looking closely instead of just noticing things at a glance.",
+    "bestFor": [
+      "Wizard",
+      "Rogue",
+      "Detective-style characters"
+    ]
+  },
+  "medicine": {
+    "title": "Medicine",
+    "ability": "Wisdom",
+    "whatItMeans": "Medicine covers treating injuries, recognizing wounds, and understanding basic physical condition.",
+    "whatItAffects": [
+      "Stabilizing creatures",
+      "Recognizing injuries",
+      "Diagnosing illness"
+    ],
+    "exampleInPlay": "A character might use Medicine to tell whether someone is dying, poisoned, or suffering from a specific injury.",
+    "whyItMatters": "Medicine is useful when someone is hurt and you want to understand the problem before acting.",
+    "bestFor": [
+      "Cleric",
+      "Druid",
+      "Healers"
+    ]
+  },
+  "nature": {
+    "title": "Nature",
+    "ability": "Intelligence",
+    "whatItMeans": "Nature covers plants, animals, weather, terrain, and the natural world.",
+    "whatItAffects": [
+      "Identifying plants and animals",
+      "Understanding terrain",
+      "Recognizing environmental patterns"
+    ],
+    "exampleInPlay": "A character might use Nature to identify a dangerous mushroom, recognize a storm pattern, or understand what lives in a swamp.",
+    "whyItMatters": "Nature helps characters understand the wild world and survive in it.",
+    "bestFor": [
+      "Druid",
+      "Ranger",
+      "Wilderness experts"
+    ]
+  },
+  "perception": {
+    "title": "Perception",
+    "ability": "Wisdom",
+    "whatItMeans": "Perception covers noticing hidden details, sounds, movement, and danger.",
+    "whatItAffects": [
+      "Spotting ambushes",
+      "Noticing hidden doors",
+      "Hearing suspicious noises"
+    ],
+    "exampleInPlay": "A character might use Perception to notice a concealed trap, hear footsteps behind a wall, or spot someone hiding in the shadows.",
+    "whyItMatters": "Perception is one of the most commonly useful skills in the game because it helps characters avoid surprises.",
+    "bestFor": [
+      "Ranger",
+      "Cleric",
+      "Anyone who wants to notice danger early"
+    ]
+  },
+  "performance": {
+    "title": "Performance",
+    "ability": "Charisma",
+    "whatItMeans": "Performance covers entertaining, performing, speaking dramatically, and presenting yourself well.",
+    "whatItAffects": [
+      "Music",
+      "Acting",
+      "Storytelling",
+      "Public performance"
+    ],
+    "exampleInPlay": "A character might use Performance to put on a convincing show, play a song, or deliver a speech with flair.",
+    "whyItMatters": "Performance matters when a character is trying to impress, entertain, or move an audience.",
+    "bestFor": [
+      "Bard",
+      "Entertainers",
+      "Showy characters"
+    ]
+  },
+  "persuasion": {
+    "title": "Persuasion",
+    "ability": "Charisma",
+    "whatItMeans": "Persuasion covers convincing others, negotiating, and making a strong argument.",
+    "whatItAffects": [
+      "Negotiation",
+      "Diplomacy",
+      "Winning trust"
+    ],
+    "exampleInPlay": "A character might use Persuasion to talk down a guard, bargain with a merchant, or win support from a noble.",
+    "whyItMatters": "Persuasion is the skill for getting people to agree with you by sounding reasonable and credible.",
+    "bestFor": [
+      "Bard",
+      "Paladin",
+      "Face characters"
+    ]
+  },
+  "religion": {
+    "title": "Religion",
+    "ability": "Intelligence",
+    "whatItMeans": "Religion covers gods, rites, cults, holy symbols, and sacred traditions.",
+    "whatItAffects": [
+      "Recognizing faiths",
+      "Understanding religious symbols",
+      "Knowing ritual or holy lore"
+    ],
+    "exampleInPlay": "A character might use Religion to identify a deity's symbol, interpret a shrine, or understand an old rite.",
+    "whyItMatters": "Religion helps characters recognize the beliefs and sacred practices that shape the world.",
+    "bestFor": [
+      "Cleric",
+      "Paladin",
+      "Theology-focused characters"
+    ]
+  },
+  "sleight-of-hand": {
+    "title": "Sleight of Hand",
+    "ability": "Dexterity",
+    "whatItMeans": "Sleight of Hand covers subtle hand work, quick fingers, and small-scale trickery.",
+    "whatItAffects": [
+      "Pickpocketing",
+      "Palming objects",
+      "Dextrous manipulation"
+    ],
+    "exampleInPlay": "A character might use Sleight of Hand to slip a key from someone's belt or hide a coin in their palm without being noticed.",
+    "whyItMatters": "This skill is for characters who work quietly with their hands instead of making a scene.",
+    "bestFor": [
+      "Rogue",
+      "Bard",
+      "Tricksters"
+    ]
   },
   "stealth": {
     "title": "Stealth",
     "ability": "Dexterity",
-    "summary": "Moving quietly and avoiding detection.",
-    "usedFor": [
+    "whatItMeans": "Stealth covers moving quietly, hiding, and avoiding notice.",
+    "whatItAffects": [
       "Sneaking past enemies",
       "Hiding in shadows",
-      "Ambushes"
+      "Setting up ambushes"
     ],
+    "exampleInPlay": "A character might use Stealth to move through a guarded hallway without being seen or heard.",
+    "whyItMatters": "Stealth is what lets characters stay unnoticed when that is exactly the point.",
     "bestFor": [
       "Rogue",
       "Ranger",
       "Monk"
-    ],
-    "beginnerTip": "Stealth is how you become a whisper with boots.",
-    "difficulty": "Easy"
+    ]
   },
   "survival": {
     "title": "Survival",
     "ability": "Wisdom",
-    "summary": "Finding your way, tracking, and enduring the wild.",
-    "usedFor": [
-      "Tracking creatures",
+    "whatItMeans": "Survival covers finding your way, tracking creatures, foraging, and enduring the wilderness.",
+    "whatItAffects": [
+      "Tracking",
       "Navigation",
       "Foraging",
-      "Weather sense"
+      "Reading weather and terrain"
     ],
+    "exampleInPlay": "A character might use Survival to follow tracks through the woods, find safe shelter, or judge which direction leads home.",
+    "whyItMatters": "Survival helps characters keep moving and stay alive when the environment itself is part of the challenge.",
     "bestFor": [
       "Ranger",
       "Druid",
       "Wilderness explorers"
-    ],
-    "beginnerTip": "Survival helps when the world is trying to eat you and you need to keep moving anyway.",
-    "difficulty": "Easy"
+    ]
   }
 }
