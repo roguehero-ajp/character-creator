@@ -1,79 +1,81 @@
 {
   "strength": {
     "title": "Strength",
-    "summary": "Measures raw physical power.",
-    "usedFor": [
-      "Athletics",
-      "Melee attack rolls",
-      "Melee weapon damage",
-      "Jump distance",
+    "whatItMeans": "Strength measures physical power, force, and raw muscle.",
+    "whatItAffects": [
+      "Athletics checks",
+      "Melee attack rolls with Strength-based weapons",
+      "Melee damage with many weapons",
+      "Jumping, climbing, lifting, and grappling",
       "Carrying capacity"
     ],
+    "exampleInPlay": "A character with high Strength might shove open a heavy door, wrestle an enemy to the ground, or haul a fallen ally out of danger.",
+    "whyItMatters": "If your character fights up close, does physical tasks, or relies on brute force, Strength matters a lot.",
     "bestFor": [
       "Barbarian",
       "Fighter",
       "Paladin"
-    ],
-    "beginnerTip": "Strength matters most for characters who fight up close with heavy weapons or do a lot of climbing, lifting, or grappling.",
-    "difficulty": "Easy"
+    ]
   },
   "dexterity": {
     "title": "Dexterity",
-    "summary": "Measures agility, reflexes, and balance.",
-    "usedFor": [
-      "Armor Class in light armor",
+    "whatItMeans": "Dexterity measures agility, reflexes, balance, and fine control.",
+    "whatItAffects": [
       "Initiative",
-      "Stealth",
+      "Armor Class in light armor",
       "Acrobatics",
+      "Stealth",
       "Sleight of Hand",
-      "Ranged attacks"
+      "Ranged attack rolls"
     ],
+    "exampleInPlay": "A character with high Dexterity might dodge a trap, move silently through a hallway, or shoot a bow with precision.",
+    "whyItMatters": "Dexterity affects defense, speed, sneaking, and many common combat actions, so it is useful for a wide range of characters.",
     "bestFor": [
       "Rogue",
       "Ranger",
       "Monk"
-    ],
-    "beginnerTip": "Dexterity helps you act earlier in combat and avoid getting hit. It is one of the most broadly useful abilities in the game.",
-    "difficulty": "Easy"
+    ]
   },
   "constitution": {
     "title": "Constitution",
-    "summary": "Measures toughness, stamina, and endurance.",
-    "usedFor": [
+    "whatItMeans": "Constitution measures toughness, endurance, and the ability to keep going when things get rough.",
+    "whatItAffects": [
       "Hit points",
       "Constitution saving throws",
-      "Concentration checks"
+      "Concentration checks",
+      "Resistance to sickness, exhaustion, and bodily strain"
     ],
+    "exampleInPlay": "A character with high Constitution might stay standing after a brutal hit, shrug off poison, or keep a spell going under pressure.",
+    "whyItMatters": "Constitution helps a character survive longer in danger, especially in combat or harsh environments.",
     "bestFor": [
       "Barbarian",
       "Fighter",
       "Cleric"
-    ],
-    "beginnerTip": "Constitution is the stat that keeps you alive longer. If you want your character to survive hard fights, do not neglect it.",
-    "difficulty": "Easy"
+    ]
   },
   "intelligence": {
     "title": "Intelligence",
-    "summary": "Measures reasoning, memory, and learned knowledge.",
-    "usedFor": [
+    "whatItMeans": "Intelligence measures reasoning, memory, study, and analysis.",
+    "whatItAffects": [
       "Arcana",
       "History",
       "Investigation",
       "Nature",
-      "Religion"
+      "Religion",
+      "Understanding complex information"
     ],
+    "exampleInPlay": "A character with high Intelligence might identify a magical sigil, piece together clues from a ruined library, or recognize an old kingdom from a symbol on a shield.",
+    "whyItMatters": "Intelligence is useful when your character learns from books, clues, research, or careful thinking.",
     "bestFor": [
       "Wizard",
       "Artificer",
-      "Knowledge-focused characters"
-    ],
-    "beginnerTip": "Intelligence is great for scholarly or investigative characters, but many builds can function fine without it.",
-    "difficulty": "Medium"
+      "Investigator-style characters"
+    ]
   },
   "wisdom": {
     "title": "Wisdom",
-    "summary": "Measures awareness, intuition, and perception.",
-    "usedFor": [
+    "whatItMeans": "Wisdom measures awareness, intuition, and a character's sense of what is happening around them.",
+    "whatItAffects": [
       "Perception",
       "Insight",
       "Survival",
@@ -81,31 +83,31 @@
       "Medicine",
       "Wisdom saving throws"
     ],
+    "exampleInPlay": "A character with high Wisdom might notice an ambush before it happens, sense that someone is lying, or find a safe path through the wilderness.",
+    "whyItMatters": "Wisdom helps a character notice danger, read people, and stay grounded in uncertain situations.",
     "bestFor": [
       "Cleric",
       "Druid",
       "Ranger"
-    ],
-    "beginnerTip": "Wisdom is one of the most important abilities for noticing danger and resisting mental tricks.",
-    "difficulty": "Easy"
+    ]
   },
   "charisma": {
     "title": "Charisma",
-    "summary": "Measures force of personality, confidence, and presence.",
-    "usedFor": [
+    "whatItMeans": "Charisma measures force of personality, confidence, charm, and presence.",
+    "whatItAffects": [
       "Deception",
       "Intimidation",
       "Performance",
       "Persuasion",
       "Spellcasting for some classes"
     ],
+    "exampleInPlay": "A character with high Charisma might talk their way past a guard, command a room, or cast powerful spells through sheer force of personality.",
+    "whyItMatters": "Charisma matters when your character influences other people, leads, negotiates, or uses certain types of magic.",
     "bestFor": [
       "Bard",
       "Paladin",
       "Warlock",
       "Sorcerer"
-    ],
-    "beginnerTip": "Charisma is important if your character talks a lot, leads the group, or casts spells using force of personality.",
-    "difficulty": "Easy"
+    ]
   }
 }
