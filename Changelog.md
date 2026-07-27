@@ -44,7 +44,8 @@ All notable changes to this project will be documented in this file.
 - JavaScript modules.
 - Data directory.
 - Asset directory.
-
+- tooltip popups
+- 
 ### Setup
 - Milestone 1. Initial project architecture
 - Image directory.
