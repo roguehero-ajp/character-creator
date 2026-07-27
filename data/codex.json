@@ -1,40 +1,252 @@
 {
   "categories": [
+    { "id": "abilities", "name": "Abilities" },
+    { "id": "skills", "name": "Skills" },
+    { "id": "combat", "name": "Combat" },
+    { "id": "savingThrows", "name": "Saving Throws" },
+    { "id": "conditions", "name": "Conditions" },
+    { "id": "equipment", "name": "Equipment" },
+    { "id": "weapons", "name": "Weapons" },
+    { "id": "armor", "name": "Armor" },
+    { "id": "spellcasting", "name": "Spellcasting" }
+  ],
+  "entries": [
     {
-      "id": "abilities",
-      "name": "Abilities"
+      "id": "strength",
+      "title": "Strength",
+      "category": "abilities",
+      "categoryName": "Abilities",
+      "whatItMeans": "Strength measures physical power, force, and raw muscle.",
+      "whatItAffects": [
+        "Athletics checks",
+        "Melee attack rolls",
+        "Melee damage",
+        "Jumping, climbing, lifting, and grappling",
+        "Carrying capacity"
+      ],
+      "exampleInPlay": "A character with high Strength might shove open a heavy door, wrestle an enemy to the ground, or haul a fallen ally out of danger.",
+      "whyItMatters": "If your character fights up close, does physical tasks, or relies on brute force, Strength matters a lot.",
+      "bestFor": ["Barbarian", "Fighter", "Paladin"],
+      "related": ["Athletics", "Grappling", "Melee Combat"]
     },
     {
-      "id": "skills",
-      "name": "Skills"
+      "id": "dexterity",
+      "title": "Dexterity",
+      "category": "abilities",
+      "categoryName": "Abilities",
+      "whatItMeans": "Dexterity measures agility, reflexes, balance, and fine control.",
+      "whatItAffects": [
+        "Initiative",
+        "Armor Class in light armor",
+        "Acrobatics",
+        "Stealth",
+        "Sleight of Hand",
+        "Ranged attack rolls"
+      ],
+      "exampleInPlay": "A character with high Dexterity might dodge a trap, move silently through a hallway, or shoot a bow with precision.",
+      "whyItMatters": "Dexterity affects defense, speed, sneaking, and many common combat actions, so it is useful for a wide range of characters.",
+      "bestFor": ["Rogue", "Ranger", "Monk"],
+      "related": ["Initiative", "Stealth", "Armor Class"]
     },
     {
-      "id": "combat",
-      "name": "Combat"
+      "id": "constitution",
+      "title": "Constitution",
+      "category": "abilities",
+      "categoryName": "Abilities",
+      "whatItMeans": "Constitution measures toughness, endurance, and the ability to keep going when things get rough.",
+      "whatItAffects": [
+        "Hit points",
+        "Constitution saving throws",
+        "Concentration checks",
+        "Resistance to sickness, exhaustion, and bodily strain"
+      ],
+      "exampleInPlay": "A character with high Constitution might stay standing after a brutal hit, shrug off poison, or keep a spell going under pressure.",
+      "whyItMatters": "Constitution helps a character survive longer in danger, especially in combat or harsh environments.",
+      "bestFor": ["Barbarian", "Fighter", "Cleric"],
+      "related": ["Hit Points", "Concentration", "Saving Throws"]
     },
     {
-      "id": "savingThrows",
-      "name": "Saving Throws"
+      "id": "intelligence",
+      "title": "Intelligence",
+      "category": "abilities",
+      "categoryName": "Abilities",
+      "whatItMeans": "Intelligence measures reasoning, memory, study, and analysis.",
+      "whatItAffects": [
+        "Arcana",
+        "History",
+        "Investigation",
+        "Nature",
+        "Religion",
+        "Understanding complex information"
+      ],
+      "exampleInPlay": "A character with high Intelligence might identify a magical sigil, piece together clues from a ruined library, or recognize an old kingdom from a symbol on a shield.",
+      "whyItMatters": "Intelligence is useful when your character learns from books, clues, research, or careful thinking.",
+      "bestFor": ["Wizard", "Artificer", "Investigator-style characters"],
+      "related": ["Arcana", "Investigation", "Knowledge"]
     },
     {
-      "id": "conditions",
-      "name": "Conditions"
+      "id": "wisdom",
+      "title": "Wisdom",
+      "category": "abilities",
+      "categoryName": "Abilities",
+      "whatItMeans": "Wisdom measures awareness, intuition, and a character's sense of what is happening around them.",
+      "whatItAffects": [
+        "Perception",
+        "Insight",
+        "Survival",
+        "Animal Handling",
+        "Medicine",
+        "Wisdom saving throws"
+      ],
+      "exampleInPlay": "A character with high Wisdom might notice an ambush before it happens, sense that someone is lying, or find a safe path through the wilderness.",
+      "whyItMatters": "Wisdom helps a character notice danger, read people, and stay grounded in uncertain situations.",
+      "bestFor": ["Cleric", "Druid", "Ranger"],
+      "related": ["Perception", "Insight", "Saving Throws"]
     },
     {
-      "id": "equipment",
-      "name": "Equipment"
+      "id": "charisma",
+      "title": "Charisma",
+      "category": "abilities",
+      "categoryName": "Abilities",
+      "whatItMeans": "Charisma measures force of personality, confidence, charm, and presence.",
+      "whatItAffects": [
+        "Deception",
+        "Intimidation",
+        "Performance",
+        "Persuasion",
+        "Spellcasting for some classes"
+      ],
+      "exampleInPlay": "A character with high Charisma might talk their way past a guard, command a room, or cast powerful spells through sheer force of personality.",
+      "whyItMatters": "Charisma matters when your character influences other people, leads, negotiates, or uses certain types of magic.",
+      "bestFor": ["Bard", "Paladin", "Warlock", "Sorcerer"],
+      "related": ["Persuasion", "Deception", "Spellcasting"]
+    },
+
+    {
+      "id": "armor-class",
+      "title": "Armor Class",
+      "category": "combat",
+      "categoryName": "Combat",
+      "whatItMeans": "Armor Class, or AC, is the number an attacker must meet or beat to hit your character.",
+      "whatItAffects": [
+        "Whether attacks hit or miss",
+        "How difficult your character is to injure",
+        "Defensive build choices"
+      ],
+      "exampleInPlay": "If your AC is 16 and an enemy rolls a 14 plus 3 for a total of 17, the attack hits. If they roll 12 plus 3 for 15, the attack misses.",
+      "whyItMatters": "Armor Class is one of the main defenses in combat. Higher AC generally means your character is harder to hit.",
+      "bestFor": ["Everyone"],
+      "related": ["Dexterity", "Armor", "Shields"]
     },
     {
-      "id": "weapons",
-      "name": "Weapons"
+      "id": "initiative",
+      "title": "Initiative",
+      "category": "combat",
+      "categoryName": "Combat",
+      "whatItMeans": "Initiative determines when your character acts at the start of combat.",
+      "whatItAffects": [
+        "Turn order",
+        "Who acts first when combat starts"
+      ],
+      "exampleInPlay": "When combat begins, everyone rolls initiative. The highest result goes first, then the next highest, and so on.",
+      "whyItMatters": "Acting earlier can help your character control the fight, protect allies, or strike before enemies do.",
+      "bestFor": ["Everyone"],
+      "related": ["Dexterity", "Turn Order", "Combat Start"]
     },
     {
-      "id": "armor",
-      "name": "Armor"
+      "id": "speed",
+      "title": "Speed",
+      "category": "combat",
+      "categoryName": "Combat",
+      "whatItMeans": "Speed tells you how far your character can move during their turn, usually measured in feet.",
+      "whatItAffects": [
+        "How far you can move on your turn",
+        "Positioning in combat",
+        "Chasing, escaping, and reaching objectives"
+      ],
+      "exampleInPlay": "If your speed is 30 feet, you can usually move up to 30 feet on your turn, then still take your actions.",
+      "whyItMatters": "Speed affects mobility, tactical positioning, and whether your character can reach what they need in a fight or scene.",
+      "bestFor": ["Everyone"],
+      "related": ["Movement", "Combat", "Terrain"]
     },
     {
-      "id": "spellcasting",
-      "name": "Spellcasting"
+      "id": "hit-points",
+      "title": "Hit Points",
+      "category": "combat",
+      "categoryName": "Combat",
+      "whatItMeans": "Hit Points, or HP, represent how much punishment your character can take before falling.",
+      "whatItAffects": [
+        "Survivability",
+        "When your character is knocked unconscious",
+        "How much damage you can absorb"
+      ],
+      "exampleInPlay": "If your character has 12 hit points and takes 7 damage, they now have 5 hit points left.",
+      "whyItMatters": "HP is one of the clearest measures of how long a character can stay in the fight.",
+      "bestFor": ["Everyone"],
+      "related": ["Constitution", "Damage", "Healing"]
+    },
+    {
+      "id": "passive-perception",
+      "title": "Passive Perception",
+      "category": "combat",
+      "categoryName": "Combat",
+      "whatItMeans": "Passive Perception is what your character notices without actively rolling to search.",
+      "whatItAffects": [
+        "Noticing hidden creatures",
+        "Spotting clues and danger",
+        "What your character picks up naturally"
+      ],
+      "exampleInPlay": "If a trap is hidden in a hallway, your Passive Perception might determine whether you notice it before stepping on it.",
+      "whyItMatters": "Passive Perception helps the game move quickly when the DM wants to know whether a character notices something automatically.",
+      "bestFor": ["Everyone"],
+      "related": ["Perception", "Wisdom", "Detection"]
+    },
+    {
+      "id": "proficiency-bonus",
+      "title": "Proficiency Bonus",
+      "category": "combat",
+      "categoryName": "Combat",
+      "whatItMeans": "Proficiency Bonus is the number added to things your character is trained or especially good at.",
+      "whatItAffects": [
+        "Skill checks you are proficient in",
+        "Saving throws you are proficient in",
+        "Attack rolls with proficient weapons",
+        "Spell save DC and spell attack bonus for casters"
+      ],
+      "exampleInPlay": "If your proficiency bonus is +2 and you are proficient in a skill, you add +2 to that skill check before other modifiers.",
+      "whyItMatters": "Proficiency Bonus scales with level and is one of the core numbers behind almost everything your character does well.",
+      "bestFor": ["Everyone"],
+      "related": ["Skills", "Saving Throws", "Attack Rolls"]
+    },
+    {
+      "id": "spell-save-dc",
+      "title": "Spell Save DC",
+      "category": "combat",
+      "categoryName": "Combat",
+      "whatItMeans": "Spell Save DC is the number enemies must meet or beat on a saving throw to resist one of your spells.",
+      "whatItAffects": [
+        "Whether spell effects land fully",
+        "Enemy saving throw difficulty"
+      ],
+      "exampleInPlay": "If your Spell Save DC is 14, a creature must roll 14 or higher on its saving throw to resist the spell's effect.",
+      "whyItMatters": "A higher Spell Save DC makes your spells harder to resist.",
+      "bestFor": ["Spellcasters"],
+      "related": ["Spellcasting Ability", "Proficiency Bonus", "Ability Modifier"]
+    },
+    {
+      "id": "spell-attack-bonus",
+      "title": "Spell Attack Bonus",
+      "category": "combat",
+      "categoryName": "Combat",
+      "whatItMeans": "Spell Attack Bonus is the number added when you make a spell attack roll.",
+      "whatItAffects": [
+        "Spell attack rolls",
+        "Whether attack spells hit"
+      ],
+      "exampleInPlay": "If your spell attack bonus is +5 and you roll a 12, your total spell attack roll is 17.",
+      "whyItMatters": "A higher spell attack bonus makes it easier for attack spells to hit their target.",
+      "bestFor": ["Spellcasters"],
+      "related": ["Spellcasting Ability", "Proficiency Bonus", "Ability Modifier"]
     }
   ]
 }
