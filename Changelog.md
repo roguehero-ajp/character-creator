@@ -52,3 +52,8 @@ All notable changes to this project will be documented in this file.
 
 ### Notes
 This marks the transition from a single HTML document to a modular application architecture.
+
+## July 27, 2026
+
+### Added
+- Added Codex data structure
