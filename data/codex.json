@@ -1,0 +1,40 @@
+{
+  "categories": [
+    {
+      "id": "abilities",
+      "name": "Abilities"
+    },
+    {
+      "id": "skills",
+      "name": "Skills"
+    },
+    {
+      "id": "combat",
+      "name": "Combat"
+    },
+    {
+      "id": "savingThrows",
+      "name": "Saving Throws"
+    },
+    {
+      "id": "conditions",
+      "name": "Conditions"
+    },
+    {
+      "id": "equipment",
+      "name": "Equipment"
+    },
+    {
+      "id": "weapons",
+      "name": "Weapons"
+    },
+    {
+      "id": "armor",
+      "name": "Armor"
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting"
+    }
+  ]
+}
