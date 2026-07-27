@@ -1,1 +1,8 @@
 /* Layout Styles */
+.site-version {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #777;
+    font-style: italic;
+}
