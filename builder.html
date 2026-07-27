@@ -760,39 +760,53 @@ Started: July 2026
 </head>
 <body>
 
-  <div class="app-container">
-    <!-- Control Panel Sidebar -->
-    <div class="controls">
-      <h3>Controls</h3>
-      <div>
-        <label for="theme-select">Theme</label>
-        <select id="theme-select">
-          <option value="theme-standard">Standard Parchment</option>
-          <option value="theme-gritty">Gritty Dark</option>
-          <option value="theme-fantasy">Arcane Fantasy</option>
-          <option value="theme-whimsical">Whimsical Woods</option>
-          <option value="theme-hellscape">Hellscape Red</option>
-          <option value="theme-bw">Standard Black & White</option>
-        </select>
-      </div>
-      <div>
-        <label for="stat-method">Stat Generation</label>
-        <select id="stat-method">
-          <option value="manual">Manual Entry</option>
-          <option value="4d6">4d6 Drop Lowest</option>
-          <option value="3d6">3d6 Straight</option>
-        </select>
-      </div>
-      <button id="roll-btn">Roll Stats</button>
+  <div class="controls">
+  <h3>Controls</h3>
 
-      <hr style="border-color: #415a77; margin: 5px 0;">
-      <h3 style="font-size: 13px; border:none; padding:0; text-align: center;">Multi-Class Options</h3>
-      <button type="button" id="multiclass-btn">Add Multi-Class</button>
-      <button type="button" id="remove-multiclass-btn" style="background: rgba(192,57,43,0.7);">Remove Last Class</button>
+  <div>
+    <label for="theme-select">Theme</label>
+    <select id="theme-select">
+      <option value="theme-standard">Standard Parchment</option>
+      <option value="theme-gritty">Gritty Dark</option>
+      <option value="theme-fantasy">Arcane Fantasy</option>
+      <option value="theme-whimsical">Whimsical Woods</option>
+      <option value="theme-hellscape">Hellscape Red</option>
+      <option value="theme-bw">Standard Black & White</option>
+    </select>
+  </div>
 
-      <hr style="border-color: #415a77; margin: 5px 0;">
-      <button id="export-btn" class="export">Export to PDF</button>
-    </div>
+  <div>
+    <label for="stat-method">Stat Generation</label>
+    <select id="stat-method">
+      <option value="manual">Manual Entry</option>
+      <option value="4d6">4d6 Drop Lowest</option>
+      <option value="3d6">3d6 Straight</option>
+    </select>
+  </div>
+
+  <button id="roll-btn">Roll Stats</button>
+
+  <hr style="border-color: #415a77; margin: 5px 0;">
+  <h3 style="font-size: 13px; border:none; padding:0; text-align: center;">Multi-Class Options</h3>
+  <button type="button" id="multiclass-btn">Add Multi-Class</button>
+  <button type="button" id="remove-multiclass-btn" style="background: rgba(192,57,43,0.7);">Remove Last Class</button>
+
+  <hr style="border-color: #415a77; margin: 5px 0;">
+  <h3 style="font-size: 13px; border:none; padding:0; text-align: center;">Character Storage</h3>
+  <div class="storage-note">
+    Saves happen in this browser. Export a JSON backup if you want a portable copy.
+  </div>
+  <button type="button" id="save-now-btn" class="secondary">Save Now</button>
+  <button type="button" id="load-now-btn" class="ghost">Load Saved Character</button>
+  <button type="button" id="export-json-btn" class="secondary">Export JSON Backup</button>
+  <button type="button" id="import-json-btn" class="ghost">Import JSON Backup</button>
+  <input type="file" id="import-json-file" accept="application/json" style="display:none;">
+  <div id="save-status" class="storage-status" data-kind="warn">No local save yet.</div>
+
+  <hr style="border-color: #415a77; margin: 5px 0;">
+  <button type="button" id="print-blank-btn" class="ghost">Print Blank Character Sheet</button>
+  <button id="export-btn" class="export">Export to PDF</button>
+</div>
 
     <!-- Document Container -->
     <div class="document-container" id="character-document">
