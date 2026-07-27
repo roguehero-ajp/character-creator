@@ -91,7 +91,8 @@ Started: July 2026
       --accent-color: #000000;
       --input-bg: #ffffff;
     }
-
+<div class="document-container theme-standard" id="character-document">
+  
     /* Remove number input spinner arrows */
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
@@ -1367,7 +1368,9 @@ Started: July 2026
       // --- Theme Switching ---
       const themeSelect = document.getElementById('theme-select');
       const characterDocument = document.getElementById('character-document');
-
+        if (characterDocument && themeSelect) {
+          characterDocument.className = `document-container ${themeSelect.value || 'theme-standard'}`;
+}
       themeSelect?.addEventListener('change', (e) => {
         characterDocument.className = `document-container ${e.target.value}`;
       });
