@@ -4,10 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My RPG Source</title>
-  <meta name="description" content="My RPG Source helps tabletop RPG players create characters while learning the game through helpful Knowledge Cards and a Codex.">
+  <meta
+    name="description"
+    content="My RPG Source helps tabletop RPG players create characters while learning the game through helpful Knowledge Cards and a Codex."
+  />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet"
+  >
+
   <style>
     :root {
       --bg: #18232f;
@@ -22,21 +31,50 @@
       --link: #ffffff;
     }
 
-    * { box-sizing: border-box; }
-    html, body { margin: 0; min-height: 100%; }
-    body {
-      font-family: 'Lora', serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top, rgba(241, 196, 15, 0.12), transparent 28%),
-        radial-gradient(circle at 20% 20%, rgba(221, 161, 94, 0.10), transparent 26%),
-        linear-gradient(180deg, #203244 0%, #17212c 55%, #111922 100%);
+    * {
+      box-sizing: border-box;
     }
 
-    a { color: inherit; text-decoration: none; }
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: "Lora", serif;
+      color: var(--text);
+
+      background:
+        radial-gradient(
+          circle at top,
+          rgba(241, 196, 15, 0.12),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 20% 20%,
+          rgba(221, 161, 94, 0.10),
+          transparent 26%
+        ),
+        linear-gradient(
+          180deg,
+          #203244 0%,
+          #17212c 55%,
+          #111922 100%
+        );
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
     .wrap {
-      width: min(1180px, calc(100% - 32px));
+      width: min(
+        1180px,
+        calc(100% - 32px)
+      );
+
       margin: 0 auto;
       padding: 28px 0 40px;
     }
@@ -45,29 +83,45 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       gap: 16px;
+
       padding: 8px 0 18px;
     }
 
     .brand {
       display: flex;
       flex-direction: column;
+
       gap: 4px;
     }
 
     .brand h1 {
-      font-family: 'Cinzel', serif;
-      letter-spacing: 0.06em;
-      font-size: clamp(2rem, 4vw, 3.4rem);
       margin: 0;
+
       color: var(--text);
-      text-shadow: 0 2px 12px rgba(0,0,0,0.45);
+
+      font-family: "Cinzel", serif;
+      font-size: clamp(
+        2rem,
+        4vw,
+        3.4rem
+      );
+
+      letter-spacing: 0.06em;
+
+      text-shadow:
+        0 2px 12px
+        rgba(0, 0, 0, 0.45);
     }
 
     .brand .tagline {
       margin: 0;
+
       color: var(--accent);
+
       font-size: 1rem;
+
       letter-spacing: 0.04em;
       text-transform: uppercase;
     }
@@ -75,159 +129,274 @@
     .pill {
       display: inline-flex;
       align-items: center;
+
       gap: 8px;
+
       padding: 9px 14px;
+
+      background:
+        rgba(255, 255, 255, 0.04);
+
+      border:
+        1px solid var(--border);
+
       border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04);
+
       color: var(--muted);
+
       font-size: 0.92rem;
-      backdrop-filter: blur(10px);
+
+      backdrop-filter:
+        blur(10px);
     }
 
     .hero {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+
+      grid-template-columns:
+        1.2fr 0.8fr;
+
       gap: 18px;
+
       align-items: stretch;
+
       margin-top: 18px;
     }
 
     .card {
-      border: 1px solid var(--border);
+      background:
+        var(--panel);
+
+      border:
+        1px solid var(--border);
+
       border-radius: 24px;
-      background: var(--panel);
-      box-shadow: 0 18px 40px var(--shadow);
-      backdrop-filter: blur(10px);
+
+      box-shadow:
+        0 18px 40px
+        var(--shadow);
+
+      backdrop-filter:
+        blur(10px);
     }
 
     .hero-main {
-      padding: 28px;
       min-height: 460px;
+      padding: 28px;
+
+      position: relative;
+
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
       overflow: hidden;
-      position: relative;
     }
 
     .hero-main::after {
       content: "";
-      position: absolute;
-      inset: auto -18% -40% auto;
+
       width: 360px;
       height: 360px;
+
+      position: absolute;
+
+      inset:
+        auto -18% -40% auto;
+
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(241, 196, 15, 0.13), transparent 65%);
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(241, 196, 15, 0.13),
+          transparent 65%
+        );
+
       pointer-events: none;
     }
 
     .eyebrow {
       margin: 0 0 10px;
+
       color: var(--accent-2);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
+
+      font-family: "Cinzel", serif;
       font-size: 0.82rem;
-      font-family: 'Cinzel', serif;
+
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
 
     .hero h2 {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1.03;
-      margin: 0 0 14px;
       max-width: 12ch;
+
+      margin: 0 0 14px;
+
+      font-family: "Cinzel", serif;
+      font-size: clamp(
+        2rem,
+        4vw,
+        3.2rem
+      );
+
+      line-height: 1.03;
     }
 
     .hero p {
+      max-width: 62ch;
+
       margin: 0;
+
       color: var(--muted);
+
       font-size: 1.05rem;
       line-height: 1.65;
-      max-width: 62ch;
     }
 
     .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
       margin-top: 24px;
+
       position: relative;
       z-index: 1;
+
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 12px;
     }
 
     .btn {
+      min-height: 48px;
+
+      padding: 0 18px;
+
       display: inline-flex;
       align-items: center;
       justify-content: center;
+
       gap: 10px;
-      min-height: 48px;
-      padding: 0 18px;
+
+      border:
+        1px solid transparent;
+
       border-radius: 14px;
-      border: 1px solid transparent;
-      font-family: 'Cinzel', serif;
+
+      font-family: "Cinzel", serif;
       font-weight: 700;
+
       letter-spacing: 0.04em;
+
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
       user-select: none;
+
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
     }
 
-    .btn:hover { transform: translateY(-1px); }
-    .btn:active { transform: translateY(0); }
+    .btn:hover {
+      transform:
+        translateY(-1px);
+    }
+
+    .btn:active {
+      transform:
+        translateY(0);
+    }
 
     .btn-primary {
-      background: linear-gradient(180deg, #f1c40f, #d4a90d);
+      background:
+        linear-gradient(
+          180deg,
+          #f1c40f,
+          #d4a90d
+        );
+
       color: #1a1a1a;
-      box-shadow: 0 10px 26px rgba(241, 196, 15, 0.24);
+
+      box-shadow:
+        0 10px 26px
+        rgba(241, 196, 15, 0.24);
     }
 
     .btn-secondary {
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      border-color: var(--border);
+      background:
+        rgba(255, 255, 255, 0.04);
+
+      border-color:
+        var(--border);
+
+      color:
+        var(--text);
     }
 
     .mini-grid {
       margin-top: 24px;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+
       position: relative;
       z-index: 1;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(
+          2,
+          minmax(0, 1fr)
+        );
+
+      gap: 12px;
     }
 
     .mini {
-      border: 1px solid var(--border);
-      background: var(--panel-strong);
-      border-radius: 18px;
       padding: 14px 14px 12px;
+
+      background:
+        var(--panel-strong);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 18px;
     }
 
     .mini .kicker {
       margin: 0 0 6px;
-      color: var(--accent-2);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+
+      color:
+        var(--accent-2);
+
+      font-family:
+        "Cinzel", serif;
+
       font-size: 0.74rem;
-      font-family: 'Cinzel', serif;
+
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .mini strong {
       display: block;
+
       margin-bottom: 6px;
+
       font-size: 1rem;
     }
 
     .mini p {
+      margin: 0;
+
+      color:
+        var(--muted);
+
       font-size: 0.92rem;
       line-height: 1.5;
-      color: var(--muted);
-      margin: 0;
     }
 
     .side {
       display: grid;
+
       gap: 18px;
     }
 
@@ -237,228 +406,481 @@
 
     .section-title {
       margin: 0 0 12px;
-      font-family: 'Cinzel', serif;
+
+      color:
+        var(--accent);
+
+      font-family:
+        "Cinzel", serif;
+
       font-size: 1.05rem;
+
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--accent);
     }
 
     .game-list {
       display: grid;
+
       gap: 10px;
     }
 
     .game {
+      padding: 12px 14px;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       gap: 12px;
-      padding: 12px 14px;
+
+      background:
+        rgba(255, 255, 255, 0.03);
+
+      border:
+        1px solid var(--border);
+
       border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
     }
 
     .game-primary {
-      background: linear-gradient(180deg, rgba(39, 174, 96, 0.26), rgba(39, 174, 96, 0.14));
-      border-color: rgba(39, 174, 96, 0.45);
+      background:
+        linear-gradient(
+          180deg,
+          rgba(39, 174, 96, 0.26),
+          rgba(39, 174, 96, 0.14)
+        );
+
+      border-color:
+        rgba(39, 174, 96, 0.45);
     }
 
     .game-primary:hover {
-      background: linear-gradient(180deg, rgba(39, 174, 96, 0.36), rgba(39, 174, 96, 0.20));
+      background:
+        linear-gradient(
+          180deg,
+          rgba(39, 174, 96, 0.36),
+          rgba(39, 174, 96, 0.20)
+        );
     }
 
     .game-primary .status-open {
       color: #9ff8b7;
     }
 
-    .game span:first-child { font-weight: 700; }
-    .game small { color: var(--muted); }
+    .game span:first-child {
+      font-weight: 700;
+    }
+
+    .game small {
+      color: var(--muted);
+    }
 
     .status-open {
-      color: #7CFC98;
+      color: #7cfc98;
+
       font-weight: 700;
     }
 
     .status-soon {
       color: #ffd27a;
+
       font-weight: 700;
     }
 
     .feature-card {
       display: grid;
+
       gap: 12px;
     }
 
     .codex-sample {
-      border: 1px solid var(--border);
-      border-radius: 18px;
       padding: 14px;
-      background: rgba(255,255,255,0.03);
+
+      background:
+        rgba(255, 255, 255, 0.03);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 18px;
     }
 
     .codex-sample .title {
-      font-family: 'Cinzel', serif;
-      font-size: 1.1rem;
-      color: var(--accent);
       margin: 0 0 8px;
+
+      color:
+        var(--accent);
+
+      font-family:
+        "Cinzel", serif;
+
+      font-size: 1.1rem;
     }
 
     .codex-sample .body {
-      color: var(--muted);
-      line-height: 1.55;
       margin: 0;
+
+      color:
+        var(--muted);
+
+      line-height: 1.55;
     }
 
     .roadmap {
       display: grid;
+
       gap: 8px;
     }
 
     .road {
+      padding: 10px 12px;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       gap: 10px;
-      padding: 10px 12px;
+
+      background:
+        rgba(255, 255, 255, 0.03);
+
+      border:
+        1px solid var(--border);
+
       border-radius: 12px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
+
       font-size: 0.95rem;
     }
 
-    .road strong { font-weight: 700; }
+    .road strong {
+      font-weight: 700;
+    }
+
     .foot {
+      margin-top: 18px;
+      padding-top: 14px;
+
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
+
       gap: 10px;
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
+
+      border-top:
+        1px solid var(--border);
+
+      color:
+        var(--muted);
+
       font-size: 0.9rem;
     }
 
     @media (max-width: 960px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-main { min-height: auto; }
+      .hero {
+        grid-template-columns:
+          1fr;
+      }
+
+      .hero-main {
+        min-height: auto;
+      }
     }
 
     @media (max-width: 640px) {
-      .wrap { width: min(100% - 20px, 1180px); padding-top: 18px; }
-      .topbar { flex-direction: column; align-items: flex-start; }
-      .mini-grid { grid-template-columns: 1fr; }
-      .game { flex-direction: column; align-items: flex-start; }
-      .btn { width: 100%; }
+      .wrap {
+        width:
+          min(
+            100% - 20px,
+            1180px
+          );
+
+        padding-top: 18px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .mini-grid {
+        grid-template-columns:
+          1fr;
+      }
+
+      .game {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="topbar">
       <div class="brand">
         <h1>My RPG Source</h1>
-        <p class="tagline">Create. Learn. Play.</p>
+        <p class="tagline">
+          Create. Learn. Play.
+        </p>
       </div>
-      <div class="pill">Free character tools, knowledge cards, and future codices</div>
+
+      <div class="pill">
+        Free character tools, knowledge cards, and future codices
+      </div>
     </div>
 
     <div class="hero">
       <section class="card hero-main">
         <div>
-          <p class="eyebrow">Tabletop character building, but friendlier</p>
-          <h2>Build characters while learning the game.</h2>
+          <p class="eyebrow">
+            Tabletop character building, but friendlier
+          </p>
+
+          <h2>
+            Build characters while learning the game.
+          </h2>
+
           <p>
-            My RPG Source helps players create tabletop characters with clear explanations,
-            printable sheets, and a growing Codex of useful rules knowledge.
+            My RPG Source helps players create tabletop characters
+            with clear explanations, printable sheets, and a growing
+            Codex of useful rules knowledge.
           </p>
 
           <div class="cta-row">
-            <a class="btn btn-primary" href="builder.html">Enter Character Builder</a>
-            <a class="btn btn-secondary" href="#games">Choose a Game</a>
+            <a
+              class="btn btn-primary"
+              href="builder.html?edition=2024"
+            >
+              Enter 2024 Character Builder
+            </a>
+
+            <a
+              class="btn btn-secondary"
+              href="#games"
+            >
+              Choose a Game
+            </a>
           </div>
         </div>
 
         <div class="mini-grid">
           <div class="mini">
-            <p class="kicker">Knowledge Cards</p>
-            <strong>Learn as you build</strong>
-            <p>Hover over abilities, skills, and rules for fast explanations that actually make sense.</p>
+            <p class="kicker">
+              Knowledge Cards
+            </p>
+
+            <strong>
+              Learn as you build
+            </strong>
+
+            <p>
+              Hover over abilities, skills, and rules for fast
+              explanations that actually make sense.
+            </p>
           </div>
+
           <div class="mini">
-            <p class="kicker">The Codex</p>
-            <strong>Expand when you need more</strong>
-            <p>Open a full reading panel for deeper rules help, related topics, and future game systems.</p>
+            <p class="kicker">
+              The Codex
+            </p>
+
+            <strong>
+              Expand when you need more
+            </strong>
+
+            <p>
+              Open a full reading panel for deeper rules help,
+              related topics, and future game systems.
+            </p>
           </div>
+
           <div class="mini">
-            <p class="kicker">Printing</p>
-            <strong>Table-friendly output</strong>
-            <p>Print blank sheets, export PDFs, or keep your characters saved in the browser.</p>
+            <p class="kicker">
+              Printing
+            </p>
+
+            <strong>
+              Table-friendly output
+            </strong>
+
+            <p>
+              Print blank sheets, export PDFs, or keep your
+              characters saved in the browser.
+            </p>
           </div>
+
           <div class="mini">
-            <p class="kicker">Made to grow</p>
-            <strong>More systems later</strong>
-            <p>Built first for D&D 2024, with space for other games once the engine is ready.</p>
+            <p class="kicker">
+              Made to grow
+            </p>
+
+            <strong>
+              More systems later
+            </strong>
+
+            <p>
+              D&amp;D 5e 2014 and 2024 are now available,
+              with more game systems planned as the engine grows.
+            </p>
           </div>
         </div>
       </section>
 
       <aside class="side">
-        <section class="card" id="games">
-          <h3 class="section-title">Character Builders</h3>
+        <section
+          class="card"
+          id="games"
+        >
+          <h3 class="section-title">
+            Character Builders
+          </h3>
+
           <div class="game-list">
-            <a class="game game-primary" href="builder.html">
-              <span>Dungeons &amp; Dragons 5e 2024</span>
-              <small class="status-open">Available</small>
+            <a
+              class="game game-primary"
+              href="builder.html?edition=2024"
+            >
+              <span>
+                Dungeons &amp; Dragons 5e 2024
+              </span>
+
+              <small class="status-open">
+                Available
+              </small>
             </a>
+
+            <a
+              class="game game-primary"
+              href="builder.html?edition=2014"
+            >
+              <span>
+                Dungeons &amp; Dragons 5e 2014
+              </span>
+
+              <small class="status-open">
+                Available
+              </small>
+            </a>
+
             <div class="game">
-              <span>Dungeons &amp; Dragons 5e 2014</span>
-              <small class="status-soon">Coming Soon</small>
+              <span>
+                Pathfinder
+              </span>
+
+              <small class="status-soon">
+                Coming Soon
+              </small>
             </div>
+
             <div class="game">
-              <span>Pathfinder</span>
-              <small class="status-soon">Coming Soon</small>
+              <span>
+                Call of Cthulhu
+              </span>
+
+              <small class="status-soon">
+                Coming Soon
+              </small>
             </div>
+
             <div class="game">
-              <span>Call of Cthulhu</span>
-              <small class="status-soon">Coming Soon</small>
-            </div>
-            <div class="game">
-              <span>Cyberpunk RED</span>
-              <small class="status-soon">Coming Soon</small>
+              <span>
+                Cyberpunk RED
+              </span>
+
+              <small class="status-soon">
+                Coming Soon
+              </small>
             </div>
           </div>
         </section>
 
         <section class="card feature-card">
-          <h3 class="section-title">Featured Knowledge Card</h3>
+          <h3 class="section-title">
+            Featured Knowledge Card
+          </h3>
+
           <div class="codex-sample">
-            <p class="title">Passive Perception</p>
+            <p class="title">
+              Passive Perception
+            </p>
+
             <p class="body">
-              Passive Perception is what your character notices without actively searching.
-              It helps determine whether they spot danger, hidden things, or important clues automatically.
+              Passive Perception is what your character notices
+              without actively searching. It helps determine whether
+              they spot danger, hidden things, or important clues
+              automatically.
             </p>
           </div>
         </section>
 
         <section class="card">
-          <h3 class="section-title">Roadmap Snapshot</h3>
+          <h3 class="section-title">
+            Roadmap Snapshot
+          </h3>
+
           <div class="roadmap">
-            <div class="road"><strong>Knowledge Cards</strong><span>Live</span></div>
-            <div class="road"><strong>Codex Drawer</strong><span>In progress</span></div>
-            <div class="road"><strong>Autosave / Import / Export</strong><span>Live</span></div>
-            <div class="road"><strong>More systems</strong><span>Later</span></div>
+            <div class="road">
+              <strong>
+                Knowledge Cards
+              </strong>
+
+              <span>
+                Live
+              </span>
+            </div>
+
+            <div class="road">
+              <strong>
+                Codex Drawer
+              </strong>
+
+              <span>
+                In progress
+              </span>
+            </div>
+
+            <div class="road">
+              <strong>
+                Autosave / Import / Export
+              </strong>
+
+              <span>
+                Live
+              </span>
+            </div>
+
+            <div class="road">
+              <strong>
+                More systems
+              </strong>
+
+              <span>
+                Later
+              </span>
+            </div>
           </div>
         </section>
       </aside>
     </div>
 
     <div class="foot">
-      <span>My RPG Source</span>
-      <span>Create. Learn. Play.</span>
-      <span>Built for tabletop adventurers</span>
+      <span>
+        My RPG Source
+      </span>
+
+      <span>
+        Create. Learn. Play.
+      </span>
+
+      <span>
+        Built for tabletop adventurers
+      </span>
     </div>
   </div>
 </body>
