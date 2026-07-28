@@ -57,3 +57,9 @@ This marks the transition from a single HTML document to a modular application a
 
 ### Added
 - Added Codex data structure
+
+## July 28, 2026
+
+### Cleaned up
+-major migrations and shifts away from huge html block of code to a more manageable system
+-architecture in place to perfect codecs, knowledge cards and future project goals
