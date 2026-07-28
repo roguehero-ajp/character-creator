@@ -1,1 +1,100 @@
-
+{
+  "edition": "2024",
+  "system": "dnd5e",
+  "source": "System Reference Document 5.2.1",
+  "license": "CC-BY-4.0",
+  "backgrounds": [
+    {
+      "id": "acolyte",
+      "name": "Acolyte",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "abilityScores": [
+        "int",
+        "wis",
+        "cha"
+      ],
+      "feat": "Magic Initiate (Cleric)",
+      "skills": [
+        "Insight",
+        "Religion"
+      ],
+      "tools": [
+        "Calligrapher's Supplies"
+      ],
+      "equipment": {
+        "package": "Calligrapher's Supplies, prayer book, Holy Symbol, 10 sheets of parchment, robe, and 8 GP",
+        "alternative": "50 GP"
+      }
+    },
+    {
+      "id": "criminal",
+      "name": "Criminal",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "abilityScores": [
+        "dex",
+        "con",
+        "int"
+      ],
+      "feat": "Alert",
+      "skills": [
+        "Sleight of Hand",
+        "Stealth"
+      ],
+      "tools": [
+        "Thieves' Tools"
+      ],
+      "equipment": {
+        "package": "2 daggers, Thieves' Tools, crowbar, 2 pouches, traveler's clothes, and 16 GP",
+        "alternative": "50 GP"
+      }
+    },
+    {
+      "id": "sage",
+      "name": "Sage",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "abilityScores": [
+        "con",
+        "int",
+        "wis"
+      ],
+      "feat": "Magic Initiate (Wizard)",
+      "skills": [
+        "Arcana",
+        "History"
+      ],
+      "tools": [
+        "Calligrapher's Supplies"
+      ],
+      "equipment": {
+        "package": "Quarterstaff, Calligrapher's Supplies, history book, 8 sheets of parchment, robe, and 8 GP",
+        "alternative": "50 GP"
+      }
+    },
+    {
+      "id": "soldier",
+      "name": "Soldier",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "abilityScores": [
+        "str",
+        "dex",
+        "con"
+      ],
+      "feat": "Savage Attacker",
+      "skills": [
+        "Athletics",
+        "Intimidation"
+      ],
+      "tools": [
+        "One Gaming Set"
+      ],
+      "equipment": {
+        "package": "Spear, shortbow, 20 arrows, Gaming Set, Healer's Kit, quiver, traveler's clothes, and 14 GP",
+        "alternative": "50 GP"
+      }
+    }
+  ]
+}
