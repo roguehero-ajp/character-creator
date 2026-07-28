@@ -172,31 +172,40 @@
   }
 
   function wireLauncher() {
-  document
-    .querySelectorAll(".stats-grid .tooltip-trigger")
-    .forEach((el) => {
-      const type = el.dataset.tooltipType;
-      const key = el.dataset.tooltipKey;
+  const abilityMap = {
+    str: "strength",
+    dex: "dexterity",
+    con: "constitution",
+    int: "intelligence",
+    wis: "wisdom",
+    cha: "charisma"
+  };
 
-      if (type !== "ability") {
+  document
+    .querySelectorAll(".stats-grid .stat-row")
+    .forEach((row) => {
+      const scoreInput = row.querySelector(".stat-val");
+      const statGroup = row.querySelector(".stat-group");
+
+      if (!scoreInput || !statGroup) {
+        return;
+      }
+
+      const entryId = abilityMap[scoreInput.id];
+
+      if (!entryId) {
         return;
       }
 
       const entry = state.data?.entries?.find(
-        (item) => item.id === key
+        (item) => item.id === entryId
       );
 
       if (!entry) {
         return;
       }
 
-      if (el.querySelector(".codex-info-btn")) {
-        return;
-      }
-
-      const statGroup = el.querySelector(".stat-group");
-
-      if (!statGroup) {
+      if (row.querySelector(".codex-info-btn")) {
         return;
       }
 
@@ -206,12 +215,12 @@
       button.className = "codex-info-btn";
       button.textContent = "Codex";
 
+      button.title = `Open ${entry.title} in the Codex`;
+
       button.setAttribute(
         "aria-label",
         `Open ${entry.title} in the Codex`
       );
-
-      button.title = `Open ${entry.title} in the Codex`;
 
       button.addEventListener("click", (event) => {
         event.preventDefault();
@@ -222,9 +231,8 @@
       });
 
       statGroup.appendChild(button);
-
     });
-  }
+}
 
   async function init() {
     try {
