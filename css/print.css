@@ -66,13 +66,11 @@
   .controls,
   .knowledge-tooltip,
   .codex-overlay,
-  .codex-drawer {
+  .codex-drawer,
+  .site-version {
     display: none !important;
     visibility: hidden !important;
   }
-.site-version {
-  display: none !important;
-}
 
   /* ==========================================================
      REMOVE KNOWLEDGE-CARD SCREEN DECORATION
