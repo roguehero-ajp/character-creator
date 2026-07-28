@@ -57,9 +57,9 @@ Every feature should make creating a character faster, clearer, and more enjoyab
 - [x] Character calculations
 
 ### Version 0.2
-- [ ] Local saves
-- [ ] JSON import/export
-- [ ] Improved printing
+- [x] Local saves
+- [x] JSON import/export
+- [x] Improved printing
 
 ### Version 0.3
 - [ ] Interactive tooltips
