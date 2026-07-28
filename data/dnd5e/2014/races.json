@@ -1,4 +1,175 @@
 {
   "edition": "2014",
-  "races": []
+  "system": "dnd5e",
+  "source": "System Reference Document 5.1",
+  "license": "CC-BY-4.0",
+  "races": [
+    {
+      "id": "hill-dwarf",
+      "name": "Hill Dwarf",
+      "parentRace": "Dwarf",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.1",
+      "abilityBonuses": {
+        "con": 2,
+        "wis": 1
+      },
+      "speed": "25 ft",
+      "traits": [
+        "Darkvision",
+        "Dwarven Resilience",
+        "Dwarven Combat Training",
+        "Tool Proficiency",
+        "Stonecunning",
+        "Dwarven Toughness"
+      ]
+    },
+    {
+      "id": "high-elf",
+      "name": "High Elf",
+      "parentRace": "Elf",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.1",
+      "abilityBonuses": {
+        "dex": 2,
+        "int": 1
+      },
+      "speed": "30 ft",
+      "traits": [
+        "Darkvision",
+        "Keen Senses",
+        "Fey Ancestry",
+        "Trance",
+        "Elf Weapon Training",
+        "Cantrip",
+        "Extra Language"
+      ]
+    },
+    {
+      "id": "lightfoot-halfling",
+      "name": "Lightfoot Halfling",
+      "parentRace": "Halfling",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.1",
+      "abilityBonuses": {
+        "dex": 2,
+        "cha": 1
+      },
+      "speed": "25 ft",
+      "traits": [
+        "Lucky",
+        "Brave",
+        "Halfling Nimbleness",
+        "Naturally Stealthy"
+      ]
+    },
+    {
+      "id": "human",
+      "name": "Human",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.1",
+      "abilityBonuses": {
+        "str": 1,
+        "dex": 1,
+        "con": 1,
+        "int": 1,
+        "wis": 1,
+        "cha": 1
+      },
+      "speed": "30 ft",
+      "traits": [
+        "Extra Language"
+      ]
+    },
+    {
+      "id": "dragonborn",
+      "name": "Dragonborn",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.1",
+      "abilityBonuses": {
+        "str": 2,
+        "cha": 1
+      },
+      "speed": "30 ft",
+      "traits": [
+        "Draconic Ancestry",
+        "Breath Weapon",
+        "Damage Resistance"
+      ]
+    },
+    {
+      "id": "rock-gnome",
+      "name": "Rock Gnome",
+      "parentRace": "Gnome",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.1",
+      "abilityBonuses": {
+        "int": 2,
+        "con": 1
+      },
+      "speed": "25 ft",
+      "traits": [
+        "Darkvision",
+        "Gnome Cunning",
+        "Artificer's Lore",
+        "Tinker"
+      ]
+    },
+    {
+      "id": "half-elf",
+      "name": "Half-Elf",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.1",
+      "abilityBonuses": {
+        "cha": 2
+      },
+      "flexibleAbilityBonuses": {
+        "count": 2,
+        "amount": 1,
+        "distinct": true,
+        "exclude": [
+          "cha"
+        ]
+      },
+      "speed": "30 ft",
+      "traits": [
+        "Darkvision",
+        "Fey Ancestry",
+        "Skill Versatility"
+      ]
+    },
+    {
+      "id": "half-orc",
+      "name": "Half-Orc",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.1",
+      "abilityBonuses": {
+        "str": 2,
+        "con": 1
+      },
+      "speed": "30 ft",
+      "traits": [
+        "Darkvision",
+        "Menacing",
+        "Relentless Endurance",
+        "Savage Attacks"
+      ]
+    },
+    {
+      "id": "tiefling",
+      "name": "Tiefling",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.1",
+      "abilityBonuses": {
+        "cha": 2,
+        "int": 1
+      },
+      "speed": "30 ft",
+      "traits": [
+        "Darkvision",
+        "Hellish Resistance",
+        "Infernal Legacy"
+      ]
+    }
+  ]
 }
