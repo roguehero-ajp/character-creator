@@ -9,6 +9,8 @@
  *  - Apply 2024 background ability-score increases
  *  - Leave 2014 ability scores unchanged
  *  - Reapply 2024 bonuses after Species or rolled stats reset scores
+ *  - Add selected background equipment to the inventory
+ *  - Add background currency to the matching coin fields
  *
  * Data files:
  *  data/dnd5e/2014/backgrounds.json
@@ -35,6 +37,20 @@
     cha: 'Charisma'
   });
 
+  const CURRENCY_CODES = Object.freeze([
+    'cp',
+    'sp',
+    'ep',
+    'gp',
+    'pp'
+  ]);
+
+  const EQUIPMENT_BLOCK_START =
+    '=== BACKGROUND EQUIPMENT:';
+
+  const EQUIPMENT_BLOCK_END =
+    '=== END BACKGROUND EQUIPMENT ===';
+
   const state = {
     active: false,
     loaded: false,
@@ -44,7 +60,9 @@
     selectedId: '',
     error: null,
     suppressOriginEvent: false,
-    applying: false
+    applying: false,
+    appliedEquipmentBackgroundId: '',
+    appliedCurrency: emptyCurrency()
   };
 
   let readyPromise = Promise.resolve(state);
@@ -167,7 +185,34 @@
       abilityNote:
         document.getElementById(
           'background-ability-note'
+        ),
+
+      inventory:
+        document.getElementById(
+          'equipment-inventory'
+        ),
+
+      currency: {
+        cp: document.getElementById(
+          'currency-cp'
+        ),
+
+        sp: document.getElementById(
+          'currency-sp'
+        ),
+
+        ep: document.getElementById(
+          'currency-ep'
+        ),
+
+        gp: document.getElementById(
+          'currency-gp'
+        ),
+
+        pp: document.getElementById(
+          'currency-pp'
         )
+      }
     };
   }
 
@@ -496,6 +541,268 @@
         summaryText;
     }
   }
+
+  /* ========================================================
+     EQUIPMENT AND CURRENCY APPLICATION
+     ======================================================== */
+
+  function emptyCurrency() {
+    return {
+      cp: 0,
+      sp: 0,
+      ep: 0,
+      gp: 0,
+      pp: 0
+    };
+  }
+
+
+  function parseCoinValue(value) {
+    const parsed = parseInt(
+      String(value ?? '').replace(
+        /[^0-9-]/g,
+        ''
+      ),
+      10
+    );
+
+    return Number.isFinite(parsed)
+      ? Math.max(0, parsed)
+      : 0;
+  }
+
+
+  function parseEquipmentPackage(entry) {
+    const packageText = text(
+      entry?.equipment?.package
+    );
+
+    const currency =
+      emptyCurrency();
+
+    if (!packageText) {
+      return {
+        items: '',
+        currency
+      };
+    }
+
+    const currencyPattern =
+      /\b(\d+)\s*(CP|SP|EP|GP|PP)\b/gi;
+
+    let match;
+
+    while (
+      (
+        match =
+          currencyPattern.exec(
+            packageText
+          )
+      ) !== null
+    ) {
+      const amount =
+        parseCoinValue(match[1]);
+
+      const code =
+        match[2].toLowerCase();
+
+      currency[code] +=
+        amount;
+    }
+
+    const items = packageText
+      .replace(
+        /(?:,\s*)?(?:and\s+)?\b\d+\s*(?:CP|SP|EP|GP|PP)\b/gi,
+        ''
+      )
+      .replace(/,\s*,/g, ',')
+      .replace(/,\s*and\s*$/i, '')
+      .replace(/\s+and\s*$/i, '')
+      .replace(/[\s,;]+$/g, '')
+      .trim();
+
+    return {
+      items,
+      currency
+    };
+  }
+
+
+  function removeBackgroundEquipmentBlocks(
+    value
+  ) {
+    const source =
+      String(value ?? '');
+
+    const pattern =
+      /(?:^|\n)\s*=== BACKGROUND EQUIPMENT:[^\n]*===\s*\n[\s\S]*?\n\s*=== END BACKGROUND EQUIPMENT ===\s*(?=\n|$)/g;
+
+    return source
+      .replace(pattern, '\n')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+  }
+
+
+  function buildEquipmentBlock(
+    entry,
+    items
+  ) {
+    if (!entry || !items) {
+      return '';
+    }
+
+    return [
+      `${EQUIPMENT_BLOCK_START} ${entry.name} ===`,
+      items,
+      EQUIPMENT_BLOCK_END
+    ].join('\n');
+  }
+
+
+  function dispatchFieldInput(field) {
+    if (!field) {
+      return;
+    }
+
+    field.dispatchEvent(
+      new Event(
+        'input',
+        { bubbles: true }
+      )
+    );
+  }
+
+
+  function updateInventoryGrant(
+    entry,
+    items
+  ) {
+    const { inventory } =
+      getElements();
+
+    if (!inventory) {
+      return;
+    }
+
+    const manualInventory =
+      removeBackgroundEquipmentBlocks(
+        inventory.value
+      );
+
+    const block =
+      buildEquipmentBlock(
+        entry,
+        items
+      );
+
+    const nextValue = [
+      manualInventory,
+      block
+    ]
+      .filter(Boolean)
+      .join('\n\n');
+
+    if (
+      inventory.value !==
+      nextValue
+    ) {
+      inventory.value =
+        nextValue;
+
+      dispatchFieldInput(
+        inventory
+      );
+    }
+  }
+
+
+  function updateCurrencyGrant(
+    nextCurrency,
+    { adoptExisting = false } = {}
+  ) {
+    const { currency } =
+      getElements();
+
+    CURRENCY_CODES.forEach(
+      (code) => {
+        const field =
+          currency[code];
+
+        if (!field) {
+          return;
+        }
+
+        if (adoptExisting) {
+          return;
+        }
+
+        const current =
+          parseCoinValue(
+            field.value
+          );
+
+        const previousGrant =
+          number(
+            state.appliedCurrency[code],
+            0
+          );
+
+        const nextGrant =
+          number(
+            nextCurrency[code],
+            0
+          );
+
+        const nextValue =
+          Math.max(
+            0,
+            current -
+              previousGrant +
+              nextGrant
+          );
+
+        if (
+          String(field.value) !==
+          String(nextValue)
+        ) {
+          field.value =
+            String(nextValue);
+
+          dispatchFieldInput(
+            field
+          );
+        }
+      }
+    );
+  }
+
+
+  function syncEquipmentAndCurrency(
+    entry,
+    { adoptExisting = false } = {}
+  ) {
+    const grant =
+      parseEquipmentPackage(entry);
+
+    updateInventoryGrant(
+      entry,
+      grant.items
+    );
+
+    updateCurrencyGrant(
+      grant.currency,
+      { adoptExisting }
+    );
+
+    state.appliedCurrency = {
+      ...grant.currency
+    };
+
+    state.appliedEquipmentBackgroundId =
+      entry?.id || '';
+  }
+
 
 
   /* ========================================================
@@ -832,7 +1139,9 @@
 
 
   function applyBackgroundRules({
-    resetScores = true
+    resetScores = true,
+    syncEquipment = false,
+    adoptExistingEquipment = false
   } = {}) {
     if (
       !state.active ||
@@ -870,6 +1179,16 @@
         entry
       );
 
+      if (syncEquipment) {
+        syncEquipmentAndCurrency(
+          entry,
+          {
+            adoptExisting:
+              adoptExistingEquipment
+          }
+        );
+      }
+
       document.dispatchEvent(
         new CustomEvent(
           'character:background-applied',
@@ -898,7 +1217,8 @@
 
   function handleBackgroundChange() {
     applyBackgroundRules({
-      resetScores: true
+      resetScores: true,
+      syncEquipment: true
     });
   }
 
@@ -1004,7 +1324,9 @@
         }
 
         applyBackgroundRules({
-          resetScores: true
+          resetScores: true,
+          syncEquipment: true,
+          adoptExistingEquipment: true
         });
       }
     );
@@ -1158,7 +1480,8 @@
 
       findEntry,
       loadBackgrounds,
-      applyBackgroundRules
+      applyBackgroundRules,
+      syncEquipmentAndCurrency
     });
 
 
