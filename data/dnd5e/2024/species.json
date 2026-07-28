@@ -1,4 +1,300 @@
 {
   "edition": "2024",
-  "species": []
+  "system": "dnd5e",
+  "source": "System Reference Document 5.2.1",
+  "license": "CC-BY-4.0",
+  "attribution": "This work includes material from the System Reference Document 5.2.1 (\u201cSRD 5.2.1\u201d) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+  "species": [
+    {
+      "id": "dragonborn",
+      "name": "Dragonborn",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "creatureType": "Humanoid",
+      "size": {
+        "options": ["Medium"],
+        "description": "Medium"
+      },
+      "speed": "30 ft",
+      "traits": [
+        {
+          "name": "Draconic Ancestry",
+          "summary": "Choose a dragon ancestor; the choice determines the damage type used by Breath Weapon and Damage Resistance."
+        },
+        {
+          "name": "Breath Weapon",
+          "summary": "Replace one attack with a 15-foot cone or 30-foot line. Damage scales with character level and uses are tied to Proficiency Bonus."
+        },
+        {
+          "name": "Damage Resistance",
+          "summary": "Gain resistance to the damage type associated with the chosen dragon ancestor."
+        },
+        {
+          "name": "Darkvision",
+          "summary": "Darkvision to 60 feet."
+        },
+        {
+          "name": "Draconic Flight",
+          "summary": "At level 5, gain temporary spectral wings and a Fly Speed equal to Speed once per Long Rest."
+        }
+      ],
+      "choices": {
+        "draconicAncestry": {
+          "label": "Draconic Ancestry",
+          "required": true,
+          "options": [
+            {"id": "black", "name": "Black", "damageType": "Acid"},
+            {"id": "blue", "name": "Blue", "damageType": "Lightning"},
+            {"id": "brass", "name": "Brass", "damageType": "Fire"},
+            {"id": "bronze", "name": "Bronze", "damageType": "Lightning"},
+            {"id": "copper", "name": "Copper", "damageType": "Acid"},
+            {"id": "gold", "name": "Gold", "damageType": "Fire"},
+            {"id": "green", "name": "Green", "damageType": "Poison"},
+            {"id": "red", "name": "Red", "damageType": "Fire"},
+            {"id": "silver", "name": "Silver", "damageType": "Cold"},
+            {"id": "white", "name": "White", "damageType": "Cold"}
+          ]
+        }
+      }
+    },
+    {
+      "id": "dwarf",
+      "name": "Dwarf",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "creatureType": "Humanoid",
+      "size": {
+        "options": ["Medium"],
+        "description": "Medium"
+      },
+      "speed": "30 ft",
+      "traits": [
+        {"name": "Darkvision", "summary": "Darkvision to 120 feet."},
+        {"name": "Dwarven Resilience", "summary": "Resistance to Poison damage and Advantage on saves to avoid or end the Poisoned condition."},
+        {"name": "Dwarven Toughness", "summary": "Hit Point maximum increases by 1 at level 1 and by 1 whenever another level is gained."},
+        {"name": "Stonecunning", "summary": "While touching stone, temporarily gain Tremorsense to 60 feet. Uses are tied to Proficiency Bonus."}
+      ]
+    },
+    {
+      "id": "elf",
+      "name": "Elf",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "creatureType": "Humanoid",
+      "size": {
+        "options": ["Medium"],
+        "description": "Medium"
+      },
+      "speed": "30 ft",
+      "traits": [
+        {"name": "Darkvision", "summary": "Darkvision to 60 feet; Drow lineage extends it to 120 feet."},
+        {"name": "Elven Lineage", "summary": "Choose Drow, High Elf, or Wood Elf to gain lineage magic and additional benefits."},
+        {"name": "Fey Ancestry", "summary": "Advantage on saves to avoid or end the Charmed condition."},
+        {"name": "Keen Senses", "summary": "Gain proficiency in Insight, Perception, or Survival."},
+        {"name": "Trance", "summary": "Magic cannot put you to sleep, and a Long Rest can be completed in four hours of conscious meditation."}
+      ],
+      "choices": {
+        "lineage": {
+          "label": "Elven Lineage",
+          "required": true,
+          "options": [
+            {
+              "id": "drow",
+              "name": "Drow",
+              "level1": ["Darkvision increases to 120 feet", "Dancing Lights cantrip"],
+              "level3": "Faerie Fire",
+              "level5": "Darkness"
+            },
+            {
+              "id": "high-elf",
+              "name": "High Elf",
+              "level1": ["Prestidigitation cantrip, replaceable with another Wizard cantrip after a Long Rest"],
+              "level3": "Detect Magic",
+              "level5": "Misty Step"
+            },
+            {
+              "id": "wood-elf",
+              "name": "Wood Elf",
+              "speedOverride": "35 ft",
+              "level1": ["Speed increases to 35 feet", "Druidcraft cantrip"],
+              "level3": "Longstrider",
+              "level5": "Pass without Trace"
+            }
+          ]
+        },
+        "keenSensesSkill": {
+          "label": "Keen Senses Skill",
+          "required": true,
+          "options": ["Insight", "Perception", "Survival"]
+        },
+        "spellcastingAbility": {
+          "label": "Lineage Spellcasting Ability",
+          "required": true,
+          "options": ["Intelligence", "Wisdom", "Charisma"]
+        }
+      }
+    },
+    {
+      "id": "gnome",
+      "name": "Gnome",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "creatureType": "Humanoid",
+      "size": {
+        "options": ["Small"],
+        "description": "Small"
+      },
+      "speed": "30 ft",
+      "traits": [
+        {"name": "Darkvision", "summary": "Darkvision to 60 feet."},
+        {"name": "Gnomish Cunning", "summary": "Advantage on Intelligence, Wisdom, and Charisma saving throws."},
+        {"name": "Gnomish Lineage", "summary": "Choose Forest Gnome or Rock Gnome for lineage magic and special abilities."}
+      ],
+      "choices": {
+        "lineage": {
+          "label": "Gnomish Lineage",
+          "required": true,
+          "options": [
+            {
+              "id": "forest-gnome",
+              "name": "Forest Gnome",
+              "benefits": ["Minor Illusion cantrip", "Speak with Animals is always prepared and can be cast without a spell slot a number of times equal to Proficiency Bonus"]
+            },
+            {
+              "id": "rock-gnome",
+              "name": "Rock Gnome",
+              "benefits": ["Mending cantrip", "Prestidigitation cantrip", "Create temporary Tiny clockwork devices using Prestidigitation"]
+            }
+          ]
+        },
+        "spellcastingAbility": {
+          "label": "Lineage Spellcasting Ability",
+          "required": true,
+          "options": ["Intelligence", "Wisdom", "Charisma"]
+        }
+      }
+    },
+    {
+      "id": "goliath",
+      "name": "Goliath",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "creatureType": "Humanoid",
+      "size": {
+        "options": ["Medium"],
+        "description": "Medium"
+      },
+      "speed": "35 ft",
+      "traits": [
+        {"name": "Giant Ancestry", "summary": "Choose one supernatural boon associated with Cloud, Fire, Frost, Hill, Stone, or Storm Giants."},
+        {"name": "Large Form", "summary": "At level 5, temporarily become Large, gain Advantage on Strength checks, and increase Speed by 10 feet once per Long Rest."},
+        {"name": "Powerful Build", "summary": "Advantage on checks to end the Grappled condition and count as one size larger for carrying capacity."}
+      ],
+      "choices": {
+        "giantAncestry": {
+          "label": "Giant Ancestry",
+          "required": true,
+          "options": [
+            {"id": "cloud", "name": "Cloud’s Jaunt", "giantType": "Cloud Giant", "summary": "Teleport up to 30 feet as a Bonus Action."},
+            {"id": "fire", "name": "Fire’s Burn", "giantType": "Fire Giant", "summary": "Deal an additional 1d10 Fire damage after hitting with an attack."},
+            {"id": "frost", "name": "Frost’s Chill", "giantType": "Frost Giant", "summary": "Deal an additional 1d6 Cold damage and reduce the target’s Speed by 10 feet."},
+            {"id": "hill", "name": "Hill’s Tumble", "giantType": "Hill Giant", "summary": "After damaging a Large or smaller creature with an attack, knock it Prone."},
+            {"id": "stone", "name": "Stone’s Endurance", "giantType": "Stone Giant", "summary": "Use a Reaction to reduce incoming damage by 1d12 plus Constitution modifier."},
+            {"id": "storm", "name": "Storm’s Thunder", "giantType": "Storm Giant", "summary": "Use a Reaction after taking damage to deal 1d8 Thunder damage to a nearby creature."}
+          ]
+        }
+      }
+    },
+    {
+      "id": "halfling",
+      "name": "Halfling",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "creatureType": "Humanoid",
+      "size": {
+        "options": ["Small"],
+        "description": "Small"
+      },
+      "speed": "30 ft",
+      "traits": [
+        {"name": "Brave", "summary": "Advantage on saves to avoid or end the Frightened condition."},
+        {"name": "Halfling Nimbleness", "summary": "Move through the space of creatures larger than you, though you cannot stop there."},
+        {"name": "Luck", "summary": "Reroll a 1 rolled on the d20 of a D20 Test and use the new result."},
+        {"name": "Naturally Stealthy", "summary": "Take the Hide action while obscured only by a creature at least one size larger."}
+      ]
+    },
+    {
+      "id": "human",
+      "name": "Human",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "creatureType": "Humanoid",
+      "size": {
+        "options": ["Small", "Medium"],
+        "description": "Small or Medium, chosen when the species is selected"
+      },
+      "speed": "30 ft",
+      "traits": [
+        {"name": "Resourceful", "summary": "Gain Heroic Inspiration whenever you finish a Long Rest."},
+        {"name": "Skillful", "summary": "Gain proficiency in one skill of your choice."},
+        {"name": "Versatile", "summary": "Gain one Origin feat of your choice."}
+      ],
+      "choices": {
+        "size": {"label": "Size", "required": true, "options": ["Small", "Medium"]},
+        "skill": {"label": "Skill Proficiency", "required": true, "optionsSource": "skills"},
+        "originFeat": {"label": "Origin Feat", "required": true, "optionsSource": "originFeats", "recommended": "Skilled"}
+      }
+    },
+    {
+      "id": "orc",
+      "name": "Orc",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "creatureType": "Humanoid",
+      "size": {
+        "options": ["Medium"],
+        "description": "Medium"
+      },
+      "speed": "30 ft",
+      "traits": [
+        {"name": "Adrenaline Rush", "summary": "Take Dash as a Bonus Action and gain Temporary Hit Points equal to Proficiency Bonus. Uses are tied to Proficiency Bonus."},
+        {"name": "Darkvision", "summary": "Darkvision to 120 feet."},
+        {"name": "Relentless Endurance", "summary": "When reduced to 0 Hit Points without being killed outright, drop to 1 Hit Point instead once per Long Rest."}
+      ]
+    },
+    {
+      "id": "tiefling",
+      "name": "Tiefling",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.2.1",
+      "creatureType": "Humanoid",
+      "size": {
+        "options": ["Small", "Medium"],
+        "description": "Small or Medium, chosen when the species is selected"
+      },
+      "speed": "30 ft",
+      "traits": [
+        {"name": "Darkvision", "summary": "Darkvision to 60 feet."},
+        {"name": "Fiendish Legacy", "summary": "Choose Abyssal, Chthonic, or Infernal to gain a resistance, cantrip, and additional spells at levels 3 and 5."},
+        {"name": "Otherworldly Presence", "summary": "Know the Thaumaturgy cantrip using the spellcasting ability chosen for Fiendish Legacy."}
+      ],
+      "choices": {
+        "size": {"label": "Size", "required": true, "options": ["Small", "Medium"]},
+        "fiendishLegacy": {
+          "label": "Fiendish Legacy",
+          "required": true,
+          "options": [
+            {"id": "abyssal", "name": "Abyssal", "resistance": "Poison", "level1": "Poison Spray", "level3": "Ray of Sickness", "level5": "Hold Person"},
+            {"id": "chthonic", "name": "Chthonic", "resistance": "Necrotic", "level1": "Chill Touch", "level3": "False Life", "level5": "Ray of Enfeeblement"},
+            {"id": "infernal", "name": "Infernal", "resistance": "Fire", "level1": "Fire Bolt", "level3": "Hellish Rebuke", "level5": "Darkness"}
+          ]
+        },
+        "spellcastingAbility": {
+          "label": "Legacy Spellcasting Ability",
+          "required": true,
+          "options": ["Intelligence", "Wisdom", "Charisma"]
+        }
+      }
+    }
+  ]
 }
