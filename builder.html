@@ -1371,568 +1371,965 @@ Started: July 2026
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // --- Theme Switching ---
-      const themeSelect = document.getElementById('theme-select');
-      const characterDocument = document.getElementById('character-document');
-        if (characterDocument && themeSelect) {
-          characterDocument.className = `document-container ${themeSelect.value || 'theme-standard'}`;
-}
-      themeSelect?.addEventListener('change', (e) => {
-        characterDocument.className = `document-container ${e.target.value}`;
-      });
+   <script>
+document.addEventListener('DOMContentLoaded', () => {
 
-      // --- Stat Generation ---
-      const rollBtn = document.getElementById('roll-btn');
-      const statMethodSelect = document.getElementById('stat-method');
+  // --- Theme Switching ---
 
-      function rollDice(count, sides) {
-        let rolls = [];
-        for (let i = 0; i < count; i++) {
-          rolls.push(Math.floor(Math.random() * sides) + 1);
-        }
-        return rolls;
+  const themeSelect =
+    document.getElementById(
+      'theme-select'
+    );
+
+  const characterDocument =
+    document.getElementById(
+      'character-document'
+    );
+
+  if (
+    characterDocument &&
+    themeSelect
+  ) {
+    characterDocument.className =
+      `document-container ${
+        themeSelect.value ||
+        'theme-standard'
+      }`;
+  }
+
+  themeSelect?.addEventListener(
+    'change',
+    (event) => {
+      characterDocument.className =
+        `document-container ${
+          event.target.value
+        }`;
+    }
+  );
+
+
+  // --- Stat Generation ---
+
+  const rollBtn =
+    document.getElementById(
+      'roll-btn'
+    );
+
+  const statMethodSelect =
+    document.getElementById(
+      'stat-method'
+    );
+
+  function rollDice(
+    count,
+    sides
+  ) {
+    const rolls = [];
+
+    for (
+      let i = 0;
+      i < count;
+      i += 1
+    ) {
+      rolls.push(
+        Math.floor(
+          Math.random() * sides
+        ) + 1
+      );
+    }
+
+    return rolls;
+  }
+
+  function generateStatValue(
+    method
+  ) {
+    if (method === '4d6') {
+      const rolls =
+        rollDice(4, 6).sort(
+          (a, b) => a - b
+        );
+
+      rolls.shift();
+
+      return rolls.reduce(
+        (a, b) => a + b,
+        0
+      );
+    }
+
+    if (method === '3d6') {
+      return rollDice(
+        3,
+        6
+      ).reduce(
+        (a, b) => a + b,
+        0
+      );
+    }
+
+    return 10;
+  }
+
+  rollBtn?.addEventListener(
+    'click',
+    () => {
+      const method =
+        statMethodSelect.value;
+
+      if (
+        method === 'manual'
+      ) {
+        alert(
+          'Select 4d6 Drop Lowest or 3d6 Straight to generate stats automatically.'
+        );
+
+        return;
       }
 
-      function generateStatValue(method) {
-        if (method === '4d6') {
-          let rolls = rollDice(4, 6).sort((a, b) => a - b);
-          rolls.shift();
-          return rolls.reduce((a, b) => a + b, 0);
-        } else if (method === '3d6') {
-          return rollDice(3, 6).reduce((a, b) => a + b, 0);
-        }
-        return 10;
-      }
+      statInputs.forEach(
+        (stat) => {
+          const input =
+            document.getElementById(
+              stat
+            );
 
-      rollBtn?.addEventListener('click', () => {
-        const method = statMethodSelect.value;
-        if (method === 'manual') {
-          alert('Select 4d6 Drop Lowest or 3d6 Straight to generate stats automatically.');
-          return;
-        }
-        statInputs.forEach(stat => {
-          const input = document.getElementById(stat);
           if (input) {
-            const val = generateStatValue(method);
-            input.dataset.base = val;
-            input.value = val;
+            const value =
+              generateStatValue(
+                method
+              );
+
+            input.dataset.base =
+              value;
+
+            input.value =
+              value;
           }
-        });
-        applyRacialBonuses();
-        calculateHP();
-      });
+        }
+      );
 
-      // --- Ability Score & Modifier Calculations ---
-      const statInputs = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
-      
-      function calculateModifier(score) {
-        const num = parseInt(score) || 10;
-        const mod = Math.floor((num - 10) / 2);
-        return mod >= 0 ? `+${mod}` : `${mod}`;
-      }
+      applyRacialBonuses();
+      calculateHP();
+    }
+  );
 
-      function updateModifiers() {
-        statInputs.forEach(stat => {
-          const input = document.getElementById(stat);
-          const modSpan = document.getElementById(`${stat}-mod`);
-          if (input && modSpan) {
-            modSpan.textContent = calculateModifier(input.value);
-          }
-        });
-        updateDerivedStats();
-        calculateHP();
-      }
 
-      statInputs.forEach(stat => {
-        const input = document.getElementById(stat);
+  // --- Racial Stat Bonuses & Speeds ---
+
+  const racialBonusesData = {
+    Aarakocra: {
+      dex: 2,
+      wis: 1
+    },
+
+    Dragonborn: {
+      str: 2,
+      cha: 1
+    },
+
+    Dwarf: {
+      con: 2
+    },
+
+    Elf: {
+      dex: 2,
+      wis: 1
+    },
+
+    'Wood Elf': {
+      dex: 2,
+      wis: 1
+    },
+
+    Gnome: {
+      int: 2
+    },
+
+    'Half-Elf': {
+      cha: 2,
+      custom: 2
+    },
+
+    'Half-Orc': {
+      str: 2,
+      con: 1
+    },
+
+    Halfling: {
+      dex: 2
+    },
+
+    Human: {
+      str: 1,
+      dex: 1,
+      con: 1,
+      int: 1,
+      wis: 1,
+      cha: 1
+    },
+
+    Tiefling: {
+      cha: 2,
+      int: 1
+    }
+  };
+
+
+  const racialSpeeds = {
+    Aarakocra:
+      '30 ft / 50 ft fly',
+
+    Dragonborn:
+      '30 ft',
+
+    Dwarf:
+      '25 ft',
+
+    Elf:
+      '30 ft',
+
+    'Wood Elf':
+      '35 ft',
+
+    Gnome:
+      '25 ft',
+
+    'Half-Elf':
+      '30 ft',
+
+    'Half-Orc':
+      '30 ft',
+
+    Halfling:
+      '25 ft',
+
+    Human:
+      '30 ft',
+
+    Tiefling:
+      '30 ft'
+  };
+
+
+  const racialAbilitiesText = {
+    Aarakocra:
+      '• Flight\n• Talons',
+
+    Dragonborn:
+      '• Draconic Ancestry\n• Breath Weapon\n• Damage Resistance',
+
+    Dwarf:
+      '• Darkvision\n• Dwarven Resilience\n• Stonecunning',
+
+    Elf:
+      '• Darkvision\n• Keen Senses\n• Fey Ancestry\n• Trance',
+
+    'Wood Elf':
+      '• Darkvision\n• Keen Senses\n• Fey Ancestry\n• Mask of the Wild',
+
+    Gnome:
+      '• Darkvision\n• Gnome Cunning',
+
+    'Half-Elf':
+      '• Darkvision\n• Fey Ancestry\n• Skill Versatility',
+
+    'Half-Orc':
+      '• Darkvision\n• Menacing\n• Relentless Endurance',
+
+    Halfling:
+      '• Lucky\n• Brave\n• Nimbleness',
+
+    Human:
+      '• Extra Language',
+
+    Tiefling:
+      '• Darkvision\n• Hellish Resistance\n• Infernal Legacy'
+  };
+
+
+  const charRaceSelect =
+    document.getElementById(
+      'char-race'
+    );
+
+  const racialAbilitiesInput =
+    document.getElementById(
+      'racial-abilities-input'
+    );
+
+  const speedInput =
+    document.getElementById(
+      'speed-input'
+    );
+
+  const halfElfContainer =
+    document.getElementById(
+      'half-elf-bonuses'
+    );
+
+  const halfElfStat1 =
+    document.getElementById(
+      'half-elf-stat1'
+    );
+
+  const halfElfStat2 =
+    document.getElementById(
+      'half-elf-stat2'
+    );
+
+
+  function applyRacialBonuses() {
+
+    const selectedRace =
+      charRaceSelect.value;
+
+    statInputs.forEach(
+      (stat) => {
+
+        const input =
+          document.getElementById(
+            stat
+          );
+
         if (input) {
-          input.addEventListener('input', (e) => {
-            e.target.dataset.base = e.target.value;
-            updateModifiers();
-          });
+
+          if (
+            !input.dataset.base ||
+            input.dataset.base === ''
+          ) {
+            input.dataset.base =
+              input.value ||
+              '10';
+          }
+
+          input.value =
+            input.dataset.base;
         }
-      });
+      }
+    );
 
-      // --- Racial Stat Bonuses & Speeds ---
-      const racialBonusesData = {
-        "Aarakocra": { dex: 2, wis: 1 },
-        "Dragonborn": { str: 2, cha: 1 },
-        "Dwarf": { con: 2 },
-        "Elf": { dex: 2, wis: 1 },
-        "Wood Elf": { dex: 2, wis: 1 },
-        "Gnome": { int: 2 },
-        "Half-Elf": { cha: 2, custom: 2 },
-        "Half-Orc": { str: 2, con: 1 },
-        "Halfling": { dex: 2 },
-        "Human": { str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1 },
-        "Tiefling": { cha: 2, int: 1 }
-      };
 
-      const racialSpeeds = {
-        "Aarakocra": "30 ft / 50 ft fly",
-        "Dragonborn": "30 ft",
-        "Dwarf": "25 ft",
-        "Elf": "30 ft",
-        "Wood Elf": "35 ft",
-        "Gnome": "25 ft",
-        "Half-Elf": "30 ft",
-        "Half-Orc": "30 ft",
-        "Halfling": "25 ft",
-        "Human": "30 ft",
-        "Tiefling": "30 ft"
-      };
+    if (!selectedRace) {
+      updateModifiers();
+      return;
+    }
 
-      const racialAbilitiesText = {
-        "Aarakocra": "• Flight\n• Talons",
-        "Dragonborn": "• Draconic Ancestry\n• Breath Weapon\n• Damage Resistance",
-        "Dwarf": "• Darkvision\n• Dwarven Resilience\n• Stonecunning",
-        "Elf": "• Darkvision\n• Keen Senses\n• Fey Ancestry\n• Trance",
-        "Wood Elf": "• Darkvision\n• Keen Senses\n• Fey Ancestry\n• Mask of the Wild",
-        "Gnome": "• Darkvision\n• Gnome Cunning",
-        "Half-Elf": "• Darkvision\n• Fey Ancestry\n• Skill Versatility",
-        "Half-Orc": "• Darkvision\n• Menacing\n• Relentless Endurance",
-        "Halfling": "• Lucky\n• Brave\n• Nimbleness",
-        "Human": "• Extra Language",
-        "Tiefling": "• Darkvision\n• Hellish Resistance\n• Infernal Legacy"
-      };
 
-      const charRaceSelect = document.getElementById('char-race');
-      const racialAbilitiesInput = document.getElementById('racial-abilities-input');
-      const speedInput = document.getElementById('speed-input');
-      const halfElfContainer = document.getElementById('half-elf-bonuses');
-      const halfElfStat1 = document.getElementById('half-elf-stat1');
-      const halfElfStat2 = document.getElementById('half-elf-stat2');
+    if (speedInput) {
+      speedInput.value =
+        racialSpeeds[
+          selectedRace
+        ] ||
+        '30 ft';
+    }
 
-      function applyRacialBonuses() {
-        const selectedRace = charRaceSelect.value;
-        
-        statInputs.forEach(stat => {
-          const input = document.getElementById(stat);
-          if (input) {
-            if (!input.dataset.base || input.dataset.base === "") {
-              input.dataset.base = input.value || "10";
+
+    const bonuses =
+      racialBonusesData[
+        selectedRace
+      ] || {};
+
+
+    for (
+      const [stat, bonus]
+      of Object.entries(
+        bonuses
+      )
+    ) {
+
+      if (
+        stat === 'custom'
+      ) {
+        continue;
+      }
+
+      const input =
+        document.getElementById(
+          stat
+        );
+
+      if (input) {
+        input.value =
+          parseInt(
+            input.value || 10,
+            10
+          ) +
+          bonus;
+      }
+    }
+
+
+    if (
+      selectedRace ===
+      'Half-Elf'
+    ) {
+
+      const stat1 =
+        halfElfStat1.value;
+
+      const stat2 =
+        halfElfStat2.value;
+
+
+      if (stat1) {
+        const input1 =
+          document.getElementById(
+            stat1
+          );
+
+        if (input1) {
+          input1.value =
+            parseInt(
+              input1.value ||
+              10,
+              10
+            ) + 1;
+        }
+      }
+
+
+      if (
+        stat2 &&
+        stat2 !== stat1
+      ) {
+        const input2 =
+          document.getElementById(
+            stat2
+          );
+
+        if (input2) {
+          input2.value =
+            parseInt(
+              input2.value ||
+              10,
+              10
+            ) + 1;
+        }
+      }
+    }
+
+    updateModifiers();
+  }
+
+
+  charRaceSelect?.addEventListener(
+    'change',
+    function () {
+
+      const selectedRace =
+        this.value;
+
+      if (
+        racialAbilitiesInput
+      ) {
+        racialAbilitiesInput.value =
+          racialAbilitiesText[
+            selectedRace
+          ] || '';
+      }
+
+      if (
+        halfElfContainer
+      ) {
+        halfElfContainer.style.display =
+          selectedRace ===
+          'Half-Elf'
+            ? 'flex'
+            : 'none';
+      }
+
+      applyRacialBonuses();
+    }
+  );
+
+
+  halfElfStat1?.addEventListener(
+    'change',
+    applyRacialBonuses
+  );
+
+  halfElfStat2?.addEventListener(
+    'change',
+    applyRacialBonuses
+  );
+
+
+  // --- Multiclassing Handlers ---
+
+  const multiclassBtn =
+    document.getElementById(
+      'multiclass-btn'
+    );
+
+  const removeMulticlassBtn =
+    document.getElementById(
+      'remove-multiclass-btn'
+    );
+
+  const classLevelContainer =
+    document.getElementById(
+      'class-level-container'
+    );
+
+
+  const allAvailableClasses = [
+    'Barbarian',
+    'Bard',
+    'Cleric',
+    'Druid',
+    'Fighter',
+    'Monk',
+    'Paladin',
+    'Ranger',
+    'Rogue',
+    'Sorcerer',
+    'Warlock',
+    'Wizard',
+    'Artificer'
+  ];
+
+
+  function updateClassDropdowns() {
+
+    const selectedClasses =
+      Array.from(
+        document.querySelectorAll(
+          '.char-class-select'
+        )
+      ).map(
+        (select) =>
+          select.value
+      );
+
+
+    document
+      .querySelectorAll(
+        '.char-class-select'
+      )
+      .forEach(
+        (select) => {
+
+          const currentValue =
+            select.value;
+
+          Array.from(
+            select.options
+          ).forEach(
+            (option) => {
+
+              option.disabled =
+                selectedClasses.includes(
+                  option.value
+                ) &&
+                option.value !==
+                  currentValue;
             }
-            input.value = input.dataset.base;
-          }
-        });
+          );
+        }
+      );
+  }
 
-        if (!selectedRace) {
-          updateModifiers();
-          return;
+
+  function updateLevelDropdowns() {
+
+    const levelSelects =
+      document.querySelectorAll(
+        '.char-level-select'
+      );
+
+    const totalLevels =
+      Array.from(
+        levelSelects
+      ).reduce(
+        (sum, select) =>
+          sum +
+          (
+            parseInt(
+              select.value,
+              10
+            ) || 0
+          ),
+        0
+      );
+
+
+    levelSelects.forEach(
+      (select) => {
+
+        const currentValue =
+          parseInt(
+            select.value,
+            10
+          ) || 1;
+
+        const otherLevels =
+          totalLevels -
+          currentValue;
+
+        const maxAllowed =
+          Math.max(
+            1,
+            20 -
+              otherLevels
+          );
+
+        let html = '';
+
+
+        for (
+          let level = 1;
+          level <= maxAllowed;
+          level += 1
+        ) {
+
+          html +=
+            `<option value="${level}" ${
+              level === currentValue
+                ? 'selected'
+                : ''
+            }>${level}</option>`;
         }
 
-        if (speedInput) {
-          speedInput.value = racialSpeeds[selectedRace] || "30 ft";
-        }
 
-        const bonuses = racialBonusesData[selectedRace] || {};
-        for (const [stat, bonus] of Object.entries(bonuses)) {
-          if (stat !== 'custom') {
-            const input = document.getElementById(stat);
-            if (input) {
-              input.value = parseInt(input.value || 10) + bonus;
-            }
-          }
-        }
+        select.innerHTML =
+          html;
 
-        if (selectedRace === 'Half-Elf') {
-          const s1 = halfElfStat1.value;
-          const s2 = halfElfStat2.value;
-          if (s1) {
-            const inp1 = document.getElementById(s1);
-            if (inp1) inp1.value = parseInt(inp1.value || 10) + 1;
-          }
-          if (s2 && s2 !== s1) {
-            const inp2 = document.getElementById(s2);
-            if (inp2) inp2.value = parseInt(inp2.value || 10) + 1;
-          }
-        }
 
-        updateModifiers();
-      }
-
-      charRaceSelect?.addEventListener('change', function() {
-        const selectedRace = this.value;
-        racialAbilitiesInput.value = racialAbilitiesText[selectedRace] || '';
-        
-        if (selectedRace === 'Half-Elf') {
-          halfElfContainer.style.display = 'flex';
-        } else {
-          halfElfContainer.style.display = 'none';
-        }
-        applyRacialBonuses();
-      });
-
-      halfElfStat1?.addEventListener('change', applyRacialBonuses);
-      halfElfStat2?.addEventListener('change', applyRacialBonuses);
-
-      // --- Derived Stats & HP ---
-      const classHitDiceMap = {
-        "Barbarian": "d12",
-        "Fighter": "d10", "Paladin": "d10", "Ranger": "d10",
-        "Bard": "d8", "Cleric": "d8", "Druid": "d8", "Monk": "d8", "Rogue": "d8", "Warlock": "d8", "Artificer": "d8",
-        "Sorcerer": "d6", "Wizard": "d6"
-      };
-
-      const classHitDiceValues = {
-        "Barbarian": 12,
-        "Fighter": 10, "Paladin": 10, "Ranger": 10,
-        "Bard": 8, "Cleric": 8, "Druid": 8, "Monk": 8, "Rogue": 8, "Warlock": 8, "Artificer": 8,
-        "Sorcerer": 6, "Wizard": 6
-      };
-
-      function updateDerivedStats() {
-        const dexMod = parseInt(document.getElementById('dex-mod')?.textContent) || 0;
-        const wisMod = parseInt(document.getElementById('wis-mod')?.textContent) || 0;
-        const profBonus = parseInt(document.getElementById('prof-bonus')?.value) || 2;
-
-        const initiativeInput = document.getElementById('initiative');
-        if (initiativeInput) {
-          initiativeInput.value = dexMod >= 0 ? `+${dexMod}` : `${dexMod}`;
-        }
-
-        const perceptionCheckbox = document.getElementById('perception-skill-check');
-        const passivePerception = 10 + wisMod + (perceptionCheckbox?.checked ? profBonus : 0);
-        const passivePerceptionInput = document.getElementById('passive-perception');
-        if (passivePerceptionInput) {
-          passivePerceptionInput.value = passivePerception;
-        }
-
-        updateSpellcastingStats(profBonus);
-        updateSavesAndSkills();
-        updateHitDice();
-      }
-
-      function updateHitDice() {
-        const hitDiceCounts = {};
-        document.querySelectorAll('.class-level-row').forEach(row => {
-          const classSelect = row.querySelector('.char-class-select');
-          const levelSelect = row.querySelector('.char-level-select');
-          if (classSelect && levelSelect) {
-            const className = classSelect.value;
-            const level = parseInt(levelSelect.value) || 1;
-            const die = classHitDiceMap[className] || 'd8';
-            hitDiceCounts[die] = (hitDiceCounts[die] || 0) + level;
-          }
-        });
-
-        let hitDiceParts = [];
-        for (const [die, count] of Object.entries(hitDiceCounts)) {
-          hitDiceParts.push(`${count}${die}`);
-        }
-
-        const hd1 = document.getElementById('hit-dice-1');
-        const hd2 = document.getElementById('hit-dice-2');
-        const hd3 = document.getElementById('hit-dice-3');
-        const hd4 = document.getElementById('hit-dice-4');
-
-        const hdInputs = [hd1, hd2, hd3, hd4];
-        hdInputs.forEach((input, index) => {
-          if (input) {
-            input.value = hitDiceParts[index] || '';
-          }
-        });
-      }
-
-      function calculateHP() {
-        const conMod = parseInt(document.getElementById('con-mod')?.textContent) || 0;
-        let totalHP = 0;
-        let firstClassProcessed = false;
-
-        document.querySelectorAll('.class-level-row').forEach(row => {
-          const classSelect = row.querySelector('.char-class-select');
-          const levelSelect = row.querySelector('.char-level-select');
-          if (!classSelect || !levelSelect) return;
-
-          const className = classSelect.value;
-          const level = parseInt(levelSelect.value) || 1;
-          const maxDie = classHitDiceValues[className] || 8;
-          const avgDie = Math.floor(maxDie / 2) + 1;
-
-          for (let l = 1; l <= level; l++) {
-            if (!firstClassProcessed) {
-              totalHP += maxDie + conMod;
-              firstClassProcessed = true;
-            } else {
-              totalHP += avgDie + conMod;
-            }
-          }
-        });
-
-        const totalLevel = Array.from(document.querySelectorAll('.char-level-select')).reduce((sum, sel) => sum + (parseInt(sel.value) || 1), 0);
-        const minHP = totalLevel * 1; 
-        if (totalHP < minHP) totalHP = minHP;
-
-        const hpInput = document.getElementById('hp-input');
-        if (hpInput) {
-          hpInput.value = totalHP;
+        if (
+          currentValue >
+          maxAllowed
+        ) {
+          select.value =
+            maxAllowed;
         }
       }
+    );
+  }
 
-      // --- Saving Throws & Skills Auto-Calculation ---
-      const skillStatMap = {
-        'Acrobatics': 'dex',
-        'Animal Handling': 'wis',
-        'Arcana': 'int',
-        'Athletics': 'str',
-        'Deception': 'cha',
-        'History': 'int',
-        'Insight': 'wis',
-        'Intimidation': 'cha',
-        'Investigation': 'int',
-        'Medicine': 'wis',
-        'Nature': 'int',
-        'Perception': 'wis',
-        'Performance': 'cha',
-        'Persuasion': 'cha',
-        'Religion': 'int',
-        'Sleight of Hand': 'dex',
-        'Stealth': 'dex',
-        'Survival': 'wis'
-      };
 
-      function updateSavesAndSkills() {
-        const profBonus = parseInt(document.getElementById('prof-bonus')?.value) || 2;
+  function handleLevelChange() {
+    updateLevelDropdowns();
 
-        document.querySelectorAll('.save-check').forEach(checkbox => {
-          const stat = checkbox.dataset.stat;
-          const modInput = checkbox.parentElement.querySelector('.save-mod');
-          const baseMod = parseInt(document.getElementById(`${stat}-mod`)?.textContent) || 0;
-          const total = baseMod + (checkbox.checked ? profBonus : 0);
-          if (modInput) {
-            modInput.value = total >= 0 ? `+${total}` : `${total}`;
-          }
-        });
+    updateTotalLevelAndProficiency();
 
-        document.querySelectorAll('.skills-box-container .saves-list label').forEach(label => {
-          const checkbox = label.querySelector('.skill-check');
-          if (!checkbox) return;
-          
-          const textContent = label.textContent;
-          let matchedStat = 'dex';
-          for (const [skillName, statKey] of Object.entries(skillStatMap)) {
-            if (textContent.includes(skillName)) {
-              matchedStat = statKey;
-              break;
-            }
-          }
-          const modInput = label.querySelector('.skill-mod');
-          const baseMod = parseInt(document.getElementById(`${matchedStat}-mod`)?.textContent) || 0;
-          const total = baseMod + (checkbox.checked ? profBonus : 0);
-          if (modInput) {
-            modInput.value = total >= 0 ? `+${total}` : `${total}`;
-          }
-        });
-      }
+    calculateHP();
+  }
 
-      document.querySelectorAll('.save-check, .skill-check').forEach(el => {
-        el.addEventListener('change', updateDerivedStats);
-      });
 
-      // --- Spellcasting DC & Attack Bonus ---
-      function updateSpellcastingStats(profBonus) {
-        const spellAbilitySelect = document.getElementById('spell-ability');
-        const spellDcInput = document.getElementById('spell-dc');
-        const spellAtkInput = document.getElementById('spell-atk');
+  function handleClassChange() {
+    updateClassDropdowns();
 
-        if (!spellAbilitySelect || !spellDcInput || !spellAtkInput) return;
+    updateTotalLevelAndProficiency();
 
-        const ability = spellAbilitySelect.value;
-        if (ability === 'none') {
-          spellDcInput.value = '-';
-          spellAtkInput.value = '-';
-          return;
+    calculateHP();
+  }
+
+
+  function setupLevelListeners() {
+
+    document
+      .querySelectorAll(
+        '.char-level-select'
+      )
+      .forEach(
+        (select) => {
+
+          select.removeEventListener(
+            'change',
+            handleLevelChange
+          );
+
+          select.addEventListener(
+            'change',
+            handleLevelChange
+          );
         }
+      );
 
-        const abilityMod = parseInt(document.getElementById(`${ability}-mod`)?.textContent) || 0;
-        const saveDc = 8 + profBonus + abilityMod;
-        const atkBonus = profBonus + abilityMod;
 
-        spellDcInput.value = saveDc;
-        spellAtkInput.value = atkBonus >= 0 ? `+${atkBonus}` : `${atkBonus}`;
+    document
+      .querySelectorAll(
+        '.char-class-select'
+      )
+      .forEach(
+        (select) => {
+
+          select.removeEventListener(
+            'change',
+            handleClassChange
+          );
+
+          select.addEventListener(
+            'change',
+            handleClassChange
+          );
+        }
+      );
+  }
+
+
+  multiclassBtn?.addEventListener(
+    'click',
+    () => {
+
+      const rows =
+        classLevelContainer
+          .querySelectorAll(
+            '.class-level-row'
+          );
+
+      if (
+        rows.length >= 13
+      ) {
+        return;
       }
 
-      document.getElementById('spell-ability')?.addEventListener('change', updateDerivedStats);
 
-      // --- Multiclassing Handlers ---
-      const multiclassBtn = document.getElementById('multiclass-btn');
-      const removeMulticlassBtn = document.getElementById('remove-multiclass-btn');
-      const classLevelContainer = document.getElementById('class-level-container');
+      const selectedClasses =
+        Array.from(
+          document.querySelectorAll(
+            '.char-class-select'
+          )
+        ).map(
+          (select) =>
+            select.value
+        );
 
-      const allAvailableClasses = [
-        "Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", 
-        "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard", "Artificer"
-      ];
 
-      function updateClassDropdowns() {
-        const selectedClasses = Array.from(document.querySelectorAll('.char-class-select')).map(s => s.value);
-        document.querySelectorAll('.char-class-select').forEach(select => {
-          const currentVal = select.value;
-          Array.from(select.options).forEach(opt => {
-            if (selectedClasses.includes(opt.value) && opt.value !== currentVal) {
-              opt.disabled = true;
-            } else {
-              opt.disabled = false;
-            }
-          });
-        });
-      }
+      const nextClass =
+        allAvailableClasses.find(
+          (className) =>
+            !selectedClasses.includes(
+              className
+            )
+        ) ||
+        allAvailableClasses[0];
 
-      function updateLevelDropdowns() {
-        const levelSelects = document.querySelectorAll('.char-level-select');
-        const totalLevels = Array.from(levelSelects).reduce((sum, sel) => sum + (parseInt(sel.value) || 0), 0);
 
-        levelSelects.forEach(select => {
-          const currentValue = parseInt(select.value) || 1;
-          const otherSum = totalLevels - currentValue;
-          const maxAllowed = Math.max(1, 20 - otherSum);
+      const optionsHtml =
+        allAvailableClasses
+          .map(
+            (className) =>
+              `<option value="${className}" ${
+                className ===
+                nextClass
+                  ? 'selected'
+                  : ''
+              }>${className}</option>`
+          )
+          .join('');
 
-          let html = '';
-          for (let i = 1; i <= maxAllowed; i++) {
-            html += `<option value="${i}" ${i === currentValue ? 'selected' : ''}>${i}</option>`;
+
+      let currentTotal = 0;
+
+
+      document
+        .querySelectorAll(
+          '.char-level-select'
+        )
+        .forEach(
+          (select) => {
+
+            currentTotal +=
+              parseInt(
+                select.value,
+                10
+              ) || 0;
           }
-          select.innerHTML = html;
+        );
 
-          if (currentValue > maxAllowed) {
-            select.value = maxAllowed;
-          }
-        });
+
+      const maxLevelForNew =
+        Math.max(
+          1,
+          20 -
+            currentTotal
+        );
+
+
+      let levelOptionsHtml =
+        '';
+
+
+      for (
+        let level = 1;
+        level <= maxLevelForNew;
+        level += 1
+      ) {
+
+        levelOptionsHtml +=
+          `<option value="${level}" ${
+            level === 1
+              ? 'selected'
+              : ''
+          }>${level}</option>`;
       }
 
-      multiclassBtn?.addEventListener('click', () => {
-        const rows = classLevelContainer.querySelectorAll('.class-level-row');
-        if (rows.length >= 13) {
-          return;
-        }
 
-        const selectedClasses = Array.from(document.querySelectorAll('.char-class-select')).map(s => s.value);
-        const nextClass = allAvailableClasses.find(c => !selectedClasses.includes(c)) || allAvailableClasses[0];
+      const newRow =
+        document.createElement(
+          'div'
+        );
 
-        const optionsHtml = allAvailableClasses.map(cls => 
-          `<option value="${cls}" ${cls === nextClass ? 'selected' : ''}>${cls}</option>`
-        ).join('');
+      newRow.className =
+        'class-level-row';
 
-        let currentTotal = 0;
-        document.querySelectorAll('.char-level-select').forEach(sel => {
-          currentTotal += parseInt(sel.value) || 0;
-        });
-        const maxLevelForNew = Math.max(1, 20 - currentTotal);
+      newRow.style.cssText =
+        'display: flex; gap: 4px;';
 
-        let levelOptionsHtml = '';
-        for (let i = 1; i <= maxLevelForNew; i++) {
-          levelOptionsHtml += `<option value="${i}" ${i === 1 ? 'selected' : ''}>${i}</option>`;
-        }
 
-        const newRow = document.createElement('div');
-        newRow.className = 'class-level-row';
-        newRow.style.cssText = 'display: flex; gap: 4px;';
-        newRow.innerHTML = `
-          <div class="detail-box" style="flex: 1.2;">
-            <select class="fantasy-input char-class-select">
-              ${optionsHtml}
-            </select>
-          </div>
-          <div class="detail-box" style="flex: 0.8;">
-            <select class="fantasy-input char-level-select">
-              ${levelOptionsHtml}
-            </select>
-          </div>
-        `;
-        classLevelContainer.appendChild(newRow);
-        setupLevelListeners();
-        updateClassDropdowns();
-        updateLevelDropdowns();
-        updateTotalLevelAndProficiency();
-        calculateHP();
-      });
+      newRow.innerHTML = `
+        <div class="detail-box" style="flex: 1.2;">
+          <select class="fantasy-input char-class-select">
+            ${optionsHtml}
+          </select>
+        </div>
 
-      removeMulticlassBtn?.addEventListener('click', () => {
-        const rows = classLevelContainer.querySelectorAll('.class-level-row');
-        if (rows.length > 1) {
-          classLevelContainer.removeChild(rows[rows.length - 1]);
-          updateLevelDropdowns();
-          updateTotalLevelAndProficiency();
-          updateClassDropdowns();
-          calculateHP();
-        }
-      });
+        <div class="detail-box" style="flex: 0.8;">
+          <select class="fantasy-input char-level-select">
+            ${levelOptionsHtml}
+          </select>
+        </div>
+      `;
 
-      function setupLevelListeners() {
-        document.querySelectorAll('.char-level-select').forEach(select => {
-          select.removeEventListener('change', handleLevelChange);
-          select.addEventListener('change', handleLevelChange);
-        });
-        document.querySelectorAll('.char-class-select').forEach(select => {
-          select.removeEventListener('change', handleClassChange);
-          select.addEventListener('change', handleClassChange);
-        });
-      }
 
-      function handleLevelChange(e) {
-        updateLevelDropdowns();
-        updateTotalLevelAndProficiency();
-        calculateHP();
-      }
+      classLevelContainer.appendChild(
+        newRow
+      );
 
-      function handleClassChange(e) {
-        updateClassDropdowns();
-        updateTotalLevelAndProficiency();
-        calculateHP();
-      }
-
-      function updateTotalLevelAndProficiency() {
-        let totalLevel = 0;
-        document.querySelectorAll('.char-level-select').forEach(select => {
-          totalLevel += parseInt(select.value) || 0;
-        });
-
-        let prof = 2;
-        if (totalLevel >= 17) prof = 6;
-        else if (totalLevel >= 13) prof = 5;
-        else if (totalLevel >= 9) prof = 4;
-        else if (totalLevel >= 5) prof = 3;
-
-        const profBonusInput = document.getElementById('prof-bonus');
-        if (profBonusInput) {
-          profBonusInput.value = `+${prof}`;
-        }
-
-        updateDerivedStats();
-        calculateHP();
-      }
 
       setupLevelListeners();
+
       updateClassDropdowns();
+
       updateLevelDropdowns();
 
-      // --- PDF Export Fixes ---
-      const exportBtn = document.getElementById('export-btn');
-      exportBtn?.addEventListener('click', () => {
-        window.scrollTo(0, 0);
+      updateTotalLevelAndProficiency();
 
-        const element = document.getElementById('character-document');
-        element.classList.add('exporting');
-
-        const opt = {
-          margin:       0,
-          filename:     'character-sheet.pdf',
-          image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
-          jsPDF:        { unit: 'px', format: [816, 1056], orientation: 'portrait' },
-          pagebreak:    { mode: 'css' }
-        };
-
-        html2pdf().from(element).set(opt).save().then(() => {
-          element.classList.remove('exporting');
-        });
-      });
-
-      // Initial calculation pass
-      updateModifiers();
       calculateHP();
-    });
-  </script>
+    }
+  );
+
+
+  removeMulticlassBtn?.addEventListener(
+    'click',
+    () => {
+
+      const rows =
+        classLevelContainer
+          .querySelectorAll(
+            '.class-level-row'
+          );
+
+
+      if (
+        rows.length > 1
+      ) {
+
+        classLevelContainer.removeChild(
+          rows[
+            rows.length - 1
+          ]
+        );
+
+        updateLevelDropdowns();
+
+        updateTotalLevelAndProficiency();
+
+        updateClassDropdowns();
+
+        calculateHP();
+      }
+    }
+  );
+
+
+  setupLevelListeners();
+
+  updateClassDropdowns();
+
+  updateLevelDropdowns();
+
+
+  // --- PDF Export ---
+
+  const exportBtn =
+    document.getElementById(
+      'export-btn'
+    );
+
+
+  exportBtn?.addEventListener(
+    'click',
+    () => {
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+
+      const element =
+        document.getElementById(
+          'character-document'
+        );
+
+
+      element.classList.add(
+        'exporting'
+      );
+
+
+      const options = {
+
+        margin: 0,
+
+        filename:
+          'character-sheet.pdf',
+
+        image: {
+          type: 'jpeg',
+          quality: 0.98
+        },
+
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          scrollY: 0
+        },
+
+        jsPDF: {
+          unit: 'px',
+          format: [
+            816,
+            1056
+          ],
+          orientation:
+            'portrait'
+        },
+
+        pagebreak: {
+          mode: 'css'
+        }
+      };
+
+
+      html2pdf()
+        .from(element)
+        .set(options)
+        .save()
+        .then(() => {
+
+          element.classList.remove(
+            'exporting'
+          );
+        });
+    }
+  );
+
+});
+</script>
 <footer class="site-version">
     Character Builder v0.1.0 | © 2026 My RPG Source
 </footer>
