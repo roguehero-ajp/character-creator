@@ -24,9 +24,9 @@ PHASE 1 - D&D 2024 CHARACTER BUILDER
 
 CURRENT PRIORITIES
 
-☐ Knowledge Cards (Combat)
+✓ Knowledge Cards (Combat)
 
-☐ Knowledge Cards (Saving Throws)
+✓ Knowledge Cards (Saving Throws)
 
 ☐ Knowledge Cards (Conditions)
 
@@ -36,9 +36,9 @@ CURRENT PRIORITIES
 
 ☐ Knowledge Cards (Currency)
 
-☐ Codex Slide-Out System
+✓ Codex Slide-Out System
 
-☐ Landing Page
+✓ Landing Page
 
 ☐ Site Branding
 
@@ -48,15 +48,15 @@ CURRENT PRIORITIES
 
 QUALITY OF LIFE
 
-☐ Browser Autosave
+✓ Browser Autosave
 
-☐ Import Character
+✓ Import Character
 
-☐ Export Character (.json)
+✓ Export Character (.json)
 
-☐ Character Validation
+✓ Character Validation
 
-☐ Theme Selector
+✓ Theme Selector
 
 ☐ Accessibility Improvements
 
