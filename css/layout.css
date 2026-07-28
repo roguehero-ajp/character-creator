@@ -1001,6 +1001,66 @@ label {
   font-size: 10.5px;
 }
 
+/* ==========================================================
+   DYNAMIC SPECIES CHOICES
+   ========================================================== */
+
+.species-choice-panel {
+  grid-column: 1 / -1;
+
+  padding: 5px;
+
+  background:
+    rgba(0, 0, 0, 0.025);
+
+  border:
+    1px dashed var(--border-color);
+
+  border-radius: 4px;
+}
+
+.species-choice-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(110px, 1fr)
+    );
+
+  gap: 4px;
+}
+
+.species-choice-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+
+  min-width: 0;
+}
+
+.species-choice-field label {
+  font-size: 8px;
+}
+
+.species-choice-field select {
+  padding: 2px 4px;
+
+  font-size: 9px;
+}
+
+.species-choice-note {
+  max-height: 28px;
+  margin-top: 3px;
+
+  overflow-y: auto;
+
+  font-size: 7.5px;
+  line-height: 1.25;
+
+  opacity: 0.8;
+}
 
 /* ==========================================================
    SITE VERSION FOOTER
