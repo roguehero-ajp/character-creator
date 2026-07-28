@@ -13,6 +13,73 @@
   const EXPORT_BUTTON_ID = 'export-btn';
   const CHARACTER_DOCUMENT_ID = 'character-document';
 
+  function sanitizeFilenamePart(value, fallback) {
+  const cleaned = String(value || '')
+    .trim()
+    .replace(/[<>:"/\\|?*]/g, '')
+    .replace(/\s+/g, ' ');
+
+  return cleaned || fallback;
+}
+
+function buildPdfFilename() {
+  const characterName =
+    document.getElementById('character-name')?.value;
+
+  const race =
+    document.getElementById('char-race')?.value;
+
+  const classRows =
+    Array.from(
+      document.querySelectorAll('.class-level-row')
+    );
+
+  const classes = [];
+  let totalLevel = 0;
+
+  classRows.forEach((row) => {
+    const className =
+      row.querySelector('.char-class-select')?.value;
+
+    const level =
+      parseInt(
+        row.querySelector('.char-level-select')?.value,
+        10
+      ) || 0;
+
+    if (
+      className &&
+      !classes.includes(className)
+    ) {
+      classes.push(className);
+    }
+
+    totalLevel += level;
+  });
+
+  const safeName =
+    sanitizeFilenamePart(
+      characterName,
+      'Unnamed'
+    );
+
+  const safeRace =
+    sanitizeFilenamePart(
+      race,
+      'Unknown Race'
+    );
+
+  const safeClass =
+    sanitizeFilenamePart(
+      classes.join('-'),
+      'Unknown Class'
+    );
+
+  const safeLevel =
+    totalLevel || 1;
+
+  return `${safeName} ${safeRace} ${safeClass} Lvl ${safeLevel}.pdf`;
+}
   async function exportCharacterPdf() {
     const element =
       document.getElementById(
@@ -48,8 +115,7 @@
     const options = {
       margin: 0,
 
-      filename:
-        'character-sheet.pdf',
+      filename: buildPdfFilename(),
 
       image: {
         type: 'jpeg',
