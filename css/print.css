@@ -1,1 +1,388 @@
-/*Printing procedures*/
+/**
+ * My RPG Source
+ * D&D 5e 2024 Character Sheet
+ * Print Styles
+ * ------------------------------------------------------------
+ *
+ * Goals:
+ *  - Print each character-sheet page on its own sheet of paper
+ *  - Hide website controls and interactive UI
+ *  - Prevent right-side clipping
+ *  - Remove screen-only shadows and spacing
+ *  - Preserve the character-sheet layout
+ *  - Suppress placeholder text when printing a blank sheet
+ *  - Avoid tooltips and Codex elements appearing in print
+ */
+
+
+/* ============================================================
+   PAGE SETUP
+   ============================================================ */
+
+@page {
+  size: Letter portrait;
+  margin: 0;
+}
+
+
+/* ============================================================
+   GLOBAL PRINT RESET
+   ============================================================ */
+
+@media print {
+
+  html,
+  body {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+  }
+
+  body {
+    display: block !important;
+    min-height: 0 !important;
+  }
+
+  /*
+   * Ask supporting browsers to preserve the selected theme and
+   * character-sheet colours as faithfully as possible.
+   */
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-sizing: border-box;
+  }
+
+
+  /* ==========================================================
+     HIDE WEBSITE-ONLY CONTROLS
+     ========================================================== */
+
+  .controls,
+  .knowledge-tooltip,
+  .codex-overlay,
+  .codex-drawer {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+
+  /* ==========================================================
+     REMOVE KNOWLEDGE-CARD SCREEN DECORATION
+     ========================================================== */
+
+  .tooltip-trigger,
+  .codex-launcher {
+    cursor: default !important;
+    text-decoration: none !important;
+  }
+
+
+  /* ==========================================================
+     CHARACTER DOCUMENT
+     ========================================================== */
+
+  #character-document,
+  .document-container {
+    display: block !important;
+
+    width: 816px !important;
+    max-width: none !important;
+
+    margin: 0 auto !important;
+    padding: 0 !important;
+
+    gap: 0 !important;
+
+    overflow: visible !important;
+  }
+
+
+  /* ==========================================================
+     INDIVIDUAL CHARACTER-SHEET PAGES
+     ========================================================== */
+
+  .sheet-page {
+    /*
+     * The existing sheet is designed around an 816px width,
+     * which corresponds to 8.5 inches at the browser's standard
+     * 96 CSS pixels per inch.
+     */
+    width: 816px !important;
+
+    /*
+     * Keep the existing vertical design dimensions rather than
+     * allowing the browser to stretch the layout unexpectedly.
+     */
+    height: 1045px !important;
+    min-height: 1045px !important;
+    max-height: 1045px !important;
+
+    margin: 0 auto !important;
+    padding: 20px !important;
+
+    box-shadow: none !important;
+
+    /*
+     * Keep a subtle page boundary without adding enough width
+     * to push the right edge off the printable layout.
+     */
+    border: 1px solid var(--border-color) !important;
+
+    position: relative !important;
+
+    overflow: hidden !important;
+
+    page-break-inside: avoid !important;
+    break-inside: avoid-page !important;
+
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+
+  /*
+   * Avoid creating an empty fifth page after Page 4.
+   */
+  .sheet-page:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+
+  /*
+   * builder.html already has a screen rule that adds a break
+   * before subsequent pages. Print.css takes full control of
+   * pagination instead.
+   */
+  .sheet-page + .sheet-page {
+    page-break-before: auto !important;
+    break-before: auto !important;
+  }
+
+
+  /* ==========================================================
+     PAGE 1 TWO-COLUMN LAYOUT
+     ========================================================== */
+
+  .sheet-page.two-column-layout {
+    display: flex !important;
+    flex-direction: row !important;
+
+    gap: 10px !important;
+
+    align-items: stretch !important;
+  }
+
+  .master-stack {
+    min-width: 0 !important;
+  }
+
+  .left-stack {
+    width: 330px !important;
+    flex: 0 0 330px !important;
+  }
+
+  .right-stack {
+    width: 436px !important;
+    flex: 0 0 436px !important;
+  }
+
+  .left-column {
+    width: 330px !important;
+    flex: 0 0 330px !important;
+  }
+
+  .right-column {
+    width: 436px !important;
+    flex: 0 0 436px !important;
+  }
+
+
+  /* ==========================================================
+     FORM CONTROLS
+     ========================================================== */
+
+  input,
+  textarea,
+  select {
+    color: var(--text-main) !important;
+
+    -webkit-text-fill-color: var(--text-main) !important;
+
+    opacity: 1 !important;
+
+    box-shadow: none !important;
+
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+
+  /*
+   * Remove dropdown arrows from the printed page.
+   * The selected value still prints normally.
+   */
+  select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+
+    background-image: none !important;
+  }
+
+
+  /*
+   * Prevent textarea scrollbars from appearing on paper.
+   */
+  textarea {
+    overflow: hidden !important;
+    resize: none !important;
+  }
+
+  textarea::-webkit-scrollbar {
+    display: none !important;
+  }
+
+
+  /*
+   * Remove number-input spinner controls.
+   */
+  input[type="number"] {
+    appearance: textfield !important;
+    -moz-appearance: textfield !important;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+  }
+
+
+  /* ==========================================================
+     PLACEHOLDER PROTECTION
+     ========================================================== */
+
+  /*
+   * printing.js temporarily removes placeholders when using
+   * "Print Blank Character Sheet".
+   *
+   * These rules are a second layer of protection so a browser
+   * cannot sneak faint placeholder text onto the paper.
+   */
+
+  body.printing-blank input::placeholder,
+  body.printing-blank textarea::placeholder,
+  #character-document.printing-blank input::placeholder,
+  #character-document.printing-blank textarea::placeholder {
+    color: transparent !important;
+    opacity: 0 !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+
+
+  /* Firefox */
+  body.printing-blank input::-moz-placeholder,
+  body.printing-blank textarea::-moz-placeholder {
+    color: transparent !important;
+    opacity: 0 !important;
+  }
+
+
+  /* ==========================================================
+     CHECKBOXES / RADIO BUTTONS
+     ========================================================== */
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+
+  /* ==========================================================
+     MULTICLASS AREA
+     ========================================================== */
+
+  /*
+   * The screen version can scroll when several classes exist.
+   * A printed sheet should never show a scrollbar.
+   */
+  #class-level-container {
+    overflow: hidden !important;
+    scrollbar-width: none !important;
+  }
+
+  #class-level-container::-webkit-scrollbar {
+    display: none !important;
+  }
+
+
+  /* ==========================================================
+     LINKS
+     ========================================================== */
+
+  /*
+   * Browsers sometimes append URLs after links when printing.
+   * We do not want that inside the character sheet.
+   */
+  a[href]::after {
+    content: none !important;
+  }
+
+
+  /* ==========================================================
+     FOCUS / INTERACTION ARTIFACTS
+     ========================================================== */
+
+  input:focus,
+  textarea:focus,
+  select:focus,
+  button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+
+  /* ==========================================================
+     BLANK-SHEET MODE
+     ========================================================== */
+
+  /*
+   * These selectors activate specifically when printing.js
+   * prepares a blank character sheet.
+   */
+
+  body.printing-blank,
+  #character-document.printing-blank {
+    background: #ffffff !important;
+  }
+
+
+  /*
+   * Keep empty fields visually obvious so the printed page is
+   * useful as a handwritten character sheet.
+   */
+  #character-document.printing-blank input,
+  #character-document.printing-blank textarea,
+  #character-document.printing-blank select {
+    box-shadow: none !important;
+  }
+
+
+  /* ==========================================================
+     PREVENT ACCIDENTAL EXTRA CONTENT
+     ========================================================== */
+
+  script,
+  noscript {
+    display: none !important;
+  }
+
+}
