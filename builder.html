@@ -455,43 +455,109 @@ Started: July 2026
             </div>
 
             <!-- Half-Elf controls remain for the current 2014-style UI logic. -->
-            <div class="detail-box" style="justify-content: center;">
-              <div
-                id="half-elf-bonuses"
-                style="display: none; flex-direction: column; gap: 2px;"
-              >
-                <label>Half-Elf Stat Boosts (+1 to two)</label>
-                <div style="display: flex; gap: 4px;">
-                  <select
-                    class="fantasy-input"
-                    id="half-elf-stat1"
-                    style="font-size: 9.5px; padding: 2px;"
-                  >
-                    <option value="str">Str</option>
-                    <option value="dex">Dex</option>
-                    <option value="con">Con</option>
-                    <option value="int">Int</option>
-                    <option value="wis">Wis</option>
-                    <option value="cha" selected>Cha</option>
-                  </select>
+            <div
+  class="detail-box"
+  id="origin-background-controls"
+  style="justify-content: center;"
+>
+  <!-- 2014 flexible Race ability bonuses -->
+  <div
+    id="half-elf-bonuses"
+    style="
+      display: none;
+      flex-direction: column;
+      gap: 2px;
+    "
+  >
+    <label>
+      Half-Elf Stat Boosts (+1 to two)
+    </label>
 
-                  <select
-                    class="fantasy-input"
-                    id="half-elf-stat2"
-                    style="font-size: 9.5px; padding: 2px;"
-                  >
-                    <option value="str">Str</option>
-                    <option value="dex">Dex</option>
-                    <option value="con">Con</option>
-                    <option value="int" selected>Int</option>
-                    <option value="wis">Wis</option>
-                    <option value="cha">Cha</option>
-                  </select>
-                </div>
-              </div>
-            </div>
+    <div style="display: flex; gap: 4px;">
+      <select
+        class="fantasy-input"
+        id="half-elf-stat1"
+        style="font-size: 9.5px; padding: 2px;"
+      >
+        <option value="str">Str</option>
+        <option value="dex">Dex</option>
+        <option value="con">Con</option>
+        <option value="int">Int</option>
+        <option value="wis">Wis</option>
+        <option value="cha" selected>Cha</option>
+      </select>
 
-            <div class="detail-box">
+      <select
+        class="fantasy-input"
+        id="half-elf-stat2"
+        style="font-size: 9.5px; padding: 2px;"
+      >
+        <option value="str">Str</option>
+        <option value="dex">Dex</option>
+        <option value="con">Con</option>
+        <option value="int" selected>Int</option>
+        <option value="wis">Wis</option>
+        <option value="cha">Cha</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- 2024 Background ability-score increases -->
+  <div
+    id="background-ability-controls"
+    style="
+      display: none;
+      flex-direction: column;
+      gap: 2px;
+    "
+  >
+    <label for="background-asi-method">
+      Background Ability Scores
+    </label>
+
+    <select
+      id="background-asi-method"
+      class="fantasy-input"
+      style="font-size: 9px; padding: 2px;"
+    >
+      <option value="2-1">
+        +2 to one, +1 to another
+      </option>
+
+      <option value="1-1-1">
+        +1 to all three
+      </option>
+    </select>
+
+    <div
+      id="background-asi-choice-row"
+      style="display: flex; gap: 4px;"
+    >
+      <select
+        id="background-asi-primary"
+        class="fantasy-input"
+        aria-label="Ability receiving plus two"
+        style="font-size: 9px; padding: 2px;"
+      ></select>
+
+      <select
+        id="background-asi-secondary"
+        class="fantasy-input"
+        aria-label="Ability receiving plus one"
+        style="font-size: 9px; padding: 2px;"
+      ></select>
+    </div>
+
+    <div
+      id="background-ability-note"
+      style="
+        font-size: 7.5px;
+        line-height: 1.15;
+        opacity: 0.75;
+      "
+    ></div>
+  </div>
+</div>
   <label for="char-background">Background</label>
 
   <select
