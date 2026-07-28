@@ -1,9 +1,7 @@
-/*commit checkpoint*/
-
 <!DOCTYPE html>
 <!--
 ===========================================================
-D&D 2024 CHARACTER BUILDER
+MY RPG SOURCE D&D CHARACTER BUILDER
 Created by Jason Paul
 Project: My RPG Source
 Version: 0.1.0
@@ -20,915 +18,308 @@ Started: July 2026
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>D&D5e 2024 Character Sheet</title>
+  <meta
+    name="description"
+    content="A printable, saveable D&D 5e character builder for the 2014 and 2024 rules."
+  >
+
+  <!-- config.js replaces this title with the selected edition. -->
+  <title>My RPG Source Character Sheet</title>
+
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-  <!-- html2pdf library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-<!-- Edition Configuration -->
-<script defer src="js/config.js"></script>
-
-<link rel="stylesheet" href="css/themes.css">
-<link rel="stylesheet" href="css/layout.css"> 
-<link rel="stylesheet" href="css/responsive.css">  
-  
-<link rel="stylesheet" href="css/tooltips.css">
-<script defer src="js/tooltips.js"></script>
-  
-<link rel="stylesheet" href="css/codex.css">
-<script defer src="js/codex.js"></script>
-
-<link rel="stylesheet" href="css/print.css" media="print">
-
-<script defer src="js/calculations.js"></script>
-<script defer src="js/ui.js"></script>
-<script defer src="js/storage.js"></script>
-<script defer src="js/printing.js"></script>
-<script defer src="js/pdf.js"></script>
-
-<script defer src="js/app.js"></script>
-  
-  <style>
-    /* Document & Theme Variables */
-    :root {
-      --bg-app: #2c3e50;
-      --bg-sheet: #f4ecd8;
-      --text-main: #2c221e;
-      --border-color: #5c4033;
-      --accent-color: #8b4513;
-      --input-bg: rgba(255, 255, 255, 0.6);
-      --shadow-color: rgba(0, 0, 0, 0.3);
-    }
-
-    .theme-standard {
-      --bg-sheet: #f4ecd8;
-      --text-main: #2c221e;
-      --border-color: #5c4033;
-      --accent-color: #8b4513;
-      --input-bg: rgba(255, 255, 255, 0.6);
-    }
-
-    .theme-gritty {
-      --bg-sheet: #1a1a1a;
-      --text-main: #f0f0f0;
-      --border-color: #4a4a4a;
-      --accent-color: #a93226;
-      --input-bg: rgba(40, 40, 40, 0.8);
-    }
-
-    .theme-fantasy {
-      --bg-sheet: #1b263b;
-      --text-main: #f1c40f;
-      --border-color: #415a77;
-      --accent-color: #778da9;
-      --input-bg: rgba(27, 38, 59, 0.7);
-    }
-
-    .theme-whimsical {
-      --bg-sheet: #fefae0;
-      --text-main: #283618;
-      --border-color: #dda15e;
-      --accent-color: #bc6c25;
-      --input-bg: rgba(254, 250, 224, 0.9);
-    }
-
-    .theme-hellscape {
-      --bg-sheet: #2b0909;
-      --text-main: #f5b041;
-      --border-color: #922b21;
-      --accent-color: #e74c3c;
-      --input-bg: rgba(43, 9, 9, 0.8);
-    }
-
-    .theme-bw {
-      --bg-sheet: #ffffff;
-      --text-main: #000000;
-      --border-color: #000000;
-      --accent-color: #000000;
-      --input-bg: #ffffff;
-    }
-  
-    /* Remove number input spinner arrows */
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      max-width: 100%;
-    }
-
-    body {
-      font-family: 'Lora', serif;
-      background-color: var(--bg-app);
-      color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    .app-container {
-      display: flex;
-      gap: 20px;
-      width: 100%;
-      max-width: 1150px;
-      justify-content: center;
-    }
-
-    /* Control Panel Sidebar */
-    .controls {
-      width: 220px;
-      background: #1a252f;
-      color: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      position: sticky;
-      top: 20px;
-      flex-shrink: 0;
-    }
-
-    .controls h3 {
-      font-family: 'Cinzel', serif;
-      font-size: 16px;
-      border-bottom: 1px solid #415a77;
-      padding-bottom: 6px;
-      text-align: center;
-    }
-
-    .controls label {
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .controls select, .controls button {
-      width: 100%;
-      padding: 8px;
-      border-radius: 4px;
-      border: none;
-      font-family: inherit;
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    .controls select {
-      background: #fff;
-      color: #333;
-    }
-
-    .controls button {
-      background: #27ae60;
-      color: #fff;
-      font-weight: bold;
-      transition: background 0.2s;
-    }
-
-    .controls button:hover {
-      background: #219653;
-    }
-
-    .controls button.export {
-      background: #c0392b;
-    }
-
-    .controls button.export:hover {
-      background: #a93226;
-    }
-
-    /* Document Container & Pages */
-    .document-container {
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-    }
-
-    .sheet-page {
-      width: 816px;
-      height: 1045px; 
-      max-height: 1045px;
-      background-color: var(--bg-sheet);
-      border: 2px solid var(--border-color);
-      padding: 20px;
-      box-shadow: 0 10px 25px var(--shadow-color);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      overflow: hidden;
-      box-sizing: border-box;
-      
-      /* Explicit Page Break Rules */
-      page-break-inside: avoid;
-      break-inside: avoid;
-    }
-
-    /* Only break before new pages */
-    .sheet-page + .sheet-page {
-      page-break-before: always;
-      break-before: page;
-    }
-
-    /* Export Mode Styles */
-    .document-container.exporting {
-      gap: 0 !important;
-      padding: 0 !important;
-    }
-
-    .document-container.exporting .sheet-page {
-      box-shadow: none !important;
-      margin: 0 !important;
-      border: 1px solid transparent !important;
-    }
-
-    /* Two-Column Stack Layout for Page 1 */
-    .sheet-page.two-column-layout {
-      display: flex;
-      flex-direction: row;
-      gap: 10px;
-    }
-
-    .master-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-width: 0;
-    }
-
-    .left-stack {
-      width: 330px;
-      flex: 0 0 330px;
-    }
-
-    .right-stack {
-      width: 436px;
-      flex: 0 0 436px;
-    }
-
-    /* Typography & Inputs */
-    h2.fantasy-header, h3.fantasy-header {
-      font-family: 'Cinzel', serif;
-      text-align: center;
-      font-size: 13px;
-      letter-spacing: 1px;
-      color: var(--accent-color);
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 2px;
-      margin-bottom: 2px;
-      text-transform: uppercase;
-    }
-
-    .fantasy-input {
-      background: var(--input-bg);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      font-family: inherit;
-      padding: 3px 6px;
-      border-radius: 3px;
-      width: 100%;
-      min-width: 0;
-    }
-
-    .fantasy-input:focus {
-      outline: none;
-      border-color: var(--accent-color);
-    }
-
-    label {
-      font-family: 'Cinzel', serif;
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--border-color);
-    }
-
-    .center-text {
-      text-align: center;
-    }
-
-    .big-text {
-      font-size: 15px;
-      font-weight: bold;
-    }
-
-    /* Header Grid Elements */
-    .name-container {
-      border: 1px solid var(--border-color);
-      padding: 6px 8px;
-      border-radius: 4px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      height: 105px;
-      min-height: 105px;
-      max-height: 105px;
-    }
-
-    .big-input {
-      font-size: 14px;
-      font-weight: bold;
-      font-family: 'Cinzel', serif;
-      padding: 2px 6px;
-    }
-
-    .details-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
-      border: 1px solid var(--border-color);
-      padding: 8px;
-      border-radius: 4px;
-      min-width: 0;
-      width: 436px;
-    }
-
-    .detail-box {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    /* Controlled Multiclass Container */
-    #class-level-container {
-      max-height: 95px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    /* Combat Blocks */
-    .left-combat-block, .right-combat-block {
-      display: flex;
-      gap: 6px;
-      min-width: 0;
-    }
-
-    .combat-box {
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: 5px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      background: rgba(0,0,0,0.02);
-      flex: 1;
-      min-width: 0;
-    }
-
-    .ac-box {
-      background: rgba(139, 69, 19, 0.1);
-    }
-
-    .hp-box {
-      flex: 1.4;
-      overflow: hidden;
-    }
-
-    .heart-bg {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      fill: rgba(192, 57, 43, 0.15);
-      z-index: 0;
-    }
-
-    .hp-content {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .hp-inputs {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
-      width: 100%;
-    }
-
-    /* Sheet Main Body Layout */
-    .left-column {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex-shrink: 0;
-      width: 330px;
-    }
-
-    .right-column {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex-shrink: 0;
-      width: 436px;
-    }
-
-    /* Stats & Saves */
-    .stats-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      width: 100%;
-    }
-
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px dashed rgba(92, 64, 51, 0.3);
-      padding-bottom: 1px;
-    }
-
-    .stat-row label {
-      font-size: 10.5px;
-      font-weight: bold;
-    }
-
-    .stat-group {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .stat-mod {
-      font-size: 12px;
-      font-weight: bold;
-      width: 24px;
-      text-align: right;
-      color: var(--accent-color);
-    }
-
-    .stat-val {
-      width: 36px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 11px;
-    }
-
-    /* Death Saves */
-    .death-saves-box {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .death-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 9px;
-      text-transform: uppercase;
-      font-family: 'Cinzel', serif;
-    }
-
-    .theme-gritty .death-label { color: #f0f0f0; }
-    .theme-fantasy .death-label { color: #f1c40f; }
-    .theme-hellscape .death-label { color: #f5b041; }
-
-    .death-circles {
-      display: flex;
-      gap: 4px;
-    }
-
-    .death-check {
-      width: 12px;
-      height: 12px;
-      accent-color: var(--accent-color);
-      cursor: pointer;
-    }
-
-    /* Saving Throws & Skills Lists */
-    .saves-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      width: 100%;
-      font-size: 10px;
-    }
-
-    .saves-list label {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-family: inherit;
-      font-size: 10px;
-      text-transform: none;
-      font-weight: normal;
-      color: var(--text-main);
-    }
-
-    .save-check, .skill-check {
-      accent-color: var(--accent-color);
-      cursor: pointer;
-      width: 11px;
-      height: 11px;
-    }
-
-    .save-mod, .skill-mod {
-      margin-left: auto;
-      width: 24px;
-      text-align: center;
-      font-size: 9.5px;
-      padding: 1px;
-      background: var(--input-bg);
-      color: var(--text-main);
-      border: 1px solid var(--border-color);
-      border-radius: 2px;
-    }
-
-    .stat-hint {
-      font-size: 8.5px;
-      color: var(--text-main);
-      opacity: 0.7;
-    }
-
-    /* Attacks & Spellcasting */
-    .attacks-box {
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: 5px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      min-width: 0;
-    }
-
-    .header-row {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 2fr;
-      gap: 4px;
-      font-family: 'Cinzel', serif;
-      font-size: 8.5px;
-      text-transform: uppercase;
-      font-weight: bold;
-      text-align: center;
-      color: var(--border-color);
-      min-width: 0;
-    }
-
-    .attack-row {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 2fr;
-      gap: 4px;
-      min-width: 0;
-    }
-
-    .attack-row input {
-      font-size: 10.5px;
-      padding: 2px 4px;
-      min-width: 0;
-    }
-
-    .extra-attacks {
-      resize: none;
-      height: 44px;
-      font-size: 10.5px;
-      min-width: 0;
-    }
-
-    /* Class Abilities / Feats */
-    .abilities-box {
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: 5px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      min-width: 0;
-    }
-
-    .abilities-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2px 6px;
-      min-width: 0;
-    }
-
-    .ability-input {
-      font-size: 9.5px;
-      padding: 2px 4px;
-      min-width: 0;
-    }
-
-    /* Equipment & Currencies */
-    .equipment-box {
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: 5px;
-      display: flex;
-      gap: 6px;
-      min-width: 0;
-    }
-
-    .money-column {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      width: 55px;
-      flex-shrink: 0;
-    }
-
-    .money-field {
-      display: flex;
-      align-items: center;
-      border: 1px solid var(--border-color);
-      border-radius: 2px;
-      overflow: hidden;
-      background: var(--input-bg);
-    }
-
-    .money-field label {
-      background: var(--accent-color);
-      color: #fff;
-      font-size: 8.5px;
-      padding: 2px;
-      width: 20px;
-      text-align: center;
-    }
-
-    .money-field input {
-      border: none;
-      text-align: center;
-      font-size: 9.5px;
-      padding: 1px;
-      background: transparent;
-      color: var(--text-main);
-      width: 33px;
-    }
-
-    .inventory-text {
-      flex: 1;
-      resize: none;
-      height: 105px;
-      font-size: 10.5px;
-      min-width: 0;
-    }
-
-    /* Page 2 & General Elements */
-    .full-width-body {
-      flex-direction: column;
-      gap: 8px;
-      flex: 1;
-      display: flex;
-    }
-
-    .flair-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .flair-ornament {
-      color: var(--accent-color);
-      font-size: 10px;
-    }
-
-    .flair-quote {
-      font-style: italic;
-      font-size: 11px;
-      width: 70%;
-    }
-
-    .flex-row-sections {
-      display: flex;
-      gap: 8px;
-      height: 140px;
-    }
-
-    .half-width {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    .trait-section {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      min-width: 0;
-    }
-
-    .trait-box {
-      flex: 1;
-      resize: none;
-      font-size: 10.5px;
-      padding: 5px;
-      min-width: 0;
-    }
-
-    .flex-grow-section {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    /* Spells Pages Expanded Layout */
-    .spell-tier {
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: 5px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      min-width: 0;
-      flex: 1;
-    }
-
-    .spell-tier-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px dashed rgba(92, 64, 51, 0.4);
-      padding-bottom: 2px;
-    }
-
-    .spell-guide-tip {
-      font-size: 8px;
-      opacity: 0.7;
-    }
-
-    .spell-box {
-      resize: none;
-      flex: 1;
-      font-size: 10.5px;
-      padding: 5px;
-      min-width: 0;
-    }
-  </style>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+  >
+
+  <!-- Shared Character Sheet Styles -->
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/tooltips.css">
+  <link rel="stylesheet" href="css/codex.css">
+  <link rel="stylesheet" href="css/print.css" media="print">
+
+  <!-- PDF Library -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+  ></script>
+
+  <!-- Edition Configuration must load before every other local module. -->
+  <script defer src="js/config.js"></script>
+
+  <!-- Character Builder Modules -->
+  <script defer src="js/tooltips.js"></script>
+  <script defer src="js/codex.js"></script>
+  <script defer src="js/calculations.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/storage.js"></script>
+  <script defer src="js/printing.js"></script>
+  <script defer src="js/pdf.js"></script>
+  <script defer src="js/app.js"></script>
 </head>
+
 <body>
+  <div class="app-container">
 
-  <div class="controls">
-  <h3>Controls</h3>
+    <!-- =====================================================
+         CONTROL PANEL
+         ===================================================== -->
+    <aside class="controls" aria-label="Character builder controls">
+      <h3>Controls</h3>
 
-  <div>
-    <label for="theme-select">Theme</label>
-    <select id="theme-select">
-      <option value="theme-standard">Standard Parchment</option>
-      <option value="theme-gritty">Gritty Dark</option>
-      <option value="theme-fantasy">Arcane Fantasy</option>
-      <option value="theme-whimsical">Whimsical Woods</option>
-      <option value="theme-hellscape">Hellscape Red</option>
-      <option value="theme-bw">Standard Black & White</option>
-    </select>
-  </div>
+      <div>
+        <label for="theme-select">Theme</label>
+        <select id="theme-select">
+          <option value="theme-standard">Standard Parchment</option>
+          <option value="theme-gritty">Gritty Dark</option>
+          <option value="theme-fantasy">Arcane Fantasy</option>
+          <option value="theme-whimsical">Whimsical Woods</option>
+          <option value="theme-hellscape">Hellscape Red</option>
+          <option value="theme-bw">Standard Black &amp; White</option>
+        </select>
+      </div>
 
-  <div>
-    <label for="stat-method">Stat Generation</label>
-    <select id="stat-method">
-      <option value="manual">Manual Entry</option>
-      <option value="4d6">4d6 Drop Lowest</option>
-      <option value="3d6">3d6 Straight</option>
-    </select>
-  </div>
+      <div>
+        <label for="stat-method">Stat Generation</label>
+        <select id="stat-method">
+          <option value="manual">Manual Entry</option>
+          <option value="4d6">4d6 Drop Lowest</option>
+          <option value="3d6">3d6 Straight</option>
+        </select>
+      </div>
 
-  <button id="roll-btn">Roll Stats</button>
+      <button type="button" id="roll-btn">Roll Stats</button>
 
-  <hr style="border-color: #415a77; margin: 5px 0;">
-  <h3 style="font-size: 13px; border:none; padding:0; text-align: center;">Multi-Class Options</h3>
-  <button type="button" id="multiclass-btn">Add Multi-Class</button>
-  <button type="button" id="remove-multiclass-btn" style="background: rgba(192,57,43,0.7);">Remove Last Class</button>
+      <hr style="border-color: #415a77; margin: 5px 0;">
 
-  <hr style="border-color: #415a77; margin: 5px 0;">
-  <h3 style="font-size: 13px; border:none; padding:0; text-align: center;">Character Storage</h3>
-  <div class="storage-note">
-    Saves happen in this browser. Export a JSON backup if you want a portable copy.
-  </div>
-  <button type="button" id="save-now-btn" class="secondary">Save Now</button>
-  <button type="button" id="load-now-btn" class="ghost">Load Saved Character</button>
-  <button type="button" id="export-json-btn" class="secondary">Export JSON Backup</button>
-  <button type="button" id="import-json-btn" class="ghost">Import JSON Backup</button>
-  <input type="file" id="import-json-file" accept="application/json" style="display:none;">
-  <div id="save-status" class="storage-status" data-kind="warn">No local save yet.</div>
+      <h3 style="font-size: 13px; border: none; padding: 0; text-align: center;">
+        Multi-Class Options
+      </h3>
 
-  <hr style="border-color: #415a77; margin: 5px 0;">
-  <button type="button" id="print-blank-btn" class="ghost">Print Blank Character Sheet</button>
-  <button id="export-btn" class="export">Export to PDF</button>
-</div>
+      <button type="button" id="multiclass-btn">Add Multi-Class</button>
+      <button
+        type="button"
+        id="remove-multiclass-btn"
+        style="background: rgba(192, 57, 43, 0.7);"
+      >
+        Remove Last Class
+      </button>
 
-    <!-- Document Container -->
-    <div class="document-container" id="character-document">
+      <hr style="border-color: #415a77; margin: 5px 0;">
 
-      <!-- PAGE 1: Two-Column Stack Layout -->
-      <div class="sheet-page two-column-layout" id="page-1">
-        
+      <h3 style="font-size: 13px; border: none; padding: 0; text-align: center;">
+        Character Storage
+      </h3>
+
+      <div class="storage-note">
+        Saves happen in this browser. Export a JSON backup if you want a portable copy.
+      </div>
+
+      <button type="button" id="save-now-btn" class="secondary">Save Now</button>
+      <button type="button" id="load-now-btn" class="ghost">Load Saved Character</button>
+      <button type="button" id="export-json-btn" class="secondary">Export JSON Backup</button>
+      <button type="button" id="import-json-btn" class="ghost">Import JSON Backup</button>
+
+      <input
+        type="file"
+        id="import-json-file"
+        accept="application/json"
+        style="display: none;"
+      >
+
+      <div id="save-status" class="storage-status" data-kind="warn">
+        No local save yet.
+      </div>
+
+      <hr style="border-color: #415a77; margin: 5px 0;">
+
+      <button type="button" id="print-blank-btn" class="ghost">
+        Print Blank Character Sheet
+      </button>
+
+      <button type="button" id="export-btn" class="export">
+        Export to PDF
+      </button>
+    </aside>
+
+    <!-- =====================================================
+         CHARACTER DOCUMENT
+         ===================================================== -->
+    <main
+      class="document-container theme-standard"
+      id="character-document"
+      aria-label="D&D character sheet"
+    >
+
+      <!-- ===================================================
+           PAGE 1: CORE CHARACTER SHEET
+           =================================================== -->
+      <section class="sheet-page two-column-layout" id="page-1">
+
         <!-- Left Master Stack -->
         <div class="master-stack left-stack">
-          
-          <!-- Character Name & Campaign Name Box -->
+
+          <!-- Character and Campaign Names -->
           <div class="name-container">
             <div style="display: flex; flex-direction: column; gap: 2px;">
-              <label>Character Name</label>
-              <input type="text" id="character-name" class="fantasy-input big-input" placeholder="Hero Name">
+              <label for="character-name">Character Name</label>
+              <input
+                type="text"
+                id="character-name"
+                class="fantasy-input big-input"
+                placeholder="Hero Name"
+              >
             </div>
+
             <div style="display: flex; flex-direction: column; gap: 2px;">
               <label>Campaign Name</label>
-              <input type="text" class="fantasy-input" placeholder="Campaign Name">
+              <input
+                type="text"
+                class="fantasy-input"
+                placeholder="Campaign Name"
+              >
             </div>
           </div>
 
-          <!-- Left Combat Block (AC, Initiative, Speed) -->
-          <div class="left-combat-block" style="display: flex; gap: 6px;">
+          <!-- Armor Class, Initiative, and Speed -->
+          <div class="left-combat-block">
             <div class="combat-box ac-box">
               <label>Armor Class</label>
-              <input type="text" class="fantasy-input center-text big-text" value="10">
+              <input
+                type="text"
+                class="fantasy-input center-text big-text"
+                value="10"
+              >
             </div>
+
             <div class="combat-box">
-              <label>Initiative</label>
-              <input type="text" id="initiative" class="fantasy-input center-text big-text" value="+0" readonly>
+              <label for="initiative">Initiative</label>
+              <input
+                type="text"
+                id="initiative"
+                class="fantasy-input center-text big-text"
+                value="+0"
+                readonly
+              >
             </div>
+
             <div class="combat-box">
-              <label>Speed</label>
-              <input type="text" id="speed-input" class="fantasy-input center-text" value="30 ft">
+              <label for="speed-input">Speed</label>
+              <input
+                type="text"
+                id="speed-input"
+                class="fantasy-input center-text"
+                value="30 ft"
+              >
             </div>
           </div>
 
           <!-- Left Column Body -->
           <div class="left-column">
-            
-            <!-- Stats & Saves Grid -->
+
+            <!-- Ability Scores -->
             <div class="stats-grid">
               <div class="stat-row">
                 <div class="stat-group">
                   <span class="stat-mod" id="str-mod">+0</span>
-                  <label>Strength</label>
+                  <label for="str">Strength</label>
                 </div>
-                <input type="number" id="str" class="fantasy-input stat-val center-text" value="10">
+                <input
+                  type="number"
+                  id="str"
+                  class="fantasy-input stat-val center-text"
+                  value="10"
+                >
               </div>
+
               <div class="stat-row">
                 <div class="stat-group">
                   <span class="stat-mod" id="dex-mod">+0</span>
-                  <label>Dexterity</label>
+                  <label for="dex">Dexterity</label>
                 </div>
-                <input type="number" id="dex" class="fantasy-input stat-val center-text" value="10">
+                <input
+                  type="number"
+                  id="dex"
+                  class="fantasy-input stat-val center-text"
+                  value="10"
+                >
               </div>
+
               <div class="stat-row">
                 <div class="stat-group">
                   <span class="stat-mod" id="con-mod">+0</span>
-                  <label>Constitution</label>
+                  <label for="con">Constitution</label>
                 </div>
-                <input type="number" id="con" class="fantasy-input stat-val center-text" value="10">
+                <input
+                  type="number"
+                  id="con"
+                  class="fantasy-input stat-val center-text"
+                  value="10"
+                >
               </div>
+
               <div class="stat-row">
                 <div class="stat-group">
                   <span class="stat-mod" id="int-mod">+0</span>
-                  <label>Intelligence</label>
+                  <label for="int">Intelligence</label>
                 </div>
-                <input type="number" id="int" class="fantasy-input stat-val center-text" value="10">
+                <input
+                  type="number"
+                  id="int"
+                  class="fantasy-input stat-val center-text"
+                  value="10"
+                >
               </div>
+
               <div class="stat-row">
                 <div class="stat-group">
                   <span class="stat-mod" id="wis-mod">+0</span>
-                  <label>Wisdom</label>
+                  <label for="wis">Wisdom</label>
                 </div>
-                <input type="number" id="wis" class="fantasy-input stat-val center-text" value="10">
+                <input
+                  type="number"
+                  id="wis"
+                  class="fantasy-input stat-val center-text"
+                  value="10"
+                >
               </div>
+
               <div class="stat-row">
                 <div class="stat-group">
                   <span class="stat-mod" id="cha-mod">+0</span>
-                  <label>Charisma</label>
+                  <label for="cha">Charisma</label>
                 </div>
-                <input type="number" id="cha" class="fantasy-input stat-val center-text" value="10">
+                <input
+                  type="number"
+                  id="cha"
+                  class="fantasy-input stat-val center-text"
+                  value="10"
+                >
               </div>
             </div>
 
             <!-- Death Saves -->
             <div class="combat-box death-saves-box">
-              <h3 class="fantasy-header" style="width: 100%; margin-bottom: 2px;">Death Saves</h3>
+              <h3 class="fantasy-header" style="width: 100%; margin-bottom: 2px;">
+                Death Saves
+              </h3>
+
               <div class="death-row" style="width: 100%;">
                 <span class="death-label">Successes</span>
                 <div class="death-circles">
-                  <input type="checkbox" class="death-check">
-                  <input type="checkbox" class="death-check">
-                  <input type="checkbox" class="death-check">
+                  <input type="checkbox" class="death-check" aria-label="Death save success 1">
+                  <input type="checkbox" class="death-check" aria-label="Death save success 2">
+                  <input type="checkbox" class="death-check" aria-label="Death save success 3">
                 </div>
               </div>
+
               <div class="death-row" style="width: 100%;">
                 <span class="death-label">Failures</span>
                 <div class="death-circles">
-                  <input type="checkbox" class="death-check">
-                  <input type="checkbox" class="death-check">
-                  <input type="checkbox" class="death-check">
+                  <input type="checkbox" class="death-check" aria-label="Death save failure 1">
+                  <input type="checkbox" class="death-check" aria-label="Death save failure 2">
+                  <input type="checkbox" class="death-check" aria-label="Death save failure 3">
                 </div>
               </div>
             </div>
@@ -971,26 +362,30 @@ Started: July 2026
               </div>
             </div>
 
-            <!-- Racial Abilities -->
+            <!-- Race / Species Abilities -->
             <div class="attacks-box">
-              <h3 class="fantasy-header">Racial Abilities</h3>
-              <textarea class="fantasy-input extra-attacks" id="racial-abilities-input" placeholder="Racial traits..." style="height: 50px;"></textarea>
+              <h3 class="fantasy-header">Race Abilities</h3>
+              <textarea
+                class="fantasy-input extra-attacks"
+                id="racial-abilities-input"
+                placeholder="Race traits..."
+                style="height: 50px;"
+              ></textarea>
             </div>
-
           </div>
-
         </div>
 
         <!-- Right Master Stack -->
         <div class="master-stack right-stack">
-          
-          <!-- Details Grid & Multiclass Container -->
+
+          <!-- Character Details and Multiclass Rows -->
           <div class="details-grid">
             <div class="detail-box" style="grid-column: span 2;">
               <div style="display: flex; gap: 4px; margin-bottom: 2px;">
                 <label style="flex: 1.2;">Class</label>
                 <label style="flex: 0.8;">Level</label>
               </div>
+
               <div id="class-level-container">
                 <div class="class-level-row" style="display: flex; gap: 4px;">
                   <div class="detail-box" style="flex: 1.2;">
@@ -1010,6 +405,7 @@ Started: July 2026
                       <option value="Artificer">Artificer</option>
                     </select>
                   </div>
+
                   <div class="detail-box" style="flex: 0.8;">
                     <select class="fantasy-input char-level-select">
                       <option value="1" selected>1</option>
@@ -1038,8 +434,9 @@ Started: July 2026
               </div>
             </div>
 
+            <!-- config.js changes the visible Race wording to Species in 2024 mode. -->
             <div class="detail-box">
-              <label>Race</label>
+              <label for="char-race">Race</label>
               <select class="fantasy-input" id="char-race">
                 <option value="">--Select Race--</option>
                 <option value="Aarakocra">Aarakocra</option>
@@ -1056,12 +453,19 @@ Started: July 2026
               </select>
             </div>
 
-            <!-- Empty slot beside race that holds Half-Elf bonus drops when applicable -->
+            <!-- Half-Elf controls remain for the current 2014-style UI logic. -->
             <div class="detail-box" style="justify-content: center;">
-              <div id="half-elf-bonuses" style="display: none; flex-direction: column; gap: 2px;">
+              <div
+                id="half-elf-bonuses"
+                style="display: none; flex-direction: column; gap: 2px;"
+              >
                 <label>Half-Elf Stat Boosts (+1 to two)</label>
                 <div style="display: flex; gap: 4px;">
-                  <select class="fantasy-input" id="half-elf-stat1" style="font-size: 9.5px; padding: 2px;">
+                  <select
+                    class="fantasy-input"
+                    id="half-elf-stat1"
+                    style="font-size: 9.5px; padding: 2px;"
+                  >
                     <option value="str">Str</option>
                     <option value="dex">Dex</option>
                     <option value="con">Con</option>
@@ -1069,7 +473,12 @@ Started: July 2026
                     <option value="wis">Wis</option>
                     <option value="cha" selected>Cha</option>
                   </select>
-                  <select class="fantasy-input" id="half-elf-stat2" style="font-size: 9.5px; padding: 2px;">
+
+                  <select
+                    class="fantasy-input"
+                    id="half-elf-stat2"
+                    style="font-size: 9.5px; padding: 2px;"
+                  >
                     <option value="str">Str</option>
                     <option value="dex">Dex</option>
                     <option value="con">Con</option>
@@ -1085,10 +494,12 @@ Started: July 2026
               <label>Background</label>
               <input type="text" class="fantasy-input" placeholder="Background">
             </div>
+
             <div class="detail-box">
               <label>Player Name</label>
               <input type="text" class="fantasy-input" placeholder="Player">
             </div>
+
             <div class="detail-box">
               <label for="alignment-select">Alignment</label>
               <select id="alignment-select" class="fantasy-input">
@@ -1102,93 +513,186 @@ Started: July 2026
                 <option value="lawful-evil">Lawful Evil</option>
                 <option value="neutral-evil">Neutral Evil</option>
                 <option value="chaotic-evil">Chaotic Evil</option>
-             </select>
-          </div>
+              </select>
+            </div>
+
             <div class="detail-box">
               <label>Experience Points</label>
               <input type="text" class="fantasy-input" placeholder="0">
             </div>
           </div>
 
-          <!-- Right Combat Block (HP, Hit Dice, Prof Bonus, Perception) -->
-          <div class="right-combat-block" style="display: flex; gap: 6px;">
+          <!-- HP, Hit Dice, Proficiency, and Passive Perception -->
+          <div class="right-combat-block">
             <div class="combat-box hp-box">
               <div class="hp-content">
-                <label>Hit Point Maximum & Current</label>
+                <label>Hit Point Maximum &amp; Current</label>
                 <div class="hp-inputs">
-                  <input type="text" id="hp-input" class="fantasy-input center-text big-text" value="10">
+                  <input
+                    type="text"
+                    id="hp-input"
+                    class="fantasy-input center-text big-text"
+                    value="10"
+                  >
                   <span>/</span>
-                  <!-- Current HP box left blank (no placeholder) -->
-                  <input type="text" class="fantasy-input center-text big-text" placeholder="">
+                  <input
+                    type="text"
+                    class="fantasy-input center-text big-text"
+                    placeholder=""
+                  >
                 </div>
               </div>
             </div>
+
             <div class="combat-box">
               <label>Hit Dice</label>
               <div style="display: flex; flex-direction: column; gap: 2px; width: 100%;">
                 <div style="display: flex; gap: 2px;">
-                  <input type="text" id="hit-dice-1" class="fantasy-input center-text" value="1d10" readonly style="font-size: 9.5px; padding: 2px; flex: 1;">
-                  <input type="text" id="hit-dice-2" class="fantasy-input center-text" value="" readonly style="font-size: 9.5px; padding: 2px; flex: 1;">
+                  <input
+                    type="text"
+                    id="hit-dice-1"
+                    class="fantasy-input center-text"
+                    value="1d10"
+                    readonly
+                    style="font-size: 9.5px; padding: 2px; flex: 1;"
+                  >
+                  <input
+                    type="text"
+                    id="hit-dice-2"
+                    class="fantasy-input center-text"
+                    value=""
+                    readonly
+                    style="font-size: 9.5px; padding: 2px; flex: 1;"
+                  >
                 </div>
+
                 <div style="display: flex; gap: 2px;">
-                  <input type="text" id="hit-dice-3" class="fantasy-input center-text" value="" readonly style="font-size: 9.5px; padding: 2px; flex: 1;">
-                  <input type="text" id="hit-dice-4" class="fantasy-input center-text" value="" readonly style="font-size: 9.5px; padding: 2px; flex: 1;">
+                  <input
+                    type="text"
+                    id="hit-dice-3"
+                    class="fantasy-input center-text"
+                    value=""
+                    readonly
+                    style="font-size: 9.5px; padding: 2px; flex: 1;"
+                  >
+                  <input
+                    type="text"
+                    id="hit-dice-4"
+                    class="fantasy-input center-text"
+                    value=""
+                    readonly
+                    style="font-size: 9.5px; padding: 2px; flex: 1;"
+                  >
                 </div>
               </div>
             </div>
+
             <div class="combat-box">
-              <label>Prof. Bonus</label>
-              <input type="text" id="prof-bonus" class="fantasy-input center-text big-text" value="+2" readonly>
+              <label for="prof-bonus">Prof. Bonus</label>
+              <input
+                type="text"
+                id="prof-bonus"
+                class="fantasy-input center-text big-text"
+                value="+2"
+                readonly
+              >
             </div>
+
             <div class="combat-box">
-              <label>Passive Perc.</label>
-              <input type="text" id="passive-perception" class="fantasy-input center-text big-text" value="10" readonly>
+              <label for="passive-perception">Passive Perc.</label>
+              <input
+                type="text"
+                id="passive-perception"
+                class="fantasy-input center-text big-text"
+                value="10"
+                readonly
+              >
             </div>
           </div>
 
           <!-- Right Column Body -->
           <div class="right-column">
-            
-            <!-- Attacks & Spellcasting -->
+
+            <!-- Attacks and Spellcasting -->
             <div class="attacks-box">
-              <h3 class="fantasy-header">Attacks & Spellcasting</h3>
+              <h3 class="fantasy-header">Attacks &amp; Spellcasting</h3>
+
               <div class="header-row">
-                <span>Name</span><span>Atk Bonus</span><span>Damage/Type</span><span>Notes</span>
+                <span>Name</span>
+                <span>Atk Bonus</span>
+                <span>Damage/Type</span>
+                <span>Notes</span>
               </div>
-              <div class="attack-row"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"></div>
-              <div class="attack-row"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"></div>
-              <div class="attack-row"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"><input type="text" class="fantasy-input"></div>
-              <textarea class="fantasy-input extra-attacks" placeholder="Additional attacks, weapon notes, or spellcasting actions..."></textarea>
+
+              <div class="attack-row">
+                <input type="text" class="fantasy-input">
+                <input type="text" class="fantasy-input">
+                <input type="text" class="fantasy-input">
+                <input type="text" class="fantasy-input">
+              </div>
+
+              <div class="attack-row">
+                <input type="text" class="fantasy-input">
+                <input type="text" class="fantasy-input">
+                <input type="text" class="fantasy-input">
+                <input type="text" class="fantasy-input">
+              </div>
+
+              <div class="attack-row">
+                <input type="text" class="fantasy-input">
+                <input type="text" class="fantasy-input">
+                <input type="text" class="fantasy-input">
+                <input type="text" class="fantasy-input">
+              </div>
+
+              <textarea
+                class="fantasy-input extra-attacks"
+                placeholder="Additional attacks, weapon notes, or spellcasting actions..."
+              ></textarea>
             </div>
 
-            <!-- Spellcasting Ability Summary -->
+            <!-- Spellcasting Summary -->
             <div class="attacks-box">
               <h3 class="fantasy-header">Spellcasting Stats</h3>
+
               <div style="display: flex; gap: 6px;">
                 <div class="detail-box" style="flex: 1;">
-                  <label>Spellcasting Ability</label>
+                  <label for="spell-ability">Spellcasting Ability</label>
                   <select class="fantasy-input" id="spell-ability">
-                    <!-- Changed option text to "Non-caster" -->
                     <option value="none">Non-caster</option>
                     <option value="int">Intelligence</option>
                     <option value="wis">Wisdom</option>
                     <option value="cha">Charisma</option>
                   </select>
                 </div>
+
                 <div class="detail-box" style="flex: 1;">
-                  <label>Spell Save DC</label>
-                  <input type="text" id="spell-dc" class="fantasy-input center-text" readonly value="-">
+                  <label for="spell-dc">Spell Save DC</label>
+                  <input
+                    type="text"
+                    id="spell-dc"
+                    class="fantasy-input center-text"
+                    readonly
+                    value="-"
+                  >
                 </div>
+
                 <div class="detail-box" style="flex: 1;">
-                  <label>Spell Attack Bonus</label>
-                  <input type="text" id="spell-atk" class="fantasy-input center-text" readonly value="-">
+                  <label for="spell-atk">Spell Attack Bonus</label>
+                  <input
+                    type="text"
+                    id="spell-atk"
+                    class="fantasy-input center-text"
+                    readonly
+                    value="-"
+                  >
                 </div>
               </div>
             </div>
 
-            <!-- Class Abilities / Feats -->
+            <!-- Class Abilities and Feats -->
             <div class="abilities-box">
-              <h3 class="fantasy-header">Class Abilities & Feats (20 Slots)</h3>
+              <h3 class="fantasy-header">Class Abilities &amp; Feats (20 Slots)</h3>
               <div class="abilities-grid">
                 <input type="text" class="fantasy-input ability-input" placeholder="Ability 1">
                 <input type="text" class="fantasy-input ability-input" placeholder="Ability 2">
@@ -1213,7 +717,7 @@ Started: July 2026
               </div>
             </div>
 
-            <!-- Equipment & Currencies -->
+            <!-- Equipment and Currency -->
             <div class="equipment-box">
               <div class="money-column">
                 <div class="money-field"><label>CP</label><input type="text" value="0"></div>
@@ -1222,166 +726,257 @@ Started: July 2026
                 <div class="money-field"><label>GP</label><input type="text" value="10"></div>
                 <div class="money-field"><label>PP</label><input type="text" value="0"></div>
               </div>
-              <textarea class="fantasy-input inventory-text" placeholder="Equipment inventory list..."></textarea>
+
+              <textarea
+                class="fantasy-input inventory-text"
+                placeholder="Equipment inventory list..."
+              ></textarea>
             </div>
-
           </div>
-
         </div>
+      </section>
 
-      </div>
+      <!-- ===================================================
+           PAGE 2: BACKGROUND AND TRAITS
+           =================================================== -->
+      <section class="sheet-page" id="page-2">
+        <h2 class="fantasy-header">Character Background &amp; Details</h2>
 
-      <!-- PAGE 2: Backstory & Traits -->
-      <div class="sheet-page" id="page-2">
-        <h2 class="fantasy-header">Character Background & Details</h2>
         <div class="sheet-body full-width-body">
           <div class="flair-container">
             <span class="flair-ornament">✦ ✧ ✦</span>
-            <input type="text" class="fantasy-input center-text flair-quote" placeholder="Personal Motto / Creed">
+            <input
+              type="text"
+              class="fantasy-input center-text flair-quote"
+              placeholder="Personal Motto / Creed"
+            >
             <span class="flair-ornament">✦ ✧ ✦</span>
           </div>
-          
+
           <div class="flex-row-sections">
             <div class="half-width trait-section">
               <h3 class="fantasy-header">Personality Traits</h3>
-              <textarea class="fantasy-input trait-box" placeholder="Character traits..."></textarea>
+              <textarea
+                class="fantasy-input trait-box"
+                placeholder="Character traits..."
+              ></textarea>
             </div>
+
             <div class="half-width trait-section">
               <h3 class="fantasy-header">Ideals</h3>
-              <textarea class="fantasy-input trait-box" placeholder="Character ideals..."></textarea>
+              <textarea
+                class="fantasy-input trait-box"
+                placeholder="Character ideals..."
+              ></textarea>
             </div>
           </div>
 
           <div class="flex-row-sections">
             <div class="half-width trait-section">
               <h3 class="fantasy-header">Bonds</h3>
-              <textarea class="fantasy-input trait-box" placeholder="Character bonds..."></textarea>
+              <textarea
+                class="fantasy-input trait-box"
+                placeholder="Character bonds..."
+              ></textarea>
             </div>
+
             <div class="half-width trait-section">
               <h3 class="fantasy-header">Flaws</h3>
-              <textarea class="fantasy-input trait-box" placeholder="Character flaws..."></textarea>
+              <textarea
+                class="fantasy-input trait-box"
+                placeholder="Character flaws..."
+              ></textarea>
             </div>
           </div>
 
           <div class="flex-grow-section trait-section" style="height: 180px;">
-            <h3 class="fantasy-header">Backstory & Appearance</h3>
-            <textarea class="fantasy-input trait-box" style="height: 100%;" placeholder="Detailed character backstory, physical description, allies and organizations..."></textarea>
+            <h3 class="fantasy-header">Backstory &amp; Appearance</h3>
+            <textarea
+              class="fantasy-input trait-box"
+              style="height: 100%;"
+              placeholder="Detailed character backstory, physical description, allies and organizations..."
+            ></textarea>
           </div>
 
-          <!-- Notes section updated with flex: 1 to extend down to the absolute end of page 2 -->
-          <div class="flex-grow-section trait-section" style="flex: 1; display: flex; flex-direction: column;">
+          <div
+            class="flex-grow-section trait-section"
+            style="flex: 1; display: flex; flex-direction: column;"
+          >
             <h3 class="fantasy-header">Notes</h3>
-            <textarea class="fantasy-input trait-box" style="flex: 1; height: 100%;" placeholder="Campaign notes, reminders, loot, or miscellaneous details..."></textarea>
+            <textarea
+              class="fantasy-input trait-box"
+              style="flex: 1; height: 100%;"
+              placeholder="Campaign notes, reminders, loot, or miscellaneous details..."
+            ></textarea>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- PAGE 3: Spells & Magic (Levels 0 - 5) -->
-      <div class="sheet-page" id="page-3">
-        <h2 class="fantasy-header">Spellcasting & Magic (Cantrips - 5th Level)</h2>
+      <!-- ===================================================
+           PAGE 3: SPELLS, CANTRIPS THROUGH LEVEL 5
+           =================================================== -->
+      <section class="sheet-page" id="page-3">
+        <h2 class="fantasy-header">Spellcasting &amp; Magic (Cantrips - 5th Level)</h2>
+
         <div class="sheet-body full-width-body" style="gap: 6px;">
-          
           <div class="spell-tier">
             <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">Cantrips (Level 0)</h3>
+              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
+                Cantrips (Level 0)
+              </h3>
               <span class="spell-guide-tip">At-Will Spells</span>
             </div>
-            <textarea class="fantasy-input spell-box" placeholder="Cantrip Name | Casting Time | Range | Components | Duration | Effect/Details"></textarea>
+            <textarea
+              class="fantasy-input spell-box"
+              placeholder="Cantrip Name | Casting Time | Range | Components | Duration | Effect/Details"
+            ></textarea>
           </div>
 
           <div class="spell-tier">
             <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">1st Level Spells</h3>
+              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
+                1st Level Spells
+              </h3>
               <span class="spell-guide-tip">Slots: [ ] [ ] [ ] [ ]</span>
             </div>
-            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"></textarea>
+            <textarea
+              class="fantasy-input spell-box"
+              placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"
+            ></textarea>
           </div>
 
           <div class="spell-tier">
             <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">2nd Level Spells</h3>
+              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
+                2nd Level Spells
+              </h3>
               <span class="spell-guide-tip">Slots: [ ] [ ] [ ]</span>
             </div>
-            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"></textarea>
+            <textarea
+              class="fantasy-input spell-box"
+              placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"
+            ></textarea>
           </div>
 
           <div class="spell-tier">
             <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">3rd Level Spells</h3>
+              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
+                3rd Level Spells
+              </h3>
               <span class="spell-guide-tip">Slots: [ ] [ ] [ ]</span>
             </div>
-            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"></textarea>
+            <textarea
+              class="fantasy-input spell-box"
+              placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"
+            ></textarea>
           </div>
 
           <div class="spell-tier">
             <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">4th Level Spells</h3>
+              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
+                4th Level Spells
+              </h3>
               <span class="spell-guide-tip">Slots: [ ] [ ] [ ]</span>
             </div>
-            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"></textarea>
+            <textarea
+              class="fantasy-input spell-box"
+              placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"
+            ></textarea>
           </div>
 
           <div class="spell-tier">
             <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">5th Level Spells</h3>
+              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
+                5th Level Spells
+              </h3>
               <span class="spell-guide-tip">Slots: [ ] [ ] [ ]</span>
             </div>
-            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"></textarea>
+            <textarea
+              class="fantasy-input spell-box"
+              placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"
+            ></textarea>
           </div>
-
         </div>
-      </div>
+      </section>
 
-      <!-- PAGE 4: High-Level Spells & Arcane Resources (Levels 6 - 9) -->
-      <div class="sheet-page" id="page-4">
-        <h2 class="fantasy-header">High-Level Spellcasting & Resources (6th - 9th Level)</h2>
+      <!-- ===================================================
+           PAGE 4: SPELLS, LEVELS 6 THROUGH 9
+           =================================================== -->
+      <section class="sheet-page" id="page-4">
+        <h2 class="fantasy-header">
+          High-Level Spellcasting &amp; Resources (6th - 9th Level)
+        </h2>
+
         <div class="sheet-body full-width-body" style="gap: 8px;">
-          
           <div class="spell-tier">
             <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">6th Level Spells</h3>
+              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
+                6th Level Spells
+              </h3>
               <span class="spell-guide-tip">Slots: [ ]</span>
             </div>
-            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"></textarea>
+            <textarea
+              class="fantasy-input spell-box"
+              placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"
+            ></textarea>
           </div>
 
           <div class="spell-tier">
             <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">7th Level Spells</h3>
+              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
+                7th Level Spells
+              </h3>
               <span class="spell-guide-tip">Slots: [ ]</span>
             </div>
-            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"></textarea>
+            <textarea
+              class="fantasy-input spell-box"
+              placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"
+            ></textarea>
           </div>
 
           <div class="spell-tier">
             <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">8th Level Spells</h3>
+              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
+                8th Level Spells
+              </h3>
               <span class="spell-guide-tip">Slots: [ ]</span>
             </div>
-            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"></textarea>
+            <textarea
+              class="fantasy-input spell-box"
+              placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"
+            ></textarea>
           </div>
 
           <div class="spell-tier">
             <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border:none; margin:0; padding:0;">9th Level Spells</h3>
+              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
+                9th Level Spells
+              </h3>
               <span class="spell-guide-tip">Slots: [ ]</span>
             </div>
-            <textarea class="fantasy-input spell-box" placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"></textarea>
+            <textarea
+              class="fantasy-input spell-box"
+              placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"
+            ></textarea>
           </div>
 
           <div class="attacks-box" style="flex: 1.2;">
-            <h3 class="fantasy-header">Sorcery Points / Arcane Pool & Metamagic Features</h3>
-            <textarea class="fantasy-input extra-attacks" style="height: 100%; min-height: 70px;" placeholder="Track Sorcery Points, Metamagic options, magical items, or special features..."></textarea>
+            <h3 class="fantasy-header">
+              Sorcery Points / Arcane Pool &amp; Metamagic Features
+            </h3>
+            <textarea
+              class="fantasy-input extra-attacks"
+              style="height: 100%; min-height: 70px;"
+              placeholder="Track Sorcery Points, Metamagic options, magical items, or special features..."
+            ></textarea>
           </div>
-
         </div>
-      </div>
-
-    </div>
+      </section>
+    </main>
   </div>
-  
-<footer class="site-version">
+
+  <footer class="site-version">
     Character Builder v0.1.0 | © 2026 My RPG Source
-</footer>
+  </footer>
 </body>
- </html>
+</html>
