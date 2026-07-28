@@ -1,1 +1,113 @@
-/*themes*/
+/**
+ * My RPG Source
+ * Shared Character Sheet Themes
+ * ------------------------------------------
+ *
+ * These themes are shared by the 2014 and
+ * 2024 D&D character builders.
+ */
+
+
+/* ==========================================================
+   DEFAULT THEME VARIABLES
+   ========================================================== */
+
+:root {
+  --bg-app: #2c3e50;
+  --bg-sheet: #f4ecd8;
+  --text-main: #2c221e;
+  --border-color: #5c4033;
+  --accent-color: #8b4513;
+  --input-bg: rgba(255, 255, 255, 0.6);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+
+/* ==========================================================
+   STANDARD PARCHMENT
+   ========================================================== */
+
+.theme-standard {
+  --bg-sheet: #f4ecd8;
+  --text-main: #2c221e;
+  --border-color: #5c4033;
+  --accent-color: #8b4513;
+  --input-bg: rgba(255, 255, 255, 0.6);
+}
+
+
+/* ==========================================================
+   GRITTY DARK
+   ========================================================== */
+
+.theme-gritty {
+  --bg-sheet: #1a1a1a;
+  --text-main: #f0f0f0;
+  --border-color: #4a4a4a;
+  --accent-color: #a93226;
+  --input-bg: rgba(40, 40, 40, 0.8);
+}
+
+.theme-gritty .death-label {
+  color: #f0f0f0;
+}
+
+
+/* ==========================================================
+   ARCANE FANTASY
+   ========================================================== */
+
+.theme-fantasy {
+  --bg-sheet: #1b263b;
+  --text-main: #f1c40f;
+  --border-color: #415a77;
+  --accent-color: #778da9;
+  --input-bg: rgba(27, 38, 59, 0.7);
+}
+
+.theme-fantasy .death-label {
+  color: #f1c40f;
+}
+
+
+/* ==========================================================
+   WHIMSICAL WOODS
+   ========================================================== */
+
+.theme-whimsical {
+  --bg-sheet: #fefae0;
+  --text-main: #283618;
+  --border-color: #dda15e;
+  --accent-color: #bc6c25;
+  --input-bg: rgba(254, 250, 224, 0.9);
+}
+
+
+/* ==========================================================
+   HELLSCAPE RED
+   ========================================================== */
+
+.theme-hellscape {
+  --bg-sheet: #2b0909;
+  --text-main: #f5b041;
+  --border-color: #922b21;
+  --accent-color: #e74c3c;
+  --input-bg: rgba(43, 9, 9, 0.8);
+}
+
+.theme-hellscape .death-label {
+  color: #f5b041;
+}
+
+
+/* ==========================================================
+   BLACK AND WHITE
+   ========================================================== */
+
+.theme-bw {
+  --bg-sheet: #ffffff;
+  --text-main: #000000;
+  --border-color: #000000;
+  --accent-color: #000000;
+  --input-bg: #ffffff;
+}
