@@ -1,1 +1,26 @@
-
+{
+  "edition": "2014",
+  "system": "dnd5e",
+  "source": "System Reference Document 5.1",
+  "license": "CC-BY-4.0",
+  "backgrounds": [
+    {
+      "id": "acolyte",
+      "name": "Acolyte",
+      "category": "Core SRD",
+      "sourceScope": "SRD 5.1",
+      "skills": [
+        "Insight",
+        "Religion"
+      ],
+      "languages": [
+        "Two of your choice"
+      ],
+      "feature": "Shelter of the Faithful",
+      "equipment": {
+        "package": "Holy symbol, prayer book or prayer wheel, 5 sticks of incense, vestments, common clothes, and 15 GP",
+        "alternative": "Use the campaign's normal starting-equipment alternative, if allowed"
+      }
+    }
+  ]
+}
