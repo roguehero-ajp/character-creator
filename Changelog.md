@@ -63,3 +63,6 @@ This marks the transition from a single HTML document to a modular application a
 ### Cleaned up
 -major migrations and shifts away from huge html block of code to a more manageable system
 -architecture in place to perfect codecs, knowledge cards and future project goals
+
+# Version 0.2.0
+functional
