@@ -492,9 +492,28 @@ Started: July 2026
             </div>
 
             <div class="detail-box">
-              <label>Background</label>
-              <input type="text" class="fantasy-input" placeholder="Background">
-            </div>
+  <label for="char-background">Background</label>
+
+  <select
+    id="char-background"
+    class="fantasy-input"
+  >
+    <option value="">--Select Background--</option>
+  </select>
+
+  <div
+    id="background-summary"
+    hidden
+    style="
+      margin-top: 2px;
+      max-height: 28px;
+      overflow-y: auto;
+      font-size: 7.5px;
+      line-height: 1.25;
+      opacity: 0.8;
+    "
+  ></div>
+</div>
 
             <div class="detail-box">
               <label>Player Name</label>
