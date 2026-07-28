@@ -3,34 +3,88 @@
  * ----------------------------------------
  *
  * Responsibilities:
- *  - Coordinate application startup
+ *  - Read application identity from config.js
+ *  - Coordinate final application startup
+ *  - Wait for edition-specific origin and background data
  *  - Verify that core modules loaded correctly
  *  - Perform a final character-sheet refresh
- *  - Provide simple diagnostics for development
+ *  - Provide diagnostics for development
  *  - Expose one central My RPG Source application API
  *
- * This file intentionally contains NO game rules,
+ * This file intentionally contains no game rules,
  * storage logic, printing logic, PDF logic, or UI controls.
  */
 
 (() => {
   'use strict';
 
-  /**********************************************************************
-   * APPLICATION INFORMATION
-   **********************************************************************/
-
-  const APP_INFO = Object.freeze({
-    name: 'My RPG Source',
-    system: 'D&D 5e 2024',
-    tool: 'Character Builder',
-    version: '0.1.0'
-  });
+  const config =
+    window.MyRPGConfig;
 
 
-  /**********************************************************************
-   * CORE ELEMENTS
-   **********************************************************************/
+  /* ========================================================
+     APPLICATION INFORMATION
+     ======================================================== */
+
+  function buildAppInfo() {
+    const settings =
+      config?.settings || {};
+
+    const edition =
+      config?.edition ||
+      settings.edition ||
+      '2024';
+
+    return Object.freeze({
+      name:
+        'My RPG Source',
+
+      systemId:
+        settings.systemId ||
+        'dnd5e',
+
+      system:
+        settings.systemName ||
+        `D&D 5e ${edition}`,
+
+      edition,
+
+      tool:
+        'Character Builder',
+
+      title:
+        settings.builderTitle ||
+        `D&D 5e ${edition} Character Builder`,
+
+      originTerm:
+        settings.originTerm ||
+        (
+          edition === '2014'
+            ? 'Race'
+            : 'Species'
+        ),
+
+      dataBasePath:
+        settings.dataBasePath ||
+        `data/dnd5e/${edition}`,
+
+      storageKey:
+        settings.storageKey ||
+        `myrpgsource.characterCreator.dnd5e.${edition}.v1`,
+
+      version:
+        '0.1.0'
+    });
+  }
+
+
+  const APP_INFO =
+    buildAppInfo();
+
+
+  /* ========================================================
+     CORE ELEMENTS
+     ======================================================== */
 
   function getCharacterDocument() {
     return document.getElementById(
@@ -39,21 +93,30 @@
   }
 
 
-  /**********************************************************************
-   * MODULE STATUS
-   **********************************************************************/
+  /* ========================================================
+     MODULE STATUS
+     ======================================================== */
 
-  /**
-   * Returns the current status of modules that expose a public API.
-   *
-   * Knowledge Cards and Codex currently initialize independently,
-   * so they are not required to expose globals here.
-   */
   function getModuleStatus() {
     return {
+      config:
+        Boolean(
+          window.MyRPGConfig
+        ),
+
       calculations:
         Boolean(
           window.CharacterCalculations
+        ),
+
+      origins:
+        Boolean(
+          window.CharacterOrigins
+        ),
+
+      backgrounds:
+        Boolean(
+          window.CharacterBackgrounds
         ),
 
       ui:
@@ -79,9 +142,77 @@
   }
 
 
-  /**
-   * Report missing modules without crashing the application.
-   */
+  function getDataStatus() {
+    const origins =
+      window.CharacterOrigins;
+
+    const backgrounds =
+      window.CharacterBackgrounds;
+
+    return {
+      origins: {
+        present:
+          Boolean(origins),
+
+        loaded:
+          Boolean(
+            origins?.loaded
+          ),
+
+        active:
+          Boolean(
+            origins?.active
+          ),
+
+        entries:
+          Array.isArray(
+            origins?.entries
+          )
+            ? origins.entries.length
+            : 0,
+
+        error:
+          origins?.error
+            ? String(
+                origins.error.message ||
+                origins.error
+              )
+            : null
+      },
+
+      backgrounds: {
+        present:
+          Boolean(backgrounds),
+
+        loaded:
+          Boolean(
+            backgrounds?.loaded
+          ),
+
+        active:
+          Boolean(
+            backgrounds?.active
+          ),
+
+        entries:
+          Array.isArray(
+            backgrounds?.entries
+          )
+            ? backgrounds.entries.length
+            : 0,
+
+        error:
+          backgrounds?.error
+            ? String(
+                backgrounds.error.message ||
+                backgrounds.error
+              )
+            : null
+      }
+    };
+  }
+
+
   function checkModules() {
     const status =
       getModuleStatus();
@@ -89,15 +220,17 @@
     const missing =
       Object.entries(status)
         .filter(
-          ([, loaded]) => !loaded
+          ([, loaded]) =>
+            !loaded
         )
         .map(
-          ([name]) => name
+          ([name]) =>
+            name
         );
 
     if (missing.length > 0) {
       console.warn(
-        'My RPG Source started, but some modules were not detected:',
+        `${APP_INFO.name} ${APP_INFO.system} started, but some modules were not detected:`,
         missing.join(', ')
       );
 
@@ -108,15 +241,75 @@
   }
 
 
-  /**********************************************************************
-   * CHARACTER REFRESH
-   **********************************************************************/
+  /* ========================================================
+     ASYNCHRONOUS DATA STARTUP
+     ======================================================== */
 
-  /**
-   * Ask the calculation engine to refresh all derived character values.
-   *
-   * Other modules remain responsible for their own behavior.
-   */
+  async function waitForDataModules() {
+    const pending = [];
+
+    const originsReady =
+      window.CharacterOrigins
+        ?.ready;
+
+    const backgroundsReady =
+      window.CharacterBackgrounds
+        ?.ready;
+
+    if (
+      originsReady &&
+      typeof originsReady.then ===
+        'function'
+    ) {
+      pending.push(
+        originsReady
+      );
+    }
+
+    if (
+      backgroundsReady &&
+      typeof backgroundsReady.then ===
+        'function'
+    ) {
+      pending.push(
+        backgroundsReady
+      );
+    }
+
+    if (pending.length === 0) {
+      return [];
+    }
+
+    const results =
+      await Promise.allSettled(
+        pending
+      );
+
+    const rejected =
+      results.filter(
+        (result) =>
+          result.status ===
+          'rejected'
+      );
+
+    if (rejected.length > 0) {
+      console.warn(
+        `${APP_INFO.name} finished starting, but one or more edition data modules reported an error.`,
+        rejected.map(
+          (result) =>
+            result.reason
+        )
+      );
+    }
+
+    return results;
+  }
+
+
+  /* ========================================================
+     CHARACTER REFRESH
+     ======================================================== */
+
   function refreshCharacter() {
     if (
       window.CharacterCalculations
@@ -136,20 +329,37 @@
   }
 
 
-  /**********************************************************************
-   * DIAGNOSTICS
-   **********************************************************************/
+  /* ========================================================
+     DOCUMENT IDENTITY
+     ======================================================== */
 
-  /**
-   * Handy developer diagnostic.
-   *
-   * Later, while debugging, we can type:
-   *
-   * MyRPGSource.diagnostics()
-   *
-   * into the browser console and immediately see whether
-   * the important pieces of the application are alive.
-   */
+  function applyApplicationIdentity() {
+    document.documentElement
+      .dataset
+      .myRpgSourceEdition =
+      APP_INFO.edition;
+
+    document.documentElement
+      .dataset
+      .myRpgSourceSystem =
+      APP_INFO.systemId;
+
+    const characterDocument =
+      getCharacterDocument();
+
+    if (characterDocument) {
+      characterDocument.setAttribute(
+        'aria-label',
+        `${APP_INFO.system} character sheet`
+      );
+    }
+  }
+
+
+  /* ========================================================
+     DIAGNOSTICS
+     ======================================================== */
+
   function diagnostics() {
     const report = {
       application: {
@@ -164,6 +374,9 @@
       modules:
         getModuleStatus(),
 
+      data:
+        getDataStatus(),
+
       ready:
         document.documentElement
           .dataset
@@ -171,22 +384,53 @@
         'true'
     };
 
+    console.group(
+      `${APP_INFO.name} diagnostics`
+    );
+
     console.table(
       report.modules
     );
 
+    console.table({
+      originsLoaded:
+        report.data.origins.loaded,
+
+      originsActive:
+        report.data.origins.active,
+
+      originEntries:
+        report.data.origins.entries,
+
+      backgroundsLoaded:
+        report.data.backgrounds.loaded,
+
+      backgroundsActive:
+        report.data.backgrounds.active,
+
+      backgroundEntries:
+        report.data.backgrounds.entries
+    });
+
     console.log(
-      'My RPG Source diagnostics:',
+      'Application:',
+      report.application
+    );
+
+    console.log(
+      'Full report:',
       report
     );
+
+    console.groupEnd();
 
     return report;
   }
 
 
-  /**********************************************************************
-   * READY EVENT
-   **********************************************************************/
+  /* ========================================================
+     READY EVENT
+     ======================================================== */
 
   function announceReady() {
     document.dispatchEvent(
@@ -195,8 +439,12 @@
         {
           detail: {
             ...APP_INFO,
+
             modules:
-              getModuleStatus()
+              getModuleStatus(),
+
+            data:
+              getDataStatus()
           }
         }
       )
@@ -204,41 +452,36 @@
   }
 
 
-  /**********************************************************************
-   * INITIALIZATION
-   **********************************************************************/
+  /* ========================================================
+     INITIALIZATION
+     ======================================================== */
 
-  function init() {
+  async function init() {
     const characterDocument =
       getCharacterDocument();
 
     if (!characterDocument) {
-      console.error(
+      throw new Error(
         'My RPG Source could not start because #character-document was not found.'
       );
-
-      return;
     }
 
+    applyApplicationIdentity();
+
     /*
-     * By the time app.js initializes, the individual modules have
-     * already registered their own DOMContentLoaded handlers.
-     *
-     * We do not bind their buttons again here.
+     * Origins and backgrounds load JSON asynchronously.
+     * Wait for them before marking the whole builder ready.
      */
+    await waitForDataModules();
+
     checkModules();
 
     /*
-     * Give derived values one final synchronized refresh after
-     * the UI and calculation modules have initialized.
+     * Give derived values one final synchronized refresh
+     * after the edition data modules have initialized.
      */
     refreshCharacter();
 
-    /*
-     * Mark the document as successfully initialized.
-     *
-     * This is useful for future debugging, testing, and CSS hooks.
-     */
     document.documentElement
       .dataset
       .myRpgSourceReady =
@@ -249,17 +492,81 @@
     console.info(
       `${APP_INFO.name} ${APP_INFO.system} ${APP_INFO.tool} v${APP_INFO.version} ready.`
     );
+
+    return {
+      info:
+        APP_INFO,
+
+      modules:
+        getModuleStatus(),
+
+      data:
+        getDataStatus()
+    };
   }
 
 
-  /**********************************************************************
-   * PUBLIC APPLICATION API
-   **********************************************************************/
+  let readyPromise =
+    Promise.resolve(null);
+
+
+  function start() {
+    readyPromise =
+      init().catch(
+        (error) => {
+          document.documentElement
+            .dataset
+            .myRpgSourceReady =
+            'false';
+
+          console.error(
+            `${APP_INFO.name} failed to initialize:`,
+            error
+          );
+
+          document.dispatchEvent(
+            new CustomEvent(
+              'myrpgsource:error',
+              {
+                detail: {
+                  ...APP_INFO,
+                  error
+                }
+              }
+            )
+          );
+
+          return {
+            info:
+              APP_INFO,
+
+            modules:
+              getModuleStatus(),
+
+            data:
+              getDataStatus(),
+
+            error
+          };
+        }
+      );
+
+    return readyPromise;
+  }
+
+
+  /* ========================================================
+     PUBLIC APPLICATION API
+     ======================================================== */
 
   window.MyRPGSource =
     Object.freeze({
       info:
         APP_INFO,
+
+      get ready() {
+        return readyPromise;
+      },
 
       refresh:
         refreshCharacter,
@@ -267,13 +574,16 @@
       diagnostics,
 
       modules:
-        getModuleStatus
+        getModuleStatus,
+
+      data:
+        getDataStatus
     });
 
 
-  /**********************************************************************
-   * START APPLICATION
-   **********************************************************************/
+  /* ========================================================
+     START APPLICATION
+     ======================================================== */
 
   if (
     document.readyState ===
@@ -281,11 +591,11 @@
   ) {
     document.addEventListener(
       'DOMContentLoaded',
-      init,
+      start,
       { once: true }
     );
   } else {
-    init();
+    start();
   }
 
 })();
