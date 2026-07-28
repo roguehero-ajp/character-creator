@@ -222,10 +222,7 @@
       });
 
       statGroup.appendChild(button);
-    });
-}
-        }
-      });
+
     });
   }
 
