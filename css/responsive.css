@@ -1,1 +1,439 @@
-/*responsive elements*/
+/**
+ * My RPG Source
+ * Responsive Character Sheet Styles
+ * ------------------------------------------
+ *
+ * Screen-only responsive behaviour shared by
+ * the D&D 5e 2014 and 2024 character builders.
+ *
+ * The printable and PDF layouts remain fixed.
+ */
+
+
+/* ==========================================================
+   TABLET / NARROW DESKTOP
+   ========================================================== */
+
+@media screen and (max-width: 1180px) {
+
+  body {
+    flex-direction: column;
+    align-items: center;
+
+    padding: 12px;
+  }
+
+  /*
+   * Supports both the current HTML structure and the
+   * upcoming cleaned builder.html structure.
+   */
+  .app-container {
+    flex-direction: column;
+    align-items: center;
+
+    max-width: 100%;
+  }
+
+  .controls {
+    width: 100%;
+    max-width: 816px;
+
+    position: static;
+    top: auto;
+  }
+
+  .document-container {
+    margin: 0 auto;
+  }
+
+  .site-version {
+    width: 100%;
+  }
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE CHARACTER-SHEET MODE
+   ========================================================== */
+
+@media screen and (max-width: 860px) {
+
+  body {
+    display: block;
+
+    width: 100%;
+    padding: 10px;
+
+    overflow-x: hidden;
+  }
+
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    width: 100%;
+    max-width: none;
+  }
+
+  .controls {
+    width: 100%;
+    max-width: none;
+    margin-bottom: 14px;
+  }
+
+  /*
+   * Do not apply the responsive reflow while pdf.js
+   * is preparing the fixed-size PDF export.
+   */
+  .document-container:not(.exporting) {
+    width: 100%;
+    max-width: none;
+
+    gap: 18px;
+  }
+
+  .document-container:not(.exporting)
+  .sheet-page {
+    width: 100%;
+
+    height: auto;
+    min-height: 0;
+    max-height: none;
+
+    padding: 16px;
+
+    overflow: visible;
+
+    page-break-before: auto;
+    page-break-after: auto;
+    break-before: auto;
+    break-after: auto;
+  }
+
+  /*
+   * Page 1 becomes a vertical form on narrow screens.
+   */
+  .document-container:not(.exporting)
+  .sheet-page.two-column-layout {
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .document-container:not(.exporting)
+  .left-stack,
+
+  .document-container:not(.exporting)
+  .right-stack,
+
+  .document-container:not(.exporting)
+  .left-column,
+
+  .document-container:not(.exporting)
+  .right-column {
+    width: 100%;
+
+    flex: 1 1 auto;
+  }
+
+  .document-container:not(.exporting)
+  .name-container {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .document-container:not(.exporting)
+  .details-grid {
+    width: 100%;
+  }
+
+  .document-container:not(.exporting)
+  #class-level-container {
+    max-height: none;
+
+    overflow: visible;
+  }
+
+  .document-container:not(.exporting)
+  .flex-row-sections {
+    height: auto;
+    min-height: 140px;
+  }
+
+  .document-container:not(.exporting)
+  .trait-box {
+    min-height: 110px;
+  }
+
+  .document-container:not(.exporting)
+  .spell-tier {
+    min-height: 210px;
+  }
+
+  .document-container:not(.exporting)
+  .spell-box {
+    min-height: 160px;
+  }
+
+  .document-container:not(.exporting)
+  .inventory-text {
+    min-height: 125px;
+  }
+
+}
+
+
+/* ==========================================================
+   PHONE LAYOUT
+   ========================================================== */
+
+@media screen and (max-width: 640px) {
+
+  body {
+    padding: 6px;
+  }
+
+  .controls {
+    padding: 12px;
+
+    gap: 10px;
+
+    border-radius: 6px;
+  }
+
+  /*
+   * Larger touch targets for mobile controls.
+   */
+  .controls select,
+  .controls button {
+    min-height: 42px;
+
+    padding: 9px 10px;
+
+    font-size: 13px;
+  }
+
+  .document-container:not(.exporting) {
+    gap: 12px;
+  }
+
+  .document-container:not(.exporting)
+  .sheet-page {
+    padding: 12px;
+
+    gap: 10px;
+
+    border-width: 1px;
+
+    box-shadow:
+      0 5px 14px var(--shadow-color);
+  }
+
+  /*
+   * Character details become a single column.
+   */
+  .document-container:not(.exporting)
+  .details-grid {
+    grid-template-columns: 1fr;
+
+    gap: 8px;
+  }
+
+  /*
+   * Combat boxes wrap rather than becoming cramped.
+   */
+  .document-container:not(.exporting)
+  .left-combat-block,
+
+  .document-container:not(.exporting)
+  .right-combat-block {
+    flex-wrap: wrap;
+  }
+
+  .document-container:not(.exporting)
+  .combat-box {
+    flex:
+      1 1 calc(50% - 6px);
+
+    min-width: 120px;
+  }
+
+  /*
+   * Ability and feature fields use one column.
+   */
+  .document-container:not(.exporting)
+  .abilities-grid {
+    grid-template-columns: 1fr;
+
+    gap: 5px;
+  }
+
+  /*
+   * Equipment and currency stack vertically.
+   */
+  .document-container:not(.exporting)
+  .equipment-box {
+    flex-direction: column;
+  }
+
+  .document-container:not(.exporting)
+  .money-column {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(5, minmax(0, 1fr));
+
+    gap: 4px;
+  }
+
+  .document-container:not(.exporting)
+  .money-field {
+    min-width: 0;
+  }
+
+  .document-container:not(.exporting)
+  .money-field label {
+    width: 24px;
+
+    flex-shrink: 0;
+  }
+
+  .document-container:not(.exporting)
+  .money-field input {
+    width: auto;
+    min-width: 0;
+
+    flex: 1;
+  }
+
+  /*
+   * Page 2 paired sections stack.
+   */
+  .document-container:not(.exporting)
+  .flex-row-sections {
+    flex-direction: column;
+
+    min-height: 0;
+
+    gap: 10px;
+  }
+
+  .document-container:not(.exporting)
+  .half-width {
+    width: 100%;
+  }
+
+  .document-container:not(.exporting)
+  .flair-container {
+    flex-wrap: wrap;
+  }
+
+  .document-container:not(.exporting)
+  .flair-quote {
+    width: 100%;
+
+    order: 3;
+  }
+
+  /*
+   * Keep attack columns readable without overflowing.
+   */
+  .document-container:not(.exporting)
+  .header-row,
+
+  .document-container:not(.exporting)
+  .attack-row {
+    grid-template-columns:
+      1.5fr 0.8fr 0.8fr 1.35fr;
+
+    gap: 2px;
+  }
+
+  .document-container:not(.exporting)
+  .header-row {
+    font-size: 7.5px;
+  }
+
+  .document-container:not(.exporting)
+  .attack-row input {
+    padding: 3px 2px;
+
+    font-size: 10px;
+  }
+
+  /*
+   * Allow spell headings and slot guides to wrap.
+   */
+  .document-container:not(.exporting)
+  .spell-tier-header {
+    flex-wrap: wrap;
+
+    gap: 4px;
+  }
+
+  .document-container:not(.exporting)
+  .spell-guide-tip {
+    width: 100%;
+
+    text-align: right;
+  }
+
+  .site-version {
+    margin-top: 18px;
+    padding: 0 8px;
+  }
+
+}
+
+
+/* ==========================================================
+   VERY SMALL PHONES
+   ========================================================== */
+
+@media screen and (max-width: 420px) {
+
+  .controls {
+    padding: 10px;
+  }
+
+  .document-container:not(.exporting)
+  .sheet-page {
+    padding: 8px;
+  }
+
+  h2.fantasy-header,
+  h3.fantasy-header {
+    font-size: 11px;
+
+    letter-spacing: 0.5px;
+  }
+
+  .document-container:not(.exporting)
+  .combat-box {
+    min-width: 105px;
+  }
+
+  .document-container:not(.exporting)
+  .money-column {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .document-container:not(.exporting)
+  .header-row {
+    font-size: 7px;
+  }
+
+  .document-container:not(.exporting)
+  .codex-info-btn {
+    padding: 2px 5px;
+
+    font-size: 7px;
+  }
+
+}
