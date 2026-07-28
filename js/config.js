@@ -5,9 +5,8 @@
  * Responsibilities:
  *  - Read the selected D&D edition from the page URL
  *  - Default safely to the 2024 rules
- *  - Provide edition-specific data-file paths
- *  - Provide edition-specific storage keys and terminology
- *  - Update basic page identity such as title and Race/Species labels
+ *  - Expose edition-specific terminology, data paths, and storage keys
+ *  - Apply lightweight edition identity to the document
  *
  * Example URLs:
  *  builder.html?edition=2024
@@ -19,80 +18,78 @@
 
   const DEFAULT_EDITION = '2024';
 
-  const SUPPORTED_EDITIONS =
-    Object.freeze([
-      '2014',
-      '2024'
-    ]);
+  const SUPPORTED_EDITIONS = Object.freeze([
+    '2014',
+    '2024'
+  ]);
 
-  const EDITION_SETTINGS =
-    Object.freeze({
-      '2014': Object.freeze({
-        edition: '2014',
+  const EDITION_SETTINGS = Object.freeze({
+    '2014': Object.freeze({
+      edition: '2014',
 
-        systemId: 'dnd5e',
+      systemId: 'dnd5e',
 
-        systemName:
-          'D&D 5e 2014',
+      systemName:
+        'D&D 5e 2014',
 
-        sheetTitle:
-          'D&D 5e 2014 Character Sheet',
+      sheetTitle:
+        'D&D 5e 2014 Character Sheet',
 
-        builderTitle:
-          'D&D 5e 2014 Character Builder',
+      builderTitle:
+        'D&D 5e 2014 Character Builder',
 
-        originTerm:
-          'Race',
+      originTerm:
+        'Race',
 
-        originTermLower:
-          'race',
+      originTermLower:
+        'race',
 
-        originCollection:
-          'races',
+      originCollection:
+        'races',
 
-        originFilename:
-          'races.json',
+      originFilename:
+        'races.json',
 
-        dataBasePath:
-          'data/dnd5e/2014',
+      dataBasePath:
+        'data/dnd5e/2014',
 
-        storageKey:
-          'myrpgsource.characterCreator.dnd5e.2014.v1'
-      }),
+      storageKey:
+        'myrpgsource.characterCreator.dnd5e.2014.v1'
+    }),
 
-      '2024': Object.freeze({
-        edition: '2024',
+    '2024': Object.freeze({
+      edition: '2024',
 
-        systemId: 'dnd5e',
+      systemId: 'dnd5e',
 
-        systemName:
-          'D&D 5e 2024',
+      systemName:
+        'D&D 5e 2024',
 
-        sheetTitle:
-          'D&D 5e 2024 Character Sheet',
+      sheetTitle:
+        'D&D 5e 2024 Character Sheet',
 
-        builderTitle:
-          'D&D 5e 2024 Character Builder',
+      builderTitle:
+        'D&D 5e 2024 Character Builder',
 
-        originTerm:
-          'Species',
+      originTerm:
+        'Species',
 
-        originTermLower:
-          'species',
+      originTermLower:
+        'species',
 
-        originCollection:
-          'species',
+      originCollection:
+        'species',
 
-        originFilename:
-          'species.json',
+      originFilename:
+        'species.json',
 
-        dataBasePath:
-          'data/dnd5e/2024',
+      dataBasePath:
+        'data/dnd5e/2024',
 
-        storageKey:
-          'myrpgsource.characterCreator.dnd5e.2024.v1'
-      })
-    });
+      storageKey:
+        'myrpgsource.characterCreator.dnd5e.2024.v1'
+    })
+  });
 
 
   /**
@@ -147,16 +144,25 @@
 
 
   /**
-   * Build a path to any file inside
+   * Clean a filename before joining it
+   * to an edition-specific data path.
+   */
+  function cleanFilename(filename) {
+    return String(filename || '')
+      .trim()
+      .replace(/^\/+/, '');
+  }
+
+
+  /**
+   * Build a path to any JSON file inside
    * the selected edition's data folder.
    */
   function getDataPath(filename) {
-    const cleanFilename =
-      String(filename || '')
-        .trim()
-        .replace(/^\/+/, '');
+    const cleaned =
+      cleanFilename(filename);
 
-    if (!cleanFilename) {
+    if (!cleaned) {
       throw new Error(
         'A data filename is required.'
       );
@@ -164,14 +170,12 @@
 
     return (
       `${settings.dataBasePath}/` +
-      cleanFilename
+      cleaned
     );
   }
 
 
   /**
-   * Edition-specific origin data.
-   *
    * 2014:
    * data/dnd5e/2014/races.json
    *
@@ -205,19 +209,21 @@
   function buildBuilderUrl(
     edition = selectedEdition
   ) {
-    const normalizedEdition =
+    const normalized =
       normalizeEdition(edition);
 
     return (
       'builder.html?edition=' +
-      normalizedEdition
+      normalized
     );
   }
 
 
   /**
-   * Change the existing Race field to say
-   * Race in 2014 mode or Species in 2024 mode.
+   * Change the existing Race field to:
+   *
+   * 2014 → Race
+   * 2024 → Species
    */
   function updateOriginLabels() {
     const originSelect =
@@ -262,10 +268,46 @@
 
 
   /**
-   * Apply basic edition identity to the page.
+   * Change the racial/species abilities section:
    *
-   * This does not yet load race, species,
-   * background, or class rules.
+   * 2014 → Race Abilities
+   * 2024 → Species Abilities
+   */
+  function updateOriginAbilitiesHeading() {
+    const textarea =
+      document.getElementById(
+        'racial-abilities-input'
+      );
+
+    if (!textarea) {
+      return;
+    }
+
+    const container =
+      textarea.closest(
+        '.attacks-box'
+      );
+
+    const heading =
+      container?.querySelector(
+        '.fantasy-header'
+      );
+
+    if (heading) {
+      heading.textContent =
+        `${settings.originTerm} Abilities`;
+    }
+
+    textarea.placeholder =
+      `${settings.originTerm} traits...`;
+  }
+
+
+  /**
+   * Apply edition identity to the page.
+   *
+   * This does not yet load or apply
+   * race/species/background rules.
    */
   function applyDocumentIdentity() {
     document.title =
@@ -294,6 +336,7 @@
     }
 
     updateOriginLabels();
+    updateOriginAbilitiesHeading();
 
     document.dispatchEvent(
       new CustomEvent(
@@ -314,11 +357,12 @@
   /**
    * Public configuration API.
    *
-   * Other modules can read:
+   * Other modules can use:
    *
    * MyRPGConfig.edition
    * MyRPGConfig.is2014
    * MyRPGConfig.is2024
+   * MyRPGConfig.settings.storageKey
    * MyRPGConfig.getOriginDataPath()
    * MyRPGConfig.getBackgroundsDataPath()
    * MyRPGConfig.getClassesDataPath()
