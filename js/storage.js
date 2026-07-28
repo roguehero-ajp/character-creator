@@ -19,7 +19,15 @@
    * CONFIGURATION
    **********************************************************************/
 
-  const STORAGE_KEY = 'myrpgsource.characterCreator.dnd5e.v1';
+  const DEFAULT_getStorageKey() =
+  'myrpgsource.characterCreator.dnd5e.2024.v1';
+
+function getStorageKey() {
+  return (
+    window.MyRPGConfig?.settings?.storageKey ||
+    DEFAULT_getStorageKey()
+  );
+}
   const SAVE_FORMAT = 'myrpgsource-character';
   const SAVE_VERSION = 1;
   const AUTOSAVE_DELAY_MS = 500;
@@ -324,7 +332,7 @@
   function saveLocal({ showMessage = true } = {}) {
     try {
       const state = captureState();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      localStorage.setItem(getStorageKey(), JSON.stringify(state));
 
       if (showMessage) {
         setStatus(`Saved in this browser at ${formatTime()}.`, 'ok');
@@ -339,7 +347,7 @@
   }
 
   async function loadLocal() {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(getStorageKey());
 
     if (!raw) {
       setStatus('No saved character was found in this browser.', 'warn');
@@ -529,7 +537,7 @@
       if (isRestoring) return;
 
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(captureState()));
+        localStorage.setItem(getStorageKey(), JSON.stringify(captureState()));
       } catch (_) {
         // Avoid blocking page exit because storage is unavailable.
       }
@@ -541,7 +549,7 @@
    **********************************************************************/
 
   function initializeStatus() {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(getStorageKey());
 
     if (!raw) {
       setStatus('No local save yet. Changes will autosave in this browser.', 'warn');
@@ -599,7 +607,7 @@
       exportJson,
       capture: captureState,
       apply: applyState,
-      storageKey: STORAGE_KEY
+      storageKey: getStorageKey()
     });
   }
 
