@@ -172,23 +172,58 @@
   }
 
   function wireLauncher() {
-    document.querySelectorAll(".knowledge-tooltip").forEach((tooltip) => {
-      // no-op placeholder if you later want direct buttons inside tooltips
+  document
+    .querySelectorAll(".stats-grid .tooltip-trigger")
+    .forEach((el) => {
+      const type = el.dataset.tooltipType;
+      const key = el.dataset.tooltipKey;
+
+      if (type !== "ability") {
+        return;
+      }
+
+      const entry = state.data?.entries?.find(
+        (item) => item.id === key
+      );
+
+      if (!entry) {
+        return;
+      }
+
+      if (el.querySelector(".codex-info-btn")) {
+        return;
+      }
+
+      const statGroup = el.querySelector(".stat-group");
+
+      if (!statGroup) {
+        return;
+      }
+
+      const button = document.createElement("button");
+
+      button.type = "button";
+      button.className = "codex-info-btn";
+      button.textContent = "Codex";
+
+      button.setAttribute(
+        "aria-label",
+        `Open ${entry.title} in the Codex`
+      );
+
+      button.title = `Open ${entry.title} in the Codex`;
+
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        openCodex();
+        showEntry(entry.id);
+      });
+
+      statGroup.appendChild(button);
     });
-
-    document.querySelectorAll(".tooltip-trigger").forEach((el) => {
-      el.classList.add("codex-launcher");
-      el.addEventListener("dblclick", () => {
-        const type = el.dataset.tooltipType;
-        const key = el.dataset.tooltipKey;
-        const entry =
-          type === "ability"
-            ? state.data.entries.find((e) => e.id === key)
-            : state.data.entries.find((e) => e.id === key);
-
-        if (entry) {
-          openCodex();
-          showEntry(entry.id);
+}
         }
       });
     });
