@@ -780,47 +780,66 @@ Started: July 2026
             </div>
 
             <!-- Class Abilities and Feats -->
-            <div class="abilities-box">
-              <h3 class="fantasy-header">Class Abilities &amp; Feats (20 Slots)</h3>
-              <div class="abilities-grid">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 1">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 2">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 3">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 4">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 5">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 6">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 7">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 8">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 9">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 10">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 11">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 12">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 13">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 14">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 15">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 16">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 17">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 18">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 19">
-                <input type="text" class="fantasy-input ability-input" placeholder="Ability 20">
-              </div>
-            </div>
+<!-- Equipment and Currency -->
+<div class="equipment-box">
+  <div class="money-column">
+    <div class="money-field">
+      <label for="currency-cp">CP</label>
+      <input
+        id="currency-cp"
+        type="text"
+        value="0"
+        inputmode="numeric"
+      >
+    </div>
 
-            <!-- Equipment and Currency -->
-            <div class="equipment-box">
-              <div class="money-column">
-                <div class="money-field"><label>CP</label><input type="text" value="0"></div>
-                <div class="money-field"><label>SP</label><input type="text" value="0"></div>
-                <div class="money-field"><label>EP</label><input type="text" value="0"></div>
-                <div class="money-field"><label>GP</label><input type="text" value="10"></div>
-                <div class="money-field"><label>PP</label><input type="text" value="0"></div>
-              </div>
+    <div class="money-field">
+      <label for="currency-sp">SP</label>
+      <input
+        id="currency-sp"
+        type="text"
+        value="0"
+        inputmode="numeric"
+      >
+    </div>
 
-              <textarea
-                class="fantasy-input inventory-text"
-                placeholder="Equipment inventory list..."
-              ></textarea>
-            </div>
+    <div class="money-field">
+      <label for="currency-ep">EP</label>
+      <input
+        id="currency-ep"
+        type="text"
+        value="0"
+        inputmode="numeric"
+      >
+    </div>
+
+    <div class="money-field">
+      <label for="currency-gp">GP</label>
+      <input
+        id="currency-gp"
+        type="text"
+        value="0"
+        inputmode="numeric"
+      >
+    </div>
+
+    <div class="money-field">
+      <label for="currency-pp">PP</label>
+      <input
+        id="currency-pp"
+        type="text"
+        value="0"
+        inputmode="numeric"
+      >
+    </div>
+  </div>
+
+  <textarea
+    id="equipment-inventory"
+    class="fantasy-input inventory-text"
+    placeholder="Equipment inventory list..."
+  ></textarea>
+</div>
           </div>
         </div>
       </section>
