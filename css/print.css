@@ -67,6 +67,7 @@
   .knowledge-tooltip,
   .codex-overlay,
   .codex-drawer,
+  .codex-info-btn,
   .site-version {
     display: none !important;
     visibility: hidden !important;
