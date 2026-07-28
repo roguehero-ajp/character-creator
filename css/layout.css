@@ -1053,6 +1053,9 @@ label {
   gap: 4px;
 }
 
+.species-choice-field[hidden] {
+  display: none;
+}
 .species-choice-field {
   display: flex;
   flex-direction: column;
