@@ -63,6 +63,16 @@ This marks the transition from a single HTML document to a modular application a
 ### Cleaned up
 -major migrations and shifts away from huge html block of code to a more manageable system
 -architecture in place to perfect codecs, knowledge cards and future project goals
+-modular JavaScript architecture
+-autosave / save / load
+-JSON import/export
+-blank printing
+-PDF export with smart filenames
+-Knowledge Cards
+-Codex
+-landing page
+-themes
+-improved calculations
 
 # Version 0.2.0
-functional
+-functional
