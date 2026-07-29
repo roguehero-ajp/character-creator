@@ -562,10 +562,11 @@
       padding-top: 14px;
 
       display: flex;
+      align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
 
-      gap: 10px;
+      gap: 12px 20px;
 
       border-top:
         1px solid var(--border);
@@ -574,6 +575,38 @@
         var(--muted);
 
       font-size: 0.9rem;
+    }
+
+    .foot-copy,
+    .foot-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      gap: 8px 16px;
+    }
+
+    .foot-copy span + span::before {
+      margin-right: 16px;
+
+      content: "•";
+      opacity: 0.55;
+    }
+
+    .foot-links {
+      justify-content: flex-end;
+    }
+
+    .foot-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .foot-links a:hover,
+    .foot-links a:focus-visible {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
     @media (max-width: 960px) {
@@ -615,6 +648,21 @@
 
       .btn {
         width: 100%;
+      }
+
+      .foot {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .foot-copy,
+      .foot-links {
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+
+      .foot-copy span + span::before {
+        display: none;
       }
     }
   </style>
@@ -869,19 +917,28 @@
       </aside>
     </div>
 
-    <div class="foot">
-      <span>
-        My RPG Source
-      </span>
+    <footer class="foot">
+      <div class="foot-copy">
+        <span>
+          My RPG Source
+        </span>
 
-      <span>
-        Create. Learn. Play.
-      </span>
+        <span>
+          Create. Learn. Play.
+        </span>
 
-      <span>
-        Built for tabletop adventurers
-      </span>
-    </div>
+        <span>
+          Built for tabletop adventurers
+        </span>
+      </div>
+
+      <nav class="foot-links" aria-label="Footer navigation">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="legal.html">Legal &amp; SRD Attribution</a>
+      </nav>
+    </footer>
   </div>
 </body>
 </html>
