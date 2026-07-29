@@ -1152,45 +1152,50 @@
   }
 
 
+  function captureManualAdjustmentForStat(
+    stat
+  ) {
+    const input =
+      getStatInput(
+        stat
+      );
+
+    const baseInput =
+      getBaseInput(
+        stat
+      );
+
+    if (
+      !input ||
+      !baseInput
+    ) {
+      return;
+    }
+
+    const displayed =
+      number(
+        input.value,
+        10
+      );
+
+    const base =
+      number(
+        baseInput.value,
+        displayed
+      );
+
+    input.dataset
+      .manualAdjustment =
+      String(
+        displayed -
+        base
+      );
+  }
+
+
   function captureManualAdjustments() {
     STAT_IDS.forEach(
-      (stat) => {
-        const input =
-          getStatInput(
-            stat
-          );
-
-        const baseInput =
-          getBaseInput(
-            stat
-          );
-
-        if (
-          !input ||
-          !baseInput
-        ) {
-          return;
-        }
-
-        const displayed =
-          number(
-            input.value,
-            10
-          );
-
-        const base =
-          number(
-            baseInput.value,
-            displayed
-          );
-
-        input.dataset
-          .manualAdjustment =
-          String(
-            displayed -
-            base
-          );
-      }
+      captureManualAdjustmentForStat
     );
   }
 
@@ -2477,15 +2482,35 @@
 
   function commitManualInput(
     stat,
-    value,
-    {
-      immediate =
-        false
-    } = {}
+    value
   ) {
     if (
       state.method !==
       'manual'
+    ) {
+      return;
+    }
+
+    const cleaned =
+      String(
+        value ?? ''
+      ).trim();
+
+    /*
+     * Do not recalculate while the number field is temporarily
+     * blank or only partially edited.
+     */
+    if (!cleaned) {
+      return;
+    }
+
+    const parsed =
+      Number(cleaned);
+
+    if (
+      !Number.isFinite(
+        parsed
+      )
     ) {
       return;
     }
@@ -2503,34 +2528,33 @@
         0
       );
 
+    const displayed =
+      Math.min(
+        20,
+        Math.max(
+          1,
+          Math.trunc(
+            parsed
+          )
+        )
+      );
+
     /*
      * The player edits the final displayed score. Store the true
-     * base score by removing the currently applied rules bonus.
+     * base score by removing the currently applied Race or
+     * Background adjustment, then reapply the rules once.
      */
     setBaseScore(
       stat,
-      number(
-        value,
-        10
-      ) -
+      displayed -
       adjustment
     );
 
-    window.clearTimeout(
-      state.manualTimer
+    reapplyCharacterRules();
+
+    captureManualAdjustmentForStat(
+      stat
     );
-
-    if (immediate) {
-      reapplyCharacterRules();
-
-      return;
-    }
-
-    state.manualTimer =
-      window.setTimeout(
-        reapplyCharacterRules,
-        180
-      );
   }
 
 
@@ -2555,26 +2579,30 @@
           .abilityScoreBound =
           'true';
 
+        /*
+         * Capture the currently applied rules adjustment before
+         * the player edits the displayed value.
+         */
         input.addEventListener(
-          'input',
+          'focus',
           () => {
-            commitManualInput(
-              stat,
-              input.value
+            captureManualAdjustmentForStat(
+              stat
             );
           }
         );
 
+        /*
+         * Commit only after editing is complete. Recalculating on
+         * every keystroke can turn a temporary value such as 101
+         * into the Background-capped value 20.
+         */
         input.addEventListener(
           'change',
           () => {
             commitManualInput(
               stat,
-              input.value,
-              {
-                immediate:
-                  true
-              }
+              input.value
             );
           }
         );
