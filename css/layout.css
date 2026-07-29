@@ -45,6 +45,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  flex-wrap: wrap;
 
   min-height: 100vh;
   padding: 20px;
@@ -1094,9 +1095,47 @@ label {
 .site-version {
   margin-top: 30px;
 
-  color: #777777;
+  flex: 0 0 100%;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  gap: 8px;
+
+  color: var(--text-main);
 
   font-size: 0.8rem;
-  font-style: italic;
   text-align: center;
+}
+
+.site-version-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 6px 14px;
+}
+
+.site-version-nav a {
+  color: inherit;
+
+  font-style: normal;
+  text-decoration: none;
+
+  opacity: 0.72;
+}
+
+.site-version-nav a:hover,
+.site-version-nav a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  opacity: 1;
+}
+
+.site-version-copy {
+  font-style: italic;
+  opacity: 0.58;
 }
