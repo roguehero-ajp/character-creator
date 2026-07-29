@@ -351,6 +351,38 @@
   );
 }
   function calculateHP() {
+    /*
+ * LEVEL-HISTORY BRIDGE
+ *
+ * Insert this at the very beginning of calculateHP(),
+ * immediately after:
+ *
+ * function calculateHP() {
+ */
+const historicalHP =
+  window.CharacterLevelUp
+    ?.calculateHistoricalHP
+    ?.();
+
+if (
+  Number.isFinite(
+    historicalHP
+  )
+) {
+  const hpInput =
+    document.getElementById(
+      'hp-input'
+    );
+
+  if (hpInput) {
+    hpInput.value =
+      String(
+        historicalHP
+      );
+  }
+
+  return historicalHP;
+}
     const conMod =
       getAbilityModifier('con');
 
