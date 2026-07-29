@@ -35,6 +35,7 @@ Started: July 2026
   <!-- Shared Character Sheet Styles -->
   <link rel="stylesheet" href="css/themes.css">
   <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/ability-scores.css">
   <link rel="stylesheet" href="css/responsive.css">
   <link rel="stylesheet" href="css/tooltips.css">
   <link rel="stylesheet" href="css/codex.css">
@@ -52,6 +53,7 @@ Started: July 2026
   <script defer src="js/tooltips.js"></script>
   <script defer src="js/codex.js"></script>
   <script defer src="js/calculations.js"></script>
+  <script defer src="js/ability-scores.js"></script>
   <script defer src="js/origins.js"></script>
   <script defer src="js/backgrounds.js"></script>
   <script defer src="js/ui.js"></script>
@@ -85,10 +87,12 @@ Started: July 2026
       <div>
         <label for="stat-method">Stat Generation</label>
         <select id="stat-method">
-          <option value="manual">Manual Entry</option>
-          <option value="4d6">4d6 Drop Lowest</option>
-          <option value="3d6">3d6 Straight</option>
-        </select>
+  <option value="manual">Manual Entry</option>
+  <option value="standard-array">Standard Array</option>
+  <option value="4d6">4d6 Drop Lowest</option>
+  <option value="3d6">3d6 (House Rule)</option>
+  <option value="point-buy">27-Point Buy</option>
+</select>
       </div>
 
       <button type="button" id="roll-btn">Roll Stats</button>
