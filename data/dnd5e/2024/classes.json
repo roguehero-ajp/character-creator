@@ -1,0 +1,308 @@
+{
+  "metadata": {
+    "system": "dnd5e",
+    "edition": "2024",
+    "version": "1.0.0",
+    "scope": "Core SRD classes",
+    "note": "This first class-data pass supports edition-aware class lists, Hit Dice, fixed HP, saving throws, spellcasting abilities, and future multiclass prerequisite checks."
+  },
+  "edition": "2024",
+  "classes": [
+    {
+      "id": "barbarian",
+      "name": "Barbarian",
+      "hitDie": 12,
+      "fixedHitPointsPerLevel": 7,
+      "primaryAbilities": [
+        "str"
+      ],
+      "savingThrows": [
+        "str",
+        "con"
+      ],
+      "spellcastingAbility": null,
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "str",
+            "minimum": 13
+          }
+        ]
+      }
+    },
+    {
+      "id": "bard",
+      "name": "Bard",
+      "hitDie": 8,
+      "fixedHitPointsPerLevel": 5,
+      "primaryAbilities": [
+        "cha"
+      ],
+      "savingThrows": [
+        "dex",
+        "cha"
+      ],
+      "spellcastingAbility": "cha",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "cha",
+            "minimum": 13
+          }
+        ]
+      }
+    },
+    {
+      "id": "cleric",
+      "name": "Cleric",
+      "hitDie": 8,
+      "fixedHitPointsPerLevel": 5,
+      "primaryAbilities": [
+        "wis"
+      ],
+      "savingThrows": [
+        "wis",
+        "cha"
+      ],
+      "spellcastingAbility": "wis",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "wis",
+            "minimum": 13
+          }
+        ]
+      }
+    },
+    {
+      "id": "druid",
+      "name": "Druid",
+      "hitDie": 8,
+      "fixedHitPointsPerLevel": 5,
+      "primaryAbilities": [
+        "wis"
+      ],
+      "savingThrows": [
+        "int",
+        "wis"
+      ],
+      "spellcastingAbility": "wis",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "wis",
+            "minimum": 13
+          }
+        ]
+      }
+    },
+    {
+      "id": "fighter",
+      "name": "Fighter",
+      "hitDie": 10,
+      "fixedHitPointsPerLevel": 6,
+      "primaryAbilities": [
+        "str",
+        "dex"
+      ],
+      "savingThrows": [
+        "str",
+        "con"
+      ],
+      "spellcastingAbility": null,
+      "multiclassPrerequisite": {
+        "type": "any",
+        "requirements": [
+          {
+            "ability": "str",
+            "minimum": 13
+          },
+          {
+            "ability": "dex",
+            "minimum": 13
+          }
+        ]
+      }
+    },
+    {
+      "id": "monk",
+      "name": "Monk",
+      "hitDie": 8,
+      "fixedHitPointsPerLevel": 5,
+      "primaryAbilities": [
+        "dex",
+        "wis"
+      ],
+      "savingThrows": [
+        "str",
+        "dex"
+      ],
+      "spellcastingAbility": null,
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "dex",
+            "minimum": 13
+          },
+          {
+            "ability": "wis",
+            "minimum": 13
+          }
+        ]
+      }
+    },
+    {
+      "id": "paladin",
+      "name": "Paladin",
+      "hitDie": 10,
+      "fixedHitPointsPerLevel": 6,
+      "primaryAbilities": [
+        "str",
+        "cha"
+      ],
+      "savingThrows": [
+        "wis",
+        "cha"
+      ],
+      "spellcastingAbility": "cha",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "str",
+            "minimum": 13
+          },
+          {
+            "ability": "cha",
+            "minimum": 13
+          }
+        ]
+      }
+    },
+    {
+      "id": "ranger",
+      "name": "Ranger",
+      "hitDie": 10,
+      "fixedHitPointsPerLevel": 6,
+      "primaryAbilities": [
+        "dex",
+        "wis"
+      ],
+      "savingThrows": [
+        "str",
+        "dex"
+      ],
+      "spellcastingAbility": "wis",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "dex",
+            "minimum": 13
+          },
+          {
+            "ability": "wis",
+            "minimum": 13
+          }
+        ]
+      }
+    },
+    {
+      "id": "rogue",
+      "name": "Rogue",
+      "hitDie": 8,
+      "fixedHitPointsPerLevel": 5,
+      "primaryAbilities": [
+        "dex"
+      ],
+      "savingThrows": [
+        "dex",
+        "int"
+      ],
+      "spellcastingAbility": null,
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "dex",
+            "minimum": 13
+          }
+        ]
+      }
+    },
+    {
+      "id": "sorcerer",
+      "name": "Sorcerer",
+      "hitDie": 6,
+      "fixedHitPointsPerLevel": 4,
+      "primaryAbilities": [
+        "cha"
+      ],
+      "savingThrows": [
+        "con",
+        "cha"
+      ],
+      "spellcastingAbility": "cha",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "cha",
+            "minimum": 13
+          }
+        ]
+      }
+    },
+    {
+      "id": "warlock",
+      "name": "Warlock",
+      "hitDie": 8,
+      "fixedHitPointsPerLevel": 5,
+      "primaryAbilities": [
+        "cha"
+      ],
+      "savingThrows": [
+        "wis",
+        "cha"
+      ],
+      "spellcastingAbility": "cha",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "cha",
+            "minimum": 13
+          }
+        ]
+      }
+    },
+    {
+      "id": "wizard",
+      "name": "Wizard",
+      "hitDie": 6,
+      "fixedHitPointsPerLevel": 4,
+      "primaryAbilities": [
+        "int"
+      ],
+      "savingThrows": [
+        "int",
+        "wis"
+      ],
+      "spellcastingAbility": "int",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "int",
+            "minimum": 13
+          }
+        ]
+      }
+    }
+  ]
+}
