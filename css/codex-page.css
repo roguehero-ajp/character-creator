@@ -1,0 +1,430 @@
+/*
+ * My RPG Source
+ * Standalone SRD Spells & Magic Items Codex
+ */
+
+.codex-shell {
+  width: min(1220px, calc(100% - 32px));
+}
+
+.codex-hero {
+  padding-bottom: 30px;
+}
+
+.codex-stat-grid {
+  margin-top: 30px;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.codex-stat {
+  min-height: 96px;
+  padding: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  text-align: center;
+}
+
+.codex-stat strong {
+  color: var(--accent);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: clamp(1.5rem, 4vw, 2.15rem);
+  line-height: 1.1;
+}
+
+.codex-stat span {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.codex-introduction {
+  margin-top: 0;
+}
+
+.codex-workspace {
+  margin-top: 28px;
+}
+
+.codex-filter-panel {
+  padding: clamp(20px, 4vw, 30px);
+
+  background: rgba(12, 18, 25, 0.78);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+
+  box-shadow: 0 18px 40px var(--shadow);
+}
+
+.codex-filter-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.codex-filter-heading h2 {
+  margin-bottom: 0;
+}
+
+#codex-reset,
+#codex-load-more {
+  padding: 10px 16px;
+
+  color: #ffffff;
+  background: #6c3483;
+
+  border: 1px solid #d2b4de;
+  border-radius: 10px;
+
+  font: inherit;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+#codex-reset:hover,
+#codex-load-more:hover {
+  background: #884ea0;
+}
+
+.codex-filter-grid {
+  margin-top: 22px;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.codex-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.codex-field-search {
+  grid-column: span 2;
+}
+
+.codex-field label {
+  color: var(--muted);
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+
+.codex-field input,
+.codex-field select {
+  min-height: 44px;
+  width: 100%;
+  padding: 9px 11px;
+
+  color: #17212c;
+  background: #fffdf6;
+
+  border: 2px solid transparent;
+  border-radius: 9px;
+
+  font: inherit;
+  font-size: 0.94rem;
+}
+
+.codex-field input:focus,
+.codex-field select:focus {
+  border-color: #b784cf;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(183, 132, 207, 0.22);
+}
+
+.codex-field.is-inactive {
+  opacity: 0.42;
+}
+
+.codex-field.is-inactive select {
+  cursor: not-allowed;
+}
+
+.codex-results-heading {
+  margin: 24px 2px 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+#codex-status {
+  margin: 0;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.codex-results-tip {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.codex-results {
+  display: grid;
+  gap: 12px;
+}
+
+.codex-entry {
+  overflow: hidden;
+
+  background: rgba(244, 236, 216, 0.065);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+.codex-entry[open] {
+  background: rgba(244, 236, 216, 0.10);
+  border-color: rgba(221, 161, 94, 0.52);
+}
+
+.codex-entry summary {
+  padding: 16px 18px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+
+  cursor: pointer;
+  list-style: none;
+}
+
+.codex-entry summary::-webkit-details-marker {
+  display: none;
+}
+
+.codex-entry summary::after {
+  content: "+";
+
+  width: 30px;
+  height: 30px;
+
+  display: grid;
+  place-items: center;
+
+  color: #ffffff;
+  background: rgba(142, 68, 173, 0.68);
+  border: 1px solid rgba(210, 180, 222, 0.58);
+  border-radius: 50%;
+
+  font-family: Arial, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.codex-entry[open] summary::after {
+  content: "−";
+}
+
+.codex-entry-title {
+  min-width: 0;
+}
+
+.codex-entry-title h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.02rem, 2.3vw, 1.23rem);
+}
+
+.codex-entry-meta {
+  margin-top: 8px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.codex-badge {
+  padding: 3px 8px;
+
+  display: inline-flex;
+  align-items: center;
+
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.075);
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.codex-badge-edition {
+  color: #fff6bf;
+  background: rgba(241, 196, 15, 0.12);
+  border-color: rgba(241, 196, 15, 0.36);
+}
+
+.codex-badge-spell {
+  color: #ead7ff;
+  background: rgba(142, 68, 173, 0.18);
+  border-color: rgba(183, 132, 207, 0.46);
+}
+
+.codex-badge-item {
+  color: #d9f7ef;
+  background: rgba(22, 160, 133, 0.16);
+  border-color: rgba(72, 201, 176, 0.42);
+}
+
+.codex-entry-body {
+  padding: 0 18px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.codex-facts {
+  margin: 16px 0;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.codex-fact {
+  padding: 10px 12px;
+
+  background: rgba(0, 0, 0, 0.16);
+  border-radius: 9px;
+}
+
+.codex-fact dt {
+  color: var(--accent-2);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.codex-fact dd {
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.codex-description {
+  margin: 0;
+  color: var(--muted);
+  white-space: pre-line;
+}
+
+.codex-source-note {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-style: italic;
+}
+
+.codex-load-row {
+  padding-top: 22px;
+  text-align: center;
+}
+
+#codex-load-more {
+  min-width: 220px;
+}
+
+.codex-error {
+  margin-top: 16px;
+  padding: 20px;
+
+  background: rgba(192, 57, 43, 0.14);
+  border: 1px solid rgba(231, 76, 60, 0.48);
+  border-radius: 14px;
+}
+
+.codex-error h2 {
+  color: #ffb7ad;
+}
+
+.codex-empty {
+  padding: 34px 20px;
+
+  color: var(--muted);
+  background: rgba(244, 236, 216, 0.055);
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+
+  text-align: center;
+}
+
+.codex-attribution .attribution + .attribution {
+  margin-top: 16px;
+}
+
+@media (max-width: 900px) {
+  .codex-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .codex-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .codex-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .codex-filter-heading,
+  .codex-results-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  #codex-reset {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .codex-filter-grid,
+  .codex-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .codex-field-search {
+    grid-column: auto;
+  }
+
+  .codex-entry summary {
+    padding: 14px;
+  }
+
+  .codex-entry-body {
+    padding: 0 14px 18px;
+  }
+}
+
+@media print {
+  .codex-filter-panel,
+  .codex-load-row,
+  .codex-results-tip {
+    display: none !important;
+  }
+
+  .codex-entry {
+    break-inside: avoid;
+  }
+}
