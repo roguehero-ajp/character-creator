@@ -353,33 +353,27 @@
 
     populateAllClassSelects();
 
-    const container =
-      document.getElementById(
-        'class-level-container'
-      );
-
-    if (
-      container &&
-      !state.observer
-    ) {
-      state.observer =
-        new MutationObserver(
-          () => {
-            populateAllClassSelects();
-          }
-        );
-
-      state.observer.observe(
-        container,
-        {
-          childList:
-            true,
-
-          subtree:
-            true
+    /*
+     * Do not observe and rebuild the class dropdowns here.
+     * Replacing a select's option children triggers a child-list
+     * observer again and can create an infinite mutation loop.
+     *
+     * ui.js owns dynamic multiclass rows. Refresh the class data
+     * once after its Add Multiclass button finishes adding a row.
+     */
+    document
+      .getElementById(
+        'multiclass-btn'
+      )
+      ?.addEventListener(
+        'click',
+        () => {
+          window.setTimeout(
+            populateAllClassSelects,
+            0
+          );
         }
       );
-    }
 
     document.dispatchEvent(
       new CustomEvent(
