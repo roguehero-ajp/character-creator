@@ -527,6 +527,94 @@
       line-height: 1.55;
     }
 
+
+    .codex-sample.is-revealing {
+      animation: knowledge-card-reveal 0.32s ease;
+    }
+
+    .knowledge-card-meta {
+      margin: 0 0 7px;
+
+      color: var(--accent-2);
+
+      font-size: 0.78rem;
+      font-weight: 700;
+
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .knowledge-card-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      gap: 8px;
+    }
+
+    .knowledge-card-controls-group {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      gap: 8px;
+    }
+
+    .knowledge-card-control {
+      min-height: 36px;
+      padding: 7px 11px;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+    .knowledge-card-control:hover,
+    .knowledge-card-control:focus-visible {
+      border-color: rgba(241, 196, 15, 0.55);
+      background: rgba(241, 196, 15, 0.10);
+    }
+
+    .knowledge-card-control:focus-visible {
+      outline: 3px solid rgba(241, 196, 15, 0.34);
+      outline-offset: 2px;
+    }
+
+    .knowledge-card-note {
+      margin: 0;
+
+      color: var(--muted);
+
+      font-size: 0.78rem;
+    }
+
+    @keyframes knowledge-card-reveal {
+      from {
+        opacity: 0.35;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .codex-sample.is-revealing {
+        animation: none;
+      }
+    }
+
     .roadmap {
       display: grid;
 
@@ -848,21 +936,77 @@
           </div>
         </section>
 
-        <section class="card feature-card">
+        <section
+          class="card feature-card"
+          id="featured-knowledge-card"
+        >
           <h3 class="section-title">
             Featured Knowledge Card
           </h3>
 
-          <div class="codex-sample">
-            <p class="title">
+          <div
+            class="codex-sample"
+            id="knowledge-card-sample"
+            aria-atomic="true"
+          >
+            <p
+              class="knowledge-card-meta"
+              id="knowledge-card-meta"
+            >
+              Skills
+            </p>
+
+            <p
+              class="title"
+              id="knowledge-card-title"
+            >
               Passive Perception
             </p>
 
-            <p class="body">
+            <p
+              class="body"
+              id="knowledge-card-body"
+            >
               Passive Perception is what your character notices
               without actively searching. It helps determine whether
               they spot danger, hidden things, or important clues
               automatically.
+            </p>
+          </div>
+
+          <div class="knowledge-card-controls">
+            <div class="knowledge-card-controls-group">
+              <button
+                class="knowledge-card-control"
+                id="knowledge-card-previous"
+                type="button"
+              >
+                Previous
+              </button>
+
+              <button
+                class="knowledge-card-control"
+                id="knowledge-card-pause"
+                type="button"
+                aria-pressed="false"
+              >
+                Pause
+              </button>
+
+              <button
+                class="knowledge-card-control"
+                id="knowledge-card-next"
+                type="button"
+              >
+                Next
+              </button>
+            </div>
+
+            <p
+              class="knowledge-card-note"
+              id="knowledge-card-note"
+            >
+              Rotates every 9 seconds
             </p>
           </div>
         </section>
@@ -889,7 +1033,7 @@
               </strong>
 
               <span>
-                In progress
+                Live
               </span>
             </div>
 
@@ -940,5 +1084,272 @@
       </nav>
     </footer>
   </div>
+
+
+  <script>
+    (() => {
+      "use strict";
+
+      const ROTATION_DELAY_MS = 9000;
+
+      const fallbackCards = [
+        {
+          title: "Passive Perception",
+          categoryName: "Skills",
+          summary:
+            "Passive Perception is what your character notices without actively searching. It helps determine whether they spot danger, hidden things, or important clues automatically."
+        },
+        {
+          title: "Ability Modifier",
+          categoryName: "Character Creation",
+          summary:
+            "An ability modifier is the bonus or penalty derived from an ability score. It is added to many checks, saving throws, attacks, and other rolls."
+        },
+        {
+          title: "Armor Class",
+          categoryName: "Combat",
+          summary:
+            "Armor Class represents how difficult a creature is to hit with an attack. An attack normally succeeds when its total equals or exceeds the target's Armor Class."
+        },
+        {
+          title: "Concentration",
+          categoryName: "Spellcasting",
+          summary:
+            "Some spells require concentration to remain active. Taking damage can force a Constitution saving throw, and concentrating on a new spell ends the previous one."
+        },
+        {
+          title: "Advantage and Disadvantage",
+          categoryName: "Combat",
+          summary:
+            "Advantage means rolling two d20s and using the higher result. Disadvantage means rolling two d20s and using the lower result."
+        }
+      ];
+
+      const feature = document.getElementById("featured-knowledge-card");
+      const sample = document.getElementById("knowledge-card-sample");
+      const meta = document.getElementById("knowledge-card-meta");
+      const title = document.getElementById("knowledge-card-title");
+      const body = document.getElementById("knowledge-card-body");
+      const previousButton = document.getElementById("knowledge-card-previous");
+      const pauseButton = document.getElementById("knowledge-card-pause");
+      const nextButton = document.getElementById("knowledge-card-next");
+      const note = document.getElementById("knowledge-card-note");
+
+      if (
+        !feature ||
+        !sample ||
+        !meta ||
+        !title ||
+        !body ||
+        !previousButton ||
+        !pauseButton ||
+        !nextButton ||
+        !note
+      ) {
+        return;
+      }
+
+      const reducedMotionQuery = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      );
+
+      let cards = shuffleCards(fallbackCards);
+      let currentIndex = 0;
+      let rotationTimer = null;
+      let manuallyPaused = reducedMotionQuery.matches;
+      let interactionPaused = false;
+
+      function shuffleCards(sourceCards) {
+        const shuffled = [...sourceCards];
+
+        for (let index = shuffled.length - 1; index > 0; index -= 1) {
+          const randomIndex = Math.floor(Math.random() * (index + 1));
+          [shuffled[index], shuffled[randomIndex]] = [
+            shuffled[randomIndex],
+            shuffled[index]
+          ];
+        }
+
+        return shuffled;
+      }
+
+      function normalizeCards(payload) {
+        const entries = Array.isArray(payload?.entries)
+          ? payload.entries
+          : [];
+
+        return entries
+          .filter((entry) => {
+            return (
+              typeof entry?.title === "string" &&
+              entry.title.trim() &&
+              typeof entry?.summary === "string" &&
+              entry.summary.trim()
+            );
+          })
+          .map((entry) => ({
+            title: entry.title.trim(),
+            categoryName:
+              typeof entry.categoryName === "string" &&
+              entry.categoryName.trim()
+                ? entry.categoryName.trim()
+                : "Rules Codex",
+            summary: entry.summary.trim()
+          }));
+      }
+
+      function showCard(index) {
+        if (!cards.length) {
+          return;
+        }
+
+        currentIndex = (index + cards.length) % cards.length;
+        const card = cards[currentIndex];
+
+        meta.textContent = card.categoryName;
+        title.textContent = card.title;
+        body.textContent = card.summary;
+
+        sample.classList.remove("is-revealing");
+        void sample.offsetWidth;
+        sample.classList.add("is-revealing");
+      }
+
+      function showNextCard() {
+        showCard(currentIndex + 1);
+      }
+
+      function showPreviousCard() {
+        showCard(currentIndex - 1);
+      }
+
+      function stopRotation() {
+        if (rotationTimer !== null) {
+          window.clearInterval(rotationTimer);
+          rotationTimer = null;
+        }
+      }
+
+      function startRotation() {
+        stopRotation();
+
+        if (
+          manuallyPaused ||
+          interactionPaused ||
+          document.hidden ||
+          cards.length < 2
+        ) {
+          return;
+        }
+
+        rotationTimer = window.setInterval(
+          showNextCard,
+          ROTATION_DELAY_MS
+        );
+      }
+
+      function restartRotation() {
+        startRotation();
+      }
+
+      function updatePauseButton() {
+        pauseButton.textContent = manuallyPaused ? "Play" : "Pause";
+        pauseButton.setAttribute(
+          "aria-pressed",
+          manuallyPaused ? "true" : "false"
+        );
+
+        note.textContent = manuallyPaused
+          ? "Rotation paused"
+          : "Rotates every 9 seconds";
+      }
+
+      previousButton.addEventListener("click", () => {
+        showPreviousCard();
+        restartRotation();
+      });
+
+      nextButton.addEventListener("click", () => {
+        showNextCard();
+        restartRotation();
+      });
+
+      pauseButton.addEventListener("click", () => {
+        manuallyPaused = !manuallyPaused;
+        updatePauseButton();
+        startRotation();
+      });
+
+      feature.addEventListener("mouseenter", () => {
+        interactionPaused = true;
+        stopRotation();
+      });
+
+      feature.addEventListener("mouseleave", () => {
+        interactionPaused = false;
+        startRotation();
+      });
+
+      feature.addEventListener("focusin", () => {
+        interactionPaused = true;
+        stopRotation();
+      });
+
+      feature.addEventListener("focusout", (event) => {
+        if (!feature.contains(event.relatedTarget)) {
+          interactionPaused = false;
+          startRotation();
+        }
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          stopRotation();
+        } else {
+          startRotation();
+        }
+      });
+
+      reducedMotionQuery.addEventListener?.("change", (event) => {
+        if (event.matches) {
+          manuallyPaused = true;
+          updatePauseButton();
+          stopRotation();
+        }
+      });
+
+      updatePauseButton();
+      showCard(Math.floor(Math.random() * cards.length));
+      startRotation();
+
+      fetch("data/codex.json")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Codex request failed: ${response.status}`);
+          }
+
+          return response.json();
+        })
+        .then((payload) => {
+          const loadedCards = normalizeCards(payload);
+
+          if (!loadedCards.length) {
+            return;
+          }
+
+          cards = shuffleCards(loadedCards);
+          currentIndex = 0;
+          showCard(0);
+          startRotation();
+        })
+        .catch((error) => {
+          console.warn(
+            "Featured Knowledge Cards are using their built-in fallback set.",
+            error
+          );
+        });
+    })();
+  </script>
+
 </body>
 </html>
