@@ -286,6 +286,70 @@
     });
   }
 
+  function hasDwarvenToughness() {
+  const originSelect =
+    document.getElementById(
+      'char-race'
+    );
+
+  const selectedValue =
+    originSelect?.value || '';
+
+  if (!selectedValue) {
+    return false;
+  }
+
+  /*
+   * Prefer the structured Race or Species data.
+   */
+  const selectedOrigin =
+    window.CharacterOrigins
+      ?.findEntry
+      ?.(
+        selectedValue
+      );
+
+  const hasStructuredTrait =
+    selectedOrigin
+      ?.traits
+      ?.some(
+        (trait) => {
+          const traitName =
+            String(
+              trait?.name ||
+              trait ||
+              ''
+            )
+              .trim()
+              .toLowerCase();
+
+          return (
+            traitName ===
+            'dwarven toughness'
+          );
+        }
+      );
+
+  if (hasStructuredTrait) {
+    return true;
+  }
+
+  /*
+   * Fallback for early startup, before origins.js has
+   * finished loading its structured data.
+   */
+  const traitSummary =
+    document.getElementById(
+      'racial-abilities-input'
+    )?.value || '';
+
+  return (
+    /\bdwarven toughness\b/i
+      .test(
+        traitSummary
+      )
+  );
+}
   function calculateHP() {
     const conMod =
       getAbilityModifier('con');
@@ -354,13 +418,30 @@
       0
     );
 
-    const minimumHP = totalLevel;
+   const minimumHP =
+  totalLevel;
 
-    if (totalHP < minimumHP) {
-      totalHP = minimumHP;
-    }
+if (totalHP < minimumHP) {
+  totalHP =
+    minimumHP;
+}
 
-    const hpInput =
+/*
+ * Dwarven Toughness grants +1 maximum HP
+ * for every total character level.
+ *
+ * This is calculated dynamically so changing Race
+ * or Species removes the bonus cleanly.
+ */
+const dwarvenToughnessBonus =
+  hasDwarvenToughness()
+    ? totalLevel
+    : 0;
+
+totalHP +=
+  dwarvenToughnessBonus;
+
+const hpInput =
       document.getElementById(
         'hp-input'
       );
@@ -571,6 +652,7 @@
     updateDerivedStats,
     updateHitDice,
     calculateHP,
+    hasDwarvenToughness,
     updateSavesAndSkills,
     updateSpellcastingStats,
     updateTotalLevelAndProficiency,
