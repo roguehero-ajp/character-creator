@@ -1,49 +1,106 @@
 .knowledge-tooltip {
   position: fixed;
   z-index: 9999;
-  width: min(320px, calc(100vw - 24px));
-  background: rgba(20, 20, 20, 0.96);
-  color: #f4ecd8;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 12px;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
-  padding: 12px 12px 10px;
+
+  width:
+    min(
+      340px,
+      calc(100vw - 24px)
+    );
+
+  max-height:
+    min(
+      520px,
+      calc(100vh - 28px)
+    );
+
+  overflow-y: auto;
+
+  padding:
+    12px 12px 10px;
+
   pointer-events: none;
+
   opacity: 0;
-  transform: translateY(6px) scale(0.98);
-  transition: opacity 0.12s ease, transform 0.12s ease;
-  font-family: inherit;
+
+  transform:
+    translateY(6px)
+    scale(0.98);
+
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease;
+
+  background:
+    rgba(20, 20, 20, 0.97);
+
+  color:
+    #f4ecd8;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.14);
+
+  border-radius:
+    12px;
+
+  box-shadow:
+    0 14px 40px
+    rgba(0, 0, 0, 0.45);
+
+  font-family:
+    inherit;
 }
 
 .knowledge-tooltip.visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
+
+  transform:
+    translateY(0)
+    scale(1);
 }
 
 .knowledge-tooltip .kt-title {
-  font-family: 'Cinzel', serif;
+  margin-bottom: 4px;
+
+  color: #f1c40f;
+
+  font-family:
+    "Cinzel", serif;
+
   font-size: 14px;
   font-weight: 700;
-  color: #f1c40f;
-  margin-bottom: 4px;
+
   letter-spacing: 0.3px;
 }
 
 .knowledge-tooltip .kt-meta {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  font-size: 11px;
-  opacity: 0.9;
   margin-bottom: 8px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 6px;
+
+  font-size: 10px;
+
+  opacity: 0.9;
 }
 
 .knowledge-tooltip .kt-pill {
   display: inline-block;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: rgba(241, 196, 15, 0.14);
-  border: 1px solid rgba(241, 196, 15, 0.2);
+
+  padding: 2px 7px;
+
+  background:
+    rgba(241, 196, 15, 0.14);
+
+  border:
+    1px solid
+    rgba(241, 196, 15, 0.2);
+
+  border-radius:
+    999px;
 }
 
 .knowledge-tooltip .kt-section {
@@ -51,32 +108,84 @@
 }
 
 .knowledge-tooltip .kt-section-title {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #dda15e;
   margin-bottom: 4px;
+
+  color: #dda15e;
+
+  font-size: 10px;
+
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .knowledge-tooltip ul {
   margin: 0;
   padding-left: 18px;
+
   font-size: 12px;
   line-height: 1.35;
 }
 
 .knowledge-tooltip p {
   margin: 0;
+
   font-size: 12px;
-  line-height: 1.35;
+  line-height: 1.4;
+}
+
+.knowledge-tooltip .kt-more {
+  margin-top: 9px;
+  padding-top: 7px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+
+  color:
+    rgba(244, 236, 216, 0.72);
+
+  font-size: 10px;
+  font-style: italic;
 }
 
 .tooltip-trigger {
   cursor: help;
-  text-decoration: underline dotted rgba(92, 64, 51, 0.55);
-  text-underline-offset: 2px;
+}
+
+label.tooltip-trigger,
+span.tooltip-trigger,
+h2.tooltip-trigger,
+h3.tooltip-trigger {
+  text-decoration:
+    underline dotted
+    rgba(92, 64, 51, 0.55);
+
+  text-underline-offset:
+    2px;
 }
 
 .tooltip-trigger:hover {
-  text-decoration-color: rgba(192, 57, 43, 0.85);
+  text-decoration-color:
+    rgba(192, 57, 43, 0.85);
+}
+
+.tooltip-trigger:focus-visible {
+  outline:
+    2px solid
+    var(
+      --accent-color,
+      #8b4513
+    );
+
+  outline-offset:
+    2px;
+}
+
+@media screen and (max-width: 640px) {
+  .knowledge-tooltip {
+    width:
+      calc(100vw - 16px);
+
+    left: 8px !important;
+  }
 }
