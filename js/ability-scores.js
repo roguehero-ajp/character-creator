@@ -922,6 +922,13 @@
 
     calc?.refreshAll?.();
 
+    if (
+      state.method ===
+      'manual'
+    ) {
+      captureManualAdjustments();
+    }
+
     document.dispatchEvent(
       new CustomEvent(
         'character:base-scores-changed',
@@ -1111,6 +1118,138 @@
 
 
   /* ========================================================
+     POOL COMPLETION AND MANUAL EDITING
+     ======================================================== */
+
+  function isPoolMethod(
+    method =
+      state.method
+  ) {
+    return [
+      'standard-array',
+      '4d6',
+      '3d6'
+    ].includes(
+      method
+    );
+  }
+
+
+  function allPoolScoresAssigned() {
+    return (
+      isPoolMethod() &&
+      state.pool.length ===
+        STAT_IDS.length &&
+      STAT_IDS.every(
+        (stat) =>
+          Boolean(
+            state.assignments[
+              stat
+            ]
+          )
+      )
+    );
+  }
+
+
+  function captureManualAdjustments() {
+    STAT_IDS.forEach(
+      (stat) => {
+        const input =
+          getStatInput(
+            stat
+          );
+
+        const baseInput =
+          getBaseInput(
+            stat
+          );
+
+        if (
+          !input ||
+          !baseInput
+        ) {
+          return;
+        }
+
+        const displayed =
+          number(
+            input.value,
+            10
+          );
+
+        const base =
+          number(
+            baseInput.value,
+            displayed
+          );
+
+        input.dataset
+          .manualAdjustment =
+          String(
+            displayed -
+            base
+          );
+      }
+    );
+  }
+
+
+  function completePoolAssignment() {
+    if (
+      !allPoolScoresAssigned()
+    ) {
+      return false;
+    }
+
+    /*
+     * The six assigned values already live in the hidden base
+     * score fields. The token pool is no longer needed.
+     */
+    state.method =
+      'manual';
+
+    state.previousMethod =
+      'manual';
+
+    state.pool = [];
+
+    state.assignments =
+      createEmptyAssignments();
+
+    state.selectedTokenId =
+      '';
+
+    /*
+     * Capture any current Race or Background adjustment before
+     * unlocking the visible fields for manual editing.
+     */
+    captureManualAdjustments();
+
+    persistState();
+
+    configureModeUi();
+
+    document.dispatchEvent(
+      new CustomEvent(
+        'ability-scores:assignment-complete',
+        {
+          detail: {
+            method:
+              'manual',
+
+            baseScores:
+              getBaseScores()
+          }
+        }
+      )
+    );
+
+    return true;
+  }
+
+
+  /* ========================================================
      SCORE ASSIGNMENT
      ======================================================== */
 
@@ -1204,6 +1343,12 @@
     persistState();
     renderTray();
     reapplyCharacterRules();
+
+    /*
+     * Once all six scores have been placed, close the tray and
+     * return to editable Manual Entry automatically.
+     */
+    completePoolAssignment();
   }
 
 
@@ -2079,6 +2224,13 @@
     const elements =
       getElements();
 
+    if (
+      state.method ===
+      'manual'
+    ) {
+      captureManualAdjustments();
+    }
+
     const poolMode =
       [
         'standard-array',
@@ -2338,9 +2490,30 @@
       return;
     }
 
+    const input =
+      getStatInput(
+        stat
+      );
+
+    const adjustment =
+      number(
+        input
+          ?.dataset
+          ?.manualAdjustment,
+        0
+      );
+
+    /*
+     * The player edits the final displayed score. Store the true
+     * base score by removing the currently applied rules bonus.
+     */
     setBaseScore(
       stat,
-      value
+      number(
+        value,
+        10
+      ) -
+      adjustment
     );
 
     window.clearTimeout(
