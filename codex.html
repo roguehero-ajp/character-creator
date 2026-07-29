@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spells &amp; Magic Items Codex | My RPG Source</title>
+  <meta
+    name="description"
+    content="Search and compare every spell and magic item in the D&D SRD 5.1 and SRD 5.2.1, covering the 2014 and 2024 fifth-edition rules."
+  >
+  <link rel="canonical" href="https://www.myrpgsource.com/codex.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+  >
+  <link rel="stylesheet" href="css/site-pages.css">
+  <link rel="stylesheet" href="css/codex-page.css">
+  <script defer src="js/codex-page.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="site-shell codex-shell">
+    <header class="site-header">
+      <a class="site-brand" href="index.html">My RPG Source</a>
+
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="builder.html">Character Builder</a>
+        <a href="codex.html" aria-current="page">Codex</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="legal.html">Legal</a>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <header class="page-hero codex-hero">
+        <p class="eyebrow">SRD reference library</p>
+        <h1>Spells &amp; Magic Items Codex</h1>
+        <p class="lede">
+          Search the complete spell and magic-item collections from SRD 5.1 and
+          SRD 5.2.1. Filter by edition, spell level, school, rarity, or attunement,
+          then open any entry for its full licensed rules text.
+        </p>
+
+        <div class="codex-stat-grid" aria-label="Codex collection totals">
+          <div class="codex-stat">
+            <strong id="codex-total-count">1,153</strong>
+            <span>Total entries</span>
+          </div>
+          <div class="codex-stat">
+            <strong id="codex-spell-count">658</strong>
+            <span>Spell entries</span>
+          </div>
+          <div class="codex-stat">
+            <strong id="codex-item-count">495</strong>
+            <span>Magic-item entries</span>
+          </div>
+          <div class="codex-stat">
+            <strong id="codex-edition-count">2</strong>
+            <span>Rules editions</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="content-card codex-introduction" aria-labelledby="codex-intro-heading">
+        <h2 id="codex-intro-heading">One library, two editions</h2>
+        <p>
+          The 2014 and 2024 versions sometimes share a name while changing rules,
+          wording, classification, or availability. Edition badges remain visible
+          on every result so you can compare the correct version without mixing
+          them together by accident.
+        </p>
+        <p>
+          This library is separate from the smaller in-builder Rules Codex. It is
+          designed as a complete reference for the spells and magic items released
+          under the two Creative Commons System Reference Documents.
+        </p>
+      </section>
+
+      <section class="codex-workspace" aria-labelledby="search-heading">
+        <div class="codex-filter-panel">
+          <div class="codex-filter-heading">
+            <div>
+              <p class="eyebrow">Search and filter</p>
+              <h2 id="search-heading">Find an entry</h2>
+            </div>
+            <button type="button" id="codex-reset">Reset filters</button>
+          </div>
+
+          <form id="codex-filter-form" class="codex-filter-grid" role="search">
+            <div class="codex-field codex-field-search">
+              <label for="codex-search">Name or rules text</label>
+              <input
+                type="search"
+                id="codex-search"
+                autocomplete="off"
+                placeholder="Try Fireball, healing, sword..."
+              >
+            </div>
+
+            <div class="codex-field">
+              <label for="codex-edition">Edition</label>
+              <select id="codex-edition">
+                <option value="all">Both editions</option>
+                <option value="2014">2014 / SRD 5.1</option>
+                <option value="2024">2024 / SRD 5.2.1</option>
+              </select>
+            </div>
+
+            <div class="codex-field">
+              <label for="codex-type">Entry type</label>
+              <select id="codex-type">
+                <option value="all">Spells and magic items</option>
+                <option value="spell">Spells only</option>
+                <option value="item">Magic items only</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-spell-filter>
+              <label for="codex-level">Spell level</label>
+              <select id="codex-level">
+                <option value="all">All spell levels</option>
+                <option value="0">Cantrip</option>
+                <option value="1">1st level</option>
+                <option value="2">2nd level</option>
+                <option value="3">3rd level</option>
+                <option value="4">4th level</option>
+                <option value="5">5th level</option>
+                <option value="6">6th level</option>
+                <option value="7">7th level</option>
+                <option value="8">8th level</option>
+                <option value="9">9th level</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-spell-filter>
+              <label for="codex-school">Spell school</label>
+              <select id="codex-school">
+                <option value="all">All schools</option>
+                <option value="Abjuration">Abjuration</option>
+                <option value="Conjuration">Conjuration</option>
+                <option value="Divination">Divination</option>
+                <option value="Enchantment">Enchantment</option>
+                <option value="Evocation">Evocation</option>
+                <option value="Illusion">Illusion</option>
+                <option value="Necromancy">Necromancy</option>
+                <option value="Transmutation">Transmutation</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-item-filter>
+              <label for="codex-rarity">Item rarity</label>
+              <select id="codex-rarity">
+                <option value="all">All rarities</option>
+                <option value="Common">Common</option>
+                <option value="Uncommon">Uncommon</option>
+                <option value="Rare">Rare</option>
+                <option value="Very Rare">Very rare</option>
+                <option value="Legendary">Legendary</option>
+                <option value="Artifact">Artifact</option>
+                <option value="Varies">Varies</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-item-filter>
+              <label for="codex-attunement">Attunement</label>
+              <select id="codex-attunement">
+                <option value="all">Either</option>
+                <option value="required">Required</option>
+                <option value="not-required">Not required</option>
+              </select>
+            </div>
+          </form>
+        </div>
+
+        <div class="codex-results-heading">
+          <p id="codex-status" role="status" aria-live="polite">
+            Loading the Codex...
+          </p>
+          <p class="codex-results-tip">Open an entry to read its full description.</p>
+        </div>
+
+        <div id="codex-error" class="codex-error" hidden>
+          <h2>The Codex could not be loaded</h2>
+          <p>
+            Refresh the page. If the problem continues, please report it through
+            the <a href="contact.html">Contact page</a>.
+          </p>
+        </div>
+
+        <div id="codex-results" class="codex-results" aria-label="Codex search results"></div>
+
+        <div class="codex-load-row">
+          <button type="button" id="codex-load-more" hidden>Load more entries</button>
+        </div>
+
+        <noscript>
+          <div class="codex-error">
+            <h2>JavaScript is required for this searchable library</h2>
+            <p>
+              Enable JavaScript to load, search, and filter all SRD spell and
+              magic-item entries.
+            </p>
+          </div>
+        </noscript>
+      </section>
+
+      <section class="content-card codex-attribution" aria-labelledby="codex-attribution-heading">
+        <h2 id="codex-attribution-heading">Sources and attribution</h2>
+        <p>
+          The searchable presentation, edition comparison, filtering, and site
+          organization are part of My RPG Source. The rules text is drawn from
+          the following Creative Commons sources.
+        </p>
+
+        <div class="attribution">
+          This work includes material taken from the System Reference Document 5.1
+          (“SRD 5.1”) by Wizards of the Coast LLC and available at
+          <a
+            href="https://dnd.wizards.com/resources/systems-reference-document"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            https://dnd.wizards.com/resources/systems-reference-document
+          </a>.
+          The SRD 5.1 is licensed under the Creative Commons Attribution 4.0
+          International License available at
+          <a
+            href="https://creativecommons.org/licenses/by/4.0/legalcode"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            https://creativecommons.org/licenses/by/4.0/legalcode
+          </a>.
+        </div>
+
+        <div class="attribution">
+          This work includes material from the System Reference Document 5.2.1
+          (“SRD 5.2.1”) by Wizards of the Coast LLC, available at
+          <a href="https://www.dndbeyond.com/srd" target="_blank" rel="noopener noreferrer">
+            https://www.dndbeyond.com/srd
+          </a>.
+          The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0
+          International License, available at
+          <a
+            href="https://creativecommons.org/licenses/by/4.0/legalcode"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            https://creativecommons.org/licenses/by/4.0/legalcode
+          </a>.
+        </div>
+
+        <p class="small-print">
+          SRD material has been reorganized and converted into searchable data for
+          this reference page. See the complete
+          <a href="legal.html">Legal &amp; SRD Attribution page</a> for additional notices.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <nav aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="builder.html">Character Builder</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="legal.html">Legal &amp; SRD Attribution</a>
+      </nav>
+      <div>© 2026 My RPG Source. Independent tabletop roleplaying tools.</div>
+    </footer>
+  </div>
+</body>
+</html>
