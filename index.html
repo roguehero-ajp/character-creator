@@ -528,8 +528,21 @@
     }
 
 
-    .codex-sample.is-revealing {
-      animation: knowledge-card-reveal 0.32s ease;
+    .codex-sample {
+      transform-style: preserve-3d;
+      transform-origin: center;
+      backface-visibility: hidden;
+      will-change: transform, opacity;
+    }
+
+    .codex-sample.is-flipping-out {
+      animation: knowledge-card-flip-out 0.24s ease-in forwards;
+      pointer-events: none;
+    }
+
+    .codex-sample.is-flipping-in {
+      animation: knowledge-card-flip-in 0.28s ease-out forwards;
+      pointer-events: none;
     }
 
     .knowledge-card-meta {
@@ -589,28 +602,33 @@
       outline-offset: 2px;
     }
 
-    .knowledge-card-note {
-      margin: 0;
+    @keyframes knowledge-card-flip-out {
+      from {
+        opacity: 1;
+        transform: perspective(900px) rotateY(0deg) scale(1);
+      }
 
-      color: var(--muted);
-
-      font-size: 0.78rem;
+      to {
+        opacity: 0.55;
+        transform: perspective(900px) rotateY(90deg) scale(0.98);
+      }
     }
 
-    @keyframes knowledge-card-reveal {
+    @keyframes knowledge-card-flip-in {
       from {
-        opacity: 0.35;
-        transform: translateY(4px);
+        opacity: 0.55;
+        transform: perspective(900px) rotateY(-90deg) scale(0.98);
       }
 
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: perspective(900px) rotateY(0deg) scale(1);
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .codex-sample.is-revealing {
+      .codex-sample.is-flipping-out,
+      .codex-sample.is-flipping-in {
         animation: none;
       }
     }
@@ -1001,13 +1019,6 @@
                 Next
               </button>
             </div>
-
-            <p
-              class="knowledge-card-note"
-              id="knowledge-card-note"
-            >
-              Rotates every 9 seconds
-            </p>
           </div>
         </section>
 
@@ -1133,7 +1144,6 @@
       const previousButton = document.getElementById("knowledge-card-previous");
       const pauseButton = document.getElementById("knowledge-card-pause");
       const nextButton = document.getElementById("knowledge-card-next");
-      const note = document.getElementById("knowledge-card-note");
 
       if (
         !feature ||
@@ -1143,8 +1153,7 @@
         !body ||
         !previousButton ||
         !pauseButton ||
-        !nextButton ||
-        !note
+        !nextButton
       ) {
         return;
       }
@@ -1156,8 +1165,11 @@
       let cards = shuffleCards(fallbackCards);
       let currentIndex = 0;
       let rotationTimer = null;
+      let flipTimer = null;
       let manuallyPaused = reducedMotionQuery.matches;
       let interactionPaused = false;
+      let isFlipping = false;
+      let pendingIndex = null;
 
       function shuffleCards(sourceCards) {
         const shuffled = [...sourceCards];
@@ -1198,21 +1210,67 @@
           }));
       }
 
-      function showCard(index) {
-        if (!cards.length) {
-          return;
-        }
-
+      function commitCard(index) {
         currentIndex = (index + cards.length) % cards.length;
         const card = cards[currentIndex];
 
         meta.textContent = card.categoryName;
         title.textContent = card.title;
         body.textContent = card.summary;
+      }
 
-        sample.classList.remove("is-revealing");
-        void sample.offsetWidth;
-        sample.classList.add("is-revealing");
+      function clearFlipTimer() {
+        if (flipTimer !== null) {
+          window.clearTimeout(flipTimer);
+          flipTimer = null;
+        }
+      }
+
+      function showCard(index, options = {}) {
+        if (!cards.length) {
+          return;
+        }
+
+        const targetIndex = (index + cards.length) % cards.length;
+        const animate = options.animate !== false && !reducedMotionQuery.matches;
+
+        if (!animate) {
+          clearFlipTimer();
+          pendingIndex = null;
+          isFlipping = false;
+          sample.classList.remove("is-flipping-out", "is-flipping-in");
+          commitCard(targetIndex);
+          return;
+        }
+
+        if (isFlipping) {
+          pendingIndex = targetIndex;
+          return;
+        }
+
+        isFlipping = true;
+        sample.classList.remove("is-flipping-in");
+        sample.classList.add("is-flipping-out");
+
+        flipTimer = window.setTimeout(() => {
+          commitCard(targetIndex);
+          sample.classList.remove("is-flipping-out");
+          sample.classList.add("is-flipping-in");
+
+          flipTimer = window.setTimeout(() => {
+            sample.classList.remove("is-flipping-in");
+            flipTimer = null;
+            isFlipping = false;
+
+            if (pendingIndex !== null && pendingIndex !== currentIndex) {
+              const queuedIndex = pendingIndex;
+              pendingIndex = null;
+              showCard(queuedIndex);
+            } else {
+              pendingIndex = null;
+            }
+          }, 280);
+        }, 240);
       }
 
       function showNextCard() {
@@ -1258,10 +1316,6 @@
           "aria-pressed",
           manuallyPaused ? "true" : "false"
         );
-
-        note.textContent = manuallyPaused
-          ? "Rotation paused"
-          : "Rotates every 9 seconds";
       }
 
       previousButton.addEventListener("click", () => {
@@ -1319,7 +1373,7 @@
       });
 
       updatePauseButton();
-      showCard(Math.floor(Math.random() * cards.length));
+      showCard(Math.floor(Math.random() * cards.length), { animate: false });
       startRotation();
 
       fetch("data/codex.json")
@@ -1339,7 +1393,7 @@
 
           cards = shuffleCards(loadedCards);
           currentIndex = 0;
-          showCard(0);
+          showCard(0, { animate: false });
           startRotation();
         })
         .catch((error) => {
