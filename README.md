@@ -6,7 +6,6 @@ A free web-based tabletop RPG character creator currently under development.
 The goal of this project is to become the easiest place on the internet to create, learn, and manage tabletop RPG characters.
 
 Rather than simply generating character sheets, this project aims to teach players how their characters work through an intuitive interface, helpful explanations, and eventually support for multiple game systems.
-
 ## Design Philosophy
 
 Character creation shouldn't require flipping through three books and watching four YouTube videos...I struggle with this sort of thing.
@@ -14,7 +13,6 @@ Character creation shouldn't require flipping through three books and watching f
 This project is being built with the ideo to make tabletop RPGs easier to learn without taking away the oomph that makes them fun.
 
 Every feature should make creating a character faster, clearer, and more enjoyable.
-
 ## Planned Game Systems
 
 - Dungeons & Dragons 5e (2024)
@@ -22,7 +20,6 @@ Every feature should make creating a character faster, clearer, and more enjoyab
 - Pathfinder
 - Cyberpunk RED
 - Shadowrun
-- Call of Cthulhu
 - Vampire: The Masquerade
 - Werewolf: The Apocalypse
 - Mage: The Ascension
@@ -37,7 +34,6 @@ Every feature should make creating a character faster, clearer, and more enjoyab
 - PDF export
 - Blank character sheet printing
 - Theme support
-
 ## Planned Features
 
 - Local character saves
@@ -57,15 +53,14 @@ Every feature should make creating a character faster, clearer, and more enjoyab
 - [x] Character calculations
 
 ### Version 0.2
-- [x] Local saves
-- [x] JSON import/export
-- [x] Improved printing
+- [ ] Local saves
+- [ ] JSON import/export
+- [ ] Improved printing
 
 ### Version 0.3
 - [ ] Interactive tooltips
 - [ ] Mobile optimization
 - [ ] UI improvements
-
 ### Version 1.0
 - Public launch
 

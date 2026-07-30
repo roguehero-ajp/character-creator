@@ -33,7 +33,6 @@ CURRENT PRIORITIES
 ☐ Knowledge Cards (Equipment)
 
 ☐ Knowledge Cards (Weapons)
-
 ☐ Knowledge Cards (Currency)
 
 ✓ Codex Slide-Out System
@@ -70,8 +69,6 @@ LONG TERM
 
 ☐ Pathfinder
 
-☐ Call of Cthulhu
-
 ☐ Cyberpunk RED
 
 ☐ Shadowrun
@@ -85,7 +82,6 @@ LONG TERM
 ☐ Changeling
 
 ☐ Wraith
-
 ----------------------------------------
 
 EVENTUAL FEATURES
