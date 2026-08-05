@@ -64,6 +64,7 @@ The project is still pre-1.0. Until formal release versioning is standardized, r
 - Made the builder Codex drawer load only the active edition's rule collection.
 - Made the homepage Featured Knowledge Card draw from the new edition-specific Codex collections without changing its guarded timer, pause controls, or two-stage flip behaviour.
 - Replaced stale homepage wording that described the Codex as a future feature.
+- Renamed the builder Codex link to reflect the complete Rules Codex and added prominent homepage and footer links to it.
 - Replaced the original single-page implementation with modular CSS, JavaScript, and JSON data files.
 - Split D&D data into `data/dnd5e/2014` and `data/dnd5e/2024` directories.
 - Made Race or Species labels and data loading depend on the selected edition.
