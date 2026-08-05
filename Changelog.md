@@ -17,8 +17,11 @@ The project is still pre-1.0. Until formal release versioning is standardized, r
 
 - Manifest-driven Codex architecture organized by game system, edition, collection, and entry.
 - Separate core-rules collections containing 215 D&D 5e 2014 entries and 218 D&D 5e 2024 entries.
+- Separate mundane-equipment collections containing 273 D&D 5e 2014 entries and 246 D&D 5e 2024 entries.
+- Complete searchable catalogues for SRD weapons, armour, ammunition, spellcasting focuses, adventuring gear, equipment packs, tools, mounts, vehicles, lifestyles, hospitality, and services.
+- 2014 trade-goods entries and 2024 weapon-mastery fields, firearm ammunition, airship, and spellcasting-service tiers.
 - Shared `js/codex-data.js` loader with request caching and normalized entry IDs.
-- Game-system, edition, entry-type, and rule-category filters on the standalone Codex page.
+- Game-system, edition, entry-type, rule-category, and equipment-category filters on the standalone Codex page.
 - Stable query-string deep links to individual Codex entries.
 - Related-rule navigation and builder links to the corresponding full Codex entry.
 - Automated Codex schema, ID, edition, category, and relationship validation through `tools/validate-codex.mjs`.
@@ -60,7 +63,7 @@ The project is still pre-1.0. Until formal release versioning is standardized, r
 
 ### Changed
 
-- Expanded `codex.html` from a spells-and-magic-items catalogue into a unified Rules Codex while preserving all 1,153 existing SRD entries.
+- Expanded `codex.html` from a spells-and-magic-items catalogue into a unified Rules Codex while preserving all 1,153 existing SRD spell and magic-item entries and adding 519 mundane-equipment entries.
 - Made the builder Codex drawer load only the active edition's rule collection.
 - Made the homepage Featured Knowledge Card draw from the new edition-specific Codex collections without changing its guarded timer, pause controls, or two-stage flip behaviour.
 - Replaced stale homepage wording that described the Codex as a future feature.
@@ -100,7 +103,7 @@ The project is still pre-1.0. Until formal release versioning is standardized, r
 - Reduced multiclass proficiencies and proficiency-source tracking are not complete.
 - Combined multiclass spell-slot calculations are not complete.
 - Background collections are still limited.
-- The Codex still needs full mundane-equipment and SRD character-option collections, focused edition comparisons, and final editorial and licensing review.
+- The Codex still needs SRD character-option collections, focused edition comparisons, and final editorial and licensing review.
 - Dense character features still need additional print-layout work.
 - Accounts, cloud saves, synchronization, hosted campaigns, and version history are not implemented.
 - The displayed application version still needs to be standardized across code, footer, and documentation.

@@ -152,8 +152,8 @@ The Codex now uses a manifest-driven hierarchy of **game system → edition → 
 
 ## Unified standalone Codex
 
-- [x] Rules, spells, and magic items in one searchable page
-- [x] Game-system, edition, entry-type, and rule-category filters
+- [x] Rules, mundane equipment, spells, and magic items in one searchable page
+- [x] Game-system, edition, entry-type, rule-category, and equipment-category filters
 - [x] Spell and magic-item filters
 - [x] 2014 and 2024 edition labels
 - [x] More than one thousand SRD spell and magic-item entries preserved
@@ -163,10 +163,20 @@ The Codex now uses a manifest-driven hierarchy of **game system → edition → 
 - [ ] Builder-to-Codex links for relevant spells and items
 - [ ] Additional original guidance around choosing and using spells
 
+## Mundane equipment catalogue
+
+- [x] Separate 2014 and 2024 equipment collection files
+- [x] 273 edition-specific 2014 mundane-equipment entries
+- [x] 246 edition-specific 2024 mundane-equipment entries
+- [x] Currency, weapons, armour, ammunition, and spellcasting focuses
+- [x] Adventuring gear, equipment packs, tools, and tool variants
+- [x] Mounts, tack, drawn vehicles, and large vehicles
+- [x] 2014 trade goods plus edition-specific lifestyles, hospitality, hirelings, and spellcasting services
+- [x] Equipment-category filtering, deep links, source labels, and searchable structured facts
+- [~] Final item-by-item mechanical and editorial audit
+
 ## Remaining Codex collections
 
-- [ ] Full edition-specific mundane-equipment tables
-- [ ] Weapons, armour, tools, packs, services, mounts, and vehicles
 - [ ] SRD races and 2024 species
 - [ ] SRD backgrounds and feats
 - [ ] SRD classes, subclasses, progression tables, and class features
@@ -327,7 +337,7 @@ Potential future systems include:
 ## Immediate Sequence
 
 1. Complete Codex editorial QA and source verification.
-2. Add edition-specific mundane equipment and SRD character-option collections.
+2. Add the SRD character-option collections: races/species, backgrounds, feats, classes, subclasses, and class features.
 3. Begin the edition-aware class architecture branch.
 4. Implement Add a New Class, prerequisites, and DM Override.
 5. Implement reduced multiclass proficiencies and source tracking.

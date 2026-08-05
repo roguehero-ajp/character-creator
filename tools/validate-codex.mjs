@@ -5,6 +5,7 @@ import process from 'node:process';
 const root = process.cwd();
 const manifestPath = path.join(root, 'data', 'codex', 'manifest.json');
 const errors = [];
+const globalIds = new Set();
 
 async function readJson(relativePath) {
   const absolutePath = path.join(root, relativePath);
@@ -29,6 +30,8 @@ function validateV2(payload, collection, gameSystem, edition) {
 
   const ids = new Set();
   const categoryIds = new Set((payload.categories || []).map((category) => category.id));
+  const allowedTypes = new Set(collection.entryTypes || []);
+  const fallbackType = allowedTypes.size === 1 ? Array.from(allowedTypes)[0] : null;
 
   payload.entries.forEach((entry, index) => {
     const label = `${collection.url} entry ${index + 1}`;
@@ -48,8 +51,41 @@ function validateV2(payload, collection, gameSystem, edition) {
     if (entry.gameSystem !== gameSystem.id || entry.edition !== edition.id) {
       errors.push(`${label}: gameSystem or edition is incorrect.`);
     }
+
+    const entryType = entry.entryType || fallbackType;
+    if (!entryType || !allowedTypes.has(entryType)) {
+      errors.push(`${label}: unsupported entryType ${entryType || '(missing)'}.`);
+    }
+
     if (!categoryIds.has(entry.category)) {
       errors.push(`${label}: unknown category ${entry.category}.`);
+    }
+
+    const globalId = `${gameSystem.id}:${edition.id}:${entryType}:${entry.id}`;
+    if (globalIds.has(globalId)) {
+      errors.push(`${label}: duplicate global id ${globalId}.`);
+    }
+    globalIds.add(globalId);
+
+    if (entryType === 'equipment') {
+      if (!entry.description || typeof entry.description !== 'string') {
+        errors.push(`${label}: equipment entry is missing a description.`);
+      }
+      if (!Array.isArray(entry.facts)) {
+        errors.push(`${label}: equipment facts must be an array.`);
+      } else {
+        entry.facts.forEach((fact, factIndex) => {
+          if (!fact?.label || !fact?.value) {
+            errors.push(`${label}: fact ${factIndex + 1} needs label and value.`);
+          }
+        });
+      }
+      if (entry.sourceDocument !== edition.source) {
+        errors.push(`${label}: sourceDocument must be ${edition.source}.`);
+      }
+      if (entry.license !== 'CC BY 4.0') {
+        errors.push(`${label}: equipment entry must declare CC BY 4.0.`);
+      }
     }
   });
 
@@ -91,5 +127,5 @@ if (errors.length) {
   errors.forEach((error) => console.error(`- ${error}`));
   process.exitCode = 1;
 } else {
-  console.log('Codex validation passed.');
+  console.log(`Codex validation passed (${globalIds.size.toLocaleString('en-CA')} versioned entries checked).`);
 }

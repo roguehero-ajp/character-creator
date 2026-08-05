@@ -1,6 +1,6 @@
 /*
  * My RPG Source
- * Standalone SRD Spells & Magic Items Codex
+ * Standalone Rules, Equipment, Spells & Magic Items Codex
  */
 
 .codex-shell {
@@ -15,7 +15,7 @@
   margin-top: 30px;
 
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -102,7 +102,7 @@
   margin-top: 22px;
 
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -287,6 +287,12 @@
   border-color: rgba(72, 201, 176, 0.42);
 }
 
+.codex-badge-equipment {
+  color: #d8f0ff;
+  background: rgba(41, 128, 185, 0.17);
+  border-color: rgba(93, 173, 226, 0.46);
+}
+
 .codex-entry-body {
   padding: 0 18px 20px;
   border-top: 1px solid var(--border);
@@ -434,7 +440,7 @@
   margin-top: 20px;
 
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
 }
 

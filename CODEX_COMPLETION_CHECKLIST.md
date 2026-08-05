@@ -67,7 +67,7 @@ The Rules Codex milestone is complete when My RPG Source provides one coherent, 
 
 ### Current separation to resolve
 
-- [x] The standalone `codex.html` page presents rules, spells, and magic items through one data layer.
+- [x] The standalone `codex.html` page presents rules, mundane equipment, spells, and magic items through one data layer.
 - [x] The builder drawer remains lightweight and loads only the active edition's core rules.
 - [x] Both halves are united without forcing the builder to load the full spell and magic-item catalogue.
 
@@ -111,11 +111,11 @@ The Rules Codex milestone is complete when My RPG Source provides one coherent, 
 
 ### Recommended content layers
 
-- [ ] **Rules:** Original explanations of how play works.
+- [x] **Rules:** Original explanations of how play works.
 - [ ] **Character Options:** SRD races/species, backgrounds, feats, classes, and subclasses.
-- [ ] **Equipment:** Mundane gear, weapons, armor, tools, packs, services, mounts, and vehicles.
-- [ ] **Spells:** Existing SRD spell library.
-- [ ] **Magic Items:** Existing SRD magic-item library.
+- [x] **Equipment:** Mundane gear, weapons, armor, tools, packs, services, mounts, and vehicles.
+- [x] **Spells:** Existing SRD spell library.
+- [x] **Magic Items:** Existing SRD magic-item library.
 - [ ] **Edition Differences:** Focused 2014-versus-2024 comparisons.
 - [ ] **Glossary:** Search aliases and short definitions for frequently encountered terms.
 
@@ -514,11 +514,11 @@ For each character option, determine whether its complete mechanical text is pre
 
 - [x] Currency overview exists.
 - [x] Carrying Capacity overview exists.
-- [ ] Coin conversions.
+- [x] Coin conversions.
 - [ ] Starting wealth.
 - [ ] Selling equipment.
-- [ ] Lifestyle expenses where included.
-- [ ] Food, drink, lodging, and services.
+- [x] Lifestyle expenses where included.
+- [x] Food, drink, lodging, and services.
 - [ ] Encumbrance and variant encumbrance only where licensed and appropriate.
 - [ ] Size and carrying capacity.
 - [ ] Push, drag, and lift.
@@ -526,28 +526,28 @@ For each character option, determine whether its complete mechanical text is pre
 
 ### Adventuring gear
 
-- [ ] Create a structured entry for every adventuring-gear item included in SRD 5.1.
-- [ ] Create a structured entry for every adventuring-gear item included in SRD 5.2.1.
-- [ ] Store name, cost, weight, category, edition, source, and description.
-- [ ] Handle edition-specific cost, weight, or wording differences.
-- [ ] Add equipment packs and pack contents.
-- [ ] Add ammunition.
-- [ ] Add arcane, druidic, and holy focuses where licensed.
-- [ ] Add kits and tools.
-- [ ] Add poisons, healing supplies, and special substances only where licensed.
-- [ ] Add services, mounts, tack, and vehicles where licensed.
-- [ ] Add searchable aliases and common names.
+- [x] Create a structured entry for every adventuring-gear item included in SRD 5.1.
+- [x] Create a structured entry for every adventuring-gear item included in SRD 5.2.1.
+- [x] Store name, cost, weight, category, edition, source, and description.
+- [x] Handle edition-specific cost, weight, or wording differences.
+- [x] Add equipment packs and pack contents.
+- [x] Add ammunition.
+- [x] Add arcane, druidic, and holy focuses where licensed.
+- [x] Add kits and tools.
+- [x] Add poisons, healing supplies, and special substances only where licensed.
+- [x] Add services, mounts, tack, and vehicles where licensed.
+- [x] Add searchable tags, variants, aliases, and common names.
 
 ### Weapons
 
 - [x] General weapon and property entries exist.
-- [ ] Create full 2014 weapon table.
-- [ ] Create full 2024 weapon table.
-- [ ] Add cost, damage, damage type, weight, and properties.
-- [ ] Add mastery property for 2024 weapons.
+- [x] Create full 2014 weapon table.
+- [x] Create full 2024 weapon table.
+- [x] Add cost, damage, damage type, weight, and properties.
+- [x] Add mastery property for 2024 weapons.
 - [ ] Create entries for every weapon property.
-- [ ] Add simple versus martial weapon guidance.
-- [ ] Add melee versus ranged classification.
+- [x] Add simple versus martial classification.
+- [x] Add melee versus ranged classification.
 - [ ] Add improvised weapon rules.
 - [ ] Add silvered weapons where included.
 - [ ] Add ammunition and loading interactions.
@@ -557,23 +557,23 @@ For each character option, determine whether its complete mechanical text is pre
 ### Armor and shields
 
 - [x] General armor category entries exist.
-- [ ] Create full 2014 armor table.
-- [ ] Create full 2024 armor table.
-- [ ] Add cost, base Armor Class, Dexterity limits, Strength requirements, stealth effects, and weight.
-- [ ] Add shield rules.
-- [ ] Add donning and doffing times.
-- [ ] Add armor proficiency consequences.
+- [x] Create full 2014 armor table.
+- [x] Create full 2024 armor table.
+- [x] Add cost, base Armor Class, Dexterity limits, Strength requirements, stealth effects, and weight.
+- [x] Add shield catalogue entry and edition-specific table values.
+- [x] Add donning and doffing times.
+- [x] Link catalogue descriptions to edition-specific armor-training or proficiency consequences.
 - [ ] Audit edition differences.
 
 ### Tools
 
 - [x] Tool Proficiency overview exists.
-- [ ] Inventory SRD tools by edition.
-- [ ] Add cost and weight.
+- [x] Inventory SRD tools by edition.
+- [x] Add cost and weight.
 - [ ] Explain tool proficiency.
-- [ ] Explain tool and skill combinations for 2024 where licensed.
-- [ ] Add gaming sets, musical instruments, artisan tools, kits, and vehicles.
-- [ ] Link tools to relevant abilities and activities.
+- [x] Add 2024 associated abilities, Utilize examples, and crafting examples where licensed.
+- [x] Add gaming sets, musical instruments, artisan tools, kits, and vehicles.
+- [x] Link tools to relevant abilities and activities through structured facts and search tags.
 
 ---
 
@@ -627,40 +627,41 @@ For each character option, determine whether its complete mechanical text is pre
 ### Preserve current functionality
 
 - [x] Spell and magic-item data remain in `data/srd-codex.json`.
-- [ ] Preserve all 1,153 existing entries during integration.
-- [ ] Preserve edition filters.
-- [ ] Preserve spell-level and school filters.
-- [ ] Preserve rarity and attunement filters.
-- [ ] Preserve progressive loading.
-- [ ] Preserve source labels and attribution.
-- [ ] Preserve mobile behaviour.
+- [x] Preserve all 1,153 existing entries during integration.
+- [x] Preserve edition filters.
+- [x] Preserve spell-level and school filters.
+- [x] Preserve rarity and attunement filters.
+- [x] Preserve progressive loading.
+- [x] Preserve source labels and attribution.
+- [x] Preserve existing responsive mobile behaviour; complete final device QA before declaring the whole Codex finished.
 
 ### Improve integration
 
-- [ ] Add **Rules**, **Character Options**, and **Equipment** to the standalone Codex page.
-- [ ] Add a top-level entry-type filter.
-- [ ] Make searches span all loaded Codex collections.
-- [ ] Add direct links to individual entries.
+- [x] Add **Rules** and **Equipment** to the standalone Codex page.
+- [ ] Add **Character Options** to the standalone Codex page.
+- [x] Add a top-level entry-type filter.
+- [x] Make searches span all loaded Codex collections.
+- [x] Add direct links to individual entries.
 - [ ] Add related-rule links from spells and items.
 - [ ] Add related-spell or related-item links only when useful and maintainable.
-- [ ] Add “Open full Codex” from the builder drawer.
-- [ ] Allow builder Knowledge Cards to link to full Codex entries.
+- [x] Add “Open full Codex” from the builder drawer.
+- [x] Allow builder Knowledge Cards to link to full Codex entries.
 - [ ] Ensure large datasets do not freeze low-powered devices.
-- [ ] Avoid loading unnecessary data inside the builder drawer.
+- [x] Avoid loading unnecessary data inside the builder drawer.
 
 ---
 
 ## 16. Edition Awareness
 
-- [ ] Every entry must declare `2014`, `2024`, or both.
+- [x] Every entry must declare `2014` or `2024`.
 - [ ] Edition-neutral explanations must be reviewed for hidden differences.
-- [ ] Entries with mechanical differences must use separate edition content or structured comparison fields.
-- [ ] Search must not return incompatible rules when an edition filter is active.
-- [ ] Builder links must automatically use the active builder edition.
-- [ ] Deep links must preserve the selected edition.
-- [ ] Source badges must identify SRD 5.1 or SRD 5.2.1.
+- [x] Entries with mechanical differences use separate edition collections and entries.
+- [x] Search must not return incompatible rules when an edition filter is active.
+- [x] Builder links automatically use the active builder edition.
+- [x] Deep links preserve the selected edition.
+- [x] Source badges identify SRD 5.1 or SRD 5.2.1.
 - [ ] Character-option entries must never mix progression tables or features between editions.
-- [ ] Equipment tables must show edition-specific values.
+- [x] Equipment entries show edition-specific values.
 - [ ] Rules with renamed actions or terms must include aliases without implying the rules are identical.
 - [ ] Add a visible edition-comparison notice where users might otherwise combine rules accidentally.
 
@@ -670,16 +671,17 @@ For each character option, determine whether its complete mechanical text is pre
 
 ### Content and navigation
 
-- [ ] Rewrite `codex.html` title, description, and introduction to describe the complete library.
-- [ ] Replace the current “spells and magic items only” statistics with collection-wide totals.
-- [ ] Add top-level navigation for Rules, Character Options, Equipment, Spells, and Magic Items.
-- [ ] Add category filters that change appropriately by entry type.
-- [ ] Keep edition selection prominent.
-- [ ] Add a clear source/licensing explanation.
-- [ ] Add beginner-oriented starting points.
-- [ ] Add “Browse by topic” links.
+- [x] Rewrite `codex.html` title, description, and introduction to describe the current library.
+- [x] Replace the “spells and magic items only” statistics with collection-wide totals.
+- [x] Add starting-point navigation for Rules, Equipment, Spells, and Magic Items.
+- [ ] Add Character Options after that collection exists.
+- [x] Add category filters that change appropriately by entry type.
+- [x] Keep edition selection prominent.
+- [x] Add a clear source/licensing explanation.
+- [x] Add beginner-oriented starting points.
+- [x] Add collection-based browsing links.
 - [ ] Add an edition-comparison landing section.
-- [ ] Add useful empty-state messages.
+- [x] Add useful empty-state messages.
 
 ### Deep links and sharing
 
@@ -844,25 +846,25 @@ Additional standards:
 - [x] Finalize the initial manifest-driven data architecture.
 - [x] Extend and normalize the entry schema through the shared loader.
 - [x] Add automated validation.
-- [x] Make `codex.html` capable of loading rules, spells, and items.
+- [x] Make `codex.html` capable of loading rules, mundane equipment, spells, and magic items.
 - [x] Preserve the current builder drawer as an edition-scoped lightweight reference.
 - [x] Add deep-link support.
 
 ### Milestone 2: Core Player Rules MVP
 
-- [ ] Complete dice and resolution rules.
-- [ ] Complete ability, skill, and saving-throw coverage.
-- [ ] Complete character creation fundamentals.
-- [ ] Complete exploration and social interaction.
-- [ ] Complete combat actions, attacks, damage, recovery, and conditions.
-- [ ] Complete spellcasting fundamentals.
-- [ ] Publish after QA.
+- [x] Complete dice and resolution rules.
+- [x] Complete ability, skill, and saving-throw coverage.
+- [x] Complete character creation fundamentals.
+- [x] Complete exploration and social interaction.
+- [x] Complete combat actions, attacks, damage, recovery, and conditions.
+- [x] Complete spellcasting fundamentals.
+- [x] Publish after QA.
 
 ### Milestone 3: Mundane Equipment Library
 
-- [ ] Import and structure SRD equipment by edition.
-- [ ] Complete weapons, armor, tools, packs, services, mounts, and vehicles.
-- [ ] Add tables and equipment-specific filters.
+- [x] Import and structure SRD equipment by edition.
+- [x] Complete weapons, armor, tools, packs, services, mounts, and vehicles.
+- [x] Add structured equipment facts and equipment-specific filters.
 - [ ] Publish after QA.
 
 ### Milestone 4: SRD Character Options

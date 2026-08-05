@@ -2,7 +2,7 @@
  * My RPG Source - Standalone Rules Codex
  * ---------------------------------------
  * Uses the shared Codex data layer to load game-system and edition-specific
- * rules, spells, and magic items. Event listeners are bound once. No timers or
+ * rules, mundane equipment, spells, and magic items. Event listeners are bound once. No timers or
  * MutationObservers are used.
  */
 
@@ -18,6 +18,7 @@ const codexState = {
   entries: [],
   filteredEntries: [],
   categories: [],
+  equipmentCategories: [],
   byGlobalId: new Map(),
   byLocalKey: new Map(),
   visibleCount: CODEX_PAGE_SIZE,
@@ -34,6 +35,7 @@ function cacheCodexElements() {
   codexElements.edition = document.getElementById('codex-edition');
   codexElements.type = document.getElementById('codex-type');
   codexElements.category = document.getElementById('codex-category');
+  codexElements.equipmentCategory = document.getElementById('codex-equipment-category');
   codexElements.level = document.getElementById('codex-level');
   codexElements.school = document.getElementById('codex-school');
   codexElements.rarity = document.getElementById('codex-rarity');
@@ -47,7 +49,9 @@ function cacheCodexElements() {
   codexElements.ruleCount = document.getElementById('codex-rule-count');
   codexElements.spellCount = document.getElementById('codex-spell-count');
   codexElements.itemCount = document.getElementById('codex-item-count');
+  codexElements.equipmentCount = document.getElementById('codex-equipment-count');
   codexElements.ruleFields = Array.from(document.querySelectorAll('[data-rule-filter]'));
+  codexElements.equipmentFields = Array.from(document.querySelectorAll('[data-equipment-filter]'));
   codexElements.spellFields = Array.from(document.querySelectorAll('[data-spell-filter]'));
   codexElements.itemFields = Array.from(document.querySelectorAll('[data-item-filter]'));
 }
@@ -75,7 +79,9 @@ function createSearchIndex(entry) {
     ...(entry.whatItAffects || []),
     ...(entry.bestFor || []),
     ...(entry.commonMistakes || []),
+    entry.subcategory,
     ...(entry.tags || []),
+    ...((entry.facts || []).flatMap((fact) => [fact.label, fact.value])),
   ];
 
   if (entry.entryType === 'spell') {
@@ -87,6 +93,10 @@ function createSearchIndex(entry) {
       entry.duration,
       ...(entry.classes || [])
     );
+  }
+
+  if (entry.entryType === 'equipment') {
+    searchableParts.push(entry.category, entry.categoryName, entry.subcategory);
   }
 
   if (entry.entryType === 'item') {
@@ -148,34 +158,43 @@ function populateEditions(gameSystem) {
   codexElements.edition.value = allowed ? previousValue : (gameSystem?.defaultEdition || 'all');
 }
 
-function populateRuleCategories(categories) {
-  const previousValue = codexElements.category.value;
-  codexElements.category.replaceChildren();
+function populateCategories(select, categories, allLabel) {
+  const previousValue = select.value;
+  select.replaceChildren();
 
   const allOption = document.createElement('option');
   allOption.value = 'all';
-  allOption.textContent = 'All rule categories';
-  codexElements.category.append(allOption);
+  allOption.textContent = allLabel;
+  select.append(allOption);
 
   categories.forEach((category) => {
     const option = document.createElement('option');
     option.value = category.id;
     option.textContent = category.name;
-    codexElements.category.append(option);
+    select.append(option);
   });
 
-  const allowed = Array.from(codexElements.category.options).some((option) => option.value === previousValue);
-  codexElements.category.value = allowed ? previousValue : 'all';
+  const allowed = Array.from(select.options).some((option) => option.value === previousValue);
+  select.value = allowed ? previousValue : 'all';
+}
+
+function populateRuleCategories(categories) {
+  populateCategories(codexElements.category, categories, 'All rule categories');
+}
+
+function populateEquipmentCategories(categories) {
+  populateCategories(codexElements.equipmentCategory, categories, 'All equipment categories');
 }
 
 async function loadGameSystem(gameSystemId) {
   const result = await window.MyRPGCodexData.loadEntries({
     gameSystem: gameSystemId,
-    entryTypes: ['rule', 'spell', 'item'],
+    entryTypes: ['rule', 'equipment', 'spell', 'item'],
   });
 
   codexState.gameSystem = result.gameSystem;
   codexState.categories = result.categories;
+  codexState.equipmentCategories = result.categoryGroups?.equipment || [];
   codexState.entries = result.entries
     .map((entry) => ({
       ...entry,
@@ -194,16 +213,19 @@ async function loadGameSystem(gameSystemId) {
 
   populateEditions(result.gameSystem);
   populateRuleCategories(result.categories);
+  populateEquipmentCategories(codexState.equipmentCategories);
   updateCollectionTotals(codexState.entries);
 }
 
 function updateCollectionTotals(entries) {
   const ruleCount = entries.filter((entry) => entry.entryType === 'rule').length;
+  const equipmentCount = entries.filter((entry) => entry.entryType === 'equipment').length;
   const spellCount = entries.filter((entry) => entry.entryType === 'spell').length;
   const itemCount = entries.filter((entry) => entry.entryType === 'item').length;
 
   codexElements.totalCount.textContent = entries.length.toLocaleString('en-CA');
   codexElements.ruleCount.textContent = ruleCount.toLocaleString('en-CA');
+  codexElements.equipmentCount.textContent = equipmentCount.toLocaleString('en-CA');
   codexElements.spellCount.textContent = spellCount.toLocaleString('en-CA');
   codexElements.itemCount.textContent = itemCount.toLocaleString('en-CA');
 }
@@ -215,6 +237,7 @@ function getFilterValues() {
     edition: codexElements.edition.value,
     type: codexElements.type.value,
     category: codexElements.category.value,
+    equipmentCategory: codexElements.equipmentCategory.value,
     level: codexElements.level.value,
     school: codexElements.school.value,
     rarity: codexElements.rarity.value,
@@ -237,6 +260,12 @@ function entryMatchesFilters(entry, filters) {
 
   if (filters.category !== 'all') {
     if (entry.entryType !== 'rule' || entry.category !== filters.category) {
+      return false;
+    }
+  }
+
+  if (filters.equipmentCategory !== 'all') {
+    if (entry.entryType !== 'equipment' || entry.category !== filters.equipmentCategory) {
       return false;
     }
   }
@@ -293,6 +322,10 @@ function updateFilterAvailability() {
     selectedType === 'all' || selectedType === 'rule'
   );
   setFieldGroupAvailability(
+    codexElements.equipmentFields,
+    selectedType === 'all' || selectedType === 'equipment'
+  );
+  setFieldGroupAvailability(
     codexElements.spellFields,
     selectedType === 'all' || selectedType === 'spell'
   );
@@ -314,6 +347,10 @@ function spellLevelLabel(level) {
 function entryTypeLabel(entryType) {
   if (entryType === 'rule') {
     return 'Rule';
+  }
+
+  if (entryType === 'equipment') {
+    return 'Mundane equipment';
   }
 
   if (entryType === 'spell') {
@@ -366,6 +403,25 @@ function createSpellFacts(entry) {
   }
 
   return facts;
+}
+
+function createEquipmentFacts(entry) {
+  const factsElement = document.createElement('dl');
+  factsElement.className = 'codex-facts';
+
+  factsElement.append(createFact('Category', entry.categoryName || entry.category));
+
+  if (entry.subcategory) {
+    factsElement.append(createFact('Type', entry.subcategory));
+  }
+
+  (entry.facts || []).forEach((fact) => {
+    if (fact?.label && fact?.value) {
+      factsElement.append(createFact(fact.label, fact.value));
+    }
+  });
+
+  return factsElement;
 }
 
 function createItemFacts(entry) {
@@ -491,7 +547,7 @@ function createCodexEntry(entry) {
     )
   );
 
-  if (entry.entryType === 'rule') {
+  if (entry.entryType === 'rule' || entry.entryType === 'equipment') {
     badges.append(createBadge(entry.categoryName));
   } else if (entry.entryType === 'spell') {
     badges.append(createBadge(spellLevelLabel(entry.level)));
@@ -509,7 +565,13 @@ function createCodexEntry(entry) {
   if (entry.entryType === 'rule') {
     body.append(createRuleBody(entry));
   } else {
-    body.append(entry.entryType === 'spell' ? createSpellFacts(entry) : createItemFacts(entry));
+    if (entry.entryType === 'spell') {
+      body.append(createSpellFacts(entry));
+    } else if (entry.entryType === 'equipment') {
+      body.append(createEquipmentFacts(entry));
+    } else {
+      body.append(createItemFacts(entry));
+    }
 
     const description = document.createElement('p');
     description.className = 'codex-description';
@@ -605,6 +667,7 @@ function resetFilters() {
   codexElements.edition.value = codexState.gameSystem?.defaultEdition || 'all';
   codexElements.type.value = 'all';
   codexElements.category.value = 'all';
+  codexElements.equipmentCategory.value = 'all';
   codexElements.level.value = 'all';
   codexElements.school.value = 'all';
   codexElements.rarity.value = 'all';
@@ -714,6 +777,7 @@ function applyUrlState() {
   );
   setSelectFromUrl(codexElements.type, params.get('type'), 'all');
   setSelectFromUrl(codexElements.category, params.get('category'), 'all');
+  setSelectFromUrl(codexElements.equipmentCategory, params.get('equipmentCategory'), 'all');
   setSelectFromUrl(codexElements.level, params.get('level'), 'all');
   setSelectFromUrl(codexElements.school, params.get('school'), 'all');
   setSelectFromUrl(codexElements.rarity, params.get('rarity'), 'all');
@@ -736,6 +800,9 @@ function syncUrl(entryId = null) {
   }
   if (filters.category !== 'all') {
     params.set('category', filters.category);
+  }
+  if (filters.equipmentCategory !== 'all') {
+    params.set('equipmentCategory', filters.equipmentCategory);
   }
   if (filters.level !== 'all') {
     params.set('level', filters.level);
@@ -762,6 +829,7 @@ function prepareFiltersForEntry(entry) {
   codexElements.type.value = entry.entryType;
   codexElements.search.value = '';
   codexElements.category.value = 'all';
+  codexElements.equipmentCategory.value = 'all';
   codexElements.level.value = 'all';
   codexElements.school.value = 'all';
   codexElements.rarity.value = 'all';

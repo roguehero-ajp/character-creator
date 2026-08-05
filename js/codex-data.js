@@ -10,6 +10,7 @@
   'use strict';
 
   const MANIFEST_URL = 'data/codex/manifest.json';
+  const DEFAULT_ENTRY_TYPES = ['rule', 'equipment', 'spell', 'item'];
   const jsonCache = new Map();
 
   async function fetchJson(url) {
@@ -41,7 +42,7 @@
     return [gameSystemId, editionId, entryType, localId].join(':');
   }
 
-  function normalizeRuleEntries(payload, collection, gameSystem, edition) {
+  function normalizeV2Entries(payload, collection, gameSystem, edition) {
     if (
       payload?.schemaVersion !== 2 ||
       !Array.isArray(payload.entries) ||
@@ -51,27 +52,42 @@
       throw new Error(`Invalid Codex v2 payload for ${collection.id}.`);
     }
 
+    const allowedTypes = new Set(collection.entryTypes || payload.entryTypes || []);
+    const fallbackType = allowedTypes.size === 1 ? Array.from(allowedTypes)[0] : null;
     const categories = Array.isArray(payload.categories) ? payload.categories : [];
+    const categoryGroups = {};
+
+    allowedTypes.forEach((entryType) => {
+      categoryGroups[entryType] = categories;
+    });
 
     const entries = payload.entries
       .filter((entry) => entry && typeof entry.id === 'string' && typeof entry.title === 'string')
-      .map((entry) => ({
-        ...entry,
-        localId: entry.id,
-        globalId: createGlobalId(gameSystem.id, edition.id, 'rule', entry.id),
-        name: entry.title,
-        type: 'rule',
-        entryType: 'rule',
-        gameSystem: gameSystem.id,
-        gameSystemName: gameSystem.name,
-        edition: edition.id,
-        editionName: edition.name,
-        source: entry.sourceDocument || edition.source,
-        sourceType: entry.sourceType || 'original-explanation',
-        collectionId: collection.id,
-      }));
+      .map((entry) => {
+        const entryType = entry.entryType || fallbackType;
 
-    return { entries, categories };
+        if (!entryType || !allowedTypes.has(entryType)) {
+          throw new Error(`${collection.id} contains an unsupported entry type.`);
+        }
+
+        return {
+          ...entry,
+          localId: entry.id,
+          globalId: createGlobalId(gameSystem.id, edition.id, entryType, entry.id),
+          name: entry.title,
+          type: entryType,
+          entryType,
+          gameSystem: gameSystem.id,
+          gameSystemName: gameSystem.name,
+          edition: edition.id,
+          editionName: edition.name,
+          source: entry.sourceDocument || payload.sourceDocument || edition.source,
+          sourceType: entry.sourceType || 'original-explanation',
+          collectionId: collection.id,
+        };
+      });
+
+    return { entries, categories, categoryGroups };
   }
 
   function normalizeLegacySrdEntries(payload, collection, gameSystem, edition) {
@@ -103,14 +119,14 @@
         collectionId: collection.id,
       }));
 
-    return { entries, categories: [] };
+    return { entries, categories: [], categoryGroups: {} };
   }
 
   async function loadCollection(collection, gameSystem, edition) {
     const payload = await fetchJson(collection.url);
 
     if (collection.adapter === 'codex-v2') {
-      return normalizeRuleEntries(payload, collection, gameSystem, edition);
+      return normalizeV2Entries(payload, collection, gameSystem, edition);
     }
 
     if (collection.adapter === 'legacy-srd') {
@@ -146,7 +162,7 @@
     const requestedTypes = new Set(
       Array.isArray(options.entryTypes) && options.entryTypes.length
         ? options.entryTypes
-        : ['rule', 'spell', 'item']
+        : DEFAULT_ENTRY_TYPES
     );
 
     const selectedEditions = requestedEditionIds
@@ -168,7 +184,7 @@
 
     const results = await Promise.all(jobs);
     const entries = [];
-    const categoriesById = new Map();
+    const categoryMapsByType = new Map();
 
     results.forEach((result) => {
       result.entries.forEach((entry) => {
@@ -177,18 +193,31 @@
         }
       });
 
-      result.categories.forEach((category) => {
-        if (!categoriesById.has(category.id)) {
-          categoriesById.set(category.id, category);
+      Object.entries(result.categoryGroups || {}).forEach(([entryType, categories]) => {
+        if (!categoryMapsByType.has(entryType)) {
+          categoryMapsByType.set(entryType, new Map());
         }
+
+        const map = categoryMapsByType.get(entryType);
+        categories.forEach((category) => {
+          if (!map.has(category.id)) {
+            map.set(category.id, category);
+          }
+        });
       });
+    });
+
+    const categoryGroups = {};
+    categoryMapsByType.forEach((categoryMap, entryType) => {
+      categoryGroups[entryType] = Array.from(categoryMap.values());
     });
 
     return {
       manifest,
       gameSystem,
       editions: selectedEditions,
-      categories: Array.from(categoriesById.values()),
+      categories: categoryGroups.rule || [],
+      categoryGroups,
       entries,
     };
   }

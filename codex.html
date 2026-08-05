@@ -6,7 +6,7 @@
   <title>Rules Codex | My RPG Source</title>
   <meta
     name="description"
-    content="Search edition-specific D&D 5e rules, spells, and magic items for the 2014 and 2024 rules in one accessible reference library."
+    content="Search edition-specific D&D 5e rules, mundane equipment, spells, and magic items for the 2014 and 2024 rules in one accessible reference library."
   >
   <link rel="canonical" href="https://www.myrpgsource.com/codex.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,8 +43,8 @@
         <p class="eyebrow">Edition-aware reference library</p>
         <h1>Rules Codex</h1>
         <p class="lede">
-          Search plain-language player rules alongside the complete SRD spell and
-          magic-item collections. Every result is tied to a game system and edition
+          Search plain-language player rules alongside edition-specific mundane equipment,
+          spells, and magic-item collections. Every result is tied to a game system and edition
           so rules from 2014 and 2024 never quietly blend together.
         </p>
 
@@ -56,6 +56,10 @@
           <div class="codex-stat">
             <strong id="codex-rule-count">Loading</strong>
             <span>Rules entries</span>
+          </div>
+          <div class="codex-stat">
+            <strong id="codex-equipment-count">Loading</strong>
+            <span>Mundane equipment</span>
           </div>
           <div class="codex-stat">
             <strong id="codex-spell-count">Loading</strong>
@@ -78,13 +82,14 @@
         </p>
         <p>
           The Rules collection uses original, beginner-friendly explanations. The
-          Spells and Magic Items collections preserve licensed SRD material with
-          visible source and edition labels.
+          Mundane Equipment, Spells, and Magic Items collections preserve licensed
+          SRD material with visible source and edition labels.
         </p>
 
         <div class="codex-start-grid" aria-label="Codex starting points">
           <a href="codex.html?game=dnd5e&amp;edition=2024&amp;type=rule">Browse 2024 rules</a>
           <a href="codex.html?game=dnd5e&amp;edition=2014&amp;type=rule">Browse 2014 rules</a>
+          <a href="codex.html?game=dnd5e&amp;edition=all&amp;type=equipment">Browse equipment</a>
           <a href="codex.html?game=dnd5e&amp;edition=all&amp;type=spell">Browse spells</a>
           <a href="codex.html?game=dnd5e&amp;edition=all&amp;type=item">Browse magic items</a>
         </div>
@@ -107,7 +112,7 @@
                 type="search"
                 id="codex-search"
                 autocomplete="off"
-                placeholder="Try grappling, Fireball, healing, sword..."
+                placeholder="Try grappling, longsword, rope, Fireball..."
               >
             </div>
 
@@ -129,6 +134,7 @@
               <select id="codex-type">
                 <option value="all">All entry types</option>
                 <option value="rule">Rules</option>
+                <option value="equipment">Mundane equipment</option>
                 <option value="spell">Spells</option>
                 <option value="item">Magic items</option>
               </select>
@@ -138,6 +144,13 @@
               <label for="codex-category">Rule category</label>
               <select id="codex-category">
                 <option value="all">All rule categories</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-equipment-filter>
+              <label for="codex-equipment-category">Equipment category</label>
+              <select id="codex-equipment-category">
+                <option value="all">All equipment categories</option>
               </select>
             </div>
 
