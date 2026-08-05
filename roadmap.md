@@ -50,7 +50,7 @@ This roadmap is a working priority guide, not a promise of release dates. The li
 - [x] Replace the outdated `README.md`
 - [x] Replace the outdated `roadmap.md`
 - [x] Rebuild `Changelog.md` around the actual repository state
-- [ ] Update the homepage roadmap snapshot and stale feature wording
+- [~] Update the homepage roadmap snapshot and stale feature wording
 - [ ] Standardize the displayed application version across code, footer, and documentation
 - [ ] Correct remaining public copy and consistency issues
 - [ ] Decide how releases and version numbers will be assigned before the next formal release
@@ -124,41 +124,53 @@ This roadmap is a working priority guide, not a promise of release dates. The li
 - [x] Skill Knowledge Cards
 - [x] Combat Knowledge Cards
 - [x] Saving-throw Knowledge Cards
-- [x] Additional rule categories in `data/codex.json`
+- [x] Edition-isolated rule collections in `data/codex/dnd5e/2014` and `data/codex/dnd5e/2024`
 - [x] Homepage Featured Knowledge Card rotation
-- [~] Content audit for accuracy, consistency, and edition labels
-- [ ] Related-entry links and guided learning paths
+- [~] Content audit for accuracy, consistency, source labels, and edition boundaries
+- [x] Related-entry links and direct full-Codex links
+- [ ] Guided beginner learning paths
 
-## Rules Codex minimum viable collection
+## Rules Codex architecture and core player rules
 
-The next content milestone is a dependable set of original, plain-language rules explanations. Each major entry should explain what the rule means, when it appears, provide an example, identify common mistakes, and note important edition differences.
+The Codex now uses a manifest-driven hierarchy of **game system → edition → collection → entry**. D&D 5e 2014 and D&D 5e 2024 have independent rule files even when a topic appears in both editions. This prevents accidental rules leakage and provides a repeatable pattern for future tabletop systems.
 
-- [~] Ability scores
-- [~] Skills
-- [~] Saving throws
-- [~] Combat basics
-- [~] Conditions
-- [~] Equipment
-- [~] Weapons and armour
-- [~] Spellcasting fundamentals
-- [ ] Resting and recovery
-- [ ] Proficiency and Expertise
-- [ ] Advantage and Disadvantage
-- [ ] Character level versus class level
-- [ ] Multiclassing fundamentals
-- [ ] 2014 versus 2024 comparison entries
-- [ ] Internal links between related entries
-- [ ] Final copy, accessibility, and accuracy review
+- [x] Versioned Codex manifest and shared data loader
+- [x] Separate 2014 and 2024 core-rules files
+- [x] 215 edition-specific 2014 player-rule entries
+- [x] 218 edition-specific 2024 player-rule entries
+- [x] Ability scores, skills, and saving throws
+- [x] Core checks, Difficulty Classes, proficiency, Expertise, Advantage, and Disadvantage
+- [x] Character creation methods and character-level versus class-level guidance
+- [x] Exploration, light, senses, travel, and social interaction fundamentals
+- [x] Combat structure, actions, attacks, damage, healing, defeat, and conditions
+- [x] Resting, recovery, and common resource rules
+- [x] Spellcasting fundamentals, components, targets, areas, and multiclass spellcasting overview
+- [x] Edition-specific procedures and terminology stored independently
+- [x] Related-entry links and stable deep links
+- [~] Final mechanical, editorial, accessibility, and source audit
+- [ ] Focused 2014-versus-2024 comparison entries
 
-## Standalone Spells & Magic Items Codex
+## Unified standalone Codex
 
-- [x] Searchable standalone Codex page
+- [x] Rules, spells, and magic items in one searchable page
+- [x] Game-system, edition, entry-type, and rule-category filters
 - [x] Spell and magic-item filters
 - [x] 2014 and 2024 edition labels
-- [x] More than one thousand SRD entries
-- [~] Search and filter usability review
+- [x] More than one thousand SRD spell and magic-item entries preserved
+- [x] Progressive rendering and debounced search
+- [x] Builder-to-full-Codex links for rule entries
+- [~] Search, mobile, and accessibility usability review
 - [ ] Builder-to-Codex links for relevant spells and items
 - [ ] Additional original guidance around choosing and using spells
+
+## Remaining Codex collections
+
+- [ ] Full edition-specific mundane-equipment tables
+- [ ] Weapons, armour, tools, packs, services, mounts, and vehicles
+- [ ] SRD races and 2024 species
+- [ ] SRD backgrounds and feats
+- [ ] SRD classes, subclasses, progression tables, and class features
+- [ ] Collection-wide editorial and licensing audit
 
 ## Original beginner guides
 
@@ -314,8 +326,8 @@ Potential future systems include:
 
 ## Immediate Sequence
 
-1. Synchronize the homepage with the Project Truth Reset.
-2. Complete and audit the Rules Codex minimum viable collection.
+1. Complete Codex editorial QA and source verification.
+2. Add edition-specific mundane equipment and SRD character-option collections.
 3. Begin the edition-aware class architecture branch.
 4. Implement Add a New Class, prerequisites, and DM Override.
 5. Implement reduced multiclass proficiencies and source tracking.

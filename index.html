@@ -814,7 +814,7 @@
       </div>
 
       <div class="pill">
-        Free character tools, knowledge cards, and future codices
+        Free character tools, Knowledge Cards, and an edition-aware Rules Codex
       </div>
     </div>
 
@@ -1124,6 +1124,7 @@
   </div>
 
 
+  <script src="js/codex-data.js"></script>
   <script>
     (() => {
       "use strict";
@@ -1228,11 +1229,14 @@
           })
           .map((entry) => ({
             title: entry.title.trim(),
-            categoryName:
-              typeof entry.categoryName === "string" &&
-              entry.categoryName.trim()
+            categoryName: [
+              entry.edition ? `${entry.edition} rules` : "",
+              typeof entry.categoryName === "string"
                 ? entry.categoryName.trim()
-                : "Rules Codex",
+                : "Rules Codex"
+            ]
+              .filter(Boolean)
+              .join(" • "),
             summary: entry.summary.trim()
           }));
       }
@@ -1403,13 +1407,11 @@
       showCard(Math.floor(Math.random() * cards.length), { animate: false });
       startRotation();
 
-      fetch("data/codex.json")
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Codex request failed: ${response.status}`);
-          }
-
-          return response.json();
+      window.MyRPGCodexData
+        .loadEntries({
+          gameSystem: "dnd5e",
+          editions: ["2014", "2024"],
+          entryTypes: ["rule"]
         })
         .then((payload) => {
           const loadedCards = normalizeCards(payload);

@@ -1,6 +1,6 @@
 # My RPG Source Rules Codex Completion Checklist
 
-**Status:** Planning  
+**Status:** Active development — architecture and broad core-player-rules milestone implemented  
 **Scope:** Player-facing D&D fifth-edition reference for the 2014 and 2024 rules  
 **Primary sources:** SRD 5.1 and SRD 5.2.1 under CC BY 4.0  
 **Project mission:** Break down the barriers that stop people from playing tabletop roleplaying games.
@@ -67,9 +67,9 @@ The Rules Codex milestone is complete when My RPG Source provides one coherent, 
 
 ### Current separation to resolve
 
-- [ ] The standalone `codex.html` page currently presents only spells and magic items.
-- [ ] The builder drawer currently presents only the original rules-reference entries.
-- [ ] Both halves must be united into one understandable Codex experience without breaking the builder drawer.
+- [x] The standalone `codex.html` page presents rules, spells, and magic items through one data layer.
+- [x] The builder drawer remains lightweight and loads only the active edition's core rules.
+- [x] Both halves are united without forcing the builder to load the full spell and magic-item catalogue.
 
 ---
 
@@ -121,15 +121,15 @@ The Rules Codex milestone is complete when My RPG Source provides one coherent, 
 
 ### Recommended data strategy
 
-- [ ] Preserve `data/codex.json` so the existing builder drawer continues working.
-- [ ] Preserve `data/srd-codex.json` for the existing spell and magic-item collection.
-- [ ] Decide whether character options and equipment should use:
+- [x] Preserve legacy `data/codex.json` for rollback while moving active rule loading to edition-specific files.
+- [x] Preserve `data/srd-codex.json` for the existing spell and magic-item collection.
+- [x] Establish modular edition-specific files and a manifest-driven loader; character options and equipment will follow this pattern:
   - Separate edition-aware JSON files, or
   - A generated Codex data bundle assembled from modular source files.
 - [ ] Avoid placing every content type into one enormous hand-edited JSON file.
-- [ ] Add a data manifest if the public page will load multiple Codex files.
-- [ ] Version the Codex data schema.
-- [ ] Add automated validation for every Codex data file.
+- [x] Add a data manifest for game systems, editions, and collections.
+- [x] Version the Codex data schema.
+- [x] Add automated validation for active Codex data files.
 
 ### Proposed entry schema additions
 
@@ -759,7 +759,7 @@ Every original explanatory entry should include, where appropriate:
 
 Additional standards:
 
-- [ ] Do not call any result a “legal character.”
+- [ ] Do not use the retired character-validity terminology.
 - [ ] Use **ready-to-go character** where appropriate.
 - [ ] Write for new players without talking down to experienced players.
 - [ ] Separate rules text from advice and examples.
@@ -841,12 +841,12 @@ Additional standards:
 
 ### Milestone 1: Codex architecture
 
-- [ ] Finalize data architecture.
-- [ ] Extend the entry schema.
-- [ ] Add automated validation.
-- [ ] Make `codex.html` capable of loading rules, spells, and items.
-- [ ] Preserve the current builder drawer.
-- [ ] Add deep-link support.
+- [x] Finalize the initial manifest-driven data architecture.
+- [x] Extend and normalize the entry schema through the shared loader.
+- [x] Add automated validation.
+- [x] Make `codex.html` capable of loading rules, spells, and items.
+- [x] Preserve the current builder drawer as an edition-scoped lightweight reference.
+- [x] Add deep-link support.
 
 ### Milestone 2: Core Player Rules MVP
 

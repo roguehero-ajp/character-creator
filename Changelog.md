@@ -15,6 +15,13 @@ The project is still pre-1.0. Until formal release versioning is standardized, r
 
 ### Added
 
+- Manifest-driven Codex architecture organized by game system, edition, collection, and entry.
+- Separate core-rules collections containing 215 D&D 5e 2014 entries and 218 D&D 5e 2024 entries.
+- Shared `js/codex-data.js` loader with request caching and normalized entry IDs.
+- Game-system, edition, entry-type, and rule-category filters on the standalone Codex page.
+- Stable query-string deep links to individual Codex entries.
+- Related-rule navigation and builder links to the corresponding full Codex entry.
+- Automated Codex schema, ID, edition, category, and relationship validation through `tools/validate-codex.mjs`.
 - Separate D&D 5e 2014 and D&D 5e 2024 builder modes.
 - Edition configuration with separate terminology, data paths, page identity, and browser-save keys.
 - Edition-specific Race data for 2014 and Species data for 2024.
@@ -53,6 +60,10 @@ The project is still pre-1.0. Until formal release versioning is standardized, r
 
 ### Changed
 
+- Expanded `codex.html` from a spells-and-magic-items catalogue into a unified Rules Codex while preserving all 1,153 existing SRD entries.
+- Made the builder Codex drawer load only the active edition's rule collection.
+- Made the homepage Featured Knowledge Card draw from the new edition-specific Codex collections without changing its guarded timer, pause controls, or two-stage flip behaviour.
+- Replaced stale homepage wording that described the Codex as a future feature.
 - Replaced the original single-page implementation with modular CSS, JavaScript, and JSON data files.
 - Split D&D data into `data/dnd5e/2014` and `data/dnd5e/2024` directories.
 - Made Race or Species labels and data loading depend on the selected edition.
@@ -65,6 +76,8 @@ The project is still pre-1.0. Until formal release versioning is standardized, r
 
 ### Fixed
 
+- Removed a duplicate Codex list-render call from the builder drawer initialization.
+- Corrected an existing duplicated border declaration in the Codex drawer stylesheet.
 - Manual ability-score entry being overwritten while typing physical ability scores.
 - Level Up class-dropdown crashes.
 - Single-option Species choice controls.
@@ -86,7 +99,7 @@ The project is still pre-1.0. Until formal release versioning is standardized, r
 - Reduced multiclass proficiencies and proficiency-source tracking are not complete.
 - Combined multiclass spell-slot calculations are not complete.
 - Background collections are still limited.
-- The Rules Codex needs more original explanations, edition comparisons, and cross-linking.
+- The Codex still needs full mundane-equipment and SRD character-option collections, focused edition comparisons, and final editorial and licensing review.
 - Dense character features still need additional print-layout work.
 - Accounts, cloud saves, synchronization, hosted campaigns, and version history are not implemented.
 - The displayed application version still needs to be standardized across code, footer, and documentation.
