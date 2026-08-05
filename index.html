@@ -332,6 +332,35 @@
         var(--text);
     }
 
+    .btn-new-player {
+      background:
+        linear-gradient(
+          180deg,
+          rgba(39, 174, 96, 0.25),
+          rgba(39, 174, 96, 0.13)
+        );
+
+      border-color:
+        rgba(78, 214, 132, 0.48);
+
+      color:
+        var(--text);
+    }
+
+    .btn-new-player:hover,
+    .btn-new-player:focus-visible {
+      background:
+        linear-gradient(
+          180deg,
+          rgba(39, 174, 96, 0.36),
+          rgba(39, 174, 96, 0.2)
+        );
+
+      box-shadow:
+        0 10px 26px
+        rgba(39, 174, 96, 0.16);
+    }
+
     .mini-grid {
       margin-top: 24px;
 
@@ -820,6 +849,13 @@
             >
               Choose a Game
             </a>
+
+            <a
+              class="btn btn-new-player"
+              href="faq.html"
+            >
+              I'm New and Don't Know Where to Start
+            </a>
           </div>
         </div>
 
@@ -1078,6 +1114,7 @@
       </div>
 
       <nav class="foot-links" aria-label="Footer navigation">
+        <a href="faq.html">New Player FAQ</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
         <a href="privacy.html">Privacy Policy</a>
