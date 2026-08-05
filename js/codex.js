@@ -1,17 +1,16 @@
 /**
- * My RPG Source - Rules Codex
- * ---------------------------
- * Loads data/codex.json, filters edition-specific material,
- * provides search/category navigation, clickable related topics,
- * and adds an Open Codex button to the control panel.
+ * My RPG Source - In-Builder Rules Codex
+ * --------------------------------------
+ * Loads only the active D&D edition's core rules through the shared Codex data
+ * layer. The much larger spell and magic-item collections remain on codex.html
+ * so the character builder stays lightweight.
  */
 
 (() => {
   'use strict';
 
-  const edition =
-    window.MyRPGConfig?.edition ||
-    '2024';
+  const gameSystem = 'dnd5e';
+  const edition = window.MyRPGConfig?.edition || '2024';
 
   const state = {
     data: null,
@@ -24,11 +23,15 @@
     search: null,
     category: null,
     count: null,
-    activeId: null
+    fullLink: null,
+    activeId: null,
+    lastFocused: null,
   };
 
   function normalize(value) {
     return String(value || '')
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, ' ')
       .trim();
@@ -43,30 +46,29 @@
       .replace(/'/g, '&#039;');
   }
 
-  function isAvailable(entry) {
-    return (
-      !Array.isArray(entry?.editions) ||
-      entry.editions.includes(edition)
-    );
+  function createFullCodexUrl(entry = null) {
+    const params = new URLSearchParams({
+      game: gameSystem,
+      edition,
+      type: 'rule',
+    });
+
+    if (entry?.globalId) {
+      params.set('entry', entry.globalId);
+    }
+
+    return `codex.html?${params.toString()}`;
   }
 
   function createDrawer() {
-    const overlay =
-      document.createElement('div');
+    const overlay = document.createElement('div');
+    overlay.className = 'codex-overlay';
 
-    overlay.className =
-      'codex-overlay';
-
-    const drawer =
-      document.createElement('aside');
-
-    drawer.className =
-      'codex-drawer';
-
-    drawer.setAttribute(
-      'aria-label',
-      'Rules Codex'
-    );
+    const drawer = document.createElement('aside');
+    drawer.className = 'codex-drawer';
+    drawer.setAttribute('role', 'dialog');
+    drawer.setAttribute('aria-modal', 'true');
+    drawer.setAttribute('aria-label', 'Rules Codex');
 
     drawer.innerHTML = `
       <div class="codex-header">
@@ -75,11 +77,16 @@
           <div class="codex-edition">D&amp;D 5e ${escapeHtml(edition)}</div>
         </div>
 
-        <button
-          class="codex-close"
-          type="button"
-          aria-label="Close Codex"
-        >×</button>
+        <div class="codex-header-actions">
+          <a class="codex-full-link" href="${escapeHtml(createFullCodexUrl())}">
+            Full Codex
+          </a>
+          <button
+            class="codex-close"
+            type="button"
+            aria-label="Close Codex"
+          >×</button>
+        </div>
       </div>
 
       <div class="codex-toolbar">
@@ -98,7 +105,7 @@
         </select>
       </div>
 
-      <div class="codex-result-count"></div>
+      <div class="codex-result-count" aria-live="polite"></div>
 
       <div class="codex-body">
         <div class="codex-list"></div>
@@ -106,352 +113,182 @@
       </div>
     `;
 
-    document.body.appendChild(
-      overlay
-    );
+    document.body.append(overlay, drawer);
 
-    document.body.appendChild(
-      drawer
-    );
+    state.overlay = overlay;
+    state.drawer = drawer;
+    state.list = drawer.querySelector('.codex-list');
+    state.reading = drawer.querySelector('.codex-reading');
+    state.search = drawer.querySelector('.codex-search');
+    state.category = drawer.querySelector('.codex-category');
+    state.count = drawer.querySelector('.codex-result-count');
+    state.fullLink = drawer.querySelector('.codex-full-link');
 
-    state.overlay =
-      overlay;
+    overlay.addEventListener('click', closeCodex);
+    drawer.querySelector('.codex-close').addEventListener('click', closeCodex);
+    state.search.addEventListener('input', renderList);
+    state.category.addEventListener('change', renderList);
 
-    state.drawer =
-      drawer;
-
-    state.list =
-      drawer.querySelector(
-        '.codex-list'
-      );
-
-    state.reading =
-      drawer.querySelector(
-        '.codex-reading'
-      );
-
-    state.search =
-      drawer.querySelector(
-        '.codex-search'
-      );
-
-    state.category =
-      drawer.querySelector(
-        '.codex-category'
-      );
-
-    state.count =
-      drawer.querySelector(
-        '.codex-result-count'
-      );
-
-    overlay.addEventListener(
-      'click',
-      closeCodex
-    );
-
-    drawer
-      .querySelector(
-        '.codex-close'
-      )
-      .addEventListener(
-        'click',
-        closeCodex
-      );
-
-    state.search.addEventListener(
-      'input',
-      renderList
-    );
-
-    state.category.addEventListener(
-      'change',
-      renderList
-    );
-
-    document.addEventListener(
-      'keydown',
-      (event) => {
-        if (
-          event.key ===
-          'Escape'
-        ) {
-          closeCodex();
-        }
-
-        if (
-          event.altKey &&
-          event.key
-            .toLowerCase() ===
-            'c'
-        ) {
-          event.preventDefault();
-          openCodex();
-        }
-      }
-    );
+    document.addEventListener('keydown', handleDocumentKeydown);
   }
 
-  async function loadData() {
-    const response =
-      await fetch(
-        'data/codex.json',
-        {
-          cache:
-            'no-store'
-        }
-      );
-
-    if (!response.ok) {
-      throw new Error(
-        `Could not load codex.json (${response.status}).`
-      );
-    }
-
-    state.data =
-      await response.json();
-
-    state.entries =
-      (
-        Array.isArray(
-          state.data?.entries
-        )
-          ? state.data.entries
-          : []
-      ).filter(
-        isAvailable
-      );
-
-    state.byId.clear();
-
-    state.entries.forEach(
-      (entry) =>
-        state.byId.set(
-          entry.id,
-          entry
-        )
-    );
-  }
-
-  function getFilteredEntries() {
-    const query =
-      normalize(
-        state.search?.value
-      );
-
-    const category =
-      state.category?.value ||
-      'all';
-
-    return state.entries.filter(
-      (entry) => {
-        const categoryMatch =
-          category ===
-            'all' ||
-          entry.category ===
-            category;
-
-        const haystack =
-          normalize(
-            [
-              entry.title,
-              entry.summary,
-              entry.whatItMeans,
-              entry.whyItMatters,
-              ...(entry.whatItAffects || []),
-              ...(entry.bestFor || []),
-              ...(entry.tags || [])
-            ].join(' ')
-          );
-
-        return (
-          categoryMatch &&
-          (
-            !query ||
-            haystack.includes(
-              query
-            )
-          )
-        );
-      }
-    );
-  }
-
-  function renderCategoryOptions() {
-    const used =
-      new Set(
-        state.entries.map(
-          (entry) =>
-            entry.category
-        )
-      );
-
-    state.category.innerHTML =
-      '<option value="all">All Categories</option>';
-
-    (
-      state.data?.categories ||
-      []
-    )
-      .filter(
-        (category) =>
-          used.has(
-            category.id
-          )
-      )
-      .forEach(
-        (category) => {
-          const option =
-            document.createElement(
-              'option'
-            );
-
-          option.value =
-            category.id;
-
-          option.textContent =
-            category.name;
-
-          state.category.appendChild(
-            option
-          );
-        }
-      );
-  }
-
-  function renderList() {
-    const entries =
-      getFilteredEntries();
-
-    state.list.replaceChildren();
-
-    state.count.textContent =
-      `${entries.length} ${
-        entries.length === 1
-          ? 'topic'
-          : 'topics'
-      }`;
-
-    if (
-      entries.length === 0
-    ) {
-      state.list.innerHTML =
-        '<p class="codex-empty">No matches found.</p>';
-
-      state.reading.innerHTML =
-        '<p class="codex-empty">Try another search or category.</p>';
-
+  function handleDocumentKeydown(event) {
+    if (event.key === 'Escape' && state.drawer?.classList.contains('open')) {
+      closeCodex();
       return;
     }
 
-    entries.forEach(
-      (entry) => {
-        const button =
-          document.createElement(
-            'button'
-          );
+    if (event.altKey && event.key.toLowerCase() === 'c') {
+      event.preventDefault();
+      openCodex();
+    }
+  }
 
-        button.type =
-          'button';
+  async function loadData() {
+    if (!window.MyRPGCodexData) {
+      throw new Error('The shared Codex data layer did not load.');
+    }
 
-        button.className =
-          entry.id ===
-            state.activeId
-            ? 'active'
-            : '';
+    const result = await window.MyRPGCodexData.loadEntries({
+      gameSystem,
+      editions: [edition],
+      entryTypes: ['rule'],
+    });
 
-        button.textContent =
-          entry.title;
+    state.data = result;
+    state.entries = result.entries;
+    state.byId.clear();
 
-        button.addEventListener(
-          'click',
-          () =>
-            showEntry(
-              entry.id
-            )
-        );
+    state.entries.forEach((entry) => {
+      state.byId.set(entry.localId || entry.id, entry);
+      state.byId.set(entry.globalId, entry);
+    });
+  }
 
-        state.list.appendChild(
-          button
-        );
-      }
-    );
+  function getFilteredEntries() {
+    const query = normalize(state.search?.value);
+    const category = state.category?.value || 'all';
 
-    if (
-      !state.activeId ||
-      !entries.some(
-        (entry) =>
-          entry.id ===
-          state.activeId
-      )
-    ) {
-      showEntry(
-        entries[0].id,
-        false
-      );
+    return state.entries.filter((entry) => {
+      const categoryMatch = category === 'all' || entry.category === category;
+      const haystack = normalize([
+        entry.title,
+        entry.summary,
+        entry.whatItMeans,
+        entry.whyItMatters,
+        ...(entry.whatItAffects || []),
+        ...(entry.bestFor || []),
+        ...(entry.commonMistakes || []),
+        ...(entry.tags || []),
+      ].join(' '));
+
+      return categoryMatch && (!query || haystack.includes(query));
+    });
+  }
+
+  function renderCategoryOptions() {
+    const used = new Set(state.entries.map((entry) => entry.category));
+    state.category.replaceChildren();
+
+    const allOption = document.createElement('option');
+    allOption.value = 'all';
+    allOption.textContent = 'All Categories';
+    state.category.append(allOption);
+
+    (state.data?.categories || [])
+      .filter((category) => used.has(category.id))
+      .forEach((category) => {
+        const option = document.createElement('option');
+        option.value = category.id;
+        option.textContent = category.name;
+        state.category.append(option);
+      });
+  }
+
+  function renderList() {
+    const entries = getFilteredEntries();
+    const fragment = document.createDocumentFragment();
+
+    state.list.replaceChildren();
+    state.count.textContent = `${entries.length} ${entries.length === 1 ? 'topic' : 'topics'}`;
+
+    if (entries.length === 0) {
+      const emptyList = document.createElement('p');
+      emptyList.className = 'codex-empty';
+      emptyList.textContent = 'No matches found.';
+
+      const emptyReading = document.createElement('p');
+      emptyReading.className = 'codex-empty';
+      emptyReading.textContent = 'Try another search or category.';
+
+      state.list.append(emptyList);
+      state.reading.replaceChildren(emptyReading);
+      return;
+    }
+
+    entries.forEach((entry) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = entry.localId === state.activeId ? 'active' : '';
+      button.textContent = entry.title;
+      button.addEventListener('click', () => showEntry(entry.localId));
+      fragment.append(button);
+    });
+
+    state.list.append(fragment);
+
+    if (!state.activeId || !entries.some((entry) => entry.localId === state.activeId)) {
+      showEntry(entries[0].localId, false);
     }
   }
 
   function getRelatedEntry(id) {
-    return (
-      state.byId.get(id) ||
-      null
-    );
+    return state.byId.get(id) || null;
+  }
+
+  function buildListSection(title, items) {
+    if (!Array.isArray(items) || items.length === 0) {
+      return '';
+    }
+
+    return `
+      <div class="codex-section-title">${escapeHtml(title)}</div>
+      <ul>
+        ${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}
+      </ul>
+    `;
   }
 
   function buildRelatedHtml(entry) {
-    const related =
-      Array.isArray(entry.related)
-        ? entry.related
-            .map(getRelatedEntry)
-            .filter(Boolean)
-        : [];
+    const related = Array.isArray(entry.related)
+      ? entry.related.map(getRelatedEntry).filter(Boolean)
+      : [];
 
-    if (
-      related.length === 0
-    ) {
+    if (related.length === 0) {
       return '';
     }
 
     return `
       <div class="codex-section-title">Related Topics</div>
       <div class="codex-related">
-        ${
-          related
-            .map(
-              (relatedEntry) => `
-                <button
-                  type="button"
-                  data-related-id="${escapeHtml(relatedEntry.id)}"
-                >
-                  ${escapeHtml(relatedEntry.title)}
-                </button>
-              `
-            )
-            .join('')
-        }
+        ${related.map((relatedEntry) => `
+          <button type="button" data-related-id="${escapeHtml(relatedEntry.localId)}">
+            ${escapeHtml(relatedEntry.title)}
+          </button>
+        `).join('')}
       </div>
     `;
   }
 
-  function showEntry(
-    id,
-    refreshList = true
-  ) {
-    const entry =
-      state.byId.get(id);
+  function showEntry(id, refreshList = true) {
+    const entry = state.byId.get(id);
 
     if (!entry) {
       return;
     }
 
-    state.activeId =
-      id;
-
-    const editionText =
-      Array.isArray(entry.editions)
-        ? entry.editions.join(' / ')
-        : '2014 / 2024';
+    state.activeId = entry.localId;
+    state.fullLink.href = createFullCodexUrl(entry);
 
     state.reading.innerHTML = `
       <h3>${escapeHtml(entry.title)}</h3>
@@ -459,88 +296,31 @@
       <div class="codex-subtitle">
         ${escapeHtml(entry.categoryName || '')}
         <span>•</span>
-        ${escapeHtml(editionText)}
+        ${escapeHtml(entry.editionName || `${edition} rules`)}
       </div>
 
-      ${
-        entry.whatItMeans
-          ? `<p><strong>What it means:</strong> ${escapeHtml(entry.whatItMeans)}</p>`
-          : ''
-      }
+      ${entry.whatItMeans
+        ? `<p><strong>What it means:</strong> ${escapeHtml(entry.whatItMeans)}</p>`
+        : ''}
 
-      ${
-        Array.isArray(
-          entry.whatItAffects
-        ) &&
-        entry.whatItAffects.length
-          ? `
-            <div class="codex-section-title">What it affects</div>
-            <ul>
-              ${
-                entry.whatItAffects
-                  .map(
-                    (item) =>
-                      `<li>${escapeHtml(item)}</li>`
-                  )
-                  .join('')
-              }
-            </ul>
-          `
-          : ''
-      }
+      ${buildListSection('What it affects', entry.whatItAffects)}
 
-      ${
-        entry.exampleInPlay
-          ? `<p><strong>Example in play:</strong> ${escapeHtml(entry.exampleInPlay)}</p>`
-          : ''
-      }
+      ${entry.exampleInPlay
+        ? `<p><strong>Example in play:</strong> ${escapeHtml(entry.exampleInPlay)}</p>`
+        : ''}
 
-      ${
-        entry.whyItMatters
-          ? `<p><strong>Why it matters:</strong> ${escapeHtml(entry.whyItMatters)}</p>`
-          : ''
-      }
+      ${entry.whyItMatters
+        ? `<p><strong>Why it matters:</strong> ${escapeHtml(entry.whyItMatters)}</p>`
+        : ''}
 
-      ${
-        Array.isArray(
-          entry.bestFor
-        ) &&
-        entry.bestFor.length
-          ? `
-            <div class="codex-section-title">Especially useful for</div>
-            <ul>
-              ${
-                entry.bestFor
-                  .map(
-                    (item) =>
-                      `<li>${escapeHtml(item)}</li>`
-                  )
-                  .join('')
-              }
-            </ul>
-          `
-          : ''
-      }
-
+      ${buildListSection('Common mistakes', entry.commonMistakes)}
+      ${buildListSection('Especially useful for', entry.bestFor)}
       ${buildRelatedHtml(entry)}
     `;
 
-    state.reading
-      .querySelectorAll(
-        '[data-related-id]'
-      )
-      .forEach(
-        (button) => {
-          button.addEventListener(
-            'click',
-            () =>
-              showEntry(
-                button.dataset
-                  .relatedId
-              )
-          );
-        }
-      );
+    state.reading.querySelectorAll('[data-related-id]').forEach((button) => {
+      button.addEventListener('click', () => showEntry(button.dataset.relatedId));
+    });
 
     if (refreshList) {
       renderList();
@@ -548,116 +328,57 @@
   }
 
   function openCodex(entryId) {
-    if (
-      entryId &&
-      state.byId.has(
-        entryId
-      )
-    ) {
-      showEntry(
-        entryId
-      );
+    if (entryId && state.byId.has(entryId)) {
+      showEntry(entryId);
     }
 
-    state.overlay.classList.add(
-      'visible'
-    );
+    state.lastFocused = document.activeElement;
+    state.overlay.classList.add('visible');
+    state.drawer.classList.add('open');
+    document.body.style.overflow = 'hidden';
 
-    state.drawer.classList.add(
-      'open'
-    );
-
-    document.body.style.overflow =
-      'hidden';
-
-    window.setTimeout(
-      () =>
-        state.search?.focus(),
-      100
-    );
+    window.setTimeout(() => state.search?.focus(), 100);
   }
 
   function closeCodex() {
-    state.overlay?.classList.remove(
-      'visible'
-    );
-
-    state.drawer?.classList.remove(
-      'open'
-    );
-
-    document.body.style.overflow =
-      '';
-  }
-
-  function addGlobalLauncher() {
-    const controls =
-      document.querySelector(
-        '.controls'
-      );
-
-    if (
-      !controls ||
-      document.getElementById(
-        'open-codex-btn'
-      )
-    ) {
+    if (!state.drawer?.classList.contains('open')) {
       return;
     }
 
-    const separator =
-      document.createElement(
-        'hr'
-      );
+    state.overlay.classList.remove('visible');
+    state.drawer.classList.remove('open');
+    document.body.style.overflow = '';
 
-    separator.className =
-      'codex-control-separator';
+    if (state.lastFocused instanceof HTMLElement) {
+      state.lastFocused.focus();
+    }
+  }
 
-    const button =
-      document.createElement(
-        'button'
-      );
+  function addGlobalLauncher() {
+    const controls = document.querySelector('.controls');
 
-    button.type =
-      'button';
+    if (!controls || document.getElementById('open-codex-btn')) {
+      return;
+    }
 
-    button.id =
-      'open-codex-btn';
+    const separator = document.createElement('hr');
+    separator.className = 'codex-control-separator';
 
-    button.className =
-      'ghost';
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.id = 'open-codex-btn';
+    button.className = 'ghost';
+    button.textContent = 'Open Rules Codex';
+    button.title = 'Open the searchable rules library (Alt+C)';
+    button.addEventListener('click', () => openCodex());
 
-    button.textContent =
-      'Open Rules Codex';
-
-    button.title =
-      'Open the searchable rules library (Alt+C)';
-
-    button.addEventListener(
-      'click',
-      () => openCodex()
-    );
-
-    const printButton =
-      document.getElementById(
-        'print-blank-btn'
-      );
+    const printButton = document.getElementById('print-blank-btn');
 
     if (printButton) {
-      controls.insertBefore(
-        separator,
-        printButton
-      );
-
-      controls.insertBefore(
-        button,
-        printButton
-      );
+      controls.insertBefore(separator, printButton);
+      controls.insertBefore(button, printButton);
     } else {
-      controls.append(
-        separator,
-        button
-      );
+      controls.append(separator, button);
     }
   }
 
@@ -668,88 +389,38 @@
       con: 'constitution',
       int: 'intelligence',
       wis: 'wisdom',
-      cha: 'charisma'
+      cha: 'charisma',
     };
 
-    document
-      .querySelectorAll(
-        '.stats-grid .stat-row'
-      )
-      .forEach(
-        (row) => {
-          const scoreInput =
-            row.querySelector(
-              '.stat-val'
-            );
+    document.querySelectorAll('.stats-grid .stat-row').forEach((row) => {
+      const scoreInput = row.querySelector('.stat-val');
+      const statGroup = row.querySelector('.stat-group');
+      const entryId = abilityMap[scoreInput?.id];
 
-          const statGroup =
-            row.querySelector(
-              '.stat-group'
-            );
+      if (!entryId || !statGroup || statGroup.querySelector('.codex-info-btn')) {
+        return;
+      }
 
-          const entryId =
-            abilityMap[
-              scoreInput?.id
-            ];
+      const entry = state.byId.get(entryId);
 
-          if (
-            !entryId ||
-            !statGroup ||
-            statGroup.querySelector(
-              '.codex-info-btn'
-            )
-          ) {
-            return;
-          }
+      if (!entry) {
+        return;
+      }
 
-          const entry =
-            state.byId.get(
-              entryId
-            );
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'codex-info-btn';
+      button.textContent = 'Codex';
+      button.title = `Open ${entry.title} in the Codex`;
+      button.setAttribute('aria-label', `Open ${entry.title} in the Codex`);
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        openCodex(entryId);
+      });
 
-          if (!entry) {
-            return;
-          }
-
-          const button =
-            document.createElement(
-              'button'
-            );
-
-          button.type =
-            'button';
-
-          button.className =
-            'codex-info-btn';
-
-          button.textContent =
-            'Codex';
-
-          button.title =
-            `Open ${entry.title} in the Codex`;
-
-          button.setAttribute(
-            'aria-label',
-            `Open ${entry.title} in the Codex`
-          );
-
-          button.addEventListener(
-            'click',
-            (event) => {
-              event.preventDefault();
-              event.stopPropagation();
-
-              openCodex(
-                entryId
-              );
-            }
-          );
-
-          statGroup.appendChild(
-            button
-          );
-        }
-      );
+      statGroup.append(button);
+    });
   }
 
   async function init() {
@@ -761,58 +432,31 @@
       addGlobalLauncher();
       addAbilityButtons();
 
-      document.addEventListener(
-        'knowledge:ready',
-        addAbilityButtons
-      );
+      document.addEventListener('knowledge:ready', addAbilityButtons);
 
-      document.dispatchEvent(
-        new CustomEvent(
-          'codex:ready',
-          {
-            detail: {
-              edition,
-              count:
-                state.entries.length
-            }
-          }
-        )
-      );
+      document.dispatchEvent(new CustomEvent('codex:ready', {
+        detail: {
+          gameSystem,
+          edition,
+          count: state.entries.length,
+        },
+      }));
     } catch (error) {
-      console.error(
-        'Codex failed to initialize:',
-        error
-      );
+      console.error('Codex failed to initialize:', error);
     }
   }
 
-  window.CharacterCodex =
-    Object.freeze({
-      open:
-        openCodex,
+  window.CharacterCodex = Object.freeze({
+    open: openCodex,
+    close: closeCodex,
+    showEntry,
+    get count() {
+      return state.entries.length;
+    },
+  });
 
-      close:
-        closeCodex,
-
-      showEntry,
-
-      get count() {
-        return state.entries.length;
-      }
-    });
-
-  if (
-    document.readyState ===
-    'loading'
-  ) {
-    document.addEventListener(
-      'DOMContentLoaded',
-      init,
-      {
-        once:
-          true
-      }
-    );
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {
     init();
   }
