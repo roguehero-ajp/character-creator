@@ -118,6 +118,39 @@
   opacity: 0.72;
 }
 
+
+.codex-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.codex-full-link {
+  padding: 5px 8px;
+
+  color:
+    var(
+      --accent-color,
+      #8b4513
+    );
+
+  border:
+    1px solid
+    rgba(139, 69, 19, 0.28);
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.codex-full-link:hover,
+.codex-full-link:focus-visible {
+  background:
+    rgba(139, 69, 19, 0.14);
+}
+
 .codex-close {
   padding: 4px 8px;
 

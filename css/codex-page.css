@@ -428,3 +428,118 @@
     break-inside: avoid;
   }
 }
+
+/* Complete Rules Codex additions */
+.codex-start-grid {
+  margin-top: 20px;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.codex-start-grid a {
+  padding: 12px 14px;
+
+  color: var(--text);
+  background: rgba(142, 68, 173, 0.13);
+
+  border: 1px solid rgba(183, 132, 207, 0.34);
+  border-radius: 10px;
+
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+}
+
+.codex-start-grid a:hover,
+.codex-start-grid a:focus-visible {
+  background: rgba(142, 68, 173, 0.24);
+  border-color: rgba(210, 180, 222, 0.62);
+}
+
+.codex-field-note {
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.codex-badge-rule {
+  color: #ffe9c7;
+  background: rgba(211, 132, 43, 0.17);
+  border-color: rgba(221, 161, 94, 0.46);
+}
+
+.codex-rule-section {
+  margin-top: 18px;
+}
+
+.codex-rule-section h4 {
+  margin: 0 0 6px;
+
+  color: var(--accent-2);
+
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.codex-rule-section p,
+.codex-rule-section ul {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.codex-rule-section ul {
+  padding-left: 20px;
+}
+
+.codex-rule-section li + li {
+  margin-top: 5px;
+}
+
+.codex-related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.codex-related-links button {
+  padding: 6px 9px;
+
+  color: #ead7ff;
+  background: rgba(142, 68, 173, 0.16);
+
+  border: 1px solid rgba(183, 132, 207, 0.4);
+  border-radius: 999px;
+
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.codex-related-links button:hover,
+.codex-related-links button:focus-visible {
+  background: rgba(142, 68, 173, 0.29);
+}
+
+.codex-entry summary:focus-visible {
+  outline: 3px solid rgba(183, 132, 207, 0.6);
+  outline-offset: -3px;
+}
+
+@media (max-width: 900px) {
+  .codex-start-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .codex-start-grid {
+    grid-template-columns: 1fr;
+  }
+}
