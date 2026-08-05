@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "defaultGameSystem": "dnd5e",
+  "gameSystems": [
+    {
+      "id": "dnd5e",
+      "name": "D&D Fifth Edition",
+      "shortName": "D&D 5e",
+      "defaultEdition": "2024",
+      "editions": [
+        {
+          "id": "2014",
+          "name": "2014 rules",
+          "source": "SRD 5.1",
+          "collections": [
+            {
+              "id": "dnd5e-2014-core-rules",
+              "entryTypes": [
+                "rule"
+              ],
+              "url": "data/codex/dnd5e/2014/core-rules.json",
+              "adapter": "codex-v2"
+            },
+            {
+              "id": "dnd5e-2014-spells-items",
+              "entryTypes": [
+                "spell",
+                "item"
+              ],
+              "url": "data/srd-codex.json",
+              "adapter": "legacy-srd",
+              "editionFilter": "2014"
+            }
+          ]
+        },
+        {
+          "id": "2024",
+          "name": "2024 rules",
+          "source": "SRD 5.2.1",
+          "collections": [
+            {
+              "id": "dnd5e-2024-core-rules",
+              "entryTypes": [
+                "rule"
+              ],
+              "url": "data/codex/dnd5e/2024/core-rules.json",
+              "adapter": "codex-v2"
+            },
+            {
+              "id": "dnd5e-2024-spells-items",
+              "entryTypes": [
+                "spell",
+                "item"
+              ],
+              "url": "data/srd-codex.json",
+              "adapter": "legacy-srd",
+              "editionFilter": "2024"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
