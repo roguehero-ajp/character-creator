@@ -30,6 +30,22 @@
               "adapter": "codex-v2"
             },
             {
+              "id": "dnd5e-2014-backgrounds",
+              "entryTypes": [
+                "background"
+              ],
+              "url": "data/codex/dnd5e/2014/backgrounds.json",
+              "adapter": "codex-v2"
+            },
+            {
+              "id": "dnd5e-2014-feats",
+              "entryTypes": [
+                "feat"
+              ],
+              "url": "data/codex/dnd5e/2014/feats.json",
+              "adapter": "codex-v2"
+            },
+            {
               "id": "dnd5e-2014-equipment",
               "entryTypes": [
                 "equipment"
@@ -68,6 +84,22 @@
                 "ancestry"
               ],
               "url": "data/codex/dnd5e/2024/ancestries.json",
+              "adapter": "codex-v2"
+            },
+            {
+              "id": "dnd5e-2024-backgrounds",
+              "entryTypes": [
+                "background"
+              ],
+              "url": "data/codex/dnd5e/2024/backgrounds.json",
+              "adapter": "codex-v2"
+            },
+            {
+              "id": "dnd5e-2024-feats",
+              "entryTypes": [
+                "feat"
+              ],
+              "url": "data/codex/dnd5e/2024/feats.json",
               "adapter": "codex-v2"
             },
             {
