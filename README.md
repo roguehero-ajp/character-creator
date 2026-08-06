@@ -62,9 +62,9 @@ My RPG Source does not currently require an account. Browser saves can be cleare
 - Contextual Knowledge Cards throughout the builder
 - Searchable in-builder Rules Codex that loads only the active edition
 - Dynamic Featured Knowledge Card on the homepage
-- Unified standalone Rules Codex containing core player rules, 519 edition-specific mundane-equipment entries, spells, and magic items
+- Unified standalone Rules Codex containing 2,161 searchable entries: core player rules, 56 edition-specific race/species entries, 519 edition-specific mundane-equipment entries, spells, and magic items
 - Separate D&D 5e 2014 and D&D 5e 2024 rules collections
-- Game-system, edition, entry-type, and category filters
+- Game-system, edition, entry-type, rule-category, race/species-category, and equipment-category filters
 - Stable deep links to individual Codex entries
 - New Player FAQ with a complete example of play
 
@@ -97,7 +97,7 @@ The visible **Add a New Class** branch is intentionally locked until multiclass 
 - Reduced multiclass proficiencies and proficiency-source tracking are not complete.
 - Combined multiclass spell-slot calculations are not complete.
 - Background data is currently limited and will be expanded.
-- The Codex architecture, broad core-player-rules collection, and mundane-equipment catalogue are in place, but SRD character options, detailed class features, focused edition comparisons, and final editorial review remain incomplete.
+- The Codex architecture, broad core-player-rules collection, mundane-equipment catalogue, and complete SRD race/species collections are in place. Backgrounds, feats, classes, subclasses, class features, focused edition comparisons, and final editorial review remain incomplete.
 - Long feature lists and other dense character information still need print-layout refinement.
 - There are no user accounts, cloud saves, cross-device synchronization, hosted campaigns, or version history yet.
 
@@ -107,7 +107,7 @@ The visible **Add a New Class** branch is intentionally locked until multiclass 
 /
 ├── index.html                 Homepage and edition selection
 ├── builder.html               Shared 2014 and 2024 character builder
-├── codex.html                 Unified Rules, Equipment, Spells & Magic Items Codex
+├── codex.html                 Unified Rules, Origins, Equipment, Spells & Magic Items Codex
 ├── faq.html                   New Player FAQ and example of play
 ├── about.html                 Project information
 ├── contact.html               Contact page
@@ -120,11 +120,11 @@ The visible **Add a New Class** branch is intentionally locked until multiclass 
 ├── data/
 │   ├── codex.json             Legacy rules data retained for rollback
 │   ├── srd-codex.json         Existing SRD spells and magic items
-│   ├── codex/                Edition-isolated rules and mundane-equipment collections
+│   ├── codex/                Edition-isolated rules, race/species, and equipment collections
 │   │   ├── manifest.json      Game-system, edition, and collection registry
 │   │   └── dnd5e/
-│   │       ├── 2014/          Edition-isolated 2014 core rules
-│   │       └── 2024/          Edition-isolated 2024 core rules
+│   │       ├── 2014/          2014 core rules, races, subraces, and equipment
+│   │       └── 2024/          2024 core rules, species, choices, and equipment
 │   └── dnd5e/
 │       ├── 2014/              2014 races, backgrounds, and classes
 │       └── 2024/              2024 species, backgrounds, and classes
@@ -140,7 +140,7 @@ The builder reads JSON files with `fetch()`, so it should be tested through GitH
 The current sequence is:
 
 1. Keep public documentation and homepage status accurate.
-2. Complete Codex editorial QA and add the SRD character-option collections.
+2. Add SRD backgrounds and feats, then complete the class, subclass, and class-feature collections.
 3. Make class behavior fully edition-aware.
 4. Enable safe multiclassing with prerequisites and DM Override.
 5. Track proficiency sources and reduced multiclass proficiencies.

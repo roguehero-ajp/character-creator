@@ -152,8 +152,8 @@ The Codex now uses a manifest-driven hierarchy of **game system → edition → 
 
 ## Unified standalone Codex
 
-- [x] Rules, mundane equipment, spells, and magic items in one searchable page
-- [x] Game-system, edition, entry-type, rule-category, and equipment-category filters
+- [x] Rules, races/species, mundane equipment, spells, and magic items in one searchable page
+- [x] Game-system, edition, entry-type, rule-category, race/species-category, and equipment-category filters
 - [x] Spell and magic-item filters
 - [x] 2014 and 2024 edition labels
 - [x] More than one thousand SRD spell and magic-item entries preserved
@@ -175,9 +175,17 @@ The Codex now uses a manifest-driven hierarchy of **game system → edition → 
 - [x] Equipment-category filtering, deep links, source labels, and searchable structured facts
 - [~] Final item-by-item mechanical and editorial audit
 
+## Character origins catalogue
+
+- [x] Separate 2014 race/subrace and 2024 species/species-choice collection files
+- [x] 23 edition-specific 2014 entries covering all SRD races, subraces, and Dragonborn ancestry choices
+- [x] 33 edition-specific 2024 entries covering all SRD species, lineages, giant ancestries, fiendish legacies, and Dragonborn ancestry choices
+- [x] Parent-and-choice navigation, deep links, source labels, structured facts, and trait sections
+- [x] 2024 species entries explain that Background, not Species, supplies ability-score increases
+- [~] Final entry-by-entry mechanical and editorial audit
+
 ## Remaining Codex collections
 
-- [ ] SRD races and 2024 species
 - [ ] SRD backgrounds and feats
 - [ ] SRD classes, subclasses, progression tables, and class features
 - [ ] Collection-wide editorial and licensing audit
@@ -336,8 +344,8 @@ Potential future systems include:
 
 ## Immediate Sequence
 
-1. Complete Codex editorial QA and source verification.
-2. Add the SRD character-option collections: races/species, backgrounds, feats, classes, subclasses, and class features.
+1. Complete the SRD background and feat collections.
+2. Add class foundations, progression tables, subclasses, and class-feature collections.
 3. Begin the edition-aware class architecture branch.
 4. Implement Add a New Class, prerequisites, and DM Override.
 5. Implement reduced multiclass proficiencies and source tracking.

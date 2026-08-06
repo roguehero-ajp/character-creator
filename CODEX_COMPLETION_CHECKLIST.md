@@ -65,9 +65,18 @@ The Rules Codex milestone is complete when My RPG Source provides one coherent, 
 - [x] Attribution is displayed.
 - [x] Progressive loading is implemented.
 
+### Existing SRD race and species library
+
+- [x] Separate `data/codex/dnd5e/2014/ancestries.json` and `data/codex/dnd5e/2024/ancestries.json` files exist.
+- [x] 23 edition-specific 2014 race, subrace, and ancestry-choice entries exist.
+- [x] 33 edition-specific 2024 species and species-choice entries exist.
+- [x] Parent and child navigation exists for subraces, lineages, giant ancestries, fiendish legacies, and draconic ancestries.
+- [x] Race/species category filtering and stable deep links exist.
+- [x] Every entry declares its edition, source document, and CC BY 4.0 licence.
+
 ### Current separation to resolve
 
-- [x] The standalone `codex.html` page presents rules, mundane equipment, spells, and magic items through one data layer.
+- [x] The standalone `codex.html` page presents rules, races/species, mundane equipment, spells, and magic items through one data layer.
 - [x] The builder drawer remains lightweight and loads only the active edition's core rules.
 - [x] Both halves are united without forcing the builder to load the full spell and magic-item catalogue.
 
@@ -269,20 +278,20 @@ For each character option, determine whether its complete mechanical text is pre
 
 ### 2014 races
 
-- [ ] Inventory every race and subrace in SRD 5.1.
-- [ ] Create a licensed-data entry for every SRD race and subrace.
-- [ ] Include size, speed, traits, languages, and ability-score changes where licensed.
+- [x] Inventory every race and subrace in SRD 5.1.
+- [x] Create a licensed-data entry for every SRD race and subrace.
+- [x] Include size, speed, traits, languages, and ability-score changes where licensed.
 - [ ] Link each entry to related rules.
-- [ ] Identify builder races that are not fully covered by SRD 5.1.
+- [x] Identify builder races that are not fully covered by SRD 5.1.
 - [ ] Provide limited source guidance for non-SRD options without reproducing protected text.
 
 ### 2024 species
 
-- [ ] Inventory every species and lineage choice in SRD 5.2.1.
-- [ ] Create a licensed-data entry for every SRD species.
-- [ ] Include size, speed, traits, senses, resistances, and choices where licensed.
-- [ ] Explain that 2024 ability-score increases come from Background.
-- [ ] Identify builder species that are not fully covered by SRD 5.2.1.
+- [x] Inventory every species and lineage choice in SRD 5.2.1.
+- [x] Create a licensed-data entry for every SRD species.
+- [x] Include size, speed, traits, senses, resistances, and choices where licensed.
+- [x] Explain that 2024 ability-score increases come from Background.
+- [x] Identify builder species that are not fully covered by SRD 5.2.1.
 - [ ] Provide limited source guidance for non-SRD options without reproducing protected text.
 
 ### Backgrounds
@@ -869,7 +878,7 @@ Additional standards:
 
 ### Milestone 4: SRD Character Options
 
-- [ ] Complete SRD races/species.
+- [x] Complete SRD races/species.
 - [ ] Complete SRD backgrounds.
 - [ ] Complete SRD feats.
 - [ ] Complete SRD classes, subclasses, progression tables, and features.
