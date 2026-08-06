@@ -296,36 +296,36 @@ For each character option, determine whether its complete mechanical text is pre
 
 ### Backgrounds
 
-- [ ] Inventory SRD 5.1 backgrounds.
-- [ ] Inventory SRD 5.2.1 backgrounds.
-- [ ] Create edition-aware entries.
-- [ ] Include proficiencies, languages, equipment, feats, and ability-score information where licensed.
+- [x] Inventory SRD 5.1 backgrounds.
+- [x] Inventory SRD 5.2.1 backgrounds.
+- [x] Create edition-aware entries.
+- [x] Include proficiencies, languages, equipment, feats, and ability-score information where licensed.
 - [ ] Explain custom or player-created background rules only where available under the relevant SRD.
 - [ ] Add background-selection guidance.
 
 ### Feats
 
-- [ ] Inventory SRD 5.1 feats.
-- [ ] Inventory SRD 5.2.1 Origin, General, Fighting Style, Epic Boon, or other feat categories included in the SRD.
-- [ ] Create edition-aware feat entries.
-- [ ] Include prerequisites and repeatability where licensed.
+- [x] Inventory SRD 5.1 feats.
+- [x] Inventory SRD 5.2.1 Origin, General, Fighting Style, Epic Boon, or other feat categories included in the SRD.
+- [x] Create edition-aware feat entries.
+- [x] Include prerequisites and repeatability where licensed.
 - [ ] Link feats to affected abilities, proficiencies, actions, and spellcasting rules.
-- [ ] Prevent non-SRD feat text from entering the Codex.
+- [x] Prevent non-SRD feat text from entering the Codex.
 
 ### Classes and subclasses
 
-- [ ] Inventory all classes in SRD 5.1.
-- [ ] Inventory all classes in SRD 5.2.1.
-- [ ] Inventory the SRD subclass included for each class.
-- [ ] Create class overview entries.
-- [ ] Create class progression tables.
+- [x] Inventory all classes in SRD 5.1.
+- [x] Inventory all classes in SRD 5.2.1.
+- [x] Inventory the SRD subclass included for each class.
+- [x] Create class overview entries.
+- [x] Create class progression tables.
 - [ ] Create class-feature entries.
 - [ ] Create subclass entries and subclass-feature entries.
-- [ ] Include hit dice, primary abilities, saving-throw proficiencies, armor, weapons, tools, skills, and starting equipment where licensed.
-- [ ] Make every class entry edition-aware.
+- [x] Include hit dice, primary abilities, saving-throw proficiencies, armor, weapons, tools, skills, and starting equipment where licensed.
+- [x] Make every class entry edition-aware.
 - [ ] Link class features to spellcasting, actions, rests, resources, and conditions.
-- [ ] Keep non-SRD class and subclass mechanics out of the Codex.
-- [ ] Coordinate class data with the future edition-aware class architecture in the builder.
+- [x] Keep non-SRD class and subclass mechanics out of the Codex.
+- [x] Cross-check Codex class foundations against the edition-specific builder class data; full builder behavior remains a later engineering milestone.
 
 ---
 
@@ -879,10 +879,10 @@ Additional standards:
 ### Milestone 4: SRD Character Options
 
 - [x] Complete SRD races/species.
-- [ ] Complete SRD backgrounds.
-- [ ] Complete SRD feats.
-- [ ] Complete SRD classes, subclasses, progression tables, and features.
-- [ ] Coordinate with edition-aware builder class work.
+- [x] Complete SRD backgrounds.
+- [x] Complete SRD feats.
+- [~] Complete SRD classes, subclasses, progression tables, and features. Class foundations and progression tables are complete; feature and subclass collections remain.
+- [~] Coordinate with edition-aware builder class work. Foundation fields are validated against builder data; behavioral integration remains.
 - [ ] Publish after QA.
 
 ### Milestone 5: Full Library Integration

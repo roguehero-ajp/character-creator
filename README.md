@@ -1,237 +1,181 @@
-/**
- * My RPG Source - Codex Data Layer
- * --------------------------------
- * Loads the versioned Codex manifest and normalizes collection files into one
- * game-system and edition-aware entry model. This file deliberately contains
- * no page rendering so the standalone Codex and builder drawer can share it.
- */
+# My RPG Source
 
-(() => {
-  'use strict';
+A free, browser-based tabletop roleplaying character builder and rules-learning project.
 
-  const MANIFEST_URL = 'data/codex/manifest.json';
-  const DEFAULT_ENTRY_TYPES = ['rule', 'ancestry', 'background', 'feat', 'equipment', 'spell', 'item'];
-  const jsonCache = new Map();
+**Live site:** [www.myrpgsource.com](https://www.myrpgsource.com)  
+**Repository:** [roguehero-ajp/character-creator](https://github.com/roguehero-ajp/character-creator)
 
-  async function fetchJson(url) {
-    if (!jsonCache.has(url)) {
-      jsonCache.set(
-        url,
-        fetch(url, { cache: 'no-cache' }).then((response) => {
-          if (!response.ok) {
-            throw new Error(`Codex data request failed for ${url} (${response.status}).`);
-          }
+## Mission
 
-          return response.json();
-        })
-      );
-    }
+**Break down the barriers that stop people from playing tabletop roleplaying games.**
 
-    return jsonCache.get(url);
-  }
+My RPG Source is designed to make character creation clearer, friendlier, and easier to learn. The project combines practical character tools with plain-language rules guidance so players can spend less time wrestling with forms and more time imagining who they want to play.
 
-  function getGameSystem(manifest, gameSystemId) {
-    return (manifest?.gameSystems || []).find((system) => system.id === gameSystemId) || null;
-  }
+## Current Status
 
-  function getEdition(gameSystem, editionId) {
-    return (gameSystem?.editions || []).find((edition) => edition.id === editionId) || null;
-  }
+My RPG Source is a public, pre-1.0 project under active development.
 
-  function createGlobalId(gameSystemId, editionId, entryType, localId) {
-    return [gameSystemId, editionId, entryType, localId].join(':');
-  }
+The live site currently supports:
 
-  function normalizeV2Entries(payload, collection, gameSystem, edition) {
-    if (
-      payload?.schemaVersion !== 2 ||
-      !Array.isArray(payload.entries) ||
-      payload.gameSystem !== gameSystem.id ||
-      payload.edition !== edition.id
-    ) {
-      throw new Error(`Invalid Codex v2 payload for ${collection.id}.`);
-    }
+- Dungeons & Dragons 5e using the 2024 rules
+- Dungeons & Dragons 5e using the 2014 rules
 
-    const allowedTypes = new Set(collection.entryTypes || payload.entryTypes || []);
-    const fallbackType = allowedTypes.size === 1 ? Array.from(allowedTypes)[0] : null;
-    const categories = Array.isArray(payload.categories) ? payload.categories : [];
-    const categoryGroups = {};
+The builders are usable now, but some advanced class, subclass, multiclass, spellcasting, and printing features remain in development. The current development priorities are documented in [`roadmap.md`](roadmap.md).
 
-    allowedTypes.forEach((entryType) => {
-      categoryGroups[entryType] = categories;
-    });
+## Current Features
 
-    const entries = payload.entries
-      .filter((entry) => entry && typeof entry.id === 'string' && typeof entry.title === 'string')
-      .map((entry) => {
-        const entryType = entry.entryType || fallbackType;
+### Character creation
 
-        if (!entryType || !allowedTypes.has(entryType)) {
-          throw new Error(`${collection.id} contains an unsupported entry type.`);
-        }
+- Separate 2014 and 2024 builder modes
+- Edition-specific Race or Species terminology and data paths
+- Edition-specific background and class data loading
+- Manual ability-score entry
+- Standard Array
+- 4d6, drop the lowest
+- 3d6 house-rule generation
+- Official 27-point Point Buy
+- Automatic ability modifiers and core derived calculations
+- Dynamic class-level rows and total character-level calculation
+- Theme selection
 
-        return {
-          ...entry,
-          localId: entry.id,
-          globalId: createGlobalId(gameSystem.id, edition.id, entryType, entry.id),
-          name: entry.title,
-          type: entryType,
-          entryType,
-          gameSystem: gameSystem.id,
-          gameSystemName: gameSystem.name,
-          edition: edition.id,
-          editionName: edition.name,
-          source: entry.sourceDocument || payload.sourceDocument || edition.source,
-          sourceType: entry.sourceType || 'original-explanation',
-          collectionId: collection.id,
-        };
-      });
+### Saving and portability
 
-    return { entries, categories, categoryGroups };
-  }
+- Automatic local browser saving
+- Save Now and Load Saved Character controls
+- Separate local saves for the 2014 and 2024 builders
+- JSON backup export
+- JSON backup import
+- Edition warnings when importing a character from a different rules version
+- Restoration of dynamic controls and multiclass rows
 
-  function normalizeLegacySrdEntries(payload, collection, gameSystem, edition) {
-    if (!payload || !Array.isArray(payload.entries)) {
-      throw new Error(`Invalid legacy SRD payload for ${collection.id}.`);
-    }
+My RPG Source does not currently require an account. Browser saves can be cleared by the browser or device, so exported JSON backups are recommended for important characters.
 
-    const allowedTypes = new Set(collection.entryTypes || []);
+### Printing and PDF
 
-    const entries = payload.entries
-      .filter((entry) => {
-        return (
-          entry &&
-          typeof entry.id === 'string' &&
-          typeof entry.name === 'string' &&
-          entry.edition === edition.id &&
-          allowedTypes.has(entry.type)
-        );
-      })
-      .map((entry) => ({
-        ...entry,
-        localId: entry.id,
-        globalId: createGlobalId(gameSystem.id, edition.id, entry.type, entry.id),
-        entryType: entry.type,
-        gameSystem: gameSystem.id,
-        gameSystemName: gameSystem.name,
-        editionName: edition.name,
-        sourceType: 'licensed-srd-text',
-        collectionId: collection.id,
-      }));
+- Printable character sheet
+- Blank character-sheet printing without altering the current character
+- PDF export with character-based filenames
+- Print-specific layout and cleanup rules
 
-    return { entries, categories: [], categoryGroups: {} };
-  }
+### Rules learning
 
-  async function loadCollection(collection, gameSystem, edition) {
-    const payload = await fetchJson(collection.url);
+- Contextual Knowledge Cards throughout the builder
+- Searchable in-builder Rules Codex that loads only the active edition
+- Dynamic Featured Knowledge Card on the homepage
+- Unified standalone Rules Codex containing 2,208 searchable entries: core player rules, 56 edition-specific race/species entries, 5 backgrounds, 18 feats, 24 class foundations, 519 mundane-equipment entries, spells, and magic items
+- Separate D&D 5e 2014 and D&D 5e 2024 rules collections
+- Game-system, edition, entry-type, rule-category, race/species-category, and equipment-category filters
+- Stable deep links to individual Codex entries
+- New Player FAQ with a complete example of play
 
-    if (collection.adapter === 'codex-v2') {
-      return normalizeV2Entries(payload, collection, gameSystem, edition);
-    }
+### Character advancement
 
-    if (collection.adapter === 'legacy-srd') {
-      return normalizeLegacySrdEntries(payload, collection, gameSystem, edition);
-    }
+- Level Up flow for advancing an existing class
+- Fixed, rolled, and manual hit-point gain methods
+- Review step before committing a level
+- Stored level history
+- Hit-point recalculation when Constitution changes
 
-    throw new Error(`Unsupported Codex adapter: ${collection.adapter || 'not specified'}.`);
-  }
+The visible **Add a New Class** branch is intentionally locked until multiclass prerequisites, proficiency handling, and combined spell-slot calculations are complete.
 
-  async function loadManifest() {
-    const manifest = await fetchJson(MANIFEST_URL);
+### Site foundation
 
-    if (manifest?.schemaVersion !== 2 || !Array.isArray(manifest.gameSystems)) {
-      throw new Error('The Codex manifest is missing or uses an unsupported schema.');
-    }
+- Custom domain with HTTPS
+- GitHub Pages deployment
+- Responsive site layout
+- About, Contact, Privacy Policy, and Legal / SRD Attribution pages
+- `robots.txt`
+- `sitemap.xml`
+- Custom `404.html`
+- `ads.txt`
 
-    return manifest;
-  }
+## Known Limitations
 
-  async function loadEntries(options = {}) {
-    const manifest = await loadManifest();
-    const gameSystemId = options.gameSystem || manifest.defaultGameSystem;
-    const gameSystem = getGameSystem(manifest, gameSystemId);
+- Class lists and basic class data are edition-aware, but complete class rules and features are not yet fully automated by edition.
+- Subclass selection and class-feature progression are not complete.
+- Multiclass prerequisites exist in the class data, but the Add a New Class flow is not yet enabled.
+- Reduced multiclass proficiencies and proficiency-source tracking are not complete.
+- Combined multiclass spell-slot calculations are not complete.
+- Builder background options remain broader than the Codex because the Codex reproduces only backgrounds released in the applicable SRD.
+- The Codex architecture, broad core-player-rules collection, mundane-equipment catalogue, SRD origins, backgrounds, feats, and 24 class foundations are in place. Individual class-feature mechanics, subclass entries, focused edition comparisons, and final editorial review remain incomplete.
+- Long feature lists and other dense character information still need print-layout refinement.
+- There are no user accounts, cloud saves, cross-device synchronization, hosted campaigns, or version history yet.
 
-    if (!gameSystem) {
-      throw new Error(`Unknown Codex game system: ${gameSystemId}.`);
-    }
+## Project Structure
 
-    const requestedEditionIds = Array.isArray(options.editions) && options.editions.length
-      ? options.editions
-      : (gameSystem.editions || []).map((edition) => edition.id);
+```text
+/
+├── index.html                 Homepage and edition selection
+├── builder.html               Shared 2014 and 2024 character builder
+├── codex.html                 Unified Rules, Origins, Equipment, Spells & Magic Items Codex
+├── faq.html                   New Player FAQ and example of play
+├── about.html                 Project information
+├── contact.html               Contact page
+├── privacy.html               Privacy policy
+├── legal.html                 Legal and SRD attribution
+├── 404.html                   Custom not-found page
+├── css/                       Layout, themes, printing, Codex, and responsive styles
+├── js/                        Modular application logic
+│   └── codex-data.js          Shared manifest-driven Codex data loader
+├── data/
+│   ├── codex.json             Legacy rules data retained for rollback
+│   ├── srd-codex.json         Existing SRD spells and magic items
+│   ├── codex/                Edition-isolated rules and character-option collections
+│   │   ├── manifest.json      Game-system, edition, and collection registry
+│   │   └── dnd5e/
+│   │       ├── 2014/          2014 rules, origins, backgrounds, feats, classes, and equipment
+│   │       └── 2024/          2024 rules, origins, backgrounds, feats, classes, and equipment
+│   └── dnd5e/
+│       ├── 2014/              2014 races, backgrounds, and classes
+│       └── 2024/              2024 species, backgrounds, and classes
+├── tools/
+│   └── validate-codex.mjs     Codex schema and relationship validation
+└── images/                    Site images
+```
 
-    const requestedTypes = new Set(
-      Array.isArray(options.entryTypes) && options.entryTypes.length
-        ? options.entryTypes
-        : DEFAULT_ENTRY_TYPES
-    );
+The builder reads JSON files with `fetch()`, so it should be tested through GitHub Pages or another web server rather than opened only as a local `file://` page.
 
-    const selectedEditions = requestedEditionIds
-      .map((editionId) => getEdition(gameSystem, editionId))
-      .filter(Boolean);
+## Development Priorities
 
-    const jobs = [];
+The current sequence is:
 
-    selectedEditions.forEach((edition) => {
-      (edition.collections || []).forEach((collection) => {
-        const collectionTypes = collection.entryTypes || [];
-        const isRelevant = collectionTypes.some((entryType) => requestedTypes.has(entryType));
+1. Keep public documentation and homepage status accurate.
+2. Complete SRD class-feature, subclass, and subclass-feature collections.
+3. Make builder class behavior fully edition-aware using the validated class foundations.
+4. Enable safe multiclassing with prerequisites and DM Override.
+5. Track proficiency sources and reduced multiclass proficiencies.
+6. Add subclass, class-feature, and multiclass spell-slot handling.
+7. Test printing, saving, loading, import, and export across both editions.
+8. Improve accessibility, mobile presentation, and dense print layouts.
+9. Prototype **My First Steps**, a free web onboarding adventure that produces a ready-to-go character.
 
-        if (isRelevant) {
-          jobs.push(loadCollection(collection, gameSystem, edition));
-        }
-      });
-    });
+See [`roadmap.md`](roadmap.md) for the detailed plan.
 
-    const results = await Promise.all(jobs);
-    const entries = [];
-    const categoryMapsByType = new Map();
+## Future Direction
 
-    results.forEach((result) => {
-      result.entries.forEach((entry) => {
-        if (requestedTypes.has(entry.entryType)) {
-          entries.push(entry);
-        }
-      });
+After the D&D 5e builders are dependable, My RPG Source may expand into:
 
-      Object.entries(result.categoryGroups || {}).forEach(([entryType, categories]) => {
-        if (!categoryMapsByType.has(entryType)) {
-          categoryMapsByType.set(entryType, new Map());
-        }
+- Additional tabletop game systems, subject to licensing and product scope
+- Original beginner guides and rules explanations
+- Optional accounts and paid cloud services
+- Cross-device saves and version history
+- Game Master hosted campaigns
+- Homebrew rules and campaign tools
+- Basic campaign communication
+- Android and iOS applications
 
-        const map = categoryMapsByType.get(entryType);
-        categories.forEach((category) => {
-          if (!map.has(category.id)) {
-            map.set(category.id, category);
-          }
-        });
-      });
-    });
+The free web experience will continue to support local saves and JSON import/export. Personal cloud storage is planned as a future optional paid service rather than a free-tier requirement.
 
-    const categoryGroups = {};
-    categoryMapsByType.forEach((categoryMap, entryType) => {
-      categoryGroups[entryType] = Array.from(categoryMap.values());
-    });
+## Licensing and Attribution
 
-    return {
-      manifest,
-      gameSystem,
-      editions: selectedEditions,
-      categories: categoryGroups.rule || [],
-      categoryGroups,
-      entries,
-    };
-  }
+My RPG Source is an independent project and is not affiliated with, endorsed by, or sponsored by Wizards of the Coast or any other tabletop game publisher.
 
-  function clearCache() {
-    jsonCache.clear();
-  }
+Licensed rules material and required attribution are documented in [`legal.html`](legal.html).
 
-  window.MyRPGCodexData = Object.freeze({
-    loadManifest,
-    loadEntries,
-    getGameSystem,
-    getEdition,
-    createGlobalId,
-    clearCache,
-  });
-})();
+No general open-source licence has been granted for the project source code at this time. Unless a file states otherwise, the project code and original content remain all rights reserved.
+
+## Maintainer
+
+My RPG Source is built and maintained by Jason Paul in Ontario, Canada.
+
+Contact: [myrpgsource@gmail.com](mailto:myrpgsource@gmail.com)
