@@ -46,6 +46,14 @@
               "adapter": "codex-v2"
             },
             {
+              "id": "dnd5e-2014-classes",
+              "entryTypes": [
+                "class"
+              ],
+              "url": "data/codex/dnd5e/2014/classes.json",
+              "adapter": "codex-v2"
+            },
+            {
               "id": "dnd5e-2014-equipment",
               "entryTypes": [
                 "equipment"
@@ -100,6 +108,14 @@
                 "feat"
               ],
               "url": "data/codex/dnd5e/2024/feats.json",
+              "adapter": "codex-v2"
+            },
+            {
+              "id": "dnd5e-2024-classes",
+              "entryTypes": [
+                "class"
+              ],
+              "url": "data/codex/dnd5e/2024/classes.json",
               "adapter": "codex-v2"
             },
             {
