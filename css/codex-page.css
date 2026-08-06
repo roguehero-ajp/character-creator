@@ -555,3 +555,69 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Class foundations */
+.codex-badge-class {
+  color: #dff7ff;
+  background: rgba(33, 150, 243, 0.16);
+  border-color: rgba(100, 181, 246, 0.48);
+}
+
+.codex-table-note {
+  margin-bottom: 10px !important;
+  font-size: 0.82rem;
+}
+
+.codex-table-wrapper {
+  overflow-x: auto;
+  margin-top: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.codex-table-wrapper:focus-visible {
+  outline: 3px solid rgba(100, 181, 246, 0.6);
+  outline-offset: 3px;
+}
+
+.codex-progression-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.codex-progression-table th,
+.codex-progression-table td {
+  padding: 9px 11px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.codex-progression-table thead th {
+  color: var(--accent);
+  background: rgba(0, 0, 0, 0.22);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 0.76rem;
+  letter-spacing: 0.035em;
+}
+
+.codex-progression-table tbody th {
+  width: 70px;
+  color: var(--accent-2);
+}
+
+.codex-progression-table tbody tr:last-child th,
+.codex-progression-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+@media (max-width: 520px) {
+  .codex-progression-table th,
+  .codex-progression-table td {
+    padding: 8px;
+  }
+}
