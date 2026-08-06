@@ -1,6 +1,6 @@
 /*
  * My RPG Source
- * Standalone Rules, Equipment, Spells & Magic Items Codex
+ * Standalone Rules, Races, Species, Equipment, Spells & Magic Items Codex
  */
 
 .codex-shell {
@@ -15,7 +15,7 @@
   margin-top: 30px;
 
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
   gap: 12px;
 }
 
@@ -287,6 +287,12 @@
   border-color: rgba(72, 201, 176, 0.42);
 }
 
+.codex-badge-ancestry {
+  color: #dff7d9;
+  background: rgba(39, 174, 96, 0.17);
+  border-color: rgba(88, 214, 141, 0.46);
+}
+
 .codex-badge-equipment {
   color: #d8f0ff;
   background: rgba(41, 128, 185, 0.17);
@@ -440,7 +446,7 @@
   margin-top: 20px;
 
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
   gap: 10px;
 }
 
