@@ -69,7 +69,7 @@ function validateV2(payload, collection, gameSystem, edition) {
     }
     globalIds.add(globalId);
 
-    if (entryType === 'equipment' || entryType === 'ancestry') {
+    if (['equipment', 'ancestry', 'background', 'feat', 'class'].includes(entryType)) {
       if (!entry.description || typeof entry.description !== 'string') {
         errors.push(`${label}: ${entryType} entry is missing a description.`);
       }
@@ -82,12 +82,12 @@ function validateV2(payload, collection, gameSystem, edition) {
           }
         });
       }
-      if (entryType === 'ancestry') {
+      if (['ancestry', 'background', 'feat', 'class'].includes(entryType)) {
         if (!entry.sourceSection || typeof entry.sourceSection !== 'string') {
-          errors.push(`${label}: ancestry entry is missing sourceSection.`);
+          errors.push(`${label}: ${entryType} entry is missing sourceSection.`);
         }
         if (!Array.isArray(entry.traits)) {
-          errors.push(`${label}: ancestry traits must be an array.`);
+          errors.push(`${label}: ${entryType} traits must be an array.`);
         } else {
           entry.traits.forEach((trait, traitIndex) => {
             if (!trait?.name || !trait?.description) {
@@ -96,6 +96,44 @@ function validateV2(payload, collection, gameSystem, edition) {
           });
         }
       }
+      if (entryType === 'class') {
+        if (!entry.builderClassId || typeof entry.builderClassId !== 'string') {
+          errors.push(`${label}: class entry needs builderClassId.`);
+        }
+        if (!Number.isInteger(entry.hitDie) || ![6, 8, 10, 12].includes(entry.hitDie)) {
+          errors.push(`${label}: class hitDie must be 6, 8, 10, or 12.`);
+        }
+        if (!Array.isArray(entry.primaryAbilities) || entry.primaryAbilities.length === 0) {
+          errors.push(`${label}: class primaryAbilities must be a non-empty array.`);
+        }
+        if (!Array.isArray(entry.savingThrows) || entry.savingThrows.length !== 2) {
+          errors.push(`${label}: class savingThrows must contain exactly two abilities.`);
+        }
+        if (!entry.multiclassPrerequisite || typeof entry.multiclassPrerequisite !== 'object') {
+          errors.push(`${label}: class multiclassPrerequisite is missing.`);
+        }
+        if (!entry.subclass?.name || !Array.isArray(entry.subclass?.featureLevels)) {
+          errors.push(`${label}: class subclass metadata is incomplete.`);
+        }
+        if (!Array.isArray(entry.progression) || entry.progression.length !== 20) {
+          errors.push(`${label}: class progression must contain levels 1 through 20.`);
+        } else {
+          entry.progression.forEach((row, rowIndex) => {
+            const expectedLevel = rowIndex + 1;
+            const expectedBonus = `+${2 + Math.floor(rowIndex / 4)}`;
+            if (row?.level !== expectedLevel) {
+              errors.push(`${label}: progression row ${rowIndex + 1} must be level ${expectedLevel}.`);
+            }
+            if (row?.proficiencyBonus !== expectedBonus) {
+              errors.push(`${label}: level ${expectedLevel} proficiency bonus must be ${expectedBonus}.`);
+            }
+            if (!row?.features || typeof row.features !== 'string') {
+              errors.push(`${label}: level ${expectedLevel} needs a feature summary.`);
+            }
+          });
+        }
+      }
+
       if (entry.sourceDocument !== edition.source) {
         errors.push(`${label}: sourceDocument must be ${edition.source}.`);
       }
@@ -176,6 +214,48 @@ if (manifest.schemaVersion !== 2 || !Array.isArray(manifest.gameSystems)) {
       }
     }
   }
+}
+
+
+// Keep Codex class foundations synchronized with the builder's edition-aware class records.
+for (const editionId of ['2014', '2024']) {
+  const builderPayload = await readJson(`data/dnd5e/${editionId}/classes.json`);
+  const codexPayload = await readJson(`data/codex/dnd5e/${editionId}/classes.json`);
+  const builderById = new Map((builderPayload.classes || []).map((entry) => [entry.id, entry]));
+  const codexById = new Map((codexPayload.entries || []).map((entry) => [entry.builderClassId, entry]));
+
+  if (builderById.size !== codexById.size) {
+    errors.push(`${editionId} class count differs between builder data and Codex foundations.`);
+  }
+
+  builderById.forEach((builderEntry, classId) => {
+    const codexEntry = codexById.get(classId);
+    if (!codexEntry) {
+      errors.push(`${editionId} Codex is missing builder class ${classId}.`);
+      return;
+    }
+
+    const comparisons = [
+      ['hitDie', builderEntry.hitDie, codexEntry.hitDie],
+      ['fixedHitPointsPerLevel', builderEntry.fixedHitPointsPerLevel, codexEntry.fixedHitPointsPerLevel],
+      ['spellcastingAbility', builderEntry.spellcastingAbility, codexEntry.spellcastingAbility],
+    ];
+    comparisons.forEach(([field, expected, actual]) => {
+      if (expected !== actual) {
+        errors.push(`${editionId} ${classId}: Codex ${field} does not match builder data.`);
+      }
+    });
+
+    if (JSON.stringify(builderEntry.primaryAbilities) !== JSON.stringify(codexEntry.primaryAbilities)) {
+      errors.push(`${editionId} ${classId}: Codex primaryAbilities do not match builder data.`);
+    }
+    if (JSON.stringify(builderEntry.savingThrows) !== JSON.stringify(codexEntry.savingThrows)) {
+      errors.push(`${editionId} ${classId}: Codex savingThrows do not match builder data.`);
+    }
+    if (JSON.stringify(builderEntry.multiclassPrerequisite) !== JSON.stringify(codexEntry.multiclassPrerequisite)) {
+      errors.push(`${editionId} ${classId}: Codex multiclassPrerequisite does not match builder data.`);
+    }
+  });
 }
 
 if (errors.length) {
