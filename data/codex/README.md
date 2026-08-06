@@ -16,13 +16,15 @@ The current D&D files are:
 
 ```text
 data/codex/dnd5e/2014/core-rules.json
+data/codex/dnd5e/2014/ancestries.json
 data/codex/dnd5e/2014/equipment.json
 data/codex/dnd5e/2024/core-rules.json
+data/codex/dnd5e/2024/ancestries.json
 data/codex/dnd5e/2024/equipment.json
 data/srd-codex.json
 ```
 
-The `core-rules.json` and `equipment.json` files use schema version 2. The existing spell and magic-item file is loaded through the `legacy-srd` adapter declared in the manifest.
+The `core-rules.json`, `ancestries.json`, and `equipment.json` files use schema version 2. The existing spell and magic-item file is loaded through the `legacy-srd` adapter declared in the manifest.
 
 ## Important rule
 
@@ -34,7 +36,7 @@ Required fields:
 
 - `id`: unique inside the edition collection
 - `title`
-- `entryType`: currently `rule` or `equipment` in schema-version-2 collections
+- `entryType`: currently `rule`, `ancestry`, or `equipment` in schema-version-2 collections
 - `gameSystem`
 - `edition`
 - `category`
@@ -56,6 +58,17 @@ Rules entries commonly use:
 - `related`
 - `tags`
 
+Ancestry entries commonly use:
+
+- `description`
+- `facts`: structured label/value pairs such as ability-score increases, creature type, size, speed, languages, and spellcasting choices
+- `traits`: named rules features with complete reference descriptions
+- `parentId` and `parentTitle` for subraces or species choices
+- `childIds` for parent races or species with finite choices
+- `sourceSection` for the audited SRD section and page range
+- `tags`
+- `license`
+
 Equipment entries commonly use:
 
 - `subcategory`
@@ -64,7 +77,7 @@ Equipment entries commonly use:
 - `tags`
 - `license`
 
-Related IDs are local to the same game system, edition, and entry type.
+Related, parent, and child IDs are local to the same game system, edition, and entry type.
 
 ## Adding another game system
 
