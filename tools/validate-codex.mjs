@@ -29,6 +29,7 @@ function validateV2(payload, collection, gameSystem, edition) {
   }
 
   const ids = new Set();
+  const entriesById = new Map();
   const categoryIds = new Set((payload.categories || []).map((category) => category.id));
   const allowedTypes = new Set(collection.entryTypes || []);
   const fallbackType = allowedTypes.size === 1 ? Array.from(allowedTypes)[0] : null;
@@ -44,6 +45,7 @@ function validateV2(payload, collection, gameSystem, edition) {
       errors.push(`${collection.url}: duplicate id ${entry.id}.`);
     }
     ids.add(entry.id);
+    entriesById.set(entry.id, entry);
 
     if (!entry.title || typeof entry.title !== 'string') {
       errors.push(`${label}: missing title.`);
@@ -67,12 +69,12 @@ function validateV2(payload, collection, gameSystem, edition) {
     }
     globalIds.add(globalId);
 
-    if (entryType === 'equipment') {
+    if (entryType === 'equipment' || entryType === 'ancestry') {
       if (!entry.description || typeof entry.description !== 'string') {
-        errors.push(`${label}: equipment entry is missing a description.`);
+        errors.push(`${label}: ${entryType} entry is missing a description.`);
       }
       if (!Array.isArray(entry.facts)) {
-        errors.push(`${label}: equipment facts must be an array.`);
+        errors.push(`${label}: ${entryType} facts must be an array.`);
       } else {
         entry.facts.forEach((fact, factIndex) => {
           if (!fact?.label || !fact?.value) {
@@ -80,11 +82,25 @@ function validateV2(payload, collection, gameSystem, edition) {
           }
         });
       }
+      if (entryType === 'ancestry') {
+        if (!entry.sourceSection || typeof entry.sourceSection !== 'string') {
+          errors.push(`${label}: ancestry entry is missing sourceSection.`);
+        }
+        if (!Array.isArray(entry.traits)) {
+          errors.push(`${label}: ancestry traits must be an array.`);
+        } else {
+          entry.traits.forEach((trait, traitIndex) => {
+            if (!trait?.name || !trait?.description) {
+              errors.push(`${label}: trait ${traitIndex + 1} needs name and description.`);
+            }
+          });
+        }
+      }
       if (entry.sourceDocument !== edition.source) {
         errors.push(`${label}: sourceDocument must be ${edition.source}.`);
       }
       if (entry.license !== 'CC BY 4.0') {
-        errors.push(`${label}: equipment entry must declare CC BY 4.0.`);
+        errors.push(`${label}: ${entryType} entry must declare CC BY 4.0.`);
       }
     }
   });
@@ -95,6 +111,29 @@ function validateV2(payload, collection, gameSystem, edition) {
         errors.push(`${collection.url}: ${entry.id} links to missing related entry ${relatedId}.`);
       }
     });
+
+    if (entry.parentId && !ids.has(entry.parentId)) {
+      errors.push(`${collection.url}: ${entry.id} links to missing parent entry ${entry.parentId}.`);
+    }
+
+    (entry.childIds || []).forEach((childId) => {
+      if (!ids.has(childId)) {
+        errors.push(`${collection.url}: ${entry.id} links to missing child entry ${childId}.`);
+        return;
+      }
+
+      const child = entriesById.get(childId);
+      if (child?.parentId !== entry.id) {
+        errors.push(`${collection.url}: ${childId} does not point back to parent ${entry.id}.`);
+      }
+    });
+
+    if (entry.parentId && ids.has(entry.parentId)) {
+      const parent = entriesById.get(entry.parentId);
+      if (!Array.isArray(parent?.childIds) || !parent.childIds.includes(entry.id)) {
+        errors.push(`${collection.url}: parent ${entry.parentId} does not list child ${entry.id}.`);
+      }
+    }
   });
 }
 
@@ -113,6 +152,23 @@ if (manifest.schemaVersion !== 2 || !Array.isArray(manifest.gameSystems)) {
         } else if (collection.adapter === 'legacy-srd') {
           if (!Array.isArray(payload.entries)) {
             errors.push(`${collection.url}: legacy SRD file has no entries array.`);
+          } else {
+            const allowedTypes = new Set(collection.entryTypes || []);
+
+            payload.entries
+              .filter((entry) => entry?.edition === edition.id && allowedTypes.has(entry.type))
+              .forEach((entry, index) => {
+                if (!entry.id || !entry.name) {
+                  errors.push(`${collection.url}: legacy entry ${index + 1} is missing an id or name.`);
+                  return;
+                }
+
+                const globalId = `${gameSystem.id}:${edition.id}:${entry.type}:${entry.id}`;
+                if (globalIds.has(globalId)) {
+                  errors.push(`${collection.url}: duplicate global id ${globalId}.`);
+                }
+                globalIds.add(globalId);
+              });
           }
         } else {
           errors.push(`${collection.id}: unsupported adapter ${collection.adapter}.`);
