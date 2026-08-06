@@ -1,0 +1,1686 @@
+{
+  "schemaVersion": 2,
+  "gameSystem": "dnd5e",
+  "edition": "2024",
+  "collection": "species-and-choices",
+  "entryTypes": [
+    "ancestry"
+  ],
+  "sourceDocument": "SRD 5.2.1",
+  "license": "CC BY 4.0",
+  "contentNote": "SRD 5.2.1 species and species-choice mechanics have been reorganized and converted into searchable structured data. Descriptive summaries are adapted for My RPG Source.",
+  "categories": [
+    {
+      "id": "species",
+      "name": "Species"
+    },
+    {
+      "id": "species-choice",
+      "name": "Species choice"
+    }
+  ],
+  "entries": [
+    {
+      "id": "dragonborn",
+      "title": "Dragonborn",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species",
+      "categoryName": "Species",
+      "summary": "A Medium Humanoid species with a flexible breath shape, resistance tied to a chosen draconic ancestry, Darkvision, and temporary flight at level 5.",
+      "description": "Choose one of ten Draconic Ancestors. The choice determines the damage type for Breath Weapon and Damage Resistance. Breath Weapon can be a cone or line each time it is used.",
+      "facts": [
+        {
+          "label": "Creature Type",
+          "value": "Humanoid"
+        },
+        {
+          "label": "Ability Scores",
+          "value": "Species does not increase ability scores in the 2024 rules; Background provides the increases"
+        },
+        {
+          "label": "Size",
+          "value": "Medium; commonly about 5–7 feet tall"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        },
+        {
+          "label": "Draconic Ancestry choices",
+          "value": "Black, Blue, Brass, Bronze, Copper, Gold, Green, Red, Silver, or White"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Draconic Ancestry",
+          "description": "Choose a dragon ancestor. The choice determines the damage type of your Breath Weapon and Damage Resistance and can influence your appearance."
+        },
+        {
+          "name": "Breath Weapon",
+          "description": "When you take the Attack action, replace one attack with magical energy in either a 15-foot cone or a 30-foot-long, 5-foot-wide line. Creatures in the area make a Dexterity save against DC 8 + your Constitution modifier + your proficiency bonus. A failed save takes 1d10 ancestry damage and a successful save takes half. Damage becomes 2d10 at level 5, 3d10 at level 11, and 4d10 at level 17. You can use it a number of times equal to your proficiency bonus and regain all uses after a long rest."
+        },
+        {
+          "name": "Damage Resistance",
+          "description": "You have resistance to the damage type associated with your chosen Draconic Ancestry."
+        },
+        {
+          "name": "Darkvision",
+          "description": "You have Darkvision with a range of 60 feet."
+        },
+        {
+          "name": "Draconic Flight",
+          "description": "At character level 5, use a bonus action to sprout spectral wings for 10 minutes, until you retract them, or until you become Incapacitated. You gain a Fly Speed equal to your Speed. Once used, this trait recharges after a long rest."
+        }
+      ],
+      "tags": [
+        "dragonborn",
+        "species",
+        "2024",
+        "breath weapon",
+        "draconic flight",
+        "damage resistance"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "childIds": [
+        "black-dragon-ancestry",
+        "blue-dragon-ancestry",
+        "brass-dragon-ancestry",
+        "bronze-dragon-ancestry",
+        "copper-dragon-ancestry",
+        "gold-dragon-ancestry",
+        "green-dragon-ancestry",
+        "red-dragon-ancestry",
+        "silver-dragon-ancestry",
+        "white-dragon-ancestry"
+      ],
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "black-dragon-ancestry",
+      "title": "Black Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "This Dragonborn ancestry sets Breath Weapon and Damage Resistance to acid damage.",
+      "description": "Choose this option for the 2024 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals acid damage, and Damage Resistance grants resistance to acid damage. The breath can be a 15-foot cone or 30-foot line each time it is used.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Acid"
+        },
+        {
+          "label": "Breath shapes",
+          "value": "15-foot cone or 30-foot-long, 5-foot-wide line"
+        },
+        {
+          "label": "Breath saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "acid",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "blue-dragon-ancestry",
+      "title": "Blue Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "This Dragonborn ancestry sets Breath Weapon and Damage Resistance to lightning damage.",
+      "description": "Choose this option for the 2024 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals lightning damage, and Damage Resistance grants resistance to lightning damage. The breath can be a 15-foot cone or 30-foot line each time it is used.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Lightning"
+        },
+        {
+          "label": "Breath shapes",
+          "value": "15-foot cone or 30-foot-long, 5-foot-wide line"
+        },
+        {
+          "label": "Breath saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "lightning",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "brass-dragon-ancestry",
+      "title": "Brass Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "This Dragonborn ancestry sets Breath Weapon and Damage Resistance to fire damage.",
+      "description": "Choose this option for the 2024 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals fire damage, and Damage Resistance grants resistance to fire damage. The breath can be a 15-foot cone or 30-foot line each time it is used.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Fire"
+        },
+        {
+          "label": "Breath shapes",
+          "value": "15-foot cone or 30-foot-long, 5-foot-wide line"
+        },
+        {
+          "label": "Breath saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "fire",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "bronze-dragon-ancestry",
+      "title": "Bronze Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "This Dragonborn ancestry sets Breath Weapon and Damage Resistance to lightning damage.",
+      "description": "Choose this option for the 2024 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals lightning damage, and Damage Resistance grants resistance to lightning damage. The breath can be a 15-foot cone or 30-foot line each time it is used.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Lightning"
+        },
+        {
+          "label": "Breath shapes",
+          "value": "15-foot cone or 30-foot-long, 5-foot-wide line"
+        },
+        {
+          "label": "Breath saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "lightning",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "copper-dragon-ancestry",
+      "title": "Copper Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "This Dragonborn ancestry sets Breath Weapon and Damage Resistance to acid damage.",
+      "description": "Choose this option for the 2024 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals acid damage, and Damage Resistance grants resistance to acid damage. The breath can be a 15-foot cone or 30-foot line each time it is used.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Acid"
+        },
+        {
+          "label": "Breath shapes",
+          "value": "15-foot cone or 30-foot-long, 5-foot-wide line"
+        },
+        {
+          "label": "Breath saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "acid",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "gold-dragon-ancestry",
+      "title": "Gold Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "This Dragonborn ancestry sets Breath Weapon and Damage Resistance to fire damage.",
+      "description": "Choose this option for the 2024 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals fire damage, and Damage Resistance grants resistance to fire damage. The breath can be a 15-foot cone or 30-foot line each time it is used.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Fire"
+        },
+        {
+          "label": "Breath shapes",
+          "value": "15-foot cone or 30-foot-long, 5-foot-wide line"
+        },
+        {
+          "label": "Breath saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "fire",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "green-dragon-ancestry",
+      "title": "Green Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "This Dragonborn ancestry sets Breath Weapon and Damage Resistance to poison damage.",
+      "description": "Choose this option for the 2024 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals poison damage, and Damage Resistance grants resistance to poison damage. The breath can be a 15-foot cone or 30-foot line each time it is used.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Poison"
+        },
+        {
+          "label": "Breath shapes",
+          "value": "15-foot cone or 30-foot-long, 5-foot-wide line"
+        },
+        {
+          "label": "Breath saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "poison",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "red-dragon-ancestry",
+      "title": "Red Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "This Dragonborn ancestry sets Breath Weapon and Damage Resistance to fire damage.",
+      "description": "Choose this option for the 2024 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals fire damage, and Damage Resistance grants resistance to fire damage. The breath can be a 15-foot cone or 30-foot line each time it is used.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Fire"
+        },
+        {
+          "label": "Breath shapes",
+          "value": "15-foot cone or 30-foot-long, 5-foot-wide line"
+        },
+        {
+          "label": "Breath saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "fire",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "silver-dragon-ancestry",
+      "title": "Silver Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "This Dragonborn ancestry sets Breath Weapon and Damage Resistance to cold damage.",
+      "description": "Choose this option for the 2024 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals cold damage, and Damage Resistance grants resistance to cold damage. The breath can be a 15-foot cone or 30-foot line each time it is used.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Cold"
+        },
+        {
+          "label": "Breath shapes",
+          "value": "15-foot cone or 30-foot-long, 5-foot-wide line"
+        },
+        {
+          "label": "Breath saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "cold",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "white-dragon-ancestry",
+      "title": "White Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "This Dragonborn ancestry sets Breath Weapon and Damage Resistance to cold damage.",
+      "description": "Choose this option for the 2024 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals cold damage, and Damage Resistance grants resistance to cold damage. The breath can be a 15-foot cone or 30-foot line each time it is used.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Cold"
+        },
+        {
+          "label": "Breath shapes",
+          "value": "15-foot cone or 30-foot-long, 5-foot-wide line"
+        },
+        {
+          "label": "Breath saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "cold",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "dwarf",
+      "title": "Dwarf",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species",
+      "categoryName": "Species",
+      "summary": "A durable Medium Humanoid species with 120-foot Darkvision, poison resilience, extra hit points, and temporary Tremorsense through stone.",
+      "description": "The 2024 Dwarf has no subrace in SRD 5.2.1. Its traits are part of the species itself.",
+      "facts": [
+        {
+          "label": "Creature Type",
+          "value": "Humanoid"
+        },
+        {
+          "label": "Ability Scores",
+          "value": "Species does not increase ability scores in the 2024 rules; Background provides the increases"
+        },
+        {
+          "label": "Size",
+          "value": "Medium; commonly about 4–5 feet tall"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Darkvision",
+          "description": "You have Darkvision with a range of 120 feet."
+        },
+        {
+          "name": "Dwarven Resilience",
+          "description": "You have resistance to poison damage and advantage on saving throws made to avoid or end the Poisoned condition."
+        },
+        {
+          "name": "Dwarven Toughness",
+          "description": "Your hit point maximum increases by 1 and increases by 1 again whenever you gain a level."
+        },
+        {
+          "name": "Stonecunning",
+          "description": "As a bonus action while on or touching a natural or worked stone surface, gain Tremorsense with a range of 60 feet for 10 minutes. You can use this bonus action a number of times equal to your proficiency bonus and regain all uses after a long rest."
+        }
+      ],
+      "tags": [
+        "dwarf",
+        "species",
+        "2024",
+        "tremorsense",
+        "poison resistance",
+        "dwarven toughness"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "elf",
+      "title": "Elf",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species",
+      "categoryName": "Species",
+      "summary": "A Medium Humanoid species with Darkvision, charm resistance, a chosen keen-senses skill, a four-hour trance, and one of three magical lineages.",
+      "description": "Choose Drow, High Elf, or Wood Elf. The lineage supplies a level-1 benefit and spells at character levels 3 and 5. Choose Intelligence, Wisdom, or Charisma as the spellcasting ability for the lineage spells.",
+      "facts": [
+        {
+          "label": "Creature Type",
+          "value": "Humanoid"
+        },
+        {
+          "label": "Ability Scores",
+          "value": "Species does not increase ability scores in the 2024 rules; Background provides the increases"
+        },
+        {
+          "label": "Size",
+          "value": "Medium; commonly about 5–6 feet tall"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet; Wood Elf lineage increases it to 35 feet"
+        },
+        {
+          "label": "Lineage choices",
+          "value": "Drow, High Elf, or Wood Elf"
+        },
+        {
+          "label": "Keen Senses choice",
+          "value": "Insight, Perception, or Survival proficiency"
+        },
+        {
+          "label": "Lineage spellcasting ability",
+          "value": "Intelligence, Wisdom, or Charisma"
+        },
+        {
+          "label": "Free lineage spell uses",
+          "value": "Each level-3 and level-5 lineage spell can be cast once without a spell slot per long rest and can also use spell slots"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Darkvision",
+          "description": "You have Darkvision with a range of 60 feet; the Drow lineage increases it to 120 feet."
+        },
+        {
+          "name": "Elven Lineage",
+          "description": "Choose Drow, High Elf, or Wood Elf. Gain its level-1 benefit immediately and its listed spells at levels 3 and 5. Those spells are always prepared."
+        },
+        {
+          "name": "Fey Ancestry",
+          "description": "You have advantage on saving throws made to avoid or end the Charmed condition."
+        },
+        {
+          "name": "Keen Senses",
+          "description": "Gain proficiency in Insight, Perception, or Survival."
+        },
+        {
+          "name": "Trance",
+          "description": "You don’t need to sleep, magic can’t put you to sleep, and you can finish a long rest in four hours of conscious trancelike meditation."
+        }
+      ],
+      "tags": [
+        "elf",
+        "species",
+        "2024",
+        "elven lineage",
+        "trance",
+        "fey ancestry"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "childIds": [
+        "drow-lineage",
+        "high-elf-lineage",
+        "wood-elf-lineage"
+      ],
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "drow-lineage",
+      "title": "Drow Lineage",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "An Elven Lineage with extended Darkvision and the Dancing Lights, Faerie Fire, and Darkness spells.",
+      "description": "Choose this option for the Elf’s Elven Lineage trait. Intelligence, Wisdom, or Charisma is the spellcasting ability chosen when the lineage is selected.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Elf"
+        },
+        {
+          "label": "Level 1",
+          "value": "Darkvision increases to 120 feet; learn Dancing Lights"
+        },
+        {
+          "label": "Level 3",
+          "value": "Faerie Fire, always prepared"
+        },
+        {
+          "label": "Level 5",
+          "value": "Darkness, always prepared"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "drow",
+        "elf",
+        "lineage",
+        "darkvision",
+        "dancing lights",
+        "faerie fire",
+        "darkness",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "elf",
+      "parentTitle": "Elf",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "high-elf-lineage",
+      "title": "High Elf Lineage",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "An Elven Lineage with a replaceable Wizard cantrip plus Detect Magic and Misty Step.",
+      "description": "Choose this option for the Elf’s Elven Lineage trait. Intelligence, Wisdom, or Charisma is the spellcasting ability chosen when the lineage is selected.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Elf"
+        },
+        {
+          "label": "Level 1",
+          "value": "Learn Prestidigitation; after a long rest, it can be replaced with another Wizard cantrip"
+        },
+        {
+          "label": "Level 3",
+          "value": "Detect Magic, always prepared"
+        },
+        {
+          "label": "Level 5",
+          "value": "Misty Step, always prepared"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "high elf",
+        "elf",
+        "lineage",
+        "prestidigitation",
+        "detect magic",
+        "misty step",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "elf",
+      "parentTitle": "Elf",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "wood-elf-lineage",
+      "title": "Wood Elf Lineage",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "An Elven Lineage with 35-foot Speed and the Druidcraft, Longstrider, and Pass without Trace spells.",
+      "description": "Choose this option for the Elf’s Elven Lineage trait. Intelligence, Wisdom, or Charisma is the spellcasting ability chosen when the lineage is selected.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Elf"
+        },
+        {
+          "label": "Level 1",
+          "value": "Speed increases to 35 feet; learn Druidcraft"
+        },
+        {
+          "label": "Level 3",
+          "value": "Longstrider, always prepared"
+        },
+        {
+          "label": "Level 5",
+          "value": "Pass without Trace, always prepared"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "wood elf",
+        "elf",
+        "lineage",
+        "druidcraft",
+        "longstrider",
+        "pass without trace",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "elf",
+      "parentTitle": "Elf",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "gnome",
+      "title": "Gnome",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species",
+      "categoryName": "Species",
+      "summary": "A Small Humanoid species with Darkvision, advantage on all Intelligence, Wisdom, and Charisma saving throws, and one of two magical lineages.",
+      "description": "Choose Forest Gnome or Rock Gnome. Choose Intelligence, Wisdom, or Charisma as the spellcasting ability for spells granted by the lineage.",
+      "facts": [
+        {
+          "label": "Creature Type",
+          "value": "Humanoid"
+        },
+        {
+          "label": "Ability Scores",
+          "value": "Species does not increase ability scores in the 2024 rules; Background provides the increases"
+        },
+        {
+          "label": "Size",
+          "value": "Small; commonly about 3–4 feet tall"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        },
+        {
+          "label": "Lineage choices",
+          "value": "Forest Gnome or Rock Gnome"
+        },
+        {
+          "label": "Lineage spellcasting ability",
+          "value": "Intelligence, Wisdom, or Charisma"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Darkvision",
+          "description": "You have Darkvision with a range of 60 feet."
+        },
+        {
+          "name": "Gnomish Cunning",
+          "description": "You have advantage on Intelligence, Wisdom, and Charisma saving throws."
+        },
+        {
+          "name": "Gnomish Lineage",
+          "description": "Choose Forest Gnome or Rock Gnome and gain the selected lineage’s supernatural abilities."
+        }
+      ],
+      "tags": [
+        "gnome",
+        "species",
+        "2024",
+        "gnomish cunning",
+        "lineage",
+        "darkvision"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "childIds": [
+        "forest-gnome-lineage",
+        "rock-gnome-lineage"
+      ],
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "forest-gnome-lineage",
+      "title": "Forest Gnome Lineage",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "A Gnomish Lineage with Minor Illusion and repeated slot-free Speak with Animals.",
+      "description": "Choose this option for the Gnome’s Gnomish Lineage trait. Intelligence, Wisdom, or Charisma is the spellcasting ability chosen when the lineage is selected.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Gnome"
+        },
+        {
+          "label": "Cantrip",
+          "value": "Minor Illusion"
+        },
+        {
+          "label": "Prepared spell",
+          "value": "Speak with Animals"
+        },
+        {
+          "label": "Free uses",
+          "value": "Proficiency Bonus times per long rest"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Forest Gnome Magic",
+          "description": "You know Minor Illusion. Speak with Animals is always prepared; you can cast it without a spell slot a number of times equal to your proficiency bonus, regaining all uses after a long rest, and you can also cast it with spell slots."
+        }
+      ],
+      "tags": [
+        "forest gnome",
+        "gnome",
+        "lineage",
+        "minor illusion",
+        "speak with animals",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "gnome",
+      "parentTitle": "Gnome",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "rock-gnome-lineage",
+      "title": "Rock Gnome Lineage",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "A Gnomish Lineage with Mending, Prestidigitation, and temporary Tiny clockwork devices.",
+      "description": "Choose this option for the Gnome’s Gnomish Lineage trait. Intelligence, Wisdom, or Charisma is the spellcasting ability chosen when the lineage is selected.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Gnome"
+        },
+        {
+          "label": "Cantrips",
+          "value": "Mending and Prestidigitation"
+        },
+        {
+          "label": "Device creation time",
+          "value": "10 minutes"
+        },
+        {
+          "label": "Device durability",
+          "value": "AC 5 and 1 hit point"
+        },
+        {
+          "label": "Device limit",
+          "value": "Three devices"
+        },
+        {
+          "label": "Device duration",
+          "value": "8 hours or until dismantled with a touch as a Utilize action"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Rock Gnome Magic",
+          "description": "You know Mending and Prestidigitation."
+        },
+        {
+          "name": "Clockwork Device",
+          "description": "Spend 10 minutes casting Prestidigitation to create a Tiny clockwork device with AC 5 and 1 hit point. Choose one Prestidigitation effect for the device; a creature activates it with a touch as a bonus action. You can have three devices at once. Each lasts 8 hours or until dismantled with a touch as a Utilize action."
+        }
+      ],
+      "tags": [
+        "rock gnome",
+        "gnome",
+        "lineage",
+        "mending",
+        "prestidigitation",
+        "clockwork",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "gnome",
+      "parentTitle": "Gnome",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "goliath",
+      "title": "Goliath",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species",
+      "categoryName": "Species",
+      "summary": "A fast Medium Humanoid species with one reusable giant-ancestry boon, a temporary Large form at level 5, and enhanced carrying power.",
+      "description": "Choose one of six Giant Ancestry boons. The chosen boon can be used a number of times equal to your proficiency bonus, with all uses returning after a long rest.",
+      "facts": [
+        {
+          "label": "Creature Type",
+          "value": "Humanoid"
+        },
+        {
+          "label": "Ability Scores",
+          "value": "Species does not increase ability scores in the 2024 rules; Background provides the increases"
+        },
+        {
+          "label": "Size",
+          "value": "Medium; commonly about 7–8 feet tall"
+        },
+        {
+          "label": "Speed",
+          "value": "35 feet"
+        },
+        {
+          "label": "Giant Ancestry choices",
+          "value": "Cloud, Fire, Frost, Hill, Stone, or Storm"
+        },
+        {
+          "label": "Giant Ancestry uses",
+          "value": "Proficiency Bonus times per long rest"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Giant Ancestry",
+          "description": "Choose Cloud’s Jaunt, Fire’s Burn, Frost’s Chill, Hill’s Tumble, Stone’s Endurance, or Storm’s Thunder. Use the chosen benefit a number of times equal to your proficiency bonus and regain all uses after a long rest."
+        },
+        {
+          "name": "Large Form",
+          "description": "At character level 5, use a bonus action to become Large for 10 minutes if space permits. During the transformation, you have advantage on Strength checks and your Speed increases by 10 feet. Once used, this trait recharges after a long rest."
+        },
+        {
+          "name": "Powerful Build",
+          "description": "You have advantage on ability checks made to end the Grappled condition and count as one size larger when determining carrying capacity."
+        }
+      ],
+      "tags": [
+        "goliath",
+        "species",
+        "2024",
+        "giant ancestry",
+        "large form",
+        "powerful build"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "childIds": [
+        "clouds-jaunt",
+        "fires-burn",
+        "frosts-chill",
+        "hills-tumble",
+        "stones-endurance",
+        "storms-thunder"
+      ],
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "clouds-jaunt",
+      "title": "Cloud’s Jaunt",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "A Goliath Giant Ancestry boon associated with the Cloud Giant.",
+      "description": "As a bonus action, magically teleport up to 30 feet to an unoccupied space you can see.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Goliath"
+        },
+        {
+          "label": "Giant ancestry",
+          "value": "Cloud Giant"
+        },
+        {
+          "label": "Uses",
+          "value": "Shares the Goliath Giant Ancestry limit: Proficiency Bonus times per long rest"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "goliath",
+        "giant ancestry",
+        "cloud giant",
+        "cloud’s jaunt",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "goliath",
+      "parentTitle": "Goliath",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "fires-burn",
+      "title": "Fire’s Burn",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "A Goliath Giant Ancestry boon associated with the Fire Giant.",
+      "description": "When you hit a target with an attack roll and deal damage, deal an additional 1d10 fire damage to that target.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Goliath"
+        },
+        {
+          "label": "Giant ancestry",
+          "value": "Fire Giant"
+        },
+        {
+          "label": "Uses",
+          "value": "Shares the Goliath Giant Ancestry limit: Proficiency Bonus times per long rest"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "goliath",
+        "giant ancestry",
+        "fire giant",
+        "fire’s burn",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "goliath",
+      "parentTitle": "Goliath",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "frosts-chill",
+      "title": "Frost’s Chill",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "A Goliath Giant Ancestry boon associated with the Frost Giant.",
+      "description": "When you hit a target with an attack roll and deal damage, deal an additional 1d6 cold damage and reduce the target’s Speed by 10 feet until the start of your next turn.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Goliath"
+        },
+        {
+          "label": "Giant ancestry",
+          "value": "Frost Giant"
+        },
+        {
+          "label": "Uses",
+          "value": "Shares the Goliath Giant Ancestry limit: Proficiency Bonus times per long rest"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "goliath",
+        "giant ancestry",
+        "frost giant",
+        "frost’s chill",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "goliath",
+      "parentTitle": "Goliath",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "hills-tumble",
+      "title": "Hill’s Tumble",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "A Goliath Giant Ancestry boon associated with the Hill Giant.",
+      "description": "When you hit a Large or smaller creature with an attack roll and deal damage, give it the Prone condition.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Goliath"
+        },
+        {
+          "label": "Giant ancestry",
+          "value": "Hill Giant"
+        },
+        {
+          "label": "Uses",
+          "value": "Shares the Goliath Giant Ancestry limit: Proficiency Bonus times per long rest"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "goliath",
+        "giant ancestry",
+        "hill giant",
+        "hill’s tumble",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "goliath",
+      "parentTitle": "Goliath",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "stones-endurance",
+      "title": "Stone’s Endurance",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "A Goliath Giant Ancestry boon associated with the Stone Giant.",
+      "description": "When you take damage, use a reaction to roll 1d12, add your Constitution modifier, and reduce the damage by that total.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Goliath"
+        },
+        {
+          "label": "Giant ancestry",
+          "value": "Stone Giant"
+        },
+        {
+          "label": "Uses",
+          "value": "Shares the Goliath Giant Ancestry limit: Proficiency Bonus times per long rest"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "goliath",
+        "giant ancestry",
+        "stone giant",
+        "stone’s endurance",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "goliath",
+      "parentTitle": "Goliath",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "storms-thunder",
+      "title": "Storm’s Thunder",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "A Goliath Giant Ancestry boon associated with the Storm Giant.",
+      "description": "When a creature within 60 feet damages you, use a reaction to deal 1d8 thunder damage to that creature.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Goliath"
+        },
+        {
+          "label": "Giant ancestry",
+          "value": "Storm Giant"
+        },
+        {
+          "label": "Uses",
+          "value": "Shares the Goliath Giant Ancestry limit: Proficiency Bonus times per long rest"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "goliath",
+        "giant ancestry",
+        "storm giant",
+        "storm’s thunder",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "goliath",
+      "parentTitle": "Goliath",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "halfling",
+      "title": "Halfling",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species",
+      "categoryName": "Species",
+      "summary": "A Small Humanoid species with courage, exceptional luck, stealth around larger allies, and free movement through larger creatures’ spaces.",
+      "description": "The 2024 Halfling has no lineage or subrace in SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Creature Type",
+          "value": "Humanoid"
+        },
+        {
+          "label": "Ability Scores",
+          "value": "Species does not increase ability scores in the 2024 rules; Background provides the increases"
+        },
+        {
+          "label": "Size",
+          "value": "Small; commonly about 2–3 feet tall"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Brave",
+          "description": "You have advantage on saving throws made to avoid or end the Frightened condition."
+        },
+        {
+          "name": "Halfling Nimbleness",
+          "description": "You can move through the space of any creature larger than you, but you can’t stop in the same space."
+        },
+        {
+          "name": "Luck",
+          "description": "When you roll a 1 on the d20 of a D20 Test, reroll the die and use the new roll."
+        },
+        {
+          "name": "Naturally Stealthy",
+          "description": "You can take the Hide action even when obscured only by a creature at least one size larger than you."
+        }
+      ],
+      "tags": [
+        "halfling",
+        "species",
+        "2024",
+        "luck",
+        "naturally stealthy",
+        "brave"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "human",
+      "title": "Human",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species",
+      "categoryName": "Species",
+      "summary": "A flexible Humanoid species that can be Small or Medium and gains Heroic Inspiration, a chosen skill proficiency, and a chosen Origin feat.",
+      "description": "Human’s Skillful and Versatile traits use open choices rather than a fixed lineage table. The Codex therefore keeps those choices inside the Human entry.",
+      "facts": [
+        {
+          "label": "Creature Type",
+          "value": "Humanoid"
+        },
+        {
+          "label": "Ability Scores",
+          "value": "Species does not increase ability scores in the 2024 rules; Background provides the increases"
+        },
+        {
+          "label": "Size",
+          "value": "Small or Medium, chosen when the species is selected"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        },
+        {
+          "label": "Skillful choice",
+          "value": "One skill proficiency"
+        },
+        {
+          "label": "Versatile choice",
+          "value": "One Origin feat; Skilled is recommended by the SRD"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Resourceful",
+          "description": "You gain Heroic Inspiration whenever you finish a long rest."
+        },
+        {
+          "name": "Skillful",
+          "description": "You gain proficiency in one skill of your choice."
+        },
+        {
+          "name": "Versatile",
+          "description": "You gain one Origin feat of your choice. Skilled is the recommended option."
+        }
+      ],
+      "tags": [
+        "human",
+        "species",
+        "2024",
+        "origin feat",
+        "skill proficiency",
+        "heroic inspiration"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "orc",
+      "title": "Orc",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species",
+      "categoryName": "Species",
+      "summary": "A Medium Humanoid species with 120-foot Darkvision, bonus-action bursts of speed and temporary hit points, and once-per-rest refusal to fall.",
+      "description": "The 2024 Orc is a full species in SRD 5.2.1 and is separate from the 2014 Half-Orc.",
+      "facts": [
+        {
+          "label": "Creature Type",
+          "value": "Humanoid"
+        },
+        {
+          "label": "Ability Scores",
+          "value": "Species does not increase ability scores in the 2024 rules; Background provides the increases"
+        },
+        {
+          "label": "Size",
+          "value": "Medium; commonly about 6–7 feet tall"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        },
+        {
+          "label": "Adrenaline Rush uses",
+          "value": "Proficiency Bonus times; all uses return after a short or long rest"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Adrenaline Rush",
+          "description": "Take the Dash action as a bonus action and gain temporary hit points equal to your proficiency bonus. You can use this trait a number of times equal to your proficiency bonus and regain all uses after a short or long rest."
+        },
+        {
+          "name": "Darkvision",
+          "description": "You have Darkvision with a range of 120 feet."
+        },
+        {
+          "name": "Relentless Endurance",
+          "description": "When reduced to 0 hit points but not killed outright, drop to 1 hit point instead. Once used, this trait recharges after a long rest."
+        }
+      ],
+      "tags": [
+        "orc",
+        "species",
+        "2024",
+        "adrenaline rush",
+        "relentless endurance",
+        "darkvision"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "tiefling",
+      "title": "Tiefling",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species",
+      "categoryName": "Species",
+      "summary": "A Small-or-Medium Humanoid species with Darkvision, Thaumaturgy, and one of three fiendish legacies granting resistance and innate spells.",
+      "description": "Choose Abyssal, Chthonic, or Infernal. The legacy grants a level-1 resistance and cantrip plus spells at levels 3 and 5. Choose Intelligence, Wisdom, or Charisma as the spellcasting ability.",
+      "facts": [
+        {
+          "label": "Creature Type",
+          "value": "Humanoid"
+        },
+        {
+          "label": "Ability Scores",
+          "value": "Species does not increase ability scores in the 2024 rules; Background provides the increases"
+        },
+        {
+          "label": "Size",
+          "value": "Small or Medium, chosen when the species is selected"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        },
+        {
+          "label": "Legacy choices",
+          "value": "Abyssal, Chthonic, or Infernal"
+        },
+        {
+          "label": "Legacy spellcasting ability",
+          "value": "Intelligence, Wisdom, or Charisma"
+        },
+        {
+          "label": "Free legacy spell uses",
+          "value": "Each level-3 and level-5 legacy spell can be cast once without a spell slot per long rest and can also use spell slots"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Darkvision",
+          "description": "You have Darkvision with a range of 60 feet."
+        },
+        {
+          "name": "Fiendish Legacy",
+          "description": "Choose Abyssal, Chthonic, or Infernal. Gain its level-1 benefit immediately and its listed spells at levels 3 and 5. Those spells are always prepared."
+        },
+        {
+          "name": "Otherworldly Presence",
+          "description": "You know Thaumaturgy. It uses the spellcasting ability chosen for Fiendish Legacy."
+        }
+      ],
+      "tags": [
+        "tiefling",
+        "species",
+        "2024",
+        "fiendish legacy",
+        "thaumaturgy",
+        "darkvision"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "childIds": [
+        "abyssal-legacy",
+        "chthonic-legacy",
+        "infernal-legacy"
+      ],
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "abyssal-legacy",
+      "title": "Abyssal Legacy",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "A Tiefling Fiendish Legacy granting poison resistance and innate spells.",
+      "description": "Choose this option for the Tiefling’s Fiendish Legacy trait. You gain resistance to poison damage, learn Poison Spray, and gain Ray of Sickness at level 3 and Hold Person at level 5. The level-3 and level-5 spells are always prepared, each can be cast once without a spell slot per long rest, and they can also be cast with spell slots.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Tiefling"
+        },
+        {
+          "label": "Damage resistance",
+          "value": "Poison"
+        },
+        {
+          "label": "Level 1 cantrip",
+          "value": "Poison Spray"
+        },
+        {
+          "label": "Level 3 spell",
+          "value": "Ray of Sickness"
+        },
+        {
+          "label": "Level 5 spell",
+          "value": "Hold Person"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "tiefling",
+        "fiendish legacy",
+        "poison",
+        "poison spray",
+        "ray of sickness",
+        "hold person",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "tiefling",
+      "parentTitle": "Tiefling",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "chthonic-legacy",
+      "title": "Chthonic Legacy",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "A Tiefling Fiendish Legacy granting necrotic resistance and innate spells.",
+      "description": "Choose this option for the Tiefling’s Fiendish Legacy trait. You gain resistance to necrotic damage, learn Chill Touch, and gain False Life at level 3 and Ray of Enfeeblement at level 5. The level-3 and level-5 spells are always prepared, each can be cast once without a spell slot per long rest, and they can also be cast with spell slots.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Tiefling"
+        },
+        {
+          "label": "Damage resistance",
+          "value": "Necrotic"
+        },
+        {
+          "label": "Level 1 cantrip",
+          "value": "Chill Touch"
+        },
+        {
+          "label": "Level 3 spell",
+          "value": "False Life"
+        },
+        {
+          "label": "Level 5 spell",
+          "value": "Ray of Enfeeblement"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "tiefling",
+        "fiendish legacy",
+        "necrotic",
+        "chill touch",
+        "false life",
+        "ray of enfeeblement",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "tiefling",
+      "parentTitle": "Tiefling",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    },
+    {
+      "id": "infernal-legacy",
+      "title": "Infernal Legacy",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "species-choice",
+      "categoryName": "Species choice",
+      "summary": "A Tiefling Fiendish Legacy granting fire resistance and innate spells.",
+      "description": "Choose this option for the Tiefling’s Fiendish Legacy trait. You gain resistance to fire damage, learn Fire Bolt, and gain Hellish Rebuke at level 3 and Darkness at level 5. The level-3 and level-5 spells are always prepared, each can be cast once without a spell slot per long rest, and they can also be cast with spell slots.",
+      "facts": [
+        {
+          "label": "Parent species",
+          "value": "Tiefling"
+        },
+        {
+          "label": "Damage resistance",
+          "value": "Fire"
+        },
+        {
+          "label": "Level 1 cantrip",
+          "value": "Fire Bolt"
+        },
+        {
+          "label": "Level 3 spell",
+          "value": "Hellish Rebuke"
+        },
+        {
+          "label": "Level 5 spell",
+          "value": "Darkness"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "tiefling",
+        "fiendish legacy",
+        "fire",
+        "fire bolt",
+        "hellish rebuke",
+        "darkness",
+        "2024"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "parentId": "tiefling",
+      "parentTitle": "Tiefling",
+      "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+    }
+  ],
+  "sourceSection": "Character Origins: Character Species (SRD 5.2.1, pages 83–86)"
+}
