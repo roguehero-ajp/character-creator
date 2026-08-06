@@ -40,6 +40,12 @@ input[type="number"] {
 body {
   font-family: "Lora", serif;
   background-color: var(--bg-app);
+  background-image:
+    linear-gradient(180deg, rgba(8, 18, 32, 0.20) 0%, rgba(6, 12, 22, 0.56) 100%),
+    url("../images/site-background-stars.png");
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-size: auto, cover;
   color: var(--text-main);
 
   display: flex;

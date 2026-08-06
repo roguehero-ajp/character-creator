@@ -29,10 +29,14 @@ body {
   color: var(--text);
   font-family: "Lora", Georgia, serif;
   line-height: 1.7;
-  background:
-    radial-gradient(circle at top, rgba(241, 196, 15, 0.12), transparent 28%),
-    radial-gradient(circle at 20% 20%, rgba(221, 161, 94, 0.10), transparent 26%),
-    linear-gradient(180deg, #203244 0%, #17212c 55%, var(--bg-deep) 100%);
+  background-color: #06111d;
+  background-image:
+    radial-gradient(circle at top, rgba(241, 196, 15, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(8, 18, 32, 0.34) 0%, rgba(6, 12, 22, 0.72) 100%),
+    url("../images/site-background-stars.png");
+  background-position: top center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-size: auto, auto, cover;
 }
 
 a {
