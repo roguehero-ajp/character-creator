@@ -1,0 +1,813 @@
+{
+  "schemaVersion": 2,
+  "gameSystem": "dnd5e",
+  "edition": "2024",
+  "collection": "feats",
+  "entryTypes": [
+    "feat"
+  ],
+  "sourceDocument": "SRD 5.2.1",
+  "license": "CC BY 4.0",
+  "contentNote": "SRD 5.2.1 feat mechanics have been reorganized into searchable structured data.",
+  "categories": [
+    {
+      "id": "origin-feat",
+      "name": "Origin Feat"
+    },
+    {
+      "id": "general-feat",
+      "name": "General Feat"
+    },
+    {
+      "id": "fighting-style-feat",
+      "name": "Fighting Style Feat"
+    },
+    {
+      "id": "epic-boon-feat",
+      "name": "Epic Boon Feat"
+    }
+  ],
+  "entries": [
+    {
+      "id": "alert",
+      "title": "Alert",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "origin-feat",
+      "categoryName": "Feat: Origin Feat",
+      "summary": "Adds proficiency to Initiative and lets you swap Initiative with a willing ally at the start of combat.",
+      "description": "Alert is a origin feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Origin Feat"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Initiative Proficiency",
+          "description": "Add your Proficiency Bonus when you roll Initiative."
+        },
+        {
+          "name": "Initiative Swap",
+          "description": "Immediately after rolling Initiative, you may exchange your Initiative with one willing ally in the same combat, provided neither of you has the Incapacitated condition."
+        }
+      ],
+      "tags": [
+        "alert",
+        "feat",
+        "2024",
+        "origin feat",
+        "initiative"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "magic-initiate",
+      "title": "Magic Initiate",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "origin-feat",
+      "categoryName": "Feat: Origin Feat",
+      "summary": "Grants two cantrips and one level 1 spell from the Cleric, Druid, or Wizard spell list.",
+      "description": "Magic Initiate is a origin feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Origin Feat"
+        },
+        {
+          "label": "Repeatable",
+          "value": "Yes"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Two Cantrips",
+          "description": "Choose two cantrips from one of the Cleric, Druid, or Wizard spell lists. Choose Intelligence, Wisdom, or Charisma as the spellcasting ability for the feat’s spells."
+        },
+        {
+          "name": "Level 1 Spell",
+          "description": "Choose one level 1 spell from the same list. It is always prepared, can be cast once per Long Rest without a spell slot, and can also be cast with available spell slots."
+        },
+        {
+          "name": "Spell Change",
+          "description": "Whenever you gain a level, one spell chosen for this feat can be replaced with another spell of the same level from the same selected list."
+        }
+      ],
+      "tags": [
+        "magic initiate",
+        "feat",
+        "2024",
+        "origin feat",
+        "spellcasting",
+        "cantrip",
+        "origin"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "savage-attacker",
+      "title": "Savage Attacker",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "origin-feat",
+      "categoryName": "Feat: Origin Feat",
+      "summary": "Once per turn, lets you roll a weapon’s damage dice twice and use either result.",
+      "description": "Savage Attacker is a origin feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Origin Feat"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Savage Attack",
+          "description": "Once per turn when you hit with a weapon, roll the weapon’s damage dice twice and choose which roll to use."
+        }
+      ],
+      "tags": [
+        "savage attacker",
+        "feat",
+        "2024",
+        "origin feat",
+        "weapon damage"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "skilled",
+      "title": "Skilled",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "origin-feat",
+      "categoryName": "Feat: Origin Feat",
+      "summary": "Grants proficiency in any combination of three skills or tools.",
+      "description": "Skilled is a origin feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Origin Feat"
+        },
+        {
+          "label": "Repeatable",
+          "value": "Yes"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Three Proficiencies",
+          "description": "Gain proficiency in any combination of three skills or tools of your choice."
+        }
+      ],
+      "tags": [
+        "skilled",
+        "feat",
+        "2024",
+        "origin feat",
+        "skills",
+        "tools",
+        "proficiency"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "ability-score-improvement",
+      "title": "Ability Score Improvement",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "general-feat",
+      "categoryName": "Feat: General Feat",
+      "summary": "Raises one ability by 2 or two abilities by 1, without exceeding 20.",
+      "description": "Ability Score Improvement is a general feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "General Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Level 4+"
+        },
+        {
+          "label": "Repeatable",
+          "value": "Yes"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Improve Abilities",
+          "description": "Increase one ability score by 2, or increase two ability scores by 1 each. These increases cannot raise a score above 20."
+        }
+      ],
+      "tags": [
+        "ability score improvement",
+        "feat",
+        "2024",
+        "general feat",
+        "ability scores",
+        "asi"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "grappler",
+      "title": "Grappler",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "general-feat",
+      "categoryName": "Feat: General Feat",
+      "summary": "Improves unarmed grappling, attacks against grappled creatures, and movement while dragging an equal-size or smaller target.",
+      "description": "Grappler is a general feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "General Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Level 4+; Strength or Dexterity 13+"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "description": "Increase Strength or Dexterity by 1, to a maximum of 20."
+        },
+        {
+          "name": "Punch and Grab",
+          "description": "Once per turn, when an Unarmed Strike hits as part of the Attack action, you can apply both its damage and grapple option."
+        },
+        {
+          "name": "Attack Advantage",
+          "description": "You have Advantage on attack rolls against a creature grappled by you."
+        },
+        {
+          "name": "Fast Wrestler",
+          "description": "Moving a creature grappled by you costs no extra movement if it is your size or smaller."
+        }
+      ],
+      "tags": [
+        "grappler",
+        "feat",
+        "2024",
+        "general feat",
+        "grapple",
+        "unarmed strike"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "archery",
+      "title": "Archery",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "fighting-style-feat",
+      "categoryName": "Feat: Fighting Style Feat",
+      "summary": "Provides a +2 bonus to attack rolls with ranged weapons.",
+      "description": "Archery is a fighting style feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Fighting Style Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Fighting Style feature"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Archery",
+          "description": "Gain a +2 bonus to attack rolls you make with ranged weapons."
+        }
+      ],
+      "tags": [
+        "archery",
+        "feat",
+        "2024",
+        "fighting style feat",
+        "ranged weapon",
+        "attack rolls"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "defense",
+      "title": "Defense",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "fighting-style-feat",
+      "categoryName": "Feat: Fighting Style Feat",
+      "summary": "Provides +1 Armor Class while wearing light, medium, or heavy armor.",
+      "description": "Defense is a fighting style feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Fighting Style Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Fighting Style feature"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Defense",
+          "description": "While wearing Light, Medium, or Heavy armor, gain a +1 bonus to Armor Class."
+        }
+      ],
+      "tags": [
+        "defense",
+        "feat",
+        "2024",
+        "fighting style feat",
+        "armor class",
+        "armor"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "great-weapon-fighting",
+      "title": "Great Weapon Fighting",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "fighting-style-feat",
+      "categoryName": "Feat: Fighting Style Feat",
+      "summary": "Raises low damage-die results for qualifying two-handed melee weapon attacks.",
+      "description": "Great Weapon Fighting is a fighting style feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Fighting Style Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Fighting Style feature"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Great Weapon Fighting",
+          "description": "When rolling damage for a melee weapon held with two hands, treat a 1 or 2 on a damage die as a 3. The weapon must have the Two-Handed or Versatile property."
+        }
+      ],
+      "tags": [
+        "great weapon fighting",
+        "feat",
+        "2024",
+        "fighting style feat",
+        "two-handed",
+        "versatile",
+        "damage"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "two-weapon-fighting",
+      "title": "Two-Weapon Fighting",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "fighting-style-feat",
+      "categoryName": "Feat: Fighting Style Feat",
+      "summary": "Lets the ability modifier apply to the extra attack made through the Light weapon property.",
+      "description": "Two-Weapon Fighting is a fighting style feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Fighting Style Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Fighting Style feature"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Two-Weapon Fighting",
+          "description": "When the Light property grants an extra attack, add your ability modifier to that attack’s damage if it is not already being added."
+        }
+      ],
+      "tags": [
+        "two-weapon fighting",
+        "feat",
+        "2024",
+        "fighting style feat",
+        "light weapon",
+        "bonus attack"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "boon-of-combat-prowess",
+      "title": "Boon of Combat Prowess",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "epic-boon-feat",
+      "categoryName": "Feat: Epic Boon Feat",
+      "summary": "Raises an ability score and can turn one missed attack into a hit each round.",
+      "description": "Boon of Combat Prowess is a epic boon feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Epic Boon Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Level 19+"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "description": "Increase one ability score by 1, to a maximum of 30."
+        },
+        {
+          "name": "Peerless Aim",
+          "description": "When you miss with an attack roll, you can hit instead. This benefit cannot be used again until the start of your next turn."
+        }
+      ],
+      "tags": [
+        "boon of combat prowess",
+        "feat",
+        "2024",
+        "epic boon feat",
+        "epic boon",
+        "attack"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "boon-of-dimensional-travel",
+      "title": "Boon of Dimensional Travel",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "epic-boon-feat",
+      "categoryName": "Feat: Epic Boon Feat",
+      "summary": "Raises an ability score and enables a short teleport after the Attack or Magic action.",
+      "description": "Boon of Dimensional Travel is a epic boon feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Epic Boon Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Level 19+"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "description": "Increase one ability score by 1, to a maximum of 30."
+        },
+        {
+          "name": "Blink Steps",
+          "description": "Immediately after taking the Attack action or Magic action, teleport up to 30 feet to an unoccupied space you can see."
+        }
+      ],
+      "tags": [
+        "boon of dimensional travel",
+        "feat",
+        "2024",
+        "epic boon feat",
+        "epic boon",
+        "teleport"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "boon-of-fate",
+      "title": "Boon of Fate",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "epic-boon-feat",
+      "categoryName": "Feat: Epic Boon Feat",
+      "summary": "Raises an ability score and lets you alter a nearby creature’s D20 Test by 2d4.",
+      "description": "Boon of Fate is a epic boon feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Epic Boon Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Level 19+"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "description": "Increase one ability score by 1, to a maximum of 30."
+        },
+        {
+          "name": "Improve Fate",
+          "description": "When you or a creature within 60 feet succeeds or fails a D20 Test, roll 2d4 and apply the total as a bonus or penalty to the d20 roll. Recharge after rolling Initiative or finishing a Short or Long Rest."
+        }
+      ],
+      "tags": [
+        "boon of fate",
+        "feat",
+        "2024",
+        "epic boon feat",
+        "epic boon",
+        "d20 test",
+        "fate"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "boon-of-irresistible-offense",
+      "title": "Boon of Irresistible Offense",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "epic-boon-feat",
+      "categoryName": "Feat: Epic Boon Feat",
+      "summary": "Raises Strength or Dexterity, bypasses resistance to physical weapon damage, and rewards natural 20 attack rolls.",
+      "description": "Boon of Irresistible Offense is a epic boon feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Epic Boon Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Level 19+"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "description": "Increase Strength or Dexterity by 1, to a maximum of 30."
+        },
+        {
+          "name": "Overcome Defenses",
+          "description": "Bludgeoning, Piercing, and Slashing damage you deal ignores Resistance."
+        },
+        {
+          "name": "Overwhelming Strike",
+          "description": "When you roll a 20 on the d20 for an attack roll, deal extra damage equal to the ability score increased by this feat. The extra damage uses the attack’s damage type."
+        }
+      ],
+      "tags": [
+        "boon of irresistible offense",
+        "feat",
+        "2024",
+        "epic boon feat",
+        "epic boon",
+        "resistance",
+        "critical hit"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "boon-of-the-night-spirit",
+      "title": "Boon of the Night Spirit",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "epic-boon-feat",
+      "categoryName": "Feat: Epic Boon Feat",
+      "summary": "Raises an ability score and grants shadow-based invisibility and broad damage resistance in dim light or darkness.",
+      "description": "Boon of the Night Spirit is a epic boon feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Epic Boon Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Level 19+"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "description": "Increase one ability score by 1, to a maximum of 30."
+        },
+        {
+          "name": "Merge with Shadows",
+          "description": "While in Dim Light or Darkness, use a Bonus Action to gain the Invisible condition until immediately after you take an action, Bonus Action, or Reaction."
+        },
+        {
+          "name": "Shadowy Form",
+          "description": "While in Dim Light or Darkness, you have Resistance to all damage except Psychic and Radiant damage."
+        }
+      ],
+      "tags": [
+        "boon of the night spirit",
+        "feat",
+        "2024",
+        "epic boon feat",
+        "epic boon",
+        "darkness",
+        "invisible",
+        "resistance"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "boon-of-spell-recall",
+      "title": "Boon of Spell Recall",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "epic-boon-feat",
+      "categoryName": "Feat: Epic Boon Feat",
+      "summary": "Raises a spellcasting ability and sometimes prevents a level 1–4 spell slot from being expended.",
+      "description": "Boon of Spell Recall is a epic boon feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Epic Boon Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Level 19+; Spellcasting feature"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "description": "Increase Intelligence, Wisdom, or Charisma by 1, to a maximum of 30."
+        },
+        {
+          "name": "Free Casting",
+          "description": "Whenever you cast a spell using a level 1–4 spell slot, roll 1d4. If the result equals the slot’s level, the slot is not expended."
+        }
+      ],
+      "tags": [
+        "boon of spell recall",
+        "feat",
+        "2024",
+        "epic boon feat",
+        "epic boon",
+        "spell slots",
+        "spellcasting"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    },
+    {
+      "id": "boon-of-truesight",
+      "title": "Boon of Truesight",
+      "entryType": "feat",
+      "gameSystem": "dnd5e",
+      "edition": "2024",
+      "category": "epic-boon-feat",
+      "categoryName": "Feat: Epic Boon Feat",
+      "summary": "Raises an ability score and grants Truesight out to 60 feet.",
+      "description": "Boon of Truesight is a epic boon feat from the SRD 5.2.1.",
+      "facts": [
+        {
+          "label": "Category",
+          "value": "Epic Boon Feat"
+        },
+        {
+          "label": "Prerequisite",
+          "value": "Level 19+"
+        },
+        {
+          "label": "Repeatable",
+          "value": "No"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "description": "Increase one ability score by 1, to a maximum of 30."
+        },
+        {
+          "name": "Truesight",
+          "description": "Gain Truesight with a range of 60 feet."
+        }
+      ],
+      "tags": [
+        "boon of truesight",
+        "feat",
+        "2024",
+        "epic boon feat",
+        "epic boon",
+        "truesight"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.2.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Feats (SRD 5.2.1, pages 87–89)"
+    }
+  ]
+}

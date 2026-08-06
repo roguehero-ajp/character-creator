@@ -1,353 +1,1168 @@
-# My RPG Source Roadmap
-
-Last updated: August 5, 2026
-
-## Mission
-
-**Break down the barriers that stop people from playing tabletop roleplaying games.**
-
-This roadmap is a working priority guide, not a promise of release dates. The live site should remain dependable while larger changes are developed and tested separately.
-
-## Status Key
-
-- [x] Complete and present in the current repository
-- [~] Partially implemented or actively being improved
-- [ ] Not yet implemented
-- [!] Intentionally blocked until required safeguards are complete
-
-## Product Guardrails
-
-- Preserve existing working features unless a deliberate replacement is tested.
-- Keep the live site reasonably stable during external reviews and major development branches.
-- Do not place advertisements near save, download, Level Up, print, or PDF controls.
-- Keep local browser saves and JSON import/export available to free users.
-- Do not include personal cloud storage in the free tier.
-- Keep the planned **My First Steps** web experience free.
-- Use **ready-to-go character** consistently in product copy.
-- Add new game systems only after licensing and product-identity risks have been reviewed.
-
-# 1. Foundation and Public Site
-
-## Completed
-
-- [x] Custom domain and HTTPS
-- [x] GitHub repository and GitHub Pages deployment
-- [x] 2014 and 2024 builder entry points
-- [x] Responsive homepage and shared site navigation
-- [x] About page
-- [x] Contact page and contact form
-- [x] Privacy Policy
-- [x] Legal / SRD Attribution page
-- [x] New Player FAQ with a complete example of play
-- [x] Custom 404 page
-- [x] `robots.txt`
-- [x] `sitemap.xml`
-- [x] `ads.txt`
-- [x] Featured Knowledge Card with Previous, Pause, and Next controls
-
-## Project Truth Reset
-
-- [x] Replace the outdated `README.md`
-- [x] Replace the outdated `roadmap.md`
-- [x] Rebuild `Changelog.md` around the actual repository state
-- [~] Update the homepage roadmap snapshot and stale feature wording
-- [ ] Standardize the displayed application version across code, footer, and documentation
-- [ ] Correct remaining public copy and consistency issues
-- [ ] Decide how releases and version numbers will be assigned before the next formal release
-
-# 2. Current Builder Foundation
-
-## Character creation and calculations
-
-- [x] Manual ability-score entry
-- [x] Standard Array
-- [x] 4d6, drop the lowest
-- [x] 3d6 house-rule generation
-- [x] Official 27-point Point Buy
-- [x] Drag, drop, tap, and keyboard score assignment
-- [x] Ability modifiers
-- [x] Initiative
-- [x] Passive Perception
-- [x] Saving throws
-- [x] Skill bonuses
-- [x] Spell save DC and spell attack bonus
-- [x] Hit dice
-- [x] Hit points
-- [x] Total character level
-- [x] Proficiency bonus
-- [~] Character validation and rule warnings
-
-## Edition support
-
-- [x] Edition selected by URL configuration
-- [x] Separate 2014 and 2024 data paths
-- [x] Separate 2014 and 2024 browser-save keys
-- [x] Race terminology and data for 2014
-- [x] Species terminology and data for 2024
-- [x] Edition-specific background data loading
-- [x] Edition-specific class data loading
-- [x] Twelve core class records for each edition
-- [x] Multiclass prerequisites represented in class data
-- [~] Complete background collections
-- [~] Complete edition-aware class behavior
-- [ ] Automated edition-specific class features
-- [ ] Automated edition-specific subclass progression
-
-## Saving, import, and export
-
-- [x] Browser autosave
-- [x] Save Now
-- [x] Load Saved Character
-- [x] JSON export
-- [x] JSON import
-- [x] Edition labels in exported backups
-- [x] Warning before importing a different edition
-- [x] Restoration of dynamic controls and class rows
-- [x] Character-based export filenames
-- [ ] Full regression test matrix for both editions
-
-## Printing and PDF
-
-- [x] Character-sheet printing
-- [x] Temporary blank-sheet printing
-- [x] PDF export
-- [x] Print-specific field and placeholder cleanup
-- [x] Restoration of character data after blank printing
-- [~] Long class-feature and species-feature print layout
-- [~] Print testing across browsers and page sizes
-
-# 3. Rules Learning and Original Content
-
-## Knowledge Cards
-
-- [x] Ability-score Knowledge Cards
-- [x] Skill Knowledge Cards
-- [x] Combat Knowledge Cards
-- [x] Saving-throw Knowledge Cards
-- [x] Edition-isolated rule collections in `data/codex/dnd5e/2014` and `data/codex/dnd5e/2024`
-- [x] Homepage Featured Knowledge Card rotation
-- [~] Content audit for accuracy, consistency, source labels, and edition boundaries
-- [x] Related-entry links and direct full-Codex links
-- [ ] Guided beginner learning paths
-
-## Rules Codex architecture and core player rules
-
-The Codex now uses a manifest-driven hierarchy of **game system → edition → collection → entry**. D&D 5e 2014 and D&D 5e 2024 have independent rule files even when a topic appears in both editions. This prevents accidental rules leakage and provides a repeatable pattern for future tabletop systems.
-
-- [x] Versioned Codex manifest and shared data loader
-- [x] Separate 2014 and 2024 core-rules files
-- [x] 215 edition-specific 2014 player-rule entries
-- [x] 218 edition-specific 2024 player-rule entries
-- [x] Ability scores, skills, and saving throws
-- [x] Core checks, Difficulty Classes, proficiency, Expertise, Advantage, and Disadvantage
-- [x] Character creation methods and character-level versus class-level guidance
-- [x] Exploration, light, senses, travel, and social interaction fundamentals
-- [x] Combat structure, actions, attacks, damage, healing, defeat, and conditions
-- [x] Resting, recovery, and common resource rules
-- [x] Spellcasting fundamentals, components, targets, areas, and multiclass spellcasting overview
-- [x] Edition-specific procedures and terminology stored independently
-- [x] Related-entry links and stable deep links
-- [~] Final mechanical, editorial, accessibility, and source audit
-- [ ] Focused 2014-versus-2024 comparison entries
-
-## Unified standalone Codex
-
-- [x] Rules, races/species, mundane equipment, spells, and magic items in one searchable page
-- [x] Game-system, edition, entry-type, rule-category, race/species-category, and equipment-category filters
-- [x] Spell and magic-item filters
-- [x] 2014 and 2024 edition labels
-- [x] More than one thousand SRD spell and magic-item entries preserved
-- [x] Progressive rendering and debounced search
-- [x] Builder-to-full-Codex links for rule entries
-- [~] Search, mobile, and accessibility usability review
-- [ ] Builder-to-Codex links for relevant spells and items
-- [ ] Additional original guidance around choosing and using spells
-
-## Mundane equipment catalogue
-
-- [x] Separate 2014 and 2024 equipment collection files
-- [x] 273 edition-specific 2014 mundane-equipment entries
-- [x] 246 edition-specific 2024 mundane-equipment entries
-- [x] Currency, weapons, armour, ammunition, and spellcasting focuses
-- [x] Adventuring gear, equipment packs, tools, and tool variants
-- [x] Mounts, tack, drawn vehicles, and large vehicles
-- [x] 2014 trade goods plus edition-specific lifestyles, hospitality, hirelings, and spellcasting services
-- [x] Equipment-category filtering, deep links, source labels, and searchable structured facts
-- [~] Final item-by-item mechanical and editorial audit
-
-## Character origins catalogue
-
-- [x] Separate 2014 race/subrace and 2024 species/species-choice collection files
-- [x] 23 edition-specific 2014 entries covering all SRD races, subraces, and Dragonborn ancestry choices
-- [x] 33 edition-specific 2024 entries covering all SRD species, lineages, giant ancestries, fiendish legacies, and Dragonborn ancestry choices
-- [x] Parent-and-choice navigation, deep links, source labels, structured facts, and trait sections
-- [x] 2024 species entries explain that Background, not Species, supplies ability-score increases
-- [~] Final entry-by-entry mechanical and editorial audit
-
-## Remaining Codex collections
-
-- [ ] SRD backgrounds and feats
-- [ ] SRD classes, subclasses, progression tables, and class features
-- [ ] Collection-wide editorial and licensing audit
-
-## Original beginner guides
-
-- [ ] How to Create Your First D&D Character
-- [ ] D&D 2014 and 2024: Which Builder Should I Use?
-- [ ] What Happens During Your First RPG Session?
-- [ ] How Ability Scores Affect Your Character
-- [ ] How Leveling Up Works
-
-# 4. Edition-Aware Classes and Multiclassing
-
-This is the next major engineering sequence after the Rules Codex minimum viable collection.
-
-## Data model and class identity
-
-- [x] Load the correct class data file for the selected edition
-- [x] Store class levels in individual class rows
-- [x] Calculate total character level from all class rows
-- [~] Preserve edition and class rows during save, load, import, and export
-- [ ] Store a stable class ID and edition with each class row
-- [ ] Prevent an edition switch from silently reinterpreting class data
-- [ ] Define migration rules for older exported characters
-
-## Level Up: Add a New Class
-
-- [!] Add a New Class interface remains locked
-- [ ] Validate multiclass ability-score prerequisites
-- [ ] Display clear prerequisite failures
-- [ ] Add DM Override
-- [ ] Record when DM Override was used
-- [ ] Apply the new class level without replacing the existing class
-- [ ] Add multiclass HP correctly
-- [ ] Record multiclass changes in level history
-
-## Proficiencies and features
-
-- [ ] Define full starting proficiencies for each edition and class
-- [ ] Define reduced multiclass proficiencies
-- [ ] Track every proficiency by source
-- [ ] Prevent duplicate proficiencies from producing invalid bonuses
-- [ ] Support tool proficiencies and languages
-- [ ] Add subclass selection at the correct class level
-- [ ] Add class features by class level and edition
-- [ ] Add Ability Score Improvement and Feat choices
-
-## Spellcasting
-
-- [ ] Identify spellcasting classes by edition
-- [ ] Track spellcasting ability by class
-- [ ] Calculate combined multiclass spell slots
-- [ ] Handle Pact Magic separately where required
-- [ ] Support prepared and known spells by class
-- [ ] Preserve spellcasting selections through save, import, export, and printing
-
-## Acceptance tests
-
-- [ ] Single-class Level Up still works in both editions
-- [ ] Multiclass prerequisites are edition-correct
-- [ ] DM Override is explicit and reversible before commit
-- [ ] Class and total levels remain separate
-- [ ] HP history remains correct after Constitution changes
-- [ ] Proficiencies show their sources
-- [ ] Spell slots remain correct after adding or advancing classes
-- [ ] JSON round trips preserve all multiclass data
-- [ ] Printing and PDF output show multiclass information clearly
-
-# 5. Character Sheet Refinement
-
-These changes should follow the class-data work unless they are critical fixes.
-
-- [ ] Rework class and subclass presentation for multiple classes
-- [ ] Create compact, printable feature summaries
-- [ ] Improve long Species or Race trait printing
-- [ ] Improve spell-list and prepared-spell workflow
-- [ ] Improve equipment and currency workflow
-- [ ] Add clearer validation without blocking house rules
-- [ ] Expand keyboard navigation
-- [ ] Improve focus states and screen-reader labels
-- [ ] Review contrast across every theme
-- [ ] Complete mobile layout polish
-- [ ] Test Chrome, Edge, Firefox, and mobile browsers
-
-# 6. My First Steps
-
-**My First Steps** is a planned free web onboarding experience that takes a new player from Level 0 to Level 1 through a short interactive adventure and produces a ready-to-go character based on their choices.
-
-- [ ] Define the Level 0 character state
-- [ ] Define the minimum onboarding questions
-- [ ] Write the first short adventure structure
-- [ ] Map decisions to character traits and class direction
-- [ ] Produce a ready-to-go Level 1 character
-- [ ] Explain why each choice changed the character
-- [ ] Allow export into the standard builder
-- [ ] Test with people who have never played before
-- [ ] Keep the PC/web experience free
-
-# 7. Accounts, Cloud, and Campaign Services
-
-These features come after the local builder and multiclass model are dependable.
-
-## Free experience
-
-- [x] Local browser saves
-- [x] JSON import and export
-- [ ] Optional account without requiring cloud storage
-
-## Paid services
-
-- [ ] Personal cloud saves
-- [ ] Cross-device synchronization
-- [ ] Character version history
-- [ ] Hosted campaigns
-- [ ] Game Master storage sponsorship for invited free players
-- [ ] Homebrew rules and content
-- [ ] Basic campaign communication
-- [ ] Privacy, security, backup, and account-recovery design
-
-# 8. Mobile Applications
-
-- [ ] Evaluate shared web and app architecture
-- [ ] Create local-only Android prototype
-- [ ] Create local-only iOS prototype
-- [ ] Keep mobile applications ad-free
-- [ ] Use subscriptions for optional cloud and campaign services
-
-# 9. Additional Game Systems
-
-Additional systems will be considered only after the D&D 5e builders are stable and each system's licensing requirements have been reviewed.
-
-Potential future systems include:
-
-- [ ] Pathfinder
-- [ ] Cyberpunk RED
-- [ ] Shadowrun
-- [ ] Vampire: The Masquerade
-- [ ] Werewolf: The Apocalypse
-- [ ] Mage: The Ascension
-- [ ] Wraith: The Oblivion
-- [ ] Changeling
-- [ ] Powered by the Apocalypse games where licensing permits
-- [ ] Basic Roleplaying under appropriate ORC-compatible terms and without protected product branding
-
-# 10. Long-Term Original Tools
-
-- [ ] Game Master campaign dashboard
-- [ ] Encounter builder
-- [ ] NPC generator
-- [ ] Treasure generator
-- [ ] Initiative tracker
-- [ ] Original adventure generator
-- [ ] World-building tools
-- [ ] Accessible dice tools
-
-## Immediate Sequence
-
-1. Complete the SRD background and feat collections.
-2. Add class foundations, progression tables, subclasses, and class-feature collections.
-3. Begin the edition-aware class architecture branch.
-4. Implement Add a New Class, prerequisites, and DM Override.
-5. Implement reduced multiclass proficiencies and source tracking.
-6. Add subclass, class-feature, and combined spell-slot handling.
-7. Run full two-edition storage, import, export, print, and PDF regression testing.
+/**
+ * My RPG Source - Standalone Rules Codex
+ * ---------------------------------------
+ * Uses the shared Codex data layer to load game-system and edition-specific
+ * rules, character origins, mundane equipment, spells, and magic items. Event listeners are bound once. No timers or
+ * MutationObservers are used.
+ */
+
+'use strict';
+
+const CODEX_PAGE_SIZE = 48;
+const CODEX_SEARCH_DELAY = 120;
+const DEFAULT_PAGE_TITLE = 'Rules Codex | My RPG Source';
+
+const codexState = {
+  manifest: null,
+  gameSystem: null,
+  entries: [],
+  filteredEntries: [],
+  categories: [],
+  ancestryCategories: [],
+  backgroundCategories: [],
+  featCategories: [],
+  equipmentCategories: [],
+  byGlobalId: new Map(),
+  byLocalKey: new Map(),
+  visibleCount: CODEX_PAGE_SIZE,
+  pendingEntryId: null,
+  searchTimer: null,
+};
+
+const codexElements = {};
+
+function cacheCodexElements() {
+  codexElements.form = document.getElementById('codex-filter-form');
+  codexElements.search = document.getElementById('codex-search');
+  codexElements.game = document.getElementById('codex-game');
+  codexElements.edition = document.getElementById('codex-edition');
+  codexElements.type = document.getElementById('codex-type');
+  codexElements.category = document.getElementById('codex-category');
+  codexElements.ancestryCategory = document.getElementById('codex-ancestry-category');
+  codexElements.backgroundCategory = document.getElementById('codex-background-category');
+  codexElements.featCategory = document.getElementById('codex-feat-category');
+  codexElements.equipmentCategory = document.getElementById('codex-equipment-category');
+  codexElements.level = document.getElementById('codex-level');
+  codexElements.school = document.getElementById('codex-school');
+  codexElements.rarity = document.getElementById('codex-rarity');
+  codexElements.attunement = document.getElementById('codex-attunement');
+  codexElements.reset = document.getElementById('codex-reset');
+  codexElements.status = document.getElementById('codex-status');
+  codexElements.results = document.getElementById('codex-results');
+  codexElements.loadMore = document.getElementById('codex-load-more');
+  codexElements.error = document.getElementById('codex-error');
+  codexElements.totalCount = document.getElementById('codex-total-count');
+  codexElements.ruleCount = document.getElementById('codex-rule-count');
+  codexElements.ancestryCount = document.getElementById('codex-ancestry-count');
+  codexElements.backgroundCount = document.getElementById('codex-background-count');
+  codexElements.featCount = document.getElementById('codex-feat-count');
+  codexElements.spellCount = document.getElementById('codex-spell-count');
+  codexElements.itemCount = document.getElementById('codex-item-count');
+  codexElements.equipmentCount = document.getElementById('codex-equipment-count');
+  codexElements.ruleFields = Array.from(document.querySelectorAll('[data-rule-filter]'));
+  codexElements.ancestryFields = Array.from(document.querySelectorAll('[data-ancestry-filter]'));
+  codexElements.backgroundFields = Array.from(document.querySelectorAll('[data-background-filter]'));
+  codexElements.featFields = Array.from(document.querySelectorAll('[data-feat-filter]'));
+  codexElements.equipmentFields = Array.from(document.querySelectorAll('[data-equipment-filter]'));
+  codexElements.spellFields = Array.from(document.querySelectorAll('[data-spell-filter]'));
+  codexElements.itemFields = Array.from(document.querySelectorAll('[data-item-filter]'));
+}
+
+function normalizeSearchText(value) {
+  return String(value ?? '')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('en-CA');
+}
+
+function createSearchIndex(entry) {
+  const searchableParts = [
+    entry.name,
+    entry.title,
+    entry.edition,
+    entry.editionName,
+    entry.source,
+    entry.sourceSection,
+    entry.meta,
+    entry.description,
+    entry.summary,
+    entry.whatItMeans,
+    entry.whyItMatters,
+    entry.categoryName,
+    ...(entry.whatItAffects || []),
+    ...(entry.bestFor || []),
+    ...(entry.commonMistakes || []),
+    entry.subcategory,
+    entry.parentTitle,
+    ...(entry.tags || []),
+    ...((entry.facts || []).flatMap((fact) => [fact.label, fact.value])),
+    ...((entry.traits || []).flatMap((item) => [item.name, item.description])),
+  ];
+
+  if (entry.entryType === 'spell') {
+    searchableParts.push(
+      entry.school,
+      entry.castingTime,
+      entry.range,
+      entry.components,
+      entry.duration,
+      ...(entry.classes || [])
+    );
+  }
+
+  if (entry.entryType === 'equipment') {
+    searchableParts.push(entry.category, entry.categoryName, entry.subcategory);
+  }
+
+  if (entry.entryType === 'item') {
+    searchableParts.push(entry.category, ...(entry.rarities || []));
+  }
+
+  return normalizeSearchText(searchableParts.filter(Boolean).join(' '));
+}
+
+function localEntryKey(entry) {
+  return [entry.edition, entry.entryType, entry.localId].join(':');
+}
+
+function compareCodexEntries(left, right) {
+  const nameComparison = left.name.localeCompare(right.name, 'en-CA', {
+    sensitivity: 'base',
+    numeric: true,
+  });
+
+  if (nameComparison !== 0) {
+    return nameComparison;
+  }
+
+  if (left.edition !== right.edition) {
+    return left.edition.localeCompare(right.edition);
+  }
+
+  return left.entryType.localeCompare(right.entryType);
+}
+
+function populateGameSystems() {
+  codexElements.game.replaceChildren();
+
+  (codexState.manifest?.gameSystems || []).forEach((gameSystem) => {
+    const option = document.createElement('option');
+    option.value = gameSystem.id;
+    option.textContent = gameSystem.name;
+    codexElements.game.append(option);
+  });
+}
+
+function populateEditions(gameSystem) {
+  const previousValue = codexElements.edition.value;
+  codexElements.edition.replaceChildren();
+
+  const allOption = document.createElement('option');
+  allOption.value = 'all';
+  allOption.textContent = 'All available editions';
+  codexElements.edition.append(allOption);
+
+  (gameSystem?.editions || []).forEach((edition) => {
+    const option = document.createElement('option');
+    option.value = edition.id;
+    option.textContent = `${edition.name} / ${edition.source}`;
+    codexElements.edition.append(option);
+  });
+
+  const allowed = Array.from(codexElements.edition.options).some((option) => option.value === previousValue);
+  codexElements.edition.value = allowed ? previousValue : (gameSystem?.defaultEdition || 'all');
+}
+
+function populateCategories(select, categories, allLabel) {
+  const previousValue = select.value;
+  select.replaceChildren();
+
+  const allOption = document.createElement('option');
+  allOption.value = 'all';
+  allOption.textContent = allLabel;
+  select.append(allOption);
+
+  categories.forEach((category) => {
+    const option = document.createElement('option');
+    option.value = category.id;
+    option.textContent = category.name;
+    select.append(option);
+  });
+
+  const allowed = Array.from(select.options).some((option) => option.value === previousValue);
+  select.value = allowed ? previousValue : 'all';
+}
+
+function populateRuleCategories(categories) {
+  populateCategories(codexElements.category, categories, 'All rule categories');
+}
+
+function populateAncestryCategories(categories) {
+  populateCategories(codexElements.ancestryCategory, categories, 'All race/species categories');
+}
+
+function populateBackgroundCategories(categories) {
+  populateCategories(codexElements.backgroundCategory, categories, 'All background categories');
+}
+
+function populateFeatCategories(categories) {
+  populateCategories(codexElements.featCategory, categories, 'All feat categories');
+}
+
+function populateEquipmentCategories(categories) {
+  populateCategories(codexElements.equipmentCategory, categories, 'All equipment categories');
+}
+
+async function loadGameSystem(gameSystemId) {
+  const result = await window.MyRPGCodexData.loadEntries({
+    gameSystem: gameSystemId,
+    entryTypes: ['rule', 'ancestry', 'background', 'feat', 'equipment', 'spell', 'item'],
+  });
+
+  codexState.gameSystem = result.gameSystem;
+  codexState.categories = result.categories;
+  codexState.ancestryCategories = result.categoryGroups?.ancestry || [];
+  codexState.backgroundCategories = result.categoryGroups?.background || [];
+  codexState.featCategories = result.categoryGroups?.feat || [];
+  codexState.equipmentCategories = result.categoryGroups?.equipment || [];
+  codexState.entries = result.entries
+    .map((entry) => ({
+      ...entry,
+      name: entry.name || entry.title,
+      searchIndex: createSearchIndex(entry),
+    }))
+    .sort(compareCodexEntries);
+
+  codexState.byGlobalId.clear();
+  codexState.byLocalKey.clear();
+
+  codexState.entries.forEach((entry) => {
+    codexState.byGlobalId.set(entry.globalId, entry);
+    codexState.byLocalKey.set(localEntryKey(entry), entry);
+  });
+
+  populateEditions(result.gameSystem);
+  populateRuleCategories(result.categories);
+  populateAncestryCategories(codexState.ancestryCategories);
+  populateBackgroundCategories(codexState.backgroundCategories);
+  populateFeatCategories(codexState.featCategories);
+  populateEquipmentCategories(codexState.equipmentCategories);
+  updateCollectionTotals(codexState.entries);
+}
+
+function updateCollectionTotals(entries) {
+  const ruleCount = entries.filter((entry) => entry.entryType === 'rule').length;
+  const ancestryCount = entries.filter((entry) => entry.entryType === 'ancestry').length;
+  const backgroundCount = entries.filter((entry) => entry.entryType === 'background').length;
+  const featCount = entries.filter((entry) => entry.entryType === 'feat').length;
+  const equipmentCount = entries.filter((entry) => entry.entryType === 'equipment').length;
+  const spellCount = entries.filter((entry) => entry.entryType === 'spell').length;
+  const itemCount = entries.filter((entry) => entry.entryType === 'item').length;
+
+  codexElements.totalCount.textContent = entries.length.toLocaleString('en-CA');
+  codexElements.ruleCount.textContent = ruleCount.toLocaleString('en-CA');
+  codexElements.ancestryCount.textContent = ancestryCount.toLocaleString('en-CA');
+  codexElements.backgroundCount.textContent = backgroundCount.toLocaleString('en-CA');
+  codexElements.featCount.textContent = featCount.toLocaleString('en-CA');
+  codexElements.equipmentCount.textContent = equipmentCount.toLocaleString('en-CA');
+  codexElements.spellCount.textContent = spellCount.toLocaleString('en-CA');
+  codexElements.itemCount.textContent = itemCount.toLocaleString('en-CA');
+}
+
+function getFilterValues() {
+  return {
+    search: normalizeSearchText(codexElements.search.value.trim()),
+    game: codexElements.game.value,
+    edition: codexElements.edition.value,
+    type: codexElements.type.value,
+    category: codexElements.category.value,
+    ancestryCategory: codexElements.ancestryCategory.value,
+    backgroundCategory: codexElements.backgroundCategory.value,
+    featCategory: codexElements.featCategory.value,
+    equipmentCategory: codexElements.equipmentCategory.value,
+    level: codexElements.level.value,
+    school: codexElements.school.value,
+    rarity: codexElements.rarity.value,
+    attunement: codexElements.attunement.value,
+  };
+}
+
+function entryMatchesFilters(entry, filters) {
+  if (filters.search && !entry.searchIndex.includes(filters.search)) {
+    return false;
+  }
+
+  if (filters.edition !== 'all' && entry.edition !== filters.edition) {
+    return false;
+  }
+
+  if (filters.type !== 'all' && entry.entryType !== filters.type) {
+    return false;
+  }
+
+  if (filters.category !== 'all') {
+    if (entry.entryType !== 'rule' || entry.category !== filters.category) {
+      return false;
+    }
+  }
+
+  if (filters.ancestryCategory !== 'all') {
+    if (entry.entryType !== 'ancestry' || entry.category !== filters.ancestryCategory) {
+      return false;
+    }
+  }
+
+  if (filters.backgroundCategory !== 'all') {
+    if (entry.entryType !== 'background' || entry.category !== filters.backgroundCategory) {
+      return false;
+    }
+  }
+
+  if (filters.featCategory !== 'all') {
+    if (entry.entryType !== 'feat' || entry.category !== filters.featCategory) {
+      return false;
+    }
+  }
+
+  if (filters.equipmentCategory !== 'all') {
+    if (entry.entryType !== 'equipment' || entry.category !== filters.equipmentCategory) {
+      return false;
+    }
+  }
+
+  if (filters.level !== 'all') {
+    if (entry.entryType !== 'spell' || String(entry.level) !== filters.level) {
+      return false;
+    }
+  }
+
+  if (filters.school !== 'all') {
+    if (entry.entryType !== 'spell' || entry.school !== filters.school) {
+      return false;
+    }
+  }
+
+  if (filters.rarity !== 'all') {
+    if (entry.entryType !== 'item' || !(entry.rarities || []).includes(filters.rarity)) {
+      return false;
+    }
+  }
+
+  if (filters.attunement !== 'all') {
+    if (entry.entryType !== 'item') {
+      return false;
+    }
+
+    const requiresAttunement = filters.attunement === 'required';
+    if (Boolean(entry.attunement) !== requiresAttunement) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function setFieldGroupAvailability(fields, active) {
+  fields.forEach((field) => {
+    const select = field.querySelector('select');
+    field.classList.toggle('is-inactive', !active);
+    select.disabled = !active;
+
+    if (!active) {
+      select.value = 'all';
+    }
+  });
+}
+
+function updateFilterAvailability() {
+  const selectedType = codexElements.type.value;
+
+  setFieldGroupAvailability(
+    codexElements.ruleFields,
+    selectedType === 'all' || selectedType === 'rule'
+  );
+  setFieldGroupAvailability(
+    codexElements.ancestryFields,
+    selectedType === 'all' || selectedType === 'ancestry'
+  );
+
+  setFieldGroupAvailability(
+    codexElements.backgroundFields,
+    selectedType === 'all' || selectedType === 'background'
+  );
+  setFieldGroupAvailability(
+    codexElements.featFields,
+    selectedType === 'all' || selectedType === 'feat'
+  );
+
+  setFieldGroupAvailability(
+    codexElements.equipmentFields,
+    selectedType === 'all' || selectedType === 'equipment'
+  );
+  setFieldGroupAvailability(
+    codexElements.spellFields,
+    selectedType === 'all' || selectedType === 'spell'
+  );
+  setFieldGroupAvailability(
+    codexElements.itemFields,
+    selectedType === 'all' || selectedType === 'item'
+  );
+}
+
+function spellLevelLabel(level) {
+  if (level === 0) {
+    return 'Cantrip';
+  }
+
+  const suffix = level === 1 ? 'st' : level === 2 ? 'nd' : level === 3 ? 'rd' : 'th';
+  return `${level}${suffix}-level spell`;
+}
+
+function entryTypeLabel(entryType) {
+  if (entryType === 'rule') {
+    return 'Rule';
+  }
+
+  if (entryType === 'ancestry') {
+    return 'Race / species';
+  }
+
+  if (entryType === 'background') {
+    return 'Background';
+  }
+
+  if (entryType === 'feat') {
+    return 'Feat';
+  }
+
+  if (entryType === 'equipment') {
+    return 'Mundane equipment';
+  }
+
+  if (entryType === 'spell') {
+    return 'Spell';
+  }
+
+  return 'Magic item';
+}
+
+function createBadge(text, className = '') {
+  const badge = document.createElement('span');
+  badge.className = `codex-badge ${className}`.trim();
+  badge.textContent = text;
+  return badge;
+}
+
+function createFact(label, value) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'codex-fact';
+
+  const term = document.createElement('dt');
+  term.textContent = label;
+
+  const description = document.createElement('dd');
+  description.textContent = value || 'Not specified';
+
+  wrapper.append(term, description);
+  return wrapper;
+}
+
+function createSpellFacts(entry) {
+  const facts = document.createElement('dl');
+  facts.className = 'codex-facts';
+
+  facts.append(
+    createFact('Level', spellLevelLabel(entry.level)),
+    createFact('School', entry.school),
+    createFact('Casting time', entry.castingTime),
+    createFact('Range', entry.range),
+    createFact('Components', entry.components),
+    createFact('Duration', entry.duration)
+  );
+
+  if (entry.ritual) {
+    facts.append(createFact('Ritual', 'Yes'));
+  }
+
+  if (Array.isArray(entry.classes) && entry.classes.length > 0) {
+    facts.append(createFact('Classes', entry.classes.join(', ')));
+  }
+
+  return facts;
+}
+
+function createAncestryFacts(entry) {
+  const factsElement = document.createElement('dl');
+  factsElement.className = 'codex-facts';
+
+  factsElement.append(createFact('Category', entry.categoryName || entry.category));
+
+  (entry.facts || []).forEach((fact) => {
+    if (fact?.label && fact?.value) {
+      factsElement.append(createFact(fact.label, fact.value));
+    }
+  });
+
+  return factsElement;
+}
+
+function createStructuredFacts(entry) {
+  const factsElement = document.createElement('dl');
+  factsElement.className = 'codex-facts';
+  factsElement.append(createFact('Category', entry.categoryName || entry.category));
+  (entry.facts || []).forEach((fact) => {
+    if (fact?.label && fact?.value) {
+      factsElement.append(createFact(fact.label, fact.value));
+    }
+  });
+  return factsElement;
+}
+
+function createStructuredBody(entry) {
+  const fragment = document.createDocumentFragment();
+  fragment.append(createStructuredFacts(entry));
+  if (entry.description) {
+    const description = document.createElement('p');
+    description.className = 'codex-description';
+    description.textContent = entry.description;
+    fragment.append(description);
+  }
+  (entry.traits || []).forEach((item) => {
+    if (!item?.name || !item?.description) return;
+    const section = document.createElement('section');
+    section.className = 'codex-rule-section';
+    const title = document.createElement('h4');
+    title.textContent = item.name;
+    const paragraph = document.createElement('p');
+    paragraph.textContent = item.description;
+    section.append(title, paragraph);
+    fragment.append(section);
+  });
+  return fragment;
+}
+
+function createEquipmentFacts(entry) {
+  const factsElement = document.createElement('dl');
+  factsElement.className = 'codex-facts';
+
+  factsElement.append(createFact('Category', entry.categoryName || entry.category));
+
+  if (entry.subcategory) {
+    factsElement.append(createFact('Type', entry.subcategory));
+  }
+
+  (entry.facts || []).forEach((fact) => {
+    if (fact?.label && fact?.value) {
+      factsElement.append(createFact(fact.label, fact.value));
+    }
+  });
+
+  return factsElement;
+}
+
+function createItemFacts(entry) {
+  const facts = document.createElement('dl');
+  facts.className = 'codex-facts';
+
+  facts.append(
+    createFact('Category', entry.category),
+    createFact('Rarity', (entry.rarities || []).join(', ')),
+    createFact('Attunement', entry.attunement ? 'Required' : 'Not required')
+  );
+
+  return facts;
+}
+
+function appendTextSection(container, heading, text) {
+  if (!text) {
+    return;
+  }
+
+  const section = document.createElement('section');
+  section.className = 'codex-rule-section';
+
+  const title = document.createElement('h4');
+  title.textContent = heading;
+
+  const paragraph = document.createElement('p');
+  paragraph.textContent = text;
+
+  section.append(title, paragraph);
+  container.append(section);
+}
+
+function appendListSection(container, heading, items) {
+  if (!Array.isArray(items) || items.length === 0) {
+    return;
+  }
+
+  const section = document.createElement('section');
+  section.className = 'codex-rule-section';
+
+  const title = document.createElement('h4');
+  title.textContent = heading;
+
+  const list = document.createElement('ul');
+  items.forEach((item) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = item;
+    list.append(listItem);
+  });
+
+  section.append(title, list);
+  container.append(section);
+}
+
+function createRelatedRules(entry) {
+  const relatedEntries = (entry.related || [])
+    .map((relatedId) => codexState.byLocalKey.get([entry.edition, 'rule', relatedId].join(':')))
+    .filter(Boolean);
+
+  if (relatedEntries.length === 0) {
+    return null;
+  }
+
+  const section = document.createElement('section');
+  section.className = 'codex-rule-section';
+
+  const title = document.createElement('h4');
+  title.textContent = 'Related topics';
+
+  const links = document.createElement('div');
+  links.className = 'codex-related-links';
+
+  relatedEntries.forEach((relatedEntry) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.openEntry = relatedEntry.globalId;
+    button.textContent = relatedEntry.title;
+    links.append(button);
+  });
+
+  section.append(title, links);
+  return section;
+}
+
+function createRuleBody(entry) {
+  const fragment = document.createDocumentFragment();
+
+  appendTextSection(fragment, 'What it means', entry.whatItMeans || entry.summary);
+  appendListSection(fragment, 'What it affects', entry.whatItAffects);
+  appendTextSection(fragment, 'Example in play', entry.exampleInPlay);
+  appendTextSection(fragment, 'Why it matters', entry.whyItMatters);
+  appendListSection(fragment, 'Common mistakes', entry.commonMistakes);
+  appendListSection(fragment, 'Especially useful for', entry.bestFor);
+
+  const related = createRelatedRules(entry);
+  if (related) {
+    fragment.append(related);
+  }
+
+  return fragment;
+}
+
+function createAncestryLinks(entry) {
+  const linkedEntries = [];
+
+  if (entry.parentId) {
+    const parent = codexState.byLocalKey.get([entry.edition, 'ancestry', entry.parentId].join(':'));
+    if (parent) {
+      linkedEntries.push({ entry: parent, label: `Parent: ${parent.title}` });
+    }
+  }
+
+  (entry.childIds || []).forEach((childId) => {
+    const child = codexState.byLocalKey.get([entry.edition, 'ancestry', childId].join(':'));
+    if (child) {
+      linkedEntries.push({ entry: child, label: child.title });
+    }
+  });
+
+  if (linkedEntries.length === 0) {
+    return null;
+  }
+
+  const section = document.createElement('section');
+  section.className = 'codex-rule-section';
+
+  const title = document.createElement('h4');
+  title.textContent = entry.parentId ? 'Related race or species' : 'Available choices';
+
+  const links = document.createElement('div');
+  links.className = 'codex-related-links';
+
+  linkedEntries.forEach(({ entry: linkedEntry, label }) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.openEntry = linkedEntry.globalId;
+    button.textContent = label;
+    links.append(button);
+  });
+
+  section.append(title, links);
+  return section;
+}
+
+function createAncestryBody(entry) {
+  const fragment = document.createDocumentFragment();
+  fragment.append(createAncestryFacts(entry));
+
+  if (entry.description) {
+    const description = document.createElement('p');
+    description.className = 'codex-description';
+    description.textContent = entry.description;
+    fragment.append(description);
+  }
+
+  (entry.traits || []).forEach((item) => {
+    if (!item?.name || !item?.description) {
+      return;
+    }
+
+    const section = document.createElement('section');
+    section.className = 'codex-rule-section';
+
+    const title = document.createElement('h4');
+    title.textContent = item.name;
+
+    const paragraph = document.createElement('p');
+    paragraph.textContent = item.description;
+
+    section.append(title, paragraph);
+    fragment.append(section);
+  });
+
+  const links = createAncestryLinks(entry);
+  if (links) {
+    fragment.append(links);
+  }
+
+  return fragment;
+}
+
+function createCodexEntry(entry) {
+  const details = document.createElement('details');
+  details.className = 'codex-entry';
+  details.dataset.entryId = entry.globalId;
+
+  const summary = document.createElement('summary');
+  const titleWrapper = document.createElement('div');
+  titleWrapper.className = 'codex-entry-title';
+
+  const title = document.createElement('h3');
+  title.textContent = entry.name;
+
+  const badges = document.createElement('div');
+  badges.className = 'codex-entry-meta';
+  badges.append(
+    createBadge(`${entry.edition} rules`, 'codex-badge-edition'),
+    createBadge(
+      entryTypeLabel(entry.entryType),
+      `codex-badge-${entry.entryType}`
+    )
+  );
+
+  if (
+    entry.entryType === 'rule' ||
+    entry.entryType === 'ancestry' ||
+    entry.entryType === 'background' ||
+    entry.entryType === 'feat' ||
+    entry.entryType === 'equipment'
+  ) {
+    badges.append(createBadge(entry.categoryName));
+  } else if (entry.entryType === 'spell') {
+    badges.append(createBadge(spellLevelLabel(entry.level)));
+  } else {
+    badges.append(createBadge((entry.rarities || []).join(', ')));
+  }
+
+  badges.append(createBadge(entry.source));
+  titleWrapper.append(title, badges);
+  summary.append(titleWrapper);
+
+  const body = document.createElement('div');
+  body.className = 'codex-entry-body';
+
+  if (entry.entryType === 'rule') {
+    body.append(createRuleBody(entry));
+  } else if (entry.entryType === 'ancestry') {
+    body.append(createAncestryBody(entry));
+  } else if (entry.entryType === 'background' || entry.entryType === 'feat') {
+    body.append(createStructuredBody(entry));
+  } else {
+    if (entry.entryType === 'spell') {
+      body.append(createSpellFacts(entry));
+    } else if (entry.entryType === 'equipment') {
+      body.append(createEquipmentFacts(entry));
+    } else {
+      body.append(createItemFacts(entry));
+    }
+
+    const description = document.createElement('p');
+    description.className = 'codex-description';
+    description.textContent = entry.description;
+    body.append(description);
+  }
+
+  const sourceNote = document.createElement('p');
+  sourceNote.className = 'codex-source-note';
+  sourceNote.textContent = entry.entryType === 'rule'
+    ? `Original My RPG Source explanation for ${entry.source} / ${entry.edition} rules.`
+    : [
+        `${entry.source} / ${entry.edition} rules.`,
+        entry.sourceSection ? `${entry.sourceSection}.` : '',
+        'Licensed under CC BY 4.0.',
+      ].filter(Boolean).join(' ');
+
+  body.append(sourceNote);
+  details.append(summary, body);
+
+  details.addEventListener('toggle', () => {
+    if (details.open) {
+      document.querySelectorAll('.codex-entry[open]').forEach((other) => {
+        if (other !== details) {
+          other.open = false;
+        }
+      });
+      syncUrl(entry.globalId);
+      document.title = `${entry.name} | Rules Codex | My RPG Source`;
+    } else if (getUrlEntryId() === entry.globalId) {
+      syncUrl(null);
+      document.title = DEFAULT_PAGE_TITLE;
+    }
+  });
+
+  return details;
+}
+
+function updateStatus(total, shown) {
+  if (total === 0) {
+    codexElements.status.textContent = 'No entries match the current filters.';
+    return;
+  }
+
+  const entryWord = total === 1 ? 'entry' : 'entries';
+  codexElements.status.textContent = `Showing ${shown.toLocaleString('en-CA')} of ${total.toLocaleString('en-CA')} ${entryWord}.`;
+}
+
+function renderResults() {
+  const total = codexState.filteredEntries.length;
+  const visibleEntries = codexState.filteredEntries.slice(0, codexState.visibleCount);
+  const fragment = document.createDocumentFragment();
+
+  codexElements.results.replaceChildren();
+
+  if (visibleEntries.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'codex-empty';
+    empty.textContent = 'No Codex entries match those filters. Try a broader search.';
+    codexElements.results.append(empty);
+  } else {
+    visibleEntries.forEach((entry) => {
+      fragment.append(createCodexEntry(entry));
+    });
+    codexElements.results.append(fragment);
+  }
+
+  const shown = Math.min(visibleEntries.length, total);
+  updateStatus(total, shown);
+
+  codexElements.loadMore.hidden = shown >= total;
+  if (!codexElements.loadMore.hidden) {
+    const remaining = total - shown;
+    codexElements.loadMore.textContent = `Load more entries (${remaining.toLocaleString('en-CA')} remaining)`;
+  }
+
+  openPendingEntry();
+}
+
+function applyFilters(options = {}) {
+  const filters = getFilterValues();
+  codexState.filteredEntries = codexState.entries.filter((entry) => entryMatchesFilters(entry, filters));
+
+  if (!options.keepVisibleCount) {
+    codexState.visibleCount = CODEX_PAGE_SIZE;
+  }
+
+  renderResults();
+
+  if (!options.skipUrlSync) {
+    syncUrl(options.entryId || null);
+  }
+}
+
+function resetFilters() {
+  codexElements.search.value = '';
+  codexElements.edition.value = codexState.gameSystem?.defaultEdition || 'all';
+  codexElements.type.value = 'all';
+  codexElements.category.value = 'all';
+  codexElements.ancestryCategory.value = 'all';
+  codexElements.backgroundCategory.value = 'all';
+  codexElements.featCategory.value = 'all';
+  codexElements.equipmentCategory.value = 'all';
+  codexElements.level.value = 'all';
+  codexElements.school.value = 'all';
+  codexElements.rarity.value = 'all';
+  codexElements.attunement.value = 'all';
+  codexState.pendingEntryId = null;
+  document.title = DEFAULT_PAGE_TITLE;
+  updateFilterAvailability();
+  applyFilters({ skipUrlSync: true });
+  syncUrl(null);
+  codexElements.search.focus();
+}
+
+async function handleGameSystemChange() {
+  try {
+    setLoadingState('Loading the selected game system...');
+    await loadGameSystem(codexElements.game.value);
+    updateFilterAvailability();
+    applyFilters({ skipUrlSync: true });
+    syncUrl(null);
+  } catch (error) {
+    showCodexError(error);
+  }
+}
+
+function handleFilterChange(event) {
+  if (event.target === codexElements.game) {
+    handleGameSystemChange();
+    return;
+  }
+
+  if (event.target === codexElements.type) {
+    updateFilterAvailability();
+  }
+
+  codexState.pendingEntryId = null;
+  document.title = DEFAULT_PAGE_TITLE;
+  applyFilters();
+}
+
+function handleSearchInput() {
+  window.clearTimeout(codexState.searchTimer);
+  codexState.searchTimer = window.setTimeout(() => {
+    codexState.pendingEntryId = null;
+    document.title = DEFAULT_PAGE_TITLE;
+    applyFilters();
+  }, CODEX_SEARCH_DELAY);
+}
+
+function loadMoreEntries() {
+  codexState.visibleCount += CODEX_PAGE_SIZE;
+  renderResults();
+}
+
+function bindCodexEvents() {
+  codexElements.search.addEventListener('input', handleSearchInput);
+  codexElements.form.addEventListener('change', handleFilterChange);
+  codexElements.form.addEventListener('submit', (event) => event.preventDefault());
+  codexElements.reset.addEventListener('click', resetFilters);
+  codexElements.loadMore.addEventListener('click', loadMoreEntries);
+
+  codexElements.results.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-open-entry]');
+    if (!button) {
+      return;
+    }
+
+    openEntryById(button.dataset.openEntry, { updateFilters: true, scroll: true });
+  });
+
+  window.addEventListener('popstate', () => {
+    applyUrlState();
+    applyFilters({ skipUrlSync: true });
+  });
+}
+
+function setLoadingState(message) {
+  codexElements.status.textContent = message;
+  codexElements.results.replaceChildren();
+  codexElements.loadMore.hidden = true;
+  codexElements.error.hidden = true;
+}
+
+function showCodexError(error) {
+  console.error('Unable to initialize the Rules Codex:', error);
+  codexElements.status.textContent = 'The Codex could not be loaded.';
+  codexElements.results.replaceChildren();
+  codexElements.loadMore.hidden = true;
+  codexElements.error.hidden = false;
+}
+
+function getUrlEntryId() {
+  return new URLSearchParams(window.location.search).get('entry');
+}
+
+function setSelectFromUrl(select, value, fallback) {
+  const allowed = Array.from(select.options).some((option) => option.value === value);
+  select.value = allowed ? value : fallback;
+}
+
+function applyUrlState() {
+  const params = new URLSearchParams(window.location.search);
+
+  setSelectFromUrl(
+    codexElements.edition,
+    params.get('edition'),
+    codexState.gameSystem?.defaultEdition || 'all'
+  );
+  setSelectFromUrl(codexElements.type, params.get('type'), 'all');
+  setSelectFromUrl(codexElements.category, params.get('category'), 'all');
+  setSelectFromUrl(codexElements.ancestryCategory, params.get('ancestryCategory'), 'all');
+  setSelectFromUrl(codexElements.backgroundCategory, params.get('backgroundCategory'), 'all');
+  setSelectFromUrl(codexElements.featCategory, params.get('featCategory'), 'all');
+  setSelectFromUrl(codexElements.equipmentCategory, params.get('equipmentCategory'), 'all');
+  setSelectFromUrl(codexElements.level, params.get('level'), 'all');
+  setSelectFromUrl(codexElements.school, params.get('school'), 'all');
+  setSelectFromUrl(codexElements.rarity, params.get('rarity'), 'all');
+  setSelectFromUrl(codexElements.attunement, params.get('attunement'), 'all');
+  codexElements.search.value = params.get('q') || '';
+  codexState.pendingEntryId = params.get('entry');
+  updateFilterAvailability();
+}
+
+function syncUrl(entryId = null) {
+  const filters = getFilterValues();
+  const params = new URLSearchParams();
+
+  params.set('game', filters.game);
+  params.set('edition', filters.edition);
+  params.set('type', filters.type);
+
+  if (filters.search) {
+    params.set('q', codexElements.search.value.trim());
+  }
+  if (filters.category !== 'all') {
+    params.set('category', filters.category);
+  }
+  if (filters.ancestryCategory !== 'all') {
+    params.set('ancestryCategory', filters.ancestryCategory);
+  }
+  if (filters.backgroundCategory !== 'all') {
+    params.set('backgroundCategory', filters.backgroundCategory);
+  }
+  if (filters.featCategory !== 'all') {
+    params.set('featCategory', filters.featCategory);
+  }
+  if (filters.equipmentCategory !== 'all') {
+    params.set('equipmentCategory', filters.equipmentCategory);
+  }
+  if (filters.level !== 'all') {
+    params.set('level', filters.level);
+  }
+  if (filters.school !== 'all') {
+    params.set('school', filters.school);
+  }
+  if (filters.rarity !== 'all') {
+    params.set('rarity', filters.rarity);
+  }
+  if (filters.attunement !== 'all') {
+    params.set('attunement', filters.attunement);
+  }
+  if (entryId) {
+    params.set('entry', entryId);
+  }
+
+  const nextUrl = `${window.location.pathname}?${params.toString()}`;
+  window.history.replaceState(null, '', nextUrl);
+}
+
+function prepareFiltersForEntry(entry) {
+  codexElements.edition.value = entry.edition;
+  codexElements.type.value = entry.entryType;
+  codexElements.search.value = '';
+  codexElements.category.value = 'all';
+  codexElements.ancestryCategory.value = 'all';
+  codexElements.backgroundCategory.value = 'all';
+  codexElements.featCategory.value = 'all';
+  codexElements.equipmentCategory.value = 'all';
+  codexElements.level.value = 'all';
+  codexElements.school.value = 'all';
+  codexElements.rarity.value = 'all';
+  codexElements.attunement.value = 'all';
+  updateFilterAvailability();
+}
+
+function openEntryById(entryId, options = {}) {
+  const entry = codexState.byGlobalId.get(entryId);
+  if (!entry) {
+    return false;
+  }
+
+  if (options.updateFilters) {
+    prepareFiltersForEntry(entry);
+    codexState.pendingEntryId = entry.globalId;
+    applyFilters({ skipUrlSync: true });
+  }
+
+  const index = codexState.filteredEntries.findIndex((candidate) => candidate.globalId === entry.globalId);
+  if (index < 0) {
+    return false;
+  }
+
+  if (index >= codexState.visibleCount) {
+    codexState.visibleCount = Math.ceil((index + 1) / CODEX_PAGE_SIZE) * CODEX_PAGE_SIZE;
+    renderResults();
+    return true;
+  }
+
+  const details = codexElements.results.querySelector(`[data-entry-id="${CSS.escape(entry.globalId)}"]`);
+  if (!details) {
+    return false;
+  }
+
+  details.open = true;
+  codexState.pendingEntryId = null;
+  syncUrl(entry.globalId);
+  document.title = `${entry.name} | Rules Codex | My RPG Source`;
+
+  if (options.scroll) {
+    details.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    details.querySelector('summary')?.focus({ preventScroll: true });
+  }
+
+  return true;
+}
+
+function openPendingEntry() {
+  if (!codexState.pendingEntryId) {
+    return;
+  }
+
+  openEntryById(codexState.pendingEntryId, { updateFilters: false, scroll: true });
+}
+
+function deriveInitialGameSystemId() {
+  const params = new URLSearchParams(window.location.search);
+  const requested = params.get('game');
+  const exists = (codexState.manifest?.gameSystems || []).some((system) => system.id === requested);
+  return exists ? requested : codexState.manifest.defaultGameSystem;
+}
+
+async function initializeCodexPage() {
+  cacheCodexElements();
+  bindCodexEvents();
+  setLoadingState('Loading the Codex...');
+
+  try {
+    if (!window.MyRPGCodexData) {
+      throw new Error('The shared Codex data layer did not load.');
+    }
+
+    codexState.manifest = await window.MyRPGCodexData.loadManifest();
+    populateGameSystems();
+
+    const gameSystemId = deriveInitialGameSystemId();
+    codexElements.game.value = gameSystemId;
+    await loadGameSystem(gameSystemId);
+    applyUrlState();
+    codexElements.error.hidden = true;
+    applyFilters({ skipUrlSync: true });
+    syncUrl(getUrlEntryId());
+  } catch (error) {
+    showCodexError(error);
+  }
+}
+
+initializeCodexPage();
