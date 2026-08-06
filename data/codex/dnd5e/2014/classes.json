@@ -1,0 +1,2765 @@
+{
+  "schemaVersion": 2,
+  "gameSystem": "dnd5e",
+  "edition": "2014",
+  "collection": "classes",
+  "entryTypes": [
+    "class"
+  ],
+  "sourceDocument": "SRD 5.1",
+  "license": "CC BY 4.0",
+  "contentNote": "SRD 5.1 class foundations have been reorganized into edition-specific structured data. Full class-feature and subclass rules will be stored in separate later collections.",
+  "categories": [
+    {
+      "id": "class",
+      "name": "Class"
+    }
+  ],
+  "entries": [
+    {
+      "id": "barbarian",
+      "title": "Barbarian",
+      "entryType": "class",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "hitDie": 12,
+      "fixedHitPointsPerLevel": 7,
+      "primaryAbilities": [
+        "str"
+      ],
+      "savingThrows": [
+        "str",
+        "con"
+      ],
+      "spellcastingAbility": null,
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "str",
+            "minimum": 13
+          }
+        ]
+      },
+      "category": "class",
+      "categoryName": "Class",
+      "summary": "A durable Strength-based warrior who channels Rage, fights without heavy armor, and excels with martial weapons.",
+      "description": "This 2014 class-foundation entry gathers the class’s core traits, starting and multiclass proficiencies, SRD subclass, and feature progression without mixing mechanics from the other edition.",
+      "facts": [
+        {
+          "label": "Primary Ability",
+          "value": "Strength"
+        },
+        {
+          "label": "Hit Point Die",
+          "value": "D12 per Barbarian level"
+        },
+        {
+          "label": "Saving Throw Proficiencies",
+          "value": "Strength and Constitution"
+        },
+        {
+          "label": "Skill Proficiencies",
+          "value": "Choose 2: Animal Handling, Athletics, Intimidation, Nature, Perception, or Survival"
+        },
+        {
+          "label": "Weapon Proficiencies",
+          "value": "Simple and Martial weapons"
+        },
+        {
+          "label": "Armor Training / Proficiencies",
+          "value": "Light armor, Medium armor, and Shields"
+        },
+        {
+          "label": "Tool Proficiencies",
+          "value": "None"
+        },
+        {
+          "label": "Starting Equipment",
+          "value": "Greataxe or another martial melee weapon; two Handaxes or another simple weapon; Explorer’s Pack; four Javelins"
+        },
+        {
+          "label": "Spellcasting Progression",
+          "value": "None"
+        },
+        {
+          "label": "Multiclass Prerequisite",
+          "value": "Strength 13"
+        },
+        {
+          "label": "Proficiencies Gained by Multiclassing",
+          "value": "Shields, Simple weapons, and Martial weapons"
+        },
+        {
+          "label": "SRD Subclass",
+          "value": "Path of the Berserker"
+        },
+        {
+          "label": "Subclass Feature Levels",
+          "value": "3, 6, 10, 14"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Starting as This Class",
+          "description": "At character level 1, gain the class’s complete starting traits and its level 1 features. Starting Hit Points use the maximum value of the Hit Point Die plus your Constitution modifier."
+        },
+        {
+          "name": "Multiclassing into This Class",
+          "description": "You must meet the listed ability-score prerequisite. You gain only the reduced multiclass proficiencies listed above, plus the class’s level 1 features. You do not gain a second set of full starting equipment."
+        },
+        {
+          "name": "Progression Table Scope",
+          "description": "The progression below records the class-feature names and Proficiency Bonus at each class level. Individual feature rules, resource columns, spell-slot columns, and subclass feature text belong to the next Codex collections."
+        }
+      ],
+      "progression": [
+        {
+          "level": 1,
+          "proficiencyBonus": "+2",
+          "features": "Rage, Unarmored Defense"
+        },
+        {
+          "level": 2,
+          "proficiencyBonus": "+2",
+          "features": "Reckless Attack, Danger Sense"
+        },
+        {
+          "level": 3,
+          "proficiencyBonus": "+2",
+          "features": "Primal Path"
+        },
+        {
+          "level": 4,
+          "proficiencyBonus": "+2",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 5,
+          "proficiencyBonus": "+3",
+          "features": "Extra Attack, Fast Movement"
+        },
+        {
+          "level": 6,
+          "proficiencyBonus": "+3",
+          "features": "Primal Path feature"
+        },
+        {
+          "level": 7,
+          "proficiencyBonus": "+3",
+          "features": "Feral Instinct"
+        },
+        {
+          "level": 8,
+          "proficiencyBonus": "+3",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 9,
+          "proficiencyBonus": "+4",
+          "features": "Brutal Critical (1 die)"
+        },
+        {
+          "level": 10,
+          "proficiencyBonus": "+4",
+          "features": "Primal Path feature"
+        },
+        {
+          "level": 11,
+          "proficiencyBonus": "+4",
+          "features": "Relentless Rage"
+        },
+        {
+          "level": 12,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 13,
+          "proficiencyBonus": "+5",
+          "features": "Brutal Critical (2 dice)"
+        },
+        {
+          "level": 14,
+          "proficiencyBonus": "+5",
+          "features": "Primal Path feature"
+        },
+        {
+          "level": 15,
+          "proficiencyBonus": "+5",
+          "features": "Persistent Rage"
+        },
+        {
+          "level": 16,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 17,
+          "proficiencyBonus": "+6",
+          "features": "Brutal Critical (3 dice)"
+        },
+        {
+          "level": 18,
+          "proficiencyBonus": "+6",
+          "features": "Indomitable Might"
+        },
+        {
+          "level": 19,
+          "proficiencyBonus": "+6",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 20,
+          "proficiencyBonus": "+6",
+          "features": "Primal Champion"
+        }
+      ],
+      "builderClassId": "barbarian",
+      "subclass": {
+        "name": "Path of the Berserker",
+        "featureLevels": [
+          3,
+          6,
+          10,
+          14
+        ]
+      },
+      "spellcasting": {
+        "summary": "None",
+        "startsAtLevel": null
+      },
+      "tags": [
+        "barbarian",
+        "class",
+        "2014",
+        "strength",
+        "path of the berserker",
+        "multiclassing",
+        "progression"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Classes: Barbarian (SRD 5.1)"
+    },
+    {
+      "id": "bard",
+      "title": "Bard",
+      "entryType": "class",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "hitDie": 8,
+      "fixedHitPointsPerLevel": 5,
+      "primaryAbilities": [
+        "cha"
+      ],
+      "savingThrows": [
+        "dex",
+        "cha"
+      ],
+      "spellcastingAbility": "cha",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "cha",
+            "minimum": 13
+          }
+        ]
+      },
+      "category": "class",
+      "categoryName": "Class",
+      "summary": "A versatile Charisma-based spellcaster who combines inspiration, broad skills, expertise, and magical secrets.",
+      "description": "This 2014 class-foundation entry gathers the class’s core traits, starting and multiclass proficiencies, SRD subclass, and feature progression without mixing mechanics from the other edition.",
+      "facts": [
+        {
+          "label": "Primary Ability",
+          "value": "Charisma"
+        },
+        {
+          "label": "Hit Point Die",
+          "value": "D8 per Bard level"
+        },
+        {
+          "label": "Saving Throw Proficiencies",
+          "value": "Dexterity and Charisma"
+        },
+        {
+          "label": "Skill Proficiencies",
+          "value": "Choose any 3 skills"
+        },
+        {
+          "label": "Weapon Proficiencies",
+          "value": "Simple weapons, Hand Crossbows, Longswords, Rapiers, and Shortswords"
+        },
+        {
+          "label": "Armor Training / Proficiencies",
+          "value": "Light armor"
+        },
+        {
+          "label": "Tool Proficiencies",
+          "value": "Three Musical Instruments of your choice"
+        },
+        {
+          "label": "Starting Equipment",
+          "value": "Rapier, Longsword, or another simple weapon; Diplomat’s Pack or Entertainer’s Pack; Lute or another Musical Instrument; Leather Armor and a Dagger"
+        },
+        {
+          "label": "Spellcasting Progression",
+          "value": "Full spellcaster; Charisma; begins at class level 1"
+        },
+        {
+          "label": "Multiclass Prerequisite",
+          "value": "Charisma 13"
+        },
+        {
+          "label": "Proficiencies Gained by Multiclassing",
+          "value": "Light armor, one skill of your choice, and one Musical Instrument of your choice"
+        },
+        {
+          "label": "SRD Subclass",
+          "value": "College of Lore"
+        },
+        {
+          "label": "Subclass Feature Levels",
+          "value": "3, 6, 14"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Starting as This Class",
+          "description": "At character level 1, gain the class’s complete starting traits and its level 1 features. Starting Hit Points use the maximum value of the Hit Point Die plus your Constitution modifier."
+        },
+        {
+          "name": "Multiclassing into This Class",
+          "description": "You must meet the listed ability-score prerequisite. You gain only the reduced multiclass proficiencies listed above, plus the class’s level 1 features. You do not gain a second set of full starting equipment."
+        },
+        {
+          "name": "Progression Table Scope",
+          "description": "The progression below records the class-feature names and Proficiency Bonus at each class level. Individual feature rules, resource columns, spell-slot columns, and subclass feature text belong to the next Codex collections."
+        }
+      ],
+      "progression": [
+        {
+          "level": 1,
+          "proficiencyBonus": "+2",
+          "features": "Spellcasting, Bardic Inspiration (d6)"
+        },
+        {
+          "level": 2,
+          "proficiencyBonus": "+2",
+          "features": "Jack of All Trades, Song of Rest (d6)"
+        },
+        {
+          "level": 3,
+          "proficiencyBonus": "+2",
+          "features": "Bard College, Expertise"
+        },
+        {
+          "level": 4,
+          "proficiencyBonus": "+2",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 5,
+          "proficiencyBonus": "+3",
+          "features": "Bardic Inspiration (d8), Font of Inspiration"
+        },
+        {
+          "level": 6,
+          "proficiencyBonus": "+3",
+          "features": "Countercharm, Bard College feature"
+        },
+        {
+          "level": 7,
+          "proficiencyBonus": "+3",
+          "features": "—"
+        },
+        {
+          "level": 8,
+          "proficiencyBonus": "+3",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 9,
+          "proficiencyBonus": "+4",
+          "features": "Song of Rest (d8)"
+        },
+        {
+          "level": 10,
+          "proficiencyBonus": "+4",
+          "features": "Bardic Inspiration (d10), Expertise, Magical Secrets"
+        },
+        {
+          "level": 11,
+          "proficiencyBonus": "+4",
+          "features": "—"
+        },
+        {
+          "level": 12,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 13,
+          "proficiencyBonus": "+5",
+          "features": "Song of Rest (d10)"
+        },
+        {
+          "level": 14,
+          "proficiencyBonus": "+5",
+          "features": "Magical Secrets, Bard College feature"
+        },
+        {
+          "level": 15,
+          "proficiencyBonus": "+5",
+          "features": "Bardic Inspiration (d12)"
+        },
+        {
+          "level": 16,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 17,
+          "proficiencyBonus": "+6",
+          "features": "Song of Rest (d12)"
+        },
+        {
+          "level": 18,
+          "proficiencyBonus": "+6",
+          "features": "Magical Secrets"
+        },
+        {
+          "level": 19,
+          "proficiencyBonus": "+6",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 20,
+          "proficiencyBonus": "+6",
+          "features": "Superior Inspiration"
+        }
+      ],
+      "builderClassId": "bard",
+      "subclass": {
+        "name": "College of Lore",
+        "featureLevels": [
+          3,
+          6,
+          14
+        ]
+      },
+      "spellcasting": {
+        "summary": "Full spellcaster; Charisma",
+        "startsAtLevel": 1
+      },
+      "tags": [
+        "bard",
+        "class",
+        "2014",
+        "charisma",
+        "college of lore",
+        "multiclassing",
+        "progression"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Classes: Bard (SRD 5.1)"
+    },
+    {
+      "id": "cleric",
+      "title": "Cleric",
+      "entryType": "class",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "hitDie": 8,
+      "fixedHitPointsPerLevel": 5,
+      "primaryAbilities": [
+        "wis"
+      ],
+      "savingThrows": [
+        "wis",
+        "cha"
+      ],
+      "spellcastingAbility": "wis",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "wis",
+            "minimum": 13
+          }
+        ]
+      },
+      "category": "class",
+      "categoryName": "Class",
+      "summary": "A Wisdom-based divine spellcaster who combines prepared magic, sacred power, armor, and a divine specialization.",
+      "description": "This 2014 class-foundation entry gathers the class’s core traits, starting and multiclass proficiencies, SRD subclass, and feature progression without mixing mechanics from the other edition.",
+      "facts": [
+        {
+          "label": "Primary Ability",
+          "value": "Wisdom"
+        },
+        {
+          "label": "Hit Point Die",
+          "value": "D8 per Cleric level"
+        },
+        {
+          "label": "Saving Throw Proficiencies",
+          "value": "Wisdom and Charisma"
+        },
+        {
+          "label": "Skill Proficiencies",
+          "value": "Choose 2: History, Insight, Medicine, Persuasion, or Religion"
+        },
+        {
+          "label": "Weapon Proficiencies",
+          "value": "Simple weapons"
+        },
+        {
+          "label": "Armor Training / Proficiencies",
+          "value": "Light armor, Medium armor, and Shields"
+        },
+        {
+          "label": "Tool Proficiencies",
+          "value": "None"
+        },
+        {
+          "label": "Starting Equipment",
+          "value": "Mace or Warhammer if proficient; Scale Mail, Leather Armor, or Chain Mail if proficient; Light Crossbow with 20 Bolts or another simple weapon; Priest’s Pack or Explorer’s Pack; Shield and Holy Symbol"
+        },
+        {
+          "label": "Spellcasting Progression",
+          "value": "Full spellcaster; Wisdom; begins at class level 1"
+        },
+        {
+          "label": "Multiclass Prerequisite",
+          "value": "Wisdom 13"
+        },
+        {
+          "label": "Proficiencies Gained by Multiclassing",
+          "value": "Light armor, Medium armor, and Shields"
+        },
+        {
+          "label": "SRD Subclass",
+          "value": "Life Domain"
+        },
+        {
+          "label": "Subclass Feature Levels",
+          "value": "1, 2, 6, 8, 17"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Starting as This Class",
+          "description": "At character level 1, gain the class’s complete starting traits and its level 1 features. Starting Hit Points use the maximum value of the Hit Point Die plus your Constitution modifier."
+        },
+        {
+          "name": "Multiclassing into This Class",
+          "description": "You must meet the listed ability-score prerequisite. You gain only the reduced multiclass proficiencies listed above, plus the class’s level 1 features. You do not gain a second set of full starting equipment."
+        },
+        {
+          "name": "Progression Table Scope",
+          "description": "The progression below records the class-feature names and Proficiency Bonus at each class level. Individual feature rules, resource columns, spell-slot columns, and subclass feature text belong to the next Codex collections."
+        }
+      ],
+      "progression": [
+        {
+          "level": 1,
+          "proficiencyBonus": "+2",
+          "features": "Spellcasting, Divine Domain"
+        },
+        {
+          "level": 2,
+          "proficiencyBonus": "+2",
+          "features": "Channel Divinity (1/rest), Divine Domain feature"
+        },
+        {
+          "level": 3,
+          "proficiencyBonus": "+2",
+          "features": "—"
+        },
+        {
+          "level": 4,
+          "proficiencyBonus": "+2",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 5,
+          "proficiencyBonus": "+3",
+          "features": "Destroy Undead (CR 1/2)"
+        },
+        {
+          "level": 6,
+          "proficiencyBonus": "+3",
+          "features": "Channel Divinity (2/rest), Divine Domain feature"
+        },
+        {
+          "level": 7,
+          "proficiencyBonus": "+3",
+          "features": "—"
+        },
+        {
+          "level": 8,
+          "proficiencyBonus": "+3",
+          "features": "Ability Score Improvement, Destroy Undead (CR 1), Divine Domain feature"
+        },
+        {
+          "level": 9,
+          "proficiencyBonus": "+4",
+          "features": "—"
+        },
+        {
+          "level": 10,
+          "proficiencyBonus": "+4",
+          "features": "Divine Intervention"
+        },
+        {
+          "level": 11,
+          "proficiencyBonus": "+4",
+          "features": "Destroy Undead (CR 2)"
+        },
+        {
+          "level": 12,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 13,
+          "proficiencyBonus": "+5",
+          "features": "—"
+        },
+        {
+          "level": 14,
+          "proficiencyBonus": "+5",
+          "features": "Destroy Undead (CR 3)"
+        },
+        {
+          "level": 15,
+          "proficiencyBonus": "+5",
+          "features": "—"
+        },
+        {
+          "level": 16,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 17,
+          "proficiencyBonus": "+6",
+          "features": "Destroy Undead (CR 4), Divine Domain feature"
+        },
+        {
+          "level": 18,
+          "proficiencyBonus": "+6",
+          "features": "Channel Divinity (3/rest)"
+        },
+        {
+          "level": 19,
+          "proficiencyBonus": "+6",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 20,
+          "proficiencyBonus": "+6",
+          "features": "Divine Intervention improvement"
+        }
+      ],
+      "builderClassId": "cleric",
+      "subclass": {
+        "name": "Life Domain",
+        "featureLevels": [
+          1,
+          2,
+          6,
+          8,
+          17
+        ]
+      },
+      "spellcasting": {
+        "summary": "Full spellcaster; Wisdom",
+        "startsAtLevel": 1
+      },
+      "tags": [
+        "cleric",
+        "class",
+        "2014",
+        "wisdom",
+        "life domain",
+        "multiclassing",
+        "progression"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Classes: Cleric (SRD 5.1)"
+    },
+    {
+      "id": "druid",
+      "title": "Druid",
+      "entryType": "class",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "hitDie": 8,
+      "fixedHitPointsPerLevel": 5,
+      "primaryAbilities": [
+        "wis"
+      ],
+      "savingThrows": [
+        "int",
+        "wis"
+      ],
+      "spellcastingAbility": "wis",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "wis",
+            "minimum": 13
+          }
+        ]
+      },
+      "category": "class",
+      "categoryName": "Class",
+      "summary": "A Wisdom-based primal spellcaster who draws on nature magic, transformation, and a druidic circle.",
+      "description": "This 2014 class-foundation entry gathers the class’s core traits, starting and multiclass proficiencies, SRD subclass, and feature progression without mixing mechanics from the other edition.",
+      "facts": [
+        {
+          "label": "Primary Ability",
+          "value": "Wisdom"
+        },
+        {
+          "label": "Hit Point Die",
+          "value": "D8 per Druid level"
+        },
+        {
+          "label": "Saving Throw Proficiencies",
+          "value": "Intelligence and Wisdom"
+        },
+        {
+          "label": "Skill Proficiencies",
+          "value": "Choose 2: Animal Handling, Arcana, Insight, Medicine, Nature, Perception, Religion, or Survival"
+        },
+        {
+          "label": "Weapon Proficiencies",
+          "value": "Clubs, Daggers, Darts, Javelins, Maces, Quarterstaffs, Scimitars, Sickles, Slings, and Spears"
+        },
+        {
+          "label": "Armor Training / Proficiencies",
+          "value": "Light armor, Medium armor, and Shields; the 2014 class text states that Druids will not wear armor or use shields made of metal"
+        },
+        {
+          "label": "Tool Proficiencies",
+          "value": "Herbalism Kit"
+        },
+        {
+          "label": "Starting Equipment",
+          "value": "Wooden Shield or another simple weapon; Scimitar or another simple melee weapon; Leather Armor, Explorer’s Pack, and Druidic Focus"
+        },
+        {
+          "label": "Spellcasting Progression",
+          "value": "Full spellcaster; Wisdom; begins at class level 1"
+        },
+        {
+          "label": "Multiclass Prerequisite",
+          "value": "Wisdom 13"
+        },
+        {
+          "label": "Proficiencies Gained by Multiclassing",
+          "value": "Light armor, Medium armor, and Shields, subject to the class’s metal restriction"
+        },
+        {
+          "label": "SRD Subclass",
+          "value": "Circle of the Land"
+        },
+        {
+          "label": "Subclass Feature Levels",
+          "value": "2, 6, 10, 14"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Starting as This Class",
+          "description": "At character level 1, gain the class’s complete starting traits and its level 1 features. Starting Hit Points use the maximum value of the Hit Point Die plus your Constitution modifier."
+        },
+        {
+          "name": "Multiclassing into This Class",
+          "description": "You must meet the listed ability-score prerequisite. You gain only the reduced multiclass proficiencies listed above, plus the class’s level 1 features. You do not gain a second set of full starting equipment."
+        },
+        {
+          "name": "Progression Table Scope",
+          "description": "The progression below records the class-feature names and Proficiency Bonus at each class level. Individual feature rules, resource columns, spell-slot columns, and subclass feature text belong to the next Codex collections."
+        }
+      ],
+      "progression": [
+        {
+          "level": 1,
+          "proficiencyBonus": "+2",
+          "features": "Druidic, Spellcasting"
+        },
+        {
+          "level": 2,
+          "proficiencyBonus": "+2",
+          "features": "Wild Shape, Druid Circle"
+        },
+        {
+          "level": 3,
+          "proficiencyBonus": "+2",
+          "features": "—"
+        },
+        {
+          "level": 4,
+          "proficiencyBonus": "+2",
+          "features": "Wild Shape improvement, Ability Score Improvement"
+        },
+        {
+          "level": 5,
+          "proficiencyBonus": "+3",
+          "features": "—"
+        },
+        {
+          "level": 6,
+          "proficiencyBonus": "+3",
+          "features": "Druid Circle feature"
+        },
+        {
+          "level": 7,
+          "proficiencyBonus": "+3",
+          "features": "—"
+        },
+        {
+          "level": 8,
+          "proficiencyBonus": "+3",
+          "features": "Wild Shape improvement, Ability Score Improvement"
+        },
+        {
+          "level": 9,
+          "proficiencyBonus": "+4",
+          "features": "—"
+        },
+        {
+          "level": 10,
+          "proficiencyBonus": "+4",
+          "features": "Druid Circle feature"
+        },
+        {
+          "level": 11,
+          "proficiencyBonus": "+4",
+          "features": "—"
+        },
+        {
+          "level": 12,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 13,
+          "proficiencyBonus": "+5",
+          "features": "—"
+        },
+        {
+          "level": 14,
+          "proficiencyBonus": "+5",
+          "features": "Druid Circle feature"
+        },
+        {
+          "level": 15,
+          "proficiencyBonus": "+5",
+          "features": "—"
+        },
+        {
+          "level": 16,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 17,
+          "proficiencyBonus": "+6",
+          "features": "—"
+        },
+        {
+          "level": 18,
+          "proficiencyBonus": "+6",
+          "features": "Timeless Body, Beast Spells"
+        },
+        {
+          "level": 19,
+          "proficiencyBonus": "+6",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 20,
+          "proficiencyBonus": "+6",
+          "features": "Archdruid"
+        }
+      ],
+      "builderClassId": "druid",
+      "subclass": {
+        "name": "Circle of the Land",
+        "featureLevels": [
+          2,
+          6,
+          10,
+          14
+        ]
+      },
+      "spellcasting": {
+        "summary": "Full spellcaster; Wisdom",
+        "startsAtLevel": 1
+      },
+      "tags": [
+        "druid",
+        "class",
+        "2014",
+        "wisdom",
+        "circle of the land",
+        "multiclassing",
+        "progression"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Classes: Druid (SRD 5.1)"
+    },
+    {
+      "id": "fighter",
+      "title": "Fighter",
+      "entryType": "class",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "hitDie": 10,
+      "fixedHitPointsPerLevel": 6,
+      "primaryAbilities": [
+        "str",
+        "dex"
+      ],
+      "savingThrows": [
+        "str",
+        "con"
+      ],
+      "spellcastingAbility": null,
+      "multiclassPrerequisite": {
+        "type": "any",
+        "requirements": [
+          {
+            "ability": "str",
+            "minimum": 13
+          },
+          {
+            "ability": "dex",
+            "minimum": 13
+          }
+        ]
+      },
+      "category": "class",
+      "categoryName": "Class",
+      "summary": "A highly adaptable martial class built around weapon training, extra attacks, resilience, and repeated Ability Score Improvements.",
+      "description": "This 2014 class-foundation entry gathers the class’s core traits, starting and multiclass proficiencies, SRD subclass, and feature progression without mixing mechanics from the other edition.",
+      "facts": [
+        {
+          "label": "Primary Ability",
+          "value": "Strength or Dexterity"
+        },
+        {
+          "label": "Hit Point Die",
+          "value": "D10 per Fighter level"
+        },
+        {
+          "label": "Saving Throw Proficiencies",
+          "value": "Strength and Constitution"
+        },
+        {
+          "label": "Skill Proficiencies",
+          "value": "Choose 2: Acrobatics, Animal Handling, Athletics, History, Insight, Intimidation, Perception, or Survival"
+        },
+        {
+          "label": "Weapon Proficiencies",
+          "value": "Simple and Martial weapons"
+        },
+        {
+          "label": "Armor Training / Proficiencies",
+          "value": "All armor and Shields"
+        },
+        {
+          "label": "Tool Proficiencies",
+          "value": "None"
+        },
+        {
+          "label": "Starting Equipment",
+          "value": "Choose armor and weapon packages from the Fighter starting-equipment options, plus a Dungeoneer’s Pack or Explorer’s Pack"
+        },
+        {
+          "label": "Spellcasting Progression",
+          "value": "None in the base class"
+        },
+        {
+          "label": "Multiclass Prerequisite",
+          "value": "Strength 13 or Dexterity 13"
+        },
+        {
+          "label": "Proficiencies Gained by Multiclassing",
+          "value": "Light armor, Medium armor, Shields, Simple weapons, and Martial weapons"
+        },
+        {
+          "label": "SRD Subclass",
+          "value": "Champion"
+        },
+        {
+          "label": "Subclass Feature Levels",
+          "value": "3, 7, 10, 15, 18"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Starting as This Class",
+          "description": "At character level 1, gain the class’s complete starting traits and its level 1 features. Starting Hit Points use the maximum value of the Hit Point Die plus your Constitution modifier."
+        },
+        {
+          "name": "Multiclassing into This Class",
+          "description": "You must meet the listed ability-score prerequisite. You gain only the reduced multiclass proficiencies listed above, plus the class’s level 1 features. You do not gain a second set of full starting equipment."
+        },
+        {
+          "name": "Progression Table Scope",
+          "description": "The progression below records the class-feature names and Proficiency Bonus at each class level. Individual feature rules, resource columns, spell-slot columns, and subclass feature text belong to the next Codex collections."
+        }
+      ],
+      "progression": [
+        {
+          "level": 1,
+          "proficiencyBonus": "+2",
+          "features": "Fighting Style, Second Wind"
+        },
+        {
+          "level": 2,
+          "proficiencyBonus": "+2",
+          "features": "Action Surge (one use)"
+        },
+        {
+          "level": 3,
+          "proficiencyBonus": "+2",
+          "features": "Martial Archetype"
+        },
+        {
+          "level": 4,
+          "proficiencyBonus": "+2",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 5,
+          "proficiencyBonus": "+3",
+          "features": "Extra Attack"
+        },
+        {
+          "level": 6,
+          "proficiencyBonus": "+3",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 7,
+          "proficiencyBonus": "+3",
+          "features": "Martial Archetype feature"
+        },
+        {
+          "level": 8,
+          "proficiencyBonus": "+3",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 9,
+          "proficiencyBonus": "+4",
+          "features": "Indomitable (one use)"
+        },
+        {
+          "level": 10,
+          "proficiencyBonus": "+4",
+          "features": "Martial Archetype feature"
+        },
+        {
+          "level": 11,
+          "proficiencyBonus": "+4",
+          "features": "Extra Attack (2)"
+        },
+        {
+          "level": 12,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 13,
+          "proficiencyBonus": "+5",
+          "features": "Indomitable (two uses)"
+        },
+        {
+          "level": 14,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 15,
+          "proficiencyBonus": "+5",
+          "features": "Martial Archetype feature"
+        },
+        {
+          "level": 16,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 17,
+          "proficiencyBonus": "+6",
+          "features": "Action Surge (two uses), Indomitable (three uses)"
+        },
+        {
+          "level": 18,
+          "proficiencyBonus": "+6",
+          "features": "Martial Archetype feature"
+        },
+        {
+          "level": 19,
+          "proficiencyBonus": "+6",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 20,
+          "proficiencyBonus": "+6",
+          "features": "Extra Attack (3)"
+        }
+      ],
+      "builderClassId": "fighter",
+      "subclass": {
+        "name": "Champion",
+        "featureLevels": [
+          3,
+          7,
+          10,
+          15,
+          18
+        ]
+      },
+      "spellcasting": {
+        "summary": "None in the base class",
+        "startsAtLevel": null
+      },
+      "tags": [
+        "fighter",
+        "class",
+        "2014",
+        "strength or dexterity",
+        "champion",
+        "multiclassing",
+        "progression"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Classes: Fighter (SRD 5.1)"
+    },
+    {
+      "id": "monk",
+      "title": "Monk",
+      "entryType": "class",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "hitDie": 8,
+      "fixedHitPointsPerLevel": 5,
+      "primaryAbilities": [
+        "dex",
+        "wis"
+      ],
+      "savingThrows": [
+        "str",
+        "dex"
+      ],
+      "spellcastingAbility": null,
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "dex",
+            "minimum": 13
+          },
+          {
+            "ability": "wis",
+            "minimum": 13
+          }
+        ]
+      },
+      "category": "class",
+      "categoryName": "Class",
+      "summary": "A mobile Dexterity-and-Wisdom martial artist who uses disciplined training, unarmed strikes, and an internal focus resource.",
+      "description": "This 2014 class-foundation entry gathers the class’s core traits, starting and multiclass proficiencies, SRD subclass, and feature progression without mixing mechanics from the other edition.",
+      "facts": [
+        {
+          "label": "Primary Ability",
+          "value": "Dexterity and Wisdom"
+        },
+        {
+          "label": "Hit Point Die",
+          "value": "D8 per Monk level"
+        },
+        {
+          "label": "Saving Throw Proficiencies",
+          "value": "Strength and Dexterity"
+        },
+        {
+          "label": "Skill Proficiencies",
+          "value": "Choose 2: Acrobatics, Athletics, History, Insight, Religion, or Stealth"
+        },
+        {
+          "label": "Weapon Proficiencies",
+          "value": "Simple weapons and Shortswords"
+        },
+        {
+          "label": "Armor Training / Proficiencies",
+          "value": "None"
+        },
+        {
+          "label": "Tool Proficiencies",
+          "value": "One type of Artisan’s Tools or one Musical Instrument"
+        },
+        {
+          "label": "Starting Equipment",
+          "value": "Shortsword or another simple weapon; Dungeoneer’s Pack or Explorer’s Pack; 10 Darts"
+        },
+        {
+          "label": "Spellcasting Progression",
+          "value": "None in the base class"
+        },
+        {
+          "label": "Multiclass Prerequisite",
+          "value": "Dexterity 13 and Wisdom 13"
+        },
+        {
+          "label": "Proficiencies Gained by Multiclassing",
+          "value": "Simple weapons and Shortswords"
+        },
+        {
+          "label": "SRD Subclass",
+          "value": "Way of the Open Hand"
+        },
+        {
+          "label": "Subclass Feature Levels",
+          "value": "3, 6, 11, 17"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Starting as This Class",
+          "description": "At character level 1, gain the class’s complete starting traits and its level 1 features. Starting Hit Points use the maximum value of the Hit Point Die plus your Constitution modifier."
+        },
+        {
+          "name": "Multiclassing into This Class",
+          "description": "You must meet the listed ability-score prerequisite. You gain only the reduced multiclass proficiencies listed above, plus the class’s level 1 features. You do not gain a second set of full starting equipment."
+        },
+        {
+          "name": "Progression Table Scope",
+          "description": "The progression below records the class-feature names and Proficiency Bonus at each class level. Individual feature rules, resource columns, spell-slot columns, and subclass feature text belong to the next Codex collections."
+        }
+      ],
+      "progression": [
+        {
+          "level": 1,
+          "proficiencyBonus": "+2",
+          "features": "Unarmored Defense, Martial Arts"
+        },
+        {
+          "level": 2,
+          "proficiencyBonus": "+2",
+          "features": "Ki, Unarmored Movement"
+        },
+        {
+          "level": 3,
+          "proficiencyBonus": "+2",
+          "features": "Monastic Tradition, Deflect Missiles"
+        },
+        {
+          "level": 4,
+          "proficiencyBonus": "+2",
+          "features": "Ability Score Improvement, Slow Fall"
+        },
+        {
+          "level": 5,
+          "proficiencyBonus": "+3",
+          "features": "Extra Attack, Stunning Strike"
+        },
+        {
+          "level": 6,
+          "proficiencyBonus": "+3",
+          "features": "Ki-Empowered Strikes, Monastic Tradition feature"
+        },
+        {
+          "level": 7,
+          "proficiencyBonus": "+3",
+          "features": "Evasion, Stillness of Mind"
+        },
+        {
+          "level": 8,
+          "proficiencyBonus": "+3",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 9,
+          "proficiencyBonus": "+4",
+          "features": "Unarmored Movement improvement"
+        },
+        {
+          "level": 10,
+          "proficiencyBonus": "+4",
+          "features": "Purity of Body"
+        },
+        {
+          "level": 11,
+          "proficiencyBonus": "+4",
+          "features": "Monastic Tradition feature"
+        },
+        {
+          "level": 12,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 13,
+          "proficiencyBonus": "+5",
+          "features": "Tongue of the Sun and Moon"
+        },
+        {
+          "level": 14,
+          "proficiencyBonus": "+5",
+          "features": "Diamond Soul"
+        },
+        {
+          "level": 15,
+          "proficiencyBonus": "+5",
+          "features": "Timeless Body"
+        },
+        {
+          "level": 16,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 17,
+          "proficiencyBonus": "+6",
+          "features": "Monastic Tradition feature"
+        },
+        {
+          "level": 18,
+          "proficiencyBonus": "+6",
+          "features": "Empty Body"
+        },
+        {
+          "level": 19,
+          "proficiencyBonus": "+6",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 20,
+          "proficiencyBonus": "+6",
+          "features": "Perfect Self"
+        }
+      ],
+      "builderClassId": "monk",
+      "subclass": {
+        "name": "Way of the Open Hand",
+        "featureLevels": [
+          3,
+          6,
+          11,
+          17
+        ]
+      },
+      "spellcasting": {
+        "summary": "None in the base class",
+        "startsAtLevel": null
+      },
+      "tags": [
+        "monk",
+        "class",
+        "2014",
+        "dexterity and wisdom",
+        "way of the open hand",
+        "multiclassing",
+        "progression"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Classes: Monk (SRD 5.1)"
+    },
+    {
+      "id": "paladin",
+      "title": "Paladin",
+      "entryType": "class",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "hitDie": 10,
+      "fixedHitPointsPerLevel": 6,
+      "primaryAbilities": [
+        "str",
+        "cha"
+      ],
+      "savingThrows": [
+        "wis",
+        "cha"
+      ],
+      "spellcastingAbility": "cha",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "str",
+            "minimum": 13
+          },
+          {
+            "ability": "cha",
+            "minimum": 13
+          }
+        ]
+      },
+      "category": "class",
+      "categoryName": "Class",
+      "summary": "A Strength-and-Charisma holy warrior who combines armor, martial weapons, healing, protective auras, and divine spellcasting.",
+      "description": "This 2014 class-foundation entry gathers the class’s core traits, starting and multiclass proficiencies, SRD subclass, and feature progression without mixing mechanics from the other edition.",
+      "facts": [
+        {
+          "label": "Primary Ability",
+          "value": "Strength and Charisma"
+        },
+        {
+          "label": "Hit Point Die",
+          "value": "D10 per Paladin level"
+        },
+        {
+          "label": "Saving Throw Proficiencies",
+          "value": "Wisdom and Charisma"
+        },
+        {
+          "label": "Skill Proficiencies",
+          "value": "Choose 2: Athletics, Insight, Intimidation, Medicine, Persuasion, or Religion"
+        },
+        {
+          "label": "Weapon Proficiencies",
+          "value": "Simple and Martial weapons"
+        },
+        {
+          "label": "Armor Training / Proficiencies",
+          "value": "All armor and Shields"
+        },
+        {
+          "label": "Tool Proficiencies",
+          "value": "None"
+        },
+        {
+          "label": "Starting Equipment",
+          "value": "One martial weapon and a Shield or two martial weapons; five Javelins or another simple melee weapon; Priest’s Pack or Explorer’s Pack; Chain Mail and Holy Symbol"
+        },
+        {
+          "label": "Spellcasting Progression",
+          "value": "Half spellcaster; Charisma; begins at class level 2"
+        },
+        {
+          "label": "Multiclass Prerequisite",
+          "value": "Strength 13 and Charisma 13"
+        },
+        {
+          "label": "Proficiencies Gained by Multiclassing",
+          "value": "Light armor, Medium armor, Shields, Simple weapons, and Martial weapons"
+        },
+        {
+          "label": "SRD Subclass",
+          "value": "Oath of Devotion"
+        },
+        {
+          "label": "Subclass Feature Levels",
+          "value": "3, 7, 15, 20"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Starting as This Class",
+          "description": "At character level 1, gain the class’s complete starting traits and its level 1 features. Starting Hit Points use the maximum value of the Hit Point Die plus your Constitution modifier."
+        },
+        {
+          "name": "Multiclassing into This Class",
+          "description": "You must meet the listed ability-score prerequisite. You gain only the reduced multiclass proficiencies listed above, plus the class’s level 1 features. You do not gain a second set of full starting equipment."
+        },
+        {
+          "name": "Progression Table Scope",
+          "description": "The progression below records the class-feature names and Proficiency Bonus at each class level. Individual feature rules, resource columns, spell-slot columns, and subclass feature text belong to the next Codex collections."
+        }
+      ],
+      "progression": [
+        {
+          "level": 1,
+          "proficiencyBonus": "+2",
+          "features": "Divine Sense, Lay on Hands"
+        },
+        {
+          "level": 2,
+          "proficiencyBonus": "+2",
+          "features": "Fighting Style, Spellcasting, Divine Smite"
+        },
+        {
+          "level": 3,
+          "proficiencyBonus": "+2",
+          "features": "Divine Health, Sacred Oath"
+        },
+        {
+          "level": 4,
+          "proficiencyBonus": "+2",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 5,
+          "proficiencyBonus": "+3",
+          "features": "Extra Attack"
+        },
+        {
+          "level": 6,
+          "proficiencyBonus": "+3",
+          "features": "Aura of Protection"
+        },
+        {
+          "level": 7,
+          "proficiencyBonus": "+3",
+          "features": "Sacred Oath feature"
+        },
+        {
+          "level": 8,
+          "proficiencyBonus": "+3",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 9,
+          "proficiencyBonus": "+4",
+          "features": "—"
+        },
+        {
+          "level": 10,
+          "proficiencyBonus": "+4",
+          "features": "Aura of Courage"
+        },
+        {
+          "level": 11,
+          "proficiencyBonus": "+4",
+          "features": "Improved Divine Smite"
+        },
+        {
+          "level": 12,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 13,
+          "proficiencyBonus": "+5",
+          "features": "—"
+        },
+        {
+          "level": 14,
+          "proficiencyBonus": "+5",
+          "features": "Cleansing Touch"
+        },
+        {
+          "level": 15,
+          "proficiencyBonus": "+5",
+          "features": "Sacred Oath feature"
+        },
+        {
+          "level": 16,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 17,
+          "proficiencyBonus": "+6",
+          "features": "—"
+        },
+        {
+          "level": 18,
+          "proficiencyBonus": "+6",
+          "features": "Aura improvements"
+        },
+        {
+          "level": 19,
+          "proficiencyBonus": "+6",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 20,
+          "proficiencyBonus": "+6",
+          "features": "Sacred Oath feature"
+        }
+      ],
+      "builderClassId": "paladin",
+      "subclass": {
+        "name": "Oath of Devotion",
+        "featureLevels": [
+          3,
+          7,
+          15,
+          20
+        ]
+      },
+      "spellcasting": {
+        "summary": "Half spellcaster; Charisma",
+        "startsAtLevel": 2
+      },
+      "tags": [
+        "paladin",
+        "class",
+        "2014",
+        "strength and charisma",
+        "oath of devotion",
+        "multiclassing",
+        "progression"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Classes: Paladin (SRD 5.1)"
+    },
+    {
+      "id": "ranger",
+      "title": "Ranger",
+      "entryType": "class",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "hitDie": 10,
+      "fixedHitPointsPerLevel": 6,
+      "primaryAbilities": [
+        "dex",
+        "wis"
+      ],
+      "savingThrows": [
+        "str",
+        "dex"
+      ],
+      "spellcastingAbility": "wis",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "dex",
+            "minimum": 13
+          },
+          {
+            "ability": "wis",
+            "minimum": 13
+          }
+        ]
+      },
+      "category": "class",
+      "categoryName": "Class",
+      "summary": "A Dexterity-and-Wisdom wilderness warrior who blends martial weapons, exploration expertise, tracking, and primal spellcasting.",
+      "description": "This 2014 class-foundation entry gathers the class’s core traits, starting and multiclass proficiencies, SRD subclass, and feature progression without mixing mechanics from the other edition.",
+      "facts": [
+        {
+          "label": "Primary Ability",
+          "value": "Dexterity and Wisdom"
+        },
+        {
+          "label": "Hit Point Die",
+          "value": "D10 per Ranger level"
+        },
+        {
+          "label": "Saving Throw Proficiencies",
+          "value": "Strength and Dexterity"
+        },
+        {
+          "label": "Skill Proficiencies",
+          "value": "Choose 3: Animal Handling, Athletics, Insight, Investigation, Nature, Perception, Stealth, or Survival"
+        },
+        {
+          "label": "Weapon Proficiencies",
+          "value": "Simple and Martial weapons"
+        },
+        {
+          "label": "Armor Training / Proficiencies",
+          "value": "Light armor, Medium armor, and Shields"
+        },
+        {
+          "label": "Tool Proficiencies",
+          "value": "None"
+        },
+        {
+          "label": "Starting Equipment",
+          "value": "Scale Mail or Leather Armor; two Shortswords or two simple melee weapons; Dungeoneer’s Pack or Explorer’s Pack; Longbow and Quiver with 20 Arrows"
+        },
+        {
+          "label": "Spellcasting Progression",
+          "value": "Half spellcaster; Wisdom; begins at class level 2"
+        },
+        {
+          "label": "Multiclass Prerequisite",
+          "value": "Dexterity 13 and Wisdom 13"
+        },
+        {
+          "label": "Proficiencies Gained by Multiclassing",
+          "value": "Light armor, Medium armor, Shields, Simple weapons, Martial weapons, and one skill from the Ranger skill list"
+        },
+        {
+          "label": "SRD Subclass",
+          "value": "Hunter"
+        },
+        {
+          "label": "Subclass Feature Levels",
+          "value": "3, 7, 11, 15"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Starting as This Class",
+          "description": "At character level 1, gain the class’s complete starting traits and its level 1 features. Starting Hit Points use the maximum value of the Hit Point Die plus your Constitution modifier."
+        },
+        {
+          "name": "Multiclassing into This Class",
+          "description": "You must meet the listed ability-score prerequisite. You gain only the reduced multiclass proficiencies listed above, plus the class’s level 1 features. You do not gain a second set of full starting equipment."
+        },
+        {
+          "name": "Progression Table Scope",
+          "description": "The progression below records the class-feature names and Proficiency Bonus at each class level. Individual feature rules, resource columns, spell-slot columns, and subclass feature text belong to the next Codex collections."
+        }
+      ],
+      "progression": [
+        {
+          "level": 1,
+          "proficiencyBonus": "+2",
+          "features": "Favored Enemy, Natural Explorer"
+        },
+        {
+          "level": 2,
+          "proficiencyBonus": "+2",
+          "features": "Fighting Style, Spellcasting"
+        },
+        {
+          "level": 3,
+          "proficiencyBonus": "+2",
+          "features": "Ranger Archetype, Primeval Awareness"
+        },
+        {
+          "level": 4,
+          "proficiencyBonus": "+2",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 5,
+          "proficiencyBonus": "+3",
+          "features": "Extra Attack"
+        },
+        {
+          "level": 6,
+          "proficiencyBonus": "+3",
+          "features": "Favored Enemy and Natural Explorer improvements"
+        },
+        {
+          "level": 7,
+          "proficiencyBonus": "+3",
+          "features": "Ranger Archetype feature"
+        },
+        {
+          "level": 8,
+          "proficiencyBonus": "+3",
+          "features": "Ability Score Improvement, Land’s Stride"
+        },
+        {
+          "level": 9,
+          "proficiencyBonus": "+4",
+          "features": "—"
+        },
+        {
+          "level": 10,
+          "proficiencyBonus": "+4",
+          "features": "Natural Explorer improvement, Hide in Plain Sight"
+        },
+        {
+          "level": 11,
+          "proficiencyBonus": "+4",
+          "features": "Ranger Archetype feature"
+        },
+        {
+          "level": 12,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 13,
+          "proficiencyBonus": "+5",
+          "features": "—"
+        },
+        {
+          "level": 14,
+          "proficiencyBonus": "+5",
+          "features": "Favored Enemy improvement, Vanish"
+        },
+        {
+          "level": 15,
+          "proficiencyBonus": "+5",
+          "features": "Ranger Archetype feature"
+        },
+        {
+          "level": 16,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 17,
+          "proficiencyBonus": "+6",
+          "features": "—"
+        },
+        {
+          "level": 18,
+          "proficiencyBonus": "+6",
+          "features": "Feral Senses"
+        },
+        {
+          "level": 19,
+          "proficiencyBonus": "+6",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 20,
+          "proficiencyBonus": "+6",
+          "features": "Foe Slayer"
+        }
+      ],
+      "builderClassId": "ranger",
+      "subclass": {
+        "name": "Hunter",
+        "featureLevels": [
+          3,
+          7,
+          11,
+          15
+        ]
+      },
+      "spellcasting": {
+        "summary": "Half spellcaster; Wisdom",
+        "startsAtLevel": 2
+      },
+      "tags": [
+        "ranger",
+        "class",
+        "2014",
+        "dexterity and wisdom",
+        "hunter",
+        "multiclassing",
+        "progression"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Classes: Ranger (SRD 5.1)"
+    },
+    {
+      "id": "rogue",
+      "title": "Rogue",
+      "entryType": "class",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "hitDie": 8,
+      "fixedHitPointsPerLevel": 5,
+      "primaryAbilities": [
+        "dex"
+      ],
+      "savingThrows": [
+        "dex",
+        "int"
+      ],
+      "spellcastingAbility": null,
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "dex",
+            "minimum": 13
+          }
+        ]
+      },
+      "category": "class",
+      "categoryName": "Class",
+      "summary": "A Dexterity-based expert who relies on precision damage, mobility, broad skills, and specialized problem solving.",
+      "description": "This 2014 class-foundation entry gathers the class’s core traits, starting and multiclass proficiencies, SRD subclass, and feature progression without mixing mechanics from the other edition.",
+      "facts": [
+        {
+          "label": "Primary Ability",
+          "value": "Dexterity"
+        },
+        {
+          "label": "Hit Point Die",
+          "value": "D8 per Rogue level"
+        },
+        {
+          "label": "Saving Throw Proficiencies",
+          "value": "Dexterity and Intelligence"
+        },
+        {
+          "label": "Skill Proficiencies",
+          "value": "Choose 4: Acrobatics, Athletics, Deception, Insight, Intimidation, Investigation, Perception, Performance, Persuasion, Sleight of Hand, or Stealth"
+        },
+        {
+          "label": "Weapon Proficiencies",
+          "value": "Simple weapons, Hand Crossbows, Longswords, Rapiers, and Shortswords"
+        },
+        {
+          "label": "Armor Training / Proficiencies",
+          "value": "Light armor"
+        },
+        {
+          "label": "Tool Proficiencies",
+          "value": "Thieves’ Tools"
+        },
+        {
+          "label": "Starting Equipment",
+          "value": "Rapier or Shortsword; Shortbow with 20 Arrows or Shortsword; Burglar’s Pack, Dungeoneer’s Pack, or Explorer’s Pack; Leather Armor, two Daggers, and Thieves’ Tools"
+        },
+        {
+          "label": "Spellcasting Progression",
+          "value": "None in the base class"
+        },
+        {
+          "label": "Multiclass Prerequisite",
+          "value": "Dexterity 13"
+        },
+        {
+          "label": "Proficiencies Gained by Multiclassing",
+          "value": "Light armor, one skill from the Rogue skill list, and Thieves’ Tools"
+        },
+        {
+          "label": "SRD Subclass",
+          "value": "Thief"
+        },
+        {
+          "label": "Subclass Feature Levels",
+          "value": "3, 9, 13, 17"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Starting as This Class",
+          "description": "At character level 1, gain the class’s complete starting traits and its level 1 features. Starting Hit Points use the maximum value of the Hit Point Die plus your Constitution modifier."
+        },
+        {
+          "name": "Multiclassing into This Class",
+          "description": "You must meet the listed ability-score prerequisite. You gain only the reduced multiclass proficiencies listed above, plus the class’s level 1 features. You do not gain a second set of full starting equipment."
+        },
+        {
+          "name": "Progression Table Scope",
+          "description": "The progression below records the class-feature names and Proficiency Bonus at each class level. Individual feature rules, resource columns, spell-slot columns, and subclass feature text belong to the next Codex collections."
+        }
+      ],
+      "progression": [
+        {
+          "level": 1,
+          "proficiencyBonus": "+2",
+          "features": "Expertise, Sneak Attack, Thieves’ Cant"
+        },
+        {
+          "level": 2,
+          "proficiencyBonus": "+2",
+          "features": "Cunning Action"
+        },
+        {
+          "level": 3,
+          "proficiencyBonus": "+2",
+          "features": "Roguish Archetype"
+        },
+        {
+          "level": 4,
+          "proficiencyBonus": "+2",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 5,
+          "proficiencyBonus": "+3",
+          "features": "Uncanny Dodge"
+        },
+        {
+          "level": 6,
+          "proficiencyBonus": "+3",
+          "features": "Expertise"
+        },
+        {
+          "level": 7,
+          "proficiencyBonus": "+3",
+          "features": "Evasion"
+        },
+        {
+          "level": 8,
+          "proficiencyBonus": "+3",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 9,
+          "proficiencyBonus": "+4",
+          "features": "Roguish Archetype feature"
+        },
+        {
+          "level": 10,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 11,
+          "proficiencyBonus": "+4",
+          "features": "Reliable Talent"
+        },
+        {
+          "level": 12,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 13,
+          "proficiencyBonus": "+5",
+          "features": "Roguish Archetype feature"
+        },
+        {
+          "level": 14,
+          "proficiencyBonus": "+5",
+          "features": "Blindsense"
+        },
+        {
+          "level": 15,
+          "proficiencyBonus": "+5",
+          "features": "Slippery Mind"
+        },
+        {
+          "level": 16,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 17,
+          "proficiencyBonus": "+6",
+          "features": "Roguish Archetype feature"
+        },
+        {
+          "level": 18,
+          "proficiencyBonus": "+6",
+          "features": "Elusive"
+        },
+        {
+          "level": 19,
+          "proficiencyBonus": "+6",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 20,
+          "proficiencyBonus": "+6",
+          "features": "Stroke of Luck"
+        }
+      ],
+      "builderClassId": "rogue",
+      "subclass": {
+        "name": "Thief",
+        "featureLevels": [
+          3,
+          9,
+          13,
+          17
+        ]
+      },
+      "spellcasting": {
+        "summary": "None in the base class",
+        "startsAtLevel": null
+      },
+      "tags": [
+        "rogue",
+        "class",
+        "2014",
+        "dexterity",
+        "thief",
+        "multiclassing",
+        "progression"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Classes: Rogue (SRD 5.1)"
+    },
+    {
+      "id": "sorcerer",
+      "title": "Sorcerer",
+      "entryType": "class",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "hitDie": 6,
+      "fixedHitPointsPerLevel": 4,
+      "primaryAbilities": [
+        "cha"
+      ],
+      "savingThrows": [
+        "con",
+        "cha"
+      ],
+      "spellcastingAbility": "cha",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "cha",
+            "minimum": 13
+          }
+        ]
+      },
+      "category": "class",
+      "categoryName": "Class",
+      "summary": "A Charisma-based arcane spellcaster whose innate magic is shaped through Sorcery Points and Metamagic.",
+      "description": "This 2014 class-foundation entry gathers the class’s core traits, starting and multiclass proficiencies, SRD subclass, and feature progression without mixing mechanics from the other edition.",
+      "facts": [
+        {
+          "label": "Primary Ability",
+          "value": "Charisma"
+        },
+        {
+          "label": "Hit Point Die",
+          "value": "D6 per Sorcerer level"
+        },
+        {
+          "label": "Saving Throw Proficiencies",
+          "value": "Constitution and Charisma"
+        },
+        {
+          "label": "Skill Proficiencies",
+          "value": "Choose 2: Arcana, Deception, Insight, Intimidation, Persuasion, or Religion"
+        },
+        {
+          "label": "Weapon Proficiencies",
+          "value": "Daggers, Darts, Slings, Quarterstaffs, and Light Crossbows"
+        },
+        {
+          "label": "Armor Training / Proficiencies",
+          "value": "None"
+        },
+        {
+          "label": "Tool Proficiencies",
+          "value": "None"
+        },
+        {
+          "label": "Starting Equipment",
+          "value": "Light Crossbow with 20 Bolts or another simple weapon; Component Pouch or Arcane Focus; Dungeoneer’s Pack or Explorer’s Pack; two Daggers"
+        },
+        {
+          "label": "Spellcasting Progression",
+          "value": "Full spellcaster; Charisma; begins at class level 1"
+        },
+        {
+          "label": "Multiclass Prerequisite",
+          "value": "Charisma 13"
+        },
+        {
+          "label": "Proficiencies Gained by Multiclassing",
+          "value": "No additional proficiencies"
+        },
+        {
+          "label": "SRD Subclass",
+          "value": "Draconic Bloodline"
+        },
+        {
+          "label": "Subclass Feature Levels",
+          "value": "1, 6, 14, 18"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Starting as This Class",
+          "description": "At character level 1, gain the class’s complete starting traits and its level 1 features. Starting Hit Points use the maximum value of the Hit Point Die plus your Constitution modifier."
+        },
+        {
+          "name": "Multiclassing into This Class",
+          "description": "You must meet the listed ability-score prerequisite. You gain only the reduced multiclass proficiencies listed above, plus the class’s level 1 features. You do not gain a second set of full starting equipment."
+        },
+        {
+          "name": "Progression Table Scope",
+          "description": "The progression below records the class-feature names and Proficiency Bonus at each class level. Individual feature rules, resource columns, spell-slot columns, and subclass feature text belong to the next Codex collections."
+        }
+      ],
+      "progression": [
+        {
+          "level": 1,
+          "proficiencyBonus": "+2",
+          "features": "Spellcasting, Sorcerous Origin"
+        },
+        {
+          "level": 2,
+          "proficiencyBonus": "+2",
+          "features": "Font of Magic"
+        },
+        {
+          "level": 3,
+          "proficiencyBonus": "+2",
+          "features": "Metamagic"
+        },
+        {
+          "level": 4,
+          "proficiencyBonus": "+2",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 5,
+          "proficiencyBonus": "+3",
+          "features": "—"
+        },
+        {
+          "level": 6,
+          "proficiencyBonus": "+3",
+          "features": "Sorcerous Origin feature"
+        },
+        {
+          "level": 7,
+          "proficiencyBonus": "+3",
+          "features": "—"
+        },
+        {
+          "level": 8,
+          "proficiencyBonus": "+3",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 9,
+          "proficiencyBonus": "+4",
+          "features": "—"
+        },
+        {
+          "level": 10,
+          "proficiencyBonus": "+4",
+          "features": "Metamagic"
+        },
+        {
+          "level": 11,
+          "proficiencyBonus": "+4",
+          "features": "—"
+        },
+        {
+          "level": 12,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 13,
+          "proficiencyBonus": "+5",
+          "features": "—"
+        },
+        {
+          "level": 14,
+          "proficiencyBonus": "+5",
+          "features": "Sorcerous Origin feature"
+        },
+        {
+          "level": 15,
+          "proficiencyBonus": "+5",
+          "features": "—"
+        },
+        {
+          "level": 16,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 17,
+          "proficiencyBonus": "+6",
+          "features": "Metamagic"
+        },
+        {
+          "level": 18,
+          "proficiencyBonus": "+6",
+          "features": "Sorcerous Origin feature"
+        },
+        {
+          "level": 19,
+          "proficiencyBonus": "+6",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 20,
+          "proficiencyBonus": "+6",
+          "features": "Sorcerous Restoration"
+        }
+      ],
+      "builderClassId": "sorcerer",
+      "subclass": {
+        "name": "Draconic Bloodline",
+        "featureLevels": [
+          1,
+          6,
+          14,
+          18
+        ]
+      },
+      "spellcasting": {
+        "summary": "Full spellcaster; Charisma",
+        "startsAtLevel": 1
+      },
+      "tags": [
+        "sorcerer",
+        "class",
+        "2014",
+        "charisma",
+        "draconic bloodline",
+        "multiclassing",
+        "progression"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Classes: Sorcerer (SRD 5.1)"
+    },
+    {
+      "id": "warlock",
+      "title": "Warlock",
+      "entryType": "class",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "hitDie": 8,
+      "fixedHitPointsPerLevel": 5,
+      "primaryAbilities": [
+        "cha"
+      ],
+      "savingThrows": [
+        "wis",
+        "cha"
+      ],
+      "spellcastingAbility": "cha",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "cha",
+            "minimum": 13
+          }
+        ]
+      },
+      "category": "class",
+      "categoryName": "Class",
+      "summary": "A Charisma-based occult spellcaster who combines pact magic, eldritch invocations, and a supernatural patron.",
+      "description": "This 2014 class-foundation entry gathers the class’s core traits, starting and multiclass proficiencies, SRD subclass, and feature progression without mixing mechanics from the other edition.",
+      "facts": [
+        {
+          "label": "Primary Ability",
+          "value": "Charisma"
+        },
+        {
+          "label": "Hit Point Die",
+          "value": "D8 per Warlock level"
+        },
+        {
+          "label": "Saving Throw Proficiencies",
+          "value": "Wisdom and Charisma"
+        },
+        {
+          "label": "Skill Proficiencies",
+          "value": "Choose 2: Arcana, Deception, History, Intimidation, Investigation, Nature, or Religion"
+        },
+        {
+          "label": "Weapon Proficiencies",
+          "value": "Simple weapons"
+        },
+        {
+          "label": "Armor Training / Proficiencies",
+          "value": "Light armor"
+        },
+        {
+          "label": "Tool Proficiencies",
+          "value": "None"
+        },
+        {
+          "label": "Starting Equipment",
+          "value": "Light Crossbow with 20 Bolts or another simple weapon; Component Pouch or Arcane Focus; Scholar’s Pack or Dungeoneer’s Pack; Leather Armor, another simple weapon, and two Daggers"
+        },
+        {
+          "label": "Spellcasting Progression",
+          "value": "Pact Magic; Charisma; begins at class level 1"
+        },
+        {
+          "label": "Multiclass Prerequisite",
+          "value": "Charisma 13"
+        },
+        {
+          "label": "Proficiencies Gained by Multiclassing",
+          "value": "Light armor and Simple weapons"
+        },
+        {
+          "label": "SRD Subclass",
+          "value": "The Fiend"
+        },
+        {
+          "label": "Subclass Feature Levels",
+          "value": "1, 6, 10, 14"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Starting as This Class",
+          "description": "At character level 1, gain the class’s complete starting traits and its level 1 features. Starting Hit Points use the maximum value of the Hit Point Die plus your Constitution modifier."
+        },
+        {
+          "name": "Multiclassing into This Class",
+          "description": "You must meet the listed ability-score prerequisite. You gain only the reduced multiclass proficiencies listed above, plus the class’s level 1 features. You do not gain a second set of full starting equipment."
+        },
+        {
+          "name": "Progression Table Scope",
+          "description": "The progression below records the class-feature names and Proficiency Bonus at each class level. Individual feature rules, resource columns, spell-slot columns, and subclass feature text belong to the next Codex collections."
+        }
+      ],
+      "progression": [
+        {
+          "level": 1,
+          "proficiencyBonus": "+2",
+          "features": "Otherworldly Patron, Pact Magic"
+        },
+        {
+          "level": 2,
+          "proficiencyBonus": "+2",
+          "features": "Eldritch Invocations"
+        },
+        {
+          "level": 3,
+          "proficiencyBonus": "+2",
+          "features": "Pact Boon"
+        },
+        {
+          "level": 4,
+          "proficiencyBonus": "+2",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 5,
+          "proficiencyBonus": "+3",
+          "features": "—"
+        },
+        {
+          "level": 6,
+          "proficiencyBonus": "+3",
+          "features": "Otherworldly Patron feature"
+        },
+        {
+          "level": 7,
+          "proficiencyBonus": "+3",
+          "features": "—"
+        },
+        {
+          "level": 8,
+          "proficiencyBonus": "+3",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 9,
+          "proficiencyBonus": "+4",
+          "features": "—"
+        },
+        {
+          "level": 10,
+          "proficiencyBonus": "+4",
+          "features": "Otherworldly Patron feature"
+        },
+        {
+          "level": 11,
+          "proficiencyBonus": "+4",
+          "features": "Mystic Arcanum (6th level)"
+        },
+        {
+          "level": 12,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 13,
+          "proficiencyBonus": "+5",
+          "features": "Mystic Arcanum (7th level)"
+        },
+        {
+          "level": 14,
+          "proficiencyBonus": "+5",
+          "features": "Otherworldly Patron feature"
+        },
+        {
+          "level": 15,
+          "proficiencyBonus": "+5",
+          "features": "Mystic Arcanum (8th level)"
+        },
+        {
+          "level": 16,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 17,
+          "proficiencyBonus": "+6",
+          "features": "Mystic Arcanum (9th level)"
+        },
+        {
+          "level": 18,
+          "proficiencyBonus": "+6",
+          "features": "—"
+        },
+        {
+          "level": 19,
+          "proficiencyBonus": "+6",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 20,
+          "proficiencyBonus": "+6",
+          "features": "Eldritch Master"
+        }
+      ],
+      "builderClassId": "warlock",
+      "subclass": {
+        "name": "The Fiend",
+        "featureLevels": [
+          1,
+          6,
+          10,
+          14
+        ]
+      },
+      "spellcasting": {
+        "summary": "Pact Magic; Charisma",
+        "startsAtLevel": 1
+      },
+      "tags": [
+        "warlock",
+        "class",
+        "2014",
+        "charisma",
+        "the fiend",
+        "multiclassing",
+        "progression"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Classes: Warlock (SRD 5.1)"
+    },
+    {
+      "id": "wizard",
+      "title": "Wizard",
+      "entryType": "class",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "hitDie": 6,
+      "fixedHitPointsPerLevel": 4,
+      "primaryAbilities": [
+        "int"
+      ],
+      "savingThrows": [
+        "int",
+        "wis"
+      ],
+      "spellcastingAbility": "int",
+      "multiclassPrerequisite": {
+        "type": "all",
+        "requirements": [
+          {
+            "ability": "int",
+            "minimum": 13
+          }
+        ]
+      },
+      "category": "class",
+      "categoryName": "Class",
+      "summary": "An Intelligence-based arcane scholar who records spells in a spellbook and prepares a flexible magical repertoire.",
+      "description": "This 2014 class-foundation entry gathers the class’s core traits, starting and multiclass proficiencies, SRD subclass, and feature progression without mixing mechanics from the other edition.",
+      "facts": [
+        {
+          "label": "Primary Ability",
+          "value": "Intelligence"
+        },
+        {
+          "label": "Hit Point Die",
+          "value": "D6 per Wizard level"
+        },
+        {
+          "label": "Saving Throw Proficiencies",
+          "value": "Intelligence and Wisdom"
+        },
+        {
+          "label": "Skill Proficiencies",
+          "value": "Choose 2: Arcana, History, Insight, Investigation, Medicine, or Religion"
+        },
+        {
+          "label": "Weapon Proficiencies",
+          "value": "Daggers, Darts, Slings, Quarterstaffs, and Light Crossbows"
+        },
+        {
+          "label": "Armor Training / Proficiencies",
+          "value": "None"
+        },
+        {
+          "label": "Tool Proficiencies",
+          "value": "None"
+        },
+        {
+          "label": "Starting Equipment",
+          "value": "Quarterstaff or Dagger; Component Pouch or Arcane Focus; Scholar’s Pack or Explorer’s Pack; Spellbook"
+        },
+        {
+          "label": "Spellcasting Progression",
+          "value": "Full spellcaster; Intelligence; begins at class level 1"
+        },
+        {
+          "label": "Multiclass Prerequisite",
+          "value": "Intelligence 13"
+        },
+        {
+          "label": "Proficiencies Gained by Multiclassing",
+          "value": "No additional proficiencies"
+        },
+        {
+          "label": "SRD Subclass",
+          "value": "School of Evocation"
+        },
+        {
+          "label": "Subclass Feature Levels",
+          "value": "2, 6, 10, 14"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Starting as This Class",
+          "description": "At character level 1, gain the class’s complete starting traits and its level 1 features. Starting Hit Points use the maximum value of the Hit Point Die plus your Constitution modifier."
+        },
+        {
+          "name": "Multiclassing into This Class",
+          "description": "You must meet the listed ability-score prerequisite. You gain only the reduced multiclass proficiencies listed above, plus the class’s level 1 features. You do not gain a second set of full starting equipment."
+        },
+        {
+          "name": "Progression Table Scope",
+          "description": "The progression below records the class-feature names and Proficiency Bonus at each class level. Individual feature rules, resource columns, spell-slot columns, and subclass feature text belong to the next Codex collections."
+        }
+      ],
+      "progression": [
+        {
+          "level": 1,
+          "proficiencyBonus": "+2",
+          "features": "Spellcasting, Arcane Recovery"
+        },
+        {
+          "level": 2,
+          "proficiencyBonus": "+2",
+          "features": "Arcane Tradition"
+        },
+        {
+          "level": 3,
+          "proficiencyBonus": "+2",
+          "features": "—"
+        },
+        {
+          "level": 4,
+          "proficiencyBonus": "+2",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 5,
+          "proficiencyBonus": "+3",
+          "features": "—"
+        },
+        {
+          "level": 6,
+          "proficiencyBonus": "+3",
+          "features": "Arcane Tradition feature"
+        },
+        {
+          "level": 7,
+          "proficiencyBonus": "+3",
+          "features": "—"
+        },
+        {
+          "level": 8,
+          "proficiencyBonus": "+3",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 9,
+          "proficiencyBonus": "+4",
+          "features": "—"
+        },
+        {
+          "level": 10,
+          "proficiencyBonus": "+4",
+          "features": "Arcane Tradition feature"
+        },
+        {
+          "level": 11,
+          "proficiencyBonus": "+4",
+          "features": "—"
+        },
+        {
+          "level": 12,
+          "proficiencyBonus": "+4",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 13,
+          "proficiencyBonus": "+5",
+          "features": "—"
+        },
+        {
+          "level": 14,
+          "proficiencyBonus": "+5",
+          "features": "Arcane Tradition feature"
+        },
+        {
+          "level": 15,
+          "proficiencyBonus": "+5",
+          "features": "—"
+        },
+        {
+          "level": 16,
+          "proficiencyBonus": "+5",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 17,
+          "proficiencyBonus": "+6",
+          "features": "—"
+        },
+        {
+          "level": 18,
+          "proficiencyBonus": "+6",
+          "features": "Spell Mastery"
+        },
+        {
+          "level": 19,
+          "proficiencyBonus": "+6",
+          "features": "Ability Score Improvement"
+        },
+        {
+          "level": 20,
+          "proficiencyBonus": "+6",
+          "features": "Signature Spells"
+        }
+      ],
+      "builderClassId": "wizard",
+      "subclass": {
+        "name": "School of Evocation",
+        "featureLevels": [
+          2,
+          6,
+          10,
+          14
+        ]
+      },
+      "spellcasting": {
+        "summary": "Full spellcaster; Intelligence",
+        "startsAtLevel": 1
+      },
+      "tags": [
+        "wizard",
+        "class",
+        "2014",
+        "intelligence",
+        "school of evocation",
+        "multiclassing",
+        "progression"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Classes: Wizard (SRD 5.1)"
+    }
+  ]
+}
