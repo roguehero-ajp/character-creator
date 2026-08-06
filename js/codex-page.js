@@ -18,6 +18,7 @@ const codexState = {
   entries: [],
   filteredEntries: [],
   categories: [],
+  ancestryCategories: [],
   equipmentCategories: [],
   byGlobalId: new Map(),
   byLocalKey: new Map(),
@@ -35,6 +36,7 @@ function cacheCodexElements() {
   codexElements.edition = document.getElementById('codex-edition');
   codexElements.type = document.getElementById('codex-type');
   codexElements.category = document.getElementById('codex-category');
+  codexElements.ancestryCategory = document.getElementById('codex-ancestry-category');
   codexElements.equipmentCategory = document.getElementById('codex-equipment-category');
   codexElements.level = document.getElementById('codex-level');
   codexElements.school = document.getElementById('codex-school');
@@ -47,10 +49,12 @@ function cacheCodexElements() {
   codexElements.error = document.getElementById('codex-error');
   codexElements.totalCount = document.getElementById('codex-total-count');
   codexElements.ruleCount = document.getElementById('codex-rule-count');
+  codexElements.ancestryCount = document.getElementById('codex-ancestry-count');
   codexElements.spellCount = document.getElementById('codex-spell-count');
   codexElements.itemCount = document.getElementById('codex-item-count');
   codexElements.equipmentCount = document.getElementById('codex-equipment-count');
   codexElements.ruleFields = Array.from(document.querySelectorAll('[data-rule-filter]'));
+  codexElements.ancestryFields = Array.from(document.querySelectorAll('[data-ancestry-filter]'));
   codexElements.equipmentFields = Array.from(document.querySelectorAll('[data-equipment-filter]'));
   codexElements.spellFields = Array.from(document.querySelectorAll('[data-spell-filter]'));
   codexElements.itemFields = Array.from(document.querySelectorAll('[data-item-filter]'));
@@ -70,6 +74,7 @@ function createSearchIndex(entry) {
     entry.edition,
     entry.editionName,
     entry.source,
+    entry.sourceSection,
     entry.meta,
     entry.description,
     entry.summary,
@@ -80,8 +85,10 @@ function createSearchIndex(entry) {
     ...(entry.bestFor || []),
     ...(entry.commonMistakes || []),
     entry.subcategory,
+    entry.parentTitle,
     ...(entry.tags || []),
     ...((entry.facts || []).flatMap((fact) => [fact.label, fact.value])),
+    ...((entry.traits || []).flatMap((item) => [item.name, item.description])),
   ];
 
   if (entry.entryType === 'spell') {
@@ -182,6 +189,10 @@ function populateRuleCategories(categories) {
   populateCategories(codexElements.category, categories, 'All rule categories');
 }
 
+function populateAncestryCategories(categories) {
+  populateCategories(codexElements.ancestryCategory, categories, 'All race/species categories');
+}
+
 function populateEquipmentCategories(categories) {
   populateCategories(codexElements.equipmentCategory, categories, 'All equipment categories');
 }
@@ -189,11 +200,12 @@ function populateEquipmentCategories(categories) {
 async function loadGameSystem(gameSystemId) {
   const result = await window.MyRPGCodexData.loadEntries({
     gameSystem: gameSystemId,
-    entryTypes: ['rule', 'equipment', 'spell', 'item'],
+    entryTypes: ['rule', 'ancestry', 'equipment', 'spell', 'item'],
   });
 
   codexState.gameSystem = result.gameSystem;
   codexState.categories = result.categories;
+  codexState.ancestryCategories = result.categoryGroups?.ancestry || [];
   codexState.equipmentCategories = result.categoryGroups?.equipment || [];
   codexState.entries = result.entries
     .map((entry) => ({
@@ -213,18 +225,21 @@ async function loadGameSystem(gameSystemId) {
 
   populateEditions(result.gameSystem);
   populateRuleCategories(result.categories);
+  populateAncestryCategories(codexState.ancestryCategories);
   populateEquipmentCategories(codexState.equipmentCategories);
   updateCollectionTotals(codexState.entries);
 }
 
 function updateCollectionTotals(entries) {
   const ruleCount = entries.filter((entry) => entry.entryType === 'rule').length;
+  const ancestryCount = entries.filter((entry) => entry.entryType === 'ancestry').length;
   const equipmentCount = entries.filter((entry) => entry.entryType === 'equipment').length;
   const spellCount = entries.filter((entry) => entry.entryType === 'spell').length;
   const itemCount = entries.filter((entry) => entry.entryType === 'item').length;
 
   codexElements.totalCount.textContent = entries.length.toLocaleString('en-CA');
   codexElements.ruleCount.textContent = ruleCount.toLocaleString('en-CA');
+  codexElements.ancestryCount.textContent = ancestryCount.toLocaleString('en-CA');
   codexElements.equipmentCount.textContent = equipmentCount.toLocaleString('en-CA');
   codexElements.spellCount.textContent = spellCount.toLocaleString('en-CA');
   codexElements.itemCount.textContent = itemCount.toLocaleString('en-CA');
@@ -237,6 +252,7 @@ function getFilterValues() {
     edition: codexElements.edition.value,
     type: codexElements.type.value,
     category: codexElements.category.value,
+    ancestryCategory: codexElements.ancestryCategory.value,
     equipmentCategory: codexElements.equipmentCategory.value,
     level: codexElements.level.value,
     school: codexElements.school.value,
@@ -260,6 +276,12 @@ function entryMatchesFilters(entry, filters) {
 
   if (filters.category !== 'all') {
     if (entry.entryType !== 'rule' || entry.category !== filters.category) {
+      return false;
+    }
+  }
+
+  if (filters.ancestryCategory !== 'all') {
+    if (entry.entryType !== 'ancestry' || entry.category !== filters.ancestryCategory) {
       return false;
     }
   }
@@ -322,6 +344,11 @@ function updateFilterAvailability() {
     selectedType === 'all' || selectedType === 'rule'
   );
   setFieldGroupAvailability(
+    codexElements.ancestryFields,
+    selectedType === 'all' || selectedType === 'ancestry'
+  );
+
+  setFieldGroupAvailability(
     codexElements.equipmentFields,
     selectedType === 'all' || selectedType === 'equipment'
   );
@@ -347,6 +374,10 @@ function spellLevelLabel(level) {
 function entryTypeLabel(entryType) {
   if (entryType === 'rule') {
     return 'Rule';
+  }
+
+  if (entryType === 'ancestry') {
+    return 'Race / species';
   }
 
   if (entryType === 'equipment') {
@@ -403,6 +434,21 @@ function createSpellFacts(entry) {
   }
 
   return facts;
+}
+
+function createAncestryFacts(entry) {
+  const factsElement = document.createElement('dl');
+  factsElement.className = 'codex-facts';
+
+  factsElement.append(createFact('Category', entry.categoryName || entry.category));
+
+  (entry.facts || []).forEach((fact) => {
+    if (fact?.label && fact?.value) {
+      factsElement.append(createFact(fact.label, fact.value));
+    }
+  });
+
+  return factsElement;
 }
 
 function createEquipmentFacts(entry) {
@@ -525,6 +571,85 @@ function createRuleBody(entry) {
   return fragment;
 }
 
+function createAncestryLinks(entry) {
+  const linkedEntries = [];
+
+  if (entry.parentId) {
+    const parent = codexState.byLocalKey.get([entry.edition, 'ancestry', entry.parentId].join(':'));
+    if (parent) {
+      linkedEntries.push({ entry: parent, label: `Parent: ${parent.title}` });
+    }
+  }
+
+  (entry.childIds || []).forEach((childId) => {
+    const child = codexState.byLocalKey.get([entry.edition, 'ancestry', childId].join(':'));
+    if (child) {
+      linkedEntries.push({ entry: child, label: child.title });
+    }
+  });
+
+  if (linkedEntries.length === 0) {
+    return null;
+  }
+
+  const section = document.createElement('section');
+  section.className = 'codex-rule-section';
+
+  const title = document.createElement('h4');
+  title.textContent = entry.parentId ? 'Related race or species' : 'Available choices';
+
+  const links = document.createElement('div');
+  links.className = 'codex-related-links';
+
+  linkedEntries.forEach(({ entry: linkedEntry, label }) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.openEntry = linkedEntry.globalId;
+    button.textContent = label;
+    links.append(button);
+  });
+
+  section.append(title, links);
+  return section;
+}
+
+function createAncestryBody(entry) {
+  const fragment = document.createDocumentFragment();
+  fragment.append(createAncestryFacts(entry));
+
+  if (entry.description) {
+    const description = document.createElement('p');
+    description.className = 'codex-description';
+    description.textContent = entry.description;
+    fragment.append(description);
+  }
+
+  (entry.traits || []).forEach((item) => {
+    if (!item?.name || !item?.description) {
+      return;
+    }
+
+    const section = document.createElement('section');
+    section.className = 'codex-rule-section';
+
+    const title = document.createElement('h4');
+    title.textContent = item.name;
+
+    const paragraph = document.createElement('p');
+    paragraph.textContent = item.description;
+
+    section.append(title, paragraph);
+    fragment.append(section);
+  });
+
+  const links = createAncestryLinks(entry);
+  if (links) {
+    fragment.append(links);
+  }
+
+  return fragment;
+}
+
 function createCodexEntry(entry) {
   const details = document.createElement('details');
   details.className = 'codex-entry';
@@ -547,7 +672,11 @@ function createCodexEntry(entry) {
     )
   );
 
-  if (entry.entryType === 'rule' || entry.entryType === 'equipment') {
+  if (
+    entry.entryType === 'rule' ||
+    entry.entryType === 'ancestry' ||
+    entry.entryType === 'equipment'
+  ) {
     badges.append(createBadge(entry.categoryName));
   } else if (entry.entryType === 'spell') {
     badges.append(createBadge(spellLevelLabel(entry.level)));
@@ -564,6 +693,8 @@ function createCodexEntry(entry) {
 
   if (entry.entryType === 'rule') {
     body.append(createRuleBody(entry));
+  } else if (entry.entryType === 'ancestry') {
+    body.append(createAncestryBody(entry));
   } else {
     if (entry.entryType === 'spell') {
       body.append(createSpellFacts(entry));
@@ -583,7 +714,11 @@ function createCodexEntry(entry) {
   sourceNote.className = 'codex-source-note';
   sourceNote.textContent = entry.entryType === 'rule'
     ? `Original My RPG Source explanation for ${entry.source} / ${entry.edition} rules.`
-    : `${entry.source} / ${entry.edition} rules. Licensed under CC BY 4.0.`;
+    : [
+        `${entry.source} / ${entry.edition} rules.`,
+        entry.sourceSection ? `${entry.sourceSection}.` : '',
+        'Licensed under CC BY 4.0.',
+      ].filter(Boolean).join(' ');
 
   body.append(sourceNote);
   details.append(summary, body);
@@ -667,6 +802,7 @@ function resetFilters() {
   codexElements.edition.value = codexState.gameSystem?.defaultEdition || 'all';
   codexElements.type.value = 'all';
   codexElements.category.value = 'all';
+  codexElements.ancestryCategory.value = 'all';
   codexElements.equipmentCategory.value = 'all';
   codexElements.level.value = 'all';
   codexElements.school.value = 'all';
@@ -777,6 +913,7 @@ function applyUrlState() {
   );
   setSelectFromUrl(codexElements.type, params.get('type'), 'all');
   setSelectFromUrl(codexElements.category, params.get('category'), 'all');
+  setSelectFromUrl(codexElements.ancestryCategory, params.get('ancestryCategory'), 'all');
   setSelectFromUrl(codexElements.equipmentCategory, params.get('equipmentCategory'), 'all');
   setSelectFromUrl(codexElements.level, params.get('level'), 'all');
   setSelectFromUrl(codexElements.school, params.get('school'), 'all');
@@ -800,6 +937,9 @@ function syncUrl(entryId = null) {
   }
   if (filters.category !== 'all') {
     params.set('category', filters.category);
+  }
+  if (filters.ancestryCategory !== 'all') {
+    params.set('ancestryCategory', filters.ancestryCategory);
   }
   if (filters.equipmentCategory !== 'all') {
     params.set('equipmentCategory', filters.equipmentCategory);
@@ -829,6 +969,7 @@ function prepareFiltersForEntry(entry) {
   codexElements.type.value = entry.entryType;
   codexElements.search.value = '';
   codexElements.category.value = 'all';
+  codexElements.ancestryCategory.value = 'all';
   codexElements.equipmentCategory.value = 'all';
   codexElements.level.value = 'all';
   codexElements.school.value = 'all';
