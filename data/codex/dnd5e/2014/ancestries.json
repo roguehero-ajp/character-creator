@@ -1,0 +1,1286 @@
+{
+  "schemaVersion": 2,
+  "gameSystem": "dnd5e",
+  "edition": "2014",
+  "collection": "races-and-subraces",
+  "entryTypes": [
+    "ancestry"
+  ],
+  "sourceDocument": "SRD 5.1",
+  "license": "CC BY 4.0",
+  "contentNote": "SRD 5.1 race, subrace, and draconic-ancestry mechanics have been reorganized and converted into searchable structured data. Descriptive summaries are adapted for My RPG Source.",
+  "categories": [
+    {
+      "id": "race",
+      "name": "Race"
+    },
+    {
+      "id": "subrace",
+      "name": "Subrace"
+    },
+    {
+      "id": "race-choice",
+      "name": "Race choice"
+    }
+  ],
+  "entries": [
+    {
+      "id": "dwarf",
+      "title": "Dwarf",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race",
+      "categoryName": "Race",
+      "summary": "A sturdy Medium race with poison resilience, stonecraft expertise, weapon training, and a 25-foot walking speed that heavy armor does not reduce.",
+      "description": "Dwarves combine a durable Constitution increase with underground senses, traditional combat training, a chosen artisan-tool proficiency, and an instinctive understanding of stonework. The SRD 5.1 dwarf uses a subrace; Hill Dwarf is the SRD subrace.",
+      "facts": [
+        {
+          "label": "Ability Score Increase",
+          "value": "Constitution +2"
+        },
+        {
+          "label": "Age",
+          "value": "Matures at the human rate, is considered young until age 50, and commonly lives about 350 years"
+        },
+        {
+          "label": "Typical alignment",
+          "value": "Often lawful and good; this is descriptive, not mandatory"
+        },
+        {
+          "label": "Size",
+          "value": "Medium; commonly 4–5 feet tall and about 150 pounds"
+        },
+        {
+          "label": "Speed",
+          "value": "25 feet; not reduced by wearing heavy armor"
+        },
+        {
+          "label": "Languages",
+          "value": "Common and Dwarvish"
+        },
+        {
+          "label": "SRD subrace",
+          "value": "Hill Dwarf"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Darkvision",
+          "description": "You can see in dim light within 60 feet as though it were bright light and in darkness as though it were dim light. In darkness, you see only shades of gray."
+        },
+        {
+          "name": "Dwarven Resilience",
+          "description": "You have advantage on saving throws against poison and resistance to poison damage."
+        },
+        {
+          "name": "Dwarven Combat Training",
+          "description": "You are proficient with the battleaxe, handaxe, light hammer, and warhammer."
+        },
+        {
+          "name": "Tool Proficiency",
+          "description": "Choose proficiency with smith’s tools, brewer’s supplies, or mason’s tools."
+        },
+        {
+          "name": "Stonecunning",
+          "description": "When you make an Intelligence (History) check related to the origin of stonework, you are treated as proficient in History and add twice your proficiency bonus instead of the bonus you would normally apply."
+        }
+      ],
+      "tags": [
+        "dwarf",
+        "race",
+        "2014",
+        "poison resistance",
+        "stonecunning",
+        "darkvision"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "childIds": [
+        "hill-dwarf"
+      ],
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "hill-dwarf",
+      "title": "Hill Dwarf",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "subrace",
+      "categoryName": "Subrace",
+      "summary": "The SRD dwarf subrace adds Wisdom and extra hit points to the base dwarf traits.",
+      "description": "A Hill Dwarf has every Dwarf trait and gains the following additional subrace traits.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Dwarf"
+        },
+        {
+          "label": "Additional Ability Score Increase",
+          "value": "Wisdom +1"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Dwarven Toughness",
+          "description": "Your hit point maximum increases by 1, and it increases by 1 whenever you gain a level."
+        }
+      ],
+      "tags": [
+        "hill dwarf",
+        "subrace",
+        "2014",
+        "dwarven toughness",
+        "wisdom"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "dwarf",
+      "parentTitle": "Dwarf",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "elf",
+      "title": "Elf",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race",
+      "categoryName": "Race",
+      "summary": "A graceful Medium race with Dexterity, Darkvision, Perception proficiency, charm resistance, and a four-hour trance.",
+      "description": "Elves gain keen senses and fey protections before adding the traits of an elven subrace. High Elf is the subrace provided in SRD 5.1.",
+      "facts": [
+        {
+          "label": "Ability Score Increase",
+          "value": "Dexterity +2"
+        },
+        {
+          "label": "Age",
+          "value": "Reaches physical maturity at roughly the human rate, commonly claims adulthood around age 100, and can live about 750 years"
+        },
+        {
+          "label": "Typical alignment",
+          "value": "Often chaotic and good; this is descriptive, not mandatory"
+        },
+        {
+          "label": "Size",
+          "value": "Medium; commonly just under 5 feet to over 6 feet tall"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        },
+        {
+          "label": "Languages",
+          "value": "Common and Elvish"
+        },
+        {
+          "label": "SRD subrace",
+          "value": "High Elf"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Darkvision",
+          "description": "You can see in dim light within 60 feet as though it were bright light and in darkness as though it were dim light. In darkness, you see only shades of gray."
+        },
+        {
+          "name": "Keen Senses",
+          "description": "You are proficient in the Perception skill."
+        },
+        {
+          "name": "Fey Ancestry",
+          "description": "You have advantage on saving throws against being charmed, and magic can’t put you to sleep."
+        },
+        {
+          "name": "Trance",
+          "description": "You don’t need to sleep. Four hours of semiconscious meditation grants the same benefit that a human gains from eight hours of sleep."
+        }
+      ],
+      "tags": [
+        "elf",
+        "race",
+        "2014",
+        "fey ancestry",
+        "trance",
+        "perception",
+        "darkvision"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "childIds": [
+        "high-elf"
+      ],
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "high-elf",
+      "title": "High Elf",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "subrace",
+      "categoryName": "Subrace",
+      "summary": "The SRD elf subrace adds Intelligence, traditional weapon training, a Wizard cantrip, and an extra language.",
+      "description": "A High Elf has every Elf trait and gains the following additional subrace traits.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Elf"
+        },
+        {
+          "label": "Additional Ability Score Increase",
+          "value": "Intelligence +1"
+        },
+        {
+          "label": "Cantrip spellcasting ability",
+          "value": "Intelligence"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Elf Weapon Training",
+          "description": "You are proficient with the longsword, shortsword, shortbow, and longbow."
+        },
+        {
+          "name": "Cantrip",
+          "description": "Choose one cantrip from the Wizard spell list. Intelligence is your spellcasting ability for it."
+        },
+        {
+          "name": "Extra Language",
+          "description": "You can speak, read, and write one additional language of your choice."
+        }
+      ],
+      "tags": [
+        "high elf",
+        "subrace",
+        "2014",
+        "wizard cantrip",
+        "weapon training",
+        "intelligence"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "elf",
+      "parentTitle": "Elf",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "halfling",
+      "title": "Halfling",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race",
+      "categoryName": "Race",
+      "summary": "A nimble Small race with exceptional luck, courage, and the ability to move through the spaces of larger creatures.",
+      "description": "Halflings combine Dexterity with practical defensive traits. Lightfoot is the halfling subrace provided in SRD 5.1.",
+      "facts": [
+        {
+          "label": "Ability Score Increase",
+          "value": "Dexterity +2"
+        },
+        {
+          "label": "Age",
+          "value": "Reaches adulthood at age 20 and commonly lives into the middle of a second century"
+        },
+        {
+          "label": "Typical alignment",
+          "value": "Often lawful good; this is descriptive, not mandatory"
+        },
+        {
+          "label": "Size",
+          "value": "Small; commonly about 3 feet tall and about 40 pounds"
+        },
+        {
+          "label": "Speed",
+          "value": "25 feet"
+        },
+        {
+          "label": "Languages",
+          "value": "Common and Halfling"
+        },
+        {
+          "label": "SRD subrace",
+          "value": "Lightfoot"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Lucky",
+          "description": "When you roll a 1 on the d20 for an attack roll, ability check, or saving throw, reroll the die and use the new roll."
+        },
+        {
+          "name": "Brave",
+          "description": "You have advantage on saving throws against being frightened."
+        },
+        {
+          "name": "Halfling Nimbleness",
+          "description": "You can move through the space of a creature that is larger than you."
+        }
+      ],
+      "tags": [
+        "halfling",
+        "race",
+        "2014",
+        "lucky",
+        "brave",
+        "small"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "childIds": [
+        "lightfoot"
+      ],
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "lightfoot",
+      "title": "Lightfoot",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "subrace",
+      "categoryName": "Subrace",
+      "summary": "The SRD halfling subrace adds Charisma and the ability to hide behind larger creatures.",
+      "description": "A Lightfoot has every Halfling trait and gains the following additional subrace traits.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Halfling"
+        },
+        {
+          "label": "Additional Ability Score Increase",
+          "value": "Charisma +1"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Naturally Stealthy",
+          "description": "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you."
+        }
+      ],
+      "tags": [
+        "lightfoot",
+        "lightfoot halfling",
+        "subrace",
+        "2014",
+        "naturally stealthy",
+        "charisma"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "halfling",
+      "parentTitle": "Halfling",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "human",
+      "title": "Human",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race",
+      "categoryName": "Race",
+      "summary": "A flexible Medium race that increases all six ability scores and learns an additional language.",
+      "description": "The SRD 5.1 Human is the standard human. The optional Variant Human is not part of this SRD race entry.",
+      "facts": [
+        {
+          "label": "Ability Score Increase",
+          "value": "Strength +1, Dexterity +1, Constitution +1, Intelligence +1, Wisdom +1, and Charisma +1"
+        },
+        {
+          "label": "Age",
+          "value": "Reaches adulthood in the late teens and usually lives less than a century"
+        },
+        {
+          "label": "Typical alignment",
+          "value": "No particular tendency"
+        },
+        {
+          "label": "Size",
+          "value": "Medium; human height and build vary widely"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        },
+        {
+          "label": "Languages",
+          "value": "Common and one additional language of your choice"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "human",
+        "race",
+        "2014",
+        "ability scores",
+        "extra language"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "dragonborn",
+      "title": "Dragonborn",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race",
+      "categoryName": "Race",
+      "summary": "A Medium draconic race with Strength, Charisma, a rechargeable breath weapon, and resistance tied to a chosen dragon ancestry.",
+      "description": "Choose one of the ten SRD draconic ancestries. That choice sets the damage type, area, and saving throw of Breath Weapon and the damage type resisted by Damage Resistance.",
+      "facts": [
+        {
+          "label": "Ability Score Increase",
+          "value": "Strength +2 and Charisma +1"
+        },
+        {
+          "label": "Age",
+          "value": "Develops rapidly, reaches adulthood by age 15, and commonly lives about 80 years"
+        },
+        {
+          "label": "Typical alignment",
+          "value": "Often strongly committed to one side of the good–evil and law–chaos axes; this is descriptive, not mandatory"
+        },
+        {
+          "label": "Size",
+          "value": "Medium; commonly over 6 feet tall and about 250 pounds"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        },
+        {
+          "label": "Languages",
+          "value": "Common and Draconic"
+        },
+        {
+          "label": "Ancestry choices",
+          "value": "Black, Blue, Brass, Bronze, Copper, Gold, Green, Red, Silver, or White"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Draconic Ancestry",
+          "description": "Choose a dragon ancestry. It determines the damage type, area, and saving throw of your Breath Weapon, as well as your Damage Resistance."
+        },
+        {
+          "name": "Breath Weapon",
+          "description": "As an action, exhale destructive energy. Creatures in the ancestry’s area make the listed saving throw against DC 8 + your Constitution modifier + your proficiency bonus. A failed save takes 2d6 damage and a successful save takes half. Damage becomes 3d6 at level 6, 4d6 at level 11, and 5d6 at level 16. After using it, you can’t use it again until you finish a short or long rest."
+        },
+        {
+          "name": "Damage Resistance",
+          "description": "You have resistance to the damage type associated with your chosen draconic ancestry."
+        }
+      ],
+      "tags": [
+        "dragonborn",
+        "race",
+        "2014",
+        "breath weapon",
+        "draconic ancestry",
+        "damage resistance"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "childIds": [
+        "black-dragon-ancestry",
+        "blue-dragon-ancestry",
+        "brass-dragon-ancestry",
+        "bronze-dragon-ancestry",
+        "copper-dragon-ancestry",
+        "gold-dragon-ancestry",
+        "green-dragon-ancestry",
+        "red-dragon-ancestry",
+        "silver-dragon-ancestry",
+        "white-dragon-ancestry"
+      ],
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "black-dragon-ancestry",
+      "title": "Black Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race-choice",
+      "categoryName": "Race choice",
+      "summary": "This Dragonborn ancestry uses acid damage in a 5-by-30-foot line.",
+      "description": "Choose this option for the 2014 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals acid damage in a 5-by-30-foot line, and targets make a Dexterity saving throw. Damage Resistance grants resistance to acid damage.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Acid"
+        },
+        {
+          "label": "Breath Weapon area",
+          "value": "5-by-30-foot line"
+        },
+        {
+          "label": "Saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "acid",
+        "5-by-30-foot line",
+        "dexterity",
+        "2014"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "blue-dragon-ancestry",
+      "title": "Blue Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race-choice",
+      "categoryName": "Race choice",
+      "summary": "This Dragonborn ancestry uses lightning damage in a 5-by-30-foot line.",
+      "description": "Choose this option for the 2014 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals lightning damage in a 5-by-30-foot line, and targets make a Dexterity saving throw. Damage Resistance grants resistance to lightning damage.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Lightning"
+        },
+        {
+          "label": "Breath Weapon area",
+          "value": "5-by-30-foot line"
+        },
+        {
+          "label": "Saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "lightning",
+        "5-by-30-foot line",
+        "dexterity",
+        "2014"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "brass-dragon-ancestry",
+      "title": "Brass Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race-choice",
+      "categoryName": "Race choice",
+      "summary": "This Dragonborn ancestry uses fire damage in a 5-by-30-foot line.",
+      "description": "Choose this option for the 2014 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals fire damage in a 5-by-30-foot line, and targets make a Dexterity saving throw. Damage Resistance grants resistance to fire damage.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Fire"
+        },
+        {
+          "label": "Breath Weapon area",
+          "value": "5-by-30-foot line"
+        },
+        {
+          "label": "Saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "fire",
+        "5-by-30-foot line",
+        "dexterity",
+        "2014"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "bronze-dragon-ancestry",
+      "title": "Bronze Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race-choice",
+      "categoryName": "Race choice",
+      "summary": "This Dragonborn ancestry uses lightning damage in a 5-by-30-foot line.",
+      "description": "Choose this option for the 2014 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals lightning damage in a 5-by-30-foot line, and targets make a Dexterity saving throw. Damage Resistance grants resistance to lightning damage.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Lightning"
+        },
+        {
+          "label": "Breath Weapon area",
+          "value": "5-by-30-foot line"
+        },
+        {
+          "label": "Saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "lightning",
+        "5-by-30-foot line",
+        "dexterity",
+        "2014"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "copper-dragon-ancestry",
+      "title": "Copper Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race-choice",
+      "categoryName": "Race choice",
+      "summary": "This Dragonborn ancestry uses acid damage in a 5-by-30-foot line.",
+      "description": "Choose this option for the 2014 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals acid damage in a 5-by-30-foot line, and targets make a Dexterity saving throw. Damage Resistance grants resistance to acid damage.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Acid"
+        },
+        {
+          "label": "Breath Weapon area",
+          "value": "5-by-30-foot line"
+        },
+        {
+          "label": "Saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "acid",
+        "5-by-30-foot line",
+        "dexterity",
+        "2014"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "gold-dragon-ancestry",
+      "title": "Gold Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race-choice",
+      "categoryName": "Race choice",
+      "summary": "This Dragonborn ancestry uses fire damage in a 15-foot cone.",
+      "description": "Choose this option for the 2014 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals fire damage in a 15-foot cone, and targets make a Dexterity saving throw. Damage Resistance grants resistance to fire damage.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Fire"
+        },
+        {
+          "label": "Breath Weapon area",
+          "value": "15-foot cone"
+        },
+        {
+          "label": "Saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "fire",
+        "15-foot cone",
+        "dexterity",
+        "2014"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "green-dragon-ancestry",
+      "title": "Green Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race-choice",
+      "categoryName": "Race choice",
+      "summary": "This Dragonborn ancestry uses poison damage in a 15-foot cone.",
+      "description": "Choose this option for the 2014 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals poison damage in a 15-foot cone, and targets make a Constitution saving throw. Damage Resistance grants resistance to poison damage.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Poison"
+        },
+        {
+          "label": "Breath Weapon area",
+          "value": "15-foot cone"
+        },
+        {
+          "label": "Saving throw",
+          "value": "Constitution"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "poison",
+        "15-foot cone",
+        "constitution",
+        "2014"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "red-dragon-ancestry",
+      "title": "Red Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race-choice",
+      "categoryName": "Race choice",
+      "summary": "This Dragonborn ancestry uses fire damage in a 15-foot cone.",
+      "description": "Choose this option for the 2014 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals fire damage in a 15-foot cone, and targets make a Dexterity saving throw. Damage Resistance grants resistance to fire damage.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Fire"
+        },
+        {
+          "label": "Breath Weapon area",
+          "value": "15-foot cone"
+        },
+        {
+          "label": "Saving throw",
+          "value": "Dexterity"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "fire",
+        "15-foot cone",
+        "dexterity",
+        "2014"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "silver-dragon-ancestry",
+      "title": "Silver Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race-choice",
+      "categoryName": "Race choice",
+      "summary": "This Dragonborn ancestry uses cold damage in a 15-foot cone.",
+      "description": "Choose this option for the 2014 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals cold damage in a 15-foot cone, and targets make a Constitution saving throw. Damage Resistance grants resistance to cold damage.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Cold"
+        },
+        {
+          "label": "Breath Weapon area",
+          "value": "15-foot cone"
+        },
+        {
+          "label": "Saving throw",
+          "value": "Constitution"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "cold",
+        "15-foot cone",
+        "constitution",
+        "2014"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "white-dragon-ancestry",
+      "title": "White Dragon Ancestry",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race-choice",
+      "categoryName": "Race choice",
+      "summary": "This Dragonborn ancestry uses cold damage in a 15-foot cone.",
+      "description": "Choose this option for the 2014 Dragonborn’s Draconic Ancestry trait. Breath Weapon deals cold damage in a 15-foot cone, and targets make a Constitution saving throw. Damage Resistance grants resistance to cold damage.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Dragonborn"
+        },
+        {
+          "label": "Damage type",
+          "value": "Cold"
+        },
+        {
+          "label": "Breath Weapon area",
+          "value": "15-foot cone"
+        },
+        {
+          "label": "Saving throw",
+          "value": "Constitution"
+        }
+      ],
+      "traits": [],
+      "tags": [
+        "dragonborn",
+        "draconic ancestry",
+        "cold",
+        "15-foot cone",
+        "constitution",
+        "2014"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "dragonborn",
+      "parentTitle": "Dragonborn",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "gnome",
+      "title": "Gnome",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race",
+      "categoryName": "Race",
+      "summary": "A clever Small race with Intelligence, Darkvision, and broad mental defenses against magic.",
+      "description": "Gnomes gain their shared traits before adding a gnome subrace. Rock Gnome is the subrace provided in SRD 5.1.",
+      "facts": [
+        {
+          "label": "Ability Score Increase",
+          "value": "Intelligence +2"
+        },
+        {
+          "label": "Age",
+          "value": "Commonly begins adult life around age 40 and can live 350–500 years"
+        },
+        {
+          "label": "Typical alignment",
+          "value": "Often good; this is descriptive, not mandatory"
+        },
+        {
+          "label": "Size",
+          "value": "Small; commonly 3–4 feet tall and about 40 pounds"
+        },
+        {
+          "label": "Speed",
+          "value": "25 feet"
+        },
+        {
+          "label": "Languages",
+          "value": "Common and Gnomish"
+        },
+        {
+          "label": "SRD subrace",
+          "value": "Rock Gnome"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Darkvision",
+          "description": "You can see in dim light within 60 feet as though it were bright light and in darkness as though it were dim light. In darkness, you see only shades of gray."
+        },
+        {
+          "name": "Gnome Cunning",
+          "description": "You have advantage on Intelligence, Wisdom, and Charisma saving throws against magic."
+        }
+      ],
+      "tags": [
+        "gnome",
+        "race",
+        "2014",
+        "gnome cunning",
+        "darkvision",
+        "small"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "childIds": [
+        "rock-gnome"
+      ],
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "rock-gnome",
+      "title": "Rock Gnome",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "subrace",
+      "categoryName": "Subrace",
+      "summary": "The SRD gnome subrace adds Constitution, doubled historical expertise for certain crafted objects, and clockwork devices.",
+      "description": "A Rock Gnome has every Gnome trait and gains the following additional subrace traits.",
+      "facts": [
+        {
+          "label": "Parent race",
+          "value": "Gnome"
+        },
+        {
+          "label": "Additional Ability Score Increase",
+          "value": "Constitution +1"
+        },
+        {
+          "label": "Tinker device limit",
+          "value": "Up to three active devices"
+        },
+        {
+          "label": "Tinker construction",
+          "value": "1 hour and 10 gp of materials"
+        },
+        {
+          "label": "Device durability",
+          "value": "AC 5 and 1 hit point"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Artificer’s Lore",
+          "description": "When you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, add twice your proficiency bonus instead of the proficiency bonus you would normally apply."
+        },
+        {
+          "name": "Tinker",
+          "description": "You are proficient with tinker's tools. Using them, you can spend 1 hour and 10 gp of materials to construct a Tiny clockwork device with AC 5 and 1 hit point. It stops functioning after 24 hours unless you spend 1 hour repairing it, or when you dismantle it as an action and reclaim the materials. You can have up to three active devices."
+        },
+        {
+          "name": "Clockwork Toy",
+          "description": "A clockwork creature moves 5 feet across the ground on each of your turns in a random direction and makes appropriate noises."
+        },
+        {
+          "name": "Fire Starter",
+          "description": "The device produces a miniature flame. Using it to light a candle, torch, or campfire requires an action."
+        },
+        {
+          "name": "Music Box",
+          "description": "When opened, the box plays one song at a moderate volume until the song ends or the box is closed."
+        }
+      ],
+      "tags": [
+        "rock gnome",
+        "subrace",
+        "2014",
+        "artificer lore",
+        "tinker",
+        "clockwork"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "parentId": "gnome",
+      "parentTitle": "Gnome",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "half-elf",
+      "title": "Half-Elf",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race",
+      "categoryName": "Race",
+      "summary": "A socially flexible Medium race with Charisma, two additional ability increases, Darkvision, fey protections, and two chosen skill proficiencies.",
+      "description": "Half-Elves combine selected human and elven traits without using a subrace.",
+      "facts": [
+        {
+          "label": "Ability Score Increase",
+          "value": "Charisma +2 and two other different ability scores of your choice +1 each"
+        },
+        {
+          "label": "Age",
+          "value": "Reaches adulthood around age 20 and often lives beyond 180 years"
+        },
+        {
+          "label": "Typical alignment",
+          "value": "Often has a chaotic bent; this is descriptive, not mandatory"
+        },
+        {
+          "label": "Size",
+          "value": "Medium; commonly 5–6 feet tall"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        },
+        {
+          "label": "Languages",
+          "value": "Common, Elvish, and one additional language of your choice"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Darkvision",
+          "description": "You can see in dim light within 60 feet as though it were bright light and in darkness as though it were dim light. In darkness, you see only shades of gray."
+        },
+        {
+          "name": "Fey Ancestry",
+          "description": "You have advantage on saving throws against being charmed, and magic can’t put you to sleep."
+        },
+        {
+          "name": "Skill Versatility",
+          "description": "You gain proficiency in two skills of your choice."
+        }
+      ],
+      "tags": [
+        "half-elf",
+        "race",
+        "2014",
+        "skill versatility",
+        "fey ancestry",
+        "charisma"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "half-orc",
+      "title": "Half-Orc",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race",
+      "categoryName": "Race",
+      "summary": "A powerful Medium race with Strength, Constitution, Intimidation proficiency, exceptional endurance, and stronger melee critical hits.",
+      "description": "Half-Orcs combine physical ability increases with Darkvision and combat-focused survival traits.",
+      "facts": [
+        {
+          "label": "Ability Score Increase",
+          "value": "Strength +2 and Constitution +1"
+        },
+        {
+          "label": "Age",
+          "value": "Reaches adulthood around age 14 and rarely lives longer than 75 years"
+        },
+        {
+          "label": "Typical alignment",
+          "value": "Often tends toward chaos and is not strongly inclined toward good; this is descriptive, not mandatory"
+        },
+        {
+          "label": "Size",
+          "value": "Medium; commonly 5–7 feet tall and 180–250 pounds"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        },
+        {
+          "label": "Languages",
+          "value": "Common and Orc"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Darkvision",
+          "description": "You can see in dim light within 60 feet as though it were bright light and in darkness as though it were dim light. In darkness, you see only shades of gray."
+        },
+        {
+          "name": "Menacing",
+          "description": "You are proficient in the Intimidation skill."
+        },
+        {
+          "name": "Relentless Endurance",
+          "description": "When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. You regain this trait after a long rest."
+        },
+        {
+          "name": "Savage Attacks",
+          "description": "When you score a critical hit with a melee weapon attack, roll one of the weapon’s damage dice one additional time and add it to the critical hit’s extra damage."
+        }
+      ],
+      "tags": [
+        "half-orc",
+        "race",
+        "2014",
+        "relentless endurance",
+        "savage attacks",
+        "intimidation"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    },
+    {
+      "id": "tiefling",
+      "title": "Tiefling",
+      "entryType": "ancestry",
+      "gameSystem": "dnd5e",
+      "edition": "2014",
+      "category": "race",
+      "categoryName": "Race",
+      "summary": "A fiend-touched Medium race with Intelligence, Charisma, Darkvision, fire resistance, and innate infernal magic.",
+      "description": "Tieflings gain an innate cantrip and unlock one-use spells at character levels 3 and 5.",
+      "facts": [
+        {
+          "label": "Ability Score Increase",
+          "value": "Intelligence +1 and Charisma +2"
+        },
+        {
+          "label": "Age",
+          "value": "Matures at the human rate and commonly lives a few years longer"
+        },
+        {
+          "label": "Typical alignment",
+          "value": "Often independent and inclined toward chaos; this is descriptive, not mandatory"
+        },
+        {
+          "label": "Size",
+          "value": "Medium; broadly similar in height and build to humans"
+        },
+        {
+          "label": "Speed",
+          "value": "30 feet"
+        },
+        {
+          "label": "Languages",
+          "value": "Common and Infernal"
+        },
+        {
+          "label": "Innate spellcasting ability",
+          "value": "Charisma"
+        }
+      ],
+      "traits": [
+        {
+          "name": "Darkvision",
+          "description": "You can see in dim light within 60 feet as though it were bright light and in darkness as though it were dim light. In darkness, you see only shades of gray."
+        },
+        {
+          "name": "Hellish Resistance",
+          "description": "You have resistance to fire damage."
+        },
+        {
+          "name": "Infernal Legacy",
+          "description": "You know the Thaumaturgy cantrip. At level 3, you can cast Hellish Rebuke as a 2nd-level spell once with this trait, regaining the use after a long rest. At level 5, you can cast Darkness once with this trait, regaining the use after a long rest. Charisma is your spellcasting ability for these spells."
+        }
+      ],
+      "tags": [
+        "tiefling",
+        "race",
+        "2014",
+        "infernal legacy",
+        "fire resistance",
+        "darkvision"
+      ],
+      "sourceType": "licensed-srd-data",
+      "sourceDocument": "SRD 5.1",
+      "license": "CC BY 4.0",
+      "sourceSection": "Races (SRD 5.1, pages 3–7)"
+    }
+  ],
+  "sourceSection": "Races (SRD 5.1, pages 3–7)"
+}
