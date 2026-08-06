@@ -1,181 +1,107 @@
-# My RPG Source
+# Codex Data Architecture
 
-A free, browser-based tabletop roleplaying character builder and rules-learning project.
+The Codex uses a versioned manifest so each tabletop game and edition can keep its rules isolated.
 
-**Live site:** [www.myrpgsource.com](https://www.myrpgsource.com)  
-**Repository:** [roguehero-ajp/character-creator](https://github.com/roguehero-ajp/character-creator)
-
-## Mission
-
-**Break down the barriers that stop people from playing tabletop roleplaying games.**
-
-My RPG Source is designed to make character creation clearer, friendlier, and easier to learn. The project combines practical character tools with plain-language rules guidance so players can spend less time wrestling with forms and more time imagining who they want to play.
-
-## Current Status
-
-My RPG Source is a public, pre-1.0 project under active development.
-
-The live site currently supports:
-
-- Dungeons & Dragons 5e using the 2024 rules
-- Dungeons & Dragons 5e using the 2014 rules
-
-The builders are usable now, but some advanced class, subclass, multiclass, spellcasting, and printing features remain in development. The current development priorities are documented in [`roadmap.md`](roadmap.md).
-
-## Current Features
-
-### Character creation
-
-- Separate 2014 and 2024 builder modes
-- Edition-specific Race or Species terminology and data paths
-- Edition-specific background and class data loading
-- Manual ability-score entry
-- Standard Array
-- 4d6, drop the lowest
-- 3d6 house-rule generation
-- Official 27-point Point Buy
-- Automatic ability modifiers and core derived calculations
-- Dynamic class-level rows and total character-level calculation
-- Theme selection
-
-### Saving and portability
-
-- Automatic local browser saving
-- Save Now and Load Saved Character controls
-- Separate local saves for the 2014 and 2024 builders
-- JSON backup export
-- JSON backup import
-- Edition warnings when importing a character from a different rules version
-- Restoration of dynamic controls and multiclass rows
-
-My RPG Source does not currently require an account. Browser saves can be cleared by the browser or device, so exported JSON backups are recommended for important characters.
-
-### Printing and PDF
-
-- Printable character sheet
-- Blank character-sheet printing without altering the current character
-- PDF export with character-based filenames
-- Print-specific layout and cleanup rules
-
-### Rules learning
-
-- Contextual Knowledge Cards throughout the builder
-- Searchable in-builder Rules Codex that loads only the active edition
-- Dynamic Featured Knowledge Card on the homepage
-- Unified standalone Rules Codex containing 2,208 searchable entries: core player rules, 56 edition-specific race/species entries, 5 backgrounds, 18 feats, 24 class foundations, 519 mundane-equipment entries, spells, and magic items
-- Separate D&D 5e 2014 and D&D 5e 2024 rules collections
-- Game-system, edition, entry-type, rule-category, race/species-category, and equipment-category filters
-- Stable deep links to individual Codex entries
-- New Player FAQ with a complete example of play
-
-### Character advancement
-
-- Level Up flow for advancing an existing class
-- Fixed, rolled, and manual hit-point gain methods
-- Review step before committing a level
-- Stored level history
-- Hit-point recalculation when Constitution changes
-
-The visible **Add a New Class** branch is intentionally locked until multiclass prerequisites, proficiency handling, and combined spell-slot calculations are complete.
-
-### Site foundation
-
-- Custom domain with HTTPS
-- GitHub Pages deployment
-- Responsive site layout
-- About, Contact, Privacy Policy, and Legal / SRD Attribution pages
-- `robots.txt`
-- `sitemap.xml`
-- Custom `404.html`
-- `ads.txt`
-
-## Known Limitations
-
-- Class lists and basic class data are edition-aware, but complete class rules and features are not yet fully automated by edition.
-- Subclass selection and class-feature progression are not complete.
-- Multiclass prerequisites exist in the class data, but the Add a New Class flow is not yet enabled.
-- Reduced multiclass proficiencies and proficiency-source tracking are not complete.
-- Combined multiclass spell-slot calculations are not complete.
-- Builder background options remain broader than the Codex because the Codex reproduces only backgrounds released in the applicable SRD.
-- The Codex architecture, broad core-player-rules collection, mundane-equipment catalogue, SRD origins, backgrounds, feats, and 24 class foundations are in place. Individual class-feature mechanics, subclass entries, focused edition comparisons, and final editorial review remain incomplete.
-- Long feature lists and other dense character information still need print-layout refinement.
-- There are no user accounts, cloud saves, cross-device synchronization, hosted campaigns, or version history yet.
-
-## Project Structure
+## Hierarchy
 
 ```text
-/
-├── index.html                 Homepage and edition selection
-├── builder.html               Shared 2014 and 2024 character builder
-├── codex.html                 Unified Rules, Origins, Equipment, Spells & Magic Items Codex
-├── faq.html                   New Player FAQ and example of play
-├── about.html                 Project information
-├── contact.html               Contact page
-├── privacy.html               Privacy policy
-├── legal.html                 Legal and SRD attribution
-├── 404.html                   Custom not-found page
-├── css/                       Layout, themes, printing, Codex, and responsive styles
-├── js/                        Modular application logic
-│   └── codex-data.js          Shared manifest-driven Codex data loader
-├── data/
-│   ├── codex.json             Legacy rules data retained for rollback
-│   ├── srd-codex.json         Existing SRD spells and magic items
-│   ├── codex/                Edition-isolated rules and character-option collections
-│   │   ├── manifest.json      Game-system, edition, and collection registry
-│   │   └── dnd5e/
-│   │       ├── 2014/          2014 rules, origins, backgrounds, feats, classes, and equipment
-│   │       └── 2024/          2024 rules, origins, backgrounds, feats, classes, and equipment
-│   └── dnd5e/
-│       ├── 2014/              2014 races, backgrounds, and classes
-│       └── 2024/              2024 species, backgrounds, and classes
-├── tools/
-│   └── validate-codex.mjs     Codex schema and relationship validation
-└── images/                    Site images
+data/codex/manifest.json
+└── game system
+    └── edition
+        └── collection
+            └── entries
 ```
 
-The builder reads JSON files with `fetch()`, so it should be tested through GitHub Pages or another web server rather than opened only as a local `file://` page.
+The current D&D files are:
 
-## Development Priorities
+```text
+data/codex/dnd5e/2014/core-rules.json
+data/codex/dnd5e/2014/ancestries.json
+data/codex/dnd5e/2014/backgrounds.json
+data/codex/dnd5e/2014/feats.json
+data/codex/dnd5e/2014/classes.json
+data/codex/dnd5e/2014/equipment.json
+data/codex/dnd5e/2024/core-rules.json
+data/codex/dnd5e/2024/ancestries.json
+data/codex/dnd5e/2024/backgrounds.json
+data/codex/dnd5e/2024/feats.json
+data/codex/dnd5e/2024/classes.json
+data/codex/dnd5e/2024/equipment.json
+data/srd-codex.json
+```
 
-The current sequence is:
+The modular rules, origins, backgrounds, feats, classes, and equipment files use schema version 2. The existing spell and magic-item file is loaded through the `legacy-srd` adapter declared in the manifest.
 
-1. Keep public documentation and homepage status accurate.
-2. Complete SRD class-feature, subclass, and subclass-feature collections.
-3. Make builder class behavior fully edition-aware using the validated class foundations.
-4. Enable safe multiclassing with prerequisites and DM Override.
-5. Track proficiency sources and reduced multiclass proficiencies.
-6. Add subclass, class-feature, and multiclass spell-slot handling.
-7. Test printing, saving, loading, import, and export across both editions.
-8. Improve accessibility, mobile presentation, and dense print layouts.
-9. Prototype **My First Steps**, a free web onboarding adventure that produces a ready-to-go character.
+## Important rule
 
-See [`roadmap.md`](roadmap.md) for the detailed plan.
+An entry belongs to exactly one game system and one edition. When two editions use the same explanation, each edition still receives its own entry. This prevents later edits to one ruleset from silently changing another.
 
-## Future Direction
+## Schema version 2 entry fields
 
-After the D&D 5e builders are dependable, My RPG Source may expand into:
+Required fields:
 
-- Additional tabletop game systems, subject to licensing and product scope
-- Original beginner guides and rules explanations
-- Optional accounts and paid cloud services
-- Cross-device saves and version history
-- Game Master hosted campaigns
-- Homebrew rules and campaign tools
-- Basic campaign communication
-- Android and iOS applications
+- `id`: unique inside the edition collection
+- `title`
+- `entryType`: currently `rule`, `ancestry`, `background`, `feat`, `class`, or `equipment` in schema-version-2 collections
+- `gameSystem`
+- `edition`
+- `category`
+- `categoryName`
+- `summary`
+- `sourceType`
+- `sourceDocument`
 
-The free web experience will continue to support local saves and JSON import/export. Personal cloud storage is planned as a future optional paid service rather than a free-tier requirement.
+Common optional fields:
 
-## Licensing and Attribution
+Rules entries commonly use:
 
-My RPG Source is an independent project and is not affiliated with, endorsed by, or sponsored by Wizards of the Coast or any other tabletop game publisher.
+- `whatItMeans`
+- `whatItAffects`
+- `exampleInPlay`
+- `whyItMatters`
+- `commonMistakes`
+- `bestFor`
+- `related`
+- `tags`
 
-Licensed rules material and required attribution are documented in [`legal.html`](legal.html).
+Ancestry entries commonly use:
 
-No general open-source licence has been granted for the project source code at this time. Unless a file states otherwise, the project code and original content remain all rights reserved.
+- `description`
+- `facts`: structured label/value pairs such as ability-score increases, creature type, size, speed, languages, and spellcasting choices
+- `traits`: named rules features with complete reference descriptions
+- `parentId` and `parentTitle` for subraces or species choices
+- `childIds` for parent races or species with finite choices
+- `sourceSection` for the audited SRD section and page range
+- `tags`
+- `license`
 
-## Maintainer
+Class entries commonly use:
 
-My RPG Source is built and maintained by Jason Paul in Ontario, Canada.
+- `description`
+- `facts`: structured class traits, proficiencies, starting equipment, spellcasting progression, and multiclass information
+- `progression`: exactly twenty level rows with proficiency bonus and feature names
+- `builderClassId`: stable link to the edition-specific builder class record
+- `subclass`: the subclass included in the applicable SRD and its feature levels
+- `sourceSection`
+- `tags`
+- `license`
 
-Contact: [myrpgsource@gmail.com](mailto:myrpgsource@gmail.com)
+Equipment entries commonly use:
+
+- `subcategory`
+- `description`
+- `facts`: structured label/value pairs such as cost, weight, damage, Armor Class, mastery, capacity, or service availability
+- `tags`
+- `license`
+
+Related, parent, and child IDs are local to the same game system, edition, and entry type.
+
+## Adding another game system
+
+1. Add the game system to `data/codex/manifest.json`.
+2. Give it one or more editions.
+3. Give each edition its own collection files.
+4. Add a loader adapter in `js/codex-data.js` only if the new files do not use schema version 2.
+5. Run `node tools/validate-codex.mjs` before deployment.
+
+Do not place another game's rules inside the D&D folders, even when the mechanic appears similar.
