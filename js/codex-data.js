@@ -10,7 +10,7 @@
   'use strict';
 
   const MANIFEST_URL = 'data/codex/manifest.json';
-  const DEFAULT_ENTRY_TYPES = ['rule', 'ancestry', 'background', 'feat', 'equipment', 'spell', 'item'];
+  const DEFAULT_ENTRY_TYPES = ['rule', 'ancestry', 'background', 'feat', 'class', 'equipment', 'spell', 'item'];
   const jsonCache = new Map();
 
   async function fetchJson(url) {

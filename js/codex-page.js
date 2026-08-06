@@ -2,7 +2,7 @@
  * My RPG Source - Standalone Rules Codex
  * ---------------------------------------
  * Uses the shared Codex data layer to load game-system and edition-specific
- * rules, character origins, mundane equipment, spells, and magic items. Event listeners are bound once. No timers or
+ * rules, character origins, class foundations, mundane equipment, spells, and magic items. Event listeners are bound once. No timers or
  * MutationObservers are used.
  */
 
@@ -56,6 +56,7 @@ function cacheCodexElements() {
   codexElements.ancestryCount = document.getElementById('codex-ancestry-count');
   codexElements.backgroundCount = document.getElementById('codex-background-count');
   codexElements.featCount = document.getElementById('codex-feat-count');
+  codexElements.classCount = document.getElementById('codex-class-count');
   codexElements.spellCount = document.getElementById('codex-spell-count');
   codexElements.itemCount = document.getElementById('codex-item-count');
   codexElements.equipmentCount = document.getElementById('codex-equipment-count');
@@ -97,6 +98,9 @@ function createSearchIndex(entry) {
     ...(entry.tags || []),
     ...((entry.facts || []).flatMap((fact) => [fact.label, fact.value])),
     ...((entry.traits || []).flatMap((item) => [item.name, item.description])),
+    ...((entry.progression || []).flatMap((row) => [row.level, row.proficiencyBonus, row.features])),
+    entry.subclass?.name,
+    ...(entry.subclass?.featureLevels || []),
   ];
 
   if (entry.entryType === 'spell') {
@@ -216,7 +220,7 @@ function populateEquipmentCategories(categories) {
 async function loadGameSystem(gameSystemId) {
   const result = await window.MyRPGCodexData.loadEntries({
     gameSystem: gameSystemId,
-    entryTypes: ['rule', 'ancestry', 'background', 'feat', 'equipment', 'spell', 'item'],
+    entryTypes: ['rule', 'ancestry', 'background', 'feat', 'class', 'equipment', 'spell', 'item'],
   });
 
   codexState.gameSystem = result.gameSystem;
@@ -255,6 +259,7 @@ function updateCollectionTotals(entries) {
   const ancestryCount = entries.filter((entry) => entry.entryType === 'ancestry').length;
   const backgroundCount = entries.filter((entry) => entry.entryType === 'background').length;
   const featCount = entries.filter((entry) => entry.entryType === 'feat').length;
+  const classCount = entries.filter((entry) => entry.entryType === 'class').length;
   const equipmentCount = entries.filter((entry) => entry.entryType === 'equipment').length;
   const spellCount = entries.filter((entry) => entry.entryType === 'spell').length;
   const itemCount = entries.filter((entry) => entry.entryType === 'item').length;
@@ -264,6 +269,7 @@ function updateCollectionTotals(entries) {
   codexElements.ancestryCount.textContent = ancestryCount.toLocaleString('en-CA');
   codexElements.backgroundCount.textContent = backgroundCount.toLocaleString('en-CA');
   codexElements.featCount.textContent = featCount.toLocaleString('en-CA');
+  codexElements.classCount.textContent = classCount.toLocaleString('en-CA');
   codexElements.equipmentCount.textContent = equipmentCount.toLocaleString('en-CA');
   codexElements.spellCount.textContent = spellCount.toLocaleString('en-CA');
   codexElements.itemCount.textContent = itemCount.toLocaleString('en-CA');
@@ -433,6 +439,10 @@ function entryTypeLabel(entryType) {
 
   if (entryType === 'feat') {
     return 'Feat';
+  }
+
+  if (entryType === 'class') {
+    return 'Class';
   }
 
   if (entryType === 'equipment') {
@@ -740,6 +750,89 @@ function createAncestryBody(entry) {
   return fragment;
 }
 
+
+function createClassProgressionTable(entry) {
+  if (!Array.isArray(entry.progression) || entry.progression.length === 0) {
+    return null;
+  }
+
+  const section = document.createElement('section');
+  section.className = 'codex-rule-section codex-class-progression';
+
+  const title = document.createElement('h4');
+  title.textContent = 'Class progression';
+
+  const note = document.createElement('p');
+  note.className = 'codex-table-note';
+  note.textContent = 'This foundation table lists feature names. Full feature rules and class-specific resource columns belong to the dedicated class-feature collection.';
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'codex-table-wrapper';
+  wrapper.tabIndex = 0;
+  wrapper.setAttribute('role', 'region');
+  wrapper.setAttribute('aria-label', `${entry.title} class progression table`);
+
+  const table = document.createElement('table');
+  table.className = 'codex-progression-table';
+
+  const head = document.createElement('thead');
+  const headRow = document.createElement('tr');
+  ['Level', 'Proficiency Bonus', 'Class Features'].forEach((label) => {
+    const cell = document.createElement('th');
+    cell.scope = 'col';
+    cell.textContent = label;
+    headRow.append(cell);
+  });
+  head.append(headRow);
+
+  const body = document.createElement('tbody');
+  entry.progression.forEach((row) => {
+    const tableRow = document.createElement('tr');
+    const level = document.createElement('th');
+    level.scope = 'row';
+    level.textContent = row.level;
+    const proficiency = document.createElement('td');
+    proficiency.textContent = row.proficiencyBonus;
+    const features = document.createElement('td');
+    features.textContent = row.features || '—';
+    tableRow.append(level, proficiency, features);
+    body.append(tableRow);
+  });
+
+  table.append(head, body);
+  wrapper.append(table);
+  section.append(title, note, wrapper);
+  return section;
+}
+
+function createClassBody(entry) {
+  const fragment = document.createDocumentFragment();
+  fragment.append(createStructuredFacts(entry));
+
+  if (entry.description) {
+    const description = document.createElement('p');
+    description.className = 'codex-description';
+    description.textContent = entry.description;
+    fragment.append(description);
+  }
+
+  (entry.traits || []).forEach((item) => {
+    if (!item?.name || !item?.description) return;
+    const section = document.createElement('section');
+    section.className = 'codex-rule-section';
+    const title = document.createElement('h4');
+    title.textContent = item.name;
+    const paragraph = document.createElement('p');
+    paragraph.textContent = item.description;
+    section.append(title, paragraph);
+    fragment.append(section);
+  });
+
+  const progression = createClassProgressionTable(entry);
+  if (progression) fragment.append(progression);
+  return fragment;
+}
+
 function createCodexEntry(entry) {
   const details = document.createElement('details');
   details.className = 'codex-entry';
@@ -767,6 +860,7 @@ function createCodexEntry(entry) {
     entry.entryType === 'ancestry' ||
     entry.entryType === 'background' ||
     entry.entryType === 'feat' ||
+    entry.entryType === 'class' ||
     entry.entryType === 'equipment'
   ) {
     badges.append(createBadge(entry.categoryName));
@@ -789,6 +883,8 @@ function createCodexEntry(entry) {
     body.append(createAncestryBody(entry));
   } else if (entry.entryType === 'background' || entry.entryType === 'feat') {
     body.append(createStructuredBody(entry));
+  } else if (entry.entryType === 'class') {
+    body.append(createClassBody(entry));
   } else {
     if (entry.entryType === 'spell') {
       body.append(createSpellFacts(entry));
