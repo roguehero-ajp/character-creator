@@ -146,6 +146,13 @@
       return;
     }
 
+    if (pageKind === 'news-article') {
+      track('news_article_open', {
+        article_id: normalizeText(document.body.dataset.articleId || ''),
+      });
+      return;
+    }
+
     if (pageKind === 'guide') {
       track('guide_open', {
         guide_id: normalizeText(document.body.dataset.guideId || ''),
