@@ -1,107 +1,165 @@
-# Codex Data Architecture
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3252YKGQX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N3252YKGQX');
+  </script>
 
-The Codex uses a versioned manifest so each tabletop game and edition can keep its rules isolated.
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RPG News &amp; Guides | My RPG Source</title>
+  <meta
+    name="description"
+    content="Original RPG news, analysis, beginner guides, and My RPG Source updates covering tabletop roleplaying games, RPG video games, and RPG-related film and television."
+  >
+  <link rel="canonical" href="https://www.myrpgsource.com/news.html">
 
-## Hierarchy
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+  >
 
-```text
-data/codex/manifest.json
-└── game system
-    └── edition
-        └── collection
-            └── entries
-```
+  <link rel="stylesheet" href="css/site-pages.css">
+  <link rel="stylesheet" href="css/content.css">
+  <script defer src="js/analytics.js"></script>
+</head>
+<body data-page-kind="news">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-The current D&D files are:
+  <div class="site-shell content-shell">
+    <header class="site-header">
+      <a class="site-brand" href="index.html">My RPG Source</a>
 
-```text
-data/codex/dnd5e/2014/core-rules.json
-data/codex/dnd5e/2014/ancestries.json
-data/codex/dnd5e/2014/backgrounds.json
-data/codex/dnd5e/2014/feats.json
-data/codex/dnd5e/2014/classes.json
-data/codex/dnd5e/2014/equipment.json
-data/codex/dnd5e/2024/core-rules.json
-data/codex/dnd5e/2024/ancestries.json
-data/codex/dnd5e/2024/backgrounds.json
-data/codex/dnd5e/2024/feats.json
-data/codex/dnd5e/2024/classes.json
-data/codex/dnd5e/2024/equipment.json
-data/srd-codex.json
-```
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="news.html" aria-current="page">News</a>
+        <a href="builder.html?edition=2024">Character Builder</a>
+        <a href="codex.html">Codex</a>
+        <a href="faq.html">FAQ</a>
+        <a href="about.html">About</a>
+      </nav>
+    </header>
 
-The modular rules, origins, backgrounds, feats, classes, and equipment files use schema version 2. The existing spell and magic-item file is loaded through the `legacy-srd` adapter declared in the manifest.
+    <main id="main-content">
+      <header class="page-hero">
+        <p class="eyebrow">The wider RPG world</p>
+        <h1>RPG News &amp; Guides</h1>
+        <p class="lede">
+          Original reporting, useful analysis, and practical guides for people who love
+          roleplaying games in all their forms: tabletop, video games, film, and television.
+        </p>
 
-## Important rule
+        <div class="news-hero-actions">
+          <a class="content-button" href="guides/how-to-create-your-first-dnd-character.html">
+            Read the first guide
+          </a>
+          <a class="content-button content-button-secondary" href="codex.html">
+            Browse the Rules Codex
+          </a>
+        </div>
+      </header>
 
-An entry belongs to exactly one game system and one edition. When two editions use the same explanation, each edition still receives its own entry. This prevents later edits to one ruleset from silently changing another.
+      <section class="content-card" aria-labelledby="latest-heading">
+        <p class="article-kicker">Latest</p>
+        <h2 id="latest-heading">Start here</h2>
 
-## Schema version 2 entry fields
+        <div class="article-grid">
+          <article class="article-card">
+            <p class="article-kicker">Beginner guide</p>
+            <h3>How to Create Your First D&amp;D Character</h3>
+            <p>
+              A plain-language roadmap from the first character idea to a ready-to-go sheet,
+              including the important differences between the 2014 and 2024 builders.
+            </p>
+            <p class="article-meta">
+              <span>Published August 7, 2026</span>
+              <span>About 12 minutes</span>
+            </p>
+            <a
+              href="guides/how-to-create-your-first-dnd-character.html"
+              data-analytics-event="guide_card_open"
+              data-analytics-id="first-dnd-character"
+            >Read the guide</a>
+          </article>
 
-Required fields:
+          <article class="article-card">
+            <p class="article-kicker">Site update</p>
+            <h3>Class foundations are now in the Rules Codex</h3>
+            <p>
+              All twelve SRD classes are represented separately for the 2014 and 2024
+              editions, with twenty-level progression tables and edition-specific foundations.
+            </p>
+            <a href="codex.html?type=class">Browse the class catalogue</a>
+          </article>
+        </div>
+      </section>
 
-- `id`: unique inside the edition collection
-- `title`
-- `entryType`: currently `rule`, `ancestry`, `background`, `feat`, `class`, or `equipment` in schema-version-2 collections
-- `gameSystem`
-- `edition`
-- `category`
-- `categoryName`
-- `summary`
-- `sourceType`
-- `sourceDocument`
+      <section class="content-card" aria-labelledby="coverage-heading">
+        <p class="article-kicker">Weekly coverage</p>
+        <h2 id="coverage-heading">What My RPG Source will cover</h2>
 
-Common optional fields:
+        <div class="editorial-grid">
+          <article class="editorial-card">
+            <h3>Tabletop RPGs</h3>
+            <p>
+              New games, editions, releases, crowdfunding, licensing changes, tools,
+              conventions, and developments that affect people at the table.
+            </p>
+          </article>
 
-Rules entries commonly use:
+          <article class="editorial-card">
+            <h3>RPG Video Games</h3>
+            <p>
+              Announcements, launches, expansions, major updates, and the design ideas that
+              connect digital RPGs with their tabletop cousins.
+            </p>
+          </article>
 
-- `whatItMeans`
-- `whatItAffects`
-- `exampleInPlay`
-- `whyItMatters`
-- `commonMistakes`
-- `bestFor`
-- `related`
-- `tags`
+          <article class="editorial-card">
+            <h3>Film &amp; Television</h3>
+            <p>
+              Adaptations, fantasy and science-fiction series, actual-play projects, and
+              other screen stories with a meaningful connection to RPG culture.
+            </p>
+          </article>
+        </div>
+      </section>
 
-Ancestry entries commonly use:
+      <section class="content-card editorial-standard" aria-labelledby="standards-heading">
+        <p class="article-kicker">How we publish</p>
+        <h2 id="standards-heading">News should earn the word “news.”</h2>
+        <p>
+          My RPG Source will favour primary announcements and attributable reporting. Articles
+          will distinguish confirmed facts from analysis, clearly label rumours when they are
+          worth discussing at all, and add context instead of merely rewriting a press release.
+        </p>
+        <p>
+          Guides follow a different rhythm: they are evergreen, original explanations designed
+          to help someone understand a game, make a decision, or get to the table with less friction.
+        </p>
+      </section>
+    </main>
 
-- `description`
-- `facts`: structured label/value pairs such as ability-score increases, creature type, size, speed, languages, and spellcasting choices
-- `traits`: named rules features with complete reference descriptions
-- `parentId` and `parentTitle` for subraces or species choices
-- `childIds` for parent races or species with finite choices
-- `sourceSection` for the audited SRD section and page range
-- `tags`
-- `license`
-
-Class entries commonly use:
-
-- `description`
-- `facts`: structured class traits, proficiencies, starting equipment, spellcasting progression, and multiclass information
-- `progression`: exactly twenty level rows with proficiency bonus and feature names
-- `builderClassId`: stable link to the edition-specific builder class record
-- `subclass`: the subclass included in the applicable SRD and its feature levels
-- `sourceSection`
-- `tags`
-- `license`
-
-Equipment entries commonly use:
-
-- `subcategory`
-- `description`
-- `facts`: structured label/value pairs such as cost, weight, damage, Armor Class, mastery, capacity, or service availability
-- `tags`
-- `license`
-
-Related, parent, and child IDs are local to the same game system, edition, and entry type.
-
-## Adding another game system
-
-1. Add the game system to `data/codex/manifest.json`.
-2. Give it one or more editions.
-3. Give each edition its own collection files.
-4. Add a loader adapter in `js/codex-data.js` only if the new files do not use schema version 2.
-5. Run `node tools/validate-codex.mjs` before deployment.
-
-Do not place another game's rules inside the D&D folders, even when the mechanic appears similar.
+    <footer class="site-footer">
+      <nav aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="news.html">News &amp; Guides</a>
+        <a href="codex.html">Rules Codex</a>
+        <a href="faq.html">New Player FAQ</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="legal.html">Legal &amp; SRD Attribution</a>
+      </nav>
+      <p>My RPG Source · Create. Learn. Play.</p>
+    </footer>
+  </div>
+</body>
+</html>

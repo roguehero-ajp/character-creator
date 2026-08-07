@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3252YKGQX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N3252YKGQX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>New Player FAQ | My RPG Source</title>
+
+  <meta
+    name="description"
+    content="A friendly beginner's guide to tabletop roleplaying games, character sheets, dice, Game Masters, and what happens during a typical game."
+  >
+
+  <link rel="canonical" href="https://www.myrpgsource.com/faq.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+  >
+
+  <link rel="stylesheet" href="css/site-pages.css">
+
+  <style>
+    .faq-intro-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .faq-button {
+      min-height: 46px;
+      padding: 10px 17px;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      color: #17212c;
+      font-family: "Cinzel", Georgia, serif;
+      font-weight: 700;
+      text-decoration: none;
+
+      background:
+        linear-gradient(
+          180deg,
+          var(--accent),
+          #d4a90d
+        );
+
+      border: 1px solid rgba(241, 196, 15, 0.8);
+      border-radius: 12px;
+
+      box-shadow:
+        0 10px 24px rgba(241, 196, 15, 0.18);
+    }
+
+    .faq-button:hover {
+      color: #17212c;
+      transform: translateY(-1px);
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .faq-item {
+      overflow: hidden;
+
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .faq-item summary {
+      padding: 18px 20px;
+
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+
+      color: var(--text);
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 1.02rem;
+      font-weight: 700;
+      line-height: 1.45;
+
+      cursor: pointer;
+      list-style-position: outside;
+    }
+
+    .faq-item summary:hover {
+      background: rgba(241, 196, 15, 0.06);
+    }
+
+    .question-label,
+    .answer-label {
+      flex: 0 0 auto;
+      color: var(--accent);
+      font-family: "Cinzel", Georgia, serif;
+      font-weight: 700;
+    }
+
+    .faq-answer {
+      padding: 0 20px 20px;
+
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: baseline;
+      gap: 10px;
+
+      color: var(--muted);
+    }
+
+    .answer-label {
+      line-height: 1.7;
+    }
+
+    .faq-answer p:first-child {
+      margin-top: 0;
+    }
+
+    .faq-answer p:last-child {
+      margin-bottom: 0;
+    }
+
+    .example-card {
+      margin-top: 32px;
+      padding-top: 34px;
+      border-top: 1px solid var(--border);
+      scroll-margin-top: 24px;
+    }
+
+    .example-heading {
+      margin-bottom: 10px;
+    }
+
+    .example-intro {
+      color: var(--muted);
+    }
+
+    .play-example {
+      margin-top: 22px;
+      padding: clamp(18px, 4vw, 30px);
+
+      background: rgba(0, 0, 0, 0.17);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 16px;
+    }
+
+    .play-example p {
+      margin: 0 0 14px;
+    }
+
+    .play-example p:last-child {
+      margin-bottom: 0;
+    }
+
+    .dialogue strong {
+      color: var(--accent-2);
+    }
+
+    .adventure-continues {
+      margin-top: 24px !important;
+
+      color: var(--accent);
+      font-family: "Cinzel", Georgia, serif;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .back-to-top {
+      margin-top: 24px;
+      text-align: right;
+    }
+
+    @media (max-width: 640px) {
+      .faq-item summary {
+        padding: 16px;
+      }
+
+      .faq-answer {
+        padding: 0 16px 17px;
+      }
+
+      .faq-intro-actions,
+      .faq-button {
+        width: 100%;
+      }
+    }
+  </style>
+  <script defer src="js/analytics.js"></script>
+</head>
+
+<body id="page-top">
+  <a class="skip-link" href="#main-content">
+    Skip to main content
+  </a>
+
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="site-brand" href="index.html">
+        My RPG Source
+      </a>
+
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="news.html">News</a>
+        <a href="builder.html?edition=2024">Character Builder</a>
+        <a href="codex.html">Codex</a>
+        <a href="faq.html" aria-current="page">New Player FAQ</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <header class="page-hero">
+        <p class="eyebrow">
+          New to tabletop roleplaying?
+        </p>
+
+        <h1>
+          Start here. No rulebook mastery required.
+        </h1>
+
+        <p class="lede">
+          These beginner questions explain what tabletop roleplaying games are,
+          what you need to play, and what actually happens once everyone sits
+          down at the table.
+        </p>
+
+        <div class="faq-intro-actions">
+          <a class="faq-button" href="builder.html?edition=2024">
+            Explore the Character Builder
+          </a>
+        </div>
+      </header>
+
+      <article class="content-card">
+        <section aria-labelledby="faq-heading">
+          <h2 id="faq-heading">
+            Frequently Asked Questions
+          </h2>
+
+          <div class="faq-list">
+            
+        <details class="faq-item" open>
+          <summary>
+            <span class="question-label">Q.</span>
+            <span>I&#x27;m very new to this. What on earth even is an RPG?</span>
+          </summary>
+
+          <div class="faq-answer">
+            <span class="answer-label" aria-hidden="true">A.</span>
+            <div>
+              <p>Ah! You've come to the perfect place! MyRPGSource.com (RPG stands for role-playing game) is designed with curious people like yourself in mind. A role-playing game is a game in which you design a "character" which you will control through a narrative scenario controlled by someone called a Dungeon Master or Game Master (DM or GM for short). The narrative (usually called a campaign) can run for a single session or can run as long as several years! Normally, you'll sit down with your friends for a few hours at a time, ending when you choose and picking back up again at a later time to continue the story.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item" open>
+          <summary>
+            <span class="question-label">Q.</span>
+            <span>What do I need to start playing an RPG?</span>
+          </summary>
+
+          <div class="faq-answer">
+            <span class="answer-label" aria-hidden="true">A.</span>
+            <div>
+              <p>Honestly, usually not much! In the early days, we simply used a pencil, a piece of paper, some dice and a rulebook. The pencil and paper were how you kept track of your character. The dice were how you determined successes and failures of the actions you chose to take with your character. The rulebook explained the rules.</p>
+<p>Today, you need a pencil, your character sheet (explained below), a copy of the Skills and Reference document for the game you're playing (commonly referred to as an SRD, which you can find linked on this site) and a set of dice. Games like Shadowrun use standard six sided dice (called d6's - aka dice with six sides), while other games like Dungeons &amp; Dragons use specialty dice that you can buy at most comic or hobby stores. D&amp;D dice include a d20, a d12, two d10's (one of which is denoted as having a digit and a 0, so you can roll both 10 sided dice to come up with a percentile number), a d8, three or four d6's (depending on the pack you get) and one or two d4's (which are little pyramid dice that can be worse than stepping on a lego if you drop one).</p>
+<p>You can buy a copy of the rulebook, but chances are if you've been invited to a group, someone already has one.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item" open>
+          <summary>
+            <span class="question-label">Q.</span>
+            <span>Do I need to know all the rules before I begin?</span>
+          </summary>
+
+          <div class="faq-answer">
+            <span class="answer-label" aria-hidden="true">A.</span>
+            <div>
+              <p>No. Not at all. Not even a little bit close to all of them. You should know some of the common ones, but not at first. Most groups are happy to provide you with a bit of a walkthrough on your first time out. Honestly, I've been playing various roleplaying games since about 1990. I don't know all the rules to any of the games that I've played.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item" open>
+          <summary>
+            <span class="question-label">Q.</span>
+            <span>What actually happens during a typical game session?</span>
+          </summary>
+
+          <div class="faq-answer">
+            <span class="answer-label" aria-hidden="true">A.</span>
+            <div>
+              <p>Well, that's kind of the neat thing...every session is unique! Generally though, you're going to get together with a few friends and the Dungeon Master or Game Master will start things off by telling you where your character are either starting or where they left off last time. From there, you will have a back and forth narrative with your DM or GM. You'll most likely end up rolling some dice and determining how things progress in the story in a collaborative way. <a href="#example-of-play">An example of play is linked below.</a></p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item" open>
+          <summary>
+            <span class="question-label">Q.</span>
+            <span>What is a character sheet and why do I need one?</span>
+          </summary>
+
+          <div class="faq-answer">
+            <span class="answer-label" aria-hidden="true">A.</span>
+            <div>
+              <p>A character is just like a character in a novel or movie, only their actions are controlled by you, the player. A character sheet is a reference sheet that includes all their vital information, statistics and relevant skills they can use. It's a way to keep track of the way your character grows and changes throughout the game, as well as serving as a reference document for the ways you will interact with the world around you, and what items you carry on you.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item" open>
+          <summary>
+            <span class="question-label">Q.</span>
+            <span>How do I know if I succeeded or failed at a task I&#x27;m trying to do with my character?</span>
+          </summary>
+
+          <div class="faq-answer">
+            <span class="answer-label" aria-hidden="true">A.</span>
+            <div>
+              <p>This is where you use your dice and character sheet together. Your statistics and skills provide a bonus that's listed on your character sheet. The Dungeon Master or Game Master will tell you to roll a specific type of dice (often times a d20 or the percentile d10's talked about above). Most times, you will have to roll above a certain target number though there are other times you have to roll under a certain number (usually when dealing with percentile dice). When in doubt, consult your DM or GM!</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item" open>
+          <summary>
+            <span class="question-label">Q.</span>
+            <span>What is a Game Master or Dungeon Master and how are they different from the other players?</span>
+          </summary>
+
+          <div class="faq-answer">
+            <span class="answer-label" aria-hidden="true">A.</span>
+            <div>
+              <p>The Game Master or Dungeon Master (colloquially known as the GM or DM) is the driver of the narrative. They determine what the rest of the world is doing and push you and your party of heroes toward the end goal. They don't have a character of their own, but instead they control all of the outside characters (called Non-Player Characters or NPC's) that you may encounter, including all the baddies and monsters you face along the way. The best DM's and GM's seamlessly weave their story around the characters you all play and paint you into the world they've created. They are almost always the ones with all the resources available to play your chosen game, and they're also the ones that determine the outcome of the story. They're also usually experienced with the game and know most of the rules.</p>
+            </div>
+          </div>
+        </details>
+          </div>
+        </section>
+
+        <section
+          class="example-card"
+          id="example-of-play"
+          aria-labelledby="example-heading"
+        >
+          <h2 class="example-heading" id="example-heading">
+            Example of Play
+          </h2>
+
+          <p class="example-intro">
+            Here is one example of how narration, decisions, dice rolls,
+            conversation, and combat might flow during a game.
+          </p>
+
+          <div class="play-example">
+            <p>The adventurers have been following a group of bandits through the forest. Their trail has led to an abandoned stone watchtower overlooking the road. Mike, the Dungeon Master, describes what the characters see.</p>
+<p class="dialogue"><strong>Mike, the DM:</strong> The trail ends at a clearing. An old watchtower rises beyond the trees, its upper floor partially collapsed. Light flickers through a narrow window on the ground level, and you can hear voices somewhere inside.</p>
+<p class="dialogue"><strong>Shanda:</strong> Eliana stays near the edge of the trees and looks around for anyone keeping watch.</p>
+<p class="dialogue"><strong>Mike:</strong> Make a Wisdom (Perception) check.</p>
+<p>Shanda rolls a twenty-sided die and adds Eliana’s Perception bonus.</p>
+<p class="dialogue"><strong>Shanda:</strong> I rolled a 14, plus 5. That’s 19.</p>
+<p class="dialogue"><strong>Mike:</strong> You spot a figure crouched on the tower’s broken upper floor. He has a crossbow resting on the stone ledge, but he hasn’t noticed you yet.</p>
+<p class="dialogue"><strong>Shanda:</strong> I motion to Bale and point to the roof, signaling that I see someone.</p>
+<p class="dialogue"><strong>Dan:</strong> Bale whispers, “There’s always someone on the roof.” Can I sneak closer and try to get underneath him?</p>
+<p class="dialogue"><strong>Mike:</strong> You can try. Make a Dexterity (Stealth) check.</p>
+<p class="dialogue"><strong>Dan:</strong> Bale has Expertise in Stealth, so I add 7. I rolled a 10, for 17 altogether.</p>
+<p class="dialogue"><strong>Mike:</strong> You move quietly through the brush and reach the base of the tower without attracting the lookout’s attention.</p>
+<p class="dialogue"><strong>Lacy:</strong> Fiona is not exactly built for sneaking. She’ll wait until Bale gives us a signal.</p>
+<p class="dialogue"><strong>Barry:</strong> Galen will stay with her. Quietly.</p>
+<p class="dialogue"><strong>Lacy:</strong> Fiona looks down at Galen’s armour.</p>
+<p class="dialogue"><strong>Barry:</strong> “Quietly for me.”</p>
+<p class="dialogue"><strong>Lacy:</strong> Lacy gives Barry a withering link.</p>
+<p class="dialogue"><strong>Mike:</strong> Bale, from where you are standing, you can see a wooden side door. It is closed. Make a perception test.</p>
+<p class="dialogue"><strong>Dan:</strong> Rolls a d20. It comes up with a 20. "HAHA! Natural 20!"</p>
+<p class="dialogue"><strong>Mike:</strong> Nice! That'll do it. You see there is a thin cord stretched across the ground in front of the door.</p>
+<p class="dialogue"><strong>Dan:</strong> A trap?</p>
+<p class="dialogue"><strong>Mike:</strong> It might be. You’ll need to examine it more closely to be sure.</p>
+<p class="dialogue"><strong>Dan:</strong> I check the cord and the door without touching anything.</p>
+<p class="dialogue"><strong>Mike:</strong> Make an Intelligence (Investigation) check.</p>
+<p>Dan rolls.</p>
+<p class="dialogue"><strong>Dan:</strong> Twelve.</p>
+<p class="dialogue"><strong>Mike:</strong> The cord runs into a bundle of empty metal cups hidden beside the doorway. Opening the door without disconnecting it would make enough noise to alert everyone inside.</p>
+<p class="dialogue"><strong>Dan:</strong> I’ll use my thieves’ tools to disconnect it.</p>
+<p class="dialogue"><strong>Mike:</strong> Dan, Make a Dexterity check using Bale’s proficiency with thieves’ tools.</p>
+<p class="dialogue"><strong>Dan:</strong> "19...I'm on fire!"</p>
+<p class="dialogue"><strong>Mike:</strong> Bale succeeds and removes the cord without making a sound.</p>
+<p class="dialogue"><strong>Dan:</strong> "Perfect, now to let the group know! Bale looks back toward the others and gives them the signal. Uh...what's the signal again?"</p>
+<p class="dialogue"><strong>Lacy:</strong> What signal did we agree on?</p>
+<p class="dialogue"><strong>Dan:</strong> I don’t think we agreed on one.</p>
+<p class="dialogue"><strong>Lacy:</strong> Then Fiona assumes the frantic waving means “charge.”</p>
+<p class="dialogue"><strong>Mike:</strong> Are you actually charging?</p>
+<p class="dialogue"><strong>Lacy:</strong> Absolutely.</p>
+<p class="dialogue"><strong>Barry:</strong> "Oh geez. Galen follows, while questioning several recent life choices."</p>
+<p class="dialogue"><strong>Mike:</strong> Fiona and Galen cross the clearing. As they reach the tower, the lookout finally notices the movement below.</p>
+<p class="dialogue"><strong>Mike:</strong> The bandit on the upper floor shouts, “They’re here!” Everyone roll Initiative.</p>
+<p>Each player rolls a d20 and adds their character’s Initiative modifier. Mike rolls for the bandits and puts everyone in order.</p>
+<p class="dialogue"><strong>Mike:</strong> Eliana acts first. The lookout is about twenty feet above you, partially protected by the broken stone wall.</p>
+<p class="dialogue"><strong>Shanda:</strong> Eliana draws her bow and fires at him.</p>
+<p class="dialogue"><strong>Mike:</strong> Make an attack roll.</p>
+<p class="dialogue"><strong>Shanda:</strong> I rolled a 16. With my attack bonus, that’s 21.</p>
+<p class="dialogue"><strong>Mike:</strong> That hits.</p>
+<p>Shanda rolls the bow’s damage dice.</p>
+<p class="dialogue"><strong>Shanda:</strong> Eight points of Piercing damage.</p>
+<p class="dialogue"><strong>Mike:</strong> Your arrow strikes the lookout in the shoulder. He stumbles backward but remains on his feet. Bale, you’re next.</p>
+<p class="dialogue"><strong>Dan:</strong> Is the side door still closed?</p>
+<p class="dialogue"><strong>Mike:</strong> Yes, but you disabled the alarm attached to it.</p>
+<p class="dialogue"><strong>Dan:</strong> Bale opens the door and slips inside.</p>
+<p class="dialogue"><strong>Mike:</strong> The room beyond contains two surprised bandits seated at a wooden table. One is reaching for a sword, and the other is knocking over his chair as he tries to stand.</p>
+<p class="dialogue"><strong>Dan:</strong> I attack the one reaching for the sword.</p>
+<p>Because Bale entered unnoticed, Mike determines that Bale has Advantage on the attack. Dan rolls two d20s and uses the higher result.</p>
+<p class="dialogue"><strong>Dan:</strong> The higher roll is 18. That should hit.</p>
+<p class="dialogue"><strong>Mike:</strong> It does.</p>
+<p class="dialogue"><strong>Dan:</strong> Since I had Advantage, Bale can use Sneak Attack.</p>
+<p>Dan rolls the weapon’s damage and Bale’s additional Sneak Attack dice.</p>
+<p class="dialogue"><strong>Dan:</strong> Fourteen damage altogether.</p>
+<p class="dialogue"><strong>Mike:</strong> Bale darts through the doorway and strikes before the bandit can draw his weapon. The bandit collapses across the table.</p>
+<p class="dialogue"><strong>Mike:</strong> Fiona, you hear the fight inside. The doorway is open.</p>
+<p class="dialogue"><strong>Lacy:</strong> Fiona runs through it, sees the remaining bandit and says, “You should probably surrender.”</p>
+<p class="dialogue"><strong>Mike:</strong> Are you trying to frighten him or attack him?</p>
+<p class="dialogue"><strong>Lacy:</strong> Frighten him. For now.</p>
+<p class="dialogue"><strong>Mike:</strong> Make a Charisma (Intimidation) check.</p>
+<p class="dialogue"><strong>Lacy:</strong> Fiona’s Charisma is not impressive.</p>
+<p class="dialogue"><strong>Barry:</strong> She is holding a very large axe.</p>
+<p class="dialogue"><strong>Mike:</strong> Given the situation, I’ll give Fiona Advantage.</p>
+<p>Lacy rolls two dice.</p>
+<p class="dialogue"><strong>Lacy:</strong> Seventeen!</p>
+<p class="dialogue"><strong>Mike:</strong> The bandit looks at Bale, looks at the fallen man on the table, and then looks at Fiona’s axe. He slowly raises his hands.</p>
+<p class="dialogue"><strong>Lacy, as Fiona:</strong> “Excellent decision.”</p>
+<p class="dialogue"><strong>Mike:</strong> Galen, you're up next, but there are no immediate enemies threatening you inside. The wounded lookout is still above.</p>
+<p class="dialogue"><strong>Barry:</strong> Galen calls up the stairs, “Your friend has surrendered. I recommend you demonstrate similar wisdom.”</p>
+<p class="dialogue"><strong>Mike:</strong> The lookout hesitates. Eliana’s arrow is still lodged in his shoulder, and he can hear Fiona below. He drops his crossbow over the side of the tower.</p>
+<p>Combat ends because the remaining bandits have surrendered.</p>
+<p class="dialogue"><strong>Shanda:</strong> Eliana keeps her bow trained on the lookout while he comes downstairs.</p>
+<p class="dialogue"><strong>Dan:</strong> Bale searches the table and asks, “Who hired you to watch this road?”</p>
+<p class="dialogue"><strong>Mike:</strong> The captured bandit glances nervously toward the trapdoor leading into the tower’s cellar.</p>
+<p>Everyone at the table pauses.</p>
+<p class="dialogue"><strong>Lacy:</strong> There’s a cellar?</p>
+<p class="dialogue"><strong>Mike:</strong> There is now...</p>
+<p class="adventure-continues">The adventure continues.</p>
+          </div>
+
+          <p class="back-to-top">
+            <a href="#page-top">Back to the top</a>
+          </p>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <nav aria-label="Footer navigation">
+        <a href="faq.html">New Player FAQ</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="legal.html">Legal &amp; SRD Attribution</a>
+      </nav>
+
+      <div>
+        © 2026 My RPG Source. Independent tabletop roleplaying tools.
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

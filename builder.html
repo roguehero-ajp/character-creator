@@ -1,1308 +1,322 @@
 <!DOCTYPE html>
-<!--
-===========================================================
-MY RPG SOURCE D&D CHARACTER BUILDER
-Created by Jason Paul
-Project: My RPG Source
-Version: 0.1.0
-
-Development assisted by ChatGPT.
-
-Started: July 2026
-
-"If you're reading this...
-...build cool stuff, please. Anyone can do this. I didn't know how to code, but I found a way."
-===========================================================
--->
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3252YKGQX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N3252YKGQX');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Page Not Found | My RPG Source</title>
+
   <meta
     name="description"
-    content="A printable, saveable D&D 5e character builder for the 2014 and 2024 rules."
+    content="The requested page could not be found on My RPG Source."
   >
 
-  <!-- config.js replaces this title with the selected edition. -->
-  <title>My RPG Source Character Sheet</title>
+  <!-- Keep the error page out of search results, while allowing its links to be followed. -->
+  <meta name="robots" content="noindex, follow">
 
-  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
-    rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet"
   >
 
-  <!-- Shared Character Sheet Styles -->
-  <link rel="stylesheet" href="css/themes.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/ability-scores.css">
-  <link rel="stylesheet" href="css/level-up.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <link rel="stylesheet" href="css/tooltips.css">
-  <link rel="stylesheet" href="css/codex.css">
-  <link rel="stylesheet" href="css/print.css" media="print">
+  <style>
+    :root {
+      --background-deep: #111922;
+      --background-mid: #18232f;
+      --background-light: #203244;
+      --panel: rgba(244, 236, 216, 0.07);
+      --text: #f5f0e6;
+      --muted: rgba(245, 240, 230, 0.78);
+      --gold: #f1c40f;
+      --warm-gold: #dda15e;
+      --border: rgba(245, 240, 230, 0.16);
+      --shadow: rgba(0, 0, 0, 0.42);
+    }
 
-  <!-- PDF Library -->
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-  ></script>
+    * {
+      box-sizing: border-box;
+    }
 
-  <!-- Edition Configuration must load before every other local module. -->
-  <script defer src="js/config.js"></script>
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+    }
 
-  <!-- Character Builder Modules -->
-  <script defer src="js/tooltips.js"></script>
-  <script defer src="js/codex-data.js"></script>
-  <script defer src="js/codex.js"></script>
-  <script defer src="js/calculations.js"></script>
-  <script defer src="js/ability-scores.js"></script>
-  <script defer src="js/origins.js"></script>
-  <script defer src="js/backgrounds.js"></script>
-  <script defer src="js/classes.js"></script>
-  <script defer src="js/ui.js"></script>
-  <script defer src="js/level-up.js"></script>
-  <script defer src="js/storage.js"></script>
-  <script defer src="js/printing.js"></script>
-  <script defer src="js/pdf.js"></script>
-  <script defer src="js/app.js"></script>
+    body {
+      display: grid;
+      place-items: center;
+
+      padding: 24px;
+
+      color: var(--text);
+      font-family: "Lora", serif;
+
+      background-color: var(--background-deep);
+      background-image:
+        radial-gradient(
+          circle at top,
+          rgba(241, 196, 15, 0.08),
+          transparent 24%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(8, 18, 32, 0.32) 0%,
+          rgba(6, 12, 22, 0.72) 100%
+        ),
+        url("images/site-background-stars.png");
+      background-position: top center, center, center;
+      background-repeat: no-repeat, no-repeat, no-repeat;
+      background-size: auto, auto, cover;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .error-card {
+      width: min(880px, 100%);
+
+      padding: clamp(24px, 5vw, 48px);
+
+      text-align: center;
+
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+
+      box-shadow:
+        0 24px 60px var(--shadow);
+
+      backdrop-filter: blur(10px);
+    }
+
+    .error-code {
+      margin: 0 0 8px;
+
+      color: var(--gold);
+
+      font-family: "Cinzel", serif;
+      font-size: clamp(3.5rem, 12vw, 7rem);
+      font-weight: 700;
+      line-height: 1;
+
+      letter-spacing: 0.08em;
+
+      text-shadow:
+        0 3px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      margin: 0 0 18px;
+
+      font-family: "Cinzel", serif;
+      font-size: clamp(1.7rem, 4vw, 2.65rem);
+      line-height: 1.2;
+    }
+
+    .message {
+      max-width: 690px;
+
+      margin: 0 auto 28px;
+
+      color: var(--muted);
+
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      line-height: 1.75;
+    }
+
+    .penguin-frame {
+      width: min(460px, 100%);
+
+      margin: 0 auto 30px;
+      padding: 10px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(241, 196, 15, 0.18),
+          rgba(221, 161, 94, 0.05)
+        );
+
+      border: 1px solid rgba(241, 196, 15, 0.35);
+      border-radius: 22px;
+
+      box-shadow:
+        0 16px 36px rgba(0, 0, 0, 0.32);
+    }
+
+    .penguin-frame img {
+      display: block;
+
+      width: 100%;
+      height: auto;
+
+      border-radius: 14px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 48px;
+      padding: 12px 19px;
+
+      border: 1px solid var(--border);
+      border-radius: 999px;
+
+      color: var(--text);
+      font-weight: 700;
+      text-decoration: none;
+
+      background:
+        rgba(255, 255, 255, 0.05);
+
+      transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease;
+    }
+
+    .button-primary {
+      color: #17212c;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold),
+          var(--warm-gold)
+        );
+
+      border-color:
+        rgba(241, 196, 15, 0.8);
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+
+      border-color:
+        rgba(241, 196, 15, 0.75);
+
+      background:
+        rgba(255, 255, 255, 0.1);
+    }
+
+    .button-primary:hover,
+    .button-primary:focus-visible {
+      background:
+        linear-gradient(
+          135deg,
+          #f7d84b,
+          #e6b477
+        );
+    }
+
+    .button:focus-visible {
+      outline:
+        3px solid rgba(241, 196, 15, 0.45);
+
+      outline-offset: 3px;
+    }
+
+    .footer-note {
+      margin: 28px 0 0;
+
+      color: rgba(245, 240, 230, 0.58);
+
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 14px;
+      }
+
+      .error-card {
+        padding: 24px 18px;
+        border-radius: 20px;
+      }
+
+      .actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .button {
+        transition: none;
+      }
+    }
+  </style>
+  <script defer src="js/analytics.js"></script>
 </head>
 
 <body>
-  <div class="app-container">
+  <main class="error-card">
+    <p class="error-code" aria-label="Error 404">
+      404
+    </p>
 
-    <!-- =====================================================
-         CONTROL PANEL
-         ===================================================== -->
-    <aside class="controls" aria-label="Character builder controls">
-      <h3>Controls</h3>
+    <h1>
+      This Page Has Vanished
+    </h1>
 
-      <div>
-        <label for="theme-select">Theme</label>
-        <select id="theme-select">
-          <option value="theme-standard">Standard Parchment</option>
-          <option value="theme-gritty">Gritty Dark</option>
-          <option value="theme-fantasy">Arcane Fantasy</option>
-          <option value="theme-whimsical">Whimsical Woods</option>
-          <option value="theme-hellscape">Hellscape Red</option>
-          <option value="theme-bw">Standard Black &amp; White</option>
-        </select>
-      </div>
+    <p class="message">
+      Uh-oh! The wizards are still working on this one, it looks like.
+      Unless they polymorphed it. Or disintegrated it...
+    </p>
 
-      <div>
-        <label for="stat-method">Stat Generation</label>
-        <select id="stat-method">
-  <option value="manual">Manual Entry</option>
-  <option value="standard-array">Standard Array</option>
-  <option value="4d6">4d6 Drop Lowest</option>
-  <option value="3d6">3d6 (House Rule)</option>
-  <option value="point-buy">27-Point Buy</option>
-</select>
-      </div>
-
-      <button type="button" id="roll-btn">Roll Stats</button>
-
-      <hr style="border-color: #415a77; margin: 5px 0;">
-
-      <h3 style="font-size: 13px; border: none; padding: 0; text-align: center;">
-        Multi-Class Options
-      </h3>
-
-      <button type="button" id="multiclass-btn">Add Multi-Class</button>
-      <button
-        type="button"
-        id="remove-multiclass-btn"
-        style="background: rgba(192, 57, 43, 0.7);"
+    <div class="penguin-frame">
+      <!-- Root-relative path keeps the image working from deeply nested missing URLs. -->
+      <img
+        src="/images/penguin404.jpg"
+        alt="A penguin illustrating the missing-page error"
       >
-        Remove Last Class
-      </button>
+    </div>
 
-      <a class="codex-library-link" href="codex.html">
-        Browse the Rules Codex
+    <nav class="actions" aria-label="Helpful destinations">
+      <a class="button button-primary" href="/">
+        Return Home
       </a>
 
-      <hr style="border-color: #415a77; margin: 5px 0;">
-
-      <h3 style="font-size: 13px; border: none; padding: 0; text-align: center;">
-        Character Storage
-      </h3>
-
-      <div class="storage-note">
-        Saves happen in this browser. Export a JSON backup if you want a portable copy.
-      </div>
-
-      <button type="button" id="save-now-btn" class="secondary">Save Now</button>
-      <button type="button" id="load-now-btn" class="ghost">Load Saved Character</button>
-      <button type="button" id="export-json-btn" class="secondary">Export JSON Backup</button>
-      <button type="button" id="import-json-btn" class="ghost">Import JSON Backup</button>
-
-      <input
-        type="file"
-        id="import-json-file"
-        accept="application/json"
-        style="display: none;"
-      >
-
-      <div id="save-status" class="storage-status" data-kind="warn">
-        No local save yet.
-      </div>
-
-      <hr style="border-color: #415a77; margin: 5px 0;">
-
-      <button type="button" id="print-blank-btn" class="ghost">
-        Print Blank Character Sheet
-      </button>
-
-      <button type="button" id="export-btn" class="export">
-        Export to PDF
-      </button>
-    </aside>
-
-    <!-- =====================================================
-         CHARACTER DOCUMENT
-         ===================================================== -->
-    <main
-      class="document-container theme-standard"
-      id="character-document"
-      aria-label="D&D character sheet"
-    >
-
-      <!-- ===================================================
-           PAGE 1: CORE CHARACTER SHEET
-           =================================================== -->
-      <section class="sheet-page two-column-layout" id="page-1">
-
-        <!-- Left Master Stack -->
-        <div class="master-stack left-stack">
-
-          <!-- Character and Campaign Names -->
-          <div class="name-container">
-            <div style="display: flex; flex-direction: column; gap: 2px;">
-              <label for="character-name">Character Name</label>
-              <input
-                type="text"
-                id="character-name"
-                class="fantasy-input big-input"
-                placeholder="Hero Name"
-              >
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 2px;">
-              <label>Campaign Name</label>
-              <input
-                type="text"
-                class="fantasy-input"
-                placeholder="Campaign Name"
-              >
-            </div>
-          </div>
-
-          <!-- Armor Class, Initiative, and Speed -->
-          <div class="left-combat-block">
-            <div class="combat-box ac-box">
-              <label>Armor Class</label>
-              <input
-                type="text"
-                class="fantasy-input center-text big-text"
-                value="10"
-              >
-            </div>
-
-            <div class="combat-box">
-              <label for="initiative">Initiative</label>
-              <input
-                type="text"
-                id="initiative"
-                class="fantasy-input center-text big-text"
-                value="+0"
-                readonly
-              >
-            </div>
-
-            <div class="combat-box">
-              <label for="speed-input">Speed</label>
-              <input
-                type="text"
-                id="speed-input"
-                class="fantasy-input center-text"
-                value="30 ft"
-              >
-            </div>
-          </div>
-
-          <!-- Left Column Body -->
-          <div class="left-column">
-
-            <!-- Ability Scores -->
-            <div class="stats-grid">
-              <div class="stat-row">
-                <div class="stat-group">
-                  <span class="stat-mod" id="str-mod">+0</span>
-                  <label for="str">Strength</label>
-                </div>
-                <input
-                  type="number"
-                  id="str"
-                  class="fantasy-input stat-val center-text"
-                  value="10"
-                >
-              </div>
-
-              <div class="stat-row">
-                <div class="stat-group">
-                  <span class="stat-mod" id="dex-mod">+0</span>
-                  <label for="dex">Dexterity</label>
-                </div>
-                <input
-                  type="number"
-                  id="dex"
-                  class="fantasy-input stat-val center-text"
-                  value="10"
-                >
-              </div>
-
-              <div class="stat-row">
-                <div class="stat-group">
-                  <span class="stat-mod" id="con-mod">+0</span>
-                  <label for="con">Constitution</label>
-                </div>
-                <input
-                  type="number"
-                  id="con"
-                  class="fantasy-input stat-val center-text"
-                  value="10"
-                >
-              </div>
-
-              <div class="stat-row">
-                <div class="stat-group">
-                  <span class="stat-mod" id="int-mod">+0</span>
-                  <label for="int">Intelligence</label>
-                </div>
-                <input
-                  type="number"
-                  id="int"
-                  class="fantasy-input stat-val center-text"
-                  value="10"
-                >
-              </div>
-
-              <div class="stat-row">
-                <div class="stat-group">
-                  <span class="stat-mod" id="wis-mod">+0</span>
-                  <label for="wis">Wisdom</label>
-                </div>
-                <input
-                  type="number"
-                  id="wis"
-                  class="fantasy-input stat-val center-text"
-                  value="10"
-                >
-              </div>
-
-              <div class="stat-row">
-                <div class="stat-group">
-                  <span class="stat-mod" id="cha-mod">+0</span>
-                  <label for="cha">Charisma</label>
-                </div>
-                <input
-                  type="number"
-                  id="cha"
-                  class="fantasy-input stat-val center-text"
-                  value="10"
-                >
-              </div>
-            </div>
-
-            <!-- Death Saves -->
-            <div class="combat-box death-saves-box">
-              <h3 class="fantasy-header" style="width: 100%; margin-bottom: 2px;">
-                Death Saves
-              </h3>
-
-              <div class="death-row" style="width: 100%;">
-                <span class="death-label">Successes</span>
-                <div class="death-circles">
-                  <input type="checkbox" class="death-check" aria-label="Death save success 1">
-                  <input type="checkbox" class="death-check" aria-label="Death save success 2">
-                  <input type="checkbox" class="death-check" aria-label="Death save success 3">
-                </div>
-              </div>
-
-              <div class="death-row" style="width: 100%;">
-                <span class="death-label">Failures</span>
-                <div class="death-circles">
-                  <input type="checkbox" class="death-check" aria-label="Death save failure 1">
-                  <input type="checkbox" class="death-check" aria-label="Death save failure 2">
-                  <input type="checkbox" class="death-check" aria-label="Death save failure 3">
-                </div>
-              </div>
-            </div>
-
-            <!-- Saving Throws -->
-            <div class="attacks-box">
-              <h3 class="fantasy-header">Saving Throws</h3>
-              <div class="saves-list saving-throws-grid">
-                <label><input type="checkbox" class="save-check" data-stat="str"> Strength <input type="text" class="fantasy-input save-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="save-check" data-stat="dex"> Dexterity <input type="text" class="fantasy-input save-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="save-check" data-stat="con"> Constitution <input type="text" class="fantasy-input save-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="save-check" data-stat="int"> Intelligence <input type="text" class="fantasy-input save-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="save-check" data-stat="wis"> Wisdom <input type="text" class="fantasy-input save-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="save-check" data-stat="cha"> Charisma <input type="text" class="fantasy-input save-mod" readonly value="+0"></label>
-              </div>
-            </div>
-
-            <!-- Skills -->
-            <div class="attacks-box skills-box-container">
-              <h3 class="fantasy-header">Skills</h3>
-              <div class="saves-list">
-                <label><input type="checkbox" class="skill-check"> Acrobatics <span class="stat-hint">(Dex)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Animal Handling <span class="stat-hint">(Wis)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Arcana <span class="stat-hint">(Int)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Athletics <span class="stat-hint">(Str)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Deception <span class="stat-hint">(Cha)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> History <span class="stat-hint">(Int)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Insight <span class="stat-hint">(Wis)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Intimidation <span class="stat-hint">(Cha)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Investigation <span class="stat-hint">(Int)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Medicine <span class="stat-hint">(Wis)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Nature <span class="stat-hint">(Int)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check" id="perception-skill-check"> Perception <span class="stat-hint">(Wis)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Performance <span class="stat-hint">(Cha)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Persuasion <span class="stat-hint">(Cha)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Religion <span class="stat-hint">(Int)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Sleight of Hand <span class="stat-hint">(Dex)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Stealth <span class="stat-hint">(Dex)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-                <label><input type="checkbox" class="skill-check"> Survival <span class="stat-hint">(Wis)</span> <input type="text" class="fantasy-input skill-mod" readonly value="+0"></label>
-              </div>
-            </div>
-
-            <!-- Race / Species Abilities -->
-            <div class="attacks-box">
-              <h3 class="fantasy-header">Race Abilities</h3>
-              <textarea
-                class="fantasy-input extra-attacks"
-                id="racial-abilities-input"
-                placeholder="Race traits..."
-                style="height: 88px;"
-              ></textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Master Stack -->
-        <div class="master-stack right-stack">
-
-          <!-- Character Details and Multiclass Rows -->
-          <div class="details-grid">
-            <div class="detail-box" style="grid-column: span 2;">
-              <div style="display: flex; gap: 4px; margin-bottom: 2px;">
-                <label style="flex: 1.2;">Class</label>
-                <label style="flex: 0.8;">Level</label>
-              </div>
-
-              <div id="class-level-container">
-                <div class="class-level-row" style="display: flex; gap: 4px;">
-                  <div class="detail-box" style="flex: 1.2;">
-                    <select class="fantasy-input char-class-select">
-                      <option value="Barbarian">Barbarian</option>
-                      <option value="Bard">Bard</option>
-                      <option value="Cleric">Cleric</option>
-                      <option value="Druid">Druid</option>
-                      <option value="Fighter" selected>Fighter</option>
-                      <option value="Monk">Monk</option>
-                      <option value="Paladin">Paladin</option>
-                      <option value="Ranger">Ranger</option>
-                      <option value="Rogue">Rogue</option>
-                      <option value="Sorcerer">Sorcerer</option>
-                      <option value="Warlock">Warlock</option>
-                      <option value="Wizard">Wizard</option>
-                      <option value="Artificer">Artificer</option>
-                    </select>
-                  </div>
-
-                  <div class="detail-box" style="flex: 0.8;">
-                    <select class="fantasy-input char-level-select">
-                      <option value="1" selected>1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                      <option value="11">11</option>
-                      <option value="12">12</option>
-                      <option value="13">13</option>
-                      <option value="14">14</option>
-                      <option value="15">15</option>
-                      <option value="16">16</option>
-                      <option value="17">17</option>
-                      <option value="18">18</option>
-                      <option value="19">19</option>
-                      <option value="20">20</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- config.js changes the visible Race wording to Species in 2024 mode. -->
-            <div class="detail-box">
-              <label for="char-race">Race</label>
-              <select class="fantasy-input" id="char-race">
-                <option value="">--Select Race--</option>
-                <option value="Aarakocra">Aarakocra</option>
-                <option value="Dragonborn">Dragonborn</option>
-                <option value="Dwarf">Dwarf</option>
-                <option value="Elf">Elf</option>
-                <option value="Wood Elf">Wood Elf</option>
-                <option value="Gnome">Gnome</option>
-                <option value="Half-Elf">Half-Elf</option>
-                <option value="Half-Orc">Half-Orc</option>
-                <option value="Halfling">Halfling</option>
-                <option value="Human">Human</option>
-                <option value="Tiefling">Tiefling</option>
-              </select>
-            </div>
-
-            <!-- Half-Elf controls remain for the current 2014-style UI logic. -->
-            <div
-  class="detail-box"
-  id="origin-background-controls"
-  style="justify-content: center;"
->
-  <!-- 2014 flexible Race ability bonuses -->
-  <div
-    id="half-elf-bonuses"
-    style="
-      display: none;
-      flex-direction: column;
-      gap: 2px;
-    "
-  >
-    <label>
-      Half-Elf Stat Boosts (+1 to two)
-    </label>
-
-    <div style="display: flex; gap: 4px;">
-      <select
-        class="fantasy-input"
-        id="half-elf-stat1"
-        style="font-size: 9.5px; padding: 2px;"
-      >
-        <option value="str">Str</option>
-        <option value="dex">Dex</option>
-        <option value="con">Con</option>
-        <option value="int">Int</option>
-        <option value="wis">Wis</option>
-        <option value="cha" selected>Cha</option>
-      </select>
-
-      <select
-        class="fantasy-input"
-        id="half-elf-stat2"
-        style="font-size: 9.5px; padding: 2px;"
-      >
-        <option value="str">Str</option>
-        <option value="dex">Dex</option>
-        <option value="con">Con</option>
-        <option value="int" selected>Int</option>
-        <option value="wis">Wis</option>
-        <option value="cha">Cha</option>
-      </select>
-    </div>
-  </div>
-
-  <!-- 2024 Background ability-score increases -->
-  <div
-    id="background-ability-controls"
-    style="
-      display: none;
-      flex-direction: column;
-      gap: 2px;
-    "
-  >
-    <label for="background-asi-method">
-      Background Ability Scores
-    </label>
-
-    <select
-      id="background-asi-method"
-      class="fantasy-input"
-      style="font-size: 9px; padding: 2px;"
-    >
-      <option value="2-1">
-        +2 to one, +1 to another
-      </option>
-
-      <option value="1-1-1">
-        +1 to all three
-      </option>
-    </select>
-
-    <div
-      id="background-asi-choice-row"
-      style="display: flex; gap: 4px;"
-    >
-      <select
-        id="background-asi-primary"
-        class="fantasy-input"
-        aria-label="Ability receiving plus two"
-        style="font-size: 9px; padding: 2px;"
-      ></select>
-
-      <select
-        id="background-asi-secondary"
-        class="fantasy-input"
-        aria-label="Ability receiving plus one"
-        style="font-size: 9px; padding: 2px;"
-      ></select>
-    </div>
-
-    <div
-      id="background-ability-note"
-      style="
-        font-size: 7.5px;
-        line-height: 1.15;
-        opacity: 0.75;
-      "
-    ></div>
-  </div>
-</div>
-
- <!-- Dynamic 2024 Species Choices -->
-<div
-  id="species-choice-panel"
-  class="species-choice-panel"
-  hidden
->
-  <div class="species-choice-grid">
-    <div
-      id="species-choice-field-1"
-      class="species-choice-field"
-      hidden
-    >
-      <label
-        id="species-choice-label-1"
-        for="species-choice-1"
-      >
-        Species Choice
-      </label>
-
-      <select
-        id="species-choice-1"
-        class="fantasy-input"
-      ></select>
-    </div>
-
-    <div
-      id="species-choice-field-2"
-      class="species-choice-field"
-      hidden
-    >
-      <label
-        id="species-choice-label-2"
-        for="species-choice-2"
-      >
-        Species Choice
-      </label>
-
-      <select
-        id="species-choice-2"
-        class="fantasy-input"
-      ></select>
-    </div>
-
-    <div
-      id="species-choice-field-3"
-      class="species-choice-field"
-      hidden
-    >
-      <label
-        id="species-choice-label-3"
-        for="species-choice-3"
-      >
-        Species Choice
-      </label>
-
-      <select
-        id="species-choice-3"
-        class="fantasy-input"
-      ></select>
-    </div>
-  </div>
-
-  <div
-    id="species-choice-note"
-    class="species-choice-note"
-  ></div>
-</div>
-
-<div class="detail-box">
-  <label for="char-background">Background</label>
-
-  <select
-    id="char-background"
-    class="fantasy-input"
-  >
-    <option value="">--Select Background--</option>
-  </select>
-
-  <div
-    id="background-summary"
-    hidden
-    style="
-      margin-top: 2px;
-      max-height: 28px;
-      overflow-y: auto;
-      font-size: 7.5px;
-      line-height: 1.25;
-      opacity: 0.8;
-    "
-  ></div>
-</div>
-
-            <div class="detail-box">
-              <label>Player Name</label>
-              <input type="text" class="fantasy-input" placeholder="Player">
-            </div>
-
-            <div class="detail-box">
-              <label for="alignment-select">Alignment</label>
-              <select id="alignment-select" class="fantasy-input">
-                <option value="" selected>--Select Alignment--</option>
-                <option value="lawful-good">Lawful Good</option>
-                <option value="neutral-good">Neutral Good</option>
-                <option value="chaotic-good">Chaotic Good</option>
-                <option value="lawful-neutral">Lawful Neutral</option>
-                <option value="true-neutral">True Neutral</option>
-                <option value="chaotic-neutral">Chaotic Neutral</option>
-                <option value="lawful-evil">Lawful Evil</option>
-                <option value="neutral-evil">Neutral Evil</option>
-                <option value="chaotic-evil">Chaotic Evil</option>
-              </select>
-            </div>
-
-            <div class="detail-box">
-              <label>Experience Points</label>
-              <input type="text" class="fantasy-input" placeholder="0">
-            </div>
-          </div>
-
-          <!-- HP, Hit Dice, Proficiency, and Passive Perception -->
-          <div class="right-combat-block">
-            <div class="combat-box hp-box">
-              <div class="hp-content">
-                <label>Hit Point Maximum &amp; Current</label>
-                <div class="hp-inputs">
-                  <input
-                    type="text"
-                    id="hp-input"
-                    class="fantasy-input center-text big-text"
-                    value="10"
-                  >
-                  <span>/</span>
-                  <input
-                    type="text"
-                    class="fantasy-input center-text big-text"
-                    placeholder=""
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div class="combat-box">
-              <label>Hit Dice</label>
-              <div style="display: flex; flex-direction: column; gap: 2px; width: 100%;">
-                <div style="display: flex; gap: 2px;">
-                  <input
-                    type="text"
-                    id="hit-dice-1"
-                    class="fantasy-input center-text"
-                    value="1d10"
-                    readonly
-                    style="font-size: 9.5px; padding: 2px; flex: 1;"
-                  >
-                  <input
-                    type="text"
-                    id="hit-dice-2"
-                    class="fantasy-input center-text"
-                    value=""
-                    readonly
-                    style="font-size: 9.5px; padding: 2px; flex: 1;"
-                  >
-                </div>
-
-                <div style="display: flex; gap: 2px;">
-                  <input
-                    type="text"
-                    id="hit-dice-3"
-                    class="fantasy-input center-text"
-                    value=""
-                    readonly
-                    style="font-size: 9.5px; padding: 2px; flex: 1;"
-                  >
-                  <input
-                    type="text"
-                    id="hit-dice-4"
-                    class="fantasy-input center-text"
-                    value=""
-                    readonly
-                    style="font-size: 9.5px; padding: 2px; flex: 1;"
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div class="combat-box">
-              <label for="prof-bonus">Prof. Bonus</label>
-              <input
-                type="text"
-                id="prof-bonus"
-                class="fantasy-input center-text big-text"
-                value="+2"
-                readonly
-              >
-            </div>
-
-            <div class="combat-box">
-              <label for="passive-perception">Passive Perc.</label>
-              <input
-                type="text"
-                id="passive-perception"
-                class="fantasy-input center-text big-text"
-                value="10"
-                readonly
-              >
-            </div>
-          </div>
-
-          <!-- Right Column Body -->
-          <div class="right-column">
-
-            <!-- Attacks and Spellcasting -->
-            <div class="attacks-box">
-              <h3 class="fantasy-header">Attacks &amp; Spellcasting</h3>
-
-              <div class="header-row">
-                <span>Name</span>
-                <span>Atk Bonus</span>
-                <span>Damage/Type</span>
-                <span>Notes</span>
-              </div>
-
-              <div class="attack-row">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-              </div>
-
-              <div class="attack-row">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-              </div>
-
-              <div class="attack-row">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-              </div>
-
-              <textarea
-                class="fantasy-input extra-attacks"
-                placeholder="Additional attacks, weapon notes, or spellcasting actions..."
-              ></textarea>
-            </div>
-
-            <!-- Spellcasting Summary -->
-            <div class="attacks-box">
-              <h3 class="fantasy-header">Spellcasting Stats</h3>
-
-              <div style="display: flex; gap: 6px;">
-                <div class="detail-box" style="flex: 1;">
-                  <label for="spell-ability">Spellcasting Ability</label>
-                  <select class="fantasy-input" id="spell-ability">
-                    <option value="none">Non-caster</option>
-                    <option value="int">Intelligence</option>
-                    <option value="wis">Wisdom</option>
-                    <option value="cha">Charisma</option>
-                  </select>
-                </div>
-
-                <div class="detail-box" style="flex: 1;">
-                  <label for="spell-dc">Spell Save DC</label>
-                  <input
-                    type="text"
-                    id="spell-dc"
-                    class="fantasy-input center-text"
-                    readonly
-                    value="-"
-                  >
-                </div>
-
-                <div class="detail-box" style="flex: 1;">
-                  <label for="spell-atk">Spell Attack Bonus</label>
-                  <input
-                    type="text"
-                    id="spell-atk"
-                    class="fantasy-input center-text"
-                    readonly
-                    value="-"
-                  >
-                </div>
-              </div>
-            </div>
-
-            <!-- Class Abilities and Feats -->
-<div class="abilities-box">
-  <h3 class="fantasy-header">
-    Class Abilities &amp; Feats (20 Slots)
-  </h3>
-
-  <div class="abilities-grid">
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 1"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 2"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 3"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 4"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 5"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 6"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 7"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 8"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 9"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 10"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 11"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 12"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 13"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 14"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 15"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 16"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 17"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 18"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 19"
-    >
-
-    <input
-      type="text"
-      class="fantasy-input ability-input"
-      placeholder="Ability 20"
-    >
-  </div>
-</div>
-
-<!-- Equipment and Currency -->
-<div class="equipment-box">
-  <div class="money-column">
-    <div class="money-field">
-      <label for="currency-cp">CP</label>
-      <input
-        id="currency-cp"
-        type="text"
-        value="0"
-        inputmode="numeric"
-      >
-    </div>
-
-    <div class="money-field">
-      <label for="currency-sp">SP</label>
-      <input
-        id="currency-sp"
-        type="text"
-        value="0"
-        inputmode="numeric"
-      >
-    </div>
-
-    <div class="money-field">
-      <label for="currency-ep">EP</label>
-      <input
-        id="currency-ep"
-        type="text"
-        value="0"
-        inputmode="numeric"
-      >
-    </div>
-
-    <div class="money-field">
-      <label for="currency-gp">GP</label>
-      <input
-        id="currency-gp"
-        type="text"
-        value="0"
-        inputmode="numeric"
-      >
-    </div>
-
-    <div class="money-field">
-      <label for="currency-pp">PP</label>
-      <input
-        id="currency-pp"
-        type="text"
-        value="0"
-        inputmode="numeric"
-      >
-    </div>
-  </div>
-
-  <textarea
-    id="equipment-inventory"
-    class="fantasy-input inventory-text"
-    placeholder="Equipment inventory list..."
-  ></textarea>
-</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================================================
-           PAGE 2: BACKGROUND AND TRAITS
-           =================================================== -->
-      <section class="sheet-page" id="page-2">
-        <h2 class="fantasy-header">Character Background &amp; Details</h2>
-
-        <div class="sheet-body full-width-body">
-          <div class="flair-container">
-            <span class="flair-ornament">✦ ✧ ✦</span>
-            <input
-              type="text"
-              class="fantasy-input center-text flair-quote"
-              placeholder="Personal Motto / Creed"
-            >
-            <span class="flair-ornament">✦ ✧ ✦</span>
-          </div>
-
-          <div class="flex-row-sections">
-            <div class="half-width trait-section">
-              <h3 class="fantasy-header">Personality Traits</h3>
-              <textarea
-                class="fantasy-input trait-box"
-                placeholder="Character traits..."
-              ></textarea>
-            </div>
-
-            <div class="half-width trait-section">
-              <h3 class="fantasy-header">Ideals</h3>
-              <textarea
-                class="fantasy-input trait-box"
-                placeholder="Character ideals..."
-              ></textarea>
-            </div>
-          </div>
-
-          <div class="flex-row-sections">
-            <div class="half-width trait-section">
-              <h3 class="fantasy-header">Bonds</h3>
-              <textarea
-                class="fantasy-input trait-box"
-                placeholder="Character bonds..."
-              ></textarea>
-            </div>
-
-            <div class="half-width trait-section">
-              <h3 class="fantasy-header">Flaws</h3>
-              <textarea
-                class="fantasy-input trait-box"
-                placeholder="Character flaws..."
-              ></textarea>
-            </div>
-          </div>
-
-          <div class="flex-grow-section trait-section" style="height: 180px;">
-            <h3 class="fantasy-header">Backstory &amp; Appearance</h3>
-            <textarea
-              class="fantasy-input trait-box"
-              style="height: 100%;"
-              placeholder="Detailed character backstory, physical description, allies and organizations..."
-            ></textarea>
-          </div>
-
-          <div
-            class="flex-grow-section trait-section"
-            style="flex: 1; display: flex; flex-direction: column;"
-          >
-            <h3 class="fantasy-header">Notes</h3>
-            <textarea
-              class="fantasy-input trait-box"
-              style="flex: 1; height: 100%;"
-              placeholder="Campaign notes, reminders, loot, or miscellaneous details..."
-            ></textarea>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================================================
-           PAGE 3: SPELLS, CANTRIPS THROUGH LEVEL 5
-           =================================================== -->
-      <section class="sheet-page" id="page-3">
-        <h2 class="fantasy-header">Spellcasting &amp; Magic (Cantrips - 5th Level)</h2>
-
-        <div class="sheet-body full-width-body" style="gap: 6px;">
-          <div class="spell-tier">
-            <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
-                Cantrips (Level 0)
-              </h3>
-              <span class="spell-guide-tip">At-Will Spells</span>
-            </div>
-            <textarea
-              class="fantasy-input spell-box"
-              placeholder="Cantrip Name | Casting Time | Range | Components | Duration | Effect/Details"
-            ></textarea>
-          </div>
-
-          <div class="spell-tier">
-            <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
-                1st Level Spells
-              </h3>
-              <span class="spell-guide-tip">Slots: [ ] [ ] [ ] [ ]</span>
-            </div>
-            <textarea
-              class="fantasy-input spell-box"
-              placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"
-            ></textarea>
-          </div>
-
-          <div class="spell-tier">
-            <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
-                2nd Level Spells
-              </h3>
-              <span class="spell-guide-tip">Slots: [ ] [ ] [ ]</span>
-            </div>
-            <textarea
-              class="fantasy-input spell-box"
-              placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"
-            ></textarea>
-          </div>
-
-          <div class="spell-tier">
-            <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
-                3rd Level Spells
-              </h3>
-              <span class="spell-guide-tip">Slots: [ ] [ ] [ ]</span>
-            </div>
-            <textarea
-              class="fantasy-input spell-box"
-              placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"
-            ></textarea>
-          </div>
-
-          <div class="spell-tier">
-            <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
-                4th Level Spells
-              </h3>
-              <span class="spell-guide-tip">Slots: [ ] [ ] [ ]</span>
-            </div>
-            <textarea
-              class="fantasy-input spell-box"
-              placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"
-            ></textarea>
-          </div>
-
-          <div class="spell-tier">
-            <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
-                5th Level Spells
-              </h3>
-              <span class="spell-guide-tip">Slots: [ ] [ ] [ ]</span>
-            </div>
-            <textarea
-              class="fantasy-input spell-box"
-              placeholder="Spell Name | Level | Casting Time | Range | Components | Duration | Description"
-            ></textarea>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================================================
-           PAGE 4: SPELLS, LEVELS 6 THROUGH 9
-           =================================================== -->
-      <section class="sheet-page" id="page-4">
-        <h2 class="fantasy-header">
-          High-Level Spellcasting &amp; Resources (6th - 9th Level)
-        </h2>
-
-        <div class="sheet-body full-width-body" style="gap: 8px;">
-          <div class="spell-tier">
-            <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
-                6th Level Spells
-              </h3>
-              <span class="spell-guide-tip">Slots: [ ]</span>
-            </div>
-            <textarea
-              class="fantasy-input spell-box"
-              placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"
-            ></textarea>
-          </div>
-
-          <div class="spell-tier">
-            <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
-                7th Level Spells
-              </h3>
-              <span class="spell-guide-tip">Slots: [ ]</span>
-            </div>
-            <textarea
-              class="fantasy-input spell-box"
-              placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"
-            ></textarea>
-          </div>
-
-          <div class="spell-tier">
-            <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
-                8th Level Spells
-              </h3>
-              <span class="spell-guide-tip">Slots: [ ]</span>
-            </div>
-            <textarea
-              class="fantasy-input spell-box"
-              placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"
-            ></textarea>
-          </div>
-
-          <div class="spell-tier">
-            <div class="spell-tier-header">
-              <h3 class="fantasy-header" style="border: none; margin: 0; padding: 0;">
-                9th Level Spells
-              </h3>
-              <span class="spell-guide-tip">Slots: [ ]</span>
-            </div>
-            <textarea
-              class="fantasy-input spell-box"
-              placeholder="Spell Name | Casting Time | Range | Components | Duration | Description"
-            ></textarea>
-          </div>
-
-          <div class="attacks-box" style="flex: 1.2;">
-            <h3 class="fantasy-header">
-              Sorcery Points / Arcane Pool &amp; Metamagic Features
-            </h3>
-            <textarea
-              class="fantasy-input extra-attacks"
-              style="height: 100%; min-height: 70px;"
-              placeholder="Track Sorcery Points, Metamagic options, magical items, or special features..."
-            ></textarea>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <footer class="site-version">
-    <nav class="site-version-nav" aria-label="Footer navigation">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="legal.html">Legal &amp; SRD Attribution</a>
+      <a class="button" href="/builder.html?edition=2024">
+        Open the Character Builder
+      </a>
+
+      <a class="button" href="/codex.html">
+        Browse the Codex
+      </a>
     </nav>
 
-    <div class="site-version-copy">
-      Character Builder v0.1.0 | © 2026 My RPG Source
-    </div>
-  </footer>
+    <p class="footer-note">
+      My RPG Source
+    </p>
+  </main>
 </body>
 </html>

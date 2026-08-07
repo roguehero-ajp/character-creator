@@ -1,313 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3252YKGQX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N3252YKGQX');
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Page Not Found | My RPG Source</title>
-
+  <title>How to Create Your First D&amp;D Character | My RPG Source</title>
   <meta
     name="description"
-    content="The requested page could not be found on My RPG Source."
+    content="A beginner-friendly roadmap for creating a first D&D 5e character, from choosing an edition and character idea to abilities, species or race, background, class, equipment, and a ready-to-go sheet."
   >
-
-  <!-- Keep the error page out of search results, while allowing its links to be followed. -->
-  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://www.myrpgsource.com/guides/how-to-create-your-first-dnd-character.html">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
     rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
   >
 
-  <style>
-    :root {
-      --background-deep: #111922;
-      --background-mid: #18232f;
-      --background-light: #203244;
-      --panel: rgba(244, 236, 216, 0.07);
-      --text: #f5f0e6;
-      --muted: rgba(245, 240, 230, 0.78);
-      --gold: #f1c40f;
-      --warm-gold: #dda15e;
-      --border: rgba(245, 240, 230, 0.16);
-      --shadow: rgba(0, 0, 0, 0.42);
-    }
+  <link rel="stylesheet" href="../css/site-pages.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <script defer src="../js/analytics.js"></script>
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      min-height: 100%;
-      margin: 0;
-    }
-
-    body {
-      display: grid;
-      place-items: center;
-
-      padding: 24px;
-
-      color: var(--text);
-      font-family: "Lora", serif;
-
-      background-color: var(--background-deep);
-      background-image:
-        radial-gradient(
-          circle at top,
-          rgba(241, 196, 15, 0.08),
-          transparent 24%
-        ),
-        linear-gradient(
-          180deg,
-          rgba(8, 18, 32, 0.32) 0%,
-          rgba(6, 12, 22, 0.72) 100%
-        ),
-        url("images/site-background-stars.png");
-      background-position: top center, center, center;
-      background-repeat: no-repeat, no-repeat, no-repeat;
-      background-size: auto, auto, cover;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    .error-card {
-      width: min(880px, 100%);
-
-      padding: clamp(24px, 5vw, 48px);
-
-      text-align: center;
-
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 26px;
-
-      box-shadow:
-        0 24px 60px var(--shadow);
-
-      backdrop-filter: blur(10px);
-    }
-
-    .error-code {
-      margin: 0 0 8px;
-
-      color: var(--gold);
-
-      font-family: "Cinzel", serif;
-      font-size: clamp(3.5rem, 12vw, 7rem);
-      font-weight: 700;
-      line-height: 1;
-
-      letter-spacing: 0.08em;
-
-      text-shadow:
-        0 3px 18px rgba(0, 0, 0, 0.5);
-    }
-
-    h1 {
-      margin: 0 0 18px;
-
-      font-family: "Cinzel", serif;
-      font-size: clamp(1.7rem, 4vw, 2.65rem);
-      line-height: 1.2;
-    }
-
-    .message {
-      max-width: 690px;
-
-      margin: 0 auto 28px;
-
-      color: var(--muted);
-
-      font-size: clamp(1rem, 2.2vw, 1.2rem);
-      line-height: 1.75;
-    }
-
-    .penguin-frame {
-      width: min(460px, 100%);
-
-      margin: 0 auto 30px;
-      padding: 10px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(241, 196, 15, 0.18),
-          rgba(221, 161, 94, 0.05)
-        );
-
-      border: 1px solid rgba(241, 196, 15, 0.35);
-      border-radius: 22px;
-
-      box-shadow:
-        0 16px 36px rgba(0, 0, 0, 0.32);
-    }
-
-    .penguin-frame img {
-      display: block;
-
-      width: 100%;
-      height: auto;
-
-      border-radius: 14px;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-
-      gap: 12px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      min-height: 48px;
-      padding: 12px 19px;
-
-      border: 1px solid var(--border);
-      border-radius: 999px;
-
-      color: var(--text);
-      font-weight: 700;
-      text-decoration: none;
-
-      background:
-        rgba(255, 255, 255, 0.05);
-
-      transition:
-        transform 160ms ease,
-        border-color 160ms ease,
-        background 160ms ease;
-    }
-
-    .button-primary {
-      color: #17212c;
-
-      background:
-        linear-gradient(
-          135deg,
-          var(--gold),
-          var(--warm-gold)
-        );
-
-      border-color:
-        rgba(241, 196, 15, 0.8);
-    }
-
-    .button:hover,
-    .button:focus-visible {
-      transform: translateY(-2px);
-
-      border-color:
-        rgba(241, 196, 15, 0.75);
-
-      background:
-        rgba(255, 255, 255, 0.1);
-    }
-
-    .button-primary:hover,
-    .button-primary:focus-visible {
-      background:
-        linear-gradient(
-          135deg,
-          #f7d84b,
-          #e6b477
-        );
-    }
-
-    .button:focus-visible {
-      outline:
-        3px solid rgba(241, 196, 15, 0.45);
-
-      outline-offset: 3px;
-    }
-
-    .footer-note {
-      margin: 28px 0 0;
-
-      color: rgba(245, 240, 230, 0.58);
-
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 520px) {
-      body {
-        padding: 14px;
-      }
-
-      .error-card {
-        padding: 24px 18px;
-        border-radius: 20px;
-      }
-
-      .actions {
-        align-items: stretch;
-        flex-direction: column;
-      }
-
-      .button {
-        width: 100%;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .button {
-        transition: none;
-      }
-    }
-  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How to Create Your First D&D Character: A Beginner's Roadmap",
+    "description": "A beginner-friendly roadmap for creating a first D&D 5e character.",
+    "datePublished": "2026-08-07",
+    "dateModified": "2026-08-07",
+    "author": {
+      "@type": "Organization",
+      "name": "My RPG Source"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "My RPG Source",
+      "url": "https://www.myrpgsource.com/"
+    },
+    "mainEntityOfPage": "https://www.myrpgsource.com/guides/how-to-create-your-first-dnd-character.html"
+  }
+  </script>
 </head>
+<body data-page-kind="guide" data-guide-id="first-dnd-character">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-<body>
-  <main class="error-card">
-    <p class="error-code" aria-label="Error 404">
-      404
-    </p>
+  <div class="site-shell content-shell">
+    <header class="site-header">
+      <a class="site-brand" href="../index.html">My RPG Source</a>
 
-    <h1>
-      This Page Has Vanished
-    </h1>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="../index.html">Home</a>
+        <a href="../news.html">News</a>
+        <a href="../builder.html?edition=2024">Character Builder</a>
+        <a href="../codex.html">Codex</a>
+        <a href="../faq.html">FAQ</a>
+      </nav>
+    </header>
 
-    <p class="message">
-      Uh-oh! The wizards are still working on this one, it looks like.
-      Unless they polymorphed it. Or disintegrated it...
-    </p>
+    <main id="main-content">
+      <header class="page-hero">
+        <p class="eyebrow">Beginner guide</p>
+        <h1>How to Create Your First D&amp;D Character</h1>
+        <p class="lede">
+          A character sheet can look like the dashboard of a small spacecraft when you first
+          meet one. Most of it becomes much simpler once you realize that character creation is
+          just a series of ordinary choices: who are you, what are you good at, and what can you do?
+        </p>
+        <p class="article-meta">
+          <span>Published August 7, 2026</span>
+          <span>My RPG Source Guide</span>
+          <span>About 12 minutes</span>
+        </p>
 
-    <div class="penguin-frame">
-      <!-- Root-relative path keeps the image working from deeply nested missing URLs. -->
-      <img
-        src="/images/penguin404.jpg"
-        alt="A penguin illustrating the missing-page error"
-      >
-    </div>
+        <div class="article-actions">
+          <a
+            class="content-button"
+            href="../builder.html?edition=2024"
+            data-analytics-event="guide_builder_click"
+            data-analytics-edition="2024"
+          >Build with D&amp;D 2024</a>
+          <a
+            class="content-button content-button-secondary"
+            href="../builder.html?edition=2014"
+            data-analytics-event="guide_builder_click"
+            data-analytics-edition="2014"
+          >Build with D&amp;D 2014</a>
+        </div>
+      </header>
 
-    <nav class="actions" aria-label="Helpful destinations">
-      <a class="button button-primary" href="/">
-        Return Home
-      </a>
+      <article class="content-card article-body">
+        <section aria-labelledby="quick-answer-heading">
+          <p class="article-kicker">The quick answer</p>
+          <h2 id="quick-answer-heading">You do not need to understand the whole game first.</h2>
+          <p>
+            A first character only needs enough information to participate in play. You can learn
+            the deeper rules while using the character. That is exactly why My RPG Source puts
+            Knowledge Cards beside unfamiliar terms and links those cards to the full Rules Codex.
+          </p>
+          <p>
+            Your first goal is not to create the most optimized adventurer imaginable. It is to make
+            a character whose basic idea makes sense to you and whose sheet is ready to use at the table.
+          </p>
 
-      <a class="button" href="/builder.html?edition=2024">
-        Open the Character Builder
-      </a>
+          <div class="article-callout">
+            <strong>A useful first-character sentence:</strong>
+            “I want to play a curious wizard who keeps getting into trouble,” or
+            “I want a tough fighter who protects everyone else.” That single sentence is enough
+            to guide many of the decisions that follow.
+          </div>
+        </section>
 
-      <a class="button" href="/codex.html">
-        Browse the Codex
-      </a>
-    </nav>
+        <section aria-labelledby="edition-heading">
+          <h2 id="edition-heading">Before anything else: choose 2014 or 2024</h2>
+          <p>
+            D&amp;D fifth edition currently has two closely related rules versions in common use.
+            My RPG Source keeps them separate because details of character creation, species or race,
+            backgrounds, classes, feats, and other rules can differ.
+          </p>
+          <p>
+            If you are joining an existing group, ask the Game Master which version the campaign uses.
+            If you are starting fresh and the group has no preference, the 2024 rules are the newer
+            version. Either way, use the matching builder from beginning to end instead of mixing rules
+            accidentally.
+          </p>
+        </section>
 
-    <p class="footer-note">
-      My RPG Source
-    </p>
-  </main>
+        <section aria-labelledby="steps-heading">
+          <p class="article-kicker">The roadmap</p>
+          <h2 id="steps-heading">Build the character one layer at a time</h2>
+
+          <ol class="step-list">
+            <li>
+              <h3>Start with a character idea</h3>
+              <p>
+                Think in broad strokes before numbers. Do you imagine a heavily armoured guardian,
+                an agile scout, a wandering healer, a charming trickster, or someone fascinated by magic?
+                You are not locking yourself into a novel-length biography. You are choosing a direction.
+              </p>
+            </li>
+
+            <li>
+              <h3>Set your ability scores</h3>
+              <p>
+                The six abilities describe broad strengths: Strength, Dexterity, Constitution,
+                Intelligence, Wisdom, and Charisma. Your class usually makes some of these more important
+                than others, so it is perfectly reasonable to choose a class first in your head and then
+                assign your better numbers where they help that concept.
+              </p>
+              <p>
+                My RPG Source supports Standard Array, Point Buy, rolling, and manual entry. For a first
+                character, Standard Array is wonderfully boring in the best possible way: there is less
+                arithmetic and fewer opportunities to wonder whether you have accidentally invented a goblin accountant.
+              </p>
+            </li>
+
+            <li>
+              <h3>Choose a race in 2014 or a species in 2024</h3>
+              <p>
+                This choice describes part of what your character is. It can affect movement, senses,
+                special traits, resistances, languages, and other abilities. The terminology and some of
+                the mechanics differ between the two editions, so stay inside the version your table uses.
+              </p>
+              <p>
+                Choose because the idea interests you, not because somebody on the internet declared that
+                one combination is mandatory. A character you are excited to play has a remarkable tendency
+                to survive more sessions than a spreadsheet you resent.
+              </p>
+            </li>
+
+            <li>
+              <h3>Choose a background</h3>
+              <p>
+                Background answers the question, “What was this person doing before the adventure began?”
+                It helps establish skills, training, equipment, and other parts of the character depending
+                on edition. It is also a useful roleplaying anchor. A soldier, scholar, criminal, or acolyte
+                may approach the same locked door for very different reasons.
+              </p>
+              <p>
+                In the 2024 rules, Background also carries important character-building choices that were
+                handled differently in 2014, including where ability-score increases come from.
+              </p>
+            </li>
+
+            <li>
+              <h3>Choose a class</h3>
+              <p>
+                Class is the largest mechanical decision. It defines the character's core adventuring tools
+                and how those tools grow with level. Fighters are built around martial ability, Rogues around
+                expertise and opportunism, Wizards around learned spellcasting, Clerics around divine magic,
+                and so on.
+              </p>
+              <p>
+                Read the class overview rather than every future feature. At level 1, you mostly need to know
+                what the class asks you to choose now and what you can actually do during your first session.
+              </p>
+            </li>
+
+            <li>
+              <h3>Choose skills and other proficiencies</h3>
+              <p>
+                Proficiency means your character has relevant training. Your species or race, background,
+                and class can all contribute different proficiencies. The builder helps collect them, while
+                Knowledge Cards explain unfamiliar terms without forcing you to leave the sheet.
+              </p>
+              <p>
+                Skills are not buttons that only work with one type of action. They describe areas of training
+                that the Game Master may pair with an appropriate ability when the situation calls for it.
+              </p>
+            </li>
+
+            <li>
+              <h3>Take your starting equipment</h3>
+              <p>
+                Your class and background normally provide the starting package or choices that get the
+                character equipped. For a first character, the offered equipment is usually the easiest path.
+                You can learn the economy of rope, lantern oil, armour, ammunition, musical instruments, and
+                suspicious quantities of ball bearings after you have survived meeting the party.
+              </p>
+              <p>
+                The Rules Codex includes a searchable mundane-equipment catalogue if you want to understand
+                what an item does or compare edition-specific versions.
+              </p>
+            </li>
+
+            <li>
+              <h3>Check the numbers you will use during play</h3>
+              <p>
+                Before the first session, make sure you can find Armor Class, hit points, speed, initiative,
+                saving throws, skill modifiers, attacks, and spell information if your character casts spells.
+                You do not need to memorize them. You need to know where they live.
+              </p>
+            </li>
+
+            <li>
+              <h3>Add enough personality to make decisions</h3>
+              <p>
+                You can write pages of history if that is fun for you, but a first character only needs a few
+                handles: What do they want? What are they afraid of? Why would they travel with the group?
+                What habit, belief, relationship, or flaw might make a scene interesting?
+              </p>
+              <p>
+                Leave yourself room to discover the character through play. Some of the best personality traits
+                are invented accidentally because of one ridiculous die roll in session two.
+              </p>
+            </li>
+
+            <li>
+              <h3>Do a ready-to-go check</h3>
+              <p>
+                Scan the sheet once before play. Resolve any empty required choices, make sure the edition is
+                correct, confirm your equipment and attacks, and save or export a backup. Then stop editing.
+                At some point the character has to escape the laboratory and encounter a tavern.
+              </p>
+            </li>
+          </ol>
+        </section>
+
+        <section aria-labelledby="differences-heading">
+          <h2 id="differences-heading">The biggest 2014-versus-2024 creation difference to remember</h2>
+          <p>
+            The editions are close enough that many names look familiar, but they should not be treated as
+            interchangeable. In particular, character-origin mechanics moved around. A 2014 Race and a 2024
+            Species are not simply two labels for one data structure, and 2024 Backgrounds carry choices that
+            work differently from their 2014 counterparts.
+          </p>
+          <p>
+            My RPG Source therefore treats the edition as part of the character's identity. The builder,
+            Knowledge Cards, Codex entries, saves, and exports are designed to keep that boundary visible.
+          </p>
+        </section>
+
+        <section aria-labelledby="checklist-heading">
+          <p class="article-kicker">Before session one</p>
+          <h2 id="checklist-heading">Ready-to-go character checklist</h2>
+          <ul class="guide-checklist">
+            <li>Correct edition selected</li>
+            <li>Character concept makes sense to you</li>
+            <li>Six ability scores assigned</li>
+            <li>Race or Species choices completed</li>
+            <li>Background choices completed</li>
+            <li>Class and level recorded</li>
+            <li>Skill and saving-throw proficiencies visible</li>
+            <li>Maximum hit points and Armor Class calculated</li>
+            <li>Attacks or spells ready to reference</li>
+            <li>Starting equipment recorded</li>
+            <li>Character saved locally</li>
+            <li>Portable JSON backup exported if desired</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="next-heading">
+          <h2 id="next-heading">What should you learn next?</h2>
+          <p>
+            Once the character exists, do not try to study the entire ruleset. Learn the handful of things
+            your character does often. A Fighter benefits from understanding attacks, movement, reactions,
+            and equipment. A spellcaster needs those fundamentals plus the spellcasting rules used by that
+            class. Everyone benefits from knowing how ability checks and saving throws work.
+          </p>
+          <p>
+            That is the philosophy behind the My RPG Source builder: the sheet is the map, Knowledge Cards
+            are the road signs, and the Codex is there when you actually want to explore the neighbourhood.
+          </p>
+
+          <div class="article-actions">
+            <a class="content-button" href="../builder.html?edition=2024">Open the 2024 Builder</a>
+            <a class="content-button content-button-secondary" href="../builder.html?edition=2014">Open the 2014 Builder</a>
+            <a class="content-button content-button-secondary" href="../codex.html">Browse the Rules Codex</a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <nav aria-label="Footer navigation">
+        <a href="../index.html">Home</a>
+        <a href="../news.html">News &amp; Guides</a>
+        <a href="../codex.html">Rules Codex</a>
+        <a href="../faq.html">New Player FAQ</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../legal.html">Legal &amp; SRD Attribution</a>
+      </nav>
+      <p>My RPG Source · Create. Learn. Play.</p>
+    </footer>
+  </div>
 </body>
 </html>

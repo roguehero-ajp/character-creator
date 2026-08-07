@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3252YKGQX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N3252YKGQX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My RPG Source | Create. Learn. Play.</title>
+  <meta
+    name="description"
+    content="Build D&D 5e 2014 and 2024 characters, learn the rules through Knowledge Cards, and explore an edition-aware Rules Codex."
+  >
+  <link rel="canonical" href="https://www.myrpgsource.com/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+  >
+
+  <link rel="stylesheet" href="css/homepage.css">
+  <script defer src="js/codex-data.js"></script>
+  <script defer src="js/homepage.js"></script>
+  <script defer src="js/analytics.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <main id="main-content">
+    <section class="desktop-home" aria-labelledby="desktop-home-title">
+      <h1 class="sr-only" id="desktop-home-title">My RPG Source</h1>
+      <p class="sr-only">
+        Create, customize, and grow tabletop roleplaying characters while learning the game.
+      </p>
+
+      <div class="artboard" aria-label="My RPG Source homepage">
+        <img
+          class="artboard-image"
+          src="images/my-rpt-source-homepage.png"
+          alt=""
+          width="1122"
+          height="1402"
+        >
+
+        <nav class="artboard-links" aria-label="Primary navigation">
+          <a class="hotspot hotspot-news" href="news.html"><span>News</span></a>
+          <a class="hotspot hotspot-builders" href="#builders"><span>Builders</span></a>
+          <a class="hotspot hotspot-rules" href="codex.html"><span>Rules and resources</span></a>
+          <a class="hotspot hotspot-faq" href="faq.html"><span>FAQ</span></a>
+          <a class="hotspot hotspot-store" href="#future-services"><span>Store</span></a>
+          <a class="hotspot hotspot-login" href="#future-services"><span>Login</span></a>
+        </nav>
+
+        <section
+          class="featured-card artboard-featured-card"
+          data-featured-card
+          aria-label="Featured Knowledge Card"
+        >
+          <article class="featured-card-inner" data-card-sample aria-live="polite">
+            <p class="featured-card-meta" data-card-meta>Rules Codex</p>
+            <h2 class="featured-card-title" data-card-title>Loading a Knowledge Card…</h2>
+            <p class="featured-card-summary" data-card-summary>
+              The Codex is opening its library.
+            </p>
+            <a class="featured-card-link" data-card-link href="codex.html">Learn more…</a>
+          </article>
+
+          <div class="featured-card-controls" aria-label="Featured Knowledge Card controls">
+            <button type="button" data-card-previous>Previous</button>
+            <button type="button" data-card-pause aria-pressed="false">Pause</button>
+            <button type="button" data-card-next>Next</button>
+          </div>
+        </section>
+
+        <a class="hotspot hotspot-knowledge" href="#builders">
+          <span>Open a builder with Knowledge Cards</span>
+        </a>
+        <a class="hotspot hotspot-codex" href="codex.html">
+          <span>Browse the Rules Codex</span>
+        </a>
+        <a class="hotspot hotspot-printable" href="#builders">
+          <span>Create printable character sheets</span>
+        </a>
+        <a class="hotspot hotspot-start" href="#builders">
+          <span>Get started</span>
+        </a>
+
+        <nav class="artboard-footer-links" aria-label="Homepage artwork footer navigation">
+          <a class="hotspot hotspot-about" href="about.html"><span>About</span></a>
+          <a class="hotspot hotspot-contact" href="contact.html"><span>Contact</span></a>
+          <a class="hotspot hotspot-privacy" href="privacy.html"><span>Privacy</span></a>
+          <a class="hotspot hotspot-legal" href="legal.html"><span>Legal</span></a>
+        </nav>
+      </div>
+    </section>
+
+    <section class="mobile-home" aria-labelledby="mobile-home-title">
+      <header class="mobile-header">
+        <p class="mobile-ornament" aria-hidden="true">✦ · ✧ · ✦</p>
+        <h1 id="mobile-home-title">My RPG Source</h1>
+        <p class="mobile-tagline">Create. Learn. Play.</p>
+        <p>Everything you need to play, all in one place.</p>
+
+        <nav class="mobile-nav" aria-label="Primary navigation">
+          <a href="news.html">News</a>
+          <a href="#builders">Builders</a>
+          <a href="codex.html">Rules &amp; Resources</a>
+          <a href="faq.html">FAQ</a>
+          <a href="#future-services">Store</a>
+          <a href="#future-services">Login</a>
+        </nav>
+      </header>
+
+      <section class="mobile-hero">
+        <div>
+          <p class="mobile-eyebrow">Create. Learn. Play.</p>
+          <h2>Build a character while learning the game.</h2>
+          <p>
+            Create, customize, and grow your characters with tools and knowledge designed
+            for every adventure.
+          </p>
+        </div>
+
+        <section class="featured-card mobile-featured-card" data-featured-card>
+          <p class="mobile-eyebrow">Featured Knowledge Card</p>
+          <article class="featured-card-inner" data-card-sample aria-live="polite">
+            <p class="featured-card-meta" data-card-meta>Rules Codex</p>
+            <h2 class="featured-card-title" data-card-title>Loading a Knowledge Card…</h2>
+            <p class="featured-card-summary" data-card-summary>
+              The Codex is opening its library.
+            </p>
+            <a class="featured-card-link" data-card-link href="codex.html">Learn more…</a>
+          </article>
+
+          <div class="featured-card-controls" aria-label="Featured Knowledge Card controls">
+            <button type="button" data-card-previous>Previous</button>
+            <button type="button" data-card-pause aria-pressed="false">Pause</button>
+            <button type="button" data-card-next>Next</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="mobile-feature-grid" aria-label="Site features">
+        <a href="#builders">
+          <strong>Knowledge Cards</strong>
+          <span>Quick lessons and rules in bite-sized chunks.</span>
+        </a>
+        <a href="codex.html">
+          <strong>Rules Codex</strong>
+          <span>Browse rules, spells, items, conditions, classes, and more.</span>
+        </a>
+        <a href="#builders">
+          <strong>Printable Sheets</strong>
+          <span>Create ready-to-use character sheets and reference tools.</span>
+        </a>
+      </section>
+
+      <a class="mobile-portal-cta" href="#builders">
+        <span>Get Started</span>
+        <small>Your adventure begins here.</small>
+      </a>
+    </section>
+
+    <section class="home-section" id="news" aria-labelledby="news-title">
+      <div class="section-heading">
+        <p>From the workshop</p>
+        <h2 id="news-title">Latest from My RPG Source</h2>
+      </div>
+
+      <div class="news-grid">
+        <article>
+          <h3>How to Create Your First D&amp;D Character</h3>
+          <p>
+            Our first original beginner guide walks from a character idea to a ready-to-go
+            sheet without requiring you to memorize the rulebook first.
+          </p>
+          <a href="guides/how-to-create-your-first-dnd-character.html">Read the guide</a>
+        </article>
+
+        <article>
+          <h3>Knowledge Cards became interactive</h3>
+          <p>
+            Builder Knowledge Cards now stay anchored, remain open while hovered or focused,
+            and link directly to their full Codex entries.
+          </p>
+          <a href="#builders">Try a builder</a>
+        </article>
+
+        <article>
+          <h3>The Rules Codex keeps growing</h3>
+          <p>
+            Rules, origins, backgrounds, feats, classes, mundane equipment, spells, and
+            magic items are searchable in one edition-aware library.
+          </p>
+          <a href="codex.html">Open the Codex</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="home-section builders-section" id="builders" aria-labelledby="builders-title">
+      <div class="section-heading">
+        <p>Choose your rules</p>
+        <h2 id="builders-title">Character Builders</h2>
+      </div>
+
+      <div class="builder-grid">
+        <a class="builder-card builder-card-primary" href="builder.html?edition=2024">
+          <span>Current edition</span>
+          <strong>D&amp;D 5e 2024</strong>
+          <small>Build with 2024 species, backgrounds, classes, and rules.</small>
+        </a>
+
+        <a class="builder-card" href="builder.html?edition=2014">
+          <span>Classic fifth edition</span>
+          <strong>D&amp;D 5e 2014</strong>
+          <small>Build with 2014 races, backgrounds, classes, and rules.</small>
+        </a>
+
+        <a class="builder-card" href="faq.html">
+          <span>New to tabletop RPGs?</span>
+          <strong>Start with the FAQ</strong>
+          <small>Learn what happens at the table before building your first character.</small>
+        </a>
+      </div>
+    </section>
+
+    <section class="home-section future-services" id="future-services" aria-labelledby="future-title">
+      <div>
+        <p class="future-label">On the roadmap</p>
+        <h2 id="future-title">Store and account services are coming later.</h2>
+        <p>
+          My RPG Source currently works without an account. Characters can be saved locally
+          or exported as JSON. Future account, cloud, campaign, and store services will be
+          introduced only when they are ready.
+        </p>
+      </div>
+      <a href="about.html">About the project</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <strong>My RPG Source</strong>
+      <span>Create. Learn. Play.</span>
+    </div>
+
+    <nav aria-label="Footer navigation">
+      <a href="news.html">News &amp; Guides</a>
+      <a href="codex.html">Rules Codex</a>
+      <a href="faq.html">New Player FAQ</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="legal.html">Legal &amp; SRD Attribution</a>
+    </nav>
+  </footer>
+</body>
+</html>

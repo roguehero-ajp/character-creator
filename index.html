@@ -1,255 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3252YKGQX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N3252YKGQX');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My RPG Source | Create. Learn. Play.</title>
+  <title>Rules Codex | My RPG Source</title>
   <meta
     name="description"
-    content="Build D&D 5e 2014 and 2024 characters, learn the rules through Knowledge Cards, and explore an edition-aware Rules Codex."
+    content="Search edition-specific D&D 5e rules, races, species, backgrounds, feats, classes, mundane equipment, spells, and magic items for the 2014 and 2024 rules in one accessible reference library."
   >
-  <link rel="canonical" href="https://www.myrpgsource.com/">
-
+  <link rel="canonical" href="https://www.myrpgsource.com/codex.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
   >
-
-  <link rel="stylesheet" href="css/homepage.css">
+  <link rel="stylesheet" href="css/site-pages.css">
+  <link rel="stylesheet" href="css/codex-page.css">
   <script defer src="js/codex-data.js"></script>
-  <script defer src="js/homepage.js"></script>
+  <script defer src="js/codex-page.js"></script>
+  <script defer src="js/analytics.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <main id="main-content">
-    <section class="desktop-home" aria-labelledby="desktop-home-title">
-      <h1 class="sr-only" id="desktop-home-title">My RPG Source</h1>
-      <p class="sr-only">
-        Create, customize, and grow tabletop roleplaying characters while learning the game.
-      </p>
+  <div class="site-shell codex-shell">
+    <header class="site-header">
+      <a class="site-brand" href="index.html">My RPG Source</a>
 
-      <div class="artboard" aria-label="My RPG Source homepage">
-        <img
-          class="artboard-image"
-          src="images/my-rpt-source-homepage.png"
-          alt=""
-          width="1122"
-          height="1402"
-        >
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="news.html">News</a>
+        <a href="builder.html">Character Builder</a>
+        <a href="codex.html" aria-current="page">Codex</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="legal.html">Legal</a>
+      </nav>
+    </header>
 
-        <nav class="artboard-links" aria-label="Primary navigation">
-          <a class="hotspot hotspot-news" href="#news"><span>News</span></a>
-          <a class="hotspot hotspot-builders" href="#builders"><span>Builders</span></a>
-          <a class="hotspot hotspot-rules" href="codex.html"><span>Rules and resources</span></a>
-          <a class="hotspot hotspot-faq" href="faq.html"><span>FAQ</span></a>
-          <a class="hotspot hotspot-store" href="#future-services"><span>Store</span></a>
-          <a class="hotspot hotspot-login" href="#future-services"><span>Login</span></a>
-        </nav>
+    <main id="main-content">
+      <header class="page-hero codex-hero">
+        <p class="eyebrow">Edition-aware reference library</p>
+        <h1>Rules Codex</h1>
+        <p class="lede">
+          Search plain-language player rules alongside edition-specific races, species, backgrounds, feats, classes,
+          mundane equipment, spells, and magic-item collections. Every result is tied to a
+          game system and edition so rules from 2014 and 2024 never quietly blend together.
+        </p>
 
-        <section
-          class="featured-card artboard-featured-card"
-          data-featured-card
-          aria-label="Featured Knowledge Card"
-        >
-          <article class="featured-card-inner" data-card-sample aria-live="polite">
-            <p class="featured-card-meta" data-card-meta>Rules Codex</p>
-            <h2 class="featured-card-title" data-card-title>Loading a Knowledge Card…</h2>
-            <p class="featured-card-summary" data-card-summary>
-              The Codex is opening its library.
-            </p>
-            <a class="featured-card-link" data-card-link href="codex.html">Learn more…</a>
-          </article>
-
-          <div class="featured-card-controls" aria-label="Featured Knowledge Card controls">
-            <button type="button" data-card-previous>Previous</button>
-            <button type="button" data-card-pause aria-pressed="false">Pause</button>
-            <button type="button" data-card-next>Next</button>
+        <div class="codex-stat-grid" aria-label="Codex collection totals">
+          <div class="codex-stat">
+            <strong id="codex-total-count">Loading</strong>
+            <span>Total entries</span>
           </div>
-        </section>
-
-        <a class="hotspot hotspot-knowledge" href="#builders">
-          <span>Open a builder with Knowledge Cards</span>
-        </a>
-        <a class="hotspot hotspot-codex" href="codex.html">
-          <span>Browse the Rules Codex</span>
-        </a>
-        <a class="hotspot hotspot-printable" href="#builders">
-          <span>Create printable character sheets</span>
-        </a>
-        <a class="hotspot hotspot-start" href="#builders">
-          <span>Get started</span>
-        </a>
-
-        <nav class="artboard-footer-links" aria-label="Homepage artwork footer navigation">
-          <a class="hotspot hotspot-about" href="about.html"><span>About</span></a>
-          <a class="hotspot hotspot-contact" href="contact.html"><span>Contact</span></a>
-          <a class="hotspot hotspot-privacy" href="privacy.html"><span>Privacy</span></a>
-          <a class="hotspot hotspot-legal" href="legal.html"><span>Legal</span></a>
-        </nav>
-      </div>
-    </section>
-
-    <section class="mobile-home" aria-labelledby="mobile-home-title">
-      <header class="mobile-header">
-        <p class="mobile-ornament" aria-hidden="true">✦ · ✧ · ✦</p>
-        <h1 id="mobile-home-title">My RPG Source</h1>
-        <p class="mobile-tagline">Create. Learn. Play.</p>
-        <p>Everything you need to play, all in one place.</p>
-
-        <nav class="mobile-nav" aria-label="Primary navigation">
-          <a href="#news">News</a>
-          <a href="#builders">Builders</a>
-          <a href="codex.html">Rules &amp; Resources</a>
-          <a href="faq.html">FAQ</a>
-          <a href="#future-services">Store</a>
-          <a href="#future-services">Login</a>
-        </nav>
+          <div class="codex-stat">
+            <strong id="codex-rule-count">Loading</strong>
+            <span>Rules entries</span>
+          </div>
+          <div class="codex-stat">
+            <strong id="codex-ancestry-count">Loading</strong>
+            <span>Races &amp; species</span>
+          </div>
+          <div class="codex-stat">
+            <strong id="codex-background-count">Loading</strong>
+            <span>Backgrounds</span>
+          </div>
+          <div class="codex-stat">
+            <strong id="codex-feat-count">Loading</strong>
+            <span>Feats</span>
+          </div>
+          <div class="codex-stat">
+            <strong id="codex-class-count">Loading</strong>
+            <span>Classes</span>
+          </div>
+          <div class="codex-stat">
+            <strong id="codex-equipment-count">Loading</strong>
+            <span>Mundane equipment</span>
+          </div>
+          <div class="codex-stat">
+            <strong id="codex-spell-count">Loading</strong>
+            <span>Spell entries</span>
+          </div>
+          <div class="codex-stat">
+            <strong id="codex-item-count">Loading</strong>
+            <span>Magic-item entries</span>
+          </div>
+        </div>
       </header>
 
-      <section class="mobile-hero">
-        <div>
-          <p class="mobile-eyebrow">Create. Learn. Play.</p>
-          <h2>Build a character while learning the game.</h2>
+      <section class="content-card codex-introduction" aria-labelledby="codex-intro-heading">
+        <h2 id="codex-intro-heading">One library, separate rulesets</h2>
+        <p>
+          My RPG Source stores each game system and edition in its own Codex
+          collection. Even when two editions use the same term, their entries are
+          kept separate so later updates, comparisons, and builder links remain
+          dependable.
+        </p>
+        <p>
+          The Rules collection uses original, beginner-friendly explanations. The
+          Races &amp; Species, Backgrounds, Feats, Classes, Mundane Equipment, Spells, and Magic Items collections
+          preserve licensed SRD material with visible source and edition labels.
+        </p>
+
+        <div class="codex-start-grid" aria-label="Codex starting points">
+          <a href="codex.html?game=dnd5e&amp;edition=2024&amp;type=rule">Browse 2024 rules</a>
+          <a href="codex.html?game=dnd5e&amp;edition=2014&amp;type=rule">Browse 2014 rules</a>
+          <a href="codex.html?game=dnd5e&amp;edition=all&amp;type=ancestry">Browse races &amp; species</a>
+          <a href="codex.html?game=dnd5e&amp;edition=all&amp;type=background">Browse backgrounds</a>
+          <a href="codex.html?game=dnd5e&amp;edition=all&amp;type=feat">Browse feats</a>
+          <a href="codex.html?game=dnd5e&amp;edition=all&amp;type=class">Browse classes</a>
+          <a href="codex.html?game=dnd5e&amp;edition=all&amp;type=equipment">Browse equipment</a>
+          <a href="codex.html?game=dnd5e&amp;edition=all&amp;type=spell">Browse spells</a>
+          <a href="codex.html?game=dnd5e&amp;edition=all&amp;type=item">Browse magic items</a>
+        </div>
+      </section>
+
+      <section class="codex-workspace" aria-labelledby="search-heading">
+        <div class="codex-filter-panel">
+          <div class="codex-filter-heading">
+            <div>
+              <p class="eyebrow">Search and filter</p>
+              <h2 id="search-heading">Find an entry</h2>
+            </div>
+            <button type="button" id="codex-reset">Reset filters</button>
+          </div>
+
+          <form id="codex-filter-form" class="codex-filter-grid" role="search">
+            <div class="codex-field codex-field-search">
+              <label for="codex-search">Name, topic, or rules text</label>
+              <input
+                type="search"
+                id="codex-search"
+                autocomplete="off"
+                placeholder="Try Barbarian, Acolyte, Drow, longsword, or Fireball..."
+              >
+            </div>
+
+            <div class="codex-field">
+              <label for="codex-game">Game system</label>
+              <select id="codex-game" aria-describedby="codex-game-note"></select>
+              <span id="codex-game-note" class="codex-field-note">
+                More systems can be added without sharing rules data.
+              </span>
+            </div>
+
+            <div class="codex-field">
+              <label for="codex-edition">Edition</label>
+              <select id="codex-edition"></select>
+            </div>
+
+            <div class="codex-field">
+              <label for="codex-type">Entry type</label>
+              <select id="codex-type">
+                <option value="all">All entry types</option>
+                <option value="rule">Rules</option>
+                <option value="ancestry">Races &amp; species</option>
+                <option value="background">Backgrounds</option>
+                <option value="feat">Feats</option>
+                <option value="class">Classes</option>
+                <option value="equipment">Mundane equipment</option>
+                <option value="spell">Spells</option>
+                <option value="item">Magic items</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-rule-filter>
+              <label for="codex-category">Rule category</label>
+              <select id="codex-category">
+                <option value="all">All rule categories</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-ancestry-filter>
+              <label for="codex-ancestry-category">Race/species category</label>
+              <select id="codex-ancestry-category">
+                <option value="all">All race/species categories</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-background-filter>
+              <label for="codex-background-category">Background category</label>
+              <select id="codex-background-category">
+                <option value="all">All background categories</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-feat-filter>
+              <label for="codex-feat-category">Feat category</label>
+              <select id="codex-feat-category">
+                <option value="all">All feat categories</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-equipment-filter>
+              <label for="codex-equipment-category">Equipment category</label>
+              <select id="codex-equipment-category">
+                <option value="all">All equipment categories</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-spell-filter>
+              <label for="codex-level">Spell level</label>
+              <select id="codex-level">
+                <option value="all">All spell levels</option>
+                <option value="0">Cantrip</option>
+                <option value="1">1st level</option>
+                <option value="2">2nd level</option>
+                <option value="3">3rd level</option>
+                <option value="4">4th level</option>
+                <option value="5">5th level</option>
+                <option value="6">6th level</option>
+                <option value="7">7th level</option>
+                <option value="8">8th level</option>
+                <option value="9">9th level</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-spell-filter>
+              <label for="codex-school">Spell school</label>
+              <select id="codex-school">
+                <option value="all">All schools</option>
+                <option value="Abjuration">Abjuration</option>
+                <option value="Conjuration">Conjuration</option>
+                <option value="Divination">Divination</option>
+                <option value="Enchantment">Enchantment</option>
+                <option value="Evocation">Evocation</option>
+                <option value="Illusion">Illusion</option>
+                <option value="Necromancy">Necromancy</option>
+                <option value="Transmutation">Transmutation</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-item-filter>
+              <label for="codex-rarity">Item rarity</label>
+              <select id="codex-rarity">
+                <option value="all">All rarities</option>
+                <option value="Common">Common</option>
+                <option value="Uncommon">Uncommon</option>
+                <option value="Rare">Rare</option>
+                <option value="Very Rare">Very rare</option>
+                <option value="Legendary">Legendary</option>
+                <option value="Artifact">Artifact</option>
+                <option value="Varies">Varies</option>
+              </select>
+            </div>
+
+            <div class="codex-field" data-item-filter>
+              <label for="codex-attunement">Attunement</label>
+              <select id="codex-attunement">
+                <option value="all">Either</option>
+                <option value="required">Required</option>
+                <option value="not-required">Not required</option>
+              </select>
+            </div>
+          </form>
+        </div>
+
+        <div class="codex-results-heading">
+          <p id="codex-status" role="status" aria-live="polite">
+            Loading the Codex...
+          </p>
+          <p class="codex-results-tip">Open an entry to read its complete reference.</p>
+        </div>
+
+        <div id="codex-error" class="codex-error" hidden>
+          <h2>The Codex could not be loaded</h2>
           <p>
-            Create, customize, and grow your characters with tools and knowledge designed
-            for every adventure.
+            Refresh the page. If the problem continues, please report it through
+            the <a href="contact.html">Contact page</a>.
           </p>
         </div>
 
-        <section class="featured-card mobile-featured-card" data-featured-card>
-          <p class="mobile-eyebrow">Featured Knowledge Card</p>
-          <article class="featured-card-inner" data-card-sample aria-live="polite">
-            <p class="featured-card-meta" data-card-meta>Rules Codex</p>
-            <h2 class="featured-card-title" data-card-title>Loading a Knowledge Card…</h2>
-            <p class="featured-card-summary" data-card-summary>
-              The Codex is opening its library.
-            </p>
-            <a class="featured-card-link" data-card-link href="codex.html">Learn more…</a>
-          </article>
+        <div id="codex-results" class="codex-results" aria-label="Codex search results"></div>
 
-          <div class="featured-card-controls" aria-label="Featured Knowledge Card controls">
-            <button type="button" data-card-previous>Previous</button>
-            <button type="button" data-card-pause aria-pressed="false">Pause</button>
-            <button type="button" data-card-next>Next</button>
+        <div class="codex-load-row">
+          <button type="button" id="codex-load-more" hidden>Load more entries</button>
+        </div>
+
+        <noscript>
+          <div class="codex-error">
+            <h2>JavaScript is required for this searchable library</h2>
+            <p>Enable JavaScript to load, search, and filter the Codex collections.</p>
           </div>
-        </section>
+        </noscript>
       </section>
 
-      <section class="mobile-feature-grid" aria-label="Site features">
-        <a href="#builders">
-          <strong>Knowledge Cards</strong>
-          <span>Quick lessons and rules in bite-sized chunks.</span>
-        </a>
-        <a href="codex.html">
-          <strong>Rules Codex</strong>
-          <span>Browse rules, spells, items, conditions, classes, and more.</span>
-        </a>
-        <a href="#builders">
-          <strong>Printable Sheets</strong>
-          <span>Create ready-to-use character sheets and reference tools.</span>
-        </a>
-      </section>
-
-      <a class="mobile-portal-cta" href="#builders">
-        <span>Get Started</span>
-        <small>Your adventure begins here.</small>
-      </a>
-    </section>
-
-    <section class="home-section" id="news" aria-labelledby="news-title">
-      <div class="section-heading">
-        <p>From the workshop</p>
-        <h2 id="news-title">Latest News</h2>
-      </div>
-
-      <div class="news-grid">
-        <article>
-          <h3>Class foundations joined the Codex</h3>
-          <p>
-            All twelve SRD classes are now represented separately for both the 2014 and
-            2024 editions, complete with level 1–20 progression tables.
-          </p>
-          <a href="codex.html?type=class">Browse classes</a>
-        </article>
-
-        <article>
-          <h3>Knowledge Cards became interactive</h3>
-          <p>
-            Builder Knowledge Cards now stay anchored, remain open while hovered or focused,
-            and link directly to their full Codex entries.
-          </p>
-          <a href="#builders">Try a builder</a>
-        </article>
-
-        <article>
-          <h3>The Rules Codex keeps growing</h3>
-          <p>
-            Rules, origins, backgrounds, feats, classes, mundane equipment, spells, and
-            magic items are searchable in one edition-aware library.
-          </p>
-          <a href="codex.html">Open the Codex</a>
-        </article>
-      </div>
-    </section>
-
-    <section class="home-section builders-section" id="builders" aria-labelledby="builders-title">
-      <div class="section-heading">
-        <p>Choose your rules</p>
-        <h2 id="builders-title">Character Builders</h2>
-      </div>
-
-      <div class="builder-grid">
-        <a class="builder-card builder-card-primary" href="builder.html?edition=2024">
-          <span>Current edition</span>
-          <strong>D&amp;D 5e 2024</strong>
-          <small>Build with 2024 species, backgrounds, classes, and rules.</small>
-        </a>
-
-        <a class="builder-card" href="builder.html?edition=2014">
-          <span>Classic fifth edition</span>
-          <strong>D&amp;D 5e 2014</strong>
-          <small>Build with 2014 races, backgrounds, classes, and rules.</small>
-        </a>
-
-        <a class="builder-card" href="faq.html">
-          <span>New to tabletop RPGs?</span>
-          <strong>Start with the FAQ</strong>
-          <small>Learn what happens at the table before building your first character.</small>
-        </a>
-      </div>
-    </section>
-
-    <section class="home-section future-services" id="future-services" aria-labelledby="future-title">
-      <div>
-        <p class="future-label">On the roadmap</p>
-        <h2 id="future-title">Store and account services are coming later.</h2>
+      <section class="content-card codex-attribution" aria-labelledby="codex-attribution-heading">
+        <h2 id="codex-attribution-heading">Sources and attribution</h2>
         <p>
-          My RPG Source currently works without an account. Characters can be saved locally
-          or exported as JSON. Future account, cloud, campaign, and store services will be
-          introduced only when they are ready.
+          The rules summaries, examples, search tools, edition separation, and site
+          organization are part of My RPG Source. Licensed rules text is drawn from
+          the following Creative Commons sources.
         </p>
-      </div>
-      <a href="about.html">About the project</a>
-    </section>
-  </main>
 
-  <footer class="site-footer">
-    <div>
-      <strong>My RPG Source</strong>
-      <span>Create. Learn. Play.</span>
-    </div>
+        <div class="attribution">
+          This work includes material taken from the System Reference Document 5.1
+          (“SRD 5.1”) by Wizards of the Coast LLC and available at
+          <a
+            href="https://dnd.wizards.com/resources/systems-reference-document"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            https://dnd.wizards.com/resources/systems-reference-document
+          </a>.
+          The SRD 5.1 is licensed under the Creative Commons Attribution 4.0
+          International License available at
+          <a
+            href="https://creativecommons.org/licenses/by/4.0/legalcode"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            https://creativecommons.org/licenses/by/4.0/legalcode
+          </a>.
+        </div>
 
-    <nav aria-label="Footer navigation">
-      <a href="codex.html">Rules Codex</a>
-      <a href="faq.html">New Player FAQ</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="legal.html">Legal &amp; SRD Attribution</a>
-    </nav>
-  </footer>
+        <div class="attribution">
+          This work includes material from the System Reference Document 5.2.1
+          (“SRD 5.2.1”) by Wizards of the Coast LLC, available at
+          <a href="https://www.dndbeyond.com/srd" target="_blank" rel="noopener noreferrer">
+            https://www.dndbeyond.com/srd
+          </a>.
+          The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0
+          International License, available at
+          <a
+            href="https://creativecommons.org/licenses/by/4.0/legalcode"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            https://creativecommons.org/licenses/by/4.0/legalcode
+          </a>.
+        </div>
+
+        <p class="small-print">
+          SRD material has been reorganized and converted into searchable data for
+          this reference page. Original summaries are not a replacement for the
+          complete source rules. See the
+          <a href="legal.html">Legal &amp; SRD Attribution page</a> for additional notices.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <nav aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="builder.html">Character Builder</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="legal.html">Legal &amp; SRD Attribution</a>
+      </nav>
+      <div>© 2026 My RPG Source. Independent tabletop roleplaying tools.</div>
+    </footer>
+  </div>
 </body>
 </html>
