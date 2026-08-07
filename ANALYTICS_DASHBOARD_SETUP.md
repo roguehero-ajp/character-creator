@@ -1,347 +1,146 @@
-/**
- * My RPG Source - Privacy-safe analytics events
- * ------------------------------------------------
- * GA4 Measurement ID: G-N3252YKGQX
- *
- * The Google tag itself is installed once in each HTML <head>. This file adds
- * product events without sending character names, notes, ability scores,
- * imported/exported JSON, email addresses, or typed Codex search terms.
- */
+# My RPG Source Analytics & Owner Dashboard Setup
 
-(() => {
-  'use strict';
+**GA4 Measurement ID:** `G-N3252YKGQX`  
+**Search Console property:** `myrpgsource.com`
 
-  if (document.documentElement.dataset.mrsAnalyticsInitialized === 'true') {
-    return;
-  }
-  document.documentElement.dataset.mrsAnalyticsInitialized = 'true';
+This file documents the owner-facing analytics setup. It contains configuration notes only; it does not expose visitor analytics data.
 
-  const MEASUREMENT_ID = 'G-N3252YKGQX';
-  const MAX_TEXT_LENGTH = 100;
-  const seenKnowledgeCards = new WeakSet();
-  let codexSearchTimer = null;
+## 1. What is installed on the site
 
-  function normalizeText(value) {
-    if (typeof value !== 'string') {
-      return '';
-    }
+The Google tag is installed once in the `<head>` of every public HTML page.
 
-    return value
-      .trim()
-      .replace(/\s+/g, ' ')
-      .slice(0, MAX_TEXT_LENGTH);
-  }
+`js/analytics.js` adds privacy-conscious product events without intentionally sending:
 
-  function safeNumber(value) {
-    const number = Number(value);
-    return Number.isFinite(number) ? number : undefined;
-  }
+- Character names
+- Character notes or backstories
+- Ability scores
+- Imported or exported JSON content
+- Email addresses
+- Text typed into the Codex search box
 
-  function sanitizeParams(params = {}) {
-    const sanitized = {};
+The Codex search event records only the query length plus active non-text filters.
 
-    Object.entries(params).forEach(([key, value]) => {
-      if (value === undefined || value === null || value === '') {
-        return;
-      }
+## 2. Custom event dictionary
 
-      if (typeof value === 'number') {
-        if (Number.isFinite(value)) {
-          sanitized[key] = value;
-        }
-        return;
-      }
+| Event | Meaning | Useful parameters |
+| --- | --- | --- |
+| `builder_open` | A character builder loaded | `game_system`, `edition` |
+| `edition_select` | A visitor chose a builder edition link | `game_system`, `edition`, `source_page` |
+| `character_export` | JSON export control used | `game_system`, `edition`, `export_type` |
+| `character_import` | JSON import flow opened | `game_system`, `edition` |
+| `sheet_print` | Blank print or PDF control used | `game_system`, `edition`, `output_type` |
+| `level_up_open` | Level Up flow opened | `game_system`, `edition` |
+| `level_up_complete` | A level advancement was committed | `edition`, `character_level`, `class_level`, `hp_method` |
+| `codex_entry_open` | A Codex entry or related entry was opened | `entry_id`, `navigation_type` |
+| `codex_filter_change` | A non-text Codex filter changed | `filter_name`, `filter_value` |
+| `codex_search` | A Codex search occurred | `query_length`, `edition`, `entry_type` |
+| `knowledge_card_open` | A builder Knowledge Card was encountered | `edition`, `topic_id` |
+| `knowledge_card_codex_click` | A Knowledge Card's Codex button was used | `edition`, `entry_id` |
+| `featured_card_codex_click` | Homepage Featured Knowledge Card link used | `entry_id` |
+| `homepage_get_started` | Homepage portal CTA used | `source_page` |
+| `news_index_open` | News & Guides index loaded | `source_page` |
+| `news_card_open` | A news story card was selected | `item_id` |
+| `news_article_open` | A news article loaded | `article_id` |
+| `guide_open` | An evergreen guide loaded | `guide_id` |
+| `guide_card_open` | A guide card was selected | `item_id` |
+| `guide_builder_click` | A guide sent a reader to a builder | `edition`, `item_id` |
+| `guide_video_start` | Reserved for future companion videos | `video_id` |
 
-      if (typeof value === 'boolean') {
-        sanitized[key] = value;
-        return;
-      }
+## 3. Verify data collection after deployment
 
-      const text = normalizeText(String(value));
-      if (text) {
-        sanitized[key] = text;
-      }
-    });
+1. Open Google Analytics.
+2. Go to **Reports → Realtime**.
+3. Open `https://www.myrpgsource.com/` in another tab.
+4. Visit the Codex and one builder.
+5. Use a test interaction such as the homepage Get Started portal or opening a Codex entry.
+6. Allow several minutes for Realtime to populate.
 
-    return sanitized;
-  }
+Google notes that initial Analytics data can take time to appear. Realtime is the quickest first verification.
 
-  function track(eventName, params = {}) {
-    if (typeof window.gtag !== 'function') {
-      return;
-    }
+## 4. Link Search Console to GA4
 
-    const safeEventName = normalizeText(eventName)
-      .toLowerCase()
-      .replace(/[^a-z0-9_]/g, '_')
-      .slice(0, 40);
+After the Google tag is detected:
 
-    if (!safeEventName) {
-      return;
-    }
+1. In GA4, open **Admin**.
+2. Under **Product links**, open **Search Console links**.
+3. Create a link.
+4. Select the verified `myrpgsource.com` Search Console property.
+5. Select the My RPG Source web stream.
+6. Review and submit.
 
-    window.gtag('event', safeEventName, sanitizeParams({
-      source_page: getPageKind(),
-      ...params,
-    }));
-  }
+This allows Search Console query and organic landing-page information to be analyzed alongside Analytics reporting.
 
-  function getPageKind() {
-    const explicit = document.body?.dataset?.pageKind;
-    if (explicit) {
-      return normalizeText(explicit);
-    }
+## 5. Recommended GA4 custom dimensions
 
-    const path = window.location.pathname.toLowerCase();
+After events have begun arriving, create event-scoped custom dimensions for the parameters that will be useful in owner reports:
 
-    if (path.includes('/guides/')) return 'guide';
-    if (path.endsWith('/news.html')) return 'news';
-    if (path.endsWith('/builder.html')) return 'builder';
-    if (path.endsWith('/codex.html')) return 'codex';
-    if (path.endsWith('/faq.html')) return 'faq';
-    if (path.endsWith('/about.html')) return 'about';
-    if (path.endsWith('/contact.html')) return 'contact';
-    if (path.endsWith('/privacy.html')) return 'privacy';
-    if (path.endsWith('/legal.html')) return 'legal';
-    if (path.endsWith('/404.html')) return '404';
-    return 'homepage';
-  }
+- `game_system`
+- `edition`
+- `source_page`
+- `entry_id`
+- `entry_type`
+- `guide_id`
+- `article_id`
+- `output_type`
+- `filter_name`
+- `filter_value`
+- `hp_method`
 
-  function getEditionFromUrl(url = window.location.href) {
-    try {
-      const parsed = new URL(url, window.location.href);
-      const edition = parsed.searchParams.get('edition');
-      return edition === '2014' || edition === '2024' ? edition : '';
-    } catch (error) {
-      return '';
-    }
-  }
+Do not create a dimension for Codex search text because the site does not send that text.
 
-  function getCodexEntryId(href) {
-    if (!href) {
-      return '';
-    }
+## 6. Private Looker Studio dashboard foundation
 
-    try {
-      const parsed = new URL(href, window.location.href);
-      return normalizeText(parsed.searchParams.get('entry') || '');
-    } catch (error) {
-      return '';
-    }
-  }
+The dashboard itself should live in Looker Studio, not on the public GitHub Pages site.
 
-  function trackInitialPageContext() {
-    const pageKind = getPageKind();
+Recommended data sources:
 
-    if (pageKind === 'builder') {
-      track('builder_open', {
-        game_system: 'dnd5e',
-        edition: getEditionFromUrl() || '2024',
-      });
-      return;
-    }
+1. Google Analytics 4
+2. Google Search Console
+3. AdSense, once the account/site is approved and reporting is available
 
-    if (pageKind === 'news') {
-      track('news_index_open');
-      return;
-    }
+Recommended first dashboard sections:
 
-    if (pageKind === 'guide') {
-      track('guide_open', {
-        guide_id: normalizeText(document.body.dataset.guideId || ''),
-      });
-    }
-  }
+### Audience pulse
 
-  function trackKnowledgeCard(element) {
-    if (!element || seenKnowledgeCards.has(element)) {
-      return;
-    }
+- Active users today
+- Users in the last 7 and 30 days
+- New versus returning users
+- Device category
+- Country
 
-    const topicId = normalizeText(
-      element.dataset.knowledge ||
-      element.dataset.codexId ||
-      element.dataset.knowledgeKey ||
-      ''
-    );
+### Acquisition
 
-    seenKnowledgeCards.add(element);
-    track('knowledge_card_open', {
-      game_system: 'dnd5e',
-      edition: getEditionFromUrl() || '2024',
-      topic_id: topicId,
-    });
-  }
+- Top traffic sources
+- Organic search users
+- Top Search Console queries
+- Search impressions and clicks
+- Top landing pages
 
-  function handleClick(event) {
-    const target = event.target instanceof Element ? event.target : null;
-    if (!target) {
-      return;
-    }
+### Product use
 
-    const explicit = target.closest('[data-analytics-event]');
-    if (explicit) {
-      track(explicit.dataset.analyticsEvent, {
-        item_id: normalizeText(explicit.dataset.analyticsId || ''),
-        item_type: normalizeText(explicit.dataset.analyticsType || ''),
-        edition: normalizeText(explicit.dataset.analyticsEdition || ''),
-      });
-    }
+- 2014 versus 2024 builder opens
+- JSON exports
+- Print/PDF actions
+- Level Up opens and completions
+- Knowledge Card interactions
+- Most-opened Codex entries
 
-    const idTarget = target.closest('[id]');
-    const id = idTarget?.id || '';
+### Content
 
-    if (id === 'export-json-btn') {
-      track('character_export', {
-        game_system: 'dnd5e',
-        edition: getEditionFromUrl() || '2024',
-        export_type: 'json',
-      });
-    } else if (id === 'import-json-btn') {
-      track('character_import', {
-        game_system: 'dnd5e',
-        edition: getEditionFromUrl() || '2024',
-      });
-    } else if (id === 'print-blank-btn') {
-      track('sheet_print', {
-        game_system: 'dnd5e',
-        edition: getEditionFromUrl() || '2024',
-        output_type: 'blank_print',
-      });
-    } else if (id === 'export-btn') {
-      track('sheet_print', {
-        game_system: 'dnd5e',
-        edition: getEditionFromUrl() || '2024',
-        output_type: 'pdf',
-      });
-    } else if (id === 'level-up-btn') {
-      track('level_up_open', {
-        game_system: 'dnd5e',
-        edition: getEditionFromUrl() || '2024',
-      });
-    }
+- News and guide page views
+- Guide-to-builder clicks
+- Future video starts
+- Returning readers
 
-    const builderLink = target.closest('a[href*="builder.html?edition="]');
-    if (builderLink) {
-      track('edition_select', {
-        game_system: 'dnd5e',
-        edition: getEditionFromUrl(builderLink.href),
-      });
-    }
+### Monetization
 
-    const getStarted = target.closest('.hotspot-start, .mobile-portal-cta');
-    if (getStarted) {
-      track('homepage_get_started');
-    }
+Add after AdSense reporting is available:
 
-    const tooltipCodexLink = target.closest('.kt-codex-link');
-    if (tooltipCodexLink) {
-      track('knowledge_card_codex_click', {
-        game_system: 'dnd5e',
-        edition: getEditionFromUrl() || '2024',
-        entry_id: getCodexEntryId(tooltipCodexLink.href),
-      });
-    }
+- Estimated revenue
+- Page RPM
+- Ad impressions
+- Revenue by landing page or content section where supported
 
-    const featuredCodexLink = target.closest('[data-card-link]');
-    if (featuredCodexLink) {
-      track('featured_card_codex_click', {
-        entry_id: getCodexEntryId(featuredCodexLink.href),
-      });
-    }
+## 7. Sharing and privacy
 
-    const codexSummary = target.closest('.codex-entry > summary');
-    if (codexSummary) {
-      const entry = codexSummary.closest('.codex-entry');
-      track('codex_entry_open', {
-        entry_id: normalizeText(entry?.dataset?.entryId || ''),
-      });
-    }
-
-    const codexRelated = target.closest('[data-open-entry]');
-    if (codexRelated) {
-      track('codex_entry_open', {
-        entry_id: normalizeText(codexRelated.dataset.openEntry || ''),
-        navigation_type: 'related_entry',
-      });
-    }
-  }
-
-  function handleKnowledgePointer(event) {
-    const target = event.target instanceof Element
-      ? event.target.closest('[data-knowledge], [data-codex-id], [data-knowledge-key]')
-      : null;
-    trackKnowledgeCard(target);
-  }
-
-  function handleCodexFilterChange(event) {
-    const target = event.target;
-    if (!(target instanceof HTMLSelectElement)) {
-      return;
-    }
-
-    track('codex_filter_change', {
-      filter_name: normalizeText(target.id || target.name || 'filter'),
-      filter_value: normalizeText(target.value),
-    });
-  }
-
-  function handleCodexSearch(event) {
-    const target = event.target;
-    if (!(target instanceof HTMLInputElement) || target.id !== 'codex-search') {
-      return;
-    }
-
-    window.clearTimeout(codexSearchTimer);
-    codexSearchTimer = window.setTimeout(() => {
-      // Privacy safeguard: only the query length is sent, never the typed text.
-      track('codex_search', {
-        query_length: target.value.trim().length,
-        edition: normalizeText(document.getElementById('codex-edition')?.value || ''),
-        entry_type: normalizeText(document.getElementById('codex-type')?.value || ''),
-      });
-    }, 1200);
-  }
-
-  function handleLevelUpComplete(event) {
-    const detail = event.detail || {};
-
-    track('level_up_complete', {
-      game_system: 'dnd5e',
-      edition: normalizeText(detail.edition || ''),
-      character_level: safeNumber(detail.characterLevel),
-      class_level: safeNumber(detail.classLevel),
-      hp_method: normalizeText(detail.hpMethod || ''),
-    });
-  }
-
-  function bindEvents() {
-    document.addEventListener('click', handleClick);
-    document.addEventListener('pointerover', handleKnowledgePointer, { passive: true });
-    document.addEventListener('focusin', handleKnowledgePointer);
-    document.addEventListener('change', handleCodexFilterChange);
-    document.addEventListener('input', handleCodexSearch);
-    document.addEventListener('character:leveled-up', handleLevelUpComplete);
-  }
-
-  window.MyRPGAnalytics = Object.freeze({
-    measurementId: MEASUREMENT_ID,
-    track,
-    trackVideoStart(videoId, extra = {}) {
-      track('guide_video_start', {
-        video_id: normalizeText(videoId),
-        ...extra,
-      });
-    },
-  });
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      bindEvents();
-      trackInitialPageContext();
-    }, { once: true });
-  } else {
-    bindEvents();
-    trackInitialPageContext();
-  }
-})();
+Keep the Looker Studio report restricted to the owner's Google account unless there is a deliberate reason to share it. Do not publish the dashboard URL as a site navigation item and do not embed private analytics data into a public GitHub Pages file.
