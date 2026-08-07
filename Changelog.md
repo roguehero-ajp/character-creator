@@ -70,6 +70,9 @@ The project is still pre-1.0. Until formal release versioning is standardized, r
 
 ### Changed
 
+- Anchored Knowledge Cards beside their triggers instead of moving them with the mouse cursor.
+- Made Knowledge Cards remain open while hovered or focused and added an edition-aware **Codex** link to each card.
+- Removed the redundant per-ability Codex buttons from the character sheet.
 - Expanded `codex.html` from a spells-and-magic-items catalogue into a unified 2,208-entry Rules Codex while preserving all 1,153 existing SRD spell and magic-item entries and adding rules, origins, backgrounds, feats, classes, and mundane equipment.
 - Made the builder Codex drawer load only the active edition's rule collection.
 - Made the homepage Featured Knowledge Card draw from the new edition-specific Codex collections without changing its guarded timer, pause controls, or two-stage flip behaviour.
