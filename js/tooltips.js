@@ -1,8 +1,8 @@
 /**
  * My RPG Source - Knowledge Cards
  * --------------------------------
- * Uses data/codex.json as the single source of truth for both
- * hover/focus Knowledge Cards and the full Codex.
+ * Uses data/codex.json for lightweight builder cards and creates
+ * edition-aware links to matching entries in the full Codex.
  */
 
 (() => {
@@ -13,12 +13,17 @@
     tooltip: null,
     activeElement: null,
     hideTimer: null,
+    positionFrame: null,
     observer: null
   };
 
   const edition =
     window.MyRPGConfig?.edition ||
     '2024';
+
+  const gameSystem =
+    window.MyRPGConfig?.settings?.systemId ||
+    'dnd5e';
 
   const abilityMap = {
     str: 'strength',
@@ -86,12 +91,55 @@
     const element =
       document.createElement('div');
 
+    element.id =
+      'knowledge-tooltip';
+
     element.className =
       'knowledge-tooltip';
 
     element.setAttribute(
+      'role',
+      'dialog'
+    );
+
+    element.setAttribute(
+      'aria-label',
+      'Knowledge Card'
+    );
+
+    element.setAttribute(
       'aria-hidden',
       'true'
+    );
+
+    element.addEventListener(
+      'mouseenter',
+      cancelHide
+    );
+
+    element.addEventListener(
+      'mouseleave',
+      () => hideTooltip(180)
+    );
+
+    element.addEventListener(
+      'focusin',
+      cancelHide
+    );
+
+    element.addEventListener(
+      'focusout',
+      (event) => {
+        if (
+          element.contains(
+            event.relatedTarget
+          )
+        ) {
+          return;
+        }
+
+        hideTooltip(120);
+      }
     );
 
     document.body.appendChild(
@@ -99,6 +147,29 @@
     );
 
     return element;
+  }
+
+  function createCodexUrl(entry) {
+    const entryId =
+      [
+        gameSystem,
+        edition,
+        'rule',
+        entry?.id || ''
+      ].join(':');
+
+    const params =
+      new URLSearchParams({
+        game:
+          gameSystem,
+        edition,
+        type:
+          'rule',
+        entry:
+          entryId
+      });
+
+    return `codex.html?${params.toString()}`;
   }
 
   function buildTooltipHtml(entry) {
@@ -111,6 +182,9 @@
       Array.isArray(entry.editions)
         ? entry.editions.join(' / ')
         : '2014 / 2024';
+
+    const codexUrl =
+      createCodexUrl(entry);
 
     return `
       <div class="kt-title">${escapeHtml(entry.title || 'Knowledge')}</div>
@@ -149,79 +223,156 @@
           : ''
       }
 
-      <div class="kt-more">Open the Codex for the full entry.</div>
+      <div class="kt-actions">
+        <a
+          class="kt-codex-link"
+          href="${escapeHtml(codexUrl)}"
+          target="_blank"
+          rel="noopener"
+          aria-label="Open ${escapeHtml(entry.title || 'this topic')} in the full Codex in a new tab"
+        >Codex</a>
+      </div>
     `;
   }
 
-  function positionTooltip(event, target) {
-    if (!state.tooltip) {
+  function cancelHide() {
+    clearTimeout(
+      state.hideTimer
+    );
+
+    state.hideTimer =
+      null;
+  }
+
+  function isTooltipVisible() {
+    return Boolean(
+      state.tooltip?.classList.contains(
+        'visible'
+      )
+    );
+  }
+
+  function positionTooltip(target) {
+    if (
+      !state.tooltip ||
+      !target ||
+      !isTooltipVisible()
+    ) {
       return;
     }
 
-    const padding = 14;
-    const rect =
+    const padding = 12;
+    const gap = 10;
+
+    const tooltipRect =
       state.tooltip.getBoundingClientRect();
 
     const targetRect =
-      target?.getBoundingClientRect?.();
+      target.getBoundingClientRect();
 
-    let x =
-      Number.isFinite(event?.clientX) &&
-      event.clientX > 0
-        ? event.clientX + 18
-        : (targetRect?.right || 20) + 10;
+    let x;
+    let y;
 
-    let y =
-      Number.isFinite(event?.clientY) &&
-      event.clientY > 0
-        ? event.clientY + 18
-        : (targetRect?.top || 20);
+    if (window.innerWidth <= 640) {
+      x = 8;
+      y = targetRect.bottom + gap;
 
-    if (
-      x + rect.width >
-      window.innerWidth - padding
-    ) {
-      x =
-        (
-          Number.isFinite(event?.clientX) &&
-          event.clientX > 0
-            ? event.clientX
-            : targetRect?.left || window.innerWidth
-        ) -
-        rect.width -
-        18;
+      if (
+        y + tooltipRect.height >
+        window.innerHeight - padding
+      ) {
+        y =
+          targetRect.top -
+          tooltipRect.height -
+          gap;
+      }
+    } else {
+      x = targetRect.right + gap;
+      y = targetRect.top;
+
+      if (
+        x + tooltipRect.width >
+        window.innerWidth - padding
+      ) {
+        x =
+          targetRect.left -
+          tooltipRect.width -
+          gap;
+      }
     }
 
-    if (
-      y + rect.height >
-      window.innerHeight - padding
-    ) {
-      y =
-        Math.max(
-          padding,
-          window.innerHeight -
-          rect.height -
-          padding
-        );
-    }
+    const maximumX =
+      Math.max(
+        padding,
+        window.innerWidth -
+        tooltipRect.width -
+        padding
+      );
+
+    const maximumY =
+      Math.max(
+        padding,
+        window.innerHeight -
+        tooltipRect.height -
+        padding
+      );
 
     state.tooltip.style.left =
-      `${Math.max(padding, x)}px`;
+      `${Math.min(Math.max(padding, x), maximumX)}px`;
 
     state.tooltip.style.top =
-      `${Math.max(padding, y)}px`;
+      `${Math.min(Math.max(padding, y), maximumY)}px`;
   }
 
-  function showTooltip(entry, event, target) {
+  function schedulePosition() {
     if (
-      !state.tooltip ||
-      !entry
+      !state.activeElement ||
+      !isTooltipVisible() ||
+      state.positionFrame !== null
     ) {
       return;
     }
 
-    clearTimeout(
-      state.hideTimer
+    state.positionFrame =
+      window.requestAnimationFrame(
+        () => {
+          state.positionFrame =
+            null;
+
+          positionTooltip(
+            state.activeElement
+          );
+        }
+      );
+  }
+
+  function showTooltip(entry, target) {
+    if (
+      !state.tooltip ||
+      !entry ||
+      !target
+    ) {
+      return;
+    }
+
+    cancelHide();
+
+    if (
+      state.activeElement &&
+      state.activeElement !== target
+    ) {
+      state.activeElement.setAttribute(
+        'aria-expanded',
+        'false'
+      );
+    }
+
+    state.activeElement =
+      target;
+
+    target.setAttribute(
+      'aria-expanded',
+      'true'
     );
 
     state.tooltip.innerHTML =
@@ -236,35 +387,64 @@
       'false'
     );
 
-    positionTooltip(
-      event,
-      target
+    positionTooltip(target);
+  }
+
+  function shouldRemainVisible() {
+    const focusedElement =
+      document.activeElement;
+
+    return Boolean(
+      state.tooltip?.matches(':hover') ||
+      state.activeElement?.matches(':hover') ||
+      state.tooltip?.contains(focusedElement) ||
+      state.activeElement === focusedElement ||
+      state.activeElement?.contains(focusedElement)
     );
   }
 
-  function hideTooltip(delay = 80) {
-    clearTimeout(
-      state.hideTimer
+  function closeTooltip() {
+    cancelHide();
+
+    if (!state.tooltip) {
+      return;
+    }
+
+    state.tooltip.classList.remove(
+      'visible'
     );
+
+    state.tooltip.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+
+    if (state.activeElement) {
+      state.activeElement.setAttribute(
+        'aria-expanded',
+        'false'
+      );
+    }
+
+    state.activeElement =
+      null;
+  }
+
+  function hideTooltip(
+    delay = 160
+  ) {
+    cancelHide();
 
     state.hideTimer =
       setTimeout(
         () => {
-          if (!state.tooltip) {
+          if (
+            shouldRemainVisible()
+          ) {
             return;
           }
 
-          state.tooltip.classList.remove(
-            'visible'
-          );
-
-          state.tooltip.setAttribute(
-            'aria-hidden',
-            'true'
-          );
-
-          state.activeElement =
-            null;
+          closeTooltip();
         },
         delay
       );
@@ -295,6 +475,21 @@
       'tooltip-trigger'
     );
 
+    element.setAttribute(
+      'aria-haspopup',
+      'dialog'
+    );
+
+    element.setAttribute(
+      'aria-controls',
+      'knowledge-tooltip'
+    );
+
+    element.setAttribute(
+      'aria-expanded',
+      'false'
+    );
+
     if (
       !isNaturallyFocusable(element)
     ) {
@@ -318,57 +513,34 @@
 
     element.addEventListener(
       'mouseenter',
-      (event) => {
+      () => {
         const entry =
           getEntry(
             element.dataset.knowledgeId
           );
 
-        state.activeElement =
-          element;
-
         showTooltip(
           entry,
-          event,
           element
         );
       }
     );
 
     element.addEventListener(
-      'mousemove',
-      (event) => {
-        if (
-          state.activeElement ===
-          element
-        ) {
-          positionTooltip(
-            event,
-            element
-          );
-        }
-      }
-    );
-
-    element.addEventListener(
       'mouseleave',
-      () => hideTooltip(80)
+      () => hideTooltip(180)
     );
 
     element.addEventListener(
       'focusin',
-      (event) => {
+      () => {
         const entry =
           getEntry(
             element.dataset.knowledgeId
           );
 
-        state.activeElement =
-          element;
-
         showTooltip(
           entry,
-          event,
           element
         );
       }
@@ -376,7 +548,18 @@
 
     element.addEventListener(
       'focusout',
-      () => hideTooltip(0)
+      (event) => {
+        if (
+          state.tooltip?.contains(
+            event.relatedTarget
+          )
+        ) {
+          cancelHide();
+          return;
+        }
+
+        hideTooltip(120);
+      }
     );
   }
 
@@ -811,13 +994,45 @@
 
       document.addEventListener(
         'scroll',
-        () => hideTooltip(0),
-        true
+        schedulePosition,
+        {
+          capture:
+            true,
+          passive:
+            true
+        }
       );
 
       window.addEventListener(
         'resize',
-        () => hideTooltip(0)
+        schedulePosition,
+        {
+          passive:
+            true
+        }
+      );
+
+      document.addEventListener(
+        'keydown',
+        (event) => {
+          if (
+            event.key !== 'Escape' ||
+            !isTooltipVisible()
+          ) {
+            return;
+          }
+
+          const trigger =
+            state.activeElement;
+
+          closeTooltip();
+
+          if (
+            trigger instanceof HTMLElement
+          ) {
+            trigger.focus();
+          }
+        }
       );
 
       document.dispatchEvent(

@@ -382,47 +382,6 @@
     }
   }
 
-  function addAbilityButtons() {
-    const abilityMap = {
-      str: 'strength',
-      dex: 'dexterity',
-      con: 'constitution',
-      int: 'intelligence',
-      wis: 'wisdom',
-      cha: 'charisma',
-    };
-
-    document.querySelectorAll('.stats-grid .stat-row').forEach((row) => {
-      const scoreInput = row.querySelector('.stat-val');
-      const statGroup = row.querySelector('.stat-group');
-      const entryId = abilityMap[scoreInput?.id];
-
-      if (!entryId || !statGroup || statGroup.querySelector('.codex-info-btn')) {
-        return;
-      }
-
-      const entry = state.byId.get(entryId);
-
-      if (!entry) {
-        return;
-      }
-
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'codex-info-btn';
-      button.textContent = 'Codex';
-      button.title = `Open ${entry.title} in the Codex`;
-      button.setAttribute('aria-label', `Open ${entry.title} in the Codex`);
-      button.addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        openCodex(entryId);
-      });
-
-      statGroup.append(button);
-    });
-  }
-
   async function init() {
     try {
       createDrawer();
@@ -430,9 +389,6 @@
       renderCategoryOptions();
       renderList();
       addGlobalLauncher();
-      addAbilityButtons();
-
-      document.addEventListener('knowledge:ready', addAbilityButtons);
 
       document.dispatchEvent(new CustomEvent('codex:ready', {
         detail: {
