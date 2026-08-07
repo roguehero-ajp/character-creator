@@ -70,6 +70,9 @@ The project is still pre-1.0. Until formal release versioning is standardized, r
 
 ### Changed
 
+- Rebuilt the homepage around the new illustrated fantasy artboard with responsive, accessible overlay links.
+- Moved the live nine-second Featured Knowledge Card rotation into the artwork’s reserved panel, including direct Codex links and guarded Previous, Pause, and Next controls.
+- Changed the artwork navigation label from Home to News, linked the portal Get Started area to the edition selector, and preserved the full footer navigation below the page.
 - Anchored Knowledge Cards beside their triggers instead of moving them with the mouse cursor.
 - Made Knowledge Cards remain open while hovered or focused and added an edition-aware **Codex** link to each card.
 - Removed the redundant per-ability Codex buttons from the character sheet.

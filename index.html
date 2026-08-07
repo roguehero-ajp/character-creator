@@ -1,1445 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My RPG Source</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My RPG Source | Create. Learn. Play.</title>
   <meta
     name="description"
-    content="My RPG Source helps tabletop RPG players create characters while learning the game through helpful Knowledge Cards and a Codex."
-  />
+    content="Build D&D 5e 2014 and 2024 characters, learn the rules through Knowledge Cards, and explore an edition-aware Rules Codex."
+  >
+  <link rel="canonical" href="https://www.myrpgsource.com/">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
     rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap"
   >
 
-  <style>
-    :root {
-      --bg: #18232f;
-      --panel: rgba(244, 236, 216, 0.06);
-      --panel-strong: rgba(244, 236, 216, 0.1);
-      --text: #f5f0e6;
-      --muted: rgba(245, 240, 230, 0.78);
-      --accent: #f1c40f;
-      --accent-2: #dda15e;
-      --border: rgba(245, 240, 230, 0.16);
-      --shadow: rgba(0, 0, 0, 0.35);
-      --link: #ffffff;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      min-height: 100%;
-      margin: 0;
-    }
-
-    body {
-      font-family: "Lora", serif;
-      color: var(--text);
-
-      background-color: #06111d;
-      background-image:
-        radial-gradient(
-          circle at top,
-          rgba(241, 196, 15, 0.08),
-          transparent 24%
-        ),
-        linear-gradient(
-          180deg,
-          rgba(8, 18, 32, 0.34) 0%,
-          rgba(6, 12, 22, 0.72) 100%
-        ),
-        url("images/site-background-stars.png");
-      background-position: top center, center, center;
-      background-repeat: no-repeat, no-repeat, no-repeat;
-      background-size: auto, auto, cover;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .wrap {
-      width: min(
-        1180px,
-        calc(100% - 32px)
-      );
-
-      margin: 0 auto;
-      padding: 28px 0 40px;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      gap: 16px;
-
-      padding: 8px 0 18px;
-    }
-
-    .brand {
-      display: flex;
-      flex-direction: column;
-
-      gap: 4px;
-    }
-
-    .brand h1 {
-      margin: 0;
-
-      color: var(--text);
-
-      font-family: "Cinzel", serif;
-      font-size: clamp(
-        2rem,
-        4vw,
-        3.4rem
-      );
-
-      letter-spacing: 0.06em;
-
-      text-shadow:
-        0 2px 12px
-        rgba(0, 0, 0, 0.45);
-    }
-
-    .brand .tagline {
-      margin: 0;
-
-      color: var(--accent);
-
-      font-size: 1rem;
-
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-
-      gap: 8px;
-
-      padding: 9px 14px;
-
-      background:
-        rgba(255, 255, 255, 0.04);
-
-      border:
-        1px solid var(--border);
-
-      border-radius: 999px;
-
-      color: var(--muted);
-
-      font-size: 0.92rem;
-
-      backdrop-filter:
-        blur(10px);
-    }
-
-    .hero {
-      display: grid;
-
-      grid-template-columns:
-        1.2fr 0.8fr;
-
-      gap: 18px;
-
-      align-items: stretch;
-
-      margin-top: 18px;
-    }
-
-    .card {
-      background:
-        var(--panel);
-
-      border:
-        1px solid var(--border);
-
-      border-radius: 24px;
-
-      box-shadow:
-        0 18px 40px
-        var(--shadow);
-
-      backdrop-filter:
-        blur(10px);
-    }
-
-    .hero-main {
-      min-height: 460px;
-      padding: 28px;
-
-      position: relative;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-
-      overflow: hidden;
-    }
-
-    .hero-main::after {
-      content: "";
-
-      width: 360px;
-      height: 360px;
-
-      position: absolute;
-
-      inset:
-        auto -18% -40% auto;
-
-      border-radius: 50%;
-
-      background:
-        radial-gradient(
-          circle,
-          rgba(241, 196, 15, 0.13),
-          transparent 65%
-        );
-
-      pointer-events: none;
-    }
-
-    .eyebrow {
-      margin: 0 0 10px;
-
-      color: var(--accent-2);
-
-      font-family: "Cinzel", serif;
-      font-size: 0.82rem;
-
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .hero h2 {
-      max-width: 12ch;
-
-      margin: 0 0 14px;
-
-      font-family: "Cinzel", serif;
-      font-size: clamp(
-        2rem,
-        4vw,
-        3.2rem
-      );
-
-      line-height: 1.03;
-    }
-
-    .hero p {
-      max-width: 62ch;
-
-      margin: 0;
-
-      color: var(--muted);
-
-      font-size: 1.05rem;
-      line-height: 1.65;
-    }
-
-    .cta-row {
-      margin-top: 24px;
-
-      position: relative;
-      z-index: 1;
-
-      display: flex;
-      flex-wrap: wrap;
-
-      gap: 12px;
-    }
-
-    .btn {
-      min-height: 48px;
-
-      padding: 0 18px;
-
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      gap: 10px;
-
-      border:
-        1px solid transparent;
-
-      border-radius: 14px;
-
-      font-family: "Cinzel", serif;
-      font-weight: 700;
-
-      letter-spacing: 0.04em;
-
-      cursor: pointer;
-      user-select: none;
-
-      transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease,
-        background 0.15s ease;
-    }
-
-    .btn:hover {
-      transform:
-        translateY(-1px);
-    }
-
-    .btn:active {
-      transform:
-        translateY(0);
-    }
-
-    .btn-primary {
-      background:
-        linear-gradient(
-          180deg,
-          #f1c40f,
-          #d4a90d
-        );
-
-      color: #1a1a1a;
-
-      box-shadow:
-        0 10px 26px
-        rgba(241, 196, 15, 0.24);
-    }
-
-    .btn-secondary {
-      background:
-        rgba(255, 255, 255, 0.04);
-
-      border-color:
-        var(--border);
-
-      color:
-        var(--text);
-    }
-
-    .btn-new-player {
-      background:
-        linear-gradient(
-          180deg,
-          rgba(39, 174, 96, 0.25),
-          rgba(39, 174, 96, 0.13)
-        );
-
-      border-color:
-        rgba(78, 214, 132, 0.48);
-
-      color:
-        var(--text);
-    }
-
-    .btn-new-player:hover,
-    .btn-new-player:focus-visible {
-      background:
-        linear-gradient(
-          180deg,
-          rgba(39, 174, 96, 0.36),
-          rgba(39, 174, 96, 0.2)
-        );
-
-      box-shadow:
-        0 10px 26px
-        rgba(39, 174, 96, 0.16);
-    }
-
-    .mini-grid {
-      margin-top: 24px;
-
-      position: relative;
-      z-index: 1;
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(
-          2,
-          minmax(0, 1fr)
-        );
-
-      gap: 12px;
-    }
-
-    .mini {
-      padding: 14px 14px 12px;
-
-      background:
-        var(--panel-strong);
-
-      border:
-        1px solid var(--border);
-
-      border-radius: 18px;
-    }
-
-    .mini .kicker {
-      margin: 0 0 6px;
-
-      color:
-        var(--accent-2);
-
-      font-family:
-        "Cinzel", serif;
-
-      font-size: 0.74rem;
-
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .mini strong {
-      display: block;
-
-      margin-bottom: 6px;
-
-      font-size: 1rem;
-    }
-
-    .mini p {
-      margin: 0;
-
-      color:
-        var(--muted);
-
-      font-size: 0.92rem;
-      line-height: 1.5;
-    }
-
-    .side {
-      display: grid;
-
-      gap: 18px;
-    }
-
-    .side .card {
-      padding: 20px;
-    }
-
-    .section-title {
-      margin: 0 0 12px;
-
-      color:
-        var(--accent);
-
-      font-family:
-        "Cinzel", serif;
-
-      font-size: 1.05rem;
-
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .game-list {
-      display: grid;
-
-      gap: 10px;
-    }
-
-    .game {
-      padding: 12px 14px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      gap: 12px;
-
-      background:
-        rgba(255, 255, 255, 0.03);
-
-      border:
-        1px solid var(--border);
-
-      border-radius: 14px;
-    }
-
-    .game-primary {
-      background:
-        linear-gradient(
-          180deg,
-          rgba(39, 174, 96, 0.26),
-          rgba(39, 174, 96, 0.14)
-        );
-
-      border-color:
-        rgba(39, 174, 96, 0.45);
-    }
-
-    .game-primary:hover {
-      background:
-        linear-gradient(
-          180deg,
-          rgba(39, 174, 96, 0.36),
-          rgba(39, 174, 96, 0.20)
-        );
-    }
-
-    .game-primary .status-open {
-      color: #9ff8b7;
-    }
-
-    .game span:first-child {
-      font-weight: 700;
-    }
-
-    .game small {
-      color: var(--muted);
-    }
-
-    .status-open {
-      color: #7cfc98;
-
-      font-weight: 700;
-    }
-
-    .status-soon {
-      color: #ffd27a;
-
-      font-weight: 700;
-    }
-
-    .feature-card {
-      display: grid;
-
-      gap: 12px;
-    }
-
-    .codex-sample {
-      padding: 14px;
-
-      background:
-        rgba(255, 255, 255, 0.03);
-
-      border:
-        1px solid var(--border);
-
-      border-radius: 18px;
-    }
-
-    .codex-sample .title {
-      margin: 0 0 8px;
-
-      color:
-        var(--accent);
-
-      font-family:
-        "Cinzel", serif;
-
-      font-size: 1.1rem;
-    }
-
-    .codex-sample .body {
-      margin: 0;
-
-      color:
-        var(--muted);
-
-      line-height: 1.55;
-    }
-
-
-    .codex-sample {
-      transform-style: preserve-3d;
-      transform-origin: center;
-      backface-visibility: hidden;
-      will-change: transform, opacity;
-    }
-
-    .codex-sample.is-flipping-out {
-      animation: knowledge-card-flip-out 0.24s ease-in forwards;
-      pointer-events: none;
-    }
-
-    .codex-sample.is-flipping-in {
-      animation: knowledge-card-flip-in 0.28s ease-out forwards;
-      pointer-events: none;
-    }
-
-    .knowledge-card-meta {
-      margin: 0 0 7px;
-
-      color: var(--accent-2);
-
-      font-size: 0.78rem;
-      font-weight: 700;
-
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .knowledge-card-controls {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-
-      gap: 8px;
-    }
-
-    .knowledge-card-controls-group {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-
-      gap: 8px;
-    }
-
-    .knowledge-card-control {
-      min-height: 36px;
-      padding: 7px 11px;
-
-      border: 1px solid var(--border);
-      border-radius: 10px;
-
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text);
-
-      font: inherit;
-      font-size: 0.82rem;
-      font-weight: 700;
-
-      cursor: pointer;
-    }
-
-    .knowledge-card-control:hover,
-    .knowledge-card-control:focus-visible {
-      border-color: rgba(241, 196, 15, 0.55);
-      background: rgba(241, 196, 15, 0.10);
-    }
-
-    .knowledge-card-control:focus-visible {
-      outline: 3px solid rgba(241, 196, 15, 0.34);
-      outline-offset: 2px;
-    }
-
-    @keyframes knowledge-card-flip-out {
-      from {
-        opacity: 1;
-        transform: perspective(900px) rotateY(0deg) scale(1);
-      }
-
-      to {
-        opacity: 0.55;
-        transform: perspective(900px) rotateY(90deg) scale(0.98);
-      }
-    }
-
-    @keyframes knowledge-card-flip-in {
-      from {
-        opacity: 0.55;
-        transform: perspective(900px) rotateY(-90deg) scale(0.98);
-      }
-
-      to {
-        opacity: 1;
-        transform: perspective(900px) rotateY(0deg) scale(1);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .codex-sample.is-flipping-out,
-      .codex-sample.is-flipping-in {
-        animation: none;
-      }
-    }
-
-    .roadmap {
-      display: grid;
-
-      gap: 8px;
-    }
-
-    .road {
-      padding: 10px 12px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      gap: 10px;
-
-      background:
-        rgba(255, 255, 255, 0.03);
-
-      border:
-        1px solid var(--border);
-
-      border-radius: 12px;
-
-      font-size: 0.95rem;
-    }
-
-    .road strong {
-      font-weight: 700;
-    }
-
-    .foot {
-      margin-top: 18px;
-      padding-top: 14px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-
-      gap: 12px 20px;
-
-      border-top:
-        1px solid var(--border);
-
-      color:
-        var(--muted);
-
-      font-size: 0.9rem;
-    }
-
-    .foot-copy,
-    .foot-links {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-
-      gap: 8px 16px;
-    }
-
-    .foot-copy span + span::before {
-      margin-right: 16px;
-
-      content: "•";
-      opacity: 0.55;
-    }
-
-    .foot-links {
-      justify-content: flex-end;
-    }
-
-    .foot-links a {
-      color: var(--muted);
-      text-decoration: none;
-    }
-
-    .foot-links a:hover,
-    .foot-links a:focus-visible {
-      color: var(--text);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    @media (max-width: 960px) {
-      .hero {
-        grid-template-columns:
-          1fr;
-      }
-
-      .hero-main {
-        min-height: auto;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .wrap {
-        width:
-          min(
-            100% - 20px,
-            1180px
-          );
-
-        padding-top: 18px;
-      }
-
-      .topbar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .mini-grid {
-        grid-template-columns:
-          1fr;
-      }
-
-      .game {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .foot {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .foot-copy,
-      .foot-links {
-        align-items: flex-start;
-        justify-content: flex-start;
-      }
-
-      .foot-copy span + span::before {
-        display: none;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/homepage.css">
+  <script defer src="js/codex-data.js"></script>
+  <script defer src="js/homepage.js"></script>
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <h1>My RPG Source</h1>
-        <p class="tagline">
-          Create. Learn. Play.
-        </p>
-      </div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-      <div class="pill">
-        Free character tools, Knowledge Cards, and an edition-aware Rules Codex
-      </div>
-    </div>
+  <main id="main-content">
+    <section class="desktop-home" aria-labelledby="desktop-home-title">
+      <h1 class="sr-only" id="desktop-home-title">My RPG Source</h1>
+      <p class="sr-only">
+        Create, customize, and grow tabletop roleplaying characters while learning the game.
+      </p>
 
-    <div class="hero">
-      <section class="card hero-main">
+      <div class="artboard" aria-label="My RPG Source homepage">
+        <img
+          class="artboard-image"
+          src="images/my-rpt-source-homepage.png"
+          alt=""
+          width="1122"
+          height="1402"
+        >
+
+        <nav class="artboard-links" aria-label="Primary navigation">
+          <a class="hotspot hotspot-news" href="#news"><span>News</span></a>
+          <a class="hotspot hotspot-builders" href="#builders"><span>Builders</span></a>
+          <a class="hotspot hotspot-rules" href="codex.html"><span>Rules and resources</span></a>
+          <a class="hotspot hotspot-faq" href="faq.html"><span>FAQ</span></a>
+          <a class="hotspot hotspot-store" href="#future-services"><span>Store</span></a>
+          <a class="hotspot hotspot-login" href="#future-services"><span>Login</span></a>
+        </nav>
+
+        <section
+          class="featured-card artboard-featured-card"
+          data-featured-card
+          aria-label="Featured Knowledge Card"
+        >
+          <article class="featured-card-inner" data-card-sample aria-live="polite">
+            <p class="featured-card-meta" data-card-meta>Rules Codex</p>
+            <h2 class="featured-card-title" data-card-title>Loading a Knowledge Card…</h2>
+            <p class="featured-card-summary" data-card-summary>
+              The Codex is opening its library.
+            </p>
+            <a class="featured-card-link" data-card-link href="codex.html">Learn more…</a>
+          </article>
+
+          <div class="featured-card-controls" aria-label="Featured Knowledge Card controls">
+            <button type="button" data-card-previous>Previous</button>
+            <button type="button" data-card-pause aria-pressed="false">Pause</button>
+            <button type="button" data-card-next>Next</button>
+          </div>
+        </section>
+
+        <a class="hotspot hotspot-knowledge" href="#builders">
+          <span>Open a builder with Knowledge Cards</span>
+        </a>
+        <a class="hotspot hotspot-codex" href="codex.html">
+          <span>Browse the Rules Codex</span>
+        </a>
+        <a class="hotspot hotspot-printable" href="#builders">
+          <span>Create printable character sheets</span>
+        </a>
+        <a class="hotspot hotspot-start" href="#builders">
+          <span>Get started</span>
+        </a>
+
+        <nav class="artboard-footer-links" aria-label="Homepage artwork footer navigation">
+          <a class="hotspot hotspot-about" href="about.html"><span>About</span></a>
+          <a class="hotspot hotspot-contact" href="contact.html"><span>Contact</span></a>
+          <a class="hotspot hotspot-privacy" href="privacy.html"><span>Privacy</span></a>
+          <a class="hotspot hotspot-legal" href="legal.html"><span>Legal</span></a>
+        </nav>
+      </div>
+    </section>
+
+    <section class="mobile-home" aria-labelledby="mobile-home-title">
+      <header class="mobile-header">
+        <p class="mobile-ornament" aria-hidden="true">✦ · ✧ · ✦</p>
+        <h1 id="mobile-home-title">My RPG Source</h1>
+        <p class="mobile-tagline">Create. Learn. Play.</p>
+        <p>Everything you need to play, all in one place.</p>
+
+        <nav class="mobile-nav" aria-label="Primary navigation">
+          <a href="#news">News</a>
+          <a href="#builders">Builders</a>
+          <a href="codex.html">Rules &amp; Resources</a>
+          <a href="faq.html">FAQ</a>
+          <a href="#future-services">Store</a>
+          <a href="#future-services">Login</a>
+        </nav>
+      </header>
+
+      <section class="mobile-hero">
         <div>
-          <p class="eyebrow">
-            Tabletop character building, but friendlier
-          </p>
-
-          <h2>
-            Build characters while learning the game.
-          </h2>
-
+          <p class="mobile-eyebrow">Create. Learn. Play.</p>
+          <h2>Build a character while learning the game.</h2>
           <p>
-            My RPG Source helps players create tabletop characters
-            with clear explanations, printable sheets, and a growing
-            Codex of useful rules knowledge.
+            Create, customize, and grow your characters with tools and knowledge designed
+            for every adventure.
           </p>
-
-          <div class="cta-row">
-            <a
-              class="btn btn-primary"
-              href="builder.html?edition=2024"
-            >
-              Enter 2024 Character Builder
-            </a>
-
-            <a
-              class="btn btn-secondary"
-              href="#games"
-            >
-              Choose a Game
-            </a>
-
-            <a
-              class="btn btn-secondary"
-              href="codex.html"
-            >
-              Browse the Rules Codex
-            </a>
-
-            <a
-              class="btn btn-new-player"
-              href="faq.html"
-            >
-              I'm New and Don't Know Where to Start
-            </a>
-          </div>
         </div>
 
-        <div class="mini-grid">
-          <div class="mini">
-            <p class="kicker">
-              Knowledge Cards
+        <section class="featured-card mobile-featured-card" data-featured-card>
+          <p class="mobile-eyebrow">Featured Knowledge Card</p>
+          <article class="featured-card-inner" data-card-sample aria-live="polite">
+            <p class="featured-card-meta" data-card-meta>Rules Codex</p>
+            <h2 class="featured-card-title" data-card-title>Loading a Knowledge Card…</h2>
+            <p class="featured-card-summary" data-card-summary>
+              The Codex is opening its library.
             </p>
+            <a class="featured-card-link" data-card-link href="codex.html">Learn more…</a>
+          </article>
 
-            <strong>
-              Learn as you build
-            </strong>
-
-            <p>
-              Hover over abilities, skills, and rules for fast
-              explanations that actually make sense.
-            </p>
+          <div class="featured-card-controls" aria-label="Featured Knowledge Card controls">
+            <button type="button" data-card-previous>Previous</button>
+            <button type="button" data-card-pause aria-pressed="false">Pause</button>
+            <button type="button" data-card-next>Next</button>
           </div>
-
-          <div class="mini">
-            <p class="kicker">
-              The Codex
-            </p>
-
-            <strong>
-              Expand when you need more
-            </strong>
-
-            <p>
-              Open a full reading panel for deeper rules help,
-              related topics, and future game systems.
-            </p>
-          </div>
-
-          <div class="mini">
-            <p class="kicker">
-              Printing
-            </p>
-
-            <strong>
-              Table-friendly output
-            </strong>
-
-            <p>
-              Print blank sheets, export PDFs, or keep your
-              characters saved in the browser.
-            </p>
-          </div>
-
-          <div class="mini">
-            <p class="kicker">
-              Made to grow
-            </p>
-
-            <strong>
-              More systems later
-            </strong>
-
-            <p>
-              D&amp;D 5e 2014 and 2024 are now available,
-              with more game systems planned as the engine grows.
-            </p>
-          </div>
-        </div>
+        </section>
       </section>
 
-      <aside class="side">
-        <section
-          class="card"
-          id="games"
-        >
-          <h3 class="section-title">
-            Character Builders
-          </h3>
+      <section class="mobile-feature-grid" aria-label="Site features">
+        <a href="#builders">
+          <strong>Knowledge Cards</strong>
+          <span>Quick lessons and rules in bite-sized chunks.</span>
+        </a>
+        <a href="codex.html">
+          <strong>Rules Codex</strong>
+          <span>Browse rules, spells, items, conditions, classes, and more.</span>
+        </a>
+        <a href="#builders">
+          <strong>Printable Sheets</strong>
+          <span>Create ready-to-use character sheets and reference tools.</span>
+        </a>
+      </section>
 
-          <div class="game-list">
-            <a
-              class="game game-primary"
-              href="builder.html?edition=2024"
-            >
-              <span>
-                Dungeons &amp; Dragons 5e 2024
-              </span>
+      <a class="mobile-portal-cta" href="#builders">
+        <span>Get Started</span>
+        <small>Your adventure begins here.</small>
+      </a>
+    </section>
 
-              <small class="status-open">
-                Available
-              </small>
-            </a>
-
-            <a
-              class="game game-primary"
-              href="builder.html?edition=2014"
-            >
-              <span>
-                Dungeons &amp; Dragons 5e 2014
-              </span>
-
-              <small class="status-open">
-                Available
-              </small>
-            </a>
-
-            <div class="game">
-              <span>
-                Pathfinder
-              </span>
-
-              <small class="status-soon">
-                Coming Soon
-              </small>
-            </div>
-
-            <div class="game">
-              <span>
-                Cyberpunk RED
-              </span>
-
-              <small class="status-soon">
-                Coming Soon
-              </small>
-            </div>
-          </div>
-        </section>
-
-        <section
-          class="card feature-card"
-          id="featured-knowledge-card"
-        >
-          <h3 class="section-title">
-            Featured Knowledge Card
-          </h3>
-
-          <div
-            class="codex-sample"
-            id="knowledge-card-sample"
-            aria-atomic="true"
-          >
-            <p
-              class="knowledge-card-meta"
-              id="knowledge-card-meta"
-            >
-              Skills
-            </p>
-
-            <p
-              class="title"
-              id="knowledge-card-title"
-            >
-              Passive Perception
-            </p>
-
-            <p
-              class="body"
-              id="knowledge-card-body"
-            >
-              Passive Perception is what your character notices
-              without actively searching. It helps determine whether
-              they spot danger, hidden things, or important clues
-              automatically.
-            </p>
-          </div>
-
-          <div class="knowledge-card-controls">
-            <div class="knowledge-card-controls-group">
-              <button
-                class="knowledge-card-control"
-                id="knowledge-card-previous"
-                type="button"
-              >
-                Previous
-              </button>
-
-              <button
-                class="knowledge-card-control"
-                id="knowledge-card-pause"
-                type="button"
-                aria-pressed="false"
-              >
-                Pause
-              </button>
-
-              <button
-                class="knowledge-card-control"
-                id="knowledge-card-next"
-                type="button"
-              >
-                Next
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section class="card">
-          <h3 class="section-title">
-            Roadmap Snapshot
-          </h3>
-
-          <div class="roadmap">
-            <div class="road">
-              <strong>
-                Knowledge Cards
-              </strong>
-
-              <span>
-                Live
-              </span>
-            </div>
-
-            <div class="road">
-              <strong>
-                Codex Drawer
-              </strong>
-
-              <span>
-                Live
-              </span>
-            </div>
-
-            <div class="road">
-              <strong>
-                Autosave / Import / Export
-              </strong>
-
-              <span>
-                Live
-              </span>
-            </div>
-
-            <div class="road">
-              <strong>
-                More systems
-              </strong>
-
-              <span>
-                Later
-              </span>
-            </div>
-          </div>
-        </section>
-      </aside>
-    </div>
-
-    <footer class="foot">
-      <div class="foot-copy">
-        <span>
-          My RPG Source
-        </span>
-
-        <span>
-          Create. Learn. Play.
-        </span>
-
-        <span>
-          Built for tabletop adventurers
-        </span>
+    <section class="home-section" id="news" aria-labelledby="news-title">
+      <div class="section-heading">
+        <p>From the workshop</p>
+        <h2 id="news-title">Latest News</h2>
       </div>
 
-      <nav class="foot-links" aria-label="Footer navigation">
-        <a href="codex.html">Rules Codex</a>
-        <a href="faq.html">New Player FAQ</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="legal.html">Legal &amp; SRD Attribution</a>
-      </nav>
-    </footer>
-  </div>
+      <div class="news-grid">
+        <article>
+          <h3>Class foundations joined the Codex</h3>
+          <p>
+            All twelve SRD classes are now represented separately for both the 2014 and
+            2024 editions, complete with level 1–20 progression tables.
+          </p>
+          <a href="codex.html?type=class">Browse classes</a>
+        </article>
 
+        <article>
+          <h3>Knowledge Cards became interactive</h3>
+          <p>
+            Builder Knowledge Cards now stay anchored, remain open while hovered or focused,
+            and link directly to their full Codex entries.
+          </p>
+          <a href="#builders">Try a builder</a>
+        </article>
 
-  <script src="js/codex-data.js"></script>
-  <script>
-    (() => {
-      "use strict";
+        <article>
+          <h3>The Rules Codex keeps growing</h3>
+          <p>
+            Rules, origins, backgrounds, feats, classes, mundane equipment, spells, and
+            magic items are searchable in one edition-aware library.
+          </p>
+          <a href="codex.html">Open the Codex</a>
+        </article>
+      </div>
+    </section>
 
-      const ROTATION_DELAY_MS = 9000;
+    <section class="home-section builders-section" id="builders" aria-labelledby="builders-title">
+      <div class="section-heading">
+        <p>Choose your rules</p>
+        <h2 id="builders-title">Character Builders</h2>
+      </div>
 
-      const fallbackCards = [
-        {
-          title: "Passive Perception",
-          categoryName: "Skills",
-          summary:
-            "Passive Perception is what your character notices without actively searching. It helps determine whether they spot danger, hidden things, or important clues automatically."
-        },
-        {
-          title: "Ability Modifier",
-          categoryName: "Character Creation",
-          summary:
-            "An ability modifier is the bonus or penalty derived from an ability score. It is added to many checks, saving throws, attacks, and other rolls."
-        },
-        {
-          title: "Armor Class",
-          categoryName: "Combat",
-          summary:
-            "Armor Class represents how difficult a creature is to hit with an attack. An attack normally succeeds when its total equals or exceeds the target's Armor Class."
-        },
-        {
-          title: "Concentration",
-          categoryName: "Spellcasting",
-          summary:
-            "Some spells require concentration to remain active. Taking damage can force a Constitution saving throw, and concentrating on a new spell ends the previous one."
-        },
-        {
-          title: "Advantage and Disadvantage",
-          categoryName: "Combat",
-          summary:
-            "Advantage means rolling two d20s and using the higher result. Disadvantage means rolling two d20s and using the lower result."
-        }
-      ];
+      <div class="builder-grid">
+        <a class="builder-card builder-card-primary" href="builder.html?edition=2024">
+          <span>Current edition</span>
+          <strong>D&amp;D 5e 2024</strong>
+          <small>Build with 2024 species, backgrounds, classes, and rules.</small>
+        </a>
 
-      const feature = document.getElementById("featured-knowledge-card");
-      const sample = document.getElementById("knowledge-card-sample");
-      const meta = document.getElementById("knowledge-card-meta");
-      const title = document.getElementById("knowledge-card-title");
-      const body = document.getElementById("knowledge-card-body");
-      const previousButton = document.getElementById("knowledge-card-previous");
-      const pauseButton = document.getElementById("knowledge-card-pause");
-      const nextButton = document.getElementById("knowledge-card-next");
+        <a class="builder-card" href="builder.html?edition=2014">
+          <span>Classic fifth edition</span>
+          <strong>D&amp;D 5e 2014</strong>
+          <small>Build with 2014 races, backgrounds, classes, and rules.</small>
+        </a>
 
-      if (
-        !feature ||
-        !sample ||
-        !meta ||
-        !title ||
-        !body ||
-        !previousButton ||
-        !pauseButton ||
-        !nextButton
-      ) {
-        return;
-      }
+        <a class="builder-card" href="faq.html">
+          <span>New to tabletop RPGs?</span>
+          <strong>Start with the FAQ</strong>
+          <small>Learn what happens at the table before building your first character.</small>
+        </a>
+      </div>
+    </section>
 
-      const reducedMotionQuery = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      );
+    <section class="home-section future-services" id="future-services" aria-labelledby="future-title">
+      <div>
+        <p class="future-label">On the roadmap</p>
+        <h2 id="future-title">Store and account services are coming later.</h2>
+        <p>
+          My RPG Source currently works without an account. Characters can be saved locally
+          or exported as JSON. Future account, cloud, campaign, and store services will be
+          introduced only when they are ready.
+        </p>
+      </div>
+      <a href="about.html">About the project</a>
+    </section>
+  </main>
 
-      let cards = shuffleCards(fallbackCards);
-      let currentIndex = 0;
-      let rotationTimer = null;
-      let flipTimer = null;
-      let manuallyPaused = reducedMotionQuery.matches;
-      let interactionPaused = false;
-      let isFlipping = false;
-      let pendingIndex = null;
+  <footer class="site-footer">
+    <div>
+      <strong>My RPG Source</strong>
+      <span>Create. Learn. Play.</span>
+    </div>
 
-      function shuffleCards(sourceCards) {
-        const shuffled = [...sourceCards];
-
-        for (let index = shuffled.length - 1; index > 0; index -= 1) {
-          const randomIndex = Math.floor(Math.random() * (index + 1));
-          [shuffled[index], shuffled[randomIndex]] = [
-            shuffled[randomIndex],
-            shuffled[index]
-          ];
-        }
-
-        return shuffled;
-      }
-
-      function normalizeCards(payload) {
-        const entries = Array.isArray(payload?.entries)
-          ? payload.entries
-          : [];
-
-        return entries
-          .filter((entry) => {
-            return (
-              typeof entry?.title === "string" &&
-              entry.title.trim() &&
-              typeof entry?.summary === "string" &&
-              entry.summary.trim()
-            );
-          })
-          .map((entry) => ({
-            title: entry.title.trim(),
-            categoryName: [
-              entry.edition ? `${entry.edition} rules` : "",
-              typeof entry.categoryName === "string"
-                ? entry.categoryName.trim()
-                : "Rules Codex"
-            ]
-              .filter(Boolean)
-              .join(" • "),
-            summary: entry.summary.trim()
-          }));
-      }
-
-      function commitCard(index) {
-        currentIndex = (index + cards.length) % cards.length;
-        const card = cards[currentIndex];
-
-        meta.textContent = card.categoryName;
-        title.textContent = card.title;
-        body.textContent = card.summary;
-      }
-
-      function clearFlipTimer() {
-        if (flipTimer !== null) {
-          window.clearTimeout(flipTimer);
-          flipTimer = null;
-        }
-      }
-
-      function showCard(index, options = {}) {
-        if (!cards.length) {
-          return;
-        }
-
-        const targetIndex = (index + cards.length) % cards.length;
-        const animate = options.animate !== false && !reducedMotionQuery.matches;
-
-        if (!animate) {
-          clearFlipTimer();
-          pendingIndex = null;
-          isFlipping = false;
-          sample.classList.remove("is-flipping-out", "is-flipping-in");
-          commitCard(targetIndex);
-          return;
-        }
-
-        if (isFlipping) {
-          pendingIndex = targetIndex;
-          return;
-        }
-
-        isFlipping = true;
-        sample.classList.remove("is-flipping-in");
-        sample.classList.add("is-flipping-out");
-
-        flipTimer = window.setTimeout(() => {
-          commitCard(targetIndex);
-          sample.classList.remove("is-flipping-out");
-          sample.classList.add("is-flipping-in");
-
-          flipTimer = window.setTimeout(() => {
-            sample.classList.remove("is-flipping-in");
-            flipTimer = null;
-            isFlipping = false;
-
-            if (pendingIndex !== null && pendingIndex !== currentIndex) {
-              const queuedIndex = pendingIndex;
-              pendingIndex = null;
-              showCard(queuedIndex);
-            } else {
-              pendingIndex = null;
-            }
-          }, 280);
-        }, 240);
-      }
-
-      function showNextCard() {
-        showCard(currentIndex + 1);
-      }
-
-      function showPreviousCard() {
-        showCard(currentIndex - 1);
-      }
-
-      function stopRotation() {
-        if (rotationTimer !== null) {
-          window.clearInterval(rotationTimer);
-          rotationTimer = null;
-        }
-      }
-
-      function startRotation() {
-        stopRotation();
-
-        if (
-          manuallyPaused ||
-          interactionPaused ||
-          document.hidden ||
-          cards.length < 2
-        ) {
-          return;
-        }
-
-        rotationTimer = window.setInterval(
-          showNextCard,
-          ROTATION_DELAY_MS
-        );
-      }
-
-      function restartRotation() {
-        startRotation();
-      }
-
-      function updatePauseButton() {
-        pauseButton.textContent = manuallyPaused ? "Play" : "Pause";
-        pauseButton.setAttribute(
-          "aria-pressed",
-          manuallyPaused ? "true" : "false"
-        );
-      }
-
-      previousButton.addEventListener("click", () => {
-        showPreviousCard();
-        restartRotation();
-      });
-
-      nextButton.addEventListener("click", () => {
-        showNextCard();
-        restartRotation();
-      });
-
-      pauseButton.addEventListener("click", () => {
-        manuallyPaused = !manuallyPaused;
-        updatePauseButton();
-        startRotation();
-      });
-
-      feature.addEventListener("mouseenter", () => {
-        interactionPaused = true;
-        stopRotation();
-      });
-
-      feature.addEventListener("mouseleave", () => {
-        interactionPaused = false;
-        startRotation();
-      });
-
-      feature.addEventListener("focusin", () => {
-        interactionPaused = true;
-        stopRotation();
-      });
-
-      feature.addEventListener("focusout", (event) => {
-        if (!feature.contains(event.relatedTarget)) {
-          interactionPaused = false;
-          startRotation();
-        }
-      });
-
-      document.addEventListener("visibilitychange", () => {
-        if (document.hidden) {
-          stopRotation();
-        } else {
-          startRotation();
-        }
-      });
-
-      reducedMotionQuery.addEventListener?.("change", (event) => {
-        if (event.matches) {
-          manuallyPaused = true;
-          updatePauseButton();
-          stopRotation();
-        }
-      });
-
-      updatePauseButton();
-      showCard(Math.floor(Math.random() * cards.length), { animate: false });
-      startRotation();
-
-      window.MyRPGCodexData
-        .loadEntries({
-          gameSystem: "dnd5e",
-          editions: ["2014", "2024"],
-          entryTypes: ["rule"]
-        })
-        .then((payload) => {
-          const loadedCards = normalizeCards(payload);
-
-          if (!loadedCards.length) {
-            return;
-          }
-
-          cards = shuffleCards(loadedCards);
-          currentIndex = 0;
-          showCard(0, { animate: false });
-          startRotation();
-        })
-        .catch((error) => {
-          console.warn(
-            "Featured Knowledge Cards are using their built-in fallback set.",
-            error
-          );
-        });
-    })();
-  </script>
-
+    <nav aria-label="Footer navigation">
+      <a href="codex.html">Rules Codex</a>
+      <a href="faq.html">New Player FAQ</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="legal.html">Legal &amp; SRD Attribution</a>
+    </nav>
+  </footer>
 </body>
 </html>
