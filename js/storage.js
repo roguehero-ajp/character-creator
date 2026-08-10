@@ -675,8 +675,8 @@
 
 
   /**
-   * Wait for asynchronous Race, Species, and Background
-   * dropdown data before restoring saved select values.
+   * Wait for asynchronous Race, Species, Background, and combat
+   * equipment dropdown data before restoring saved select values.
    */
   async function waitForDynamicModules() {
     const promises = [
@@ -684,6 +684,9 @@
         ?.ready,
 
       window.CharacterBackgrounds
+        ?.ready,
+
+      window.CharacterCombatEquipment
         ?.ready
     ].filter(
       (value) =>
@@ -695,6 +698,211 @@
     if (promises.length) {
       await Promise.allSettled(
         promises
+      );
+    }
+  }
+
+
+  const LEGACY_SPELL_ABILITY_FIELD_INDEX = 102;
+  const LEGACY_ATTACK_ROWS = [
+    { name: 89, attack: 90, damage: 91, notes: 92 },
+    { name: 93, attack: 94, damage: 95, notes: 96 },
+    { name: 97, attack: 98, damage: 99, notes: 100 }
+  ];
+  const LEGACY_EXTRA_ATTACKS_FIELD_INDEX = 101;
+
+
+  function savedValueByLegacyIndex(data, index) {
+    return String(
+      data?.fields?.[`field:${index}`]?.value ?? ''
+    ).trim();
+  }
+
+
+  function isPreCombatEquipmentSave(data) {
+    return Boolean(
+      data?.fields &&
+      !data.fields['id:weapon-select-1'] &&
+      !data.fields['id:armor-select']
+    );
+  }
+
+
+  function findLegacyFallback(data, field, index, fields) {
+    if (
+      !isPreCombatEquipmentSave(data) ||
+      field.id ||
+      field.name
+    ) {
+      return null;
+    }
+
+    const spellAbilityIndex = fields.findIndex(
+      (candidate) => candidate.id === 'spell-ability'
+    );
+
+    if (
+      spellAbilityIndex < 0 ||
+      index <= spellAbilityIndex + 2
+    ) {
+      return null;
+    }
+
+    const indexShift =
+      spellAbilityIndex -
+      LEGACY_SPELL_ABILITY_FIELD_INDEX;
+
+    if (indexShift <= 0) {
+      return null;
+    }
+
+    return (
+      data.fields[
+        `field:${index - indexShift}`
+      ] ||
+      null
+    );
+  }
+
+
+  function normalizeEquipmentName(value) {
+    return String(value || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  }
+
+
+  function migrateLegacyAttackFields(data) {
+    if (!isPreCombatEquipmentSave(data)) {
+      return;
+    }
+
+    /*
+     * Older sheets allowed Armor Class to be typed manually and
+     * had no equipment-driven AC toggle. Preserve that value on
+     * first load instead of replacing it with unarmored AC.
+     */
+    const autoAc =
+      document.getElementById(
+        'armor-auto-ac'
+      );
+
+    if (autoAc) {
+      autoAc.checked = false;
+    }
+
+    const migratedNotes = [];
+
+    LEGACY_ATTACK_ROWS.forEach(
+      (row, rowIndex) => {
+        const name =
+          savedValueByLegacyIndex(
+            data,
+            row.name
+          );
+
+        if (!name) {
+          return;
+        }
+
+        const attack =
+          savedValueByLegacyIndex(
+            data,
+            row.attack
+          );
+
+        const damage =
+          savedValueByLegacyIndex(
+            data,
+            row.damage
+          );
+
+        const notes =
+          savedValueByLegacyIndex(
+            data,
+            row.notes
+          );
+
+        const select =
+          document.getElementById(
+            `weapon-select-${rowIndex + 1}`
+          );
+
+        const normalizedName =
+          normalizeEquipmentName(name);
+
+        const matchingOption =
+          Array.from(
+            select?.options || []
+          ).find(
+            (option) =>
+              normalizeEquipmentName(
+                option.textContent
+              ) === normalizedName
+          );
+
+        if (select && matchingOption) {
+          select.value =
+            matchingOption.value;
+
+          notifyFieldChanged(
+            select
+          );
+
+          if (notes) {
+            migratedNotes.push(
+              `${name}: ${notes}`
+            );
+          }
+
+          return;
+        }
+
+        const pieces = [
+          name,
+          attack
+            ? `Atk ${attack}`
+            : '',
+          damage
+            ? `Damage ${damage}`
+            : '',
+          notes
+        ].filter(Boolean);
+
+        migratedNotes.push(
+          pieces.join(' | ')
+        );
+      }
+    );
+
+    const extra =
+      savedValueByLegacyIndex(
+        data,
+        LEGACY_EXTRA_ATTACKS_FIELD_INDEX
+      );
+
+    if (extra) {
+      migratedNotes.push(extra);
+    }
+
+    const notesField =
+      document.getElementById(
+        'attack-action-notes'
+      );
+
+    if (
+      notesField &&
+      !data.fields[
+        'id:attack-action-notes'
+      ] &&
+      migratedNotes.length
+    ) {
+      notesField.value =
+        migratedNotes.join('\n');
+
+      notifyFieldChanged(
+        notesField
       );
     }
   }
@@ -724,7 +932,13 @@
             );
 
           const savedField =
-            data.fields[key];
+            data.fields[key] ||
+            findLegacyFallback(
+              data,
+              field,
+              index,
+              fields
+            );
 
           if (!savedField) {
             return;
@@ -739,6 +953,10 @@
             field
           );
         }
+      );
+
+      migrateLegacyAttackFields(
+        data
       );
 
       document.dispatchEvent(
