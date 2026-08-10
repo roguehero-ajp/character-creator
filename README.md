@@ -1,165 +1,286 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3252YKGQX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-N3252YKGQX');
-  </script>
+# My RPG Source
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RPG News &amp; Guides | My RPG Source</title>
-  <meta
-    name="description"
-    content="Original RPG news, analysis, beginner guides, and My RPG Source updates covering tabletop roleplaying games, RPG video games, and RPG-related film and television."
-  >
-  <link rel="canonical" href="https://www.myrpgsource.com/news.html">
+**Create. Learn. Play.**
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
-  >
+My RPG Source is an independent, browser-based tabletop roleplaying project focused on reducing the friction between someone wanting to play an RPG and actually getting a character to the table.
 
-  <link rel="stylesheet" href="css/site-pages.css">
-  <link rel="stylesheet" href="css/content.css">
-  <script defer src="js/analytics.js"></script>
-</head>
-<body data-page-kind="news">
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+Live site: https://www.myrpgsource.com/
 
-  <div class="site-shell content-shell">
-    <header class="site-header">
-      <a class="site-brand" href="index.html">My RPG Source</a>
+## Mission
 
-      <nav class="site-nav" aria-label="Primary navigation">
-        <a href="index.html">Home</a>
-        <a href="news.html" aria-current="page">News</a>
-        <a href="builder.html?edition=2024">Character Builder</a>
-        <a href="codex.html">Codex</a>
-        <a href="faq.html">FAQ</a>
-        <a href="about.html">About</a>
-      </nav>
-    </header>
+**Break down the barriers that stop people from playing tabletop roleplaying games.**
 
-    <main id="main-content">
-      <header class="page-hero">
-        <p class="eyebrow">The wider RPG world</p>
-        <h1>RPG News &amp; Guides</h1>
-        <p class="lede">
-          Original reporting, useful analysis, and practical guides for people who love
-          roleplaying games in all their forms: tabletop, video games, film, and television.
-        </p>
+The project currently centers on Dungeons & Dragons Fifth Edition character creation and rules learning, with separate support for the 2014 and 2024 rules. The long-term plan is to expand into additional RPG systems only where licensing permits.
 
-        <div class="news-hero-actions">
-          <a class="content-button" href="guides/how-to-create-your-first-dnd-character.html">
-            Read the first guide
-          </a>
-          <a class="content-button content-button-secondary" href="codex.html">
-            Browse the Rules Codex
-          </a>
-        </div>
-      </header>
+## Project Status
 
-      <section class="content-card" aria-labelledby="latest-heading">
-        <p class="article-kicker">Latest</p>
-        <h2 id="latest-heading">Start here</h2>
+My RPG Source is an active **pre-1.0** project. The public site is usable, but several systems are still under active development and should not be treated as feature-complete.
 
-        <div class="article-grid">
-          <article class="article-card">
-            <p class="article-kicker">Beginner guide</p>
-            <h3>How to Create Your First D&amp;D Character</h3>
-            <p>
-              A plain-language roadmap from the first character idea to a ready-to-go sheet,
-              including the important differences between the 2014 and 2024 builders.
-            </p>
-            <p class="article-meta">
-              <span>Published August 7, 2026</span>
-              <span>About 12 minutes</span>
-            </p>
-            <a
-              href="guides/how-to-create-your-first-dnd-character.html"
-              data-analytics-event="guide_card_open"
-              data-analytics-id="first-dnd-character"
-            >Read the guide</a>
-          </article>
+Current priorities are:
 
-          <article class="article-card">
-            <p class="article-kicker">Site update</p>
-            <h3>Class foundations are now in the Rules Codex</h3>
-            <p>
-              All twelve SRD classes are represented separately for the 2014 and 2024
-              editions, with twenty-level progression tables and edition-specific foundations.
-            </p>
-            <a href="codex.html?type=class">Browse the class catalogue</a>
-          </article>
-        </div>
-      </section>
+1. Keep the public site stable and repair repository inconsistencies.
+2. Regression-test the 2014 and 2024 builders after major sheet changes.
+3. Improve spellcasting and spell-management usability.
+4. Continue edition-aware class, subclass, proficiency, and multiclass automation.
+5. Continue accessibility, mobile, print, and editorial review.
 
-      <section class="content-card" aria-labelledby="coverage-heading">
-        <p class="article-kicker">Weekly coverage</p>
-        <h2 id="coverage-heading">What My RPG Source will cover</h2>
+See [`roadmap.md`](roadmap.md) for the detailed working plan and [`Changelog.md`](Changelog.md) for completed work.
 
-        <div class="editorial-grid">
-          <article class="editorial-card">
-            <h3>Tabletop RPGs</h3>
-            <p>
-              New games, editions, releases, crowdfunding, licensing changes, tools,
-              conventions, and developments that affect people at the table.
-            </p>
-          </article>
+## What Works Today
 
-          <article class="editorial-card">
-            <h3>RPG Video Games</h3>
-            <p>
-              Announcements, launches, expansions, major updates, and the design ideas that
-              connect digital RPGs with their tabletop cousins.
-            </p>
-          </article>
+### D&D 5e character builder
 
-          <article class="editorial-card">
-            <h3>Film &amp; Television</h3>
-            <p>
-              Adaptations, fantasy and science-fiction series, actual-play projects, and
-              other screen stories with a meaningful connection to RPG culture.
-            </p>
-          </article>
-        </div>
-      </section>
+The builder supports separate 2014 and 2024 modes selected by URL:
 
-      <section class="content-card editorial-standard" aria-labelledby="standards-heading">
-        <p class="article-kicker">How we publish</p>
-        <h2 id="standards-heading">News should earn the word “news.”</h2>
-        <p>
-          My RPG Source will favour primary announcements and attributable reporting. Articles
-          will distinguish confirmed facts from analysis, clearly label rumours when they are
-          worth discussing at all, and add context instead of merely rewriting a press release.
-        </p>
-        <p>
-          Guides follow a different rhythm: they are evergreen, original explanations designed
-          to help someone understand a game, make a decision, or get to the table with less friction.
-        </p>
-      </section>
-    </main>
+- `builder.html?edition=2014`
+- `builder.html?edition=2024`
 
-    <footer class="site-footer">
-      <nav aria-label="Footer navigation">
-        <a href="index.html">Home</a>
-        <a href="news.html">News &amp; Guides</a>
-        <a href="codex.html">Rules Codex</a>
-        <a href="faq.html">New Player FAQ</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="legal.html">Legal &amp; SRD Attribution</a>
-      </nav>
-      <p>My RPG Source · Create. Learn. Play.</p>
-    </footer>
-  </div>
-</body>
-</html>
+Implemented character-building features include:
+
+- Manual ability-score entry
+- Standard Array
+- 4d6, drop the lowest
+- 3d6 house-rule generation
+- Official 27-point Point Buy
+- Drag, drop, tap, and keyboard score assignment
+- Edition-specific Race data for 2014
+- Edition-specific Species data for 2024
+- Edition-specific backgrounds and class data
+- Automatic ability modifiers and common derived values
+- Hit points, hit dice, saving throws, skills, proficiency bonus, initiative, and Passive Perception
+- Level Up flow for advancing an existing class
+- Fixed, rolled, and manual Level Up hit-point gains
+- Stored level history and Constitution-sensitive HP recalculation
+- Twenty Class Ability slots on page 2
+- Structured feat tracking with edition-aware SRD feat data
+- 2024 Background and Human Origin feat synchronization
+- Detection of class-level feat opportunities
+- Manual / DM Override feat entry for content outside the included SRD data
+- Edition-aware mundane and SRD magic weapon selectors
+- Edition-aware mundane and SRD magic armor/shield selectors
+- Weapon attack and damage calculation helpers
+- Armor Class calculation and optional sheet synchronization
+
+### Saving, export, and printing
+
+The builder currently provides:
+
+- Browser autosave
+- Save Now and Load Saved Character
+- Separate browser-save keys for the 2014 and 2024 editions
+- JSON export and import
+- Edition information in portable JSON backups
+- Warnings when importing a character from another edition
+- Character-based export filenames
+- Character-sheet printing
+- Temporary blank-sheet printing
+- PDF export
+- Multiple visual themes
+
+Free users currently keep their characters in local browser storage or portable JSON backups. Cloud character storage is not part of the current implementation.
+
+### Rules Codex
+
+The standalone Rules Codex is manifest-driven and keeps game systems and editions isolated.
+
+Current D&D 5e collections include:
+
+- Core player rules
+- Races, subraces, Species, and Species choices
+- Backgrounds
+- Feats
+- Class foundations and 20-level progression tables
+- Mundane equipment
+- Spells
+- Magic items
+
+The current repository validates **2,208 versioned Codex entries** through `tools/validate-codex.mjs`.
+
+The builder also uses contextual Knowledge Cards and links into the full Codex.
+
+### Beginner content and site pages
+
+The public site currently includes:
+
+- Portal homepage
+- News & Guides hub
+- Beginner guide: *How to Create Your First D&D Character*
+- New Player FAQ with an example of play
+- About page
+- Contact page
+- Privacy Policy
+- Legal / SRD Attribution page
+- Custom 404 page
+- Search-engine sitemap and robots file
+- Google Analytics integration
+- AdSense support files and consent/privacy preparation
+
+## Repository Structure
+
+```text
+/
+├── assets/                 Static project assets
+├── css/                    Builder, Codex, content, print, and site styles
+├── data/
+│   ├── codex/              Versioned Rules Codex collections
+│   ├── dnd5e/              Edition-specific builder data
+│   ├── codex.json          Contextual Knowledge Card data
+│   └── srd-codex.json      Legacy-adapter spell and magic-item collection
+├── guides/                 Evergreen guides
+├── images/                 Site and builder images
+├── js/                     Builder and site JavaScript modules
+├── news/                   Individual news articles
+├── tools/                  Repository validation tools
+├── builder.html            D&D character builder
+├── codex.html              Standalone Rules Codex
+├── index.html              Portal homepage
+├── news.html               News & Guides hub
+└── ...                     Public information and policy pages
+```
+
+## Important JavaScript Modules
+
+The builder is intentionally modular. Major responsibilities are separated as follows:
+
+- `js/config.js` - edition configuration, terminology, data paths, and save keys
+- `js/app.js` - application coordination
+- `js/ability-scores.js` - ability-score generation and assignment
+- `js/origins.js` - Race / Species loading and choices
+- `js/backgrounds.js` - background loading and application
+- `js/classes.js` - edition-specific class data
+- `js/calculations.js` - derived character values
+- `js/level-up.js` - existing-class Level Up workflow and level history
+- `js/feats.js` - structured feat selection and feat-opportunity tracking
+- `js/combat-equipment.js` - weapon, armor, shield, and combat-equipment helpers
+- `js/storage.js` - local saves, JSON import/export, and restoration logic
+- `js/printing.js` - print and blank-sheet behavior
+- `js/pdf.js` - PDF export
+- `js/tooltips.js` - contextual Knowledge Cards
+- `js/codex-data.js` - shared Codex collection loader
+- `js/codex.js` - in-builder Codex interactions
+- `js/codex-page.js` - standalone Codex page behavior
+- `js/analytics.js` - site analytics events
+
+Avoid duplicating listeners, intervals, observers, or save logic across modules when extending the project.
+
+## Edition-Specific Builder Data
+
+Builder-facing D&D data is separated by edition:
+
+```text
+data/dnd5e/2014/
+├── backgrounds.json
+├── classes.json
+└── races.json
+
+data/dnd5e/2024/
+├── backgrounds.json
+├── classes.json
+└── species.json
+```
+
+`js/config.js` selects the correct directory and terminology for the active edition.
+
+Do not place shared-looking rules into the wrong edition merely because the wording or mechanic appears similar. Edition boundaries are deliberate.
+
+## Codex Data Architecture
+
+The Codex uses this hierarchy:
+
+```text
+data/codex/manifest.json
+└── game system
+    └── edition
+        └── collection
+            └── entries
+```
+
+For D&D 5e, 2014 and 2024 each have their own collections for core rules, origins, backgrounds, feats, classes, and mundane equipment. Spells and magic items currently use `data/srd-codex.json` through the manifest's `legacy-srd` adapter.
+
+More schema detail is documented in [`data/codex/README.md`](data/codex/README.md).
+
+## Validation
+
+Before a Codex deployment, run:
+
+```text
+node tools/validate-codex.mjs
+```
+
+The validator checks schema rules, IDs, edition boundaries, relationships, class progression, and synchronization between class foundations and builder class data.
+
+The site currently has no package-install or build step. GitHub Pages serves the static HTML, CSS, JavaScript, JSON, and image files directly.
+
+Because the application fetches JSON files, local testing should use a local web server rather than opening `builder.html` directly with a `file://` URL.
+
+## Storage Compatibility
+
+Character data is deliberately restored through `js/storage.js` rather than by assuming that every saved character was created by the newest sheet.
+
+When adding new structured fields:
+
+- Preserve older save compatibility whenever practical.
+- Prefer appending new stable storage fields rather than shifting legacy positional fields.
+- Test Save, Load, Export, Import, Level Up, Print, and PDF together.
+- Test both editions independently.
+
+The structured feat state was appended after legacy sheet fields for this reason.
+
+## Development Guardrails
+
+- Preserve working features unless a replacement has been tested.
+- Keep the live site stable during external reviews and major development work.
+- Keep 2014 and 2024 rules isolated.
+- Keep local browser saves and JSON import/export available to free users.
+- Do not place advertisements next to Save, Download, Level Up, Print, or PDF controls.
+- Keep the planned **My First Steps** web onboarding experience free.
+- Use **ready-to-go character** in product copy rather than language implying tournament or rules-lawyer legality.
+- Review licensing before adding another game system or non-SRD rules content.
+- Prefer complete, modular features over partially duplicated logic.
+
+## Known Limitations
+
+The current repository is functional but not finished.
+
+Important known limitations include:
+
+- Add a New Class remains intentionally blocked until multiclass safeguards are complete.
+- Full class-feature and subclass automation is not complete.
+- Reduced multiclass proficiencies and proficiency-source tracking are not complete.
+- Combined multiclass spell-slot calculations are not complete.
+- The current spell sheet and prepared/known spell workflow still need a major usability pass.
+- Feat choices are tracked, but most feat mechanical effects are intentionally not auto-applied yet.
+- Combat-equipment helpers do not replace full class proficiency-source tracking.
+- Long feature text still needs additional print-layout refinement.
+- Accessibility labeling, keyboard navigation, mobile polish, and cross-browser testing remain ongoing work.
+- Accounts, cloud saves, hosted campaigns, and cross-device synchronization are not implemented.
+- Displayed application version numbers are not yet standardized across all files.
+
+## Licensing and Attribution
+
+My RPG Source is an independent project and is not an official Wizards of the Coast product.
+
+Open-game rules content must remain limited to material that can be used under the applicable license and attribution requirements. Public attribution and project legal information are maintained in `legal.html`.
+
+When adding another RPG system, review its current licensing terms before adding rules text, character data, logos, product identity, or monetized tools.
+
+## Product Direction
+
+Longer-term plans include:
+
+- Better spellcasting and spell-management tools
+- Complete class and subclass automation
+- Safe multiclass automation
+- **My First Steps**, a free Level 0 to Level 1 onboarding adventure that produces a ready-to-go character
+- Optional accounts and paid cloud/campaign services
+- Mobile applications
+- Additional tabletop systems where licensing permits
+- Game Master and world-building tools
+
+The roadmap is intentionally a priority guide, not a promise of release dates.
+
+## Project History
+
+My RPG Source began in July 2026 as a much smaller character-sheet project and has been progressively refactored into a modular static web application.
+
+The repository history remains an important recovery tool. When a major file becomes corrupted or overwritten, prefer recovering known-good work from version history over reconstructing it from memory.
