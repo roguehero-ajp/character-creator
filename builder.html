@@ -1000,10 +1000,10 @@ Started: July 2026
             </div>
 
             <!-- Spellcasting Summary -->
-            <div class="attacks-box">
+            <div class="attacks-box spellcasting-summary-box">
               <h3 class="fantasy-header">Spellcasting Stats</h3>
 
-              <div style="display: flex; gap: 6px;">
+              <div class="spellcasting-summary-row">
                 <div class="detail-box" style="flex: 1;">
                   <label for="spell-ability">Spellcasting Ability</label>
                   <select class="fantasy-input" id="spell-ability">
@@ -1038,8 +1038,19 @@ Started: July 2026
               </div>
             </div>
 
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================
+           PAGE 2: BACKGROUND AND TRAITS
+           =================================================== -->
+      <section class="sheet-page" id="page-2">
+        <h2 class="fantasy-header">Character Background &amp; Details</h2>
+
+        <div class="sheet-body full-width-body">
             <!-- Class Abilities and Feats -->
-<div class="abilities-box">
+<div class="abilities-box page2-abilities-box">
   <h3 class="fantasy-header">
     Class Abilities &amp; Feats (20 Slots)
   </h3>
@@ -1168,7 +1179,8 @@ Started: July 2026
 </div>
 
 <!-- Equipment and Currency -->
-<div class="equipment-box">
+<h3 class="fantasy-header page2-equipment-title">Equipment &amp; Currency</h3>
+<div class="equipment-box page2-equipment-box" aria-label="Equipment and Currency">
   <div class="money-column">
     <div class="money-field">
       <label for="currency-cp">CP</label>
@@ -1227,18 +1239,9 @@ Started: July 2026
     placeholder="Equipment inventory list..."
   ></textarea>
 </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- ===================================================
-           PAGE 2: BACKGROUND AND TRAITS
-           =================================================== -->
-      <section class="sheet-page" id="page-2">
-        <h2 class="fantasy-header">Character Background &amp; Details</h2>
-
-        <div class="sheet-body full-width-body">
-          <div class="flair-container">
+          <!-- Visually first; kept after moved fields in the DOM so existing positional saves remain stable. -->
+          <div class="flair-container page2-motto-row">
             <span class="flair-ornament">✦ ✧ ✦</span>
             <input
               type="text"
@@ -1248,61 +1251,60 @@ Started: July 2026
             <span class="flair-ornament">✦ ✧ ✦</span>
           </div>
 
-          <div class="flex-row-sections">
+          <div class="flex-row-sections page2-traits-row">
             <div class="half-width trait-section">
-              <h3 class="fantasy-header">Personality Traits</h3>
+              <h3 class="fantasy-header">Personality Traits &amp; Ideals</h3>
               <textarea
                 class="fantasy-input trait-box"
-                placeholder="Character traits..."
+                data-character-section="personality-ideals"
+                placeholder="Personality traits, ideals, values, beliefs..."
               ></textarea>
             </div>
 
-            <div class="half-width trait-section">
-              <h3 class="fantasy-header">Ideals</h3>
+            <!-- Hidden legacy field preserves old save positions; storage.js folds its value into the combined box on load. -->
+            <div class="half-width trait-section" hidden aria-hidden="true">
               <textarea
                 class="fantasy-input trait-box"
+                data-character-section="legacy-ideals"
                 placeholder="Character ideals..."
               ></textarea>
             </div>
-          </div>
 
-          <div class="flex-row-sections">
             <div class="half-width trait-section">
-              <h3 class="fantasy-header">Bonds</h3>
+              <h3 class="fantasy-header">Bonds &amp; Flaws</h3>
               <textarea
                 class="fantasy-input trait-box"
-                placeholder="Character bonds..."
+                data-character-section="bonds-flaws"
+                placeholder="Bonds, loyalties, flaws, complications..."
               ></textarea>
             </div>
 
-            <div class="half-width trait-section">
-              <h3 class="fantasy-header">Flaws</h3>
+            <!-- Hidden legacy field preserves old save positions; storage.js folds its value into the combined box on load. -->
+            <div class="half-width trait-section" hidden aria-hidden="true">
               <textarea
                 class="fantasy-input trait-box"
+                data-character-section="legacy-flaws"
                 placeholder="Character flaws..."
               ></textarea>
             </div>
           </div>
 
-          <div class="flex-grow-section trait-section" style="height: 180px;">
-            <h3 class="fantasy-header">Backstory &amp; Appearance</h3>
-            <textarea
-              class="fantasy-input trait-box"
-              style="height: 100%;"
-              placeholder="Detailed character backstory, physical description, allies and organizations..."
-            ></textarea>
-          </div>
+          <div class="flex-row-sections page2-story-row">
+            <div class="half-width trait-section">
+              <h3 class="fantasy-header">Backstory &amp; Appearance</h3>
+              <textarea
+                class="fantasy-input trait-box"
+                placeholder="Detailed character backstory, physical description, allies and organizations..."
+              ></textarea>
+            </div>
 
-          <div
-            class="flex-grow-section trait-section"
-            style="flex: 1; display: flex; flex-direction: column;"
-          >
-            <h3 class="fantasy-header">Notes</h3>
-            <textarea
-              class="fantasy-input trait-box"
-              style="flex: 1; height: 100%;"
-              placeholder="Campaign notes, reminders, loot, or miscellaneous details..."
-            ></textarea>
+            <div class="half-width trait-section">
+              <h3 class="fantasy-header">Proficiencies, Languages &amp; Notes</h3>
+              <textarea
+                class="fantasy-input trait-box"
+                placeholder="Proficiencies, languages, campaign notes, reminders, loot, or miscellaneous details..."
+              ></textarea>
+            </div>
           </div>
         </div>
       </section>
