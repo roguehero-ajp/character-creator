@@ -1,0 +1,322 @@
+/* =========================================================
+   MY RPG SOURCE - STRUCTURED FEATS
+   ========================================================= */
+
+.feats-box {
+  border: 1px solid var(--border-color, #7f6a45);
+  border-radius: 6px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.feats-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.feats-header-row .fantasy-header {
+  flex: 1;
+  margin: 0;
+}
+
+.feat-count {
+  white-space: nowrap;
+  font-size: 9px;
+  opacity: 0.75;
+}
+
+.feat-helper {
+  margin: 0 0 6px;
+  font-size: 9px;
+  line-height: 1.35;
+  opacity: 0.78;
+}
+
+.feat-toolbar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.feat-toolbar button,
+.feat-card-actions button,
+.feat-card-actions a {
+  border: 1px solid rgba(99, 75, 38, 0.65);
+  border-radius: 4px;
+  padding: 4px 7px;
+  font: inherit;
+  font-size: 9px;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.feat-toolbar .feat-resolve-pending {
+  font-weight: 700;
+}
+
+.feat-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.feat-empty {
+  margin: 4px 0 0;
+  padding: 7px;
+  border: 1px dashed rgba(99, 75, 38, 0.45);
+  border-radius: 4px;
+  text-align: center;
+  font-size: 9px;
+  opacity: 0.72;
+}
+
+.feat-card {
+  min-width: 0;
+  border: 1px solid rgba(99, 75, 38, 0.45);
+  border-radius: 5px;
+  padding: 5px 6px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.feat-card-warning {
+  border-style: dashed;
+}
+
+.feat-card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.feat-card-heading > div:first-child {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.feat-card-heading strong {
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+
+.feat-card-heading small {
+  font-size: 7.5px;
+  opacity: 0.7;
+}
+
+.feat-card-actions {
+  display: flex;
+  gap: 3px;
+  flex: 0 0 auto;
+}
+
+.feat-card-actions button,
+.feat-card-actions a {
+  padding: 2px 5px;
+  font-size: 7.5px;
+}
+
+.feat-card-summary,
+.feat-conflict {
+  margin: 4px 0 0;
+  font-size: 8px;
+  line-height: 1.3;
+}
+
+.feat-conflict {
+  font-weight: 700;
+}
+
+/* Modal */
+.feat-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  background: rgba(10, 12, 18, 0.72);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.feat-modal-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.feat-modal {
+  position: fixed;
+  z-index: 12001;
+  left: 50%;
+  top: 50%;
+  width: min(620px, calc(100vw - 30px));
+  max-height: calc(100vh - 30px);
+  overflow: auto;
+  transform: translate(-50%, -46%) scale(0.98);
+  opacity: 0;
+  pointer-events: none;
+  border: 1px solid #9b7a42;
+  border-radius: 10px;
+  background: #f3ead3;
+  color: #261f17;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.feat-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.feat-modal-header,
+.feat-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(83, 59, 29, 0.25);
+}
+
+.feat-modal-actions {
+  justify-content: flex-end;
+  border-top: 1px solid rgba(83, 59, 29, 0.25);
+  border-bottom: 0;
+}
+
+.feat-modal-header h2 {
+  margin: 1px 0 0;
+  font-family: "Cinzel", serif;
+  font-size: 18px;
+}
+
+.feat-modal-kicker {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.65;
+}
+
+.feat-modal-close {
+  border: 0;
+  background: transparent;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.feat-modal-body {
+  padding: 12px 14px;
+}
+
+.feat-modal-source {
+  margin: 0 0 10px;
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.feat-select-wrap,
+.feat-custom-fields {
+  display: grid;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.feat-custom-fields textarea {
+  resize: vertical;
+}
+
+.feat-2014-mode {
+  display: grid;
+  gap: 7px;
+}
+
+.feat-mode-option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  align-items: start;
+  padding: 8px;
+  border: 1px solid rgba(83, 59, 29, 0.25);
+  border-radius: 6px;
+}
+
+.feat-mode-option span {
+  display: grid;
+  gap: 2px;
+}
+
+.feat-mode-option small {
+  opacity: 0.72;
+}
+
+.feat-preview {
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 6px;
+  background: rgba(80, 56, 25, 0.08);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.feat-preview:empty {
+  display: none;
+}
+
+.feat-preview p {
+  margin: 4px 0;
+}
+
+.feat-preview ul {
+  margin: 6px 0 0 18px;
+  padding: 0;
+}
+
+.feat-modal-error {
+  min-height: 1.2em;
+  margin: 8px 0 0;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.feat-modal-actions button {
+  border: 1px solid #72572f;
+  border-radius: 5px;
+  padding: 7px 12px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.feat-modal-save {
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .feat-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  .feat-toolbar,
+  .feat-card-actions,
+  .feat-modal,
+  .feat-modal-overlay,
+  .feat-helper {
+    display: none !important;
+  }
+
+  .feat-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .feat-card {
+    break-inside: avoid;
+  }
+}
