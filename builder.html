@@ -879,7 +879,8 @@ Started: July 2026
                 <div id="weapon-special-2" class="equipment-special" hidden></div>
               </div>
 
-              <div class="attack-action-card">
+              <!-- Reserved hidden third attack row keeps existing save-field ordering stable. -->
+              <div class="attack-action-card" hidden>
                 <div class="attack-action-main">
                   <select id="weapon-select-3" class="fantasy-input weapon-select" aria-label="Attack action 3 weapon">
                     <option value="">Loading weapons…</option>
@@ -916,8 +917,10 @@ Started: July 2026
                 <div id="weapon-special-3" class="equipment-special" hidden></div>
               </div>
 
+              <!-- Reserved hidden notes field keeps existing saves backward-compatible. -->
               <textarea
                 id="attack-action-notes"
+                hidden
                 class="fantasy-input attack-notes"
                 placeholder="Additional attack notes or special combat actions…"
               ></textarea>
