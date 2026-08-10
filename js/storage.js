@@ -908,6 +908,79 @@
   }
 
 
+  function mergeLegacyCombinedTextField({
+    primarySelector,
+    legacySelector,
+    legacyLabel
+  }) {
+    const primary =
+      document.querySelector(
+        primarySelector
+      );
+
+    const legacy =
+      document.querySelector(
+        legacySelector
+      );
+
+    if (!primary || !legacy) {
+      return;
+    }
+
+    const legacyText =
+      String(legacy.value || '')
+        .trim();
+
+    if (!legacyText) {
+      return;
+    }
+
+    const primaryText =
+      String(primary.value || '')
+        .trim();
+
+    primary.value =
+      primaryText
+        ? `${primaryText}\n\n${legacyLabel}: ${legacyText}`
+        : `${legacyLabel}: ${legacyText}`;
+
+    /*
+     * Clear the hidden legacy field after folding it into the new
+     * combined box. This prevents the same text from being appended
+     * again the next time the character is loaded.
+     */
+    legacy.value = '';
+
+    notifyFieldChanged(primary);
+    notifyFieldChanged(legacy);
+  }
+
+
+  function mergeLegacyCombinedTraitFields() {
+    mergeLegacyCombinedTextField({
+      primarySelector:
+        '[data-character-section="personality-ideals"]',
+
+      legacySelector:
+        '[data-character-section="legacy-ideals"]',
+
+      legacyLabel:
+        'Ideals'
+    });
+
+    mergeLegacyCombinedTextField({
+      primarySelector:
+        '[data-character-section="bonds-flaws"]',
+
+      legacySelector:
+        '[data-character-section="legacy-flaws"]',
+
+      legacyLabel:
+        'Flaws'
+    });
+  }
+
+
   async function applyState(data) {
     validateSaveData(data);
 
@@ -958,6 +1031,8 @@
       migrateLegacyAttackFields(
         data
       );
+
+      mergeLegacyCombinedTraitFields();
 
       document.dispatchEvent(
         new CustomEvent(
