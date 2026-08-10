@@ -822,6 +822,41 @@ label {
 
 
 /* ==========================================================
+   COMPACT SPELLCASTING SUMMARY
+   ========================================================== */
+
+.spellcasting-summary-box {
+  padding: 4px 5px;
+  gap: 2px;
+}
+
+.spellcasting-summary-row {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.35fr)
+    minmax(0, 0.8fr)
+    minmax(0, 0.9fr);
+  gap: 4px;
+  align-items: end;
+}
+
+.spellcasting-summary-row .detail-box {
+  min-width: 0;
+}
+
+.spellcasting-summary-row label {
+  font-size: 7.5px;
+  line-height: 1.05;
+}
+
+.spellcasting-summary-row .fantasy-input {
+  min-width: 0;
+  padding: 2px 4px;
+  font-size: 9px;
+}
+
+
+/* ==========================================================
    CLASS ABILITIES AND FEATS
    ========================================================== */
 
@@ -1024,6 +1059,78 @@ label {
   flex-direction: column;
 
   min-width: 0;
+}
+
+
+/* ==========================================================
+   PAGE 2 REORGANIZATION
+   ========================================================== */
+
+#page-2 .full-width-body {
+  gap: 6px;
+}
+
+/*
+ * The DOM keeps the old field order for save-file compatibility.
+ * Flex order presents the page in the more useful reading order.
+ */
+.page2-motto-row {
+  order: 1;
+  flex: 0 0 auto;
+}
+
+.page2-traits-row {
+  order: 2;
+  height: 150px;
+  flex: 0 0 150px;
+}
+
+.page2-abilities-box {
+  order: 3;
+  flex: 0 0 auto;
+}
+
+.page2-abilities-box .abilities-grid {
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+  gap: 4px 6px;
+}
+
+.page2-abilities-box .ability-input {
+  padding: 3px 4px;
+  font-size: 9.5px;
+}
+
+.page2-equipment-title {
+  order: 4;
+  margin-bottom: -4px;
+}
+
+.page2-equipment-box {
+  order: 5;
+  min-height: 118px;
+  flex: 0 0 118px;
+}
+
+.page2-equipment-box .inventory-text {
+  height: auto;
+  min-height: 0;
+  flex: 1;
+}
+
+.page2-story-row {
+  order: 6;
+  height: auto;
+  min-height: 250px;
+  flex: 1 1 auto;
+}
+
+.page2-story-row .trait-box {
+  height: 100%;
+}
+
+#page-2 [hidden] {
+  display: none !important;
 }
 
 

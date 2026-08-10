@@ -187,6 +187,30 @@
   display: none !important;
 }
 
+/* Page 1 density pass: keep armor useful without making it a tall block. */
+.armor-defense-box {
+  padding: 4px 5px;
+  gap: 2px;
+}
+
+.armor-defense-box .armor-main-line,
+.armor-defense-box .armor-options-line,
+.armor-defense-box .shield-line {
+  gap: 3px;
+}
+
+.armor-defense-box .equipment-special {
+  max-height: 30px;
+  margin-top: 1px;
+  padding: 2px 4px;
+  font-size: 8px;
+  line-height: 1.2;
+}
+
+.armor-defense-box .auto-ac-toggle {
+  font-size: 8px;
+}
+
 @media (max-width: 900px) {
   .attack-actions-header {
     display: none;
