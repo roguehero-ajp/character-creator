@@ -48,6 +48,7 @@ Started: July 2026
   <link rel="stylesheet" href="css/responsive.css">
   <link rel="stylesheet" href="css/tooltips.css">
   <link rel="stylesheet" href="css/codex.css">
+  <link rel="stylesheet" href="css/combat-equipment.css">
   <link rel="stylesheet" href="css/print.css" media="print">
 
   <!-- PDF Library -->
@@ -69,6 +70,7 @@ Started: July 2026
   <script defer src="js/classes.js"></script>
   <script defer src="js/ui.js"></script>
   <script defer src="js/level-up.js"></script>
+  <script defer src="js/combat-equipment.js"></script>
   <script defer src="js/storage.js"></script>
   <script defer src="js/printing.js"></script>
   <script defer src="js/pdf.js"></script>
@@ -211,6 +213,7 @@ Started: July 2026
               <label>Armor Class</label>
               <input
                 type="text"
+                data-role="armor-class"
                 class="fantasy-input center-text big-text"
                 value="10"
               >
@@ -789,44 +792,208 @@ Started: July 2026
           </div>
 
           <!-- Right Column Body -->
-          <div class="right-column">
+          <div class="right-column" id="combat-equipment-root">
 
-            <!-- Attacks and Spellcasting -->
-            <div class="attacks-box">
-              <h3 class="fantasy-header">Attacks &amp; Spellcasting</h3>
+            <!-- Attack Actions -->
+            <div class="combat-equipment-box">
+              <h3 class="fantasy-header">Attack Actions</h3>
 
-              <div class="header-row">
-                <span>Name</span>
+              <div class="attack-actions-header" aria-hidden="true">
+                <span>Weapon</span>
                 <span>Atk Bonus</span>
                 <span>Damage/Type</span>
-                <span>Notes</span>
+                <span>Properties</span>
               </div>
 
-              <div class="attack-row">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
+              <div class="attack-action-card">
+                <div class="attack-action-main">
+                  <select id="weapon-select-1" class="fantasy-input weapon-select" aria-label="Attack action 1 weapon">
+                    <option value="">Loading weapons…</option>
+                  </select>
+                  <input id="weapon-attack-1" type="text" class="fantasy-input" readonly aria-label="Attack action 1 attack bonus">
+                  <input id="weapon-damage-1" type="text" class="fantasy-input" readonly aria-label="Attack action 1 damage and type">
+                  <input id="weapon-properties-1" type="text" class="fantasy-input" readonly aria-label="Attack action 1 weapon properties">
+                </div>
+                <div class="attack-action-controls">
+                  <div id="weapon-base-wrap-1" class="attack-control base-weapon" hidden>
+                    <label for="weapon-base-select-1">Base Weapon</label>
+                    <select id="weapon-base-select-1" class="fantasy-input"></select>
+                  </div>
+                  <div id="weapon-tier-wrap-1" class="attack-control magic-tier" hidden>
+                    <label for="weapon-tier-1">Magic Bonus</label>
+                    <select id="weapon-tier-1" class="fantasy-input">
+                      <option value="1">+1</option>
+                      <option value="2">+2</option>
+                      <option value="3">+3</option>
+                    </select>
+                  </div>
+                  <div class="attack-control ability">
+                    <label for="weapon-ability-1">Ability</label>
+                    <select id="weapon-ability-1" class="fantasy-input">
+                      <option value="auto">Auto</option>
+                      <option value="str">STR</option>
+                      <option value="dex">DEX</option>
+                    </select>
+                  </div>
+                  <label class="proficiency-toggle" for="weapon-proficient-1">
+                    <input id="weapon-proficient-1" type="checkbox" checked> Proficient
+                  </label>
+                </div>
+                <div id="weapon-special-1" class="equipment-special" hidden></div>
               </div>
 
-              <div class="attack-row">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
+              <div class="attack-action-card">
+                <div class="attack-action-main">
+                  <select id="weapon-select-2" class="fantasy-input weapon-select" aria-label="Attack action 2 weapon">
+                    <option value="">Loading weapons…</option>
+                  </select>
+                  <input id="weapon-attack-2" type="text" class="fantasy-input" readonly aria-label="Attack action 2 attack bonus">
+                  <input id="weapon-damage-2" type="text" class="fantasy-input" readonly aria-label="Attack action 2 damage and type">
+                  <input id="weapon-properties-2" type="text" class="fantasy-input" readonly aria-label="Attack action 2 weapon properties">
+                </div>
+                <div class="attack-action-controls">
+                  <div id="weapon-base-wrap-2" class="attack-control base-weapon" hidden>
+                    <label for="weapon-base-select-2">Base Weapon</label>
+                    <select id="weapon-base-select-2" class="fantasy-input"></select>
+                  </div>
+                  <div id="weapon-tier-wrap-2" class="attack-control magic-tier" hidden>
+                    <label for="weapon-tier-2">Magic Bonus</label>
+                    <select id="weapon-tier-2" class="fantasy-input">
+                      <option value="1">+1</option>
+                      <option value="2">+2</option>
+                      <option value="3">+3</option>
+                    </select>
+                  </div>
+                  <div class="attack-control ability">
+                    <label for="weapon-ability-2">Ability</label>
+                    <select id="weapon-ability-2" class="fantasy-input">
+                      <option value="auto">Auto</option>
+                      <option value="str">STR</option>
+                      <option value="dex">DEX</option>
+                    </select>
+                  </div>
+                  <label class="proficiency-toggle" for="weapon-proficient-2">
+                    <input id="weapon-proficient-2" type="checkbox" checked> Proficient
+                  </label>
+                </div>
+                <div id="weapon-special-2" class="equipment-special" hidden></div>
               </div>
 
-              <div class="attack-row">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
-                <input type="text" class="fantasy-input">
+              <div class="attack-action-card">
+                <div class="attack-action-main">
+                  <select id="weapon-select-3" class="fantasy-input weapon-select" aria-label="Attack action 3 weapon">
+                    <option value="">Loading weapons…</option>
+                  </select>
+                  <input id="weapon-attack-3" type="text" class="fantasy-input" readonly aria-label="Attack action 3 attack bonus">
+                  <input id="weapon-damage-3" type="text" class="fantasy-input" readonly aria-label="Attack action 3 damage and type">
+                  <input id="weapon-properties-3" type="text" class="fantasy-input" readonly aria-label="Attack action 3 weapon properties">
+                </div>
+                <div class="attack-action-controls">
+                  <div id="weapon-base-wrap-3" class="attack-control base-weapon" hidden>
+                    <label for="weapon-base-select-3">Base Weapon</label>
+                    <select id="weapon-base-select-3" class="fantasy-input"></select>
+                  </div>
+                  <div id="weapon-tier-wrap-3" class="attack-control magic-tier" hidden>
+                    <label for="weapon-tier-3">Magic Bonus</label>
+                    <select id="weapon-tier-3" class="fantasy-input">
+                      <option value="1">+1</option>
+                      <option value="2">+2</option>
+                      <option value="3">+3</option>
+                    </select>
+                  </div>
+                  <div class="attack-control ability">
+                    <label for="weapon-ability-3">Ability</label>
+                    <select id="weapon-ability-3" class="fantasy-input">
+                      <option value="auto">Auto</option>
+                      <option value="str">STR</option>
+                      <option value="dex">DEX</option>
+                    </select>
+                  </div>
+                  <label class="proficiency-toggle" for="weapon-proficient-3">
+                    <input id="weapon-proficient-3" type="checkbox" checked> Proficient
+                  </label>
+                </div>
+                <div id="weapon-special-3" class="equipment-special" hidden></div>
               </div>
 
               <textarea
-                class="fantasy-input extra-attacks"
-                placeholder="Additional attacks, weapon notes, or spellcasting actions..."
+                id="attack-action-notes"
+                class="fantasy-input attack-notes"
+                placeholder="Additional attack notes or special combat actions…"
               ></textarea>
+            </div>
+
+            <!-- Armor and Defense -->
+            <div class="combat-equipment-box armor-defense-box">
+              <h3 class="fantasy-header">Armor &amp; Defense</h3>
+
+              <div class="armor-main-line">
+                <div class="armor-field">
+                  <label for="armor-select">Worn Armor</label>
+                  <select id="armor-select" class="fantasy-input">
+                    <option value="">Loading armor…</option>
+                  </select>
+                </div>
+                <div class="armor-field">
+                  <label for="armor-ac-display">AC</label>
+                  <input id="armor-ac-display" type="text" class="fantasy-input" readonly value="10">
+                </div>
+                <div class="armor-field">
+                  <label for="armor-dex-display">Dex to AC</label>
+                  <input id="armor-dex-display" type="text" class="fantasy-input" readonly value="Full">
+                </div>
+                <div class="armor-field">
+                  <label for="armor-stealth-display">Stealth</label>
+                  <input id="armor-stealth-display" type="text" class="fantasy-input" readonly value="—">
+                </div>
+                <div class="armor-field">
+                  <label for="armor-strength-display">Strength</label>
+                  <input id="armor-strength-display" type="text" class="fantasy-input" readonly value="—">
+                </div>
+              </div>
+
+              <div class="armor-options-line">
+                <div id="armor-base-wrap" class="armor-field armor-base-field" hidden>
+                  <label for="armor-base-select">Base Armor</label>
+                  <select id="armor-base-select" class="fantasy-input"></select>
+                </div>
+                <div id="armor-tier-wrap" class="armor-field armor-tier-field" hidden>
+                  <label for="armor-tier">Magic Bonus</label>
+                  <select id="armor-tier" class="fantasy-input">
+                    <option value="1">+1</option>
+                    <option value="2">+2</option>
+                    <option value="3">+3</option>
+                  </select>
+                </div>
+                <label class="auto-ac-toggle" for="armor-auto-ac">
+                  <input id="armor-auto-ac" type="checkbox" checked> Sync sheet AC
+                </label>
+              </div>
+
+              <div id="armor-special-text" class="equipment-special" hidden></div>
+
+              <div class="shield-line">
+                <div class="armor-field shield-select-field">
+                  <label for="shield-select">Shield</label>
+                  <select id="shield-select" class="fantasy-input">
+                    <option value="">Loading shields…</option>
+                  </select>
+                </div>
+                <div class="armor-field shield-ac-field">
+                  <label for="shield-ac-display">AC Bonus</label>
+                  <input id="shield-ac-display" type="text" class="fantasy-input" readonly value="+0">
+                </div>
+                <div id="shield-tier-wrap" class="armor-field shield-tier-field" hidden>
+                  <label for="shield-tier">Magic Bonus</label>
+                  <select id="shield-tier" class="fantasy-input">
+                    <option value="1">+1</option>
+                    <option value="2">+2</option>
+                    <option value="3">+3</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="shield-special-text" class="equipment-special" hidden></div>
             </div>
 
             <!-- Spellcasting Summary -->
