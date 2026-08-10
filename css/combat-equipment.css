@@ -1,0 +1,238 @@
+/**
+ * My RPG Source - Combat Equipment UI
+ * Compact weapon / armor selectors for builder page 1.
+ */
+
+.combat-equipment-box {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.attack-actions-header,
+.attack-action-main {
+  display: grid;
+  grid-template-columns: minmax(0, 2.25fr) 0.72fr 1.18fr minmax(0, 1.65fr);
+  gap: 4px;
+  align-items: center;
+  min-width: 0;
+}
+
+.attack-actions-header {
+  color: var(--border-color);
+  font-family: "Cinzel", serif;
+  font-size: 8px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.attack-action-card {
+  padding: 2px 0 3px;
+  border-bottom: 1px dashed rgba(92, 64, 51, 0.25);
+}
+
+.attack-action-card:last-of-type {
+  border-bottom: 0;
+}
+
+.attack-action-main select,
+.attack-action-main input,
+.combat-equipment-box select,
+.combat-equipment-box input {
+  min-width: 0;
+  padding: 2px 4px;
+  font-size: 9px;
+}
+
+.attack-action-main input[readonly],
+.armor-stat-grid input[readonly],
+.shield-line input[readonly] {
+  background: rgba(0, 0, 0, 0.025);
+  text-align: center;
+}
+
+.attack-action-controls {
+  margin-top: 2px;
+  display: flex;
+  align-items: end;
+  gap: 4px;
+  min-width: 0;
+}
+
+.attack-control {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.attack-control.base-weapon {
+  flex: 1.55;
+}
+
+.attack-control.ability {
+  width: 75px;
+  flex: 0 0 75px;
+}
+
+.attack-control.magic-tier {
+  width: 58px;
+  flex: 0 0 58px;
+}
+
+.proficiency-toggle,
+.auto-ac-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 8.5px;
+  font-weight: normal;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.proficiency-toggle input,
+.auto-ac-toggle input {
+  width: 12px;
+  height: 12px;
+  accent-color: var(--accent-color);
+}
+
+.equipment-special {
+  margin-top: 2px;
+  max-height: 42px;
+  padding: 3px 5px;
+  overflow-y: auto;
+  border-left: 2px solid var(--accent-color);
+  background: rgba(0, 0, 0, 0.025);
+  color: var(--text-main);
+  font-size: 8.5px;
+  line-height: 1.25;
+}
+
+.armor-main-line {
+  display: grid;
+  grid-template-columns: minmax(0, 2.3fr) 0.65fr 0.8fr 0.95fr 0.8fr;
+  gap: 4px;
+  align-items: end;
+}
+
+.armor-field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.armor-field label,
+.attack-control label {
+  font-size: 7.5px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.armor-options-line,
+.shield-line {
+  display: flex;
+  align-items: end;
+  gap: 4px;
+  min-width: 0;
+}
+
+.armor-options-line .armor-field,
+.shield-line .armor-field:first-child {
+  flex: 1;
+}
+
+.shield-line .shield-select-field {
+  flex: 1.8;
+}
+
+.shield-ac-field {
+  width: 58px;
+  flex: 0 0 58px;
+}
+
+.armor-tier-field,
+.shield-tier-field {
+  width: 62px;
+  flex: 0 0 62px;
+}
+
+.armor-base-field {
+  flex: 1.7;
+}
+
+.attack-notes {
+  height: 34px;
+  min-height: 34px;
+  resize: none;
+  font-size: 9px;
+}
+
+.combat-equipment-loading-note {
+  font-size: 8px;
+  opacity: 0.72;
+  text-align: center;
+}
+
+#combat-equipment-root [hidden] {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .attack-actions-header {
+    display: none;
+  }
+
+  .attack-action-main,
+  .armor-main-line {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .attack-action-main select {
+    grid-column: 1 / -1;
+  }
+
+  .attack-action-controls,
+  .armor-options-line,
+  .shield-line {
+    flex-wrap: wrap;
+  }
+
+  .attack-control.base-weapon,
+  .armor-base-field,
+  .shield-line .shield-select-field {
+    flex-basis: 100%;
+  }
+}
+
+@media print {
+  .equipment-special {
+    max-height: 34px;
+    overflow: hidden;
+  }
+
+  .proficiency-toggle,
+  .auto-ac-toggle {
+    font-size: 7.5px;
+  }
+
+  .combat-equipment-box select,
+  .combat-equipment-box input,
+  .attack-action-main select,
+  .attack-action-main input {
+    font-size: 8px;
+  }
+}
+
+#combat-equipment-root {
+  min-width: 0;
+}
