@@ -13,6 +13,8 @@
   const EXPORT_BUTTON_ID = 'export-btn';
   const CHARACTER_DOCUMENT_ID = 'character-document';
 
+  let isExporting = false;
+
   function sanitizeFilenamePart(value, fallback) {
   const cleaned = String(value || '')
     .trim()
@@ -81,6 +83,10 @@ function buildPdfFilename() {
   return `${safeName} ${safeRace} ${safeClass} Lvl ${safeLevel}.pdf`;
 }
   async function exportCharacterPdf() {
+    if (isExporting) {
+      return;
+    }
+
     const element =
       document.getElementById(
         CHARACTER_DOCUMENT_ID
@@ -104,6 +110,29 @@ function buildPdfFilename() {
       );
 
       return;
+    }
+
+    const exportButton =
+      document.getElementById(
+        EXPORT_BUTTON_ID
+      );
+
+    const buttonWasDisabled =
+      Boolean(
+        exportButton?.disabled
+      );
+
+    const originalScrollX =
+      window.scrollX;
+
+    const originalScrollY =
+      window.scrollY;
+
+    isExporting = true;
+
+    if (exportButton) {
+      exportButton.disabled =
+        true;
     }
 
     window.scrollTo(0, 0);
@@ -165,6 +194,19 @@ function buildPdfFilename() {
     } finally {
       element.classList.remove(
         'exporting'
+      );
+
+      if (exportButton) {
+        exportButton.disabled =
+          buttonWasDisabled;
+      }
+
+      isExporting =
+        false;
+
+      window.scrollTo(
+        originalScrollX,
+        originalScrollY
       );
     }
   }

@@ -48,6 +48,8 @@
   let autosaveTimer = null;
   let autosaveReady = false;
   let isRestoring = false;
+  let hasUnsavedChanges = false;
+  let autosaveSuspendDepth = 0;
 
   let saveNowBtn = null;
   let loadNowBtn = null;
@@ -1087,6 +1089,8 @@
         JSON.stringify(state)
       );
 
+      hasUnsavedChanges = false;
+
       if (showMessage) {
         setStatus(
           `${getEdition()} character saved in this browser at ${formatTime()}.`,
@@ -1143,6 +1147,8 @@
             'warn'
           );
 
+          scheduleAutosaveIfDirty();
+
           return false;
         }
 
@@ -1156,6 +1162,8 @@
         `No saved ${getEdition()} character was found in this browser.`,
         'warn'
       );
+
+      scheduleAutosaveIfDirty();
 
       return false;
     }
@@ -1174,6 +1182,8 @@
           'warn'
         );
 
+        scheduleAutosaveIfDirty();
+
         return false;
       }
 
@@ -1189,6 +1199,13 @@
           'ok'
         );
       } else {
+        /*
+         * A successful Load intentionally replaces any unsaved
+         * working-sheet edits with the stored character.
+         */
+        hasUnsavedChanges =
+          false;
+
         setStatus(
           `${getEdition()} character loaded.`,
           'ok'
@@ -1207,6 +1224,8 @@
         'error'
       );
 
+      scheduleAutosaveIfDirty();
+
       return false;
     }
   }
@@ -1218,6 +1237,64 @@
     );
 
     autosaveTimer = null;
+  }
+
+
+  function isAutosaveSuspended() {
+    return (
+      autosaveSuspendDepth >
+      0
+    );
+  }
+
+
+  function scheduleAutosaveIfDirty() {
+    if (
+      !hasUnsavedChanges ||
+      isRestoring ||
+      !autosaveReady ||
+      isAutosaveSuspended()
+    ) {
+      return;
+    }
+
+    queueAutosave({
+      markDirty:
+        false
+    });
+  }
+
+
+  function suspendAutosave() {
+    autosaveSuspendDepth +=
+      1;
+
+    /*
+     * A transient UI operation such as blank-sheet printing
+     * must never allow a previously queued timer to capture
+     * temporary field values.
+     */
+    cancelQueuedAutosave();
+
+    return autosaveSuspendDepth;
+  }
+
+
+  function resumeAutosave() {
+    autosaveSuspendDepth =
+      Math.max(
+        0,
+        autosaveSuspendDepth - 1
+      );
+
+    if (
+      autosaveSuspendDepth ===
+      0
+    ) {
+      scheduleAutosaveIfDirty();
+    }
+
+    return autosaveSuspendDepth;
   }
 
 
@@ -1238,6 +1315,13 @@
 
     autosaveReady = true;
 
+    /*
+     * A very fast user can begin typing before the asynchronous
+     * data modules finish. Trusted edits made during startup are
+     * remembered and saved once startup is safe.
+     */
+    scheduleAutosaveIfDirty();
+
     document.dispatchEvent(
       new CustomEvent(
         'character:autosave-ready',
@@ -1252,10 +1336,38 @@
   }
 
 
-  function queueAutosave() {
+  function queueAutosave({
+    markDirty = true,
+    userInitiated = false
+  } = {}) {
+    if (isRestoring) {
+      return;
+    }
+
+    /*
+     * Before startup completes, ignore synthetic initialization
+     * events but remember genuine user input.
+     */
+    if (!autosaveReady) {
+      if (
+        markDirty &&
+        userInitiated
+      ) {
+        hasUnsavedChanges =
+          true;
+      }
+
+      return;
+    }
+
+    if (markDirty) {
+      hasUnsavedChanges =
+        true;
+    }
+
     if (
-      isRestoring ||
-      !autosaveReady
+      !hasUnsavedChanges ||
+      isAutosaveSuspended()
     ) {
       return;
     }
@@ -1268,21 +1380,30 @@
           autosaveTimer = null;
 
           /*
-           * A load/import may have begun after this timer was
-           * queued. Never let a stale autosave race a restore.
+           * A load/import or transient print operation may have
+           * begun after this timer was queued. Never let a stale
+           * autosave race either operation.
            */
-          if (isRestoring) {
+          if (
+            isRestoring ||
+            isAutosaveSuspended()
+          ) {
+            scheduleAutosaveIfDirty();
             return;
           }
 
-          saveLocal({
-            showMessage: false
-          });
+          const saved =
+            saveLocal({
+              showMessage:
+                false
+            });
 
-          setStatus(
-            `${getEdition()} autosaved at ${formatTime()}.`,
-            'ok'
-          );
+          if (saved) {
+            setStatus(
+              `${getEdition()} autosaved at ${formatTime()}.`,
+              'ok'
+            );
+          }
         },
         AUTOSAVE_DELAY_MS
       );
@@ -1441,6 +1562,8 @@
         'warn'
       );
 
+      scheduleAutosaveIfDirty();
+
       return;
     }
 
@@ -1465,6 +1588,8 @@
           'JSON import cancelled.',
           'warn'
         );
+
+        scheduleAutosaveIfDirty();
 
         return;
       }
@@ -1494,6 +1619,8 @@
         'That JSON backup could not be imported.',
         'error'
       );
+
+      scheduleAutosaveIfDirty();
     }
   }
 
@@ -1573,7 +1700,12 @@
             event.target
           )
         ) {
-          queueAutosave();
+          queueAutosave({
+            userInitiated:
+              Boolean(
+                event.isTrusted
+              )
+          });
         }
       },
       true
@@ -1587,16 +1719,56 @@
             event.target
           )
         ) {
-          queueAutosave();
+          queueAutosave({
+            userInitiated:
+              Boolean(
+                event.isTrusted
+              )
+          });
         }
       },
       true
     );
 
+    /*
+     * Adding or removing a multiclass row changes saved character
+     * structure without necessarily changing a form control.
+     * Capture that structural edit explicitly.
+     */
+    [
+      'multiclass-btn',
+      'remove-multiclass-btn'
+    ].forEach(
+      (id) => {
+        document
+          .getElementById(id)
+          ?.addEventListener(
+            'click',
+            (event) => {
+              queueAutosave({
+                userInitiated:
+                  Boolean(
+                    event.isTrusted
+                  )
+              });
+            }
+          );
+      }
+    );
+
     window.addEventListener(
       'beforeunload',
       () => {
-        if (isRestoring) {
+        /*
+         * Never overwrite a good stored character merely because
+         * the player opened a blank builder and left without making
+         * a change. Only flush genuinely dirty working state.
+         */
+        if (
+          isRestoring ||
+          isAutosaveSuspended() ||
+          !hasUnsavedChanges
+        ) {
           return;
         }
 
@@ -1607,6 +1779,9 @@
               captureState()
             )
           );
+
+          hasUnsavedChanges =
+            false;
         } catch (_) {
           /*
            * Never block page exit because
@@ -1774,6 +1949,7 @@
 
           cancelQueuedAutosave();
           autosaveReady = true;
+          scheduleAutosaveIfDirty();
         }
       );
 
@@ -1798,12 +1974,28 @@
         apply:
           applyState,
 
+        suspendAutosave,
+
+        resumeAutosave,
+
         get storageKey() {
           return getStorageKey();
         },
 
         get edition() {
           return getEdition();
+        },
+
+        get autosaveReady() {
+          return autosaveReady;
+        },
+
+        get autosaveSuspended() {
+          return isAutosaveSuspended();
+        },
+
+        get dirty() {
+          return hasUnsavedChanges;
         }
       });
   }

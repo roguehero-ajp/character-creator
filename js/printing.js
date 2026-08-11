@@ -21,6 +21,7 @@
 
   let isPrintingBlank = false;
   let activeRestore = null;
+  let autosaveSuspended = false;
 
   /**
    * Capture the exact current state of one form control.
@@ -268,6 +269,46 @@
   }
 
   /**
+   * Suspend character autosave while the sheet contains temporary
+   * blank print values. Any dirty character state remains dirty and
+   * will be queued again after the original fields are restored.
+   */
+  function suspendCharacterAutosave() {
+    if (
+      autosaveSuspended ||
+      typeof window
+        .CharacterStorage
+        ?.suspendAutosave !==
+        'function'
+    ) {
+      return;
+    }
+
+    window
+      .CharacterStorage
+      .suspendAutosave();
+
+    autosaveSuspended =
+      true;
+  }
+
+
+  function resumeCharacterAutosave() {
+    if (!autosaveSuspended) {
+      return;
+    }
+
+    autosaveSuspended =
+      false;
+
+    window
+      .CharacterStorage
+      ?.resumeAutosave
+      ?.();
+  }
+
+
+  /**
    * Main blank-print workflow.
    */
   async function printBlankCharacterSheet() {
@@ -298,10 +339,38 @@
     isPrintingBlank = true;
 
     /*
-     * Temporarily blank the sheet.
+     * Cancel any already-queued autosave before temporary print
+     * values are introduced.
      */
-    activeRestore =
-      prepareBlankSheet(characterDocument);
+    suspendCharacterAutosave();
+
+    /*
+     * Temporarily blank the sheet.
+     *
+     * If preparation itself ever fails, release the autosave
+     * suspension immediately before propagating the error into
+     * the existing print error handling.
+     */
+    try {
+      activeRestore =
+        prepareBlankSheet(characterDocument);
+    } catch (error) {
+      isPrintingBlank =
+        false;
+
+      resumeCharacterAutosave();
+
+      console.error(
+        'Blank character sheet preparation failed:',
+        error
+      );
+
+      alert(
+        'Something went wrong while preparing the blank character sheet.'
+      );
+
+      return;
+    }
 
     /**
      * Safe restoration function.
@@ -315,6 +384,13 @@
 
       activeRestore = null;
       isPrintingBlank = false;
+
+      /*
+       * Resume autosave only after every original field has been
+       * restored. If the character was dirty before printing,
+       * storage.js will safely queue that real state now.
+       */
+      resumeCharacterAutosave();
     };
 
     /*
