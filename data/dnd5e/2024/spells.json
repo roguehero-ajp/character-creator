@@ -1,0 +1,2619 @@
+{
+  "metadata": {
+    "system": "dnd5e",
+    "edition": "2024",
+    "version": "1.0.0",
+    "scope": "SRD 5.2.1 Wizard spell list",
+    "source": "System Reference Document 5.2.1",
+    "sourceUrl": "https://www.dndbeyond.com/srd",
+    "license": "CC-BY-4.0",
+    "note": "Build 1 contains the complete SRD 5.2.1 Wizard spell list. Additional class memberships will be added as smart class profiles are implemented."
+  },
+  "edition": "2024",
+  "spells": [
+    {
+      "id": "acid-splash",
+      "name": "Acid Splash",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "chill-touch",
+      "name": "Chill Touch",
+      "level": 0,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dancing-lights",
+      "name": "Dancing Lights",
+      "level": 0,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "elementalism",
+      "name": "Elementalism",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "fire-bolt",
+      "name": "Fire Bolt",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "light",
+      "name": "Light",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "mage-hand",
+      "name": "Mage Hand",
+      "level": 0,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "mending",
+      "name": "Mending",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "message",
+      "name": "Message",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "minor-illusion",
+      "name": "Minor Illusion",
+      "level": 0,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "poison-spray",
+      "name": "Poison Spray",
+      "level": 0,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "prestidigitation",
+      "name": "Prestidigitation",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "ray-of-frost",
+      "name": "Ray of Frost",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "shocking-grasp",
+      "name": "Shocking Grasp",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "true-strike",
+      "name": "True Strike",
+      "level": 0,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "alarm",
+      "name": "Alarm",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "burning-hands",
+      "name": "Burning Hands",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "charm-person",
+      "name": "Charm Person",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "chromatic-orb",
+      "name": "Chromatic Orb",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "color-spray",
+      "name": "Color Spray",
+      "level": 1,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "comprehend-languages",
+      "name": "Comprehend Languages",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "detect-magic",
+      "name": "Detect Magic",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "disguise-self",
+      "name": "Disguise Self",
+      "level": 1,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "expeditious-retreat",
+      "name": "Expeditious Retreat",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "false-life",
+      "name": "False Life",
+      "level": 1,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "feather-fall",
+      "name": "Feather Fall",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "find-familiar",
+      "name": "Find Familiar",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "floating-disk",
+      "name": "Floating Disk",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "fog-cloud",
+      "name": "Fog Cloud",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "grease",
+      "name": "Grease",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "hideous-laughter",
+      "name": "Hideous Laughter",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "ice-knife",
+      "name": "Ice Knife",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "identify",
+      "name": "Identify",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "illusory-script",
+      "name": "Illusory Script",
+      "level": 1,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "jump",
+      "name": "Jump",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "longstrider",
+      "name": "Longstrider",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "mage-armor",
+      "name": "Mage Armor",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "magic-missile",
+      "name": "Magic Missile",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "protection-from-evil-and-good",
+      "name": "Protection from Evil and Good",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "ray-of-sickness",
+      "name": "Ray of Sickness",
+      "level": 1,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "shield",
+      "name": "Shield",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "silent-image",
+      "name": "Silent Image",
+      "level": 1,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "sleep",
+      "name": "Sleep",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "thunderwave",
+      "name": "Thunderwave",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "unseen-servant",
+      "name": "Unseen Servant",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "acid-arrow",
+      "name": "Acid Arrow",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "alter-self",
+      "name": "Alter Self",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "arcane-lock",
+      "name": "Arcane Lock",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "arcanist-s-magic-aura",
+      "name": "Arcanist’s Magic Aura",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "augury",
+      "name": "Augury",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "blindness-deafness",
+      "name": "Blindness/Deafness",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "blur",
+      "name": "Blur",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "continual-flame",
+      "name": "Continual Flame",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "darkness",
+      "name": "Darkness",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "darkvision",
+      "name": "Darkvision",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "detect-thoughts",
+      "name": "Detect Thoughts",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dragon-s-breath",
+      "name": "Dragon’s Breath",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "enhance-ability",
+      "name": "Enhance Ability",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "enlarge-reduce",
+      "name": "Enlarge/Reduce",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "flaming-sphere",
+      "name": "Flaming Sphere",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "gentle-repose",
+      "name": "Gentle Repose",
+      "level": 2,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "gust-of-wind",
+      "name": "Gust of Wind",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "hold-person",
+      "name": "Hold Person",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "invisibility",
+      "name": "Invisibility",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "knock",
+      "name": "Knock",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "levitate",
+      "name": "Levitate",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "locate-object",
+      "name": "Locate Object",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "magic-mouth",
+      "name": "Magic Mouth",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "magic-weapon",
+      "name": "Magic Weapon",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "mind-spike",
+      "name": "Mind Spike",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "mirror-image",
+      "name": "Mirror Image",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "misty-step",
+      "name": "Misty Step",
+      "level": 2,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "ray-of-enfeeblement",
+      "name": "Ray of Enfeeblement",
+      "level": 2,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "rope-trick",
+      "name": "Rope Trick",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "scorching-ray",
+      "name": "Scorching Ray",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "see-invisibility",
+      "name": "See Invisibility",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "shatter",
+      "name": "Shatter",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "spider-climb",
+      "name": "Spider Climb",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "suggestion",
+      "name": "Suggestion",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "web",
+      "name": "Web",
+      "level": 2,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "animate-dead",
+      "name": "Animate Dead",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "bestow-curse",
+      "name": "Bestow Curse",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "blink",
+      "name": "Blink",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "clairvoyance",
+      "name": "Clairvoyance",
+      "level": 3,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "counterspell",
+      "name": "Counterspell",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dispel-magic",
+      "name": "Dispel Magic",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "fear",
+      "name": "Fear",
+      "level": 3,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "fireball",
+      "name": "Fireball",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "fly",
+      "name": "Fly",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "gaseous-form",
+      "name": "Gaseous Form",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "glyph-of-warding",
+      "name": "Glyph of Warding",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "haste",
+      "name": "Haste",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "hypnotic-pattern",
+      "name": "Hypnotic Pattern",
+      "level": 3,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "lightning-bolt",
+      "name": "Lightning Bolt",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "magic-circle",
+      "name": "Magic Circle",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "major-image",
+      "name": "Major Image",
+      "level": 3,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "nondetection",
+      "name": "Nondetection",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "phantom-steed",
+      "name": "Phantom Steed",
+      "level": 3,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "protection-from-energy",
+      "name": "Protection from Energy",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "remove-curse",
+      "name": "Remove Curse",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "sending",
+      "name": "Sending",
+      "level": 3,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "sleet-storm",
+      "name": "Sleet Storm",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "slow",
+      "name": "Slow",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "speak-with-dead",
+      "name": "Speak with Dead",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "stinking-cloud",
+      "name": "Stinking Cloud",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "tiny-hut",
+      "name": "Tiny Hut",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "tongues",
+      "name": "Tongues",
+      "level": 3,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "vampiric-touch",
+      "name": "Vampiric Touch",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "water-breathing",
+      "name": "Water Breathing",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "arcane-eye",
+      "name": "Arcane Eye",
+      "level": 4,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "banishment",
+      "name": "Banishment",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "black-tentacles",
+      "name": "Black Tentacles",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "blight",
+      "name": "Blight",
+      "level": 4,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "charm-monster",
+      "name": "Charm Monster",
+      "level": 4,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "confusion",
+      "name": "Confusion",
+      "level": 4,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "conjure-minor-elementals",
+      "name": "Conjure Minor Elementals",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "control-water",
+      "name": "Control Water",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dimension-door",
+      "name": "Dimension Door",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "divination",
+      "name": "Divination",
+      "level": 4,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "fabricate",
+      "name": "Fabricate",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "faithful-hound",
+      "name": "Faithful Hound",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "fire-shield",
+      "name": "Fire Shield",
+      "level": 4,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "greater-invisibility",
+      "name": "Greater Invisibility",
+      "level": 4,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "hallucinatory-terrain",
+      "name": "Hallucinatory Terrain",
+      "level": 4,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "ice-storm",
+      "name": "Ice Storm",
+      "level": 4,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "locate-creature",
+      "name": "Locate Creature",
+      "level": 4,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "phantasmal-killer",
+      "name": "Phantasmal Killer",
+      "level": 4,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "polymorph",
+      "name": "Polymorph",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "private-sanctum",
+      "name": "Private Sanctum",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "resilient-sphere",
+      "name": "Resilient Sphere",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "secret-chest",
+      "name": "Secret Chest",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "stone-shape",
+      "name": "Stone Shape",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "stoneskin",
+      "name": "Stoneskin",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "vitriolic-sphere",
+      "name": "Vitriolic Sphere",
+      "level": 4,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "wall-of-fire",
+      "name": "Wall of Fire",
+      "level": 4,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "animate-objects",
+      "name": "Animate Objects",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "arcane-hand",
+      "name": "Arcane Hand",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "cloudkill",
+      "name": "Cloudkill",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "cone-of-cold",
+      "name": "Cone of Cold",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "conjure-elemental",
+      "name": "Conjure Elemental",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "contact-other-plane",
+      "name": "Contact Other Plane",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "creation",
+      "name": "Creation",
+      "level": 5,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dominate-person",
+      "name": "Dominate Person",
+      "level": 5,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dream",
+      "name": "Dream",
+      "level": 5,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "geas",
+      "name": "Geas",
+      "level": 5,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "hold-monster",
+      "name": "Hold Monster",
+      "level": 5,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "legend-lore",
+      "name": "Legend Lore",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "mislead",
+      "name": "Mislead",
+      "level": 5,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "modify-memory",
+      "name": "Modify Memory",
+      "level": 5,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "passwall",
+      "name": "Passwall",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "planar-binding",
+      "name": "Planar Binding",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "scrying",
+      "name": "Scrying",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "seeming",
+      "name": "Seeming",
+      "level": 5,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "summon-dragon",
+      "name": "Summon Dragon",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "telekinesis",
+      "name": "Telekinesis",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "telepathic-bond",
+      "name": "Telepathic Bond",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "teleportation-circle",
+      "name": "Teleportation Circle",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "wall-of-force",
+      "name": "Wall of Force",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "wall-of-stone",
+      "name": "Wall of Stone",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "chain-lightning",
+      "name": "Chain Lightning",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "circle-of-death",
+      "name": "Circle of Death",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "contingency",
+      "name": "Contingency",
+      "level": 6,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "create-undead",
+      "name": "Create Undead",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "disintegrate",
+      "name": "Disintegrate",
+      "level": 6,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "eyebite",
+      "name": "Eyebite",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "flesh-to-stone",
+      "name": "Flesh to Stone",
+      "level": 6,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "freezing-sphere",
+      "name": "Freezing Sphere",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "globe-of-invulnerability",
+      "name": "Globe of Invulnerability",
+      "level": 6,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "guards-and-wards",
+      "name": "Guards and Wards",
+      "level": 6,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "instant-summons",
+      "name": "Instant Summons",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "irresistible-dance",
+      "name": "Irresistible Dance",
+      "level": 6,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "magic-jar",
+      "name": "Magic Jar",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "mass-suggestion",
+      "name": "Mass Suggestion",
+      "level": 6,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "move-earth",
+      "name": "Move Earth",
+      "level": 6,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "programmed-illusion",
+      "name": "Programmed Illusion",
+      "level": 6,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "sunbeam",
+      "name": "Sunbeam",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "true-seeing",
+      "name": "True Seeing",
+      "level": 6,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "wall-of-ice",
+      "name": "Wall of Ice",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "arcane-sword",
+      "name": "Arcane Sword",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "delayed-blast-fireball",
+      "name": "Delayed Blast Fireball",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "etherealness",
+      "name": "Etherealness",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "finger-of-death",
+      "name": "Finger of Death",
+      "level": 7,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "forcecage",
+      "name": "Forcecage",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "magnificent-mansion",
+      "name": "Magnificent Mansion",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "mirage-arcane",
+      "name": "Mirage Arcane",
+      "level": 7,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "plane-shift",
+      "name": "Plane Shift",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "prismatic-spray",
+      "name": "Prismatic Spray",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "project-image",
+      "name": "Project Image",
+      "level": 7,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "reverse-gravity",
+      "name": "Reverse Gravity",
+      "level": 7,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "sequester",
+      "name": "Sequester",
+      "level": 7,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "simulacrum",
+      "name": "Simulacrum",
+      "level": 7,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "symbol",
+      "name": "Symbol",
+      "level": 7,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "teleport",
+      "name": "Teleport",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "antimagic-field",
+      "name": "Antimagic Field",
+      "level": 8,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "antipathy-sympathy",
+      "name": "Antipathy/Sympathy",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "befuddlement",
+      "name": "Befuddlement",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "clone",
+      "name": "Clone",
+      "level": 8,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "control-weather",
+      "name": "Control Weather",
+      "level": 8,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "demiplane",
+      "name": "Demiplane",
+      "level": 8,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dominate-monster",
+      "name": "Dominate Monster",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "incendiary-cloud",
+      "name": "Incendiary Cloud",
+      "level": 8,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "maze",
+      "name": "Maze",
+      "level": 8,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "mind-blank",
+      "name": "Mind Blank",
+      "level": 8,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "power-word-stun",
+      "name": "Power Word Stun",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "sunburst",
+      "name": "Sunburst",
+      "level": 8,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "astral-projection",
+      "name": "Astral Projection",
+      "level": 9,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "foresight",
+      "name": "Foresight",
+      "level": 9,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "gate",
+      "name": "Gate",
+      "level": 9,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "imprisonment",
+      "name": "Imprisonment",
+      "level": 9,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "meteor-swarm",
+      "name": "Meteor Swarm",
+      "level": 9,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "power-word-kill",
+      "name": "Power Word Kill",
+      "level": 9,
+      "school": "Enchantment",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "prismatic-wall",
+      "name": "Prismatic Wall",
+      "level": 9,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "shapechange",
+      "name": "Shapechange",
+      "level": 9,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "time-stop",
+      "name": "Time Stop",
+      "level": 9,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "true-polymorph",
+      "name": "True Polymorph",
+      "level": 9,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "weird",
+      "name": "Weird",
+      "level": 9,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "wish",
+      "name": "Wish",
+      "level": 9,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    }
+  ]
+}
