@@ -1326,14 +1326,29 @@
       )
       .forEach(
         (label) => {
+          const radio =
+            label.querySelector(
+              'input[name="level-up-hp-method"]'
+            );
+
+          const selected =
+            radio?.value ===
+            state.hpMethod;
+
+          /*
+           * Keep the browser's checked radio state synchronized
+           * with the modal's internal HP method. Previously the
+           * browser could remember "Roll Hit Die" while state had
+           * already reset to "fixed", hiding the Roll button.
+           */
+          if (radio) {
+            radio.checked =
+              selected;
+          }
+
           label.classList.toggle(
             'selected',
-            label
-              .querySelector(
-                'input'
-              )
-              ?.value ===
-            state.hpMethod
+            selected
           );
         }
       );
@@ -1666,9 +1681,11 @@
     state.selectedRowIndex =
       0;
 
-    state.hpMethod =
-      'fixed';
-
+    /*
+     * Preserve the HP method used on the previous level-up during
+     * this browser session. A rolled value itself never carries
+     * forward, so choosing Roll opens with a fresh Roll button.
+     */
     state.rolledValue =
       null;
 

@@ -46,6 +46,7 @@
      ======================================================== */
 
   let autosaveTimer = null;
+  let autosaveReady = false;
   let isRestoring = false;
 
   let saveNowBtn = null;
@@ -1076,6 +1077,8 @@
     showMessage = true
   } = {}) {
     try {
+      cancelQueuedAutosave();
+
       const state =
         captureState();
 
@@ -1109,6 +1112,8 @@
 
 
   async function loadLocal() {
+    cancelQueuedAutosave();
+
     const storageKey =
       getStorageKey();
 
@@ -1207,18 +1212,69 @@
   }
 
 
-  function queueAutosave() {
-    if (isRestoring) {
-      return;
-    }
-
+  function cancelQueuedAutosave() {
     window.clearTimeout(
       autosaveTimer
     );
 
+    autosaveTimer = null;
+  }
+
+
+  async function armAutosaveAfterStartup() {
+    /*
+     * 2024 Feat initialization synchronizes Background/Species
+     * origin feats and emits programmatic input events. If autosave
+     * is armed before that finishes, a freshly opened blank sheet
+     * can overwrite an existing local character before the user
+     * presses Load Saved Character.
+     *
+     * Wait until all dynamic modules have completed their startup
+     * work, discard any startup-generated timer, then permit autosave.
+     */
+    await waitForDynamicModules();
+
+    cancelQueuedAutosave();
+
+    autosaveReady = true;
+
+    document.dispatchEvent(
+      new CustomEvent(
+        'character:autosave-ready',
+        {
+          detail: {
+            edition:
+              getEdition()
+          }
+        }
+      )
+    );
+  }
+
+
+  function queueAutosave() {
+    if (
+      isRestoring ||
+      !autosaveReady
+    ) {
+      return;
+    }
+
+    cancelQueuedAutosave();
+
     autosaveTimer =
       window.setTimeout(
         () => {
+          autosaveTimer = null;
+
+          /*
+           * A load/import may have begun after this timer was
+           * queued. Never let a stale autosave race a restore.
+           */
+          if (isRestoring) {
+            return;
+          }
+
           saveLocal({
             showMessage: false
           });
@@ -1368,6 +1424,8 @@
     if (!file) {
       return;
     }
+
+    cancelQueuedAutosave();
 
     const looksLikeJson =
       file.name
@@ -1700,6 +1758,24 @@
     bindButtons();
     bindAutosave();
     initializeStatus();
+
+    armAutosaveAfterStartup()
+      .catch(
+        (error) => {
+          /*
+           * waitForDynamicModules currently uses Promise.allSettled,
+           * so this is a defensive fallback. Autosave should remain
+           * available even if future startup code changes.
+           */
+          console.warn(
+            'Autosave startup guard could not complete normally:',
+            error
+          );
+
+          cancelQueuedAutosave();
+          autosaveReady = true;
+        }
+      );
 
     window.CharacterStorage =
       Object.freeze({
