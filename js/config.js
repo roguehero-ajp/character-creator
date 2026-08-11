@@ -210,6 +210,13 @@
   }
 
 
+  function getSubclassesDataPath() {
+    return getDataPath(
+      'subclasses.json'
+    );
+  }
+
+
   /**
    * Build a link to either edition.
    */
@@ -374,6 +381,7 @@
    * MyRPGConfig.getBackgroundsDataPath()
    * MyRPGConfig.getClassesDataPath()
    * MyRPGConfig.getSpellsDataPath()
+   * MyRPGConfig.getSubclassesDataPath()
    */
   const publicConfig =
     Object.freeze({
@@ -407,6 +415,8 @@
       getClassesDataPath,
 
       getSpellsDataPath,
+
+      getSubclassesDataPath,
 
       buildBuilderUrl,
 

@@ -267,12 +267,10 @@
 
 
   /**
-   * 2024 dynamic magic pages are class-generated DOM rather than legacy
-   * blank-sheet furniture. A truly blank character has no spellcasting class,
-   * so Print Blank temporarily hides the generated magic pages and the
-   * class-specific Spellcasting Stats summary.
-   *
-   * 2014 is unaffected because its dynamic host is empty.
+   * Dynamic magic pages are class-generated DOM rather than legacy blank-sheet
+   * furniture. A truly blank character has no spellcasting class, so Print Blank
+   * temporarily hides the generated magic pages and the class-specific
+   * Spellcasting Stats summary in both supported editions.
    */
   function blankDynamicSpellcastingDisplay(characterDocument) {
     const host = characterDocument.querySelector('#spellcasting-pages');
@@ -342,7 +340,7 @@
       );
 
     /*
-     * A blank 2024 character has no class-generated magic pages.
+     * A blank character has no class-generated magic pages.
      */
     const restoreSpellcastingDisplay =
       blankDynamicSpellcastingDisplay(

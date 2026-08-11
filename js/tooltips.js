@@ -1,8 +1,9 @@
 /**
  * My RPG Source - Knowledge Cards
  * --------------------------------
- * Uses data/codex.json for lightweight builder cards and creates
- * edition-aware links to matching entries in the full Codex.
+ * Uses lightweight rule cards plus the full edition-specific SRD spell
+ * collection so builder spell selections can open Knowledge Cards and
+ * exact standalone Codex entries.
  */
 
 (() => {
@@ -69,6 +70,11 @@
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, ' ')
       .trim();
+  }
+
+
+  function spellKey(value) {
+    return `spell:${normalize(value)}`;
   }
 
   function escapeHtml(value) {
@@ -150,21 +156,33 @@
   }
 
   function createCodexUrl(entry) {
+    const entryType =
+      entry?.entryType ||
+      entry?.type ||
+      'rule';
+
+    const localId =
+      entry?.localId ||
+      entry?.id ||
+      '';
+
     const entryId =
+      entry?.globalId ||
       [
         gameSystem,
-        edition,
-        'rule',
-        entry?.id || ''
+        entry?.edition || edition,
+        entryType,
+        localId
       ].join(':');
 
     const params =
       new URLSearchParams({
         game:
           gameSystem,
-        edition,
+        edition:
+          entry?.edition || edition,
         type:
-          'rule',
+          entryType,
         entry:
           entryId
       });
@@ -172,7 +190,80 @@
     return `codex.html?${params.toString()}`;
   }
 
+
+  function buildSpellTooltipHtml(entry) {
+    const codexUrl =
+      createCodexUrl(entry);
+
+    const level =
+      Number(entry?.level) || 0;
+
+    const levelLabel =
+      level === 0
+        ? 'Cantrip'
+        : `${level}${level === 1 ? 'st' : level === 2 ? 'nd' : level === 3 ? 'rd' : 'th'} level`;
+
+    const flags = [];
+
+    if (entry?.ritual) {
+      flags.push('Ritual');
+    }
+
+    if (
+      String(entry?.duration || '')
+        .toLowerCase()
+        .startsWith('concentration')
+    ) {
+      flags.push('Concentration');
+    }
+
+    const description =
+      entry?.description ||
+      entry?.summary ||
+      '';
+
+    return `
+      <div class="kt-title">${escapeHtml(entry?.name || entry?.title || 'Spell')}</div>
+
+      <div class="kt-meta">
+        <span class="kt-pill">${escapeHtml(`${levelLabel} ${entry?.school || ''}`.trim())}</span>
+        <span class="kt-pill">${escapeHtml(entry?.edition || edition)}</span>
+        ${flags.map((flag) => `<span class="kt-pill">${escapeHtml(flag)}</span>`).join('')}
+      </div>
+
+      <div class="kt-spell-grid">
+        <div><span>Casting Time</span><strong>${escapeHtml(entry?.castingTime || '—')}</strong></div>
+        <div><span>Range</span><strong>${escapeHtml(entry?.range || '—')}</strong></div>
+        <div><span>Components</span><strong>${escapeHtml(entry?.components || '—')}</strong></div>
+        <div><span>Duration</span><strong>${escapeHtml(entry?.duration || '—')}</strong></div>
+      </div>
+
+      <div class="kt-section">
+        <div class="kt-section-title">Spell</div>
+        <p>${escapeHtml(description)}</p>
+      </div>
+
+      <div class="kt-actions">
+        <a
+          class="kt-codex-link"
+          href="${escapeHtml(codexUrl)}"
+          target="_blank"
+          rel="noopener"
+          aria-label="Open ${escapeHtml(entry?.name || entry?.title || 'this spell')} in the full Codex in a new tab"
+        >Codex</a>
+      </div>
+    `;
+  }
+
+
   function buildTooltipHtml(entry) {
+    if (
+      entry?.entryType === 'spell' ||
+      entry?.type === 'spell'
+    ) {
+      return buildSpellTooltipHtml(entry);
+    }
+
     const affects =
       Array.isArray(entry.whatItAffects)
         ? entry.whatItAffects.slice(0, 4)
@@ -906,6 +997,22 @@
     );
   }
 
+  function markDynamicSpells() {
+    document
+      .querySelectorAll(
+        '[data-spell-knowledge]'
+      )
+      .forEach(
+        (element) =>
+          mark(
+            element,
+            element.dataset
+              .spellKnowledge
+          )
+      );
+  }
+
+
   function markEquipment() {
     mark(
       document.querySelector(
@@ -930,6 +1037,7 @@
     markCharacterCreation();
     markCombat();
     markSpellcasting();
+    markDynamicSpells();
     markEquipment();
   }
 
@@ -966,7 +1074,46 @@
             entry
           )
       );
+
+    /*
+     * Spell cards use the same licensed SRD collection that powers
+     * the standalone Codex. This keeps card text and Codex text from
+     * drifting apart as the spell engine evolves.
+     */
+    if (
+      window.MyRPGCodexData
+        ?.loadEntries
+    ) {
+      const spellData =
+        await window
+          .MyRPGCodexData
+          .loadEntries({
+            gameSystem,
+            editions: [edition],
+            entryTypes: ['spell']
+          });
+
+      (spellData?.entries || [])
+        .forEach(
+          (entry) => {
+            state.entries.set(
+              entry.localId ||
+              entry.id,
+              entry
+            );
+
+            state.entries.set(
+              spellKey(
+                entry.name ||
+                entry.title
+              ),
+              entry
+            );
+          }
+        );
+    }
   }
+
 
   async function init() {
     state.tooltip =
@@ -1058,6 +1205,12 @@
   window.CharacterKnowledge =
     Object.freeze({
       getEntry,
+
+      mark,
+
+      createCodexUrl,
+
+      spellKey,
 
       refresh:
         markAll,
