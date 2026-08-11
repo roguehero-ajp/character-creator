@@ -1,0 +1,417 @@
+{
+  "metadata": {
+    "system": "dnd5e",
+    "edition": "2024",
+    "version": "1.0.0",
+    "scope": "SRD subclass metadata used by the character builder spellcasting engine",
+    "license": "CC-BY-4.0",
+    "note": "The SRD provides one subclass per core class. Magic effects are included only where the SRD subclass changes spell availability or grants spells."
+  },
+  "edition": "2024",
+  "subclasses": [
+    {
+      "id": "path-of-the-berserker",
+      "name": "Path of the Berserker",
+      "classId": "barbarian",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        6,
+        10,
+        14
+      ]
+    },
+    {
+      "id": "college-of-lore",
+      "name": "College of Lore",
+      "classId": "bard",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        6,
+        14
+      ]
+    },
+    {
+      "id": "life-domain",
+      "name": "Life Domain",
+      "classId": "cleric",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        6,
+        17
+      ],
+      "magic": {
+        "alwaysPrepared": [
+          {
+            "classLevel": 3,
+            "spell": "Aid"
+          },
+          {
+            "classLevel": 3,
+            "spell": "Bless"
+          },
+          {
+            "classLevel": 3,
+            "spell": "Cure Wounds"
+          },
+          {
+            "classLevel": 3,
+            "spell": "Lesser Restoration"
+          },
+          {
+            "classLevel": 5,
+            "spell": "Mass Healing Word"
+          },
+          {
+            "classLevel": 5,
+            "spell": "Revivify"
+          },
+          {
+            "classLevel": 7,
+            "spell": "Aura of Life"
+          },
+          {
+            "classLevel": 7,
+            "spell": "Death Ward"
+          },
+          {
+            "classLevel": 9,
+            "spell": "Greater Restoration"
+          },
+          {
+            "classLevel": 9,
+            "spell": "Mass Cure Wounds"
+          }
+        ]
+      }
+    },
+    {
+      "id": "circle-of-the-land",
+      "name": "Circle of the Land",
+      "classId": "druid",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        6,
+        10,
+        14
+      ],
+      "magic": {
+        "choiceGroup": {
+          "id": "land",
+          "label": "Circle Land",
+          "changeTiming": "Choose after each Long Rest",
+          "options": [
+            {
+              "id": "arid",
+              "name": "Arid",
+              "alwaysPrepared": [
+                {
+                  "classLevel": 3,
+                  "spell": "Blur"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Burning Hands"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Fire Bolt"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Fireball"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Blight"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Wall of Stone"
+                }
+              ]
+            },
+            {
+              "id": "polar",
+              "name": "Polar",
+              "alwaysPrepared": [
+                {
+                  "classLevel": 3,
+                  "spell": "Fog Cloud"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Hold Person"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Ray of Frost"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Sleet Storm"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Ice Storm"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Cone of Cold"
+                }
+              ]
+            },
+            {
+              "id": "temperate",
+              "name": "Temperate",
+              "alwaysPrepared": [
+                {
+                  "classLevel": 3,
+                  "spell": "Misty Step"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Shocking Grasp"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Sleep"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Lightning Bolt"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Freedom of Movement"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Tree Stride"
+                }
+              ]
+            },
+            {
+              "id": "tropical",
+              "name": "Tropical",
+              "alwaysPrepared": [
+                {
+                  "classLevel": 3,
+                  "spell": "Acid Splash"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Ray of Sickness"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Web"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Stinking Cloud"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Polymorph"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Insect Plague"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "champion",
+      "name": "Champion",
+      "classId": "fighter",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        7,
+        10,
+        15,
+        18
+      ]
+    },
+    {
+      "id": "warrior-of-the-open-hand",
+      "name": "Warrior of the Open Hand",
+      "classId": "monk",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        6,
+        11,
+        17
+      ]
+    },
+    {
+      "id": "oath-of-devotion",
+      "name": "Oath of Devotion",
+      "classId": "paladin",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        7,
+        15,
+        20
+      ],
+      "magic": {
+        "alwaysPrepared": [
+          {
+            "classLevel": 3,
+            "spell": "Protection from Evil and Good"
+          },
+          {
+            "classLevel": 3,
+            "spell": "Shield of Faith"
+          },
+          {
+            "classLevel": 5,
+            "spell": "Aid"
+          },
+          {
+            "classLevel": 5,
+            "spell": "Zone of Truth"
+          },
+          {
+            "classLevel": 9,
+            "spell": "Beacon of Hope"
+          },
+          {
+            "classLevel": 9,
+            "spell": "Dispel Magic"
+          },
+          {
+            "classLevel": 13,
+            "spell": "Freedom of Movement"
+          },
+          {
+            "classLevel": 13,
+            "spell": "Guardian of Faith"
+          },
+          {
+            "classLevel": 17,
+            "spell": "Commune"
+          },
+          {
+            "classLevel": 17,
+            "spell": "Flame Strike"
+          }
+        ]
+      }
+    },
+    {
+      "id": "hunter",
+      "name": "Hunter",
+      "classId": "ranger",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        7,
+        11,
+        15
+      ]
+    },
+    {
+      "id": "thief",
+      "name": "Thief",
+      "classId": "rogue",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        9,
+        13,
+        17
+      ]
+    },
+    {
+      "id": "draconic-sorcery",
+      "name": "Draconic Sorcery",
+      "classId": "sorcerer",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        6,
+        14,
+        18
+      ]
+    },
+    {
+      "id": "fiend-patron",
+      "name": "Fiend Patron",
+      "classId": "warlock",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        6,
+        10,
+        14
+      ],
+      "magic": {
+        "alwaysPrepared": [
+          {
+            "classLevel": 3,
+            "spell": "Burning Hands"
+          },
+          {
+            "classLevel": 3,
+            "spell": "Command"
+          },
+          {
+            "classLevel": 3,
+            "spell": "Scorching Ray"
+          },
+          {
+            "classLevel": 3,
+            "spell": "Suggestion"
+          },
+          {
+            "classLevel": 5,
+            "spell": "Fireball"
+          },
+          {
+            "classLevel": 5,
+            "spell": "Stinking Cloud"
+          },
+          {
+            "classLevel": 7,
+            "spell": "Fire Shield"
+          },
+          {
+            "classLevel": 7,
+            "spell": "Wall of Fire"
+          },
+          {
+            "classLevel": 9,
+            "spell": "Geas"
+          },
+          {
+            "classLevel": 9,
+            "spell": "Insect Plague"
+          }
+        ]
+      }
+    },
+    {
+      "id": "evoker",
+      "name": "Evoker",
+      "classId": "wizard",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        6,
+        10,
+        14
+      ]
+    }
+  ]
+}

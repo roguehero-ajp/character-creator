@@ -2,7 +2,7 @@
   "metadata": {
     "system": "dnd5e",
     "edition": "2024",
-    "version": "2.0.0",
+    "version": "1.1.0",
     "scope": "SRD 5.2.1 spell lists for all 2024 SRD spellcasting classes",
     "source": "System Reference Document 5.2.1",
     "sourceUrl": "https://www.dndbeyond.com/srd",
@@ -18,7 +18,7 @@
       "wizard": 217
     },
     "uniqueSpellCount": 338,
-    "note": "Class memberships are taken from the SRD 5.2.1 class spell lists. Spell descriptions remain in the Rules Codex; this file contains picker metadata only."
+    "note": "Complete SRD 5.2.1 spell-list union for the eight SRD spellcasting classes. codexId links each picker entry to the licensed full spell text in data/srd-codex.json."
   },
   "edition": "2024",
   "spells": [
@@ -33,7 +33,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-acid-splash"
     },
     {
       "id": "chill-touch",
@@ -47,7 +48,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-chill-touch"
     },
     {
       "id": "dancing-lights",
@@ -61,7 +63,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-dancing-lights"
     },
     {
       "id": "druidcraft",
@@ -73,7 +76,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-druidcraft"
     },
     {
       "id": "eldritch-blast",
@@ -85,7 +89,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-eldritch-blast"
     },
     {
       "id": "elementalism",
@@ -99,7 +104,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-elementalism"
     },
     {
       "id": "fire-bolt",
@@ -112,7 +118,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-fire-bolt"
     },
     {
       "id": "guidance",
@@ -125,7 +132,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-guidance"
     },
     {
       "id": "light",
@@ -140,7 +148,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-light"
     },
     {
       "id": "mage-hand",
@@ -155,7 +164,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-mage-hand"
     },
     {
       "id": "mending",
@@ -171,7 +181,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-mending"
     },
     {
       "id": "message",
@@ -186,7 +197,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-message"
     },
     {
       "id": "minor-illusion",
@@ -201,7 +213,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-minor-illusion"
     },
     {
       "id": "poison-spray",
@@ -216,7 +229,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-poison-spray"
     },
     {
       "id": "prestidigitation",
@@ -231,7 +245,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-prestidigitation"
     },
     {
       "id": "produce-flame",
@@ -243,7 +258,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-produce-flame"
     },
     {
       "id": "ray-of-frost",
@@ -256,7 +272,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-ray-of-frost"
     },
     {
       "id": "resistance",
@@ -269,7 +286,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-resistance"
     },
     {
       "id": "sacred-flame",
@@ -281,7 +299,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-sacred-flame"
     },
     {
       "id": "shillelagh",
@@ -293,7 +312,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-shillelagh"
     },
     {
       "id": "shocking-grasp",
@@ -306,7 +326,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-shocking-grasp"
     },
     {
       "id": "sorcerous-burst",
@@ -318,7 +339,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-sorcerous-burst"
     },
     {
       "id": "spare-the-dying",
@@ -331,7 +353,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-spare-the-dying"
     },
     {
       "id": "starry-wisp",
@@ -344,7 +367,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-starry-wisp"
     },
     {
       "id": "thaumaturgy",
@@ -356,7 +380,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-thaumaturgy"
     },
     {
       "id": "true-strike",
@@ -371,7 +396,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-true-strike"
     },
     {
       "id": "vicious-mockery",
@@ -383,7 +409,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-vicious-mockery"
     },
     {
       "id": "alarm",
@@ -396,7 +423,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-alarm"
     },
     {
       "id": "animal-friendship",
@@ -410,7 +438,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-animal-friendship"
     },
     {
       "id": "bane",
@@ -424,7 +453,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-bane"
     },
     {
       "id": "bless",
@@ -437,7 +467,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-bless"
     },
     {
       "id": "burning-hands",
@@ -450,7 +481,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-burning-hands"
     },
     {
       "id": "charm-person",
@@ -466,7 +498,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-charm-person"
     },
     {
       "id": "chromatic-orb",
@@ -479,7 +512,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-chromatic-orb"
     },
     {
       "id": "color-spray",
@@ -493,7 +527,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-color-spray"
     },
     {
       "id": "command",
@@ -507,7 +542,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-command"
     },
     {
       "id": "comprehend-languages",
@@ -522,7 +558,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-comprehend-languages"
     },
     {
       "id": "create-or-destroy-water",
@@ -535,7 +572,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-create-or-destroy-water"
     },
     {
       "id": "cure-wounds",
@@ -551,7 +589,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-cure-wounds"
     },
     {
       "id": "detect-evil-and-good",
@@ -564,7 +603,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-detect-evil-and-good"
     },
     {
       "id": "detect-magic",
@@ -583,7 +623,8 @@
       ],
       "concentration": true,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-detect-magic"
     },
     {
       "id": "detect-poison-and-disease",
@@ -598,7 +639,8 @@
       ],
       "concentration": true,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-detect-poison-and-disease"
     },
     {
       "id": "disguise-self",
@@ -612,7 +654,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-disguise-self"
     },
     {
       "id": "dissonant-whispers",
@@ -624,7 +667,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-dissonant-whispers"
     },
     {
       "id": "divine-favor",
@@ -636,7 +680,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-divine-favor"
     },
     {
       "id": "divine-smite",
@@ -648,7 +693,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-divine-smite"
     },
     {
       "id": "ensnaring-strike",
@@ -660,7 +706,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-ensnaring-strike"
     },
     {
       "id": "entangle",
@@ -673,7 +720,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-entangle"
     },
     {
       "id": "expeditious-retreat",
@@ -687,7 +735,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-expeditious-retreat"
     },
     {
       "id": "faerie-fire",
@@ -700,7 +749,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-faerie-fire"
     },
     {
       "id": "false-life",
@@ -713,7 +763,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-false-life"
     },
     {
       "id": "feather-fall",
@@ -727,7 +778,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-feather-fall"
     },
     {
       "id": "find-familiar",
@@ -739,7 +791,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-find-familiar"
     },
     {
       "id": "floating-disk",
@@ -751,7 +804,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-floating-disk"
     },
     {
       "id": "fog-cloud",
@@ -766,7 +820,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-fog-cloud"
     },
     {
       "id": "goodberry",
@@ -779,7 +834,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-goodberry"
     },
     {
       "id": "grease",
@@ -792,7 +848,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-grease"
     },
     {
       "id": "guiding-bolt",
@@ -804,7 +861,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-guiding-bolt"
     },
     {
       "id": "healing-word",
@@ -818,7 +876,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-healing-word"
     },
     {
       "id": "hellish-rebuke",
@@ -830,7 +889,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-hellish-rebuke"
     },
     {
       "id": "heroism",
@@ -843,7 +903,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-heroism"
     },
     {
       "id": "hex",
@@ -855,7 +916,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-hex"
     },
     {
       "id": "hideous-laughter",
@@ -869,7 +931,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-hideous-laughter"
     },
     {
       "id": "hunter-s-mark",
@@ -881,7 +944,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-hunters-mark"
     },
     {
       "id": "ice-knife",
@@ -895,7 +959,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-ice-knife"
     },
     {
       "id": "identify",
@@ -908,7 +973,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-identify"
     },
     {
       "id": "illusory-script",
@@ -922,7 +988,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-illusory-script"
     },
     {
       "id": "inflict-wounds",
@@ -934,7 +1001,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-inflict-wounds"
     },
     {
       "id": "jump",
@@ -949,7 +1017,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-jump"
     },
     {
       "id": "longstrider",
@@ -964,7 +1033,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-longstrider"
     },
     {
       "id": "mage-armor",
@@ -977,7 +1047,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-mage-armor"
     },
     {
       "id": "magic-missile",
@@ -990,7 +1061,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-magic-missile"
     },
     {
       "id": "protection-from-evil-and-good",
@@ -1006,7 +1078,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-protection-from-evil-and-good"
     },
     {
       "id": "purify-food-and-drink",
@@ -1020,7 +1093,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-purify-food-and-drink"
     },
     {
       "id": "ray-of-sickness",
@@ -1033,7 +1107,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-ray-of-sickness"
     },
     {
       "id": "sanctuary",
@@ -1045,7 +1120,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-sanctuary"
     },
     {
       "id": "searing-smite",
@@ -1057,7 +1133,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-searing-smite"
     },
     {
       "id": "shield",
@@ -1070,7 +1147,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-shield"
     },
     {
       "id": "shield-of-faith",
@@ -1083,7 +1161,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-shield-of-faith"
     },
     {
       "id": "silent-image",
@@ -1097,7 +1176,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-silent-image"
     },
     {
       "id": "sleep",
@@ -1111,7 +1191,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-sleep"
     },
     {
       "id": "speak-with-animals",
@@ -1126,7 +1207,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-speak-with-animals"
     },
     {
       "id": "thunderwave",
@@ -1141,7 +1223,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-thunderwave"
     },
     {
       "id": "unseen-servant",
@@ -1155,7 +1238,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-unseen-servant"
     },
     {
       "id": "acid-arrow",
@@ -1167,7 +1251,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-acid-arrow"
     },
     {
       "id": "aid",
@@ -1183,7 +1268,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-aid"
     },
     {
       "id": "alter-self",
@@ -1196,7 +1282,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-alter-self"
     },
     {
       "id": "animal-messenger",
@@ -1210,7 +1297,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-animal-messenger"
     },
     {
       "id": "arcane-lock",
@@ -1222,7 +1310,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-arcane-lock"
     },
     {
       "id": "arcanist-s-magic-aura",
@@ -1234,7 +1323,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-arcanists-magic-aura"
     },
     {
       "id": "augury",
@@ -1248,7 +1338,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-augury"
     },
     {
       "id": "barkskin",
@@ -1261,7 +1352,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-barkskin"
     },
     {
       "id": "blindness-deafness",
@@ -1276,7 +1368,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-blindness-deafness"
     },
     {
       "id": "blur",
@@ -1289,7 +1382,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-blur"
     },
     {
       "id": "calm-emotions",
@@ -1302,7 +1396,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-calm-emotions"
     },
     {
       "id": "continual-flame",
@@ -1316,7 +1411,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-continual-flame"
     },
     {
       "id": "darkness",
@@ -1330,7 +1426,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-darkness"
     },
     {
       "id": "darkvision",
@@ -1345,7 +1442,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-darkvision"
     },
     {
       "id": "detect-thoughts",
@@ -1359,7 +1457,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-detect-thoughts"
     },
     {
       "id": "dragon-s-breath",
@@ -1372,7 +1471,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-dragons-breath"
     },
     {
       "id": "enhance-ability",
@@ -1389,7 +1489,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-enhance-ability"
     },
     {
       "id": "enlarge-reduce",
@@ -1404,7 +1505,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-enlarge-reduce"
     },
     {
       "id": "enthrall",
@@ -1417,7 +1519,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-enthrall"
     },
     {
       "id": "find-steed",
@@ -1429,7 +1532,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-find-steed"
     },
     {
       "id": "find-traps",
@@ -1443,7 +1547,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-find-traps"
     },
     {
       "id": "flame-blade",
@@ -1456,7 +1561,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-flame-blade"
     },
     {
       "id": "flaming-sphere",
@@ -1470,7 +1576,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-flaming-sphere"
     },
     {
       "id": "gentle-repose",
@@ -1484,7 +1591,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-gentle-repose"
     },
     {
       "id": "gust-of-wind",
@@ -1499,7 +1607,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-gust-of-wind"
     },
     {
       "id": "heat-metal",
@@ -1512,7 +1621,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-heat-metal"
     },
     {
       "id": "hold-person",
@@ -1529,7 +1639,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-hold-person"
     },
     {
       "id": "invisibility",
@@ -1544,7 +1655,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-invisibility"
     },
     {
       "id": "knock",
@@ -1558,7 +1670,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-knock"
     },
     {
       "id": "lesser-restoration",
@@ -1574,7 +1687,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-lesser-restoration"
     },
     {
       "id": "levitate",
@@ -1587,7 +1701,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-levitate"
     },
     {
       "id": "locate-animals-or-plants",
@@ -1601,7 +1716,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-locate-animals-or-plants"
     },
     {
       "id": "locate-object",
@@ -1618,7 +1734,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-locate-object"
     },
     {
       "id": "magic-mouth",
@@ -1631,7 +1748,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-magic-mouth"
     },
     {
       "id": "magic-weapon",
@@ -1646,7 +1764,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-magic-weapon"
     },
     {
       "id": "mind-spike",
@@ -1659,7 +1778,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-mind-spike"
     },
     {
       "id": "mirror-image",
@@ -1674,7 +1794,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-mirror-image"
     },
     {
       "id": "misty-step",
@@ -1688,7 +1809,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-misty-step"
     },
     {
       "id": "moonbeam",
@@ -1700,7 +1822,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-moonbeam"
     },
     {
       "id": "pass-without-trace",
@@ -1713,7 +1836,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-pass-without-trace"
     },
     {
       "id": "prayer-of-healing",
@@ -1726,7 +1850,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-prayer-of-healing"
     },
     {
       "id": "protection-from-poison",
@@ -1741,7 +1866,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-protection-from-poison"
     },
     {
       "id": "ray-of-enfeeblement",
@@ -1754,7 +1880,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-ray-of-enfeeblement"
     },
     {
       "id": "rope-trick",
@@ -1766,7 +1893,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-rope-trick"
     },
     {
       "id": "scorching-ray",
@@ -1779,7 +1907,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-scorching-ray"
     },
     {
       "id": "see-invisibility",
@@ -1793,7 +1922,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-see-invisibility"
     },
     {
       "id": "shatter",
@@ -1807,7 +1937,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-shatter"
     },
     {
       "id": "shining-smite",
@@ -1819,7 +1950,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-shining-smite"
     },
     {
       "id": "silence",
@@ -1833,7 +1965,8 @@
       ],
       "concentration": true,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-silence"
     },
     {
       "id": "spider-climb",
@@ -1847,7 +1980,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-spider-climb"
     },
     {
       "id": "spike-growth",
@@ -1860,7 +1994,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-spike-growth"
     },
     {
       "id": "spiritual-weapon",
@@ -1872,7 +2007,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-spiritual-weapon"
     },
     {
       "id": "suggestion",
@@ -1887,7 +2023,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-suggestion"
     },
     {
       "id": "warding-bond",
@@ -1900,7 +2037,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-warding-bond"
     },
     {
       "id": "web",
@@ -1913,7 +2051,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-web"
     },
     {
       "id": "zone-of-truth",
@@ -1927,7 +2066,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-zone-of-truth"
     },
     {
       "id": "animate-dead",
@@ -1940,7 +2080,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-animate-dead"
     },
     {
       "id": "beacon-of-hope",
@@ -1952,7 +2093,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-beacon-of-hope"
     },
     {
       "id": "bestow-curse",
@@ -1966,7 +2108,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-bestow-curse"
     },
     {
       "id": "blink",
@@ -1979,7 +2122,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-blink"
     },
     {
       "id": "call-lightning",
@@ -1991,7 +2135,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-call-lightning"
     },
     {
       "id": "clairvoyance",
@@ -2006,7 +2151,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-clairvoyance"
     },
     {
       "id": "conjure-animals",
@@ -2019,7 +2165,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-conjure-animals"
     },
     {
       "id": "counterspell",
@@ -2033,7 +2180,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-counterspell"
     },
     {
       "id": "create-food-and-water",
@@ -2046,7 +2194,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-create-food-and-water"
     },
     {
       "id": "daylight",
@@ -2062,7 +2211,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-daylight"
     },
     {
       "id": "dispel-magic",
@@ -2081,7 +2231,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-dispel-magic"
     },
     {
       "id": "fear",
@@ -2096,7 +2247,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-fear"
     },
     {
       "id": "fireball",
@@ -2109,7 +2261,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-fireball"
     },
     {
       "id": "fly",
@@ -2123,7 +2276,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-fly"
     },
     {
       "id": "gaseous-form",
@@ -2137,7 +2291,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-gaseous-form"
     },
     {
       "id": "glyph-of-warding",
@@ -2151,7 +2306,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-glyph-of-warding"
     },
     {
       "id": "haste",
@@ -2164,7 +2320,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-haste"
     },
     {
       "id": "hypnotic-pattern",
@@ -2179,7 +2336,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-hypnotic-pattern"
     },
     {
       "id": "lightning-bolt",
@@ -2192,7 +2350,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-lightning-bolt"
     },
     {
       "id": "magic-circle",
@@ -2207,7 +2366,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-magic-circle"
     },
     {
       "id": "major-image",
@@ -2222,7 +2382,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-major-image"
     },
     {
       "id": "mass-healing-word",
@@ -2235,7 +2396,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-mass-healing-word"
     },
     {
       "id": "meld-into-stone",
@@ -2249,7 +2411,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-meld-into-stone"
     },
     {
       "id": "nondetection",
@@ -2263,7 +2426,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-nondetection"
     },
     {
       "id": "phantom-steed",
@@ -2275,7 +2439,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-phantom-steed"
     },
     {
       "id": "plant-growth",
@@ -2289,7 +2454,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-plant-growth"
     },
     {
       "id": "protection-from-energy",
@@ -2305,7 +2471,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-protection-from-energy"
     },
     {
       "id": "remove-curse",
@@ -2320,7 +2487,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-remove-curse"
     },
     {
       "id": "revivify",
@@ -2335,7 +2503,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-revivify"
     },
     {
       "id": "sending",
@@ -2349,7 +2518,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-sending"
     },
     {
       "id": "sleet-storm",
@@ -2363,7 +2533,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-sleet-storm"
     },
     {
       "id": "slow",
@@ -2377,7 +2548,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-slow"
     },
     {
       "id": "speak-with-dead",
@@ -2391,7 +2563,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-speak-with-dead"
     },
     {
       "id": "speak-with-plants",
@@ -2405,7 +2578,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-speak-with-plants"
     },
     {
       "id": "spirit-guardians",
@@ -2417,7 +2591,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-spirit-guardians"
     },
     {
       "id": "stinking-cloud",
@@ -2431,7 +2606,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-stinking-cloud"
     },
     {
       "id": "tiny-hut",
@@ -2444,7 +2620,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-tiny-hut"
     },
     {
       "id": "tongues",
@@ -2460,7 +2637,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-tongues"
     },
     {
       "id": "vampiric-touch",
@@ -2474,7 +2652,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-vampiric-touch"
     },
     {
       "id": "water-breathing",
@@ -2489,7 +2668,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-water-breathing"
     },
     {
       "id": "water-walk",
@@ -2504,7 +2684,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-water-walk"
     },
     {
       "id": "wind-wall",
@@ -2517,7 +2698,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-wind-wall"
     },
     {
       "id": "arcane-eye",
@@ -2529,7 +2711,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-arcane-eye"
     },
     {
       "id": "aura-of-life",
@@ -2542,7 +2725,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-aura-of-life"
     },
     {
       "id": "banishment",
@@ -2558,7 +2742,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-banishment"
     },
     {
       "id": "black-tentacles",
@@ -2570,7 +2755,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-black-tentacles"
     },
     {
       "id": "blight",
@@ -2585,7 +2771,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-blight"
     },
     {
       "id": "charm-monster",
@@ -2601,7 +2788,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-charm-monster"
     },
     {
       "id": "compulsion",
@@ -2613,7 +2801,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-compulsion"
     },
     {
       "id": "confusion",
@@ -2628,7 +2817,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-confusion"
     },
     {
       "id": "conjure-minor-elementals",
@@ -2641,7 +2831,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-conjure-minor-elementals"
     },
     {
       "id": "conjure-woodland-beings",
@@ -2654,7 +2845,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-conjure-woodland-beings"
     },
     {
       "id": "control-water",
@@ -2668,7 +2860,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-control-water"
     },
     {
       "id": "death-ward",
@@ -2681,7 +2874,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-death-ward"
     },
     {
       "id": "dimension-door",
@@ -2696,7 +2890,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-dimension-door"
     },
     {
       "id": "divination",
@@ -2710,7 +2905,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-divination"
     },
     {
       "id": "dominate-beast",
@@ -2724,7 +2920,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-dominate-beast"
     },
     {
       "id": "fabricate",
@@ -2736,7 +2933,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-fabricate"
     },
     {
       "id": "faithful-hound",
@@ -2748,7 +2946,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-faithful-hound"
     },
     {
       "id": "fire-shield",
@@ -2762,7 +2961,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-fire-shield"
     },
     {
       "id": "freedom-of-movement",
@@ -2777,7 +2977,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-freedom-of-movement"
     },
     {
       "id": "giant-insect",
@@ -2789,7 +2990,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-giant-insect"
     },
     {
       "id": "greater-invisibility",
@@ -2803,7 +3005,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-greater-invisibility"
     },
     {
       "id": "guardian-of-faith",
@@ -2815,7 +3018,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-guardian-of-faith"
     },
     {
       "id": "hallucinatory-terrain",
@@ -2830,7 +3034,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-hallucinatory-terrain"
     },
     {
       "id": "ice-storm",
@@ -2844,7 +3049,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-ice-storm"
     },
     {
       "id": "locate-creature",
@@ -2861,7 +3067,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-locate-creature"
     },
     {
       "id": "phantasmal-killer",
@@ -2874,7 +3081,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-phantasmal-killer"
     },
     {
       "id": "polymorph",
@@ -2889,7 +3097,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-polymorph"
     },
     {
       "id": "private-sanctum",
@@ -2901,7 +3110,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-private-sanctum"
     },
     {
       "id": "resilient-sphere",
@@ -2913,7 +3123,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-resilient-sphere"
     },
     {
       "id": "secret-chest",
@@ -2925,7 +3136,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-secret-chest"
     },
     {
       "id": "stone-shape",
@@ -2939,7 +3151,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-stone-shape"
     },
     {
       "id": "stoneskin",
@@ -2954,7 +3167,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-stoneskin"
     },
     {
       "id": "vitriolic-sphere",
@@ -2967,7 +3181,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-vitriolic-sphere"
     },
     {
       "id": "wall-of-fire",
@@ -2981,7 +3196,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-wall-of-fire"
     },
     {
       "id": "animate-objects",
@@ -2995,7 +3211,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-animate-objects"
     },
     {
       "id": "antilife-shell",
@@ -3007,7 +3224,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-antilife-shell"
     },
     {
       "id": "arcane-hand",
@@ -3020,7 +3238,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-arcane-hand"
     },
     {
       "id": "awaken",
@@ -3033,7 +3252,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-awaken"
     },
     {
       "id": "cloudkill",
@@ -3046,7 +3266,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-cloudkill"
     },
     {
       "id": "commune",
@@ -3058,7 +3279,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-commune"
     },
     {
       "id": "commune-with-nature",
@@ -3071,7 +3293,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-commune-with-nature"
     },
     {
       "id": "cone-of-cold",
@@ -3085,7 +3308,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-cone-of-cold"
     },
     {
       "id": "conjure-elemental",
@@ -3098,7 +3322,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-conjure-elemental"
     },
     {
       "id": "contact-other-plane",
@@ -3111,7 +3336,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-contact-other-plane"
     },
     {
       "id": "contagion",
@@ -3124,7 +3350,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-contagion"
     },
     {
       "id": "creation",
@@ -3137,7 +3364,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-creation"
     },
     {
       "id": "dispel-evil-and-good",
@@ -3150,7 +3378,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-dispel-evil-and-good"
     },
     {
       "id": "dominate-person",
@@ -3164,7 +3393,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-dominate-person"
     },
     {
       "id": "dream",
@@ -3178,7 +3408,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-dream"
     },
     {
       "id": "flame-strike",
@@ -3190,7 +3421,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-flame-strike"
     },
     {
       "id": "geas",
@@ -3206,7 +3438,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-geas"
     },
     {
       "id": "greater-restoration",
@@ -3222,7 +3455,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-greater-restoration"
     },
     {
       "id": "hallow",
@@ -3234,7 +3468,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-hallow"
     },
     {
       "id": "hold-monster",
@@ -3249,7 +3484,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-hold-monster"
     },
     {
       "id": "insect-plague",
@@ -3263,7 +3499,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-insect-plague"
     },
     {
       "id": "legend-lore",
@@ -3277,7 +3514,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-legend-lore"
     },
     {
       "id": "mass-cure-wounds",
@@ -3291,7 +3529,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-mass-cure-wounds"
     },
     {
       "id": "mislead",
@@ -3305,7 +3544,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-mislead"
     },
     {
       "id": "modify-memory",
@@ -3318,7 +3558,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-modify-memory"
     },
     {
       "id": "passwall",
@@ -3330,7 +3571,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-passwall"
     },
     {
       "id": "planar-binding",
@@ -3346,7 +3588,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-planar-binding"
     },
     {
       "id": "raise-dead",
@@ -3360,7 +3603,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-raise-dead"
     },
     {
       "id": "reincarnate",
@@ -3372,7 +3616,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-reincarnate"
     },
     {
       "id": "scrying",
@@ -3388,7 +3633,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-scrying"
     },
     {
       "id": "seeming",
@@ -3402,7 +3648,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-seeming"
     },
     {
       "id": "summon-dragon",
@@ -3414,7 +3661,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-summon-dragon"
     },
     {
       "id": "telekinesis",
@@ -3427,7 +3675,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-telekinesis"
     },
     {
       "id": "telepathic-bond",
@@ -3440,7 +3689,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-telepathic-bond"
     },
     {
       "id": "teleportation-circle",
@@ -3455,7 +3705,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-teleportation-circle"
     },
     {
       "id": "tree-stride",
@@ -3468,7 +3719,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-tree-stride"
     },
     {
       "id": "wall-of-force",
@@ -3480,7 +3732,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-wall-of-force"
     },
     {
       "id": "wall-of-stone",
@@ -3494,7 +3747,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-wall-of-stone"
     },
     {
       "id": "blade-barrier",
@@ -3506,7 +3760,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-blade-barrier"
     },
     {
       "id": "chain-lightning",
@@ -3519,7 +3774,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-chain-lightning"
     },
     {
       "id": "circle-of-death",
@@ -3533,7 +3789,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-circle-of-death"
     },
     {
       "id": "conjure-fey",
@@ -3545,7 +3802,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-conjure-fey"
     },
     {
       "id": "contingency",
@@ -3557,7 +3815,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-contingency"
     },
     {
       "id": "create-undead",
@@ -3571,7 +3830,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-create-undead"
     },
     {
       "id": "disintegrate",
@@ -3584,7 +3844,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-disintegrate"
     },
     {
       "id": "eyebite",
@@ -3599,7 +3860,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-eyebite"
     },
     {
       "id": "find-the-path",
@@ -3613,7 +3875,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-find-the-path"
     },
     {
       "id": "flesh-to-stone",
@@ -3627,7 +3890,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-flesh-to-stone"
     },
     {
       "id": "forbiddance",
@@ -3639,7 +3903,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-forbiddance"
     },
     {
       "id": "freezing-sphere",
@@ -3652,7 +3917,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-freezing-sphere"
     },
     {
       "id": "globe-of-invulnerability",
@@ -3665,7 +3931,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-globe-of-invulnerability"
     },
     {
       "id": "guards-and-wards",
@@ -3678,7 +3945,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-guards-and-wards"
     },
     {
       "id": "harm",
@@ -3690,7 +3958,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-harm"
     },
     {
       "id": "heal",
@@ -3703,7 +3972,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-heal"
     },
     {
       "id": "heroes-feast",
@@ -3717,7 +3987,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-heroes-feast"
     },
     {
       "id": "instant-summons",
@@ -3729,7 +4000,8 @@
       ],
       "concentration": false,
       "ritual": true,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-instant-summons"
     },
     {
       "id": "irresistible-dance",
@@ -3742,7 +4014,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-irresistible-dance"
     },
     {
       "id": "magic-jar",
@@ -3754,7 +4027,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-magic-jar"
     },
     {
       "id": "mass-suggestion",
@@ -3768,7 +4042,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-mass-suggestion"
     },
     {
       "id": "move-earth",
@@ -3782,7 +4057,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-move-earth"
     },
     {
       "id": "planar-ally",
@@ -3794,7 +4070,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-planar-ally"
     },
     {
       "id": "programmed-illusion",
@@ -3807,7 +4084,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-programmed-illusion"
     },
     {
       "id": "sunbeam",
@@ -3822,7 +4100,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-sunbeam"
     },
     {
       "id": "transport-via-plants",
@@ -3834,7 +4113,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-transport-via-plants"
     },
     {
       "id": "true-seeing",
@@ -3850,7 +4130,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-true-seeing"
     },
     {
       "id": "wall-of-ice",
@@ -3862,7 +4143,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-wall-of-ice"
     },
     {
       "id": "wall-of-thorns",
@@ -3874,7 +4156,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-wall-of-thorns"
     },
     {
       "id": "wind-walk",
@@ -3886,7 +4169,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-wind-walk"
     },
     {
       "id": "word-of-recall",
@@ -3898,7 +4182,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-word-of-recall"
     },
     {
       "id": "arcane-sword",
@@ -3911,7 +4196,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-arcane-sword"
     },
     {
       "id": "conjure-celestial",
@@ -3923,7 +4209,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-conjure-celestial"
     },
     {
       "id": "delayed-blast-fireball",
@@ -3936,7 +4223,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-delayed-blast-fireball"
     },
     {
       "id": "divine-word",
@@ -3948,7 +4236,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-divine-word"
     },
     {
       "id": "etherealness",
@@ -3964,7 +4253,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-etherealness"
     },
     {
       "id": "finger-of-death",
@@ -3978,7 +4268,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-finger-of-death"
     },
     {
       "id": "fire-storm",
@@ -3992,7 +4283,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-fire-storm"
     },
     {
       "id": "forcecage",
@@ -4006,7 +4298,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-forcecage"
     },
     {
       "id": "magnificent-mansion",
@@ -4019,7 +4312,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-magnificent-mansion"
     },
     {
       "id": "mirage-arcane",
@@ -4033,7 +4327,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-mirage-arcane"
     },
     {
       "id": "plane-shift",
@@ -4049,7 +4344,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-plane-shift"
     },
     {
       "id": "prismatic-spray",
@@ -4063,7 +4359,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-prismatic-spray"
     },
     {
       "id": "project-image",
@@ -4076,7 +4373,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-project-image"
     },
     {
       "id": "regenerate",
@@ -4090,7 +4388,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-regenerate"
     },
     {
       "id": "resurrection",
@@ -4103,7 +4402,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-resurrection"
     },
     {
       "id": "reverse-gravity",
@@ -4117,7 +4417,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-reverse-gravity"
     },
     {
       "id": "sequester",
@@ -4129,7 +4430,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-sequester"
     },
     {
       "id": "simulacrum",
@@ -4141,7 +4443,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-simulacrum"
     },
     {
       "id": "symbol",
@@ -4156,7 +4459,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-symbol"
     },
     {
       "id": "teleport",
@@ -4170,7 +4474,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-teleport"
     },
     {
       "id": "animal-shapes",
@@ -4182,7 +4487,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-animal-shapes"
     },
     {
       "id": "antimagic-field",
@@ -4195,7 +4501,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-antimagic-field"
     },
     {
       "id": "antipathy-sympathy",
@@ -4209,7 +4516,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-antipathy-sympathy"
     },
     {
       "id": "befuddlement",
@@ -4224,7 +4532,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-befuddlement"
     },
     {
       "id": "clone",
@@ -4236,7 +4545,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-clone"
     },
     {
       "id": "control-weather",
@@ -4250,7 +4560,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-control-weather"
     },
     {
       "id": "demiplane",
@@ -4264,7 +4575,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-demiplane"
     },
     {
       "id": "dominate-monster",
@@ -4279,7 +4591,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-dominate-monster"
     },
     {
       "id": "earthquake",
@@ -4293,7 +4606,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-earthquake"
     },
     {
       "id": "glibness",
@@ -4306,7 +4620,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-glibness"
     },
     {
       "id": "holy-aura",
@@ -4318,7 +4633,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-holy-aura"
     },
     {
       "id": "incendiary-cloud",
@@ -4332,7 +4648,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-incendiary-cloud"
     },
     {
       "id": "maze",
@@ -4344,7 +4661,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-maze"
     },
     {
       "id": "mind-blank",
@@ -4357,7 +4675,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-mind-blank"
     },
     {
       "id": "power-word-stun",
@@ -4372,7 +4691,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-power-word-stun"
     },
     {
       "id": "sunburst",
@@ -4387,7 +4707,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-sunburst"
     },
     {
       "id": "tsunami",
@@ -4399,7 +4720,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-tsunami"
     },
     {
       "id": "astral-projection",
@@ -4413,7 +4735,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-astral-projection"
     },
     {
       "id": "foresight",
@@ -4428,7 +4751,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-foresight"
     },
     {
       "id": "gate",
@@ -4443,7 +4767,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-gate"
     },
     {
       "id": "imprisonment",
@@ -4456,7 +4781,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-imprisonment"
     },
     {
       "id": "mass-heal",
@@ -4468,7 +4794,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-mass-heal"
     },
     {
       "id": "meteor-swarm",
@@ -4481,7 +4808,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-meteor-swarm"
     },
     {
       "id": "power-word-heal",
@@ -4494,7 +4822,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-power-word-heal"
     },
     {
       "id": "power-word-kill",
@@ -4509,7 +4838,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-power-word-kill"
     },
     {
       "id": "prismatic-wall",
@@ -4522,7 +4852,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-prismatic-wall"
     },
     {
       "id": "shapechange",
@@ -4535,7 +4866,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-shapechange"
     },
     {
       "id": "storm-of-vengeance",
@@ -4547,7 +4879,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-storm-of-vengeance"
     },
     {
       "id": "time-stop",
@@ -4560,7 +4893,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-time-stop"
     },
     {
       "id": "true-polymorph",
@@ -4574,7 +4908,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-true-polymorph"
     },
     {
       "id": "true-resurrection",
@@ -4587,7 +4922,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": true
+      "material": true,
+      "codexId": "2024-spell-true-resurrection"
     },
     {
       "id": "weird",
@@ -4600,7 +4936,8 @@
       ],
       "concentration": true,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-weird"
     },
     {
       "id": "wish",
@@ -4613,7 +4950,8 @@
       ],
       "concentration": false,
       "ritual": false,
-      "material": false
+      "material": false,
+      "codexId": "2024-spell-wish"
     }
   ]
 }
