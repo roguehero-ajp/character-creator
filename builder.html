@@ -50,6 +50,7 @@ Started: July 2026
   <link rel="stylesheet" href="css/codex.css">
   <link rel="stylesheet" href="css/combat-equipment.css">
   <link rel="stylesheet" href="css/feats.css">
+  <link rel="stylesheet" href="css/class-features.css">
   <link rel="stylesheet" href="css/spellcasting.css">
   <link rel="stylesheet" href="css/print.css" media="print">
 
@@ -71,6 +72,7 @@ Started: July 2026
   <script defer src="js/backgrounds.js"></script>
   <script defer src="js/classes.js"></script>
   <script defer src="js/spellcasting.js"></script>
+  <script defer src="js/class-features.js"></script>
   <script defer src="js/feats.js"></script>
   <script defer src="js/ui.js"></script>
   <script defer src="js/level-up.js"></script>
@@ -1057,10 +1059,18 @@ Started: July 2026
             <!-- Class Abilities -->
 <div class="abilities-box page2-abilities-box">
   <h3 class="fantasy-header">
-    Class Abilities (20 Slots)
+    Class &amp; Subclass Features
   </h3>
 
-  <div class="abilities-grid">
+  <div class="structured-class-features" data-storage-ignore="true">
+    <div class="class-feature-toolbar">
+      <p class="class-feature-helper">Features populate automatically from class levels. Choice-heavy features include a saved note field until their dedicated choice UI is added.</p>
+    </div>
+    <div id="class-feature-groups" class="class-feature-groups"></div>
+  </div>
+
+  <!-- Legacy 20-slot fields remain in place for old positional save compatibility and blank printing. -->
+  <div class="abilities-grid legacy-class-abilities">
     <input
       type="text"
       class="fantasy-input ability-input"
@@ -1332,6 +1342,16 @@ Started: July 2026
       </section>
 
       <!-- ===================================================
+           DYNAMIC CLASS FEATURE CONTINUATION HOST
+           Overflow feature cards are generated here when Page 2
+           would otherwise become too crowded.
+           =================================================== -->
+      <div
+        id="class-feature-pages"
+        data-storage-ignore="true"
+      ></div>
+
+      <!-- ===================================================
            DYNAMIC SPELLCASTING HOST
            2024 smart/class-specific spell pages are generated here.
            Dynamic controls are excluded from positional storage; their
@@ -1511,6 +1531,9 @@ Started: July 2026
 
       <!-- Structured spell state is appended after every legacy field for save compatibility. -->
       <textarea id="spellcasting-state" hidden aria-hidden="true"></textarea>
+
+      <!-- Structured class/subclass feature state is appended after all legacy fields. -->
+      <textarea id="class-feature-state" hidden aria-hidden="true"></textarea>
     </main>
   </div>
 
