@@ -242,3 +242,46 @@ h3.tooltip-trigger {
     transition: none;
   }
 }
+
+
+/* ==========================================================
+   SPELL KNOWLEDGE CARDS
+   ========================================================== */
+
+.knowledge-tooltip .kt-spell-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.knowledge-tooltip .kt-spell-grid > div {
+  padding: 6px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 7px;
+  background: rgba(255,255,255,0.035);
+}
+
+.knowledge-tooltip .kt-spell-grid span,
+.knowledge-tooltip .kt-spell-grid strong {
+  display: block;
+}
+
+.knowledge-tooltip .kt-spell-grid span {
+  margin-bottom: 2px;
+  color: #dda15e;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.knowledge-tooltip .kt-spell-grid strong {
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+@media screen and (max-width: 420px) {
+  .knowledge-tooltip .kt-spell-grid {
+    grid-template-columns: 1fr;
+  }
+}
