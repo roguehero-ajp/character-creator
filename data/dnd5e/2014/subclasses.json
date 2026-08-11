@@ -1,0 +1,548 @@
+{
+  "metadata": {
+    "system": "dnd5e",
+    "edition": "2014",
+    "version": "1.0.0",
+    "scope": "SRD subclass metadata used by the character builder spellcasting engine",
+    "license": "CC-BY-4.0",
+    "note": "The SRD provides one subclass per core class. Magic effects are included only where the SRD subclass changes spell availability or grants spells."
+  },
+  "edition": "2014",
+  "subclasses": [
+    {
+      "id": "path-of-the-berserker",
+      "name": "Path of the Berserker",
+      "classId": "barbarian",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        6,
+        10,
+        14
+      ]
+    },
+    {
+      "id": "college-of-lore",
+      "name": "College of Lore",
+      "classId": "bard",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        6,
+        14
+      ],
+      "magic": {
+        "bonusSelections": [
+          {
+            "classLevel": 6,
+            "label": "Additional Magical Secrets",
+            "count": 2,
+            "pool": "all-spells",
+            "countsAgainstClassLimit": false,
+            "note": "College of Lore bonus spells. They count as Bard spells but do not count against the Bard Spells Known number."
+          }
+        ]
+      }
+    },
+    {
+      "id": "life-domain",
+      "name": "Life Domain",
+      "classId": "cleric",
+      "minimumLevel": 1,
+      "featureLevels": [
+        1,
+        2,
+        6,
+        8,
+        17
+      ],
+      "magic": {
+        "alwaysPrepared": [
+          {
+            "classLevel": 1,
+            "spell": "Bless"
+          },
+          {
+            "classLevel": 1,
+            "spell": "Cure Wounds"
+          },
+          {
+            "classLevel": 3,
+            "spell": "Lesser Restoration"
+          },
+          {
+            "classLevel": 3,
+            "spell": "Spiritual Weapon"
+          },
+          {
+            "classLevel": 5,
+            "spell": "Beacon of Hope"
+          },
+          {
+            "classLevel": 5,
+            "spell": "Revivify"
+          },
+          {
+            "classLevel": 7,
+            "spell": "Death Ward"
+          },
+          {
+            "classLevel": 7,
+            "spell": "Guardian of Faith"
+          },
+          {
+            "classLevel": 9,
+            "spell": "Mass Cure Wounds"
+          },
+          {
+            "classLevel": 9,
+            "spell": "Raise Dead"
+          }
+        ]
+      }
+    },
+    {
+      "id": "circle-of-the-land",
+      "name": "Circle of the Land",
+      "classId": "druid",
+      "minimumLevel": 2,
+      "featureLevels": [
+        2,
+        6,
+        10,
+        14
+      ],
+      "magic": {
+        "choiceGroup": {
+          "id": "land",
+          "label": "Circle Land",
+          "changeTiming": "Chosen when the subclass is selected",
+          "options": [
+            {
+              "id": "arctic",
+              "name": "Arctic",
+              "alwaysPrepared": [
+                {
+                  "classLevel": 3,
+                  "spell": "Hold Person"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Spike Growth"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Sleet Storm"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Slow"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Freedom of Movement"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Ice Storm"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Commune with Nature"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Cone of Cold"
+                }
+              ]
+            },
+            {
+              "id": "coast",
+              "name": "Coast",
+              "alwaysPrepared": [
+                {
+                  "classLevel": 3,
+                  "spell": "Mirror Image"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Misty Step"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Water Breathing"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Water Walk"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Control Water"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Freedom of Movement"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Conjure Elemental"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Scrying"
+                }
+              ]
+            },
+            {
+              "id": "desert",
+              "name": "Desert",
+              "alwaysPrepared": [
+                {
+                  "classLevel": 3,
+                  "spell": "Blur"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Silence"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Create Food and Water"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Protection from Energy"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Blight"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Hallucinatory Terrain"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Insect Plague"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Wall of Stone"
+                }
+              ]
+            },
+            {
+              "id": "forest",
+              "name": "Forest",
+              "alwaysPrepared": [
+                {
+                  "classLevel": 3,
+                  "spell": "Barkskin"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Spider Climb"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Call Lightning"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Plant Growth"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Divination"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Freedom of Movement"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Commune with Nature"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Tree Stride"
+                }
+              ]
+            },
+            {
+              "id": "grassland",
+              "name": "Grassland",
+              "alwaysPrepared": [
+                {
+                  "classLevel": 3,
+                  "spell": "Invisibility"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Pass without Trace"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Daylight"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Haste"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Divination"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Freedom of Movement"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Dream"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Insect Plague"
+                }
+              ]
+            },
+            {
+              "id": "mountain",
+              "name": "Mountain",
+              "alwaysPrepared": [
+                {
+                  "classLevel": 3,
+                  "spell": "Spider Climb"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Spike Growth"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Lightning Bolt"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Meld into Stone"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Stone Shape"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Stoneskin"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Passwall"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Wall of Stone"
+                }
+              ]
+            },
+            {
+              "id": "swamp",
+              "name": "Swamp",
+              "alwaysPrepared": [
+                {
+                  "classLevel": 3,
+                  "spell": "Acid Arrow"
+                },
+                {
+                  "classLevel": 3,
+                  "spell": "Darkness"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Water Walk"
+                },
+                {
+                  "classLevel": 5,
+                  "spell": "Stinking Cloud"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Freedom of Movement"
+                },
+                {
+                  "classLevel": 7,
+                  "spell": "Locate Creature"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Insect Plague"
+                },
+                {
+                  "classLevel": 9,
+                  "spell": "Scrying"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "champion",
+      "name": "Champion",
+      "classId": "fighter",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        7,
+        10,
+        15,
+        18
+      ]
+    },
+    {
+      "id": "way-of-the-open-hand",
+      "name": "Way of the Open Hand",
+      "classId": "monk",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        6,
+        11,
+        17
+      ]
+    },
+    {
+      "id": "oath-of-devotion",
+      "name": "Oath of Devotion",
+      "classId": "paladin",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        7,
+        15,
+        20
+      ],
+      "magic": {
+        "alwaysPrepared": [
+          {
+            "classLevel": 3,
+            "spell": "Protection from Evil and Good"
+          },
+          {
+            "classLevel": 3,
+            "spell": "Sanctuary"
+          },
+          {
+            "classLevel": 5,
+            "spell": "Lesser Restoration"
+          },
+          {
+            "classLevel": 5,
+            "spell": "Zone of Truth"
+          },
+          {
+            "classLevel": 9,
+            "spell": "Beacon of Hope"
+          },
+          {
+            "classLevel": 9,
+            "spell": "Dispel Magic"
+          },
+          {
+            "classLevel": 13,
+            "spell": "Freedom of Movement"
+          },
+          {
+            "classLevel": 13,
+            "spell": "Guardian of Faith"
+          },
+          {
+            "classLevel": 17,
+            "spell": "Commune"
+          },
+          {
+            "classLevel": 17,
+            "spell": "Flame Strike"
+          }
+        ]
+      }
+    },
+    {
+      "id": "hunter",
+      "name": "Hunter",
+      "classId": "ranger",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        7,
+        11,
+        15
+      ]
+    },
+    {
+      "id": "thief",
+      "name": "Thief",
+      "classId": "rogue",
+      "minimumLevel": 3,
+      "featureLevels": [
+        3,
+        9,
+        13,
+        17
+      ]
+    },
+    {
+      "id": "draconic-bloodline",
+      "name": "Draconic Bloodline",
+      "classId": "sorcerer",
+      "minimumLevel": 1,
+      "featureLevels": [
+        1,
+        6,
+        14,
+        18
+      ]
+    },
+    {
+      "id": "the-fiend",
+      "name": "The Fiend",
+      "classId": "warlock",
+      "minimumLevel": 1,
+      "featureLevels": [
+        1,
+        6,
+        10,
+        14
+      ],
+      "magic": {
+        "expandedClassList": [
+          "Burning Hands",
+          "Command",
+          "Blindness/Deafness",
+          "Scorching Ray",
+          "Fireball",
+          "Stinking Cloud",
+          "Fire Shield",
+          "Wall of Fire",
+          "Flame Strike",
+          "Hallow"
+        ],
+        "note": "The Fiend expands the Warlock spell list in 2014; these spells are choices, not automatically known."
+      }
+    },
+    {
+      "id": "school-of-evocation",
+      "name": "School of Evocation",
+      "classId": "wizard",
+      "minimumLevel": 2,
+      "featureLevels": [
+        2,
+        6,
+        10,
+        14
+      ]
+    }
+  ]
+}

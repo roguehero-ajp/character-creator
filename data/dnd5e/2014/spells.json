@@ -1,0 +1,4620 @@
+{
+  "metadata": {
+    "system": "dnd5e",
+    "edition": "2014",
+    "version": "1.0.0",
+    "scope": "Complete SRD 5.1 spell lists for the eight SRD spellcasting classes",
+    "source": "System Reference Document 5.1",
+    "license": "CC-BY-4.0",
+    "note": "Class memberships were transcribed from the SRD 5.1 class spell lists; spell detail text remains in data/srd-codex.json."
+  },
+  "edition": "2014",
+  "spells": [
+    {
+      "id": "acid-splash",
+      "codexId": "2014-spell-acid-splash",
+      "name": "Acid Splash",
+      "level": 0,
+      "school": "Conjuration",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "chill-touch",
+      "codexId": "2014-spell-chill-touch",
+      "name": "Chill Touch",
+      "level": 0,
+      "school": "Necromancy",
+      "classes": [
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dancing-lights",
+      "codexId": "2014-spell-dancing-lights",
+      "name": "Dancing Lights",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "druidcraft",
+      "codexId": "2014-spell-druidcraft",
+      "name": "Druidcraft",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "eldritch-blast",
+      "codexId": "2014-spell-eldritch-blast",
+      "name": "Eldritch Blast",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "warlock"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "fire-bolt",
+      "codexId": "2014-spell-fire-bolt",
+      "name": "Fire Bolt",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "guidance",
+      "codexId": "2014-spell-guidance",
+      "name": "Guidance",
+      "level": 0,
+      "school": "Divination",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "light",
+      "codexId": "2014-spell-light",
+      "name": "Light",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "cleric",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "mage-hand",
+      "codexId": "2014-spell-mage-hand",
+      "name": "Mage Hand",
+      "level": 0,
+      "school": "Conjuration",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "mending",
+      "codexId": "2014-spell-mending",
+      "name": "Mending",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "message",
+      "codexId": "2014-spell-message",
+      "name": "Message",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "minor-illusion",
+      "codexId": "2014-spell-minor-illusion",
+      "name": "Minor Illusion",
+      "level": 0,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "poison-spray",
+      "codexId": "2014-spell-poison-spray",
+      "name": "Poison Spray",
+      "level": 0,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "prestidigitation",
+      "codexId": "2014-spell-prestidigitation",
+      "name": "Prestidigitation",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "produce-flame",
+      "codexId": "2014-spell-produce-flame",
+      "name": "Produce Flame",
+      "level": 0,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "ray-of-frost",
+      "codexId": "2014-spell-ray-of-frost",
+      "name": "Ray of Frost",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "resistance",
+      "codexId": "2014-spell-resistance",
+      "name": "Resistance",
+      "level": 0,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "sacred-flame",
+      "codexId": "2014-spell-sacred-flame",
+      "name": "Sacred Flame",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "shillelagh",
+      "codexId": "2014-spell-shillelagh",
+      "name": "Shillelagh",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "shocking-grasp",
+      "codexId": "2014-spell-shocking-grasp",
+      "name": "Shocking Grasp",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "spare-the-dying",
+      "codexId": "2014-spell-spare-the-dying",
+      "name": "Spare the Dying",
+      "level": 0,
+      "school": "Necromancy",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "thaumaturgy",
+      "codexId": "2014-spell-thaumaturgy",
+      "name": "Thaumaturgy",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "true-strike",
+      "codexId": "2014-spell-true-strike",
+      "name": "True Strike",
+      "level": 0,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "vicious-mockery",
+      "codexId": "2014-spell-vicious-mockery",
+      "name": "Vicious Mockery",
+      "level": 0,
+      "school": "Enchantment",
+      "classes": [
+        "bard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "alarm",
+      "codexId": "2014-spell-alarm",
+      "name": "Alarm",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "ranger",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "animal-friendship",
+      "codexId": "2014-spell-animal-friendship",
+      "name": "Animal Friendship",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "bane",
+      "codexId": "2014-spell-bane",
+      "name": "Bane",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "cleric"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "bless",
+      "codexId": "2014-spell-bless",
+      "name": "Bless",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "burning-hands",
+      "codexId": "2014-spell-burning-hands",
+      "name": "Burning Hands",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "charm-person",
+      "codexId": "2014-spell-charm-person",
+      "name": "Charm Person",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "druid",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "color-spray",
+      "codexId": "2014-spell-color-spray",
+      "name": "Color Spray",
+      "level": 1,
+      "school": "Illusion",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "command",
+      "codexId": "2014-spell-command",
+      "name": "Command",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "comprehend-languages",
+      "codexId": "2014-spell-comprehend-languages",
+      "name": "Comprehend Languages",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "create-or-destroy-water",
+      "codexId": "2014-spell-create-or-destroy-water",
+      "name": "Create or Destroy Water",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "cure-wounds",
+      "codexId": "2014-spell-cure-wounds",
+      "name": "Cure Wounds",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "detect-evil-and-good",
+      "codexId": "2014-spell-detect-evil-and-good",
+      "name": "Detect Evil and Good",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "detect-magic",
+      "codexId": "2014-spell-detect-magic",
+      "name": "Detect Magic",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "detect-poison-and-disease",
+      "codexId": "2014-spell-detect-poison-and-disease",
+      "name": "Detect Poison and Disease",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "disguise-self",
+      "codexId": "2014-spell-disguise-self",
+      "name": "Disguise Self",
+      "level": 1,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "divine-favor",
+      "codexId": "2014-spell-divine-favor",
+      "name": "Divine Favor",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "paladin"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "entangle",
+      "codexId": "2014-spell-entangle",
+      "name": "Entangle",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "expeditious-retreat",
+      "codexId": "2014-spell-expeditious-retreat",
+      "name": "Expeditious Retreat",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "faerie-fire",
+      "codexId": "2014-spell-faerie-fire",
+      "name": "Faerie Fire",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "false-life",
+      "codexId": "2014-spell-false-life",
+      "name": "False Life",
+      "level": 1,
+      "school": "Necromancy",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "feather-fall",
+      "codexId": "2014-spell-feather-fall",
+      "name": "Feather Fall",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "find-familiar",
+      "codexId": "2014-spell-find-familiar",
+      "name": "Find Familiar",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "floating-disk",
+      "codexId": "2014-spell-floating-disk",
+      "name": "Floating Disk",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "fog-cloud",
+      "codexId": "2014-spell-fog-cloud",
+      "name": "Fog Cloud",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "ranger",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "goodberry",
+      "codexId": "2014-spell-goodberry",
+      "name": "Goodberry",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "grease",
+      "codexId": "2014-spell-grease",
+      "name": "Grease",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "guiding-bolt",
+      "codexId": "2014-spell-guiding-bolt",
+      "name": "Guiding Bolt",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "healing-word",
+      "codexId": "2014-spell-healing-word",
+      "name": "Healing Word",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "hellish-rebuke",
+      "codexId": "2014-spell-hellish-rebuke",
+      "name": "Hellish Rebuke",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "warlock"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "heroism",
+      "codexId": "2014-spell-heroism",
+      "name": "Heroism",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "paladin"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "hideous-laughter",
+      "codexId": "2014-spell-hideous-laughter",
+      "name": "Hideous Laughter",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "hunter-s-mark",
+      "codexId": "2014-spell-hunters-mark",
+      "name": "Hunter’s Mark",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "identify",
+      "codexId": "2014-spell-identify",
+      "name": "Identify",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "illusory-script",
+      "codexId": "2014-spell-illusory-script",
+      "name": "Illusory Script",
+      "level": 1,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "inflict-wounds",
+      "codexId": "2014-spell-inflict-wounds",
+      "name": "Inflict Wounds",
+      "level": 1,
+      "school": "Necromancy",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "jump",
+      "codexId": "2014-spell-jump",
+      "name": "Jump",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "druid",
+        "ranger",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "longstrider",
+      "codexId": "2014-spell-longstrider",
+      "name": "Longstrider",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "mage-armor",
+      "codexId": "2014-spell-mage-armor",
+      "name": "Mage Armor",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "magic-missile",
+      "codexId": "2014-spell-magic-missile",
+      "name": "Magic Missile",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "protection-from-evil-and-good",
+      "codexId": "2014-spell-protection-from-evil-and-good",
+      "name": "Protection from Evil and Good",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "purify-food-and-drink",
+      "codexId": "2014-spell-purify-food-and-drink",
+      "name": "Purify Food and Drink",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "cleric",
+        "druid",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "sanctuary",
+      "codexId": "2014-spell-sanctuary",
+      "name": "Sanctuary",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "shield",
+      "codexId": "2014-spell-shield",
+      "name": "Shield",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "shield-of-faith",
+      "codexId": "2014-spell-shield-of-faith",
+      "name": "Shield of Faith",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "silent-image",
+      "codexId": "2014-spell-silent-image",
+      "name": "Silent Image",
+      "level": 1,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "sleep",
+      "codexId": "2014-spell-sleep",
+      "name": "Sleep",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "speak-with-animals",
+      "codexId": "2014-spell-speak-with-animals",
+      "name": "Speak with Animals",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "thunderwave",
+      "codexId": "2014-spell-thunderwave",
+      "name": "Thunderwave",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "unseen-servant",
+      "codexId": "2014-spell-unseen-servant",
+      "name": "Unseen Servant",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "bard",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "acid-arrow",
+      "codexId": "2014-spell-acid-arrow",
+      "name": "Acid Arrow",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "aid",
+      "codexId": "2014-spell-aid",
+      "name": "Aid",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "alter-self",
+      "codexId": "2014-spell-alter-self",
+      "name": "Alter Self",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "animal-messenger",
+      "codexId": "2014-spell-animal-messenger",
+      "name": "Animal Messenger",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "arcane-lock",
+      "codexId": "2014-spell-arcane-lock",
+      "name": "Arcane Lock",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "arcanist-s-magic-aura",
+      "codexId": "2014-spell-arcanists-magic-aura",
+      "name": "Arcanist’s Magic Aura",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "augury",
+      "codexId": "2014-spell-augury",
+      "name": "Augury",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "barkskin",
+      "codexId": "2014-spell-barkskin",
+      "name": "Barkskin",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "blindness-deafness",
+      "codexId": "2014-spell-blindness-deafness",
+      "name": "Blindness/Deafness",
+      "level": 2,
+      "school": "Necromancy",
+      "classes": [
+        "bard",
+        "cleric",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "blur",
+      "codexId": "2014-spell-blur",
+      "name": "Blur",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "branding-smite",
+      "codexId": "2014-spell-branding-smite",
+      "name": "Branding Smite",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "paladin"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "calm-emotions",
+      "codexId": "2014-spell-calm-emotions",
+      "name": "Calm Emotions",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "cleric"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "continual-flame",
+      "codexId": "2014-spell-continual-flame",
+      "name": "Continual Flame",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "cleric",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "darkness",
+      "codexId": "2014-spell-darkness",
+      "name": "Darkness",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "darkvision",
+      "codexId": "2014-spell-darkvision",
+      "name": "Darkvision",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "druid",
+        "ranger",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "detect-thoughts",
+      "codexId": "2014-spell-detect-thoughts",
+      "name": "Detect Thoughts",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "enhance-ability",
+      "codexId": "2014-spell-enhance-ability",
+      "name": "Enhance Ability",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "sorcerer"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "enlarge-reduce",
+      "codexId": "2014-spell-enlarge-reduce",
+      "name": "Enlarge/Reduce",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "enthrall",
+      "codexId": "2014-spell-enthrall",
+      "name": "Enthrall",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "warlock"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "find-steed",
+      "codexId": "2014-spell-find-steed",
+      "name": "Find Steed",
+      "level": 2,
+      "school": "Conjuration",
+      "classes": [
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "find-traps",
+      "codexId": "2014-spell-find-traps",
+      "name": "Find Traps",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "cleric",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "flame-blade",
+      "codexId": "2014-spell-flame-blade",
+      "name": "Flame Blade",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "flaming-sphere",
+      "codexId": "2014-spell-flaming-sphere",
+      "name": "Flaming Sphere",
+      "level": 2,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "gentle-repose",
+      "codexId": "2014-spell-gentle-repose",
+      "name": "Gentle Repose",
+      "level": 2,
+      "school": "Necromancy",
+      "classes": [
+        "cleric",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "gust-of-wind",
+      "codexId": "2014-spell-gust-of-wind",
+      "name": "Gust of Wind",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "heat-metal",
+      "codexId": "2014-spell-heat-metal",
+      "name": "Heat Metal",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "hold-person",
+      "codexId": "2014-spell-hold-person",
+      "name": "Hold Person",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "invisibility",
+      "codexId": "2014-spell-invisibility",
+      "name": "Invisibility",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "knock",
+      "codexId": "2014-spell-knock",
+      "name": "Knock",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "lesser-restoration",
+      "codexId": "2014-spell-lesser-restoration",
+      "name": "Lesser Restoration",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "levitate",
+      "codexId": "2014-spell-levitate",
+      "name": "Levitate",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "locate-animals-or-plants",
+      "codexId": "2014-spell-locate-animals-or-plants",
+      "name": "Locate Animals or Plants",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "locate-object",
+      "codexId": "2014-spell-locate-object",
+      "name": "Locate Object",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "magic-mouth",
+      "codexId": "2014-spell-magic-mouth",
+      "name": "Magic Mouth",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "magic-weapon",
+      "codexId": "2014-spell-magic-weapon",
+      "name": "Magic Weapon",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "paladin",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "mirror-image",
+      "codexId": "2014-spell-mirror-image",
+      "name": "Mirror Image",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "misty-step",
+      "codexId": "2014-spell-misty-step",
+      "name": "Misty Step",
+      "level": 2,
+      "school": "Conjuration",
+      "classes": [
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "moonbeam",
+      "codexId": "2014-spell-moonbeam",
+      "name": "Moonbeam",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "pass-without-trace",
+      "codexId": "2014-spell-pass-without-trace",
+      "name": "Pass without Trace",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "prayer-of-healing",
+      "codexId": "2014-spell-prayer-of-healing",
+      "name": "Prayer of Healing",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "protection-from-poison",
+      "codexId": "2014-spell-protection-from-poison",
+      "name": "Protection from Poison",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "ray-of-enfeeblement",
+      "codexId": "2014-spell-ray-of-enfeeblement",
+      "name": "Ray of Enfeeblement",
+      "level": 2,
+      "school": "Necromancy",
+      "classes": [
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "rope-trick",
+      "codexId": "2014-spell-rope-trick",
+      "name": "Rope Trick",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "scorching-ray",
+      "codexId": "2014-spell-scorching-ray",
+      "name": "Scorching Ray",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "see-invisibility",
+      "codexId": "2014-spell-see-invisibility",
+      "name": "See Invisibility",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "shatter",
+      "codexId": "2014-spell-shatter",
+      "name": "Shatter",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "silence",
+      "codexId": "2014-spell-silence",
+      "name": "Silence",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "cleric",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "spider-climb",
+      "codexId": "2014-spell-spider-climb",
+      "name": "Spider Climb",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "spike-growth",
+      "codexId": "2014-spell-spike-growth",
+      "name": "Spike Growth",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "spiritual-weapon",
+      "codexId": "2014-spell-spiritual-weapon",
+      "name": "Spiritual Weapon",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "suggestion",
+      "codexId": "2014-spell-suggestion",
+      "name": "Suggestion",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "warding-bond",
+      "codexId": "2014-spell-warding-bond",
+      "name": "Warding Bond",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "web",
+      "codexId": "2014-spell-web",
+      "name": "Web",
+      "level": 2,
+      "school": "Conjuration",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "zone-of-truth",
+      "codexId": "2014-spell-zone-of-truth",
+      "name": "Zone of Truth",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "animate-dead",
+      "codexId": "2014-spell-animate-dead",
+      "name": "Animate Dead",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "cleric",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "beacon-of-hope",
+      "codexId": "2014-spell-beacon-of-hope",
+      "name": "Beacon of Hope",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "bestow-curse",
+      "codexId": "2014-spell-bestow-curse",
+      "name": "Bestow Curse",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "bard",
+        "cleric",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "blink",
+      "codexId": "2014-spell-blink",
+      "name": "Blink",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "call-lightning",
+      "codexId": "2014-spell-call-lightning",
+      "name": "Call Lightning",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "clairvoyance",
+      "codexId": "2014-spell-clairvoyance",
+      "name": "Clairvoyance",
+      "level": 3,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "cleric",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "conjure-animals",
+      "codexId": "2014-spell-conjure-animals",
+      "name": "Conjure Animals",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "counterspell",
+      "codexId": "2014-spell-counterspell",
+      "name": "Counterspell",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "create-food-and-water",
+      "codexId": "2014-spell-create-food-and-water",
+      "name": "Create Food and Water",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "daylight",
+      "codexId": "2014-spell-daylight",
+      "name": "Daylight",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger",
+        "sorcerer"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dispel-magic",
+      "codexId": "2014-spell-dispel-magic",
+      "name": "Dispel Magic",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "fear",
+      "codexId": "2014-spell-fear",
+      "name": "Fear",
+      "level": 3,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "fireball",
+      "codexId": "2014-spell-fireball",
+      "name": "Fireball",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "fly",
+      "codexId": "2014-spell-fly",
+      "name": "Fly",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "gaseous-form",
+      "codexId": "2014-spell-gaseous-form",
+      "name": "Gaseous Form",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "glyph-of-warding",
+      "codexId": "2014-spell-glyph-of-warding",
+      "name": "Glyph of Warding",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "haste",
+      "codexId": "2014-spell-haste",
+      "name": "Haste",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "hypnotic-pattern",
+      "codexId": "2014-spell-hypnotic-pattern",
+      "name": "Hypnotic Pattern",
+      "level": 3,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "lightning-bolt",
+      "codexId": "2014-spell-lightning-bolt",
+      "name": "Lightning Bolt",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "magic-circle",
+      "codexId": "2014-spell-magic-circle",
+      "name": "Magic Circle",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "major-image",
+      "codexId": "2014-spell-major-image",
+      "name": "Major Image",
+      "level": 3,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "mass-healing-word",
+      "codexId": "2014-spell-mass-healing-word",
+      "name": "Mass Healing Word",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "meld-into-stone",
+      "codexId": "2014-spell-meld-into-stone",
+      "name": "Meld into Stone",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "nondetection",
+      "codexId": "2014-spell-nondetection",
+      "name": "Nondetection",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "ranger",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "phantom-steed",
+      "codexId": "2014-spell-phantom-steed",
+      "name": "Phantom Steed",
+      "level": 3,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "plant-growth",
+      "codexId": "2014-spell-plant-growth",
+      "name": "Plant Growth",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "protection-from-energy",
+      "codexId": "2014-spell-protection-from-energy",
+      "name": "Protection from Energy",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "druid",
+        "ranger",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "remove-curse",
+      "codexId": "2014-spell-remove-curse",
+      "name": "Remove Curse",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "revivify",
+      "codexId": "2014-spell-revivify",
+      "name": "Revivify",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "sending",
+      "codexId": "2014-spell-sending",
+      "name": "Sending",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "cleric",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "sleet-storm",
+      "codexId": "2014-spell-sleet-storm",
+      "name": "Sleet Storm",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "slow",
+      "codexId": "2014-spell-slow",
+      "name": "Slow",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "speak-with-dead",
+      "codexId": "2014-spell-speak-with-dead",
+      "name": "Speak with Dead",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "bard",
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "speak-with-plants",
+      "codexId": "2014-spell-speak-with-plants",
+      "name": "Speak with Plants",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "spirit-guardians",
+      "codexId": "2014-spell-spirit-guardians",
+      "name": "Spirit Guardians",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "stinking-cloud",
+      "codexId": "2014-spell-stinking-cloud",
+      "name": "Stinking Cloud",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "tiny-hut",
+      "codexId": "2014-spell-tiny-hut",
+      "name": "Tiny Hut",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "tongues",
+      "codexId": "2014-spell-tongues",
+      "name": "Tongues",
+      "level": 3,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "cleric",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "vampiric-touch",
+      "codexId": "2014-spell-vampiric-touch",
+      "name": "Vampiric Touch",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "water-breathing",
+      "codexId": "2014-spell-water-breathing",
+      "name": "Water Breathing",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "druid",
+        "ranger",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "water-walk",
+      "codexId": "2014-spell-water-walk",
+      "name": "Water Walk",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "cleric",
+        "druid",
+        "ranger",
+        "sorcerer"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "wind-wall",
+      "codexId": "2014-spell-wind-wall",
+      "name": "Wind Wall",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "arcane-eye",
+      "codexId": "2014-spell-arcane-eye",
+      "name": "Arcane Eye",
+      "level": 4,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "banishment",
+      "codexId": "2014-spell-banishment",
+      "name": "Banishment",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "black-tentacles",
+      "codexId": "2014-spell-black-tentacles",
+      "name": "Black Tentacles",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "blight",
+      "codexId": "2014-spell-blight",
+      "name": "Blight",
+      "level": 4,
+      "school": "Necromancy",
+      "classes": [
+        "druid",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "compulsion",
+      "codexId": "2014-spell-compulsion",
+      "name": "Compulsion",
+      "level": 4,
+      "school": "Enchantment",
+      "classes": [
+        "bard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "confusion",
+      "codexId": "2014-spell-confusion",
+      "name": "Confusion",
+      "level": 4,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "conjure-minor-elementals",
+      "codexId": "2014-spell-conjure-minor-elementals",
+      "name": "Conjure Minor Elementals",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "conjure-woodland-beings",
+      "codexId": "2014-spell-conjure-woodland-beings",
+      "name": "Conjure Woodland Beings",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "control-water",
+      "codexId": "2014-spell-control-water",
+      "name": "Control Water",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "cleric",
+        "druid",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "death-ward",
+      "codexId": "2014-spell-death-ward",
+      "name": "Death Ward",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dimension-door",
+      "codexId": "2014-spell-dimension-door",
+      "name": "Dimension Door",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "divination",
+      "codexId": "2014-spell-divination",
+      "name": "Divination",
+      "level": 4,
+      "school": "Divination",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "dominate-beast",
+      "codexId": "2014-spell-dominate-beast",
+      "name": "Dominate Beast",
+      "level": 4,
+      "school": "Enchantment",
+      "classes": [
+        "druid",
+        "sorcerer"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "fabricate",
+      "codexId": "2014-spell-fabricate",
+      "name": "Fabricate",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "faithful-hound",
+      "codexId": "2014-spell-faithful-hound",
+      "name": "Faithful Hound",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "fire-shield",
+      "codexId": "2014-spell-fire-shield",
+      "name": "Fire Shield",
+      "level": 4,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "freedom-of-movement",
+      "codexId": "2014-spell-freedom-of-movement",
+      "name": "Freedom of Movement",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "giant-insect",
+      "codexId": "2014-spell-giant-insect",
+      "name": "Giant Insect",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "greater-invisibility",
+      "codexId": "2014-spell-greater-invisibility",
+      "name": "Greater Invisibility",
+      "level": 4,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "guardian-of-faith",
+      "codexId": "2014-spell-guardian-of-faith",
+      "name": "Guardian of Faith",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "hallucinatory-terrain",
+      "codexId": "2014-spell-hallucinatory-terrain",
+      "name": "Hallucinatory Terrain",
+      "level": 4,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "druid",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "ice-storm",
+      "codexId": "2014-spell-ice-storm",
+      "name": "Ice Storm",
+      "level": 4,
+      "school": "Evocation",
+      "classes": [
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "locate-creature",
+      "codexId": "2014-spell-locate-creature",
+      "name": "Locate Creature",
+      "level": 4,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "phantasmal-killer",
+      "codexId": "2014-spell-phantasmal-killer",
+      "name": "Phantasmal Killer",
+      "level": 4,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "polymorph",
+      "codexId": "2014-spell-polymorph",
+      "name": "Polymorph",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "private-sanctum",
+      "codexId": "2014-spell-private-sanctum",
+      "name": "Private Sanctum",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "resilient-sphere",
+      "codexId": "2014-spell-resilient-sphere",
+      "name": "Resilient Sphere",
+      "level": 4,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "secret-chest",
+      "codexId": "2014-spell-secret-chest",
+      "name": "Secret Chest",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "stone-shape",
+      "codexId": "2014-spell-stone-shape",
+      "name": "Stone Shape",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "cleric",
+        "druid",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "stoneskin",
+      "codexId": "2014-spell-stoneskin",
+      "name": "Stoneskin",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "druid",
+        "ranger",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "wall-of-fire",
+      "codexId": "2014-spell-wall-of-fire",
+      "name": "Wall of Fire",
+      "level": 4,
+      "school": "Evocation",
+      "classes": [
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "animate-objects",
+      "codexId": "2014-spell-animate-objects",
+      "name": "Animate Objects",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "antilife-shell",
+      "codexId": "2014-spell-antilife-shell",
+      "name": "Antilife Shell",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "arcane-hand",
+      "codexId": "2014-spell-arcane-hand",
+      "name": "Arcane Hand",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "awaken",
+      "codexId": "2014-spell-awaken",
+      "name": "Awaken",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "cloudkill",
+      "codexId": "2014-spell-cloudkill",
+      "name": "Cloudkill",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "commune",
+      "codexId": "2014-spell-commune",
+      "name": "Commune",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "commune-with-nature",
+      "codexId": "2014-spell-commune-with-nature",
+      "name": "Commune with Nature",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "cone-of-cold",
+      "codexId": "2014-spell-cone-of-cold",
+      "name": "Cone of Cold",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "conjure-elemental",
+      "codexId": "2014-spell-conjure-elemental",
+      "name": "Conjure Elemental",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "contact-other-plane",
+      "codexId": "2014-spell-contact-other-plane",
+      "name": "Contact Other Plane",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "contagion",
+      "codexId": "2014-spell-contagion",
+      "name": "Contagion",
+      "level": 5,
+      "school": "Necromancy",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "creation",
+      "codexId": "2014-spell-creation",
+      "name": "Creation",
+      "level": 5,
+      "school": "Illusion",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "dispel-evil-and-good",
+      "codexId": "2014-spell-dispel-evil-and-good",
+      "name": "Dispel Evil and Good",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "dominate-person",
+      "codexId": "2014-spell-dominate-person",
+      "name": "Dominate Person",
+      "level": 5,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dream",
+      "codexId": "2014-spell-dream",
+      "name": "Dream",
+      "level": 5,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "flame-strike",
+      "codexId": "2014-spell-flame-strike",
+      "name": "Flame Strike",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "geas",
+      "codexId": "2014-spell-geas",
+      "name": "Geas",
+      "level": 5,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "greater-restoration",
+      "codexId": "2014-spell-greater-restoration",
+      "name": "Greater Restoration",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "hallow",
+      "codexId": "2014-spell-hallow",
+      "name": "Hallow",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "hold-monster",
+      "codexId": "2014-spell-hold-monster",
+      "name": "Hold Monster",
+      "level": 5,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "insect-plague",
+      "codexId": "2014-spell-insect-plague",
+      "name": "Insect Plague",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "cleric",
+        "druid",
+        "sorcerer"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "legend-lore",
+      "codexId": "2014-spell-legend-lore",
+      "name": "Legend Lore",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "cleric",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "mass-cure-wounds",
+      "codexId": "2014-spell-mass-cure-wounds",
+      "name": "Mass Cure Wounds",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "mislead",
+      "codexId": "2014-spell-mislead",
+      "name": "Mislead",
+      "level": 5,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "modify-memory",
+      "codexId": "2014-spell-modify-memory",
+      "name": "Modify Memory",
+      "level": 5,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "passwall",
+      "codexId": "2014-spell-passwall",
+      "name": "Passwall",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "planar-binding",
+      "codexId": "2014-spell-planar-binding",
+      "name": "Planar Binding",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "raise-dead",
+      "codexId": "2014-spell-raise-dead",
+      "name": "Raise Dead",
+      "level": 5,
+      "school": "Necromancy",
+      "classes": [
+        "bard",
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "reincarnate",
+      "codexId": "2014-spell-reincarnate",
+      "name": "Reincarnate",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "scrying",
+      "codexId": "2014-spell-scrying",
+      "name": "Scrying",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "seeming",
+      "codexId": "2014-spell-seeming",
+      "name": "Seeming",
+      "level": 5,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "telekinesis",
+      "codexId": "2014-spell-telekinesis",
+      "name": "Telekinesis",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "telepathic-bond",
+      "codexId": "2014-spell-telepathic-bond",
+      "name": "Telepathic Bond",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "teleportation-circle",
+      "codexId": "2014-spell-teleportation-circle",
+      "name": "Teleportation Circle",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "tree-stride",
+      "codexId": "2014-spell-tree-stride",
+      "name": "Tree Stride",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "wall-of-force",
+      "codexId": "2014-spell-wall-of-force",
+      "name": "Wall of Force",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "wall-of-stone",
+      "codexId": "2014-spell-wall-of-stone",
+      "name": "Wall of Stone",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "blade-barrier",
+      "codexId": "2014-spell-blade-barrier",
+      "name": "Blade Barrier",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "chain-lightning",
+      "codexId": "2014-spell-chain-lightning",
+      "name": "Chain Lightning",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "circle-of-death",
+      "codexId": "2014-spell-circle-of-death",
+      "name": "Circle of Death",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "conjure-fey",
+      "codexId": "2014-spell-conjure-fey",
+      "name": "Conjure Fey",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "warlock"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "contingency",
+      "codexId": "2014-spell-contingency",
+      "name": "Contingency",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "create-undead",
+      "codexId": "2014-spell-create-undead",
+      "name": "Create Undead",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "cleric",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "disintegrate",
+      "codexId": "2014-spell-disintegrate",
+      "name": "Disintegrate",
+      "level": 6,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "eyebite",
+      "codexId": "2014-spell-eyebite",
+      "name": "Eyebite",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "find-the-path",
+      "codexId": "2014-spell-find-the-path",
+      "name": "Find the Path",
+      "level": 6,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "flesh-to-stone",
+      "codexId": "2014-spell-flesh-to-stone",
+      "name": "Flesh to Stone",
+      "level": 6,
+      "school": "Transmutation",
+      "classes": [
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "forbiddance",
+      "codexId": "2014-spell-forbiddance",
+      "name": "Forbiddance",
+      "level": 6,
+      "school": "Abjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "freezing-sphere",
+      "codexId": "2014-spell-freezing-sphere",
+      "name": "Freezing Sphere",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "globe-of-invulnerability",
+      "codexId": "2014-spell-globe-of-invulnerability",
+      "name": "Globe of Invulnerability",
+      "level": 6,
+      "school": "Abjuration",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "guards-and-wards",
+      "codexId": "2014-spell-guards-and-wards",
+      "name": "Guards and Wards",
+      "level": 6,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "harm",
+      "codexId": "2014-spell-harm",
+      "name": "Harm",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "heal",
+      "codexId": "2014-spell-heal",
+      "name": "Heal",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "heroes-feast",
+      "codexId": "2014-spell-heroes-feast",
+      "name": "Heroes’ Feast",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "instant-summons",
+      "codexId": "2014-spell-instant-summons",
+      "name": "Instant Summons",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
+      "id": "irresistible-dance",
+      "codexId": "2014-spell-irresistible-dance",
+      "name": "Irresistible Dance",
+      "level": 6,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "magic-jar",
+      "codexId": "2014-spell-magic-jar",
+      "name": "Magic Jar",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "mass-suggestion",
+      "codexId": "2014-spell-mass-suggestion",
+      "name": "Mass Suggestion",
+      "level": 6,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "move-earth",
+      "codexId": "2014-spell-move-earth",
+      "name": "Move Earth",
+      "level": 6,
+      "school": "Transmutation",
+      "classes": [
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "planar-ally",
+      "codexId": "2014-spell-planar-ally",
+      "name": "Planar Ally",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "programmed-illusion",
+      "codexId": "2014-spell-programmed-illusion",
+      "name": "Programmed Illusion",
+      "level": 6,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "sunbeam",
+      "codexId": "2014-spell-sunbeam",
+      "name": "Sunbeam",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "transport-via-plants",
+      "codexId": "2014-spell-transport-via-plants",
+      "name": "Transport via Plants",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "true-seeing",
+      "codexId": "2014-spell-true-seeing",
+      "name": "True Seeing",
+      "level": 6,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "cleric",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "wall-of-ice",
+      "codexId": "2014-spell-wall-of-ice",
+      "name": "Wall of Ice",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "wall-of-thorns",
+      "codexId": "2014-spell-wall-of-thorns",
+      "name": "Wall of Thorns",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "wind-walk",
+      "codexId": "2014-spell-wind-walk",
+      "name": "Wind Walk",
+      "level": 6,
+      "school": "Transmutation",
+      "classes": [
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "word-of-recall",
+      "codexId": "2014-spell-word-of-recall",
+      "name": "Word of Recall",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "arcane-sword",
+      "codexId": "2014-spell-arcane-sword",
+      "name": "Arcane Sword",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "conjure-celestial",
+      "codexId": "2014-spell-conjure-celestial",
+      "name": "Conjure Celestial",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "delayed-blast-fireball",
+      "codexId": "2014-spell-delayed-blast-fireball",
+      "name": "Delayed Blast Fireball",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "divine-word",
+      "codexId": "2014-spell-divine-word",
+      "name": "Divine Word",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "etherealness",
+      "codexId": "2014-spell-etherealness",
+      "name": "Etherealness",
+      "level": 7,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "cleric",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "finger-of-death",
+      "codexId": "2014-spell-finger-of-death",
+      "name": "Finger of Death",
+      "level": 7,
+      "school": "Necromancy",
+      "classes": [
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "fire-storm",
+      "codexId": "2014-spell-fire-storm",
+      "name": "Fire Storm",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "cleric",
+        "druid",
+        "sorcerer"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "forcecage",
+      "codexId": "2014-spell-forcecage",
+      "name": "Forcecage",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "magnificent-mansion",
+      "codexId": "2014-spell-magnificent-mansion",
+      "name": "Magnificent Mansion",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "mirage-arcane",
+      "codexId": "2014-spell-mirage-arcane",
+      "name": "Mirage Arcane",
+      "level": 7,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "druid",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "plane-shift",
+      "codexId": "2014-spell-plane-shift",
+      "name": "Plane Shift",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "cleric",
+        "druid",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "prismatic-spray",
+      "codexId": "2014-spell-prismatic-spray",
+      "name": "Prismatic Spray",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "project-image",
+      "codexId": "2014-spell-project-image",
+      "name": "Project Image",
+      "level": 7,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "regenerate",
+      "codexId": "2014-spell-regenerate",
+      "name": "Regenerate",
+      "level": 7,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "resurrection",
+      "codexId": "2014-spell-resurrection",
+      "name": "Resurrection",
+      "level": 7,
+      "school": "Necromancy",
+      "classes": [
+        "bard",
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "reverse-gravity",
+      "codexId": "2014-spell-reverse-gravity",
+      "name": "Reverse Gravity",
+      "level": 7,
+      "school": "Transmutation",
+      "classes": [
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "sequester",
+      "codexId": "2014-spell-sequester",
+      "name": "Sequester",
+      "level": 7,
+      "school": "Transmutation",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "simulacrum",
+      "codexId": "2014-spell-simulacrum",
+      "name": "Simulacrum",
+      "level": 7,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "symbol",
+      "codexId": "2014-spell-symbol",
+      "name": "Symbol",
+      "level": 7,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "teleport",
+      "codexId": "2014-spell-teleport",
+      "name": "Teleport",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "animal-shapes",
+      "codexId": "2014-spell-animal-shapes",
+      "name": "Animal Shapes",
+      "level": 8,
+      "school": "Transmutation",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "antimagic-field",
+      "codexId": "2014-spell-antimagic-field",
+      "name": "Antimagic Field",
+      "level": 8,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "antipathy-sympathy",
+      "codexId": "2014-spell-antipathy-sympathy",
+      "name": "Antipathy/Sympathy",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "druid",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "clone",
+      "codexId": "2014-spell-clone",
+      "name": "Clone",
+      "level": 8,
+      "school": "Necromancy",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "control-weather",
+      "codexId": "2014-spell-control-weather",
+      "name": "Control Weather",
+      "level": 8,
+      "school": "Transmutation",
+      "classes": [
+        "cleric",
+        "druid",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "demiplane",
+      "codexId": "2014-spell-demiplane",
+      "name": "Demiplane",
+      "level": 8,
+      "school": "Conjuration",
+      "classes": [
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dominate-monster",
+      "codexId": "2014-spell-dominate-monster",
+      "name": "Dominate Monster",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "earthquake",
+      "codexId": "2014-spell-earthquake",
+      "name": "Earthquake",
+      "level": 8,
+      "school": "Evocation",
+      "classes": [
+        "cleric",
+        "druid",
+        "sorcerer"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "feeblemind",
+      "codexId": "2014-spell-feeblemind",
+      "name": "Feeblemind",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "druid",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "glibness",
+      "codexId": "2014-spell-glibness",
+      "name": "Glibness",
+      "level": 8,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "warlock"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "holy-aura",
+      "codexId": "2014-spell-holy-aura",
+      "name": "Holy Aura",
+      "level": 8,
+      "school": "Abjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "incendiary-cloud",
+      "codexId": "2014-spell-incendiary-cloud",
+      "name": "Incendiary Cloud",
+      "level": 8,
+      "school": "Conjuration",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "maze",
+      "codexId": "2014-spell-maze",
+      "name": "Maze",
+      "level": 8,
+      "school": "Conjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "mind-blank",
+      "codexId": "2014-spell-mind-blank",
+      "name": "Mind Blank",
+      "level": 8,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "power-word-stun",
+      "codexId": "2014-spell-power-word-stun",
+      "name": "Power Word Stun",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "sunburst",
+      "codexId": "2014-spell-sunburst",
+      "name": "Sunburst",
+      "level": 8,
+      "school": "Evocation",
+      "classes": [
+        "druid",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "astral-projection",
+      "codexId": "2014-spell-astral-projection",
+      "name": "Astral Projection",
+      "level": 9,
+      "school": "Necromancy",
+      "classes": [
+        "cleric",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "foresight",
+      "codexId": "2014-spell-foresight",
+      "name": "Foresight",
+      "level": 9,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "druid",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "gate",
+      "codexId": "2014-spell-gate",
+      "name": "Gate",
+      "level": 9,
+      "school": "Conjuration",
+      "classes": [
+        "cleric",
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "imprisonment",
+      "codexId": "2014-spell-imprisonment",
+      "name": "Imprisonment",
+      "level": 9,
+      "school": "Abjuration",
+      "classes": [
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "mass-heal",
+      "codexId": "2014-spell-mass-heal",
+      "name": "Mass Heal",
+      "level": 9,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "meteor-swarm",
+      "codexId": "2014-spell-meteor-swarm",
+      "name": "Meteor Swarm",
+      "level": 9,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "power-word-kill",
+      "codexId": "2014-spell-power-word-kill",
+      "name": "Power Word Kill",
+      "level": 9,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "prismatic-wall",
+      "codexId": "2014-spell-prismatic-wall",
+      "name": "Prismatic Wall",
+      "level": 9,
+      "school": "Abjuration",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "shapechange",
+      "codexId": "2014-spell-shapechange",
+      "name": "Shapechange",
+      "level": 9,
+      "school": "Transmutation",
+      "classes": [
+        "druid",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "storm-of-vengeance",
+      "codexId": "2014-spell-storm-of-vengeance",
+      "name": "Storm of Vengeance",
+      "level": 9,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "time-stop",
+      "codexId": "2014-spell-time-stop",
+      "name": "Time Stop",
+      "level": 9,
+      "school": "Transmutation",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "true-polymorph",
+      "codexId": "2014-spell-true-polymorph",
+      "name": "True Polymorph",
+      "level": 9,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "warlock",
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "true-resurrection",
+      "codexId": "2014-spell-true-resurrection",
+      "name": "True Resurrection",
+      "level": 9,
+      "school": "Necromancy",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "weird",
+      "codexId": "2014-spell-weird",
+      "name": "Weird",
+      "level": 9,
+      "school": "Illusion",
+      "classes": [
+        "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "wish",
+      "codexId": "2014-spell-wish",
+      "name": "Wish",
+      "level": 9,
+      "school": "Conjuration",
+      "classes": [
+        "sorcerer",
+        "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    }
+  ]
+}
