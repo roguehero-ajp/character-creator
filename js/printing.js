@@ -267,6 +267,49 @@
 
 
   /**
+   * 2024 dynamic magic pages are class-generated DOM rather than legacy
+   * blank-sheet furniture. A truly blank character has no spellcasting class,
+   * so Print Blank temporarily hides the generated magic pages and the
+   * class-specific Spellcasting Stats summary.
+   *
+   * 2014 is unaffected because its dynamic host is empty.
+   */
+  function blankDynamicSpellcastingDisplay(characterDocument) {
+    const host = characterDocument.querySelector('#spellcasting-pages');
+    const hasDynamicPages = Boolean(host?.querySelector('.dynamic-spell-page'));
+
+    if (!hasDynamicPages) {
+      return () => {};
+    }
+
+    const summary = characterDocument.querySelector('.spellcasting-summary-box');
+    const hostDisplay = host.style.display;
+    const hostPriority = host.style.getPropertyPriority('display');
+    const summaryDisplay = summary?.style.display ?? '';
+    const summaryPriority = summary?.style.getPropertyPriority('display') ?? '';
+
+    host.style.setProperty('display', 'none', 'important');
+    summary?.style.setProperty('display', 'none', 'important');
+
+    let restored = false;
+    return function restoreDynamicSpellcastingDisplay() {
+      if (restored) return;
+      restored = true;
+
+      if (host?.isConnected) {
+        if (hostDisplay) host.style.setProperty('display', hostDisplay, hostPriority);
+        else host.style.removeProperty('display');
+      }
+
+      if (summary?.isConnected) {
+        if (summaryDisplay) summary.style.setProperty('display', summaryDisplay, summaryPriority);
+        else summary.style.removeProperty('display');
+      }
+    };
+  }
+
+
+  /**
    * Prepare the character sheet for blank printing.
    *
    * Returns a function that restores everything afterward.
@@ -295,6 +338,14 @@
      */
     const restoreFeatDisplay =
       blankStructuredFeatDisplay(
+        characterDocument
+      );
+
+    /*
+     * A blank 2024 character has no class-generated magic pages.
+     */
+    const restoreSpellcastingDisplay =
+      blankDynamicSpellcastingDisplay(
         characterDocument
       );
 
@@ -347,6 +398,11 @@
        * Restore the exact feat cards/count that were visible before printing.
        */
       restoreFeatDisplay();
+
+      /*
+       * Restore class-generated spell pages after the blank printout.
+       */
+      restoreSpellcastingDisplay();
 
       /*
        * Restore the browser title.
