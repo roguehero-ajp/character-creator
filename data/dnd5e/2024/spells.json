@@ -2,12 +2,23 @@
   "metadata": {
     "system": "dnd5e",
     "edition": "2024",
-    "version": "1.0.0",
-    "scope": "SRD 5.2.1 Wizard spell list",
+    "version": "2.0.0",
+    "scope": "SRD 5.2.1 spell lists for all 2024 SRD spellcasting classes",
     "source": "System Reference Document 5.2.1",
     "sourceUrl": "https://www.dndbeyond.com/srd",
     "license": "CC-BY-4.0",
-    "note": "Build 1 contains the complete SRD 5.2.1 Wizard spell list. Additional class memberships will be added as smart class profiles are implemented."
+    "classCounts": {
+      "bard": 129,
+      "cleric": 109,
+      "druid": 124,
+      "paladin": 38,
+      "ranger": 48,
+      "sorcerer": 138,
+      "warlock": 72,
+      "wizard": 217
+    },
+    "uniqueSpellCount": 338,
+    "note": "Class memberships are taken from the SRD 5.2.1 class spell lists. Spell descriptions remain in the Rules Codex; this file contains picker metadata only."
   },
   "edition": "2024",
   "spells": [
@@ -17,6 +28,7 @@
       "level": 0,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -29,6 +41,8 @@
       "level": 0,
       "school": "Necromancy",
       "classes": [
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -41,9 +55,35 @@
       "level": 0,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "druidcraft",
+      "name": "Druidcraft",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "eldritch-blast",
+      "name": "Eldritch Blast",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "warlock"
+      ],
+      "concentration": false,
       "ritual": false,
       "material": false
     },
@@ -53,6 +93,8 @@
       "level": 0,
       "school": "Transmutation",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -65,9 +107,23 @@
       "level": 0,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "guidance",
+      "name": "Guidance",
+      "level": 0,
+      "school": "Divination",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": true,
       "ritual": false,
       "material": false
     },
@@ -77,6 +133,9 @@
       "level": 0,
       "school": "Evocation",
       "classes": [
+        "bard",
+        "cleric",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -89,6 +148,9 @@
       "level": 0,
       "school": "Conjuration",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -101,6 +163,10 @@
       "level": 0,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -113,6 +179,9 @@
       "level": 0,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -125,6 +194,9 @@
       "level": 0,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -137,6 +209,9 @@
       "level": 0,
       "school": "Necromancy",
       "classes": [
+        "druid",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -149,7 +224,22 @@
       "level": 0,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "produce-flame",
+      "name": "Produce Flame",
+      "level": 0,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
       ],
       "concentration": false,
       "ritual": false,
@@ -161,7 +251,45 @@
       "level": 0,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "resistance",
+      "name": "Resistance",
+      "level": 0,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "sacred-flame",
+      "name": "Sacred Flame",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "shillelagh",
+      "name": "Shillelagh",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "druid"
       ],
       "concentration": false,
       "ritual": false,
@@ -173,7 +301,58 @@
       "level": 0,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "sorcerous-burst",
+      "name": "Sorcerous Burst",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "sorcerer"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "spare-the-dying",
+      "name": "Spare the Dying",
+      "level": 0,
+      "school": "Necromancy",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "starry-wisp",
+      "name": "Starry Wisp",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "thaumaturgy",
+      "name": "Thaumaturgy",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "cleric"
       ],
       "concentration": false,
       "ritual": false,
@@ -185,7 +364,22 @@
       "level": 0,
       "school": "Divination",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "vicious-mockery",
+      "name": "Vicious Mockery",
+      "level": 0,
+      "school": "Enchantment",
+      "classes": [
+        "bard"
       ],
       "concentration": false,
       "ritual": false,
@@ -197,6 +391,7 @@
       "level": 1,
       "school": "Abjuration",
       "classes": [
+        "ranger",
         "wizard"
       ],
       "concentration": false,
@@ -204,11 +399,53 @@
       "material": false
     },
     {
+      "id": "animal-friendship",
+      "name": "Animal Friendship",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "bane",
+      "name": "Bane",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "cleric",
+        "warlock"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "bless",
+      "name": "Bless",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
       "id": "burning-hands",
       "name": "Burning Hands",
       "level": 1,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -221,6 +458,10 @@
       "level": 1,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "druid",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -233,6 +474,7 @@
       "level": 1,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -245,7 +487,23 @@
       "level": 1,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "command",
+      "name": "Command",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "cleric",
+        "paladin"
       ],
       "concentration": false,
       "ritual": false,
@@ -257,10 +515,55 @@
       "level": 1,
       "school": "Divination",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
       "ritual": true,
+      "material": false
+    },
+    {
+      "id": "create-or-destroy-water",
+      "name": "Create or Destroy Water",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "cure-wounds",
+      "name": "Cure Wounds",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "detect-evil-and-good",
+      "name": "Detect Evil and Good",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": true,
+      "ritual": false,
       "material": false
     },
     {
@@ -269,7 +572,29 @@
       "level": 1,
       "school": "Divination",
       "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger",
+        "sorcerer",
+        "warlock",
         "wizard"
+      ],
+      "concentration": true,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "detect-poison-and-disease",
+      "name": "Detect Poison and Disease",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger"
       ],
       "concentration": true,
       "ritual": true,
@@ -281,9 +606,72 @@
       "level": 1,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dissonant-whispers",
+      "name": "Dissonant Whispers",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "bard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "divine-favor",
+      "name": "Divine Favor",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "divine-smite",
+      "name": "Divine Smite",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "ensnaring-strike",
+      "name": "Ensnaring Strike",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "entangle",
+      "name": "Entangle",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
       "ritual": false,
       "material": false
     },
@@ -293,7 +681,22 @@
       "level": 1,
       "school": "Transmutation",
       "classes": [
+        "sorcerer",
+        "warlock",
         "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "faerie-fire",
+      "name": "Faerie Fire",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "bard",
+        "druid"
       ],
       "concentration": true,
       "ritual": false,
@@ -305,6 +708,7 @@
       "level": 1,
       "school": "Necromancy",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -317,6 +721,8 @@
       "level": 1,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -353,9 +759,25 @@
       "level": 1,
       "school": "Conjuration",
       "classes": [
+        "druid",
+        "ranger",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "goodberry",
+      "name": "Goodberry",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
       "ritual": false,
       "material": false
     },
@@ -365,9 +787,73 @@
       "level": 1,
       "school": "Conjuration",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "guiding-bolt",
+      "name": "Guiding Bolt",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "healing-word",
+      "name": "Healing Word",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "hellish-rebuke",
+      "name": "Hellish Rebuke",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "warlock"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "heroism",
+      "name": "Heroism",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "paladin"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "hex",
+      "name": "Hex",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "warlock"
+      ],
+      "concentration": true,
       "ritual": false,
       "material": false
     },
@@ -377,7 +863,21 @@
       "level": 1,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "warlock",
         "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "hunter-s-mark",
+      "name": "Hunter’s Mark",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "ranger"
       ],
       "concentration": true,
       "ritual": false,
@@ -389,6 +889,8 @@
       "level": 1,
       "school": "Conjuration",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -401,6 +903,7 @@
       "level": 1,
       "school": "Divination",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": false,
@@ -413,6 +916,8 @@
       "level": 1,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -420,11 +925,26 @@
       "material": true
     },
     {
+      "id": "inflict-wounds",
+      "name": "Inflict Wounds",
+      "level": 1,
+      "school": "Necromancy",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
       "id": "jump",
       "name": "Jump",
       "level": 1,
       "school": "Transmutation",
       "classes": [
+        "druid",
+        "ranger",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -437,6 +957,9 @@
       "level": 1,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "druid",
+        "ranger",
         "wizard"
       ],
       "concentration": false,
@@ -449,6 +972,7 @@
       "level": 1,
       "school": "Abjuration",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -461,6 +985,7 @@
       "level": 1,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -473,6 +998,10 @@
       "level": 1,
       "school": "Abjuration",
       "classes": [
+        "cleric",
+        "druid",
+        "paladin",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -480,12 +1009,51 @@
       "material": true
     },
     {
+      "id": "purify-food-and-drink",
+      "name": "Purify Food and Drink",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "cleric",
+        "druid",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
       "id": "ray-of-sickness",
       "name": "Ray of Sickness",
       "level": 1,
       "school": "Necromancy",
       "classes": [
+        "sorcerer",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "sanctuary",
+      "name": "Sanctuary",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "searing-smite",
+      "name": "Searing Smite",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "paladin"
       ],
       "concentration": false,
       "ritual": false,
@@ -497,9 +1065,23 @@
       "level": 1,
       "school": "Abjuration",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "shield-of-faith",
+      "name": "Shield of Faith",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": true,
       "ritual": false,
       "material": false
     },
@@ -509,6 +1091,8 @@
       "level": 1,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -521,10 +1105,27 @@
       "level": 1,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
       "ritual": false,
+      "material": false
+    },
+    {
+      "id": "speak-with-animals",
+      "name": "Speak with Animals",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger",
+        "warlock"
+      ],
+      "concentration": false,
+      "ritual": true,
       "material": false
     },
     {
@@ -533,6 +1134,9 @@
       "level": 1,
       "school": "Evocation",
       "classes": [
+        "bard",
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -545,6 +1149,8 @@
       "level": 1,
       "school": "Conjuration",
       "classes": [
+        "bard",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -564,15 +1170,46 @@
       "material": false
     },
     {
+      "id": "aid",
+      "name": "Aid",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
       "id": "alter-self",
       "name": "Alter Self",
       "level": 2,
       "school": "Transmutation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
       "ritual": false,
+      "material": false
+    },
+    {
+      "id": "animal-messenger",
+      "name": "Animal Messenger",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": true,
       "material": false
     },
     {
@@ -605,6 +1242,8 @@
       "level": 2,
       "school": "Divination",
       "classes": [
+        "cleric",
+        "druid",
         "wizard"
       ],
       "concentration": false,
@@ -612,11 +1251,27 @@
       "material": true
     },
     {
+      "id": "barkskin",
+      "name": "Barkskin",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
       "id": "blindness-deafness",
       "name": "Blindness/Deafness",
       "level": 2,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "cleric",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -629,7 +1284,21 @@
       "level": 2,
       "school": "Illusion",
       "classes": [
+        "sorcerer",
         "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "calm-emotions",
+      "name": "Calm Emotions",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "cleric"
       ],
       "concentration": true,
       "ritual": false,
@@ -641,6 +1310,8 @@
       "level": 2,
       "school": "Evocation",
       "classes": [
+        "cleric",
+        "druid",
         "wizard"
       ],
       "concentration": false,
@@ -653,6 +1324,8 @@
       "level": 2,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -665,6 +1338,9 @@
       "level": 2,
       "school": "Transmutation",
       "classes": [
+        "druid",
+        "ranger",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -677,6 +1353,8 @@
       "level": 2,
       "school": "Divination",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -689,6 +1367,7 @@
       "level": 2,
       "school": "Transmutation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -701,6 +1380,11 @@
       "level": 2,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "ranger",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -713,7 +1397,62 @@
       "level": 2,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "druid",
+        "sorcerer",
         "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "enthrall",
+      "name": "Enthrall",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "warlock"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "find-steed",
+      "name": "Find Steed",
+      "level": 2,
+      "school": "Conjuration",
+      "classes": [
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "find-traps",
+      "name": "Find Traps",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "cleric",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "flame-blade",
+      "name": "Flame Blade",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "druid",
+        "sorcerer"
       ],
       "concentration": true,
       "ritual": false,
@@ -725,6 +1464,8 @@
       "level": 2,
       "school": "Evocation",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -737,6 +1478,8 @@
       "level": 2,
       "school": "Necromancy",
       "classes": [
+        "cleric",
+        "paladin",
         "wizard"
       ],
       "concentration": false,
@@ -749,7 +1492,23 @@
       "level": 2,
       "school": "Evocation",
       "classes": [
+        "druid",
+        "ranger",
+        "sorcerer",
         "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "heat-metal",
+      "name": "Heat Metal",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "druid"
       ],
       "concentration": true,
       "ritual": false,
@@ -761,6 +1520,11 @@
       "level": 2,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -773,6 +1537,9 @@
       "level": 2,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -785,7 +1552,25 @@
       "level": 2,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "lesser-restoration",
+      "name": "Lesser Restoration",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger"
       ],
       "concentration": false,
       "ritual": false,
@@ -797,10 +1582,25 @@
       "level": 2,
       "school": "Transmutation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
       "ritual": false,
+      "material": false
+    },
+    {
+      "id": "locate-animals-or-plants",
+      "name": "Locate Animals or Plants",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": true,
       "material": false
     },
     {
@@ -809,6 +1609,11 @@
       "level": 2,
       "school": "Divination",
       "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger",
         "wizard"
       ],
       "concentration": true,
@@ -821,6 +1626,7 @@
       "level": 2,
       "school": "Illusion",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": false,
@@ -833,6 +1639,9 @@
       "level": 2,
       "school": "Transmutation",
       "classes": [
+        "paladin",
+        "ranger",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -845,6 +1654,7 @@
       "level": 2,
       "school": "Divination",
       "classes": [
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -857,6 +1667,9 @@
       "level": 2,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -869,7 +1682,62 @@
       "level": 2,
       "school": "Conjuration",
       "classes": [
+        "sorcerer",
+        "warlock",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "moonbeam",
+      "name": "Moonbeam",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "pass-without-trace",
+      "name": "Pass without Trace",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "prayer-of-healing",
+      "name": "Prayer of Healing",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "protection-from-poison",
+      "name": "Protection from Poison",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger"
       ],
       "concentration": false,
       "ritual": false,
@@ -881,6 +1749,7 @@
       "level": 2,
       "school": "Necromancy",
       "classes": [
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -905,6 +1774,7 @@
       "level": 2,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -917,6 +1787,8 @@
       "level": 2,
       "school": "Divination",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -929,10 +1801,38 @@
       "level": 2,
       "school": "Evocation",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
       "ritual": false,
+      "material": false
+    },
+    {
+      "id": "shining-smite",
+      "name": "Shining Smite",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "paladin"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "silence",
+      "name": "Silence",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "bard",
+        "cleric",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": true,
       "material": false
     },
     {
@@ -941,7 +1841,34 @@
       "level": 2,
       "school": "Transmutation",
       "classes": [
+        "sorcerer",
+        "warlock",
         "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "spike-growth",
+      "name": "Spike Growth",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "spiritual-weapon",
+      "name": "Spiritual Weapon",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
       ],
       "concentration": true,
       "ritual": false,
@@ -953,6 +1880,9 @@
       "level": 2,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -960,14 +1890,42 @@
       "material": false
     },
     {
+      "id": "warding-bond",
+      "name": "Warding Bond",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
       "id": "web",
       "name": "Web",
       "level": 2,
       "school": "Conjuration",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "zone-of-truth",
+      "name": "Zone of Truth",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
       "ritual": false,
       "material": false
     },
@@ -977,9 +1935,22 @@
       "level": 3,
       "school": "Necromancy",
       "classes": [
+        "cleric",
         "wizard"
       ],
       "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "beacon-of-hope",
+      "name": "Beacon of Hope",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": true,
       "ritual": false,
       "material": false
     },
@@ -989,6 +1960,8 @@
       "level": 3,
       "school": "Necromancy",
       "classes": [
+        "bard",
+        "cleric",
         "wizard"
       ],
       "concentration": true,
@@ -1001,9 +1974,22 @@
       "level": 3,
       "school": "Transmutation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "call-lightning",
+      "name": "Call Lightning",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
       "ritual": false,
       "material": false
     },
@@ -1013,6 +1999,9 @@
       "level": 3,
       "school": "Divination",
       "classes": [
+        "bard",
+        "cleric",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1020,12 +2009,56 @@
       "material": true
     },
     {
+      "id": "conjure-animals",
+      "name": "Conjure Animals",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
       "id": "counterspell",
       "name": "Counterspell",
       "level": 3,
       "school": "Abjuration",
       "classes": [
+        "sorcerer",
+        "warlock",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "create-food-and-water",
+      "name": "Create Food and Water",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "daylight",
+      "name": "Daylight",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger",
+        "sorcerer"
       ],
       "concentration": false,
       "ritual": false,
@@ -1037,6 +2070,13 @@
       "level": 3,
       "school": "Abjuration",
       "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -1049,6 +2089,9 @@
       "level": 3,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -1061,6 +2104,7 @@
       "level": 3,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -1073,6 +2117,8 @@
       "level": 3,
       "school": "Transmutation",
       "classes": [
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -1085,6 +2131,8 @@
       "level": 3,
       "school": "Transmutation",
       "classes": [
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -1097,6 +2145,8 @@
       "level": 3,
       "school": "Abjuration",
       "classes": [
+        "bard",
+        "cleric",
         "wizard"
       ],
       "concentration": false,
@@ -1109,6 +2159,7 @@
       "level": 3,
       "school": "Transmutation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1121,6 +2172,9 @@
       "level": 3,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -1133,6 +2187,7 @@
       "level": 3,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -1145,6 +2200,9 @@
       "level": 3,
       "school": "Abjuration",
       "classes": [
+        "cleric",
+        "paladin",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -1157,10 +2215,40 @@
       "level": 3,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
       "ritual": false,
+      "material": false
+    },
+    {
+      "id": "mass-healing-word",
+      "name": "Mass Healing Word",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "meld-into-stone",
+      "name": "Meld into Stone",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "cleric",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": true,
       "material": false
     },
     {
@@ -1169,6 +2257,8 @@
       "level": 3,
       "school": "Abjuration",
       "classes": [
+        "bard",
+        "ranger",
         "wizard"
       ],
       "concentration": false,
@@ -1188,11 +2278,29 @@
       "material": false
     },
     {
+      "id": "plant-growth",
+      "name": "Plant Growth",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
       "id": "protection-from-energy",
       "name": "Protection from Energy",
       "level": 3,
       "school": "Abjuration",
       "classes": [
+        "cleric",
+        "druid",
+        "ranger",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1205,6 +2313,9 @@
       "level": 3,
       "school": "Abjuration",
       "classes": [
+        "cleric",
+        "paladin",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -1212,11 +2323,28 @@
       "material": false
     },
     {
+      "id": "revivify",
+      "name": "Revivify",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
       "id": "sending",
       "name": "Sending",
       "level": 3,
       "school": "Divination",
       "classes": [
+        "bard",
+        "cleric",
         "wizard"
       ],
       "concentration": false,
@@ -1229,6 +2357,8 @@
       "level": 3,
       "school": "Conjuration",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1241,6 +2371,8 @@
       "level": 3,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1253,9 +2385,37 @@
       "level": 3,
       "school": "Necromancy",
       "classes": [
+        "bard",
+        "cleric",
         "wizard"
       ],
       "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "speak-with-plants",
+      "name": "Speak with Plants",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "spirit-guardians",
+      "name": "Spirit Guardians",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": true,
       "ritual": false,
       "material": false
     },
@@ -1265,6 +2425,8 @@
       "level": 3,
       "school": "Conjuration",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1277,6 +2439,7 @@
       "level": 3,
       "school": "Evocation",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": false,
@@ -1289,6 +2452,10 @@
       "level": 3,
       "school": "Divination",
       "classes": [
+        "bard",
+        "cleric",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -1301,6 +2468,8 @@
       "level": 3,
       "school": "Necromancy",
       "classes": [
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -1313,10 +2482,41 @@
       "level": 3,
       "school": "Transmutation",
       "classes": [
+        "druid",
+        "ranger",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
       "ritual": true,
+      "material": false
+    },
+    {
+      "id": "water-walk",
+      "name": "Water Walk",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "cleric",
+        "druid",
+        "ranger",
+        "sorcerer"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "wind-wall",
+      "name": "Wind Wall",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
       "material": false
     },
     {
@@ -1332,11 +2532,28 @@
       "material": false
     },
     {
+      "id": "aura-of-life",
+      "name": "Aura of Life",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
       "id": "banishment",
       "name": "Banishment",
       "level": 4,
       "school": "Abjuration",
       "classes": [
+        "cleric",
+        "paladin",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -1361,6 +2578,9 @@
       "level": 4,
       "school": "Necromancy",
       "classes": [
+        "druid",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -1373,9 +2593,25 @@
       "level": 4,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "druid",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "compulsion",
+      "name": "Compulsion",
+      "level": 4,
+      "school": "Enchantment",
+      "classes": [
+        "bard"
+      ],
+      "concentration": true,
       "ritual": false,
       "material": false
     },
@@ -1385,6 +2621,9 @@
       "level": 4,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1397,7 +2636,21 @@
       "level": 4,
       "school": "Conjuration",
       "classes": [
+        "druid",
         "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "conjure-woodland-beings",
+      "name": "Conjure Woodland Beings",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "ranger"
       ],
       "concentration": true,
       "ritual": false,
@@ -1409,9 +2662,24 @@
       "level": 4,
       "school": "Transmutation",
       "classes": [
+        "cleric",
+        "druid",
         "wizard"
       ],
       "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "death-ward",
+      "name": "Death Ward",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
       "ritual": false,
       "material": false
     },
@@ -1421,6 +2689,9 @@
       "level": 4,
       "school": "Conjuration",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -1433,11 +2704,27 @@
       "level": 4,
       "school": "Divination",
       "classes": [
+        "cleric",
+        "druid",
         "wizard"
       ],
       "concentration": false,
       "ritual": true,
       "material": true
+    },
+    {
+      "id": "dominate-beast",
+      "name": "Dominate Beast",
+      "level": 4,
+      "school": "Enchantment",
+      "classes": [
+        "druid",
+        "ranger",
+        "sorcerer"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
     },
     {
       "id": "fabricate",
@@ -1469,9 +2756,38 @@
       "level": 4,
       "school": "Evocation",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "freedom-of-movement",
+      "name": "Freedom of Movement",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "giant-insect",
+      "name": "Giant Insect",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
       "ritual": false,
       "material": false
     },
@@ -1481,9 +2797,23 @@
       "level": 4,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "guardian-of-faith",
+      "name": "Guardian of Faith",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
       "ritual": false,
       "material": false
     },
@@ -1493,6 +2823,9 @@
       "level": 4,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "druid",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -1505,6 +2838,8 @@
       "level": 4,
       "school": "Evocation",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -1517,6 +2852,11 @@
       "level": 4,
       "school": "Divination",
       "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger",
         "wizard"
       ],
       "concentration": true,
@@ -1529,6 +2869,7 @@
       "level": 4,
       "school": "Illusion",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": true,
@@ -1541,6 +2882,9 @@
       "level": 4,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1589,6 +2933,8 @@
       "level": 4,
       "school": "Transmutation",
       "classes": [
+        "cleric",
+        "druid",
         "wizard"
       ],
       "concentration": false,
@@ -1601,6 +2947,9 @@
       "level": 4,
       "school": "Transmutation",
       "classes": [
+        "druid",
+        "ranger",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1613,6 +2962,7 @@
       "level": 4,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -1625,6 +2975,8 @@
       "level": 4,
       "school": "Evocation",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1637,7 +2989,21 @@
       "level": 5,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "antilife-shell",
+      "name": "Antilife Shell",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "druid"
       ],
       "concentration": true,
       "ritual": false,
@@ -1649,6 +3015,7 @@
       "level": 5,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1656,15 +3023,54 @@
       "material": false
     },
     {
+      "id": "awaken",
+      "name": "Awaken",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
       "id": "cloudkill",
       "name": "Cloudkill",
       "level": 5,
       "school": "Conjuration",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
       "ritual": false,
+      "material": false
+    },
+    {
+      "id": "commune",
+      "name": "Commune",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": false
+    },
+    {
+      "id": "commune-with-nature",
+      "name": "Commune with Nature",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": true,
       "material": false
     },
     {
@@ -1673,6 +3079,8 @@
       "level": 5,
       "school": "Evocation",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -1685,6 +3093,7 @@
       "level": 5,
       "school": "Conjuration",
       "classes": [
+        "druid",
         "wizard"
       ],
       "concentration": true,
@@ -1697,10 +3106,24 @@
       "level": 5,
       "school": "Divination",
       "classes": [
+        "warlock",
         "wizard"
       ],
       "concentration": false,
       "ritual": true,
+      "material": false
+    },
+    {
+      "id": "contagion",
+      "name": "Contagion",
+      "level": 5,
+      "school": "Necromancy",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
       "material": false
     },
     {
@@ -1709,9 +3132,23 @@
       "level": 5,
       "school": "Illusion",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "dispel-evil-and-good",
+      "name": "Dispel Evil and Good",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "paladin"
+      ],
+      "concentration": true,
       "ritual": false,
       "material": false
     },
@@ -1721,6 +3158,8 @@
       "level": 5,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1733,7 +3172,21 @@
       "level": 5,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "warlock",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "flame-strike",
+      "name": "Flame Strike",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
       ],
       "concentration": false,
       "ritual": false,
@@ -1745,6 +3198,10 @@
       "level": 5,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
         "wizard"
       ],
       "concentration": false,
@@ -1752,12 +3209,57 @@
       "material": false
     },
     {
+      "id": "greater-restoration",
+      "name": "Greater Restoration",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "paladin",
+        "ranger"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "hallow",
+      "name": "Hallow",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
       "id": "hold-monster",
       "name": "Hold Monster",
       "level": 5,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "insect-plague",
+      "name": "Insect Plague",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "cleric",
+        "druid",
+        "sorcerer"
       ],
       "concentration": true,
       "ritual": false,
@@ -1769,6 +3271,8 @@
       "level": 5,
       "school": "Divination",
       "classes": [
+        "bard",
+        "cleric",
         "wizard"
       ],
       "concentration": false,
@@ -1776,11 +3280,27 @@
       "material": true
     },
     {
+      "id": "mass-cure-wounds",
+      "name": "Mass Cure Wounds",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
       "id": "mislead",
       "name": "Mislead",
       "level": 5,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -1793,6 +3313,7 @@
       "level": 5,
       "school": "Enchantment",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": true,
@@ -1817,7 +3338,37 @@
       "level": 5,
       "school": "Abjuration",
       "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "warlock",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "raise-dead",
+      "name": "Raise Dead",
+      "level": 5,
+      "school": "Necromancy",
+      "classes": [
+        "bard",
+        "cleric",
+        "paladin"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "reincarnate",
+      "name": "Reincarnate",
+      "level": 5,
+      "school": "Necromancy",
+      "classes": [
+        "druid"
       ],
       "concentration": false,
       "ritual": false,
@@ -1829,6 +3380,10 @@
       "level": 5,
       "school": "Divination",
       "classes": [
+        "bard",
+        "cleric",
+        "druid",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -1841,6 +3396,8 @@
       "level": 5,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -1865,6 +3422,7 @@
       "level": 5,
       "school": "Transmutation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -1877,6 +3435,7 @@
       "level": 5,
       "school": "Divination",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": false,
@@ -1889,11 +3448,27 @@
       "level": 5,
       "school": "Conjuration",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
       "ritual": false,
       "material": true
+    },
+    {
+      "id": "tree-stride",
+      "name": "Tree Stride",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "druid",
+        "ranger"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
     },
     {
       "id": "wall-of-force",
@@ -1913,7 +3488,21 @@
       "level": 5,
       "school": "Evocation",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "blade-barrier",
+      "name": "Blade Barrier",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
       ],
       "concentration": true,
       "ritual": false,
@@ -1925,6 +3514,7 @@
       "level": 6,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -1937,11 +3527,25 @@
       "level": 6,
       "school": "Necromancy",
       "classes": [
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
       "ritual": false,
       "material": true
+    },
+    {
+      "id": "conjure-fey",
+      "name": "Conjure Fey",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
     },
     {
       "id": "contingency",
@@ -1961,6 +3565,8 @@
       "level": 6,
       "school": "Necromancy",
       "classes": [
+        "cleric",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -1973,6 +3579,7 @@
       "level": 6,
       "school": "Transmutation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -1985,11 +3592,28 @@
       "level": 6,
       "school": "Necromancy",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
       "ritual": false,
       "material": false
+    },
+    {
+      "id": "find-the-path",
+      "name": "Find the Path",
+      "level": 6,
+      "school": "Divination",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
     },
     {
       "id": "flesh-to-stone",
@@ -1997,6 +3621,8 @@
       "level": 6,
       "school": "Transmutation",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -2004,11 +3630,24 @@
       "material": false
     },
     {
+      "id": "forbiddance",
+      "name": "Forbiddance",
+      "level": 6,
+      "school": "Abjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": true,
+      "material": true
+    },
+    {
       "id": "freezing-sphere",
       "name": "Freezing Sphere",
       "level": 6,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -2021,6 +3660,7 @@
       "level": 6,
       "school": "Abjuration",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -2033,7 +3673,47 @@
       "level": 6,
       "school": "Abjuration",
       "classes": [
+        "bard",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "harm",
+      "name": "Harm",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "heal",
+      "name": "Heal",
+      "level": 6,
+      "school": "Abjuration",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "heroes-feast",
+      "name": "Heroes’ Feast",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid"
       ],
       "concentration": false,
       "ritual": false,
@@ -2057,6 +3737,7 @@
       "level": 6,
       "school": "Enchantment",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": true,
@@ -2081,6 +3762,8 @@
       "level": 6,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -2093,9 +3776,23 @@
       "level": 6,
       "school": "Transmutation",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "planar-ally",
+      "name": "Planar Ally",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
       "ritual": false,
       "material": false
     },
@@ -2105,6 +3802,7 @@
       "level": 6,
       "school": "Illusion",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": false,
@@ -2117,9 +3815,24 @@
       "level": 6,
       "school": "Evocation",
       "classes": [
+        "cleric",
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "transport-via-plants",
+      "name": "Transport via Plants",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": false,
       "ritual": false,
       "material": false
     },
@@ -2129,6 +3842,10 @@
       "level": 6,
       "school": "Divination",
       "classes": [
+        "bard",
+        "cleric",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -2148,11 +3865,48 @@
       "material": false
     },
     {
+      "id": "wall-of-thorns",
+      "name": "Wall of Thorns",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "wind-walk",
+      "name": "Wind Walk",
+      "level": 6,
+      "school": "Transmutation",
+      "classes": [
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "word-of-recall",
+      "name": "Word of Recall",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
       "id": "arcane-sword",
       "name": "Arcane Sword",
       "level": 7,
       "school": "Evocation",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": true,
@@ -2160,14 +3914,39 @@
       "material": true
     },
     {
+      "id": "conjure-celestial",
+      "name": "Conjure Celestial",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
       "id": "delayed-blast-fireball",
       "name": "Delayed Blast Fireball",
       "level": 7,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "divine-word",
+      "name": "Divine Word",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
       "ritual": false,
       "material": false
     },
@@ -2177,6 +3956,10 @@
       "level": 7,
       "school": "Conjuration",
       "classes": [
+        "bard",
+        "cleric",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -2189,7 +3972,23 @@
       "level": 7,
       "school": "Necromancy",
       "classes": [
+        "sorcerer",
+        "warlock",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "fire-storm",
+      "name": "Fire Storm",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "cleric",
+        "druid",
+        "sorcerer"
       ],
       "concentration": false,
       "ritual": false,
@@ -2201,6 +4000,8 @@
       "level": 7,
       "school": "Evocation",
       "classes": [
+        "bard",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -2213,6 +4014,7 @@
       "level": 7,
       "school": "Conjuration",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": false,
@@ -2225,6 +4027,8 @@
       "level": 7,
       "school": "Illusion",
       "classes": [
+        "bard",
+        "druid",
         "wizard"
       ],
       "concentration": false,
@@ -2237,6 +4041,10 @@
       "level": 7,
       "school": "Conjuration",
       "classes": [
+        "cleric",
+        "druid",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -2249,6 +4057,8 @@
       "level": 7,
       "school": "Evocation",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -2261,9 +4071,37 @@
       "level": 7,
       "school": "Illusion",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
+      "id": "regenerate",
+      "name": "Regenerate",
+      "level": 7,
+      "school": "Transmutation",
+      "classes": [
+        "bard",
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "resurrection",
+      "name": "Resurrection",
+      "level": 7,
+      "school": "Necromancy",
+      "classes": [
+        "bard",
+        "cleric"
+      ],
+      "concentration": false,
       "ritual": false,
       "material": true
     },
@@ -2273,6 +4111,8 @@
       "level": 7,
       "school": "Transmutation",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -2309,6 +4149,9 @@
       "level": 7,
       "school": "Abjuration",
       "classes": [
+        "bard",
+        "cleric",
+        "druid",
         "wizard"
       ],
       "concentration": false,
@@ -2321,7 +4164,21 @@
       "level": 7,
       "school": "Conjuration",
       "classes": [
+        "bard",
+        "sorcerer",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "animal-shapes",
+      "name": "Animal Shapes",
+      "level": 8,
+      "school": "Transmutation",
+      "classes": [
+        "druid"
       ],
       "concentration": false,
       "ritual": false,
@@ -2333,6 +4190,7 @@
       "level": 8,
       "school": "Abjuration",
       "classes": [
+        "cleric",
         "wizard"
       ],
       "concentration": true,
@@ -2345,6 +4203,8 @@
       "level": 8,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "druid",
         "wizard"
       ],
       "concentration": false,
@@ -2357,6 +4217,9 @@
       "level": 8,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "druid",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -2381,6 +4244,8 @@
       "level": 8,
       "school": "Transmutation",
       "classes": [
+        "cleric",
+        "druid",
         "wizard"
       ],
       "concentration": true,
@@ -2393,6 +4258,8 @@
       "level": 8,
       "school": "Conjuration",
       "classes": [
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -2405,6 +4272,9 @@
       "level": 8,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -2412,11 +4282,52 @@
       "material": false
     },
     {
+      "id": "earthquake",
+      "name": "Earthquake",
+      "level": 8,
+      "school": "Transmutation",
+      "classes": [
+        "cleric",
+        "druid",
+        "sorcerer"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "glibness",
+      "name": "Glibness",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "warlock"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "holy-aura",
+      "name": "Holy Aura",
+      "level": 8,
+      "school": "Abjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": true
+    },
+    {
       "id": "incendiary-cloud",
       "name": "Incendiary Cloud",
       "level": 8,
       "school": "Conjuration",
       "classes": [
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": true,
@@ -2441,6 +4352,7 @@
       "level": 8,
       "school": "Abjuration",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": false,
@@ -2453,6 +4365,9 @@
       "level": 8,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -2465,9 +4380,24 @@
       "level": 8,
       "school": "Evocation",
       "classes": [
+        "cleric",
+        "druid",
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "tsunami",
+      "name": "Tsunami",
+      "level": 8,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
       "ritual": false,
       "material": false
     },
@@ -2477,6 +4407,8 @@
       "level": 9,
       "school": "Necromancy",
       "classes": [
+        "cleric",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -2489,6 +4421,9 @@
       "level": 9,
       "school": "Divination",
       "classes": [
+        "bard",
+        "druid",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -2501,6 +4436,9 @@
       "level": 9,
       "school": "Conjuration",
       "classes": [
+        "cleric",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -2513,6 +4451,7 @@
       "level": 9,
       "school": "Abjuration",
       "classes": [
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -2520,12 +4459,38 @@
       "material": true
     },
     {
+      "id": "mass-heal",
+      "name": "Mass Heal",
+      "level": 9,
+      "school": "Abjuration",
+      "classes": [
+        "cleric"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
       "id": "meteor-swarm",
       "name": "Meteor Swarm",
       "level": 9,
       "school": "Evocation",
       "classes": [
+        "sorcerer",
         "wizard"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": false
+    },
+    {
+      "id": "power-word-heal",
+      "name": "Power Word Heal",
+      "level": 9,
+      "school": "Enchantment",
+      "classes": [
+        "bard",
+        "cleric"
       ],
       "concentration": false,
       "ritual": false,
@@ -2537,6 +4502,9 @@
       "level": 9,
       "school": "Enchantment",
       "classes": [
+        "bard",
+        "sorcerer",
+        "warlock",
         "wizard"
       ],
       "concentration": false,
@@ -2549,6 +4517,7 @@
       "level": 9,
       "school": "Abjuration",
       "classes": [
+        "bard",
         "wizard"
       ],
       "concentration": false,
@@ -2561,6 +4530,7 @@
       "level": 9,
       "school": "Transmutation",
       "classes": [
+        "druid",
         "wizard"
       ],
       "concentration": true,
@@ -2568,11 +4538,24 @@
       "material": true
     },
     {
+      "id": "storm-of-vengeance",
+      "name": "Storm of Vengeance",
+      "level": 9,
+      "school": "Conjuration",
+      "classes": [
+        "druid"
+      ],
+      "concentration": true,
+      "ritual": false,
+      "material": false
+    },
+    {
       "id": "time-stop",
       "name": "Time Stop",
       "level": 9,
       "school": "Transmutation",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
@@ -2585,6 +4568,8 @@
       "level": 9,
       "school": "Transmutation",
       "classes": [
+        "bard",
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -2592,11 +4577,25 @@
       "material": false
     },
     {
+      "id": "true-resurrection",
+      "name": "True Resurrection",
+      "level": 9,
+      "school": "Necromancy",
+      "classes": [
+        "cleric",
+        "druid"
+      ],
+      "concentration": false,
+      "ritual": false,
+      "material": true
+    },
+    {
       "id": "weird",
       "name": "Weird",
       "level": 9,
       "school": "Illusion",
       "classes": [
+        "warlock",
         "wizard"
       ],
       "concentration": true,
@@ -2609,6 +4608,7 @@
       "level": 9,
       "school": "Conjuration",
       "classes": [
+        "sorcerer",
         "wizard"
       ],
       "concentration": false,
