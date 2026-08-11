@@ -143,3 +143,71 @@
   .smart-spell-row { grid-template-columns: minmax(0, 1fr) auto !important; }
   .smart-spell-select { border-color: transparent !important; background: transparent !important; }
 }
+
+
+/* ==========================================================
+   SPELLCASTING BUILD 2 - ALL 2024 SRD CASTER PROFILES
+   ========================================================== */
+
+.spell-slot-stack {
+  display: grid;
+  gap: 4px;
+}
+
+.secondary-slot-line {
+  font-size: 7.75px;
+  opacity: 0.78;
+}
+
+.always-prepared-box,
+.spell-rule-note {
+  padding: 5px 7px;
+  border: 1px dashed var(--border-color);
+  border-radius: 4px;
+  font-size: 8px;
+  line-height: 1.3;
+}
+
+.always-prepared-title {
+  margin-bottom: 4px;
+  font-family: "Cinzel", serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.35px;
+  text-transform: uppercase;
+}
+
+.always-prepared-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.always-prepared-chip {
+  padding: 2px 5px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  font-size: 7.5px;
+  white-space: nowrap;
+}
+
+.arcanum-tier .smart-spell-select {
+  margin-top: 2px;
+}
+
+@media print {
+  .spell-rule-note,
+  .smart-spell-warning,
+  .smart-spell-full,
+  .smart-spell-locked-message {
+    font-size: 7px;
+  }
+
+  body.printing-blank #spellcasting-pages {
+    display: none !important;
+  }
+
+  body.printing-blank .spellcasting-summary-box {
+    display: none !important;
+  }
+}
