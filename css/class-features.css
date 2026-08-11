@@ -1,0 +1,40 @@
+/* My RPG Source - Structured Class & Subclass Features */
+.legacy-class-abilities { display:none; }
+.structured-class-features { display:flex; flex-direction:column; gap:7px; }
+.class-feature-toolbar { display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+.class-feature-helper { margin:0; font-size:8px; line-height:1.35; opacity:.75; }
+.class-feature-groups { display:flex; flex-direction:column; gap:6px; }
+.class-feature-group { border:1px solid var(--border-color); border-radius:5px; padding:6px; min-width:0; }
+.class-feature-group-head { display:flex; align-items:flex-start; justify-content:space-between; gap:6px; margin-bottom:5px; }
+.class-feature-group-title { margin:0; font-family:"Cinzel",serif; font-size:10px; letter-spacing:.35px; text-transform:uppercase; }
+.class-feature-level { font-size:8px; opacity:.7; white-space:nowrap; }
+.subclass-feature-panel { display:grid; grid-template-columns:minmax(0,1fr); gap:4px; padding:4px 5px; margin-bottom:4px; border:1px dashed rgba(92,64,51,.45); border-radius:4px; }
+.subclass-feature-panel > label:first-child { display:grid; grid-template-columns:auto minmax(0,1fr); gap:6px; align-items:center; font-size:8px; font-weight:700; }
+.subclass-feature-select,.subclass-manual-name { width:100%; min-width:0; }
+.class-feature-list { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:4px; }
+.class-feature-card { border:1px solid rgba(92,64,51,.35); border-radius:4px; padding:5px; background:rgba(255,255,255,.12); }
+.class-feature-card.subclass { border-style:dashed; }
+.class-feature-card-head { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:5px; align-items:start; }
+.class-feature-title { font-size:9px; font-weight:700; line-height:1.2; }
+.class-feature-source { font-size:7px; opacity:.68; margin-top:1px; }
+.class-feature-actions { display:flex; align-items:center; gap:3px; }
+.class-feature-info,.class-feature-codex { display:inline-flex; align-items:center; justify-content:center; min-width:23px; height:22px; padding:0 5px; border:1px solid var(--border-color); border-radius:4px; background:transparent; color:inherit; font-size:8px; text-decoration:none; cursor:pointer; }
+.class-feature-info { font-weight:800; }
+.class-feature-choice { margin-top:3px; font-size:7.5px; }
+.class-feature-choice summary { cursor:pointer; opacity:.78; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.class-feature-choice input { width:100%; min-width:0; font-size:8px; }
+.class-feature-empty { margin:4px 0 0; font-size:8px; opacity:.7; text-align:center; }
+.manual-subclass-feature { margin-top:4px; }
+.manual-subclass-feature input { width:100%; min-width:0; font-size:8px; }
+body.printing-blank .structured-class-features { display:none !important; }
+body.printing-blank .legacy-class-abilities { display:grid !important; }
+@media screen and (max-width:900px){.class-feature-list{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media print {.class-feature-info,.class-feature-codex,.class-feature-choice,.subclass-feature-panel{display:none!important}.class-feature-card{break-inside:avoid}.class-feature-list{grid-template-columns:repeat(4,minmax(0,1fr));}}
+
+#class-feature-pages { display:contents; }
+.class-feature-more { grid-column:1 / -1; margin:2px 0 0; font-size:7.5px; text-align:right; opacity:.72; }
+.class-feature-continuation-page { gap:6px; }
+.class-feature-page-note { margin:-2px 0 2px; text-align:center; font-size:8px; opacity:.7; }
+.class-feature-continuation-body { display:flex; flex-direction:column; gap:7px; min-height:0; flex:1; }
+.class-feature-continuation-page .class-feature-list { grid-template-columns:repeat(4,minmax(0,1fr)); }
+body.printing-blank #class-feature-pages { display:none !important; }
