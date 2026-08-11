@@ -220,7 +220,7 @@ function populateEquipmentCategories(categories) {
 async function loadGameSystem(gameSystemId) {
   const result = await window.MyRPGCodexData.loadEntries({
     gameSystem: gameSystemId,
-    entryTypes: ['rule', 'ancestry', 'background', 'feat', 'class', 'equipment', 'spell', 'item'],
+    entryTypes: ['rule', 'ancestry', 'background', 'feat', 'class', 'class-feature', 'equipment', 'spell', 'item'],
   });
 
   codexState.gameSystem = result.gameSystem;

@@ -1210,6 +1210,7 @@ const left=make('div','smart-spell-column'); const right=make('div','smart-spell
   }
 
   function changeSubclassSelection(target) {
+    const sourceId=text(target.dataset.spellSource);
     const sourceState=sourceStateForTarget(target);
     const previous=sourceState.subclassId;
     sourceState.subclassId=text(target.value);
@@ -1217,6 +1218,7 @@ const left=make('div','smart-spell-column'); const right=make('div','smart-spell
     /* A subclass-specific secondary choice must not leak across subclass modes. */
     if (previous !== sourceState.subclassId) sourceState.subclassChoice='';
     syncStateField(); render();
+    document.dispatchEvent(new CustomEvent('character:subclass-changed',{detail:{classId:sourceId,subclassId:sourceState.subclassId,manualName:sourceState.manualSubclassName,origin:'spellcasting'}}));
   }
 
   function changeSubclassChoice(target) {
@@ -1224,7 +1226,19 @@ const left=make('div','smart-spell-column'); const right=make('div','smart-spell
   }
 
   function updateManualSubclassName(target) {
-    const sourceState=sourceStateForTarget(target); sourceState.manualSubclassName=target.value; syncStateField();
+    const sourceId=text(target.dataset.spellSource); const sourceState=sourceStateForTarget(target); sourceState.manualSubclassName=target.value; syncStateField();
+    document.dispatchEvent(new CustomEvent('character:subclass-changed',{detail:{classId:sourceId,subclassId:sourceState.subclassId,manualName:sourceState.manualSubclassName,origin:'spellcasting'}}));
+  }
+
+  function setSubclassSelection(classId, subclassId, manualName = '', options = {}) {
+    const sourceState=ensureSourceState(classId);
+    const previous=sourceState.subclassId;
+    sourceState.subclassId=text(subclassId);
+    sourceState.manualSubclassName=sourceState.subclassId==='__manual__'?text(manualName):'';
+    if(previous!==sourceState.subclassId) sourceState.subclassChoice='';
+    syncStateField({notify: options.emit !== false});
+    if(options.render !== false) render();
+    return {subclassId:sourceState.subclassId,manualSubclassName:sourceState.manualSubclassName};
   }
 
   function changeBonusSelection(target, field) {
@@ -1321,7 +1335,7 @@ const left=make('div','smart-spell-column'); const right=make('div','smart-spell
 
   window.CharacterSpellcasting=Object.freeze({
     get ready(){return readyPromise;}, get loaded(){return state.loaded;}, get active(){return state.active;}, get spellCount(){return state.spells.length;},
-    get error(){return state.error;}, get state(){return JSON.parse(JSON.stringify(state.structured));}, render, getActiveSources,effectiveCasterLevel,sharedSpellSlots,
+    get error(){return state.error;}, get state(){return JSON.parse(JSON.stringify(state.structured));}, setSubclassSelection, render, getActiveSources,effectiveCasterLevel,sharedSpellSlots,
     classSpellCount(id){return (state.classSpells.get(id)||[]).length;}, get subclassCount(){return state.subclasses.size;}, bardMagicalSecretsCap
   });
 

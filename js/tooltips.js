@@ -272,7 +272,7 @@
     const editionLabel =
       Array.isArray(entry.editions)
         ? entry.editions.join(' / ')
-        : '2014 / 2024';
+        : entry.edition || edition;
 
     const codexUrl =
       createCodexUrl(entry);
@@ -1012,6 +1012,12 @@
       );
   }
 
+  function markClassFeatures() {
+    document
+      .querySelectorAll('[data-class-feature-knowledge]')
+      .forEach((element) => mark(element, element.dataset.classFeatureKnowledge));
+  }
+
 
   function markEquipment() {
     mark(
@@ -1038,6 +1044,7 @@
     markCombat();
     markSpellcasting();
     markDynamicSpells();
+    markClassFeatures();
     markEquipment();
   }
 
@@ -1084,14 +1091,19 @@
       window.MyRPGCodexData
         ?.loadEntries
     ) {
-      const spellData =
-        await window
-          .MyRPGCodexData
-          .loadEntries({
+      const [spellData, classFeatureData] =
+        await Promise.all([
+          window.MyRPGCodexData.loadEntries({
             gameSystem,
             editions: [edition],
             entryTypes: ['spell']
-          });
+          }),
+          window.MyRPGCodexData.loadEntries({
+            gameSystem,
+            editions: [edition],
+            entryTypes: ['class-feature']
+          })
+        ]);
 
       (spellData?.entries || [])
         .forEach(
@@ -1111,6 +1123,11 @@
             );
           }
         );
+
+      (classFeatureData?.entries || [])
+        .forEach((entry) => {
+          state.entries.set(entry.localId || entry.id, entry);
+        });
     }
   }
 

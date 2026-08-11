@@ -129,6 +129,11 @@
           window.CharacterSpellcasting
         ),
 
+      classFeatures:
+        Boolean(
+          window.CharacterClassFeatures
+        ),
+
       feats:
         Boolean(
           window.CharacterFeats
@@ -287,6 +292,9 @@
         ?.ready,
 
       window.CharacterSpellcasting
+        ?.ready,
+
+      window.CharacterClassFeatures
         ?.ready,
 
       window.CharacterFeats

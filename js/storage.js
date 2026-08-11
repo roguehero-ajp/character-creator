@@ -692,7 +692,7 @@
 
   /**
    * Wait for asynchronous Race/Species, Background, Class, Spellcasting,
-   * Feat, and combat-equipment data before restoring saved values.
+   * Class Feature, Feat, and combat-equipment data before restoring saved values.
    */
   async function waitForDynamicModules() {
     const promises = [
@@ -706,6 +706,9 @@
         ?.ready,
 
       window.CharacterSpellcasting
+        ?.ready,
+
+      window.CharacterClassFeatures
         ?.ready,
 
       window.CharacterFeats
