@@ -176,6 +176,97 @@
   }
 
   /**
+   * Feat cards are rendered DOM content rather than ordinary form fields.
+   *
+   * The hidden #feat-state textarea is already cleared by blankField(), but
+   * that alone does not remove cards that CharacterFeats has already rendered.
+   * Detach those cards temporarily so the printed Feats area is truly blank.
+   *
+   * The original DOM nodes are preserved and reattached afterward, which keeps
+   * their existing event listeners intact and does not modify actual feat state.
+   */
+  function blankStructuredFeatDisplay(characterDocument) {
+    const list =
+      characterDocument.querySelector(
+        '#feat-list'
+      );
+
+    const count =
+      characterDocument.querySelector(
+        '#feat-count'
+      );
+
+    const empty =
+      characterDocument.querySelector(
+        '#feat-empty'
+      );
+
+    const originalChildren =
+      list
+        ? Array.from(
+            list.childNodes
+          )
+        : [];
+
+    const originalCountText =
+      count
+        ? count.textContent
+        : null;
+
+    const originalEmptyHidden =
+      empty
+        ? empty.hidden
+        : null;
+
+    /*
+     * Leave the Feats box itself in place so a blank printed sheet still
+     * provides usable space for handwritten feats.
+     */
+    list?.replaceChildren();
+
+    if (count) {
+      count.textContent = '';
+    }
+
+    if (empty) {
+      empty.hidden = true;
+    }
+
+    let restored = false;
+
+    return function restoreStructuredFeatDisplay() {
+      if (restored) {
+        return;
+      }
+
+      restored = true;
+
+      if (list?.isConnected) {
+        list.replaceChildren(
+          ...originalChildren
+        );
+      }
+
+      if (
+        count?.isConnected &&
+        originalCountText !== null
+      ) {
+        count.textContent =
+          originalCountText;
+      }
+
+      if (
+        empty?.isConnected &&
+        originalEmptyHidden !== null
+      ) {
+        empty.hidden =
+          originalEmptyHidden;
+      }
+    };
+  }
+
+
+  /**
    * Prepare the character sheet for blank printing.
    *
    * Returns a function that restores everything afterward.
@@ -197,6 +288,15 @@
      */
     const calculatedSnapshots =
       blankCalculatedText(characterDocument);
+
+    /*
+     * Structured Feats are rendered cards, not ordinary form fields.
+     * Temporarily remove the rendered cards for the blank printout.
+     */
+    const restoreFeatDisplay =
+      blankStructuredFeatDisplay(
+        characterDocument
+      );
 
     /*
      * Preserve the browser page title.
@@ -242,6 +342,11 @@
        * Restore modifiers.
        */
       restoreCalculatedText(calculatedSnapshots);
+
+      /*
+       * Restore the exact feat cards/count that were visible before printing.
+       */
+      restoreFeatDisplay();
 
       /*
        * Restore the browser title.
