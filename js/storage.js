@@ -260,6 +260,19 @@
           return false;
         }
 
+        /*
+         * Dynamic modules store their real state in stable hidden fields.
+         * Excluding their generated controls keeps old positional save keys
+         * unchanged even as pages appear and disappear.
+         */
+        if (
+          field.closest(
+            '[data-storage-ignore="true"]'
+          )
+        ) {
+          return false;
+        }
+
         if (
           [
             'button',
@@ -678,8 +691,8 @@
 
 
   /**
-   * Wait for asynchronous Race/Species, Background, Class, Feat,
-   * and combat-equipment data before restoring saved values.
+   * Wait for asynchronous Race/Species, Background, Class, Spellcasting,
+   * Feat, and combat-equipment data before restoring saved values.
    */
   async function waitForDynamicModules() {
     const promises = [
@@ -690,6 +703,9 @@
         ?.ready,
 
       window.CharacterClasses
+        ?.ready,
+
+      window.CharacterSpellcasting
         ?.ready,
 
       window.CharacterFeats

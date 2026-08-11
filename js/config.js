@@ -203,6 +203,13 @@
   }
 
 
+  function getSpellsDataPath() {
+    return getDataPath(
+      'spells.json'
+    );
+  }
+
+
   /**
    * Build a link to either edition.
    */
@@ -366,6 +373,7 @@
    * MyRPGConfig.getOriginDataPath()
    * MyRPGConfig.getBackgroundsDataPath()
    * MyRPGConfig.getClassesDataPath()
+   * MyRPGConfig.getSpellsDataPath()
    */
   const publicConfig =
     Object.freeze({
@@ -397,6 +405,8 @@
       getBackgroundsDataPath,
 
       getClassesDataPath,
+
+      getSpellsDataPath,
 
       buildBuilderUrl,
 
