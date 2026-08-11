@@ -5,7 +5,7 @@
  * Responsibilities:
  *  - Read application identity from config.js
  *  - Coordinate final application startup
- *  - Wait for edition-specific origin and background data
+ *  - Wait for edition-specific dynamic builder data
  *  - Verify that core modules loaded correctly
  *  - Perform a final character-sheet refresh
  *  - Provide diagnostics for development
@@ -119,9 +119,34 @@
           window.CharacterBackgrounds
         ),
 
+      classes:
+        Boolean(
+          window.CharacterClasses
+        ),
+
+      feats:
+        Boolean(
+          window.CharacterFeats
+        ),
+
+      combatEquipment:
+        Boolean(
+          window.CharacterCombatEquipment
+        ),
+
+      abilityScores:
+        Boolean(
+          window.CharacterAbilityScores
+        ),
+
       ui:
         Boolean(
           window.CharacterUI
+        ),
+
+      accessibility:
+        Boolean(
+          window.CharacterAccessibility
         ),
 
       storage:
@@ -246,35 +271,27 @@
      ======================================================== */
 
   async function waitForDataModules() {
-    const pending = [];
-
-    const originsReady =
+    const pending = [
       window.CharacterOrigins
-        ?.ready;
+        ?.ready,
 
-    const backgroundsReady =
       window.CharacterBackgrounds
-        ?.ready;
+        ?.ready,
 
-    if (
-      originsReady &&
-      typeof originsReady.then ===
-        'function'
-    ) {
-      pending.push(
-        originsReady
-      );
-    }
+      window.CharacterClasses
+        ?.ready,
 
-    if (
-      backgroundsReady &&
-      typeof backgroundsReady.then ===
-        'function'
-    ) {
-      pending.push(
-        backgroundsReady
-      );
-    }
+      window.CharacterFeats
+        ?.ready,
+
+      window.CharacterCombatEquipment
+        ?.ready
+    ].filter(
+      (value) =>
+        value &&
+        typeof value.then ===
+          'function'
+    );
 
     if (pending.length === 0) {
       return [];
@@ -469,7 +486,7 @@
     applyApplicationIdentity();
 
     /*
-     * Origins and backgrounds load JSON asynchronously.
+     * Several builder modules load JSON asynchronously.
      * Wait for them before marking the whole builder ready.
      */
     await waitForDataModules();

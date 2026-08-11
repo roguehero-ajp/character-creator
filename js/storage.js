@@ -675,8 +675,8 @@
 
 
   /**
-   * Wait for asynchronous Race, Species, Background, and combat
-   * equipment dropdown data before restoring saved select values.
+   * Wait for asynchronous Race/Species, Background, Class, Feat,
+   * and combat-equipment data before restoring saved values.
    */
   async function waitForDynamicModules() {
     const promises = [
@@ -684,6 +684,12 @@
         ?.ready,
 
       window.CharacterBackgrounds
+        ?.ready,
+
+      window.CharacterClasses
+        ?.ready,
+
+      window.CharacterFeats
         ?.ready,
 
       window.CharacterCombatEquipment
