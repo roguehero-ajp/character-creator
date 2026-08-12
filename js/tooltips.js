@@ -9,13 +9,20 @@
 (() => {
   'use strict';
 
+  const HOVER_DELAY_MS = 500;
+
+  const KNOWLEDGE_PREFERENCE_KEY =
+    'myrpgsource:knowledge-cards-enabled';
+
   const state = {
     entries: new Map(),
     tooltip: null,
     activeElement: null,
+    showTimer: null,
     hideTimer: null,
     positionFrame: null,
-    observer: null
+    observer: null,
+    enabled: true
   };
 
   const edition =
@@ -136,6 +143,8 @@
     element.addEventListener(
       'focusout',
       (event) => {
+        cancelShow();
+
         if (
           element.contains(
             event.relatedTarget
@@ -326,6 +335,207 @@
     `;
   }
 
+  function readKnowledgePreference() {
+    try {
+      return (
+        localStorage.getItem(
+          KNOWLEDGE_PREFERENCE_KEY
+        ) !== 'false'
+      );
+    } catch (_) {
+      return true;
+    }
+  }
+
+
+  function saveKnowledgePreference(
+    enabled
+  ) {
+    try {
+      localStorage.setItem(
+        KNOWLEDGE_PREFERENCE_KEY,
+        enabled
+          ? 'true'
+          : 'false'
+      );
+    } catch (_) {
+      /*
+       * The switch still works for the current page even if browser
+       * storage is unavailable.
+       */
+    }
+  }
+
+
+  function cancelShow() {
+    clearTimeout(
+      state.showTimer
+    );
+
+    state.showTimer =
+      null;
+  }
+
+
+  function updateKnowledgeToggleUi() {
+    const toggle =
+      document.getElementById(
+        'knowledge-cards-toggle'
+      );
+
+    const text =
+      document.getElementById(
+        'knowledge-cards-toggle-text'
+      );
+
+    if (toggle) {
+      toggle.checked =
+        state.enabled;
+
+      toggle.setAttribute(
+        'aria-checked',
+        state.enabled
+          ? 'true'
+          : 'false'
+      );
+    }
+
+    if (text) {
+      text.textContent =
+        state.enabled
+          ? 'Turn off Knowledge Cards'
+          : 'Turn on Knowledge Cards';
+    }
+  }
+
+
+  function updateKnowledgeTriggerAvailability() {
+    document
+      .querySelectorAll(
+        '.tooltip-trigger'
+      )
+      .forEach(
+        (element) => {
+          if (
+            element.dataset
+              .knowledgeOwnsTabindex ===
+            'true'
+          ) {
+            element.tabIndex =
+              state.enabled
+                ? 0
+                : -1;
+          }
+        }
+      );
+  }
+
+
+  function setKnowledgeCardsEnabled(
+    enabled,
+    {
+      persist = true
+    } = {}
+  ) {
+    state.enabled =
+      Boolean(enabled);
+
+    document.body
+      ?.classList.toggle(
+        'knowledge-cards-disabled',
+        !state.enabled
+      );
+
+    if (!state.enabled) {
+      cancelShow();
+      closeTooltip();
+    }
+
+    updateKnowledgeToggleUi();
+    updateKnowledgeTriggerAvailability();
+
+    if (persist) {
+      saveKnowledgePreference(
+        state.enabled
+      );
+    }
+
+    document.dispatchEvent(
+      new CustomEvent(
+        'knowledge:preference-changed',
+        {
+          detail: {
+            enabled:
+              state.enabled
+          }
+        }
+      )
+    );
+  }
+
+
+  function bindKnowledgeToggle() {
+    const toggle =
+      document.getElementById(
+        'knowledge-cards-toggle'
+      );
+
+    if (!toggle) {
+      return;
+    }
+
+    toggle.addEventListener(
+      'change',
+      () => {
+        setKnowledgeCardsEnabled(
+          toggle.checked
+        );
+      }
+    );
+
+    updateKnowledgeToggleUi();
+  }
+
+
+  function queueShow(
+    entry,
+    target,
+    delay = HOVER_DELAY_MS
+  ) {
+    cancelShow();
+
+    if (
+      !state.enabled ||
+      !entry ||
+      !target
+    ) {
+      return;
+    }
+
+    state.showTimer =
+      setTimeout(
+        () => {
+          state.showTimer =
+            null;
+
+          if (
+            !state.enabled ||
+            !target.isConnected ||
+            !target.matches(':hover')
+          ) {
+            return;
+          }
+
+          showTooltip(
+            entry,
+            target
+          );
+        },
+        delay
+      );
+  }
+
+
   function cancelHide() {
     clearTimeout(
       state.hideTimer
@@ -439,6 +649,7 @@
 
   function showTooltip(entry, target) {
     if (
+      !state.enabled ||
       !state.tooltip ||
       !entry ||
       !target
@@ -446,6 +657,7 @@
       return;
     }
 
+    cancelShow();
     cancelHide();
 
     if (
@@ -495,6 +707,7 @@
   }
 
   function closeTooltip() {
+    cancelShow();
     cancelHide();
 
     if (!state.tooltip) {
@@ -524,7 +737,13 @@
   function hideTooltip(
     delay = 160
   ) {
+    cancelShow();
     cancelHide();
+
+    if (!state.enabled) {
+      closeTooltip();
+      return;
+    }
 
     state.hideTimer =
       setTimeout(
@@ -584,7 +803,14 @@
     if (
       !isNaturallyFocusable(element)
     ) {
-      element.tabIndex = 0;
+      element.dataset
+        .knowledgeOwnsTabindex =
+        'true';
+
+      element.tabIndex =
+        state.enabled
+          ? 0
+          : -1;
     }
 
     bindElement(element);
@@ -610,7 +836,7 @@
             element.dataset.knowledgeId
           );
 
-        showTooltip(
+        queueShow(
           entry,
           element
         );
@@ -619,17 +845,31 @@
 
     element.addEventListener(
       'mouseleave',
-      () => hideTooltip(180)
+      () => {
+        cancelShow();
+        hideTooltip(180);
+      }
     );
 
     element.addEventListener(
       'focusin',
       () => {
+        cancelShow();
+
+        if (!state.enabled) {
+          return;
+        }
+
         const entry =
           getEntry(
             element.dataset.knowledgeId
           );
 
+        /*
+         * Keyboard users receive the card immediately. The 500 ms
+         * delay is only for pointer hover, where accidental flyovers
+         * are common.
+         */
         showTooltip(
           entry,
           element
@@ -1136,9 +1376,22 @@
     state.tooltip =
       createTooltip();
 
+    state.enabled =
+      readKnowledgePreference();
+
+    bindKnowledgeToggle();
+
+    setKnowledgeCardsEnabled(
+      state.enabled,
+      {
+        persist: false
+      }
+    );
+
     try {
       await loadData();
       markAll();
+      updateKnowledgeTriggerAvailability();
 
       state.observer =
         new MutationObserver(
@@ -1231,6 +1484,17 @@
 
       refresh:
         markAll,
+
+      setEnabled:
+        setKnowledgeCardsEnabled,
+
+      get enabled() {
+        return state.enabled;
+      },
+
+      get hoverDelay() {
+        return HOVER_DELAY_MS;
+      },
 
       get count() {
         return state.entries.size;
