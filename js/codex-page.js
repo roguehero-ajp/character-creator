@@ -57,6 +57,7 @@ function cacheCodexElements() {
   codexElements.backgroundCount = document.getElementById('codex-background-count');
   codexElements.featCount = document.getElementById('codex-feat-count');
   codexElements.classCount = document.getElementById('codex-class-count');
+  codexElements.classFeatureCount = document.getElementById('codex-class-feature-count');
   codexElements.spellCount = document.getElementById('codex-spell-count');
   codexElements.itemCount = document.getElementById('codex-item-count');
   codexElements.equipmentCount = document.getElementById('codex-equipment-count');
@@ -260,6 +261,7 @@ function updateCollectionTotals(entries) {
   const backgroundCount = entries.filter((entry) => entry.entryType === 'background').length;
   const featCount = entries.filter((entry) => entry.entryType === 'feat').length;
   const classCount = entries.filter((entry) => entry.entryType === 'class').length;
+  const classFeatureCount = entries.filter((entry) => entry.entryType === 'class-feature').length;
   const equipmentCount = entries.filter((entry) => entry.entryType === 'equipment').length;
   const spellCount = entries.filter((entry) => entry.entryType === 'spell').length;
   const itemCount = entries.filter((entry) => entry.entryType === 'item').length;
@@ -270,6 +272,7 @@ function updateCollectionTotals(entries) {
   codexElements.backgroundCount.textContent = backgroundCount.toLocaleString('en-CA');
   codexElements.featCount.textContent = featCount.toLocaleString('en-CA');
   codexElements.classCount.textContent = classCount.toLocaleString('en-CA');
+  codexElements.classFeatureCount.textContent = classFeatureCount.toLocaleString('en-CA');
   codexElements.equipmentCount.textContent = equipmentCount.toLocaleString('en-CA');
   codexElements.spellCount.textContent = spellCount.toLocaleString('en-CA');
   codexElements.itemCount.textContent = itemCount.toLocaleString('en-CA');
@@ -445,6 +448,10 @@ function entryTypeLabel(entryType) {
     return 'Class';
   }
 
+  if (entryType === 'class-feature') {
+    return 'Class feature';
+  }
+
   if (entryType === 'equipment') {
     return 'Mundane equipment';
   }
@@ -550,6 +557,55 @@ function createStructuredBody(entry) {
   });
   return fragment;
 }
+
+function createClassFeatureBody(entry) {
+  const fragment = document.createDocumentFragment();
+
+  fragment.append(
+    createStructuredFacts(entry)
+  );
+
+  if (entry.summary) {
+    const summary = document.createElement('p');
+    summary.className = 'codex-description';
+    summary.textContent = entry.summary;
+    fragment.append(summary);
+  }
+
+  if (
+    Array.isArray(entry.whatItAffects) &&
+    entry.whatItAffects.length > 0
+  ) {
+    const section = document.createElement('section');
+    section.className = 'codex-rule-section';
+
+    const heading = document.createElement('h4');
+    heading.textContent = 'What it affects';
+
+    const list = document.createElement('ul');
+    list.className = 'codex-list';
+
+    entry.whatItAffects.forEach((item) => {
+      const listItem = document.createElement('li');
+      listItem.textContent = item;
+      list.append(listItem);
+    });
+
+    section.append(heading, list);
+    fragment.append(section);
+  }
+
+  if (entry.requiresChoice) {
+    const note = document.createElement('p');
+    note.className = 'codex-note';
+    note.textContent =
+      'This feature requires one or more player choices. The character builder records those choices separately from the feature itself.';
+    fragment.append(note);
+  }
+
+  return fragment;
+}
+
 
 function createEquipmentFacts(entry) {
   const factsElement = document.createElement('dl');
@@ -861,6 +917,7 @@ function createCodexEntry(entry) {
     entry.entryType === 'background' ||
     entry.entryType === 'feat' ||
     entry.entryType === 'class' ||
+    entry.entryType === 'class-feature' ||
     entry.entryType === 'equipment'
   ) {
     badges.append(createBadge(entry.categoryName));
@@ -885,6 +942,8 @@ function createCodexEntry(entry) {
     body.append(createStructuredBody(entry));
   } else if (entry.entryType === 'class') {
     body.append(createClassBody(entry));
+  } else if (entry.entryType === 'class-feature') {
+    body.append(createClassFeatureBody(entry));
   } else {
     if (entry.entryType === 'spell') {
       body.append(createSpellFacts(entry));
