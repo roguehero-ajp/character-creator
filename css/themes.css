@@ -75,16 +75,22 @@
    ========================================================== */
 
 .theme-whimsical {
-  --bg-sheet: #fefae0;
+  /*
+   * Whimsical Woods
+   * Forest-green parchment with warm gold accents and
+   * light emerald body text for strong readability.
+   */
+  --bg-sheet: #14532d;
 
-  /* Deep emerald replaces the theme's former near-black body text. */
-  --text-main: #047857;
+  /* Replaces the old near-black body text. */
+  --text-main: #6ee7b7;
 
-  /* Forest tones replace the former gold/brown borders and headings. */
-  --border-color: #14532d;
-  --accent-color: #228b22;
+  /* Preserve the warm gold visual role for borders/headings/accents. */
+  --border-color: #dda15e;
+  --accent-color: #dda15e;
 
-  --input-bg: rgba(247, 252, 239, 0.92);
+  /* Slightly lighter forest field so inputs remain visible on the sheet. */
+  --input-bg: rgba(22, 101, 52, 0.72);
 }
 
 
