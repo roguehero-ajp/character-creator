@@ -3,7 +3,7 @@
 
   const HOVER_MS = 2000;
   const DESTINATION = '/avendor/test.html';
-  const AUDIO_SRC = '/avendor/assets/avendor-theme.ogg';
+  const AUDIO_SRC = '/avendor/assets/avendor-theme.mp3';
   const STYLE_ID = 'avendor-easter-egg-style';
 
   let hoverTimer = null;
