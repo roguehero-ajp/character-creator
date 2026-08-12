@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Avendor: The Rising Tides | Early Test</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="css/avendor.css">
+</head>
+<body>
+  <main class="avendor-stage" style="--stage-ratio: 1672 / 941" aria-label="Avendor early test title screen">
+    <img class="stage-art" src="assets/rising-tides-intro.png" alt="The Rising Tides of Avendor title screen, overlooking snowy Briarwell">
+    <section class="intro-cover-panel" aria-label="Early test menu">
+      <button class="early-test-button" id="early-test" type="button">Early Test</button>
+    </section>
+    <div class="test-ribbon">prototype build · no save data</div>
+  </main>
+  <audio id="avendor-music" src="assets/avendor-theme.ogg" preload="auto" loop></audio>
+  <script>
+    (() => {
+      const button = document.getElementById('early-test');
+      const audio = document.getElementById('avendor-music');
+      audio.volume = 0.42;
+      if (sessionStorage.getItem('avendorMusicWanted') === '1') {
+        audio.play().catch(() => {});
+      }
+      button.addEventListener('click', () => {
+        sessionStorage.setItem('avendorMusicWanted', '1');
+        const started = audio.play();
+        if (started?.catch) started.catch(() => {});
+        document.body.style.transition = 'filter .25s ease, opacity .25s ease';
+        document.body.style.filter = 'brightness(.45)';
+        document.body.style.opacity = '.75';
+        window.setTimeout(() => { window.location.href = 'walk-test.html'; }, 260);
+      });
+    })();
+  </script>
+</body>
+</html>
