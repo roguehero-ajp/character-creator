@@ -76,10 +76,15 @@
 
 .theme-whimsical {
   --bg-sheet: #fefae0;
-  --text-main: #283618;
-  --border-color: #dda15e;
-  --accent-color: #bc6c25;
-  --input-bg: rgba(254, 250, 224, 0.9);
+
+  /* Deep emerald replaces the theme's former near-black body text. */
+  --text-main: #047857;
+
+  /* Forest tones replace the former gold/brown borders and headings. */
+  --border-color: #14532d;
+  --accent-color: #228b22;
+
+  --input-bg: rgba(247, 252, 239, 0.92);
 }
 
 

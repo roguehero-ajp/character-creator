@@ -157,10 +157,10 @@ a:focus-visible {
     inset 0 0 28px rgba(255, 210, 119, 0.055);
 }
 
-.hotspot-about { left: 7.2%; top: 95.2%; width: 9.3%; height: 3.6%; }
-.hotspot-contact { left: 20.6%; top: 95.2%; width: 10.8%; height: 3.6%; }
-.hotspot-privacy { left: 35.0%; top: 95.2%; width: 10.2%; height: 3.6%; }
-.hotspot-legal { left: 49.4%; top: 95.2%; width: 8.5%; height: 3.6%; }
+.hotspot-about { left: 7.2%; top: 96.5%; width: 9.3%; height: 3.2%; }
+.hotspot-contact { left: 20.6%; top: 96.5%; width: 10.8%; height: 3.2%; }
+.hotspot-privacy { left: 35.0%; top: 96.5%; width: 10.2%; height: 3.2%; }
+.hotspot-legal { left: 49.4%; top: 96.5%; width: 8.5%; height: 3.2%; }
 
 .featured-card {
   color: var(--home-text);
