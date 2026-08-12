@@ -340,6 +340,12 @@
   white-space: pre-line;
 }
 
+.codex-entry-body a,
+.codex-attribution a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 .codex-source-note {
   margin: 16px 0 0;
   color: var(--muted);

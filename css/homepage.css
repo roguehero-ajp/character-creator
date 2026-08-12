@@ -437,7 +437,7 @@ a:focus-visible {
   color: var(--home-gold-bright);
 }
 
-@media (max-width: 840px) {
+@media (max-width: 1080px) {
   body {
     background-attachment: scroll;
   }
@@ -447,7 +447,7 @@ a:focus-visible {
   }
 
   .mobile-home {
-    width: min(720px, calc(100% - 24px));
+    width: min(920px, calc(100% - 24px));
     margin: 0 auto;
     padding-top: 22px;
     display: block;
@@ -625,7 +625,7 @@ a:focus-visible {
 
   .home-section,
   .site-footer {
-    width: min(720px, calc(100% - 24px));
+    width: min(920px, calc(100% - 24px));
   }
 
   .news-grid,
@@ -641,6 +641,41 @@ a:focus-visible {
 
   .site-footer nav {
     justify-content: flex-start;
+  }
+}
+
+
+@media (min-width: 700px) and (max-width: 1080px) {
+  .mobile-header {
+    padding: 34px 32px;
+  }
+
+  .mobile-header h1 {
+    font-size: clamp(3rem, 7vw, 4.5rem);
+  }
+
+  .mobile-hero {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.9fr);
+    align-items: stretch;
+    padding: 30px;
+  }
+
+  .mobile-hero h2 {
+    font-size: clamp(2rem, 4.6vw, 3.2rem);
+  }
+
+  .mobile-feature-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mobile-portal-cta {
+    min-height: 190px;
+    border-radius: 34px;
+  }
+
+  .builder-grid,
+  .news-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

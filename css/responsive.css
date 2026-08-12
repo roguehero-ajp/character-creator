@@ -10,6 +10,17 @@
  */
 
 
+
+
+/* ==========================================================
+   RESPONSIVE CONTROL-PANEL TOGGLE
+   ========================================================== */
+
+.responsive-controls-toggle {
+  display: none;
+}
+
+
 /* ==========================================================
    TABLET / NARROW DESKTOP
    ========================================================== */
@@ -40,6 +51,35 @@
 
     position: static;
     top: auto;
+  }
+
+
+  .responsive-controls-toggle {
+    min-height: 44px;
+    display: block;
+    background: #23425f !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  }
+
+  .responsive-controls-toggle:hover,
+  .responsive-controls-toggle:focus-visible {
+    background: #2d557a !important;
+  }
+
+  .controls.responsive-controls-collapsed {
+    gap: 8px;
+    padding: 12px 15px;
+  }
+
+  .controls.responsive-controls-collapsed > *:not(.controls-heading):not(.responsive-controls-toggle) {
+    display: none !important;
+  }
+
+  .controls.responsive-controls-collapsed .controls-heading {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 14px;
   }
 
   .document-container {
@@ -181,6 +221,50 @@
   .document-container:not(.exporting)
   .inventory-text {
     min-height: 125px;
+  }
+
+  /*
+   * Page 2 previously retained fixed flex-bases from the print-oriented
+   * desktop sheet. On tablets that could make expanded content collide
+   * with Equipment, Bonds/Flaws, or the story sections.
+   */
+  .document-container:not(.exporting)
+  #page-2 .full-width-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .document-container:not(.exporting)
+  .page2-traits-row,
+  .document-container:not(.exporting)
+  .page2-equipment-box,
+  .document-container:not(.exporting)
+  .page2-story-row {
+    height: auto;
+    min-height: 0;
+    flex: 0 0 auto;
+  }
+
+  .document-container:not(.exporting)
+  .page2-traits-row,
+  .document-container:not(.exporting)
+  .page2-story-row {
+    align-items: stretch;
+  }
+
+  .document-container:not(.exporting)
+  .page2-traits-row .trait-box,
+  .document-container:not(.exporting)
+  .page2-story-row .trait-box {
+    height: auto;
+    min-height: 150px;
+    flex: 1 1 auto;
+  }
+
+  .document-container:not(.exporting)
+  .page2-equipment-box .inventory-text {
+    min-height: 150px;
   }
 
 }
@@ -381,6 +465,30 @@
     width: 100%;
 
     text-align: right;
+  }
+
+  .document-container:not(.exporting)
+  .class-feature-list,
+  .document-container:not(.exporting)
+  .class-feature-continuation-page .class-feature-list {
+    grid-template-columns: 1fr;
+  }
+
+  .document-container:not(.exporting)
+  .page2-traits-row .trait-box,
+  .document-container:not(.exporting)
+  .page2-story-row .trait-box {
+    min-height: 165px;
+  }
+
+  .document-container:not(.exporting)
+  .page2-equipment-box .inventory-text {
+    min-height: 165px;
+  }
+
+  .document-container:not(.exporting)
+  .feat-list {
+    grid-template-columns: 1fr;
   }
 
   .site-version {

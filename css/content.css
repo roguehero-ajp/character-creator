@@ -196,6 +196,32 @@
   }
 }
 
+
+@media (max-width: 560px) {
+  .article-body {
+    font-size: 1rem;
+  }
+
+  .step-list > li {
+    padding: 58px 15px 16px;
+  }
+
+  .step-list > li::before {
+    left: 15px;
+    top: 14px;
+  }
+
+  .news-hero-actions,
+  .article-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .content-button {
+    width: 100%;
+  }
+}
+
 @media print {
   .news-hero-actions,
   .article-actions {
