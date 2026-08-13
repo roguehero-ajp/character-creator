@@ -179,7 +179,8 @@ body {
   .player.walking, .player.confused, .confusion-mark.show { animation: none; }
 }
 
-/* Prototype 0.2 title-screen cinematic */
+
+/* Prototype 0.2 - Scene 1 production treatment */
 .title-stage {
   isolation: isolate;
 }
@@ -189,7 +190,7 @@ body {
   inset: 0;
   z-index: 40;
   overflow: hidden;
-  background: #030507;
+  background: #020407;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -206,25 +207,9 @@ body {
 .cinematic-scene {
   position: absolute;
   inset: 0;
+  z-index: 1;
   overflow: hidden;
-  background: #04070a;
-}
-
-.cinematic-art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  image-rendering: pixelated;
-  user-select: none;
-  pointer-events: none;
-  will-change: transform, opacity, filter;
-  opacity: 0;
-}
-
-.cinematic-art.scene-visible {
-  opacity: 1;
+  background: #020407;
 }
 
 .cinematic-pan,
@@ -239,15 +224,53 @@ body {
 }
 
 .cinematic-zoom {
-  transform-origin: 50% 20%;
+  transform-origin: 75% 18%;
 }
 
+.cinematic-art,
+.cinematic-stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  pointer-events: none;
+}
+
+.cinematic-art {
+  z-index: 1;
+  object-fit: cover;
+  image-rendering: pixelated;
+  will-change: transform, opacity, filter;
+  opacity: 0;
+  transition: opacity .26s ease;
+}
+
+.cinematic-art.scene-visible {
+  opacity: 1;
+}
+
+.cinematic-stars {
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.cinematic-stars.active {
+  opacity: .78;
+}
+
+/*
+ * Scene 1 camera: two wrappers on purpose.
+ * Zoom owns only scale. Pan owns only travel. They never overwrite each
+ * other's transform, so later tuning remains predictable.
+ */
 .cinematic-pan.camera-moons-pan {
-  animation: avendor-moons-pan 15s linear forwards;
+  animation: avendor-moons-pan 15s cubic-bezier(.28,.03,.22,1) forwards;
 }
 
 .cinematic-zoom.camera-moons-zoom {
-  animation: avendor-moons-zoom 15s linear forwards;
+  animation: avendor-moons-zoom 15s cubic-bezier(.18,.02,.2,1) forwards;
 }
 
 .cinematic-art.camera-barrens {
@@ -258,41 +281,52 @@ body {
   animation: avendor-camera-bruntide 12s ease-in-out forwards;
 }
 
-
-.cinematic-art.camera-numynor {
-  animation: avendor-camera-numynor 12s ease-in-out forwards;
-}
-
-.cinematic-art.camera-stouthome {
-  animation: avendor-camera-stouthome 12s ease-in-out forwards;
-}
-
-.cinematic-art.camera-theland {
-  animation: avendor-camera-theland 15s ease-in-out forwards;
-}
-
 .cinematic-wind,
-.cinematic-snow {
+.cinematic-snow,
+.cinematic-transition-wind {
   position: absolute;
-  inset: 0;
+  inset: -8%;
   pointer-events: none;
 }
 
 .cinematic-wind {
-  opacity: .18;
+  z-index: 3;
+  opacity: .1;
   mix-blend-mode: screen;
   background:
     repeating-linear-gradient(
       168deg,
-      transparent 0 42px,
-      rgba(220,235,245,.09) 43px 45px,
-      transparent 46px 92px
+      transparent 0 46px,
+      rgba(220,235,245,.075) 47px 49px,
+      transparent 50px 104px
     );
-  background-size: 210% 100%;
-  animation: avendor-wind 2.8s linear infinite;
+  background-size: 220% 100%;
+  animation: avendor-wind 3.4s linear infinite;
+  transition: opacity .7s ease;
+}
+
+.cinematic-wind.whisper {
+  opacity: .065;
+  animation-duration: 4.8s;
+}
+
+.cinematic-wind.barrens {
+  opacity: .3;
+  animation-duration: 1.05s;
+}
+
+.cinematic-wind.bruntide {
+  opacity: .21;
+  animation-duration: 1.55s;
+}
+
+.cinematic.wind-transitioning .cinematic-wind {
+  opacity: .62;
+  animation-duration: .62s;
 }
 
 .cinematic-snow {
+  z-index: 4;
   opacity: 0;
   background-image:
     radial-gradient(circle, rgba(255,255,255,.88) 0 1px, transparent 1.6px),
@@ -307,37 +341,85 @@ body {
 .cinematic-snow.light { opacity: .34; }
 .cinematic-snow.heavy { opacity: .72; }
 
+/* Independent meteor layer. The art can move beneath it without changing its path. */
 .cinematic-meteor {
   position: absolute;
-  left: 16%;
-  top: 24%;
-  width: 18%;
+  z-index: 5;
+  left: 59%;
+  top: 20%;
+  width: 15%;
   height: 2px;
   opacity: 0;
-  transform: rotate(-19deg);
+  pointer-events: none;
   transform-origin: left center;
   background: linear-gradient(
     90deg,
-    transparent,
-    rgba(176,199,255,.35),
-    rgba(255,245,220,.98)
+    rgba(255,249,225,.98) 0,
+    rgba(190,215,255,.72) 12%,
+    rgba(150,181,245,.28) 48%,
+    transparent 100%
   );
-  box-shadow: 0 0 8px rgba(208,221,255,.8);
-  pointer-events: none;
+  filter: drop-shadow(0 0 4px rgba(205,225,255,.9));
+}
+
+.cinematic-meteor::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: #fff6d9;
+  box-shadow:
+    0 0 5px #fff,
+    0 0 11px rgba(177,205,255,.92);
 }
 
 .cinematic-meteor.run {
-  animation: avendor-meteor 1.2s ease-in forwards;
+  animation: avendor-meteor 1.15s cubic-bezier(.19,.72,.32,1) forwards;
+}
+
+/* A fast veil of airborne ice hides the Scene 1 -> Barrens cut. */
+.cinematic-transition-wind {
+  z-index: 6;
+  opacity: 0;
+  transform: translate3d(72%, -2%, 0) skewX(-8deg);
+  mix-blend-mode: screen;
+  background:
+    repeating-linear-gradient(
+      166deg,
+      transparent 0 18px,
+      rgba(235,246,255,.08) 19px 22px,
+      rgba(219,236,250,.31) 23px 27px,
+      transparent 28px 54px
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0,
+      rgba(190,215,232,.08) 22%,
+      rgba(231,242,250,.38) 52%,
+      rgba(188,215,235,.1) 78%,
+      transparent 100%
+    );
+  filter: blur(.6px);
+  will-change: transform, opacity;
+}
+
+.cinematic-transition-wind.run {
+  animation: avendor-wind-wipe 2.34s cubic-bezier(.24,.02,.19,1) forwards;
 }
 
 .cinematic-subtitle-wrap {
   position: absolute;
-  z-index: 45;
+  z-index: 50;
   left: 8%;
   right: 8%;
   bottom: 5.5%;
   display: flex;
   justify-content: center;
+  transform: none !important;
   pointer-events: none;
 }
 
@@ -366,6 +448,7 @@ body {
   );
   opacity: 0;
   transform: translateY(7px);
+  transform-origin: center bottom;
   transition: opacity .24s ease, transform .24s ease;
 }
 
@@ -376,7 +459,7 @@ body {
 
 .cinematic-skip {
   position: absolute;
-  z-index: 46;
+  z-index: 51;
   top: 2.2%;
   right: 2.2%;
   color: rgba(234,215,173,.74);
@@ -393,28 +476,19 @@ body {
 }
 
 @keyframes avendor-moons-pan {
-  /*
-   * PAN and ZOOM are now separate animations.
-   *
-   * The image layer physically moves UP over the shot, which makes the
-   * camera/view travel DOWN through the scene toward the mountains.
-   * Because this movement lives on a separate wrapper, changing the zoom no
-   * longer changes the pan distance or direction.
-   */
-  0%   { transform: translate3d(0, 10vh, 0); }
-  30%  { transform: translate3d(0, 5vh, 0); }
-  65%  { transform: translate3d(0, -3vh, 0); }
-  100% { transform: translate3d(0, -12vh, 0); }
+  0%   { transform: translate3d(0, 7vh, 0); }
+  28%  { transform: translate3d(0, 4vh, 0); }
+  58%  { transform: translate3d(0, -1.5vh, 0); }
+  82%  { transform: translate3d(0, -5vh, 0); }
+  100% { transform: translate3d(0, -8vh, 0); }
 }
 
 @keyframes avendor-moons-zoom {
-  /*
-   * Independent pull-back from the upper sky.
-   */
-  0%   { transform: scale(1.55); }
-  30%  { transform: scale(1.38); }
-  65%  { transform: scale(1.18); }
-  100% { transform: scale(1.00); }
+  0%   { transform: scale(2.00); }
+  28%  { transform: scale(1.72); }
+  58%  { transform: scale(1.43); }
+  82%  { transform: scale(1.27); }
+  100% { transform: scale(1.18); }
 }
 
 @keyframes avendor-camera-barrens {
@@ -429,40 +503,10 @@ body {
   72%  { transform: scale(1.30) translate3d(2%, 0, 0); }
   100% { transform: scale(1.44) translate3d(9%, -2%, 0); }
 }
-  24%  { transform: scale(.985) translate3d(-.3%, 0, 0); }
-  76%  { transform: scale(.985) translate3d(.3%, 0, 0); }
-  100% { transform: scale(1) translate3d(0, 0, 0); }
-}
-  20%  { transform: scale(1.12) translate3d(-1%, 0, 0); }
-  78%  { transform: scale(1.12) translate3d(1%, 0, 0); }
-  100% { transform: scale(1.20) translate3d(5%, -1%, 0); }
-}
-
-
-@keyframes avendor-camera-numynor {
-  0%   { transform: scale(1.10) translate3d(-6%, 0, 0); }
-  35%  { transform: scale(1.18) translate3d(-2%, 0, 0); }
-  72%  { transform: scale(1.24) translate3d(2%, 0, 0); }
-  100% { transform: scale(1.32) translate3d(6%, -1%, 0); }
-}
-
-@keyframes avendor-camera-stouthome {
-  0%   { transform: scale(1.02) translate3d(0, 1%, 0); }
-  30%  { transform: scale(1.12) translate3d(0, 0, 0); }
-  70%  { transform: scale(1.22) translate3d(1.5%, -1%, 0); }
-  100% { transform: scale(1.32) translate3d(3%, -2%, 0); }
-}
-
-@keyframes avendor-camera-theland {
-  0%   { transform: scale(1.08) translate3d(0, -2%, 0); }
-  40%  { transform: scale(1.14) translate3d(0, 0, 0); }
-  75%  { transform: scale(1.20) translate3d(0, 2%, 0); }
-  100% { transform: scale(1.28) translate3d(0, 4%, 0); }
-}
 
 @keyframes avendor-wind {
   from { background-position: 0 0; }
-  to   { background-position: -110% 0; }
+  to   { background-position: -115% 0; }
 }
 
 @keyframes avendor-snow-drift {
@@ -473,13 +517,30 @@ body {
 @keyframes avendor-meteor {
   0% {
     opacity: 0;
-    transform: translate3d(-40%, -40%, 0) rotate(-19deg) scaleX(.3);
+    transform: translate3d(0, -10%, 0) rotate(-23deg) scaleX(.22);
   }
-  15% { opacity: 1; }
-  75% { opacity: .95; }
+  13% { opacity: 1; }
+  56% { opacity: .94; }
   100% {
     opacity: 0;
-    transform: translate3d(360%, 190%, 0) rotate(-19deg) scaleX(1.15);
+    transform: translate3d(-285%, 32vh, 0) rotate(-23deg) scaleX(1.22);
+  }
+}
+
+@keyframes avendor-wind-wipe {
+  0% {
+    opacity: 0;
+    transform: translate3d(72%, -2%, 0) skewX(-8deg);
+  }
+  35% { opacity: .24; }
+  64% { opacity: .62; }
+  79% {
+    opacity: .94;
+    transform: translate3d(-8%, 1%, 0) skewX(-8deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-72%, 3%, 0) skewX(-8deg);
   }
 }
 
@@ -505,35 +566,10 @@ body {
   .cinematic-zoom.camera-moons-zoom,
   .cinematic-art.camera-barrens,
   .cinematic-art.camera-bruntide,
-  .cinematic-art.camera-numynor,
-  .cinematic-art.camera-stouthome,
-  .cinematic-art.camera-theland,
   .cinematic-wind,
   .cinematic-snow,
-  .cinematic-meteor.run {
+  .cinematic-meteor.run,
+  .cinematic-transition-wind.run {
     animation: none;
   }
-}
-
-
-/*
- * INDEPENDENT SUBTITLE LAYER
- * --------------------------
- * .cinematic-scene contains the image and visual effects.
- * .cinematic-subtitle-wrap is a sibling ABOVE that scene, not a child of
- * .cinematic-art. Therefore image zoom/pan/scale never changes subtitle size.
- * The image can be scaled to 2x, 5x, or 10x and the subtitle typography stays
- * tied to the viewport, not the artwork transform.
- */
-.cinematic-scene {
-  z-index: 1;
-}
-
-.cinematic-subtitle-wrap {
-  z-index: 50;
-  transform: none !important;
-}
-
-.cinematic-subtitle {
-  transform-origin: center bottom;
 }
