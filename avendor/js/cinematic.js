@@ -7,6 +7,8 @@
   const stage = document.getElementById('avendor-title-stage');
   const cinematic = document.getElementById('avendor-cinematic');
   const sceneArt = document.getElementById('cinematic-art');
+  const cameraPan = document.getElementById('cinematic-pan');
+  const cameraZoom = document.getElementById('cinematic-zoom');
   const subtitle = document.getElementById('cinematic-subtitle');
   const snow = document.getElementById('cinematic-snow');
   const meteor = document.getElementById('cinematic-meteor');
@@ -18,6 +20,8 @@
     !stage ||
     !cinematic ||
     !sceneArt ||
+    !cameraPan ||
+    !cameraZoom ||
     !subtitle ||
     !snow ||
     !meteor ||
@@ -229,6 +233,9 @@
     hideSubtitle();
 
     sceneArt.className = 'cinematic-art';
+    cameraPan.className = 'cinematic-pan';
+    cameraZoom.className = 'cinematic-zoom';
+
     sceneArt.alt = '';
     sceneArt.src = scene.image;
 
@@ -245,8 +252,14 @@
         return;
       }
 
-      sceneArt.className =
-        `cinematic-art scene-visible ${scene.cameraClass}`;
+      if (scene.id === 'moons') {
+        sceneArt.className = 'cinematic-art scene-visible';
+        cameraPan.className = 'cinematic-pan camera-moons-pan';
+        cameraZoom.className = 'cinematic-zoom camera-moons-zoom';
+      } else {
+        sceneArt.className =
+          `cinematic-art scene-visible ${scene.cameraClass}`;
+      }
 
       for (const cue of scene.subtitles) {
         scheduleSubtitle(cue);
@@ -329,6 +342,8 @@
     stopCinematicMusic();
 
     sceneArt.className = 'cinematic-art';
+    cameraPan.className = 'cinematic-pan';
+    cameraZoom.className = 'cinematic-zoom';
     snow.className = 'cinematic-snow';
     meteor.classList.remove('run');
 
