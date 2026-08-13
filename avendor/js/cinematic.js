@@ -100,8 +100,78 @@
             '...great warriors of the north, keeping the monsters at bay.'
         }
       ]
+    },
+    {
+      id: 'numynor',
+      duration: 12_000,
+      image: 'assets/cinematic/scene-04-numynor.png',
+      cameraClass: 'camera-numynor',
+      snowClass: '',
+      subtitles: [
+        {
+          at: 500,
+          until: 4_700,
+          text:
+            'Through the barbarian fiefdoms of Numynor...'
+        },
+        {
+          at: 4_900,
+          until: 11_500,
+          text:
+            '...full of ramshackle huts and villages of people willing to fight for pennies, food, or fun.'
+        }
+      ]
+    },
+    {
+      id: 'stouthome',
+      duration: 12_000,
+      image: 'assets/cinematic/scene-05-stouthome.png',
+      cameraClass: 'camera-stouthome',
+      snowClass: '',
+      subtitles: [
+        {
+          at: 500,
+          until: 5_500,
+          text:
+            'Through the great mountains of Stouthome, where the dwarves run their kingdom...'
+        },
+        {
+          at: 5_700,
+          until: 11_500,
+          text:
+            '...guarding one of the entrances to the secret underworld below.'
+        }
+      ]
+    },
+    {
+      id: 'theland',
+      duration: 15_000,
+      image: 'assets/cinematic/scene-06-theland-briarwell.png',
+      cameraClass: 'camera-theland',
+      snowClass: 'light',
+      subtitles: [
+        {
+          at: 500,
+          until: 5_300,
+          text:
+            'Toward the coastal lands of Theland... calmly tucked away from the strife and turmoil of the world.'
+        },
+        {
+          at: 5_600,
+          until: 10_300,
+          text:
+            'Hints of the cold come with the wind, as it brings with it the first few flakes of snow seen in many years.'
+        },
+        {
+          at: 10_600,
+          until: 14_600,
+          text:
+            'The signs of another great change at play hang in the air...'
+        }
+      ]
     }
   ];
+
 
   let idleTimer = null;
   let cinematicRunning = false;
