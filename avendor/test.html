@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/avendor.css">
   <link rel="preload" as="image" href="assets/cinematic/scene-01-moons-master.png">
-  <link rel="preload" as="audio" href="assets/cinematic/handel-sarabande-intro.mp3">
+  <link rel="preload" as="audio" href="assets/cinematic/avendor-sarabande-of-the-north-v7.ogg" type="audio/ogg">
 </head>
 <body>
   <main
@@ -27,7 +27,7 @@
     </section>
 
     <div class="test-ribbon" id="test-ribbon">
-      prototype 0.2 · idle 10 seconds for intro test
+      prototype 0.2.2 · idle 10 seconds for intro
     </div>
 
     <section
@@ -76,11 +76,16 @@
     <source src="assets/bruckner-fourth-title-loop.mp3" type="audio/mpeg">
   </audio>
 
-  <audio
-    id="cinematic-music"
-    src="assets/cinematic/handel-sarabande-intro.mp3"
-    preload="auto"
-  ></audio>
+  <audio id="cinematic-music" preload="auto">
+    <source
+      src="assets/cinematic/avendor-sarabande-of-the-north-v7.ogg"
+      type="audio/ogg"
+    >
+    <source
+      src="assets/cinematic/avendor-sarabande-of-the-north-v7.mp3"
+      type="audio/mpeg"
+    >
+  </audio>
 
   <audio
     id="scene-01-wind"
