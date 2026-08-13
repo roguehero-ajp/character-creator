@@ -12,6 +12,7 @@
   const meteor = document.getElementById('cinematic-meteor');
   const button = document.getElementById('early-test');
   const audio = document.getElementById('avendor-music');
+  const cinematicMusic = document.getElementById('cinematic-music');
 
   if (
     !stage ||
@@ -21,12 +22,14 @@
     !snow ||
     !meteor ||
     !button ||
-    !audio
+    !audio ||
+    !cinematicMusic
   ) {
     return;
   }
 
   audio.volume = 0.42;
+  cinematicMusic.volume = 0.52;
 
   /*
    * Prototype 0.2 animatic timing pass.
@@ -122,6 +125,20 @@
 
     window.clearTimeout(idleTimer);
     idleTimer = window.setTimeout(startCinematic, IDLE_DELAY_MS);
+  }
+
+  function startCinematicMusic() {
+    cinematicMusic.currentTime = 0;
+    const started = cinematicMusic.play();
+
+    if (started?.catch) {
+      started.catch(() => {});
+    }
+  }
+
+  function stopCinematicMusic() {
+    cinematicMusic.pause();
+    cinematicMusic.currentTime = 0;
   }
 
   function tryMusic() {
@@ -275,7 +292,7 @@
     cinematic.classList.add('active');
     cinematic.setAttribute('aria-hidden', 'false');
 
-    tryMusic();
+    startCinematicMusic();
     nextScene();
   }
 
@@ -287,6 +304,7 @@
     cinematicRunning = false;
     clearTimers();
     hideSubtitle();
+    stopCinematicMusic();
 
     sceneArt.className = 'cinematic-art';
     snow.className = 'cinematic-snow';
