@@ -361,13 +361,14 @@ body {
 }
 
 @keyframes avendor-camera-moons {
+  /*
+   * Start tightly framed on the moons and upper sky.
+   * Pull BACK while moving the view DOWN so the mountains are gradually revealed.
+   */
   0%   { transform: scale(1.42) translate3d(0, -8%, 0); }
-  34%  { transform: scale(1.26) translate3d(0, -5%, 0); }
-  68%  { transform: scale(1.12) translate3d(0, -1.5%, 0); }
+  28%  { transform: scale(1.30) translate3d(0, -6%, 0); }
+  60%  { transform: scale(1.16) translate3d(0, -2.5%, 0); }
   100% { transform: scale(1.00) translate3d(0, 4.5%, 0); }
-}
-  38%  { transform: scale(1.10) translate3d(0, -2%, 0); }
-  100% { transform: scale(1.32) translate3d(0, 8%, 0); }
 }
 
 @keyframes avendor-camera-barrens {
@@ -381,14 +382,6 @@ body {
   24%  { transform: scale(1.28) translate3d(-2%, 0, 0); }
   72%  { transform: scale(1.30) translate3d(2%, 0, 0); }
   100% { transform: scale(1.44) translate3d(9%, -2%, 0); }
-}
-  24%  { transform: scale(.985) translate3d(-.3%, 0, 0); }
-  76%  { transform: scale(.985) translate3d(.3%, 0, 0); }
-  100% { transform: scale(1) translate3d(0, 0, 0); }
-}
-  20%  { transform: scale(1.12) translate3d(-1%, 0, 0); }
-  78%  { transform: scale(1.12) translate3d(1%, 0, 0); }
-  100% { transform: scale(1.20) translate3d(5%, -1%, 0); }
 }
 
 @keyframes avendor-wind {
