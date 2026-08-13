@@ -227,8 +227,27 @@ body {
   opacity: 1;
 }
 
-.cinematic-art.camera-moons {
-  animation: avendor-camera-moons 15s linear forwards;
+.cinematic-pan,
+.cinematic-zoom {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.cinematic-pan {
+  z-index: 1;
+}
+
+.cinematic-zoom {
+  transform-origin: 50% 20%;
+}
+
+.cinematic-pan.camera-moons-pan {
+  animation: avendor-moons-pan 15s linear forwards;
+}
+
+.cinematic-zoom.camera-moons-zoom {
+  animation: avendor-moons-zoom 15s linear forwards;
 }
 
 .cinematic-art.camera-barrens {
@@ -360,18 +379,29 @@ body {
   visibility: hidden;
 }
 
-@keyframes avendor-camera-moons {
+@keyframes avendor-moons-pan {
   /*
-   * Scene 1 — unmistakable pull-back and downward reveal
+   * PAN and ZOOM are now separate animations.
    *
-   * Start very tight on the upper sky/moons by pushing the artwork DOWN.
-   * Over the shot, pull back while driving the artwork strongly UP.
-   * That makes the apparent camera motion move DOWN, revealing the mountains.
+   * The image layer physically moves UP over the shot, which makes the
+   * camera/view travel DOWN through the scene toward the mountains.
+   * Because this movement lives on a separate wrapper, changing the zoom no
+   * longer changes the pan distance or direction.
    */
-  0%   { transform: scale(1.55) translate3d(0, 18%, 0); }
-  25%  { transform: scale(1.40) translate3d(0, 10%, 0); }
-  55%  { transform: scale(1.22) translate3d(0, 0%, 0); }
-  100% { transform: scale(1.00) translate3d(0, -18%, 0); }
+  0%   { transform: translate3d(0, 10vh, 0); }
+  30%  { transform: translate3d(0, 5vh, 0); }
+  65%  { transform: translate3d(0, -3vh, 0); }
+  100% { transform: translate3d(0, -12vh, 0); }
+}
+
+@keyframes avendor-moons-zoom {
+  /*
+   * Independent pull-back from the upper sky.
+   */
+  0%   { transform: scale(1.55); }
+  30%  { transform: scale(1.38); }
+  65%  { transform: scale(1.18); }
+  100% { transform: scale(1.00); }
 }
 
 @keyframes avendor-camera-barrens {
@@ -436,7 +466,8 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cinematic-art.camera-moons,
+  .cinematic-pan.camera-moons-pan,
+  .cinematic-zoom.camera-moons-zoom,
   .cinematic-art.camera-barrens,
   .cinematic-art.camera-bruntide,
   .cinematic-wind,
