@@ -11,6 +11,7 @@
   let awakened = false;
   let snowStarted = false;
   let animationFrame = 0;
+  let effectFallbackTimer = null;
   let flakes = [];
   let canvas = null;
   let ctx = null;
@@ -247,16 +248,77 @@
     }
   }
 
-  function tryMusic() {
-    if (!audio) return;
+  function activateAwakeningEffects() {
+    clearTimeout(effectFallbackTimer);
+    effectFallbackTimer = null;
+
+    document
+      .getElementById('avendor-darkness')
+      ?.classList.add('avendor-awake');
+
+    canvas?.classList.add('avendor-awake');
+    startSnow();
+  }
+
+  function tryMusic({ syncEffects = false } = {}) {
+    if (!audio) {
+      if (syncEffects) {
+        activateAwakeningEffects();
+      }
+      return;
+    }
+
+    sessionStorage.setItem('avendorMusicWanted', '1');
+
+    let effectsStarted = false;
+
+    const startSyncedEffects = () => {
+      if (!syncEffects || effectsStarted || !awakened) {
+        return;
+      }
+
+      effectsStarted = true;
+      activateAwakeningEffects();
+    };
+
+    if (syncEffects) {
+      /*
+       * When Chrome allows hover-triggered playback, the snowfall begins from
+       * the media element's real "playing" event so picture and sound wake up
+       * together.
+       *
+       * Hover does not always grant user activation. If Chrome blocks audible
+       * playback, we still reveal the secret visually after a short fallback
+       * delay rather than making the Easter egg appear broken.
+       */
+      audio.addEventListener(
+        'playing',
+        startSyncedEffects,
+        { once: true }
+      );
+
+      clearTimeout(effectFallbackTimer);
+      effectFallbackTimer = window.setTimeout(
+        startSyncedEffects,
+        220
+      );
+    }
 
     const promise = audio.play();
-    if (promise && typeof promise.catch === 'function') {
-      promise.catch(() => {
-        // Chrome may block audio that begins from hover alone. The click that
-        // enters Avendor retries playback as a genuine user interaction.
-        sessionStorage.setItem('avendorMusicWanted', '1');
-      });
+
+    if (promise && typeof promise.then === 'function') {
+      promise
+        .then(() => {
+          startSyncedEffects();
+        })
+        .catch(() => {
+          /*
+           * Chrome may reject audible playback when the only trigger was a
+           * hover/timer. The click that enters Avendor retries playback using
+           * a genuine user activation.
+           */
+          sessionStorage.setItem('avendorMusicWanted', '1');
+        });
     }
   }
 
@@ -267,20 +329,25 @@
     if (awakened) return;
 
     awakened = true;
-    triggers.forEach((trigger) => trigger.classList.add('avendor-awake'));
-    document.getElementById('avendor-darkness')?.classList.add('avendor-awake');
-    canvas?.classList.add('avendor-awake');
+    triggers.forEach(
+      (trigger) => trigger.classList.add('avendor-awake')
+    );
 
-    startSnow();
-    sessionStorage.setItem('avendorMusicWanted', '1');
-    tryMusic();
+    /*
+     * Ask for music and visual awakening as one event. If playback is
+     * permitted, snow/darkness start from the real "playing" event. If Chrome
+     * blocks hover audio, a tiny fallback keeps the snowfall discoverable.
+     */
+    tryMusic({ syncEffects: true });
   }
 
   function sleep() {
     clearTimeout(hoverTimer);
     clearTimeout(sleepTimer);
+    clearTimeout(effectFallbackTimer);
     hoverTimer = null;
     sleepTimer = null;
+    effectFallbackTimer = null;
 
     if (!awakened || document.body.classList.contains('avendor-entering')) return;
 
@@ -347,7 +414,7 @@
 
     sessionStorage.setItem('avendorMusicWanted', '1');
     document.body.classList.add('avendor-entering');
-    tryMusic();
+    tryMusic({ syncEffects: false });
 
     window.setTimeout(() => {
       window.location.href = DESTINATION;
