@@ -258,6 +258,19 @@ body {
   animation: avendor-camera-bruntide 12s ease-in-out forwards;
 }
 
+
+.cinematic-art.camera-numynor {
+  animation: avendor-camera-numynor 12s ease-in-out forwards;
+}
+
+.cinematic-art.camera-stouthome {
+  animation: avendor-camera-stouthome 12s ease-in-out forwards;
+}
+
+.cinematic-art.camera-theland {
+  animation: avendor-camera-theland 15s ease-in-out forwards;
+}
+
 .cinematic-wind,
 .cinematic-snow {
   position: absolute;
@@ -425,6 +438,28 @@ body {
   100% { transform: scale(1.20) translate3d(5%, -1%, 0); }
 }
 
+
+@keyframes avendor-camera-numynor {
+  0%   { transform: scale(1.10) translate3d(-6%, 0, 0); }
+  35%  { transform: scale(1.18) translate3d(-2%, 0, 0); }
+  72%  { transform: scale(1.24) translate3d(2%, 0, 0); }
+  100% { transform: scale(1.32) translate3d(6%, -1%, 0); }
+}
+
+@keyframes avendor-camera-stouthome {
+  0%   { transform: scale(1.02) translate3d(0, 1%, 0); }
+  30%  { transform: scale(1.12) translate3d(0, 0, 0); }
+  70%  { transform: scale(1.22) translate3d(1.5%, -1%, 0); }
+  100% { transform: scale(1.32) translate3d(3%, -2%, 0); }
+}
+
+@keyframes avendor-camera-theland {
+  0%   { transform: scale(1.08) translate3d(0, -2%, 0); }
+  40%  { transform: scale(1.14) translate3d(0, 0, 0); }
+  75%  { transform: scale(1.20) translate3d(0, 2%, 0); }
+  100% { transform: scale(1.28) translate3d(0, 4%, 0); }
+}
+
 @keyframes avendor-wind {
   from { background-position: 0 0; }
   to   { background-position: -110% 0; }
@@ -470,6 +505,9 @@ body {
   .cinematic-zoom.camera-moons-zoom,
   .cinematic-art.camera-barrens,
   .cinematic-art.camera-bruntide,
+  .cinematic-art.camera-numynor,
+  .cinematic-art.camera-stouthome,
+  .cinematic-art.camera-theland,
   .cinematic-wind,
   .cinematic-snow,
   .cinematic-meteor.run {
