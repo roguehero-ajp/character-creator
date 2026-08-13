@@ -8,32 +8,59 @@
   <link rel="stylesheet" href="css/avendor.css">
 </head>
 <body>
-  <main class="avendor-stage" style="--stage-ratio: 1672 / 941" aria-label="Avendor early test title screen">
-    <img class="stage-art" src="assets/rising-tides-intro.png" alt="The Rising Tides of Avendor title screen, overlooking snowy Briarwell">
-    <section class="intro-cover-panel" aria-label="Early test menu">
+  <main
+    class="avendor-stage title-stage"
+    id="avendor-title-stage"
+    style="--stage-ratio: 1672 / 941"
+    aria-label="Avendor early test title screen"
+  >
+    <img
+      class="stage-art"
+      src="assets/rising-tides-intro.png"
+      alt="The Rising Tides of Avendor title screen, overlooking snowy Briarwell"
+    >
+
+    <section class="intro-cover-panel" id="title-menu" aria-label="Early test menu">
       <button class="early-test-button" id="early-test" type="button">Early Test</button>
     </section>
-    <div class="test-ribbon">prototype build · no save data</div>
+
+    <div class="test-ribbon" id="test-ribbon">
+      prototype 0.2 · idle 10 seconds for intro test
+    </div>
+
+    <section
+      class="cinematic"
+      id="avendor-cinematic"
+      aria-label="The Rising Tides opening cinematic"
+      aria-hidden="true"
+    >
+      <div class="cinematic-scene" id="cinematic-scene">
+        <img
+          class="cinematic-art"
+          id="cinematic-art"
+          alt=""
+          draggable="false"
+        >
+        <div class="cinematic-wind" aria-hidden="true"></div>
+        <div class="cinematic-snow" id="cinematic-snow" aria-hidden="true"></div>
+        <div class="cinematic-meteor" id="cinematic-meteor" aria-hidden="true"></div>
+      </div>
+
+      <div class="cinematic-subtitle-wrap" aria-live="polite" aria-atomic="true">
+        <p class="cinematic-subtitle" id="cinematic-subtitle"></p>
+      </div>
+
+      <div class="cinematic-skip">Click or press any key to skip</div>
+    </section>
   </main>
-  <audio id="avendor-music" src="assets/avendor-theme.mp3" preload="auto" loop></audio>
-  <script>
-    (() => {
-      const button = document.getElementById('early-test');
-      const audio = document.getElementById('avendor-music');
-      audio.volume = 0.42;
-      if (sessionStorage.getItem('avendorMusicWanted') === '1') {
-        audio.play().catch(() => {});
-      }
-      button.addEventListener('click', () => {
-        sessionStorage.setItem('avendorMusicWanted', '1');
-        const started = audio.play();
-        if (started?.catch) started.catch(() => {});
-        document.body.style.transition = 'filter .25s ease, opacity .25s ease';
-        document.body.style.filter = 'brightness(.45)';
-        document.body.style.opacity = '.75';
-        window.setTimeout(() => { window.location.href = 'walk-test.html'; }, 260);
-      });
-    })();
-  </script>
+
+  <audio
+    id="avendor-music"
+    src="assets/avendor-theme.mp3"
+    preload="auto"
+    loop
+  ></audio>
+
+  <script src="js/cinematic.js"></script>
 </body>
 </html>
