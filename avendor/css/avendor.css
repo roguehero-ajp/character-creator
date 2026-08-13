@@ -362,13 +362,14 @@ body {
 
 @keyframes avendor-camera-moons {
   /*
-   * Start tightly framed on the moons and upper sky.
-   * Pull BACK while moving the view DOWN so the mountains are gradually revealed.
+   * Start tightly framed higher on the sky / moons.
+   * Then pull BACK while drifting the image UP so the camera appears to move
+   * down and reveal more mountain by the end of the shot.
    */
-  0%   { transform: scale(1.42) translate3d(0, -8%, 0); }
-  28%  { transform: scale(1.30) translate3d(0, -6%, 0); }
-  60%  { transform: scale(1.16) translate3d(0, -2.5%, 0); }
-  100% { transform: scale(1.00) translate3d(0, 4.5%, 0); }
+  0%   { transform: scale(1.42) translate3d(0, 8%, 0); }
+  28%  { transform: scale(1.30) translate3d(0, 5.5%, 0); }
+  60%  { transform: scale(1.16) translate3d(0, 1.5%, 0); }
+  100% { transform: scale(1.00) translate3d(0, -5%, 0); }
 }
 
 @keyframes avendor-camera-barrens {
