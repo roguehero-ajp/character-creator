@@ -127,6 +127,27 @@
     idleTimer = window.setTimeout(startCinematic, IDLE_DELAY_MS);
   }
 
+  function stopTitleMusic() {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+
+  function resumeTitleMusic() {
+    if (
+      sessionStorage.getItem('avendorMusicWanted') !== '1'
+    ) {
+      return;
+    }
+
+    audio.volume = 0.42;
+
+    const started = audio.play();
+
+    if (started?.catch) {
+      started.catch(() => {});
+    }
+  }
+
   function startCinematicMusic() {
     cinematicMusic.currentTime = 0;
     const started = cinematicMusic.play();
@@ -292,6 +313,7 @@
     cinematic.classList.add('active');
     cinematic.setAttribute('aria-hidden', 'false');
 
+    stopTitleMusic();
     startCinematicMusic();
     nextScene();
   }
@@ -315,6 +337,7 @@
 
     window.setTimeout(() => {
       stage.classList.remove('cinematic-running');
+      resumeTitleMusic();
       resetIdleTimer();
     }, FADE_MS);
   }
@@ -332,7 +355,6 @@
       event.preventDefault();
     }
 
-    tryMusic();
     finishCinematic();
   }
 
