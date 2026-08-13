@@ -4,7 +4,7 @@
   const IDLE_DELAY_MS = 10_000;
   const FADE_MS = 650;
   const TITLE_VOLUME = 0.42;
-  const CINEMATIC_VOLUME = 0.46;
+  const CINEMATIC_VOLUME = 0.42;
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   const stage = document.getElementById('avendor-title-stage');
@@ -47,11 +47,11 @@
   if (!starContext) return;
 
   titleMusic.volume = TITLE_VOLUME;
-  cinematicMusic.volume = 0.025;
+  cinematicMusic.volume = 0.012;
   sceneOneWind.volume = 0;
 
   /*
-   * Prototype 0.2 production pass.
+   * Prototype 0.2.2 production lock.
    *
    * Scene 1 is now the template shot: camera pan, camera zoom, twinkles,
    * meteor, subtitle timing, environmental audio and transition effects are
@@ -275,20 +275,20 @@
   function startCinematicMusic() {
     musicFadeFrame = cancelFrame(musicFadeFrame);
     cinematicMusic.currentTime = 0;
-    cinematicMusic.volume = 0.025;
+    cinematicMusic.volume = 0.012;
 
     const started = cinematicMusic.play();
     if (started?.catch) started.catch(() => {});
 
     const beganAt = performance.now();
-    const fadeDuration = 4_800;
+    const fadeDuration = 4_400;
 
     const fadeIn = (now) => {
       if (!cinematicRunning) return;
 
       const progress = Math.min(1, (now - beganAt) / fadeDuration);
       const eased = progress * progress * (3 - 2 * progress);
-      cinematicMusic.volume = 0.025 + (CINEMATIC_VOLUME - 0.025) * eased;
+      cinematicMusic.volume = 0.012 + (CINEMATIC_VOLUME - 0.012) * eased;
 
       if (progress < 1) {
         musicFadeFrame = requestAnimationFrame(fadeIn);
@@ -304,13 +304,13 @@
     musicFadeFrame = cancelFrame(musicFadeFrame);
     cinematicMusic.pause();
     cinematicMusic.currentTime = 0;
-    cinematicMusic.volume = 0.025;
+    cinematicMusic.volume = 0.012;
   }
 
   function startSceneOneWind() {
     windFadeFrame = cancelFrame(windFadeFrame);
     sceneOneWind.currentTime = 0;
-    sceneOneWind.volume = 0.018;
+    sceneOneWind.volume = 0.014;
 
     const started = sceneOneWind.play();
     if (started?.catch) started.catch(() => {});
@@ -325,13 +325,13 @@
       let target;
 
       if (elapsed < 10_800) {
-        target = 0.018 + (elapsed / 10_800) * 0.085;
+        target = 0.014 + (elapsed / 10_800) * 0.070;
       } else {
         const finalPush = Math.min(1, (elapsed - 10_800) / (duration - 10_800));
-        target = 0.103 + finalPush * 0.215;
+        target = 0.084 + finalPush * 0.172;
       }
 
-      sceneOneWind.volume = Math.min(0.318, target);
+      sceneOneWind.volume = Math.min(0.256, target);
       windFadeFrame = requestAnimationFrame(swell);
     };
 
