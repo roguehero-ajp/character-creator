@@ -5,6 +5,7 @@
   const FADE_MS = 650;
   const TITLE_VOLUME = 0.42;
   const CINEMATIC_VOLUME = 0.42;
+  const TITLE_LOOP_FALLBACK_MS = 79_000;
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   const stage = document.getElementById('avendor-title-stage');
@@ -18,6 +19,8 @@
   const snow = document.getElementById('cinematic-snow');
   const meteor = document.getElementById('cinematic-meteor');
   const transitionWind = document.getElementById('cinematic-transition-wind');
+  const barrensFx = document.getElementById('cinematic-barrens-fx');
+  const barrensGustCanvas = document.getElementById('cinematic-barrens-gusts');
   const button = document.getElementById('early-test');
   const titleMusic = document.getElementById('avendor-music');
   const cinematicMusic = document.getElementById('cinematic-music');
@@ -35,6 +38,8 @@
     !snow ||
     !meteor ||
     !transitionWind ||
+    !barrensFx ||
+    !barrensGustCanvas ||
     !button ||
     !titleMusic ||
     !cinematicMusic ||
@@ -44,7 +49,8 @@
   }
 
   const starContext = starCanvas.getContext('2d');
-  if (!starContext) return;
+  const barrensGustContext = barrensGustCanvas.getContext('2d');
+  if (!starContext || !barrensGustContext) return;
 
   titleMusic.volume = TITLE_VOLUME;
   cinematicMusic.volume = 0.012;
@@ -88,6 +94,7 @@
       cameraClass: 'camera-barrens',
       snowClass: 'heavy',
       windClass: 'barrens',
+      transitionAt: 10_050,
       subtitles: [
         {
           at: 650,
@@ -198,7 +205,12 @@
   let starAnimationFrame = 0;
   let musicFadeFrame = 0;
   let windFadeFrame = 0;
+  let barrensGustFrame = 0;
   let starActive = false;
+  let barrensGustActive = false;
+  let replayGateTimer = null;
+  let replayUnlocked = true;
+  let lastTitleInteractionAt = performance.now();
 
   const twinkleStars = createTwinkleStars(44);
 
@@ -249,10 +261,63 @@
   }
 
   function resetIdleTimer() {
-    if (cinematicRunning) return;
+    if (cinematicRunning || !replayUnlocked) return;
 
     window.clearTimeout(idleTimer);
-    idleTimer = window.setTimeout(startCinematic, IDLE_DELAY_MS);
+    const idleFor = Math.max(0, performance.now() - lastTitleInteractionAt);
+    const remaining = Math.max(0, IDLE_DELAY_MS - idleFor);
+    idleTimer = window.setTimeout(startCinematic, remaining);
+  }
+
+  function markTitleInteraction() {
+    lastTitleInteractionAt = performance.now();
+    if (!cinematicRunning && replayUnlocked) resetIdleTimer();
+  }
+
+  function clearReplayGate() {
+    window.clearTimeout(replayGateTimer);
+    replayGateTimer = null;
+  }
+
+  function titleLoopDurationMs() {
+    const seconds = Number(titleMusic.duration);
+    if (Number.isFinite(seconds) && seconds > 20) {
+      return Math.ceil(seconds * 1000);
+    }
+    return TITLE_LOOP_FALLBACK_MS;
+  }
+
+  function beginFullTitleLoopGate() {
+    clearReplayGate();
+    replayUnlocked = false;
+    window.clearTimeout(idleTimer);
+
+    // Restart Bruckner from the beginning so the player receives one complete
+    // title-screen statement before the cinematic is eligible to return.
+    try {
+      titleMusic.currentTime = 0;
+    } catch (_) {}
+    resumeTitleMusic();
+
+    const armGate = () => {
+      clearReplayGate();
+      replayGateTimer = window.setTimeout(() => {
+        replayGateTimer = null;
+        replayUnlocked = true;
+        resetIdleTimer();
+      }, titleLoopDurationMs());
+    };
+
+    if (titleMusic.readyState >= 1) {
+      armGate();
+    } else {
+      titleMusic.addEventListener('loadedmetadata', armGate, { once: true });
+      replayGateTimer = window.setTimeout(() => {
+        replayGateTimer = null;
+        replayUnlocked = true;
+        resetIdleTimer();
+      }, TITLE_LOOP_FALLBACK_MS);
+    }
   }
 
   function pauseTitleMusic() {
@@ -438,6 +503,102 @@
     starContext.clearRect(0, 0, cinematic.clientWidth, cinematic.clientHeight);
   }
 
+  const barrensGusts = [
+    { y: .18, period: 3300, offset: 130, length: .20, bend: -8, strength: .32, width: 1.05 },
+    { y: .29, period: 4700, offset: 1700, length: .15, bend: 10, strength: .22, width: .8 },
+    { y: .42, period: 3900, offset: 820, length: .24, bend: -12, strength: .28, width: 1.25 },
+    { y: .55, period: 5200, offset: 3100, length: .18, bend: 7, strength: .18, width: .75 },
+    { y: .68, period: 3600, offset: 2200, length: .22, bend: -6, strength: .27, width: 1.1 },
+    { y: .77, period: 4400, offset: 600, length: .16, bend: 9, strength: .20, width: .85 }
+  ];
+
+  function resizeBarrensGustCanvas() {
+    const width = Math.max(1, cinematic.clientWidth);
+    const height = Math.max(1, cinematic.clientHeight);
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+
+    barrensGustCanvas.width = Math.floor(width * ratio);
+    barrensGustCanvas.height = Math.floor(height * ratio);
+    barrensGustCanvas.style.width = `${width}px`;
+    barrensGustCanvas.style.height = `${height}px`;
+    barrensGustContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+  }
+
+  function drawBarrensGusts(time) {
+    if (!barrensGustActive || !cinematicRunning || sceneIndex !== 1) return;
+
+    const width = cinematic.clientWidth;
+    const height = cinematic.clientHeight;
+    barrensGustContext.clearRect(0, 0, width, height);
+    barrensGustContext.lineCap = 'round';
+
+    for (const gust of barrensGusts) {
+      const progress = ((time + gust.offset) % gust.period) / gust.period;
+      const x = width * (1.16 - progress * 1.52);
+      const y = height * gust.y;
+      const length = width * gust.length;
+      const visibility = Math.sin(Math.PI * progress);
+      const alpha = Math.max(0, visibility * visibility * gust.strength);
+
+      if (alpha < .01) continue;
+
+      const gradient = barrensGustContext.createLinearGradient(x, y, x + length, y);
+      gradient.addColorStop(0, `rgba(235,246,255,0)`);
+      gradient.addColorStop(.30, `rgba(235,246,255,${alpha * .55})`);
+      gradient.addColorStop(.68, `rgba(245,250,255,${alpha})`);
+      gradient.addColorStop(1, `rgba(235,246,255,0)`);
+
+      barrensGustContext.strokeStyle = gradient;
+      barrensGustContext.lineWidth = gust.width;
+      barrensGustContext.beginPath();
+      barrensGustContext.moveTo(x, y);
+      barrensGustContext.bezierCurveTo(
+        x + length * .28,
+        y + gust.bend,
+        x + length * .62,
+        y - gust.bend * .65,
+        x + length,
+        y + gust.bend * .18
+      );
+      barrensGustContext.stroke();
+
+      barrensGustContext.strokeStyle = `rgba(220,237,250,${alpha * .32})`;
+      barrensGustContext.lineWidth = Math.max(.45, gust.width * .55);
+      barrensGustContext.beginPath();
+      barrensGustContext.moveTo(x + length * .08, y + 5);
+      barrensGustContext.bezierCurveTo(
+        x + length * .34,
+        y + gust.bend * .55 + 6,
+        x + length * .70,
+        y - gust.bend * .32 + 3,
+        x + length * .92,
+        y + 5
+      );
+      barrensGustContext.stroke();
+    }
+
+    barrensGustFrame = requestAnimationFrame(drawBarrensGusts);
+  }
+
+  function startBarrensEffects() {
+    stopBarrensEffects();
+    barrensFx.classList.add('active', 'camera-barrens');
+    if (REDUCED_MOTION.matches) return;
+
+    resizeBarrensGustCanvas();
+    barrensGustCanvas.classList.add('active');
+    barrensGustActive = true;
+    barrensGustFrame = requestAnimationFrame(drawBarrensGusts);
+  }
+
+  function stopBarrensEffects() {
+    barrensGustActive = false;
+    barrensGustFrame = cancelFrame(barrensGustFrame);
+    barrensGustCanvas.classList.remove('active');
+    barrensFx.className = 'cinematic-barrens-fx';
+    barrensGustContext.clearRect(0, 0, cinematic.clientWidth, cinematic.clientHeight);
+  }
+
   function hideSubtitle() {
     subtitleGeneration += 1;
     subtitle.classList.remove('show');
@@ -486,6 +647,7 @@
     snow.className = 'cinematic-snow';
     windLayer.className = 'cinematic-wind';
     meteor.classList.remove('run');
+    stopBarrensEffects();
 
     if (scene.snowClass) snow.classList.add(scene.snowClass);
     if (scene.windClass) windLayer.classList.add(scene.windClass);
@@ -539,6 +701,7 @@
 
         if (scene.id === 'barrens') {
           fadeOutSceneOneWind(1_350);
+          startBarrensEffects();
         }
 
         // Every regional cut may arrive through the same wind veil. Clear the
@@ -593,6 +756,7 @@
     ignoreSkipUntil = performance.now() + 800;
 
     window.clearTimeout(idleTimer);
+    clearReplayGate();
     clearTimers();
 
     stage.classList.add('cinematic-running');
@@ -613,6 +777,7 @@
     stopCinematicMusic();
     stopSceneOneWind();
     stopStarTwinkle();
+    stopBarrensEffects();
 
     sceneArt.className = 'cinematic-art';
     cameraPan.className = 'cinematic-pan';
@@ -628,8 +793,8 @@
 
     window.setTimeout(() => {
       stage.classList.remove('cinematic-running');
-      resumeTitleMusic();
-      resetIdleTimer();
+      lastTitleInteractionAt = performance.now();
+      beginFullTitleLoopGate();
     }, FADE_MS);
   }
 
@@ -658,20 +823,42 @@
   // Pointer movement keeps the title awake, but does not accidentally skip
   // a cinematic. Actual click/touch/key interaction remains the skip gesture.
   window.addEventListener('mousemove', () => {
-    if (!cinematicRunning) resetIdleTimer();
+    if (!cinematicRunning) markTitleInteraction();
   }, { passive: true });
 
-  window.addEventListener('mousedown', skipCinematic);
-  window.addEventListener('touchstart', skipCinematic, { passive: false });
-  window.addEventListener('keydown', skipCinematic);
+  window.addEventListener('mousedown', (event) => {
+    if (cinematicRunning) {
+      skipCinematic(event);
+    } else {
+      markTitleInteraction();
+    }
+  });
+
+  window.addEventListener('touchstart', (event) => {
+    if (cinematicRunning) {
+      skipCinematic(event);
+    } else {
+      markTitleInteraction();
+    }
+  }, { passive: false });
+
+  window.addEventListener('keydown', (event) => {
+    if (cinematicRunning) {
+      skipCinematic(event);
+    } else {
+      markTitleInteraction();
+    }
+  });
 
   window.addEventListener('resize', () => {
     if (starActive) resizeStarCanvas();
+    if (barrensGustActive) resizeBarrensGustCanvas();
   }, { passive: true });
 
   if (sessionStorage.getItem('avendorMusicWanted') === '1') {
     resumeTitleMusic();
   }
 
+  lastTitleInteractionAt = performance.now();
   resetIdleTimer();
 })();
