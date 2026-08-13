@@ -6,6 +6,8 @@
   <title>Avendor: The Rising Tides | Early Test</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/avendor.css">
+  <link rel="preload" as="image" href="assets/cinematic/scene-01-moons-master.png">
+  <link rel="preload" as="audio" href="assets/cinematic/handel-sarabande-intro.mp3">
 </head>
 <body>
   <main
@@ -43,12 +45,22 @@
               alt=""
               draggable="false"
             >
+            <canvas
+              class="cinematic-stars"
+              id="cinematic-stars"
+              aria-hidden="true"
+            ></canvas>
           </div>
         </div>
 
-        <div class="cinematic-wind" aria-hidden="true"></div>
+        <div class="cinematic-wind" id="cinematic-wind" aria-hidden="true"></div>
         <div class="cinematic-snow" id="cinematic-snow" aria-hidden="true"></div>
         <div class="cinematic-meteor" id="cinematic-meteor" aria-hidden="true"></div>
+        <div
+          class="cinematic-transition-wind"
+          id="cinematic-transition-wind"
+          aria-hidden="true"
+        ></div>
       </div>
 
       <div class="cinematic-subtitle-wrap" aria-live="polite" aria-atomic="true">
@@ -59,17 +71,22 @@
     </section>
   </main>
 
-  <audio
-    id="avendor-music"
-    src="assets/avendor-theme.mp3"
-    preload="auto"
-    loop
-  ></audio>
+  <audio id="avendor-music" preload="auto" loop>
+    <source src="assets/bruckner-fourth-title-loop.ogg" type="audio/ogg">
+    <source src="assets/bruckner-fourth-title-loop.mp3" type="audio/mpeg">
+  </audio>
 
   <audio
     id="cinematic-music"
     src="assets/cinematic/handel-sarabande-intro.mp3"
     preload="auto"
+  ></audio>
+
+  <audio
+    id="scene-01-wind"
+    src="assets/cinematic/scene-01-northern-wind.ogg"
+    preload="auto"
+    loop
   ></audio>
 
   <script src="js/cinematic.js"></script>
