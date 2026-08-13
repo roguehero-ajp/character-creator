@@ -13,12 +13,29 @@
   const button = document.getElementById('early-test');
   const audio = document.getElementById('avendor-music');
 
-  if (!stage || !cinematic || !sceneArt || !subtitle || !snow || !meteor || !button || !audio) {
+  if (
+    !stage ||
+    !cinematic ||
+    !sceneArt ||
+    !subtitle ||
+    !snow ||
+    !meteor ||
+    !button ||
+    !audio
+  ) {
     return;
   }
 
   audio.volume = 0.42;
 
+  /*
+   * Prototype 0.2 animatic timing pass.
+   *
+   * Subtitle cues deliberately begin earlier than the first draft so the
+   * narration is already readable while the eye is settling into each shot.
+   * Each cue owns its own lifetime. Older cues are never allowed to clear a
+   * newer cue.
+   */
   const scenes = [
     {
       id: 'moons',
@@ -26,10 +43,19 @@
       image: 'assets/cinematic/scene-01-moons.png',
       cameraClass: 'camera-moons',
       snowClass: '',
-      meteorAt: 4_000,
+      meteorAt: 3_800,
       subtitles: [
-        { at: 4_000, until: 8_000, text: 'A breeze starts in the far North...' },
-        { at: 8_200, until: 14_600, text: "...high in the Barrens, where there's nothing but cold, ice, rocks and snow." }
+        {
+          at: 1_300,
+          until: 5_900,
+          text: 'A breeze starts in the far North...'
+        },
+        {
+          at: 6_100,
+          until: 14_500,
+          text:
+            "...high in the Barrens, where there's nothing but cold, ice, rocks and snow."
+        }
       ]
     },
     {
@@ -40,9 +66,10 @@
       snowClass: 'heavy',
       subtitles: [
         {
-          at: 1_600,
-          until: 10_800,
-          text: 'Even the secret and magical warm spots hidden within those deep mountain crags bow to the power of mother nature.'
+          at: 650,
+          until: 11_300,
+          text:
+            'Even the secret and magical warm spots hidden within those deep mountain crags bow to the power of mother nature.'
         }
       ]
     },
@@ -54,14 +81,16 @@
       snowClass: 'light',
       subtitles: [
         {
-          at: 800,
-          until: 6_100,
-          text: 'Over the snowy tundra and into Bruntide, with its stoic and strong men and women...'
+          at: 450,
+          until: 5_450,
+          text:
+            'Over the snowy tundra and into Bruntide, with its stoic and strong men and women...'
         },
         {
-          at: 6_300,
-          until: 11_500,
-          text: '...great warriors of the north, keeping the monsters at bay.'
+          at: 5_650,
+          until: 11_550,
+          text:
+            '...great warriors of the north, keeping the monsters at bay.'
         }
       ]
     }
@@ -72,6 +101,7 @@
   let sceneIndex = -1;
   let timers = [];
   let ignoreSkipUntil = 0;
+  let subtitleGeneration = 0;
 
   function rememberTimer(timer) {
     timers.push(timer);
@@ -86,7 +116,9 @@
   }
 
   function resetIdleTimer() {
-    if (cinematicRunning) return;
+    if (cinematicRunning) {
+      return;
+    }
 
     window.clearTimeout(idleTimer);
     idleTimer = window.setTimeout(startCinematic, IDLE_DELAY_MS);
@@ -94,50 +126,76 @@
 
   function tryMusic() {
     sessionStorage.setItem('avendorMusicWanted', '1');
+
     const started = audio.play();
+
     if (started?.catch) {
       started.catch(() => {});
     }
   }
 
-  function setSubtitle(text) {
+  function hideSubtitle() {
+    subtitleGeneration += 1;
     subtitle.classList.remove('show');
 
-    rememberTimer(window.setTimeout(() => {
-      subtitle.textContent = text;
-      subtitle.classList.toggle('show', Boolean(text));
-    }, 130));
+    window.setTimeout(() => {
+      if (!subtitle.classList.contains('show')) {
+        subtitle.textContent = '';
+      }
+    }, 260);
   }
 
-  function clearSubtitle() {
-    subtitle.classList.remove('show');
+  function showSubtitle(text) {
+    subtitleGeneration += 1;
+    const generation = subtitleGeneration;
 
-    rememberTimer(window.setTimeout(() => {
-      subtitle.textContent = '';
-    }, 520));
+    subtitle.classList.remove('show');
+    subtitle.textContent = text;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (
+          cinematicRunning &&
+          generation === subtitleGeneration
+        ) {
+          subtitle.classList.add('show');
+        }
+      });
+    });
   }
 
   function scheduleSubtitle(cue) {
-    rememberTimer(window.setTimeout(() => {
-      if (!cinematicRunning) return;
-      setSubtitle(cue.text);
-    }, cue.at));
+    rememberTimer(
+      window.setTimeout(() => {
+        if (!cinematicRunning) {
+          return;
+        }
 
-    rememberTimer(window.setTimeout(() => {
-      if (!cinematicRunning) return;
-      clearSubtitle();
-    }, cue.until));
+        showSubtitle(cue.text);
+      }, cue.at)
+    );
+
+    rememberTimer(
+      window.setTimeout(() => {
+        if (!cinematicRunning) {
+          return;
+        }
+
+        hideSubtitle();
+      }, cue.until)
+    );
   }
 
   function showScene(scene) {
     clearTimers();
-    clearSubtitle();
+    hideSubtitle();
 
     sceneArt.className = 'cinematic-art';
     sceneArt.alt = '';
     sceneArt.src = scene.image;
 
     snow.className = 'cinematic-snow';
+
     if (scene.snowClass) {
       snow.classList.add(scene.snowClass);
     }
@@ -145,35 +203,51 @@
     meteor.classList.remove('run');
 
     const reveal = () => {
-      if (!cinematicRunning) return;
+      if (!cinematicRunning) {
+        return;
+      }
 
-      sceneArt.className = `cinematic-art scene-visible ${scene.cameraClass}`;
+      sceneArt.className =
+        `cinematic-art scene-visible ${scene.cameraClass}`;
 
       for (const cue of scene.subtitles) {
         scheduleSubtitle(cue);
       }
 
       if (Number.isFinite(scene.meteorAt)) {
-        rememberTimer(window.setTimeout(() => {
-          if (!cinematicRunning) return;
-          meteor.classList.remove('run');
-          void meteor.offsetWidth;
-          meteor.classList.add('run');
-        }, scene.meteorAt));
+        rememberTimer(
+          window.setTimeout(() => {
+            if (!cinematicRunning) {
+              return;
+            }
+
+            meteor.classList.remove('run');
+            void meteor.offsetWidth;
+            meteor.classList.add('run');
+          }, scene.meteorAt)
+        );
       }
 
-      rememberTimer(window.setTimeout(nextScene, scene.duration));
+      rememberTimer(
+        window.setTimeout(nextScene, scene.duration)
+      );
     };
 
     if (sceneArt.complete) {
       reveal();
     } else {
-      sceneArt.addEventListener('load', reveal, { once: true });
+      sceneArt.addEventListener(
+        'load',
+        reveal,
+        { once: true }
+      );
     }
   }
 
   function nextScene() {
-    if (!cinematicRunning) return;
+    if (!cinematicRunning) {
+      return;
+    }
 
     sceneIndex += 1;
 
@@ -186,7 +260,9 @@
   }
 
   function startCinematic() {
-    if (cinematicRunning) return;
+    if (cinematicRunning) {
+      return;
+    }
 
     cinematicRunning = true;
     sceneIndex = -1;
@@ -204,11 +280,13 @@
   }
 
   function finishCinematic() {
-    if (!cinematicRunning) return;
+    if (!cinematicRunning) {
+      return;
+    }
 
     cinematicRunning = false;
     clearTimers();
-    clearSubtitle();
+    hideSubtitle();
 
     sceneArt.className = 'cinematic-art';
     snow.className = 'cinematic-snow';
@@ -224,8 +302,13 @@
   }
 
   function skipCinematic(event) {
-    if (!cinematicRunning) return;
-    if (performance.now() < ignoreSkipUntil) return;
+    if (!cinematicRunning) {
+      return;
+    }
+
+    if (performance.now() < ignoreSkipUntil) {
+      return;
+    }
 
     if (event?.cancelable) {
       event.preventDefault();
@@ -259,16 +342,22 @@
   ];
 
   for (const eventName of activityEvents) {
-    window.addEventListener(eventName, (event) => {
-      if (cinematicRunning) {
-        skipCinematic(event);
-      } else {
-        resetIdleTimer();
-      }
-    }, { passive: eventName !== 'touchstart' });
+    window.addEventListener(
+      eventName,
+      (event) => {
+        if (cinematicRunning) {
+          skipCinematic(event);
+        } else {
+          resetIdleTimer();
+        }
+      },
+      { passive: eventName !== 'touchstart' }
+    );
   }
 
-  if (sessionStorage.getItem('avendorMusicWanted') === '1') {
+  if (
+    sessionStorage.getItem('avendorMusicWanted') === '1'
+  ) {
     audio.play().catch(() => {});
   }
 
