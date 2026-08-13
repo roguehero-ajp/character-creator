@@ -362,14 +362,16 @@ body {
 
 @keyframes avendor-camera-moons {
   /*
-   * Start tightly framed higher on the sky / moons.
-   * Then pull BACK while drifting the image UP so the camera appears to move
-   * down and reveal more mountain by the end of the shot.
+   * Scene 1 — unmistakable pull-back and downward reveal
+   *
+   * Start very tight on the upper sky/moons by pushing the artwork DOWN.
+   * Over the shot, pull back while driving the artwork strongly UP.
+   * That makes the apparent camera motion move DOWN, revealing the mountains.
    */
-  0%   { transform: scale(1.42) translate3d(0, 8%, 0); }
-  28%  { transform: scale(1.30) translate3d(0, 5.5%, 0); }
-  60%  { transform: scale(1.16) translate3d(0, 1.5%, 0); }
-  100% { transform: scale(1.00) translate3d(0, -5%, 0); }
+  0%   { transform: scale(1.55) translate3d(0, 18%, 0); }
+  25%  { transform: scale(1.40) translate3d(0, 10%, 0); }
+  55%  { transform: scale(1.22) translate3d(0, 0%, 0); }
+  100% { transform: scale(1.00) translate3d(0, -18%, 0); }
 }
 
 @keyframes avendor-camera-barrens {
@@ -383,6 +385,14 @@ body {
   24%  { transform: scale(1.28) translate3d(-2%, 0, 0); }
   72%  { transform: scale(1.30) translate3d(2%, 0, 0); }
   100% { transform: scale(1.44) translate3d(9%, -2%, 0); }
+}
+  24%  { transform: scale(.985) translate3d(-.3%, 0, 0); }
+  76%  { transform: scale(.985) translate3d(.3%, 0, 0); }
+  100% { transform: scale(1) translate3d(0, 0, 0); }
+}
+  20%  { transform: scale(1.12) translate3d(-1%, 0, 0); }
+  78%  { transform: scale(1.12) translate3d(1%, 0, 0); }
+  100% { transform: scale(1.20) translate3d(5%, -1%, 0); }
 }
 
 @keyframes avendor-wind {
