@@ -104,6 +104,7 @@
       cameraClass: 'camera-bruntide',
       snowClass: 'light',
       windClass: 'bruntide',
+      transitionAt: 10_000,
       subtitles: [
         {
           at: 450,
@@ -116,6 +117,73 @@
           until: 11_550,
           text:
             '...great warriors of the north, keeping the monsters at bay.'
+        }
+      ]
+    },
+    {
+      id: 'numynor',
+      duration: 12_000,
+      image: 'assets/cinematic/scene-04-numynor.png',
+      cameraClass: 'camera-numynor',
+      snowClass: '',
+      windClass: 'numynor',
+      transitionAt: 10_050,
+      subtitles: [
+        {
+          at: 450,
+          until: 5_250,
+          text: 'Through the barbarian fiefdoms of Numynor...'
+        },
+        {
+          at: 5_500,
+          until: 11_500,
+          text:
+            '...full of its ramshackle huts and villages of people willing to fight for pennies, food, or fun...'
+        }
+      ]
+    },
+    {
+      id: 'stouthome',
+      duration: 12_000,
+      image: 'assets/cinematic/scene-05-stouthome.png',
+      cameraClass: 'camera-stouthome',
+      snowClass: '',
+      windClass: 'stouthome',
+      transitionAt: 10_100,
+      subtitles: [
+        {
+          at: 450,
+          until: 5_400,
+          text:
+            'Through the great mountains of Stouthome, where the dwarves run their kingdom...'
+        },
+        {
+          at: 5_650,
+          until: 11_450,
+          text:
+            '...guarding one of the entrances to the secret underworld below...'
+        }
+      ]
+    },
+    {
+      id: 'theland-briarwell',
+      duration: 12_000,
+      image: 'assets/cinematic/scene-06-theland-briarwell.png',
+      cameraClass: 'camera-theland',
+      snowClass: 'light',
+      windClass: 'theland',
+      subtitles: [
+        {
+          at: 400,
+          until: 5_500,
+          text:
+            'Toward the coastal lands of Theland... calmly tucked away from the strife and turmoil of the world.'
+        },
+        {
+          at: 5_750,
+          until: 11_650,
+          text:
+            'Hints of the cold come with the wind, as it brings the first few flakes of snow seen in many years. The signs of another great change hang in the air...'
         }
       ]
     }
@@ -132,7 +200,7 @@
   let windFadeFrame = 0;
   let starActive = false;
 
-  const twinkleStars = createTwinkleStars(34);
+  const twinkleStars = createTwinkleStars(44);
 
   function createTwinkleStars(count) {
     let seed = 0x4a56454e;
@@ -471,8 +539,12 @@
 
         if (scene.id === 'barrens') {
           fadeOutSceneOneWind(1_350);
-          settleWindTransition();
         }
+
+        // Every regional cut may arrive through the same wind veil. Clear the
+        // previous wipe shortly after the new scene appears so it can be
+        // reused cleanly on the next transition.
+        settleWindTransition();
       }
 
       for (const cue of scene.subtitles) scheduleSubtitle(cue);

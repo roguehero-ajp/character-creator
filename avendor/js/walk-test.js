@@ -5,14 +5,12 @@
   const player = document.getElementById('player');
   const mark = document.getElementById('confusion-mark');
   const help = document.getElementById('walk-help');
-  const audio = document.getElementById('avendor-music');
 
   const keys = new Set();
   let x = 0.42;
   let y = 0.70;
   let last = performance.now();
   let wrapping = false;
-  let musicStarted = false;
 
   const WALK_SPEED_X = 0.19;
   const WALK_SPEED_Y = 0.17;
@@ -23,19 +21,6 @@
   const NORTH_MIN_X = 0.43;
   const NORTH_MAX_X = 0.63;
 
-  audio.volume = 0.42;
-
-  function startMusic() {
-    if (musicStarted) return;
-    musicStarted = true;
-    sessionStorage.setItem('avendorMusicWanted', '1');
-    const p = audio.play();
-    if (p?.catch) p.catch(() => { musicStarted = false; });
-  }
-
-  if (sessionStorage.getItem('avendorMusicWanted') === '1') {
-    startMusic();
-  }
 
   const controls = new Set(['w','a','s','d','arrowup','arrowleft','arrowdown','arrowright']);
 
@@ -44,7 +29,6 @@
     if (!controls.has(key)) return;
     event.preventDefault();
     keys.add(key);
-    startMusic();
   });
 
   window.addEventListener('keyup', (event) => {
@@ -53,7 +37,6 @@
 
   stage.addEventListener('pointerdown', () => {
     stage.focus({ preventScroll: true });
-    startMusic();
   });
 
   function setPosition() {
