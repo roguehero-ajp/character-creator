@@ -354,6 +354,22 @@ body {
   opacity: .92;
 }
 
+.cinematic-bruntide-battle {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transition: opacity .45s ease;
+}
+
+.cinematic-bruntide-battle.active {
+  opacity: .96;
+}
+
 /*
  * Scene 1 camera: two wrappers on purpose.
  * Zoom owns only scale. Pan owns only travel. They never overwrite each
@@ -422,8 +438,8 @@ body {
 }
 
 .cinematic-wind.bruntide {
-  opacity: .21;
-  animation-duration: 1.55s;
+  opacity: .24;
+  animation-duration: 1.35s;
 }
 
 .cinematic-wind.numynor {
@@ -630,10 +646,11 @@ body {
 }
 
 @keyframes avendor-camera-bruntide {
-  0%   { transform: scale(1.14) translate3d(-8%, 2%, 0); }
-  24%  { transform: scale(1.28) translate3d(-2%, 0, 0); }
-  72%  { transform: scale(1.30) translate3d(2%, 0, 0); }
-  100% { transform: scale(1.44) translate3d(9%, -2%, 0); }
+  0%   { transform: scale(1.12) translate3d(-7%, 2%, 0); }
+  22%  { transform: scale(1.22) translate3d(-3%, 1%, 0); }
+  54%  { transform: scale(1.28) translate3d(0, 0, 0); }
+  76%  { transform: scale(1.33) translate3d(2.5%, 0, 0); }
+  100% { transform: scale(1.41) translate3d(7%, -1%, 0); }
 }
 
 @keyframes avendor-camera-numynor {
