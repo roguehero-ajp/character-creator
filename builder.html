@@ -79,7 +79,6 @@ Started: July 2026
   <script defer src="js/combat-equipment.js"></script>
   <script defer src="js/storage.js"></script>
   <script defer src="js/accessibility.js"></script>
-  <script defer src="js/responsive-builder.js"></script>
   <script defer src="js/printing.js"></script>
   <script defer src="js/pdf.js"></script>
   <script defer src="js/app.js"></script>
@@ -93,16 +92,7 @@ Started: July 2026
          CONTROL PANEL
          ===================================================== -->
     <aside class="controls" aria-label="Character builder controls">
-      <h3 class="controls-heading">Controls</h3>
-
-      <button
-        type="button"
-        id="responsive-controls-toggle"
-        class="responsive-controls-toggle"
-        aria-expanded="true"
-      >
-        Hide Tools &amp; Save
-      </button>
+      <h3>Controls</h3>
 
       <div>
         <label for="theme-select">Theme</label>
@@ -200,6 +190,20 @@ Started: July 2026
       <button type="button" id="export-btn" class="export">
         Export to PDF
       </button>
+
+      <!-- SUPPORT MY RPG SOURCE: intentionally outside #character-document so it never enters print/PDF output. -->
+      <section class="builder-support" aria-label="Support My RPG Source">
+        <p>Enjoying the builder?</p>
+        <a
+          class="builder-support-link"
+          href="https://ko-fi.com/myrpgsource"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-analytics-event="support_click"
+          data-analytics-id="builder_controls"
+        >Support My RPG Source</a>
+        <small>Help keep the tools free and growing.</small>
+      </section>
     </aside>
 
     <!-- =====================================================
