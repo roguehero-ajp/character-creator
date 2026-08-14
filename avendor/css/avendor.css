@@ -261,7 +261,7 @@ body {
 }
 
 /*
- * Scene 2 production layers.
+ * Scene 2 final production layers.
  * The cave glow is camera-locked to the Barrens artwork while the gust canvas
  * remains screen-space, giving the landscape a sense of depth and moving air.
  */
@@ -284,9 +284,9 @@ body {
 
 .cinematic-barrens-cave-glow {
   position: absolute;
-  left: 40.1%;
-  top: 49.2%;
-  width: 10.5%;
+  left: 31.6%;
+  top: 62.5%;
+  width: 8.8%;
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
   border-radius: 50%;
