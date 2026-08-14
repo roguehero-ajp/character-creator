@@ -6,15 +6,54 @@
   <title>Briarwell Walking Test | Avendor</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/avendor.css">
+  <link rel="stylesheet" href="css/garius.css">
 </head>
 <body>
   <main class="avendor-stage walk-stage" id="walk-stage" style="--stage-ratio: 1449 / 1085" tabindex="0" aria-label="Briarwell walking test. Use W A S D or arrow keys to move.">
     <img class="stage-art" src="assets/briarwell-square-bg.png" alt="Snowy Lodestone Square in Briarwell">
+
+    <!-- GARIUS: roadside support NPC. Kept separate from movement/gameplay logic. -->
+    <img
+      class="garius-npc"
+      id="garius-npc"
+      src="assets/garius/garius-idle.png"
+      alt="Garius, a weary adventurer sitting beside the road with a straw hat"
+      data-pose="idle"
+      draggable="false"
+    >
+    <a
+      class="garius-hat-hitbox"
+      id="garius-hat-hitbox"
+      href="https://ko-fi.com/myrpgsource"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Spare a coin for Garius and support Avendor"
+      title="Spare a coin for Garius"
+      data-analytics-event="support_click"
+      data-analytics-id="avendor_garius_hat"
+    ></a>
+    <a
+      class="garius-bubble"
+      id="garius-bubble"
+      href="https://ko-fi.com/myrpgsource"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Support Avendor on Ko-fi"
+      data-analytics-event="support_click"
+      data-analytics-id="avendor_garius_bubble"
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <span id="garius-bubble-text">Spare some coin for a weary game developer?</span>
+    </a>
+
     <img class="player" id="player" src="assets/hero.png" alt="" aria-hidden="true">
     <div class="confusion-mark" id="confusion-mark" aria-hidden="true">?</div>
     <div class="walk-help" id="walk-help">WASD or arrow keys to walk. Try heading north up the path.</div>
     <div class="dev-badge">EARLY MOVEMENT TEST</div>
   </main>
+  <audio id="avendor-music" src="assets/avendor-theme.mp3" preload="auto" loop></audio>
   <script src="js/walk-test.js"></script>
+  <script src="js/garius.js"></script>
 </body>
 </html>
