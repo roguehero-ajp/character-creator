@@ -57,7 +57,7 @@
   sceneOneWind.volume = 0;
 
   /*
-   * Prototype 0.2.2 production lock.
+   * Prototype 0.2.4 production lock.
    *
    * Scene 1 is now the template shot: camera pan, camera zoom, twinkles,
    * meteor, subtitle timing, environmental audio and transition effects are
@@ -90,7 +90,7 @@
     {
       id: 'barrens',
       duration: 12_000,
-      image: 'assets/cinematic/scene-02-barrens.png',
+      image: 'assets/cinematic/scene-02-barrens-final.png',
       cameraClass: 'camera-barrens',
       snowClass: 'heavy',
       windClass: 'barrens',
