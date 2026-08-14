@@ -5,7 +5,7 @@
   const FADE_MS = 650;
   const TITLE_VOLUME = 0.42;
   const CINEMATIC_VOLUME = 0.42;
-  const BARRENS_AMBIENCE_VOLUME = 0.15;
+  const BARRENS_AMBIENCE_VOLUME = 0.12;
   const TITLE_LOOP_FALLBACK_MS = 79_000;
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -23,6 +23,7 @@
   const barrensFx = document.getElementById('cinematic-barrens-fx');
   const barrensGustCanvas = document.getElementById('cinematic-barrens-gusts');
   const button = document.getElementById('early-test');
+  const introductionButton = document.getElementById('play-introduction');
   const titleMusic = document.getElementById('avendor-music');
   const cinematicMusic = document.getElementById('cinematic-music');
   const sceneOneWind = document.getElementById('scene-01-wind');
@@ -43,6 +44,7 @@
     !barrensFx ||
     !barrensGustCanvas ||
     !button ||
+    !introductionButton ||
     !titleMusic ||
     !cinematicMusic ||
     !sceneOneWind ||
@@ -61,7 +63,7 @@
   barrensAmbience.volume = 0;
 
   /*
-   * Prototype 0.2.5 production lock.
+   * Prototype 0.2.6 production lock.
    *
    * Scene 1 is now the template shot: camera pan, camera zoom, twinkles,
    * meteor, subtitle timing, environmental audio and transition effects are
@@ -445,7 +447,7 @@
   function startBarrensAmbience() {
     barrensAmbienceFrame = cancelFrame(barrensAmbienceFrame);
     barrensAmbience.currentTime = 0;
-    barrensAmbience.volume = 0.008;
+    barrensAmbience.volume = 0.0064;
 
     const started = barrensAmbience.play();
     if (started?.catch) started.catch(() => {});
@@ -463,7 +465,7 @@
       if (elapsed < fadeInDuration) {
         const progress = Math.min(1, elapsed / fadeInDuration);
         const eased = progress * progress * (3 - 2 * progress);
-        target = 0.008 + (BARRENS_AMBIENCE_VOLUME * 0.82 - 0.008) * eased;
+        target = 0.0064 + (BARRENS_AMBIENCE_VOLUME * 0.82 - 0.0064) * eased;
       } else {
         const progress = Math.min(1, (elapsed - fadeInDuration) / (swellEnd - fadeInDuration));
         target = BARRENS_AMBIENCE_VOLUME * (0.82 + progress * 0.18);
@@ -887,6 +889,15 @@
     finishCinematic();
   }
 
+  function startIntroductionPreview() {
+    // Manual test control: deliberately bypasses the automatic replay gate.
+    // A real click also gives the browser a trusted gesture for audio playback.
+    sessionStorage.setItem('avendorMusicWanted', '1');
+    window.clearTimeout(idleTimer);
+    clearReplayGate();
+    startCinematic();
+  }
+
   function startEarlyTest() {
     window.clearTimeout(idleTimer);
     ensureTitleMusic();
@@ -901,6 +912,7 @@
   }
 
   button.addEventListener('click', startEarlyTest);
+  introductionButton.addEventListener('click', startIntroductionPreview);
 
   // Pointer movement keeps the title awake, but does not accidentally skip
   // a cinematic. Actual click/touch/key interaction remains the skip gesture.
