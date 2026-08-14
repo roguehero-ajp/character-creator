@@ -5,6 +5,7 @@
   const FADE_MS = 650;
   const TITLE_VOLUME = 0.42;
   const CINEMATIC_VOLUME = 0.42;
+  const BARRENS_AMBIENCE_VOLUME = 0.15;
   const TITLE_LOOP_FALLBACK_MS = 79_000;
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -25,6 +26,7 @@
   const titleMusic = document.getElementById('avendor-music');
   const cinematicMusic = document.getElementById('cinematic-music');
   const sceneOneWind = document.getElementById('scene-01-wind');
+  const barrensAmbience = document.getElementById('scene-02-barrens-ambience');
 
   if (
     !stage ||
@@ -43,7 +45,8 @@
     !button ||
     !titleMusic ||
     !cinematicMusic ||
-    !sceneOneWind
+    !sceneOneWind ||
+    !barrensAmbience
   ) {
     return;
   }
@@ -55,9 +58,10 @@
   titleMusic.volume = TITLE_VOLUME;
   cinematicMusic.volume = 0.012;
   sceneOneWind.volume = 0;
+  barrensAmbience.volume = 0;
 
   /*
-   * Prototype 0.2.4 production lock.
+   * Prototype 0.2.5 production lock.
    *
    * Scene 1 is now the template shot: camera pan, camera zoom, twinkles,
    * meteor, subtitle timing, environmental audio and transition effects are
@@ -205,6 +209,7 @@
   let starAnimationFrame = 0;
   let musicFadeFrame = 0;
   let windFadeFrame = 0;
+  let barrensAmbienceFrame = 0;
   let barrensGustFrame = 0;
   let starActive = false;
   let barrensGustActive = false;
@@ -435,6 +440,74 @@
     sceneOneWind.pause();
     sceneOneWind.currentTime = 0;
     sceneOneWind.volume = 0;
+  }
+
+  function startBarrensAmbience() {
+    barrensAmbienceFrame = cancelFrame(barrensAmbienceFrame);
+    barrensAmbience.currentTime = 0;
+    barrensAmbience.volume = 0.008;
+
+    const started = barrensAmbience.play();
+    if (started?.catch) started.catch(() => {});
+
+    const beganAt = performance.now();
+    const fadeInDuration = 1_700;
+    const swellEnd = 9_300;
+
+    const swell = (now) => {
+      if (!cinematicRunning || sceneIndex !== 1) return;
+
+      const elapsed = Math.max(0, now - beganAt);
+      let target;
+
+      if (elapsed < fadeInDuration) {
+        const progress = Math.min(1, elapsed / fadeInDuration);
+        const eased = progress * progress * (3 - 2 * progress);
+        target = 0.008 + (BARRENS_AMBIENCE_VOLUME * 0.82 - 0.008) * eased;
+      } else {
+        const progress = Math.min(1, (elapsed - fadeInDuration) / (swellEnd - fadeInDuration));
+        target = BARRENS_AMBIENCE_VOLUME * (0.82 + progress * 0.18);
+      }
+
+      barrensAmbience.volume = Math.min(BARRENS_AMBIENCE_VOLUME, target);
+      barrensAmbienceFrame = requestAnimationFrame(swell);
+    };
+
+    barrensAmbienceFrame = requestAnimationFrame(swell);
+  }
+
+  function fadeOutBarrensAmbience(duration = 1_650) {
+    barrensAmbienceFrame = cancelFrame(barrensAmbienceFrame);
+    if (barrensAmbience.paused) return;
+
+    const from = barrensAmbience.volume;
+    const beganAt = performance.now();
+
+    const fade = (now) => {
+      if (!cinematicRunning) return;
+
+      const progress = Math.min(1, (now - beganAt) / duration);
+      const eased = progress * progress * (3 - 2 * progress);
+      barrensAmbience.volume = Math.max(0, from * (1 - eased));
+
+      if (progress < 1) {
+        barrensAmbienceFrame = requestAnimationFrame(fade);
+      } else {
+        barrensAmbience.pause();
+        barrensAmbience.currentTime = 0;
+        barrensAmbience.volume = 0;
+        barrensAmbienceFrame = 0;
+      }
+    };
+
+    barrensAmbienceFrame = requestAnimationFrame(fade);
+  }
+
+  function stopBarrensAmbience() {
+    barrensAmbienceFrame = cancelFrame(barrensAmbienceFrame);
+    barrensAmbience.pause();
+    barrensAmbience.currentTime = 0;
+    barrensAmbience.volume = 0;
   }
 
   function resizeStarCanvas() {
@@ -702,6 +775,14 @@
         if (scene.id === 'barrens') {
           fadeOutSceneOneWind(1_350);
           startBarrensEffects();
+          startBarrensAmbience();
+          rememberTimer(window.setTimeout(() => {
+            if (cinematicRunning && sceneIndex === 1) {
+              fadeOutBarrensAmbience(1_650);
+            }
+          }, 9_850));
+        } else {
+          stopBarrensAmbience();
         }
 
         // Every regional cut may arrive through the same wind veil. Clear the
@@ -776,6 +857,7 @@
     hideSubtitle();
     stopCinematicMusic();
     stopSceneOneWind();
+    stopBarrensAmbience();
     stopStarTwinkle();
     stopBarrensEffects();
 
