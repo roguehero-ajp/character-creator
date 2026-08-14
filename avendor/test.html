@@ -9,6 +9,7 @@
   <link rel="preload" as="image" href="assets/cinematic/scene-01-moons-master.png">
   <link rel="preload" as="image" href="assets/cinematic/scene-02-barrens-final.png">
   <link rel="preload" as="audio" href="assets/cinematic/avendor-sarabande-of-the-north-v7.ogg" type="audio/ogg">
+  <link rel="preload" as="audio" href="assets/cinematic/scene-02-barrens-ambience.ogg" type="audio/ogg">
 </head>
 <body>
   <main
@@ -28,7 +29,7 @@
     </section>
 
     <div class="test-ribbon" id="test-ribbon">
-      prototype 0.2.4 · scene 2 final art · replay after one Bruckner loop
+      prototype 0.2.5 · scene 2 final audio · replay after one Bruckner loop
     </div>
 
     <section
@@ -107,6 +108,11 @@
     preload="auto"
     loop
   ></audio>
+
+  <audio id="scene-02-barrens-ambience" preload="auto" loop>
+    <source src="assets/cinematic/scene-02-barrens-ambience.ogg" type="audio/ogg">
+    <source src="assets/cinematic/scene-02-barrens-ambience.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="js/cinematic.js"></script>
 </body>
