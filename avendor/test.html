@@ -8,8 +8,10 @@
   <link rel="stylesheet" href="css/avendor.css">
   <link rel="preload" as="image" href="assets/cinematic/scene-01-moons-master.png">
   <link rel="preload" as="image" href="assets/cinematic/scene-02-barrens-final.png">
+  <link rel="preload" as="image" href="assets/cinematic/scene-03-bruntide-final.png">
   <link rel="preload" as="audio" href="assets/cinematic/avendor-sarabande-of-the-north-v7.ogg" type="audio/ogg">
   <link rel="preload" as="audio" href="assets/cinematic/scene-02-barrens-ambience.ogg" type="audio/ogg">
+  <link rel="preload" as="audio" href="assets/cinematic/scene-03-bruntide-ambience.ogg" type="audio/ogg">
 </head>
 <body>
   <main
@@ -32,7 +34,7 @@
     </section>
 
     <div class="test-ribbon" id="test-ribbon">
-      prototype 0.2.6 · Barrens mix balanced · Introduction test button</div>
+      prototype 0.2.7 · Bruntide production pass · Introduction test button</div>
 
     <section
       class="cinematic"
@@ -69,6 +71,11 @@
         <canvas
           class="cinematic-barrens-gusts"
           id="cinematic-barrens-gusts"
+          aria-hidden="true"
+        ></canvas>
+        <canvas
+          class="cinematic-bruntide-battle"
+          id="cinematic-bruntide-battle"
           aria-hidden="true"
         ></canvas>
         <div class="cinematic-snow" id="cinematic-snow" aria-hidden="true"></div>
@@ -114,6 +121,11 @@
   <audio id="scene-02-barrens-ambience" preload="auto" loop>
     <source src="assets/cinematic/scene-02-barrens-ambience.ogg" type="audio/ogg">
     <source src="assets/cinematic/scene-02-barrens-ambience.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="scene-03-bruntide-ambience" preload="auto" loop>
+    <source src="assets/cinematic/scene-03-bruntide-ambience.ogg" type="audio/ogg">
+    <source src="assets/cinematic/scene-03-bruntide-ambience.mp3" type="audio/mpeg">
   </audio>
 
   <script src="js/cinematic.js"></script>
