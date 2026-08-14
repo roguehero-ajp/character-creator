@@ -40,12 +40,6 @@ input[type="number"] {
 body {
   font-family: "Lora", serif;
   background-color: var(--bg-app);
-  background-image:
-    linear-gradient(180deg, rgba(8, 18, 32, 0.20) 0%, rgba(6, 12, 22, 0.56) 100%),
-    url("../images/site-background-stars.png");
-  background-position: center, center;
-  background-repeat: no-repeat, no-repeat;
-  background-size: auto, cover;
   color: var(--text-main);
 
   display: flex;
@@ -149,53 +143,6 @@ body {
 
 .controls button.export:hover {
   background: #a93226;
-}
-
-.controls .codex-library-link {
-  width: 100%;
-  padding: 10px 8px;
-
-  display: block;
-
-  color: #ffffff;
-  background:
-    linear-gradient(135deg, #8e44ad, #5b2c6f);
-
-  border: 1px solid #d2b4de;
-  border-radius: 4px;
-
-  box-shadow:
-    0 3px 9px rgba(0, 0, 0, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
-
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 1.3;
-  text-align: center;
-  text-decoration: none;
-
-  transition:
-    background 0.2s,
-    box-shadow 0.2s,
-    transform 0.2s;
-}
-
-.controls .codex-library-link:hover,
-.controls .codex-library-link:focus-visible {
-  color: #ffffff;
-  background:
-    linear-gradient(135deg, #a569bd, #6c3483);
-
-  box-shadow:
-    0 5px 13px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-
-  transform: translateY(-1px);
-}
-
-.controls .codex-library-link:active {
-  transform: translateY(0);
 }
 
 
@@ -822,41 +769,6 @@ label {
 
 
 /* ==========================================================
-   COMPACT SPELLCASTING SUMMARY
-   ========================================================== */
-
-.spellcasting-summary-box {
-  padding: 4px 5px;
-  gap: 2px;
-}
-
-.spellcasting-summary-row {
-  display: grid;
-  grid-template-columns:
-    minmax(0, 1.35fr)
-    minmax(0, 0.8fr)
-    minmax(0, 0.9fr);
-  gap: 4px;
-  align-items: end;
-}
-
-.spellcasting-summary-row .detail-box {
-  min-width: 0;
-}
-
-.spellcasting-summary-row label {
-  font-size: 7.5px;
-  line-height: 1.05;
-}
-
-.spellcasting-summary-row .fantasy-input {
-  min-width: 0;
-  padding: 2px 4px;
-  font-size: 9px;
-}
-
-
-/* ==========================================================
    CLASS ABILITIES AND FEATS
    ========================================================== */
 
@@ -1063,78 +975,6 @@ label {
 
 
 /* ==========================================================
-   PAGE 2 REORGANIZATION
-   ========================================================== */
-
-#page-2 .full-width-body {
-  gap: 6px;
-}
-
-/*
- * The DOM keeps the old field order for save-file compatibility.
- * Flex order presents the page in the more useful reading order.
- */
-.page2-motto-row {
-  order: 1;
-  flex: 0 0 auto;
-}
-
-.page2-traits-row {
-  order: 2;
-  height: 150px;
-  flex: 0 0 150px;
-}
-
-.page2-abilities-box {
-  order: 3;
-  flex: 0 0 auto;
-}
-
-.page2-abilities-box .abilities-grid {
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
-  gap: 4px 6px;
-}
-
-.page2-abilities-box .ability-input {
-  padding: 3px 4px;
-  font-size: 9.5px;
-}
-
-.page2-equipment-title {
-  order: 4;
-  margin-bottom: -4px;
-}
-
-.page2-equipment-box {
-  order: 5;
-  min-height: 118px;
-  flex: 0 0 118px;
-}
-
-.page2-equipment-box .inventory-text {
-  height: auto;
-  min-height: 0;
-  flex: 1;
-}
-
-.page2-story-row {
-  order: 6;
-  height: auto;
-  min-height: 250px;
-  flex: 1 1 auto;
-}
-
-.page2-story-row .trait-box {
-  height: 100%;
-}
-
-#page-2 [hidden] {
-  display: none !important;
-}
-
-
-/* ==========================================================
    SPELL PAGES
    ========================================================== */
 
@@ -1299,3 +1139,66 @@ label {
   font-style: italic;
   opacity: 0.58;
 }
+
+/* ==========================================================
+   BUILDER SUPPORT LINK
+   Kept visually secondary to character-building controls.
+   ========================================================== */
+
+.builder-support {
+  margin-top: 3px;
+  padding-top: 12px;
+  display: grid;
+  gap: 7px;
+  text-align: center;
+  border-top: 1px solid #415a77;
+}
+
+.builder-support p,
+.builder-support small {
+  margin: 0;
+}
+
+.builder-support p {
+  color: #d9e2ec;
+  font-size: 11px;
+}
+
+.builder-support small {
+  color: #aebdca;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.builder-support-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  width: 100%;
+  padding: 8px 10px;
+  color: #f3d28a;
+  font-family: "Cinzel", serif;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  background: rgba(243, 210, 138, 0.06);
+  border: 1px solid rgba(243, 210, 138, 0.62);
+  border-radius: 4px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.builder-support-link:hover,
+.builder-support-link:focus-visible {
+  color: #ffffff;
+  background: rgba(243, 210, 138, 0.13);
+  border-color: #f3d28a;
+  outline: none;
+}
+
+.builder-support-link:focus-visible {
+  box-shadow: 0 0 0 2px rgba(243, 210, 138, 0.28);
+}
+
