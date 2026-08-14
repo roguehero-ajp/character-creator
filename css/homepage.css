@@ -129,12 +129,45 @@ a:focus-visible {
   box-shadow: 0 0 24px rgba(255, 210, 119, 0.22);
 }
 
+.hotspot-visible-label {
+  background: linear-gradient(180deg, rgba(4, 18, 31, 0.9), rgba(4, 18, 31, 0.78));
+  border-color: rgba(230, 173, 77, 0.5);
+  border-radius: 999px;
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.3),
+    inset 0 0 18px rgba(255, 210, 119, 0.04);
+}
+
+.hotspot-visible-label span {
+  width: auto;
+  height: auto;
+  position: static;
+  overflow: visible;
+  clip: auto;
+  white-space: nowrap;
+  color: var(--home-gold-bright);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: clamp(0.78rem, 1.1vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hotspot-visible-label:hover,
+.hotspot-visible-label:focus-visible {
+  background: linear-gradient(180deg, rgba(19, 38, 56, 0.96), rgba(6, 24, 40, 0.9));
+  border-color: rgba(255, 210, 119, 0.72);
+  box-shadow:
+    0 0 22px rgba(255, 210, 119, 0.25),
+    0 10px 28px rgba(0, 0, 0, 0.34);
+}
+
 .hotspot-news { left: 7.4%; top: 21.8%; width: 10.3%; height: 3.5%; }
 .hotspot-builders { left: 19.1%; top: 21.8%; width: 13.0%; height: 3.5%; }
 .hotspot-rules { left: 33.8%; top: 21.8%; width: 26.6%; height: 3.5%; }
 .hotspot-faq { left: 61.8%; top: 21.8%; width: 7.4%; height: 3.5%; }
-.hotspot-store { left: 70.2%; top: 21.8%; width: 10.2%; height: 3.5%; }
-.hotspot-login { left: 81.5%; top: 21.8%; width: 12.0%; height: 3.5%; }
+.hotspot-support { left: 70.0%; top: 21.2%; width: 23.8%; height: 4.3%; display: flex; align-items: center; justify-content: center; }
 
 .hotspot-knowledge { left: 5.0%; top: 55.0%; width: 30.2%; height: 16.4%; }
 .hotspot-codex { left: 36.5%; top: 55.0%; width: 27.2%; height: 16.4%; }
