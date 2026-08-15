@@ -237,7 +237,7 @@
   const cameraTravelVectors = Object.freeze({
     west:      { xVw: -15, yVh:   0 },
     east:      { xVw:  15, yVh:   0 },
-    south:     { xVw:   0, yVh:  14 },
+    south:     { xVw:   0, yVh:  54 },
     southeast: { xVw:  12, yVh:  12 },
     southwest: { xVw: -12, yVh:  12 }
   });
