@@ -226,17 +226,20 @@
 
 
   /*
-   * Prototype 0.3.2: a short camera impulse now accompanies each directional
-   * wind wipe. It animates the CSS `translate` component rather than the
-   * `transform` property, so it can layer safely over the scene's existing
-   * pan/zoom animations without replacing them.
+   * Prototype 0.3.3: the camera now gets a much stronger LAST-SECOND travel
+   * impulse. The scenery moves opposite the journey direction, which is how a
+   * camera travelling across the world reads visually: travelling south pulls
+   * the current landscape upward, travelling east pulls it left, and so on.
+   *
+   * Individual `translate` / `scale` properties layer over the existing scene
+   * transform animations instead of replacing them.
    */
   const cameraTravelVectors = Object.freeze({
-    west:      { xVw: -7, yVh: 0 },
-    east:      { xVw: 7,  yVh: 0 },
-    south:     { xVw: 0,  yVh: 6 },
-    southeast: { xVw: 5,  yVh: 5 },
-    southwest: { xVw: -5, yVh: 5 }
+    west:      { xVw:  15, yVh:   0 },
+    east:      { xVw: -15, yVh:   0 },
+    south:     { xVw:   0, yVh: -14 },
+    southeast: { xVw: -12, yVh: -12 },
+    southwest: { xVw:  12, yVh: -12 }
   });
 
   let cameraTravelAnimation = null;
@@ -254,18 +257,15 @@
     cancelCameraTravel();
     const vector = cameraTravelVectors[direction] || cameraTravelVectors.west;
 
-    const midX = vector.xVw * 0.28;
-    const midY = vector.yVh * 0.28;
-
     cameraTravelAnimation = cameraPan.animate(
       [
-        { translate: '0vw 0vh', offset: 0 },
-        { translate: `${midX}vw ${midY}vh`, offset: 0.30 },
-        { translate: `${vector.xVw}vw ${vector.yVh}vh`, offset: 1 }
+        { translate: '0vw 0vh', scale: '1', offset: 0 },
+        { translate: `${vector.xVw * 0.18}vw ${vector.yVh * 0.18}vh`, scale: '1.03', offset: 0.18 },
+        { translate: `${vector.xVw}vw ${vector.yVh}vh`, scale: '1.34', offset: 1 }
       ],
       {
-        duration: 760,
-        easing: 'cubic-bezier(.18,.72,.16,1)',
+        duration: 100,
+        easing: 'cubic-bezier(.42,0,.92,.24)',
         fill: 'forwards'
       }
     );
@@ -826,7 +826,6 @@
 
   function runWindTransition(direction = 'west') {
     setTransitionDirection(direction);
-    runCameraTravel(direction);
     transitionWind.classList.remove('run');
     void transitionWind.offsetWidth;
     transitionWind.classList.add('run');
@@ -895,6 +894,12 @@
         rememberTimer(window.setTimeout(() => {
           if (cinematicRunning) runWindTransition(scene.transitionDirection);
         }, scene.transitionAt));
+      }
+
+      if (scene.transitionDirection) {
+        rememberTimer(window.setTimeout(() => {
+          if (cinematicRunning) runCameraTravel(scene.transitionDirection);
+        }, Math.max(0, scene.duration - 100)));
       }
 
       rememberTimer(window.setTimeout(nextScene, scene.duration));
