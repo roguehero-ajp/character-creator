@@ -77,6 +77,7 @@
       windClass: 'whisper',
       meteorAt: 4_050,
       transitionAt: 13_150,
+      transitionDirection: 'south',
       subtitles: [
         {
           at: 1_450,
@@ -99,6 +100,7 @@
       snowClass: 'heavy',
       windClass: 'barrens',
       transitionAt: 10_050,
+      transitionDirection: 'southeast',
       subtitles: [
         {
           at: 650,
@@ -116,6 +118,7 @@
       snowClass: 'light',
       windClass: 'bruntide',
       transitionAt: 10_000,
+      transitionDirection: 'south',
       subtitles: [
         {
           at: 450,
@@ -139,6 +142,7 @@
       snowClass: '',
       windClass: 'numynor',
       transitionAt: 10_050,
+      transitionDirection: 'southwest',
       subtitles: [
         {
           at: 450,
@@ -161,6 +165,7 @@
       snowClass: '',
       windClass: 'stouthome',
       transitionAt: 10_100,
+      transitionDirection: 'east',
       subtitles: [
         {
           at: 450,
@@ -199,6 +204,37 @@
       ]
     }
   ];
+
+
+  const transitionVectors = Object.freeze({
+    west: {
+      startX: '72%', startY: '-2%', midX: '-8%', midY: '1%', endX: '-72%', endY: '3%', rotate: '0deg', skew: '-8deg'
+    },
+    east: {
+      startX: '-72%', startY: '-2%', midX: '8%', midY: '1%', endX: '72%', endY: '3%', rotate: '0deg', skew: '8deg'
+    },
+    south: {
+      startX: '0%', startY: '-78%', midX: '0%', midY: '-2%', endX: '0%', endY: '82%', rotate: '90deg', skew: '0deg'
+    },
+    southeast: {
+      startX: '-62%', startY: '-54%', midX: '2%', midY: '-3%', endX: '68%', endY: '58%', rotate: '42deg', skew: '0deg'
+    },
+    southwest: {
+      startX: '62%', startY: '-54%', midX: '-2%', midY: '-3%', endX: '-68%', endY: '58%', rotate: '-42deg', skew: '0deg'
+    }
+  });
+
+  function setTransitionDirection(direction) {
+    const vector = transitionVectors[direction] || transitionVectors.west;
+    transitionWind.style.setProperty('--wind-wipe-start-x', vector.startX);
+    transitionWind.style.setProperty('--wind-wipe-start-y', vector.startY);
+    transitionWind.style.setProperty('--wind-wipe-mid-x', vector.midX);
+    transitionWind.style.setProperty('--wind-wipe-mid-y', vector.midY);
+    transitionWind.style.setProperty('--wind-wipe-end-x', vector.endX);
+    transitionWind.style.setProperty('--wind-wipe-end-y', vector.endY);
+    transitionWind.style.setProperty('--wind-wipe-rotate', vector.rotate);
+    transitionWind.style.setProperty('--wind-wipe-skew', vector.skew);
+  }
 
   let idleTimer = null;
   let cinematicRunning = false;
@@ -740,7 +776,8 @@
     meteor.classList.add('run');
   }
 
-  function runWindTransition() {
+  function runWindTransition(direction = 'west') {
+    setTransitionDirection(direction);
     transitionWind.classList.remove('run');
     void transitionWind.offsetWidth;
     transitionWind.classList.add('run');
@@ -807,7 +844,7 @@
 
       if (Number.isFinite(scene.transitionAt)) {
         rememberTimer(window.setTimeout(() => {
-          if (cinematicRunning) runWindTransition();
+          if (cinematicRunning) runWindTransition(scene.transitionDirection);
         }, scene.transitionAt));
       }
 
@@ -873,6 +910,7 @@
     snow.className = 'cinematic-snow';
     windLayer.className = 'cinematic-wind';
     meteor.classList.remove('run');
+    setTransitionDirection('west');
     transitionWind.classList.remove('run');
     cinematic.classList.remove('wind-transitioning');
 
