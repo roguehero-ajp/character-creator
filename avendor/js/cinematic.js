@@ -6,7 +6,6 @@
   const TITLE_VOLUME = 0.42;
   const CINEMATIC_VOLUME = 0.42;
   const BARRENS_AMBIENCE_VOLUME = 0.12;
-  const BRUNTIDE_AMBIENCE_VOLUME = 0.095;
   const TITLE_LOOP_FALLBACK_MS = 79_000;
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -23,14 +22,12 @@
   const transitionWind = document.getElementById('cinematic-transition-wind');
   const barrensFx = document.getElementById('cinematic-barrens-fx');
   const barrensGustCanvas = document.getElementById('cinematic-barrens-gusts');
-  const bruntideBattleCanvas = document.getElementById('cinematic-bruntide-battle');
   const button = document.getElementById('early-test');
   const introductionButton = document.getElementById('play-introduction');
   const titleMusic = document.getElementById('avendor-music');
   const cinematicMusic = document.getElementById('cinematic-music');
   const sceneOneWind = document.getElementById('scene-01-wind');
   const barrensAmbience = document.getElementById('scene-02-barrens-ambience');
-  const bruntideAmbience = document.getElementById('scene-03-bruntide-ambience');
 
   if (
     !stage ||
@@ -46,31 +43,25 @@
     !transitionWind ||
     !barrensFx ||
     !barrensGustCanvas ||
-    !bruntideBattleCanvas ||
     !button ||
     !introductionButton ||
     !titleMusic ||
-    !cinematicMusic ||
-    !sceneOneWind ||
-    !barrensAmbience ||
-    !bruntideAmbience
+    !cinematicMusic
   ) {
     return;
   }
 
   const starContext = starCanvas.getContext('2d');
   const barrensGustContext = barrensGustCanvas.getContext('2d');
-  const bruntideBattleContext = bruntideBattleCanvas.getContext('2d');
-  if (!starContext || !barrensGustContext || !bruntideBattleContext) return;
+  if (!starContext || !barrensGustContext) return;
 
   titleMusic.volume = TITLE_VOLUME;
   cinematicMusic.volume = 0.012;
-  sceneOneWind.volume = 0;
-  barrensAmbience.volume = 0;
-  bruntideAmbience.volume = 0;
+  if (sceneOneWind) sceneOneWind.volume = 0;
+  if (barrensAmbience) barrensAmbience.volume = 0;
 
   /*
-   * Prototype 0.2.7 production lock.
+   * Prototype 0.2.6 production lock.
    *
    * Scene 1 is now the template shot: camera pan, camera zoom, twinkles,
    * meteor, subtitle timing, environmental audio and transition effects are
@@ -219,12 +210,9 @@
   let musicFadeFrame = 0;
   let windFadeFrame = 0;
   let barrensAmbienceFrame = 0;
-  let bruntideAmbienceFrame = 0;
   let barrensGustFrame = 0;
-  let bruntideBattleFrame = 0;
   let starActive = false;
   let barrensGustActive = false;
-  let bruntideBattleActive = false;
   let replayGateTimer = null;
   let replayUnlocked = true;
   let lastTitleInteractionAt = performance.now();
@@ -390,6 +378,7 @@
   }
 
   function startSceneOneWind() {
+    if (!sceneOneWind) return;
     windFadeFrame = cancelFrame(windFadeFrame);
     sceneOneWind.currentTime = 0;
     sceneOneWind.volume = 0.014;
@@ -421,6 +410,7 @@
   }
 
   function fadeOutSceneOneWind(duration = 1_200) {
+    if (!sceneOneWind) return;
     windFadeFrame = cancelFrame(windFadeFrame);
 
     if (sceneOneWind.paused) return;
@@ -448,6 +438,7 @@
   }
 
   function stopSceneOneWind() {
+    if (!sceneOneWind) return;
     windFadeFrame = cancelFrame(windFadeFrame);
     sceneOneWind.pause();
     sceneOneWind.currentTime = 0;
@@ -455,6 +446,7 @@
   }
 
   function startBarrensAmbience() {
+    if (!barrensAmbience) return;
     barrensAmbienceFrame = cancelFrame(barrensAmbienceFrame);
     barrensAmbience.currentTime = 0;
     barrensAmbience.volume = 0.0064;
@@ -489,6 +481,7 @@
   }
 
   function fadeOutBarrensAmbience(duration = 1_650) {
+    if (!barrensAmbience) return;
     barrensAmbienceFrame = cancelFrame(barrensAmbienceFrame);
     if (barrensAmbience.paused) return;
 
@@ -508,7 +501,6 @@
         barrensAmbience.pause();
         barrensAmbience.currentTime = 0;
         barrensAmbience.volume = 0;
-  bruntideAmbience.volume = 0;
         barrensAmbienceFrame = 0;
       }
     };
@@ -517,11 +509,11 @@
   }
 
   function stopBarrensAmbience() {
+    if (!barrensAmbience) return;
     barrensAmbienceFrame = cancelFrame(barrensAmbienceFrame);
     barrensAmbience.pause();
     barrensAmbience.currentTime = 0;
     barrensAmbience.volume = 0;
-  bruntideAmbience.volume = 0;
   }
 
   function resizeStarCanvas() {
@@ -669,8 +661,6 @@
 
   function startBarrensEffects() {
     stopBarrensEffects();
-    stopBruntideEffects();
-    stopBruntideEffects();
     barrensFx.classList.add('active', 'camera-barrens');
     if (REDUCED_MOTION.matches) return;
 
@@ -687,86 +677,6 @@
     barrensFx.className = 'cinematic-barrens-fx';
     barrensGustContext.clearRect(0, 0, cinematic.clientWidth, cinematic.clientHeight);
   }
-
-  const bruntideImpacts = [
-    { x: .30, y: .73, period: 2650, offset: 180, radius: .038, strength: .62 },
-    { x: .45, y: .67, period: 2950, offset: 980, radius: .045, strength: .58 },
-    { x: .58, y: .64, period: 2400, offset: 520, radius: .05, strength: .80 },
-    { x: .68, y: .71, period: 3200, offset: 1580, radius: .038, strength: .54 },
-    { x: .79, y: .74, period: 2850, offset: 2100, radius: .032, strength: .46 }
-  ];
-
-  function resizeBruntideBattleCanvas() {
-    const width = Math.max(1, cinematic.clientWidth);
-    const height = Math.max(1, cinematic.clientHeight);
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
-
-    bruntideBattleCanvas.width = Math.floor(width * ratio);
-    bruntideBattleCanvas.height = Math.floor(height * ratio);
-    bruntideBattleCanvas.style.width = `${width}px`;
-    bruntideBattleCanvas.style.height = `${height}px`;
-    bruntideBattleContext.setTransform(ratio, 0, 0, ratio, 0, 0);
-  }
-
-  function drawBruntideBattle(time) {
-    if (!bruntideBattleActive || !cinematicRunning || sceneIndex !== 2) return;
-
-    const width = cinematic.clientWidth;
-    const height = cinematic.clientHeight;
-    bruntideBattleContext.clearRect(0, 0, width, height);
-
-    for (const fx of bruntideImpacts) {
-      const progress = ((time + fx.offset) % fx.period) / fx.period;
-      const pulse = Math.sin(Math.PI * progress);
-      const alpha = Math.max(0, pulse * pulse * pulse * fx.strength);
-      if (alpha < .015) continue;
-
-      const x = width * fx.x;
-      const y = height * fx.y;
-      const radius = Math.max(8, width * fx.radius * (0.65 + pulse * 0.8));
-
-      const grad = bruntideBattleContext.createRadialGradient(x, y, 0, x, y, radius);
-      grad.addColorStop(0, `rgba(255,244,205,${alpha})`);
-      grad.addColorStop(.3, `rgba(255,216,146,${alpha * .9})`);
-      grad.addColorStop(.62, `rgba(255,171,96,${alpha * .55})`);
-      grad.addColorStop(1, 'rgba(255,171,96,0)');
-      bruntideBattleContext.fillStyle = grad;
-      bruntideBattleContext.beginPath();
-      bruntideBattleContext.arc(x, y, radius, 0, Math.PI * 2);
-      bruntideBattleContext.fill();
-
-      bruntideBattleContext.strokeStyle = `rgba(255,238,210,${alpha * .75})`;
-      bruntideBattleContext.lineWidth = Math.max(0.8, width * 0.0013);
-      for (let i = 0; i < 3; i += 1) {
-        const angle = (-0.8 + i * 0.55) + pulse * 0.18;
-        const len = radius * (0.65 + i * 0.14);
-        bruntideBattleContext.beginPath();
-        bruntideBattleContext.moveTo(x, y);
-        bruntideBattleContext.lineTo(x + Math.cos(angle) * len, y - Math.sin(angle) * len);
-        bruntideBattleContext.stroke();
-      }
-    }
-
-    bruntideBattleFrame = requestAnimationFrame(drawBruntideBattle);
-  }
-
-  function startBruntideEffects() {
-    stopBruntideEffects();
-    if (REDUCED_MOTION.matches) return;
-
-    resizeBruntideBattleCanvas();
-    bruntideBattleCanvas.classList.add('active');
-    bruntideBattleActive = true;
-    bruntideBattleFrame = requestAnimationFrame(drawBruntideBattle);
-  }
-
-  function stopBruntideEffects() {
-    bruntideBattleActive = false;
-    bruntideBattleFrame = cancelFrame(bruntideBattleFrame);
-    bruntideBattleCanvas.classList.remove('active');
-    bruntideBattleContext.clearRect(0, 0, cinematic.clientWidth, cinematic.clientHeight);
-  }
-
 
   function hideSubtitle() {
     subtitleGeneration += 1;
@@ -817,7 +727,6 @@
     windLayer.className = 'cinematic-wind';
     meteor.classList.remove('run');
     stopBarrensEffects();
-    stopBruntideEffects();
 
     if (scene.snowClass) snow.classList.add(scene.snowClass);
     if (scene.windClass) windLayer.classList.add(scene.windClass);
@@ -878,19 +787,8 @@
               fadeOutBarrensAmbience(1_650);
             }
           }, 9_850));
-        } else if (scene.id === 'bruntide') {
-          stopBarrensAmbience();
-    stopBruntideAmbience();
-          startBruntideEffects();
-          startBruntideAmbience();
-          rememberTimer(window.setTimeout(() => {
-            if (cinematicRunning && sceneIndex === 2) {
-              fadeOutBruntideAmbience(1_500);
-            }
-          }, 9_900));
         } else {
           stopBarrensAmbience();
-          stopBruntideAmbience();
         }
 
         // Every regional cut may arrive through the same wind veil. Clear the
@@ -968,7 +866,6 @@
     stopBarrensAmbience();
     stopStarTwinkle();
     stopBarrensEffects();
-    stopBruntideEffects();
 
     sceneArt.className = 'cinematic-art';
     cameraPan.className = 'cinematic-pan';
@@ -1054,12 +951,30 @@
   window.addEventListener('resize', () => {
     if (starActive) resizeStarCanvas();
     if (barrensGustActive) resizeBarrensGustCanvas();
-    if (bruntideBattleActive) resizeBruntideBattleCanvas();
   }, { passive: true });
 
-  if (sessionStorage.getItem('avendorMusicWanted') === '1') {
+  // Title audio resilience: the homepage secret entrance sets avendorMusicWanted,
+  // but a stale/missing flag must not prevent us from attempting the Bruckner loop.
+  // Browsers may still block audible autoplay; the first trusted gesture retries it.
+  function requestTitleMusic() {
+    if (cinematicRunning) return;
+    sessionStorage.setItem('avendorMusicWanted', '1');
     resumeTitleMusic();
   }
+
+  requestTitleMusic();
+
+  window.addEventListener('pointerdown', requestTitleMusic, { passive: true });
+  window.addEventListener('touchstart', requestTitleMusic, { passive: true });
+  window.addEventListener('keydown', requestTitleMusic);
+
+  // Small public health hook for future smoke tests. No gameplay code depends on it.
+  window.AvendorTitleController = Object.freeze({
+    healthy: true,
+    startEarlyTest,
+    startIntroduction: startIntroductionPreview,
+    requestTitleMusic
+  });
 
   lastTitleInteractionAt = performance.now();
   resetIdleTimer();
