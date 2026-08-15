@@ -1,100 +1,125 @@
 /* ==========================================================
-   GARIUS - ROADSIDE SUPPORT NPC
-   Avendor prototype 0.2.7
+   GARIUS - TITLE SCREEN SUPPORT NPC
+   Avendor prototype 0.2.8
    ----------------------------------------------------------
-   Garius is deliberately isolated from the walking-test
-   movement layer. Only his hat and speech bubble accept input.
+   Garius sits beneath the Briarwell sign on test.html.
+   Only his hat and speech bubble accept input.
+   His idle loop is visual only and does not touch the title
+   screen inactivity / cinematic replay timers.
    ========================================================== */
 
-.garius-npc {
+.garius-title-npc {
   position: absolute;
-  left: 17.7%;
-  top: 72.75%;
-  z-index: 7;
-  width: 11.35%;
-  height: auto;
+  left: 14.5%;
+  top: 93.5%;
+  z-index: 12;
+  width: 13.2%;
+  height: 25%;
   transform: translate(-50%, -100%);
   transform-origin: 50% 100%;
-  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, .48));
-  user-select: none;
   pointer-events: none;
-  transition: opacity 120ms ease, width 180ms ease, left 180ms ease;
+  user-select: none;
+  animation: garius-breathe 4.8s ease-in-out infinite;
+  transition: opacity 220ms ease;
 }
 
-.garius-npc[data-pose="present"] {
-  left: 18.0%;
-  width: 11.45%;
+.garius-pose {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: auto;
+  max-width: none;
+  opacity: 0;
+  transform: translateX(-50%) scale(.985);
+  transform-origin: 50% 100%;
+  filter: drop-shadow(0 5px 4px rgba(0, 0, 0, .5));
+  image-rendering: auto;
+  transition: opacity 300ms ease, transform 340ms ease;
 }
 
-.garius-npc[data-pose="raise"] {
-  left: 18.6%;
-  width: 12.35%;
+.garius-pose.is-active {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.garius-pose-idle { width: 100%; }
+.garius-pose-present { width: 96%; }
+.garius-pose-raise { width: 105%; }
+
+/* A tiny posture change makes the up-look read as a natural idle fidget. */
+.garius-title-npc[data-pose="present"] {
+  animation-name: garius-breathe-up;
+}
+
+.garius-title-npc[data-pose="raise"] {
+  animation-name: garius-breathe-up;
 }
 
 .garius-hat-hitbox {
   position: absolute;
-  z-index: 11;
+  z-index: 17;
   display: block;
   cursor: pointer;
-  border-radius: 50%;
-  background: transparent;
   border: 0;
   outline: 0;
+  border-radius: 50%;
+  background: transparent;
+  transition: box-shadow 160ms ease, outline-color 160ms ease;
 }
 
-/* Hat location follows the current Garius pose. */
-.walk-stage[data-garius-pose="idle"] .garius-hat-hitbox {
-  left: 17.0%;
-  top: 65.2%;
-  width: 4.5%;
-  height: 3.6%;
+/* Hat hit target follows the active pose. */
+.title-stage[data-garius-pose="idle"] .garius-hat-hitbox {
+  left: 15.3%;
+  top: 82.4%;
+  width: 5.1%;
+  height: 5.5%;
 }
 
-.walk-stage[data-garius-pose="present"] .garius-hat-hitbox {
-  left: 18.5%;
-  top: 60.1%;
-  width: 4.7%;
-  height: 3.8%;
+.title-stage[data-garius-pose="present"] .garius-hat-hitbox {
+  left: 15.0%;
+  top: 73.0%;
+  width: 5.7%;
+  height: 5.2%;
 }
 
-.walk-stage[data-garius-pose="raise"] .garius-hat-hitbox {
-  left: 20.3%;
-  top: 51.0%;
-  width: 5.4%;
-  height: 5.0%;
+.title-stage[data-garius-pose="raise"] .garius-hat-hitbox {
+  left: 18.0%;
+  top: 64.0%;
+  width: 6.0%;
+  height: 6.5%;
 }
 
 .garius-hat-hitbox:hover,
 .garius-hat-hitbox:focus-visible {
-  outline: clamp(1px, .12vw, 2px) solid rgba(244, 211, 136, .72);
-  outline-offset: clamp(1px, .15vw, 3px);
-  box-shadow: 0 0 clamp(7px, .8vw, 14px) rgba(239, 198, 107, .28);
+  outline: clamp(1px, .11vw, 2px) solid rgba(244, 211, 136, .8);
+  outline-offset: clamp(1px, .14vw, 3px);
+  box-shadow: 0 0 clamp(7px, .8vw, 14px) rgba(239, 198, 107, .3);
 }
 
 .garius-bubble {
   position: absolute;
-  left: 21.4%;
-  top: 48.8%;
-  z-index: 14;
-  width: 25.0%;
+  left: 21.0%;
+  top: 58.0%;
+  z-index: 18;
+  width: 22.5%;
   min-height: 9.0%;
-  padding: 1.05% 1.4%;
+  padding: 1.0% 1.35%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #2a1a0d;
   text-align: center;
   text-decoration: none;
-  font: 700 clamp(9px, 1.28vw, 22px)/1.22 Georgia, 'Times New Roman', serif;
+  font: 700 clamp(9px, 1.22vw, 21px)/1.22 Georgia, 'Times New Roman', serif;
   background:
-    radial-gradient(circle at 42% 38%, rgba(255, 246, 211, .98), rgba(226, 196, 137, .98) 72%, rgba(196, 155, 94, .99));
+    radial-gradient(circle at 42% 38%, #fff6d3, #e2c489 72%, #c49b5e);
   border: clamp(2px, .20vw, 4px) solid #51341d;
   border-radius: 12% 10% 13% 9% / 18% 15% 20% 16%;
   box-shadow:
-    inset 0 0 0 1px rgba(255, 248, 214, .62),
+    inset 0 0 0 1px rgba(255, 248, 214, .66),
     inset 0 0 16px rgba(111, 73, 32, .14),
-    0 6px 12px rgba(0, 0, 0, .42);
-  text-shadow: 0 1px 0 rgba(255, 246, 216, .65);
+    0 7px 15px rgba(0, 0, 0, .5);
+  text-shadow: 0 1px 0 rgba(255, 246, 216, .7);
   cursor: pointer;
   opacity: 0;
   transform: translateY(7%) scale(.97);
@@ -112,7 +137,7 @@
   height: 35%;
   background: #d8b875;
   clip-path: polygon(0 0, 100% 0, 18% 100%);
-  filter: drop-shadow(2px 3px 1px rgba(0, 0, 0, .28));
+  filter: drop-shadow(2px 3px 1px rgba(0, 0, 0, .3));
 }
 
 .garius-bubble.is-visible {
@@ -126,22 +151,42 @@
   color: #171009;
   border-color: #8d642e;
   box-shadow:
-    inset 0 0 0 1px rgba(255, 248, 214, .75),
-    inset 0 0 18px rgba(111, 73, 32, .10),
+    inset 0 0 0 1px rgba(255, 248, 214, .78),
+    inset 0 0 18px rgba(111, 73, 32, .1),
     0 0 14px rgba(230, 190, 105, .28),
-    0 7px 14px rgba(0, 0, 0, .45);
+    0 8px 16px rgba(0, 0, 0, .5);
   outline: none;
 }
 
 .garius-bubble.is-thanks {
-  left: 22.2%;
-  top: 50.1%;
-  width: 21.5%;
+  left: 21.6%;
+  top: 59.0%;
+  width: 20.0%;
+}
+
+/* Cinematic owns the screen while active. Garius pauses/fades underneath. */
+.title-stage.cinematic-running .garius-title-npc,
+.title-stage.cinematic-running .garius-hat-hitbox,
+.title-stage.cinematic-running .garius-bubble {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes garius-breathe {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  42% { translate: 0 -.18%; rotate: -.18deg; }
+  70% { translate: .05% 0; rotate: .12deg; }
+}
+
+@keyframes garius-breathe-up {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  45% { translate: 0 -.28%; rotate: .18deg; }
+  72% { translate: -.05% -.08%; rotate: -.12deg; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .garius-npc,
-  .garius-bubble {
-    transition: none;
-  }
+  .garius-title-npc { animation: none; }
+  .garius-pose,
+  .garius-title-npc,
+  .garius-bubble { transition: none; }
 }
