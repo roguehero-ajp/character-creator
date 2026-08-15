@@ -226,20 +226,20 @@
 
 
   /*
-   * Prototype 0.3.3: the camera now gets a much stronger LAST-SECOND travel
-   * impulse. The scenery moves opposite the journey direction, which is how a
-   * camera travelling across the world reads visually: travelling south pulls
-   * the current landscape upward, travelling east pulls it left, and so on.
+   * Prototype 0.3.4: preserve the dramatic final-100ms travel impulse, but
+   * move the visible scene in the SAME direction as the journey. Although the
+   * inverse motion is physically camera-correct, direct motion reads more
+   * naturally for Avendor's stylized wind-driven world-map transitions.
    *
    * Individual `translate` / `scale` properties layer over the existing scene
    * transform animations instead of replacing them.
    */
   const cameraTravelVectors = Object.freeze({
-    west:      { xVw:  15, yVh:   0 },
-    east:      { xVw: -15, yVh:   0 },
-    south:     { xVw:   0, yVh: -14 },
-    southeast: { xVw: -12, yVh: -12 },
-    southwest: { xVw:  12, yVh: -12 }
+    west:      { xVw: -15, yVh:   0 },
+    east:      { xVw:  15, yVh:   0 },
+    south:     { xVw:   0, yVh:  14 },
+    southeast: { xVw:  12, yVh:  12 },
+    southwest: { xVw: -12, yVh:  12 }
   });
 
   let cameraTravelAnimation = null;
