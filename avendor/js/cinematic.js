@@ -899,7 +899,7 @@
       if (scene.transitionDirection) {
         rememberTimer(window.setTimeout(() => {
           if (cinematicRunning) runCameraTravel(scene.transitionDirection);
-        }, Math.max(0, scene.duration - 100)));
+        }, Math.max(0, scene.duration - 500)));
       }
 
       rememberTimer(window.setTimeout(nextScene, scene.duration));
