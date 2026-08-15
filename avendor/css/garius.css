@@ -1,12 +1,17 @@
 /* ==========================================================
    GARIUS - TITLE SCREEN SUPPORT NPC
-   Avendor prototype 0.2.8
+   Avendor prototype 0.2.9
    ----------------------------------------------------------
    Garius sits beneath the Briarwell sign on test.html.
    Only his hat and speech bubble accept input.
    His idle loop is visual only and does not touch the title
    screen inactivity / cinematic replay timers.
    ========================================================== */
+
+/* Title controls always remain above Garius and his temporary speech bubble. */
+.intro-cover-panel {
+  z-index: 25;
+}
 
 .garius-title-npc {
   position: absolute;
