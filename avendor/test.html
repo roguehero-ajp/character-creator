@@ -12,7 +12,6 @@
   <link rel="preload" as="audio" href="assets/cinematic/avendor-sarabande-of-the-north-v7.ogg" type="audio/ogg">
   <link rel="preload" as="audio" href="assets/cinematic/scene-02-barrens-ambience.ogg" type="audio/ogg">
   <link rel="preload" as="image" href="assets/cinematic/scene-03-bruntide-final.png">
-  <link rel="preload" as="audio" href="assets/cinematic/scene-03-bruntide-ambience.ogg" type="audio/ogg">
 </head>
 <body>
   <main
@@ -27,37 +26,16 @@
       alt="The Rising Tides of Avendor title screen, overlooking snowy Briarwell"
     >
 
-    <!-- GARIUS: title-screen support NPC. His idle animation does not count as player input. -->
+    <!-- GARIUS: independent title-screen support NPC. -->
     <div
       class="garius-title-npc"
       id="garius-title-npc"
       data-pose="idle"
       aria-label="Garius, a weary adventurer sitting beneath the Briarwell sign"
     >
-      <img
-        class="garius-pose garius-pose-idle is-active"
-        data-garius-pose="idle"
-        src="assets/garius/garius-idle.png"
-        alt=""
-        draggable="false"
-        aria-hidden="true"
-      >
-      <img
-        class="garius-pose garius-pose-present"
-        data-garius-pose="present"
-        src="assets/garius/garius-present.png"
-        alt=""
-        draggable="false"
-        aria-hidden="true"
-      >
-      <img
-        class="garius-pose garius-pose-raise"
-        data-garius-pose="raise"
-        src="assets/garius/garius-raise.png"
-        alt=""
-        draggable="false"
-        aria-hidden="true"
-      >
+      <img class="garius-pose garius-pose-idle is-active" data-garius-pose="idle" src="assets/garius/garius-idle.png" alt="" draggable="false" aria-hidden="true">
+      <img class="garius-pose garius-pose-present" data-garius-pose="present" src="assets/garius/garius-present.png" alt="" draggable="false" aria-hidden="true">
+      <img class="garius-pose garius-pose-raise" data-garius-pose="raise" src="assets/garius/garius-raise.png" alt="" draggable="false" aria-hidden="true">
     </div>
 
     <a
@@ -83,9 +61,7 @@
       data-analytics-id="avendor_garius_bubble"
       aria-hidden="true"
       tabindex="-1"
-    >
-      <span id="garius-bubble-text">Spare some coin for a weary game developer?</span>
-    </a>
+    ><span id="garius-bubble-text">Spare some coin for a weary game developer?</span></a>
 
     <section class="intro-cover-panel" id="title-menu" aria-label="Early test menu">
       <div class="title-menu-buttons">
@@ -95,7 +71,7 @@
     </section>
 
     <div class="test-ribbon" id="test-ribbon">
-      prototype 0.2.9 · Garius transparency + title controls hotfix</div>
+      prototype 0.3.0 · matched title controller · Garius</div>
 
     <section
       class="cinematic"
@@ -177,12 +153,6 @@
   <audio id="scene-02-barrens-ambience" preload="auto" loop>
     <source src="assets/cinematic/scene-02-barrens-ambience.ogg" type="audio/ogg">
     <source src="assets/cinematic/scene-02-barrens-ambience.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- Scene 3 production-pass hook. Required by the Bruntide cinematic controller. -->
-  <audio id="scene-03-bruntide-ambience" preload="auto" loop>
-    <source src="assets/cinematic/scene-03-bruntide-ambience.ogg" type="audio/ogg">
-    <source src="assets/cinematic/scene-03-bruntide-ambience.mp3" type="audio/mpeg">
   </audio>
 
   <script src="js/cinematic.js"></script>
