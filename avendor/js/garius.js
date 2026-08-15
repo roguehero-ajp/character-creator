@@ -1,6 +1,18 @@
 (() => {
   'use strict';
 
+  /*
+   * Avendor 0.3.5 - Garius static-body stability pass
+   * -------------------------------------------------
+   * The existing idle / present / raise images are separate full-body paintings,
+   * not layered animation frames. Crossfading them makes Garius appear to phase.
+   * Until dedicated body/head/arm layers exist, the approved idle frame is kept
+   * completely stationary and only the support bubble animates.
+   *
+   * This module remains independent of cinematic.js and does not affect title
+   * inactivity, Bruckner playback, or cinematic replay timing.
+   */
+
   if (window.__avendorGariusInstalled) return;
   window.__avendorGariusInstalled = true;
 
@@ -11,7 +23,7 @@
   const bubble = document.getElementById('garius-bubble');
   const bubbleText = document.getElementById('garius-bubble-text');
 
-  if (!stage || !npc || poseImages.length < 3 || !hat || !bubble || !bubbleText) return;
+  if (!stage || !npc || !poseImages.length || !hat || !bubble || !bubbleText) return;
 
   const LINES = Object.freeze([
     'Spare some coin for a weary game developer?',
@@ -25,20 +37,10 @@
   const NEXT_PROMPT_MIN = 28000;
   const NEXT_PROMPT_MAX = 46000;
   const BUBBLE_HOLD_MS = 5600;
-  const POSE_TRANSITION_MS = 520;
   const THANKS_HOLD_MS = 2600;
-
-  const IDLE_LOOK_MIN = 2600;
-  const IDLE_LOOK_MAX = 5200;
-  const IDLE_LOOK_HOLD_MIN = 900;
-  const IDLE_LOOK_HOLD_MAX = 1550;
-
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   let promptTimer = 0;
   let sequenceTimer = 0;
-  let idleTimer = 0;
-  let idleReturnTimer = 0;
   let lineIndex = Math.floor(Math.random() * LINES.length);
   let sequenceActive = false;
   let thanked = false;
@@ -48,30 +50,30 @@
     return Math.round(min + Math.random() * (max - min));
   }
 
-  function clearTimer(name) {
-    if (!name) return 0;
-    window.clearTimeout(name);
+  function clearTimer(timer) {
+    if (!timer) return 0;
+    window.clearTimeout(timer);
     return 0;
   }
 
-  function clearPromptTimer() { promptTimer = clearTimer(promptTimer); }
-  function clearSequenceTimer() { sequenceTimer = clearTimer(sequenceTimer); }
-  function clearIdleTimers() {
-    idleTimer = clearTimer(idleTimer);
-    idleReturnTimer = clearTimer(idleReturnTimer);
+  function clearPromptTimer() {
+    promptTimer = clearTimer(promptTimer);
+  }
+
+  function clearSequenceTimer() {
+    sequenceTimer = clearTimer(sequenceTimer);
   }
 
   function titleAvailable() {
     return !document.hidden && !cinematicActive;
   }
 
-  function setPose(pose) {
-    const safePose = ['idle', 'present', 'raise'].includes(pose) ? pose : 'idle';
-    npc.dataset.pose = safePose;
-    stage.dataset.gariusPose = safePose;
+  function lockStaticPose() {
+    npc.dataset.pose = 'idle';
+    stage.dataset.gariusPose = 'idle';
 
     poseImages.forEach((image) => {
-      image.classList.toggle('is-active', image.dataset.gariusPose === safePose);
+      image.classList.toggle('is-active', image.dataset.gariusPose === 'idle');
     });
   }
 
@@ -95,22 +97,6 @@
     return line;
   }
 
-  function scheduleIdleLook() {
-    clearIdleTimers();
-    if (!titleAvailable() || sequenceActive || thanked || reducedMotion.matches) return;
-
-    idleTimer = window.setTimeout(() => {
-      if (!titleAvailable() || sequenceActive || thanked) return;
-
-      // Garius looks up from the hat for a moment, then settles back down.
-      setPose('present');
-      idleReturnTimer = window.setTimeout(() => {
-        if (!sequenceActive && !thanked && titleAvailable()) setPose('idle');
-        scheduleIdleLook();
-      }, randomBetween(IDLE_LOOK_HOLD_MIN, IDLE_LOOK_HOLD_MAX));
-    }, randomBetween(IDLE_LOOK_MIN, IDLE_LOOK_MAX));
-  }
-
   function schedulePrompt(first = false) {
     clearPromptTimer();
     if (!titleAvailable() || sequenceActive || thanked) return;
@@ -122,31 +108,11 @@
     promptTimer = window.setTimeout(runPrompt, delay);
   }
 
-  function resumeIdleAndSchedule() {
-    setPose('idle');
-    sequenceActive = false;
-    scheduleIdleLook();
-    schedulePrompt(false);
-  }
-
   function finishPrompt() {
     hideBubble();
-
-    if (reducedMotion.matches) {
-      resumeIdleAndSchedule();
-      return;
-    }
-
-    setPose('present');
-    clearSequenceTimer();
-    sequenceTimer = window.setTimeout(resumeIdleAndSchedule, POSE_TRANSITION_MS);
-  }
-
-  function holdPrompt() {
-    setPose('raise');
-    showBubble(nextLine());
-    clearSequenceTimer();
-    sequenceTimer = window.setTimeout(finishPrompt, BUBBLE_HOLD_MS);
+    sequenceActive = false;
+    lockStaticPose();
+    schedulePrompt(false);
   }
 
   function runPrompt() {
@@ -154,49 +120,43 @@
     if (sequenceActive || thanked || !titleAvailable()) return;
 
     sequenceActive = true;
-    clearIdleTimers();
+    lockStaticPose();
+    showBubble(nextLine());
 
-    if (reducedMotion.matches) {
-      holdPrompt();
-      return;
-    }
-
-    setPose('present');
     clearSequenceTimer();
-    sequenceTimer = window.setTimeout(holdPrompt, POSE_TRANSITION_MS);
+    sequenceTimer = window.setTimeout(finishPrompt, BUBBLE_HOLD_MS);
   }
 
   function thankTraveller() {
     clearPromptTimer();
     clearSequenceTimer();
-    clearIdleTimers();
 
     thanked = true;
     sequenceActive = true;
-    setPose('raise');
+    lockStaticPose();
     showBubble('Many thanks, kind traveller.', true);
 
     sequenceTimer = window.setTimeout(() => {
       hideBubble();
       thanked = false;
-      resumeIdleAndSchedule();
+      sequenceActive = false;
+      lockStaticPose();
+      schedulePrompt(false);
     }, THANKS_HOLD_MS);
   }
 
   function pauseForCinematic() {
     clearPromptTimer();
     clearSequenceTimer();
-    clearIdleTimers();
     hideBubble();
-    setPose('idle');
+    lockStaticPose();
     sequenceActive = false;
     thanked = false;
   }
 
   function resumeFromCinematic() {
-    setPose('idle');
+    lockStaticPose();
     hideBubble();
-    scheduleIdleLook();
     schedulePrompt(true);
   }
 
@@ -211,31 +171,26 @@
     if (cinematicActive) pauseForCinematic();
     else resumeFromCinematic();
   });
-  stageObserver.observe(stage, { attributes: true, attributeFilter: ['class'] });
+
+  stageObserver.observe(stage, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       clearPromptTimer();
-      clearIdleTimers();
+      clearSequenceTimer();
       return;
     }
 
     if (!cinematicActive && !sequenceActive && !thanked) {
-      scheduleIdleLook();
+      lockStaticPose();
       schedulePrompt(true);
     }
   });
 
-  reducedMotion.addEventListener?.('change', () => {
-    clearIdleTimers();
-    if (!sequenceActive) {
-      setPose('idle');
-      if (!reducedMotion.matches) scheduleIdleLook();
-    }
-  });
-
-  setPose('idle');
+  lockStaticPose();
   hideBubble();
-  scheduleIdleLook();
   schedulePrompt(true);
 })();
