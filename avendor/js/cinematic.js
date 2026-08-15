@@ -224,6 +224,53 @@
     }
   });
 
+
+  /*
+   * Prototype 0.3.2: a short camera impulse now accompanies each directional
+   * wind wipe. It animates the CSS `translate` component rather than the
+   * `transform` property, so it can layer safely over the scene's existing
+   * pan/zoom animations without replacing them.
+   */
+  const cameraTravelVectors = Object.freeze({
+    west:      { xVw: -7, yVh: 0 },
+    east:      { xVw: 7,  yVh: 0 },
+    south:     { xVw: 0,  yVh: 6 },
+    southeast: { xVw: 5,  yVh: 5 },
+    southwest: { xVw: -5, yVh: 5 }
+  });
+
+  let cameraTravelAnimation = null;
+
+  function cancelCameraTravel() {
+    if (cameraTravelAnimation) {
+      cameraTravelAnimation.cancel();
+      cameraTravelAnimation = null;
+    }
+  }
+
+  function runCameraTravel(direction) {
+    if (REDUCED_MOTION.matches || typeof cameraPan.animate !== 'function') return;
+
+    cancelCameraTravel();
+    const vector = cameraTravelVectors[direction] || cameraTravelVectors.west;
+
+    const midX = vector.xVw * 0.28;
+    const midY = vector.yVh * 0.28;
+
+    cameraTravelAnimation = cameraPan.animate(
+      [
+        { translate: '0vw 0vh', offset: 0 },
+        { translate: `${midX}vw ${midY}vh`, offset: 0.30 },
+        { translate: `${vector.xVw}vw ${vector.yVh}vh`, offset: 1 }
+      ],
+      {
+        duration: 760,
+        easing: 'cubic-bezier(.18,.72,.16,1)',
+        fill: 'forwards'
+      }
+    );
+  }
+
   function setTransitionDirection(direction) {
     const vector = transitionVectors[direction] || transitionVectors.west;
     transitionWind.style.setProperty('--wind-wipe-start-x', vector.startX);
@@ -756,6 +803,7 @@
   }
 
   function resetSceneLayers(scene) {
+    cancelCameraTravel();
     sceneArt.className = 'cinematic-art';
     cameraPan.className = 'cinematic-pan';
     cameraZoom.className = 'cinematic-zoom';
@@ -778,6 +826,7 @@
 
   function runWindTransition(direction = 'west') {
     setTransitionDirection(direction);
+    runCameraTravel(direction);
     transitionWind.classList.remove('run');
     void transitionWind.offsetWidth;
     transitionWind.classList.add('run');
@@ -903,6 +952,7 @@
     stopBarrensAmbience();
     stopStarTwinkle();
     stopBarrensEffects();
+    cancelCameraTravel();
 
     sceneArt.className = 'cinematic-art';
     cameraPan.className = 'cinematic-pan';
