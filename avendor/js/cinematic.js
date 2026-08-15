@@ -264,7 +264,7 @@
         { translate: `${vector.xVw}vw ${vector.yVh}vh`, scale: '1.34', offset: 1 }
       ],
       {
-        duration: 100,
+        duration: 500,
         easing: 'cubic-bezier(.42,0,.92,.24)',
         fill: 'forwards'
       }
