@@ -354,22 +354,6 @@ body {
   opacity: .92;
 }
 
-.cinematic-bruntide-battle {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  transition: opacity .45s ease;
-}
-
-.cinematic-bruntide-battle.active {
-  opacity: .96;
-}
-
 /*
  * Scene 1 camera: two wrappers on purpose.
  * Zoom owns only scale. Pan owns only travel. They never overwrite each
@@ -438,8 +422,8 @@ body {
 }
 
 .cinematic-wind.bruntide {
-  opacity: .24;
-  animation-duration: 1.35s;
+  opacity: .21;
+  animation-duration: 1.55s;
 }
 
 .cinematic-wind.numynor {
@@ -520,9 +504,17 @@ body {
 
 /* A fast veil of airborne ice hides the Scene 1 -> Barrens cut. */
 .cinematic-transition-wind {
+  --wind-wipe-start-x: 72%;
+  --wind-wipe-start-y: -2%;
+  --wind-wipe-mid-x: -8%;
+  --wind-wipe-mid-y: 1%;
+  --wind-wipe-end-x: -72%;
+  --wind-wipe-end-y: 3%;
+  --wind-wipe-rotate: 0deg;
+  --wind-wipe-skew: -8deg;
   z-index: 6;
   opacity: 0;
-  transform: translate3d(72%, -2%, 0) skewX(-8deg);
+  transform: translate3d(var(--wind-wipe-start-x), var(--wind-wipe-start-y), 0) rotate(var(--wind-wipe-rotate)) skewX(var(--wind-wipe-skew));
   mix-blend-mode: screen;
   background:
     repeating-linear-gradient(
@@ -646,11 +638,10 @@ body {
 }
 
 @keyframes avendor-camera-bruntide {
-  0%   { transform: scale(1.12) translate3d(-7%, 2%, 0); }
-  22%  { transform: scale(1.22) translate3d(-3%, 1%, 0); }
-  54%  { transform: scale(1.28) translate3d(0, 0, 0); }
-  76%  { transform: scale(1.33) translate3d(2.5%, 0, 0); }
-  100% { transform: scale(1.41) translate3d(7%, -1%, 0); }
+  0%   { transform: scale(1.14) translate3d(-8%, 2%, 0); }
+  24%  { transform: scale(1.28) translate3d(-2%, 0, 0); }
+  72%  { transform: scale(1.30) translate3d(2%, 0, 0); }
+  100% { transform: scale(1.44) translate3d(9%, -2%, 0); }
 }
 
 @keyframes avendor-camera-numynor {
@@ -711,17 +702,17 @@ body {
 @keyframes avendor-wind-wipe {
   0% {
     opacity: 0;
-    transform: translate3d(72%, -2%, 0) skewX(-8deg);
+    transform: translate3d(var(--wind-wipe-start-x), var(--wind-wipe-start-y), 0) rotate(var(--wind-wipe-rotate)) skewX(var(--wind-wipe-skew));
   }
   35% { opacity: .24; }
   64% { opacity: .62; }
   79% {
     opacity: .94;
-    transform: translate3d(-8%, 1%, 0) skewX(-8deg);
+    transform: translate3d(var(--wind-wipe-mid-x), var(--wind-wipe-mid-y), 0) rotate(var(--wind-wipe-rotate)) skewX(var(--wind-wipe-skew));
   }
   100% {
     opacity: 0;
-    transform: translate3d(-72%, 3%, 0) skewX(-8deg);
+    transform: translate3d(var(--wind-wipe-end-x), var(--wind-wipe-end-y), 0) rotate(var(--wind-wipe-rotate)) skewX(var(--wind-wipe-skew));
   }
 }
 
