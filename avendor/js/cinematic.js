@@ -767,7 +767,12 @@
 
     const width = cinematic.clientWidth;
     const height = cinematic.clientHeight;
+    const frame = getBruntideArtFrame();
     barrensGustContext.clearRect(0, 0, width, height);
+    if (frame.width <= 0 || frame.height <= 0) {
+      bruntideFxFrame = requestAnimationFrame(drawBruntideFx);
+      return;
+    }
     barrensGustContext.lineCap = 'round';
 
     for (const gust of barrensGusts) {
@@ -837,7 +842,19 @@
     barrensGustContext.clearRect(0, 0, cinematic.clientWidth, cinematic.clientHeight);
   }
 
-  function updateBruntideTorchField(width, height, time) {
+  function getBruntideArtFrame() {
+    const fxRect = barrensFx.getBoundingClientRect();
+    const artRect = sceneArt.getBoundingClientRect();
+
+    return {
+      left: artRect.left - fxRect.left,
+      top: artRect.top - fxRect.top,
+      width: artRect.width,
+      height: artRect.height
+    };
+  }
+
+  function updateBruntideTorchField(frame, time) {
     const field = bruntideNodes.torchField;
     const layers = [];
 
@@ -847,8 +864,8 @@
       const flutter = Math.sin(time * 0.0146 + torch.phase * 8.1);
       const intensity = Math.max(0.18, torch.base + wave * 0.14 + pulse * 0.08 + flutter * 0.05);
       const radius = torch.size * (0.78 + intensity * 0.52);
-      const x = Math.round(width * torch.x);
-      const y = Math.round(height * torch.y);
+      const x = Math.round(frame.left + frame.width * torch.x);
+      const y = Math.round(frame.top + frame.height * torch.y);
 
       layers.push(`radial-gradient(circle at ${x}px ${y}px, rgba(255,244,202,${(0.72 * intensity).toFixed(3)}) 0, rgba(255,199,118,${(0.52 * intensity).toFixed(3)}) ${Math.round(radius * 0.26)}px, rgba(255,151,72,${(0.22 * intensity).toFixed(3)}) ${Math.round(radius * 0.56)}px, rgba(255,122,44,0) ${Math.round(radius)}px)`);
     }
@@ -883,8 +900,8 @@
     if (sparkPulse > 0.96) {
       const pulse = (sparkPulse - 0.96) / 0.04;
       const alpha = Math.min(1, pulse * pulse);
-      const x = width * 0.56;
-      const y = height * 0.79;
+      const x = frame.left + frame.width * 0.56;
+      const y = frame.top + frame.height * 0.79;
       const radius = 3 + alpha * 10;
       barrensGustContext.strokeStyle = `rgba(255,211,126,${alpha * 0.95})`;
       barrensGustContext.lineWidth = 1.2;
@@ -902,7 +919,7 @@
       bruntideNodes.glint.style.opacity = '0';
     }
 
-    updateBruntideTorchField(width, height, time);
+    updateBruntideTorchField(frame, time);
 
     const breathCycle = (time + 820) % 3400;
     if (breathCycle < 1500) {
@@ -911,12 +928,12 @@
         ? progress / 0.35
         : 1 - Math.min(1, (progress - 0.35) / 0.65);
       const opacity = Math.max(0, eased) * 0.72;
-      const mouthX = width * 0.607;
-      const mouthY = height * 0.518;
-      const puffWidth = width * (0.055 + progress * 0.080);
-      const puffHeight = height * (0.030 + progress * 0.055);
-      const moveX = width * progress * 0.058;
-      const moveY = -height * progress * 0.020;
+      const mouthX = frame.left + frame.width * 0.607;
+      const mouthY = frame.top + frame.height * 0.518;
+      const puffWidth = frame.width * (0.055 + progress * 0.080);
+      const puffHeight = frame.height * (0.030 + progress * 0.055);
+      const moveX = frame.width * progress * 0.058;
+      const moveY = -frame.height * progress * 0.020;
       bruntideNodes.breath.style.left = `${mouthX - puffWidth * 0.22 + moveX}px`;
       bruntideNodes.breath.style.top = `${mouthY - puffHeight * 0.52 + moveY}px`;
       bruntideNodes.breath.style.width = `${puffWidth}px`;
