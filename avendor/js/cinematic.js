@@ -452,7 +452,8 @@
 
     // The troll faces toward the soldiers, so the vapour drifts left and rises.
     const left = mouthX - w * 0.82 - p * 4.2;
-    const top = mouthY - h * 0.54 - p * 1.7;
+    const startDrop = 2.4 * (1 - p);
+    const top = mouthY - h * 0.54 - p * 1.7 + startDrop;
 
     Object.assign(bruntideFx.breath.style, {
       left: `${left}%`,
