@@ -55,35 +55,6 @@
   const barrensGustContext = barrensGustCanvas.getContext('2d');
   if (!starContext || !barrensGustContext) return;
 
-  /*
-   * Prototype 0.3.6 - Bruntide visual polish.
-   *
-   * Scene 3 gets an additive, camera-locked effects canvas. Keeping the layer
-   * here avoids changing test.html or avendor.css and preserves the matched
-   * title/cinematic structure. The approved 0.3.4 transition vectors and
-   * final-100ms camera snap remain untouched.
-   */
-  let bruntideFxCanvas = document.getElementById('cinematic-bruntide-fx');
-  if (!bruntideFxCanvas) {
-    bruntideFxCanvas = document.createElement('canvas');
-    bruntideFxCanvas.id = 'cinematic-bruntide-fx';
-    bruntideFxCanvas.className = 'cinematic-bruntide-fx';
-    bruntideFxCanvas.setAttribute('aria-hidden', 'true');
-    Object.assign(bruntideFxCanvas.style, {
-      position: 'absolute',
-      inset: '0',
-      width: '100%',
-      height: '100%',
-      pointerEvents: 'none',
-      opacity: '0',
-      zIndex: '8'
-    });
-    cameraZoom.appendChild(bruntideFxCanvas);
-  }
-
-  const bruntideFxContext = bruntideFxCanvas.getContext('2d');
-  if (!bruntideFxContext) return;
-
   titleMusic.volume = TITLE_VOLUME;
   cinematicMusic.volume = 0.012;
   if (sceneOneWind) sceneOneWind.volume = 0;
@@ -142,7 +113,7 @@
     {
       id: 'bruntide',
       duration: 12_000,
-      image: 'assets/cinematic/scene-03-bruntide-polished.png',
+      image: 'assets/cinematic/scene-03-bruntide-final.png',
       cameraClass: 'camera-bruntide',
       snowClass: 'light',
       windClass: 'bruntide',
@@ -324,15 +295,88 @@
   let barrensAmbienceFrame = 0;
   let barrensGustFrame = 0;
   let bruntideFxFrame = 0;
-  let bruntideFxStartedAt = 0;
-  let bruntideFxActive = false;
   let starActive = false;
   let barrensGustActive = false;
+  let bruntideFxActive = false;
   let replayGateTimer = null;
   let replayUnlocked = true;
   let lastTitleInteractionAt = performance.now();
 
   const twinkleStars = createTwinkleStars(44);
+
+  const bruntideNodes = createBruntideFxNodes();
+  const bruntideSnowFlakes = createBruntideSnowFlakes(18);
+  const bruntideTorchAnchors = [
+    { x: 0.401, y: 0.483, size: 28, phase: 0.15, base: 0.40 },
+    { x: 0.425, y: 0.523, size: 26, phase: 0.95, base: 0.38 },
+    { x: 0.437, y: 0.663, size: 68, phase: 1.65, base: 0.92 },
+    { x: 0.463, y: 0.663, size: 68, phase: 2.35, base: 0.95 },
+    { x: 0.484, y: 0.417, size: 32, phase: 2.85, base: 0.34 },
+    { x: 0.838, y: 0.598, size: 34, phase: 0.55, base: 0.42 }
+  ];
+
+
+  function createBruntideFxNodes() {
+    const nodes = {
+      caveGlow: barrensFx.querySelector('.cinematic-barrens-cave-glow')
+    };
+
+    const ensureNode = (key) => {
+      const node = document.createElement('div');
+      node.dataset.bruntideFx = key;
+      node.setAttribute('aria-hidden', 'true');
+      node.style.position = 'absolute';
+      node.style.pointerEvents = 'none';
+      node.style.opacity = '0';
+      node.style.willChange = 'transform, opacity';
+      barrensFx.appendChild(node);
+      nodes[key] = node;
+      return node;
+    };
+
+    ensureNode('torchField');
+    ensureNode('breath');
+    ensureNode('glint');
+
+    nodes.torchField.style.inset = '0';
+    nodes.breath.style.background = 'radial-gradient(ellipse at 34% 50%, rgba(241,247,255,0.92) 0%, rgba(216,229,243,0.78) 28%, rgba(187,204,224,0.36) 56%, rgba(187,204,224,0) 76%)';
+    nodes.breath.style.mixBlendMode = 'screen';
+    nodes.breath.style.filter = 'blur(4px)';
+    nodes.breath.style.borderRadius = '999px';
+
+    nodes.glint.style.width = '18px';
+    nodes.glint.style.height = '18px';
+    nodes.glint.style.marginLeft = '-9px';
+    nodes.glint.style.marginTop = '-9px';
+    nodes.glint.style.mixBlendMode = 'screen';
+    nodes.glint.style.background = 'radial-gradient(circle, rgba(255,232,165,0.98) 0%, rgba(255,198,80,0.85) 22%, rgba(255,140,46,0.24) 48%, rgba(255,140,46,0) 72%)';
+    nodes.glint.style.boxShadow = '0 0 10px rgba(255,186,94,0.55)';
+
+    return nodes;
+  }
+
+  function createBruntideSnowFlakes(count) {
+    let seed = 0x4252554e;
+    const random = () => {
+      seed = (1664525 * seed + 1013904223) >>> 0;
+      return seed / 4294967296;
+    };
+
+    const flakes = [];
+    for (let i = 0; i < count; i += 1) {
+      flakes.push({
+        x: random(),
+        y: random(),
+        size: 1.4 + random() * 3.6,
+        speed: 0.55 + random() * 1.55,
+        alpha: 0.14 + random() * 0.28,
+        drift: 14 + random() * 44,
+        streak: 3 + random() * 7,
+        phase: random() * 6000
+      });
+    }
+    return flakes;
+  }
 
   function createTwinkleStars(count) {
     let seed = 0x4a56454e;
@@ -793,193 +837,131 @@
     barrensGustContext.clearRect(0, 0, cinematic.clientWidth, cinematic.clientHeight);
   }
 
-  const bruntideSnow = [
-    { x: .08, y: .12, speed: .000030, drift: .000020, size: 1.8, phase: 120 },
-    { x: .16, y: .32, speed: .000024, drift: .000016, size: 2.5, phase: 890 },
-    { x: .24, y: .05, speed: .000034, drift: .000021, size: 1.5, phase: 430 },
-    { x: .33, y: .22, speed: .000028, drift: .000017, size: 2.1, phase: 1280 },
-    { x: .41, y: .08, speed: .000037, drift: .000023, size: 1.7, phase: 760 },
-    { x: .49, y: .39, speed: .000025, drift: .000019, size: 2.8, phase: 1900 },
-    { x: .57, y: .17, speed: .000032, drift: .000020, size: 1.9, phase: 250 },
-    { x: .64, y: .31, speed: .000029, drift: .000018, size: 2.3, phase: 1450 },
-    { x: .72, y: .09, speed: .000035, drift: .000022, size: 1.6, phase: 1010 },
-    { x: .79, y: .43, speed: .000026, drift: .000017, size: 2.7, phase: 540 },
-    { x: .87, y: .21, speed: .000031, drift: .000020, size: 2.0, phase: 1740 },
-    { x: .94, y: .04, speed: .000038, drift: .000024, size: 1.4, phase: 320 },
-    { x: .12, y: .58, speed: .000023, drift: .000015, size: 3.0, phase: 2140 },
-    { x: .38, y: .63, speed: .000027, drift: .000018, size: 2.6, phase: 670 },
-    { x: .61, y: .56, speed: .000024, drift: .000016, size: 3.2, phase: 1530 },
-    { x: .84, y: .68, speed: .000026, drift: .000018, size: 2.9, phase: 930 }
-  ];
+  function updateBruntideTorchField(width, height, time) {
+    const field = bruntideNodes.torchField;
+    const layers = [];
 
-  const bruntideFirePoints = [
-    { x: .187, y: .452, radius: .032, phase: .4 },
-    { x: .313, y: .522, radius: .041, phase: 1.6 },
-    { x: .412, y: .366, radius: .031, phase: 2.9 },
-    { x: .346, y: .415, radius: .020, phase: 4.2 }
-  ];
+    for (const torch of bruntideTorchAnchors) {
+      const wave = Math.sin(time * 0.0032 + torch.phase);
+      const pulse = Math.sin(time * 0.0081 + torch.phase * 3.7);
+      const flutter = Math.sin(time * 0.0146 + torch.phase * 8.1);
+      const intensity = Math.max(0.18, torch.base + wave * 0.14 + pulse * 0.08 + flutter * 0.05);
+      const radius = torch.size * (0.78 + intensity * 0.52);
+      const x = Math.round(width * torch.x);
+      const y = Math.round(height * torch.y);
 
-  function resizeBruntideFxCanvas() {
-    const width = Math.max(1, cameraZoom.clientWidth || cinematic.clientWidth);
-    const height = Math.max(1, cameraZoom.clientHeight || cinematic.clientHeight);
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
-
-    bruntideFxCanvas.width = Math.floor(width * ratio);
-    bruntideFxCanvas.height = Math.floor(height * ratio);
-    bruntideFxCanvas.style.width = `${width}px`;
-    bruntideFxCanvas.style.height = `${height}px`;
-    bruntideFxContext.setTransform(ratio, 0, 0, ratio, 0, 0);
-  }
-
-  function drawBruntideGlow(width, height, elapsed) {
-    for (const point of bruntideFirePoints) {
-      const pulse =
-        .72 +
-        Math.sin(elapsed * .0071 + point.phase) * .12 +
-        Math.sin(elapsed * .0173 + point.phase * 2.1) * .08;
-      const radius = width * point.radius * Math.max(.72, pulse);
-      const x = width * point.x;
-      const y = height * point.y;
-      const gradient = bruntideFxContext.createRadialGradient(x, y, 0, x, y, radius);
-      gradient.addColorStop(0, `rgba(255,224,132,${.28 * pulse})`);
-      gradient.addColorStop(.22, `rgba(255,151,48,${.17 * pulse})`);
-      gradient.addColorStop(1, 'rgba(255,94,22,0)');
-      bruntideFxContext.fillStyle = gradient;
-      bruntideFxContext.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+      layers.push(`radial-gradient(circle at ${x}px ${y}px, rgba(255,244,202,${(0.72 * intensity).toFixed(3)}) 0, rgba(255,199,118,${(0.52 * intensity).toFixed(3)}) ${Math.round(radius * 0.26)}px, rgba(255,151,72,${(0.22 * intensity).toFixed(3)}) ${Math.round(radius * 0.56)}px, rgba(255,122,44,0) ${Math.round(radius)}px)`);
     }
+
+    field.style.backgroundImage = layers.join(',');
+    field.style.opacity = '1';
   }
 
-  function drawBruntideBannerRipple(width, height, elapsed) {
-    // The foreground banner is already painted into the approved frame. Rather
-    // than deforming the art, faint travelling highlights make the cloth read
-    // as moving while preserving its silhouette and heraldry.
-    bruntideFxContext.save();
-    bruntideFxContext.beginPath();
-    bruntideFxContext.moveTo(width * .006, height * .105);
-    bruntideFxContext.lineTo(width * .274, height * .080);
-    bruntideFxContext.lineTo(width * .302, height * .598);
-    bruntideFxContext.lineTo(width * .012, height * .620);
-    bruntideFxContext.closePath();
-    bruntideFxContext.clip();
-
-    const shift = (elapsed * .022) % (width * .28);
-    for (let i = -1; i < 4; i += 1) {
-      const x = width * .015 + i * width * .095 + shift;
-      const wave = Math.sin(elapsed * .0025 + i * 1.7) * height * .018;
-      const gradient = bruntideFxContext.createLinearGradient(x - width * .035, 0, x + width * .035, 0);
-      gradient.addColorStop(0, 'rgba(170,203,239,0)');
-      gradient.addColorStop(.46, 'rgba(170,203,239,.035)');
-      gradient.addColorStop(.54, 'rgba(3,17,41,.035)');
-      gradient.addColorStop(1, 'rgba(3,17,41,0)');
-      bruntideFxContext.fillStyle = gradient;
-      bruntideFxContext.fillRect(x - width * .04, height * .06 + wave, width * .08, height * .62);
-    }
-    bruntideFxContext.restore();
-  }
-
-  function drawBruntideBreath(width, height, elapsed) {
-    const start = 4_900;
-    const duration = 2_050;
-    if (elapsed < start || elapsed > start + duration) return;
-
-    const progress = (elapsed - start) / duration;
-    const fade = Math.sin(Math.PI * progress);
-    const mouthX = width * .708;
-    const mouthY = height * .365;
-
-    bruntideFxContext.save();
-    bruntideFxContext.globalCompositeOperation = 'screen';
-    for (let i = 0; i < 9; i += 1) {
-      const p = Math.max(0, Math.min(1, progress * 1.22 - i * .055));
-      if (p <= 0) continue;
-      const x = mouthX - width * (.018 + p * .085) + Math.sin(i * 2.4) * width * .004;
-      const y = mouthY + height * (.006 - p * .038) + Math.cos(i * 1.8) * height * .004;
-      const radius = width * (.006 + p * .020 + i * .0008);
-      const alpha = fade * (1 - p * .58) * .060;
-      const plume = bruntideFxContext.createRadialGradient(x, y, 0, x, y, radius);
-      plume.addColorStop(0, `rgba(226,239,247,${alpha})`);
-      plume.addColorStop(.55, `rgba(195,218,233,${alpha * .62})`);
-      plume.addColorStop(1, 'rgba(188,211,229,0)');
-      bruntideFxContext.fillStyle = plume;
-      bruntideFxContext.fillRect(x - radius, y - radius, radius * 2, radius * 2);
-    }
-    bruntideFxContext.restore();
-  }
-
-  function drawBruntideBattleFlash(width, height, elapsed) {
-    const flashAt = 7_260;
-    const delta = Math.abs(elapsed - flashAt);
-    if (delta > 190) return;
-
-    const intensity = Math.max(0, 1 - delta / 190);
-    const x = width * .811;
-    const y = height * .739;
-    const radius = width * (.018 + intensity * .018);
-    const gradient = bruntideFxContext.createRadialGradient(x, y, 0, x, y, radius);
-    gradient.addColorStop(0, `rgba(255,242,190,${.34 * intensity})`);
-    gradient.addColorStop(.28, `rgba(255,176,62,${.20 * intensity})`);
-    gradient.addColorStop(1, 'rgba(255,110,24,0)');
-    bruntideFxContext.fillStyle = gradient;
-    bruntideFxContext.fillRect(x - radius, y - radius, radius * 2, radius * 2);
-  }
-
-  function drawBruntideForegroundSnow(width, height, elapsed) {
-    bruntideFxContext.save();
-    bruntideFxContext.lineCap = 'round';
-    for (const flake of bruntideSnow) {
-      const t = elapsed + flake.phase;
-      const x = ((flake.x * width + t * flake.drift * width) % (width * 1.12)) - width * .06;
-      const y = ((flake.y * height + t * flake.speed * height) % (height * 1.10)) - height * .05;
-      const sway = Math.sin(t * .002 + flake.phase) * width * .010;
-      const alpha = .17 + (flake.size / 3.2) * .16;
-      bruntideFxContext.strokeStyle = `rgba(235,245,255,${alpha})`;
-      bruntideFxContext.lineWidth = Math.max(.75, flake.size * .55);
-      bruntideFxContext.beginPath();
-      bruntideFxContext.moveTo(x + sway, y);
-      bruntideFxContext.lineTo(x + sway - flake.size * 2.1, y + flake.size * 3.0);
-      bruntideFxContext.stroke();
-    }
-    bruntideFxContext.restore();
-  }
-
-  function drawBruntideEffects(now) {
+  function drawBruntideFx(time) {
     if (!bruntideFxActive || !cinematicRunning || sceneIndex !== 2) return;
 
-    const width = cameraZoom.clientWidth || cinematic.clientWidth;
-    const height = cameraZoom.clientHeight || cinematic.clientHeight;
-    const elapsed = Math.max(0, now - bruntideFxStartedAt);
-    bruntideFxContext.clearRect(0, 0, width, height);
+    const width = cinematic.clientWidth;
+    const height = cinematic.clientHeight;
+    barrensGustContext.clearRect(0, 0, width, height);
+    barrensGustContext.lineCap = 'round';
 
-    drawBruntideBannerRipple(width, height, elapsed);
-    drawBruntideGlow(width, height, elapsed);
-    drawBruntideBreath(width, height, elapsed);
-    drawBruntideBattleFlash(width, height, elapsed);
-    drawBruntideForegroundSnow(width, height, elapsed);
+    for (const flake of bruntideSnowFlakes) {
+      const x = ((flake.x * width) + ((time + flake.phase) * 0.030 * flake.speed)) % (width + 140) - 70;
+      const y = ((flake.y * height) + ((time + flake.phase) * 0.012 * flake.speed)) % (height + 90) - 45;
+      const dx = flake.drift * 0.50;
+      const dy = flake.streak * 0.35;
+      barrensGustContext.strokeStyle = `rgba(238,245,255,${flake.alpha})`;
+      barrensGustContext.lineWidth = Math.max(0.8, flake.size * 0.34);
+      barrensGustContext.beginPath();
+      barrensGustContext.moveTo(x, y);
+      barrensGustContext.lineTo(x + dx, y + dy);
+      barrensGustContext.stroke();
+    }
 
-    bruntideFxFrame = requestAnimationFrame(drawBruntideEffects);
+    const sparkCycle = ((time + 1100) % 2900) / 2900;
+    const sparkPulse = Math.sin(Math.PI * sparkCycle);
+    if (sparkPulse > 0.96) {
+      const pulse = (sparkPulse - 0.96) / 0.04;
+      const alpha = Math.min(1, pulse * pulse);
+      const x = width * 0.56;
+      const y = height * 0.79;
+      const radius = 3 + alpha * 10;
+      barrensGustContext.strokeStyle = `rgba(255,211,126,${alpha * 0.95})`;
+      barrensGustContext.lineWidth = 1.2;
+      barrensGustContext.beginPath();
+      barrensGustContext.moveTo(x - radius, y);
+      barrensGustContext.lineTo(x + radius, y);
+      barrensGustContext.moveTo(x, y - radius);
+      barrensGustContext.lineTo(x, y + radius);
+      barrensGustContext.stroke();
+      bruntideNodes.glint.style.left = `${x}px`;
+      bruntideNodes.glint.style.top = `${y}px`;
+      bruntideNodes.glint.style.opacity = `${alpha * 0.92}`;
+      bruntideNodes.glint.style.transform = `scale(${0.55 + alpha * 0.7})`;
+    } else {
+      bruntideNodes.glint.style.opacity = '0';
+    }
+
+    updateBruntideTorchField(width, height, time);
+
+    const breathCycle = (time + 820) % 3400;
+    if (breathCycle < 1500) {
+      const progress = breathCycle / 1500;
+      const eased = progress < 0.35
+        ? progress / 0.35
+        : 1 - Math.min(1, (progress - 0.35) / 0.65);
+      const opacity = Math.max(0, eased) * 0.72;
+      const mouthX = width * 0.607;
+      const mouthY = height * 0.518;
+      const puffWidth = width * (0.055 + progress * 0.080);
+      const puffHeight = height * (0.030 + progress * 0.055);
+      const moveX = width * progress * 0.058;
+      const moveY = -height * progress * 0.020;
+      bruntideNodes.breath.style.left = `${mouthX - puffWidth * 0.22 + moveX}px`;
+      bruntideNodes.breath.style.top = `${mouthY - puffHeight * 0.52 + moveY}px`;
+      bruntideNodes.breath.style.width = `${puffWidth}px`;
+      bruntideNodes.breath.style.height = `${puffHeight}px`;
+      bruntideNodes.breath.style.opacity = `${opacity}`;
+      bruntideNodes.breath.style.transform = `skewX(-12deg) scale(${0.80 + progress * 0.60}, ${0.84 + progress * 0.36})`;
+    } else {
+      bruntideNodes.breath.style.opacity = '0';
+    }
+
+    bruntideFxFrame = requestAnimationFrame(drawBruntideFx);
   }
 
   function startBruntideEffects() {
     stopBruntideEffects();
+    if (bruntideNodes.caveGlow) bruntideNodes.caveGlow.style.display = 'none';
+
+    barrensFx.classList.add('active');
+    barrensFx.style.opacity = '1';
+    barrensGustCanvas.classList.add('active');
+    resizeBarrensGustCanvas();
+
+    bruntideNodes.torchField.style.opacity = '1';
+    bruntideNodes.glint.style.opacity = '0';
+    bruntideNodes.breath.style.opacity = '0';
+
     if (REDUCED_MOTION.matches) return;
 
-    resizeBruntideFxCanvas();
-    bruntideFxCanvas.style.opacity = '1';
-    bruntideFxStartedAt = performance.now();
     bruntideFxActive = true;
-    bruntideFxFrame = requestAnimationFrame(drawBruntideEffects);
+    bruntideFxFrame = requestAnimationFrame(drawBruntideFx);
   }
 
   function stopBruntideEffects() {
     bruntideFxActive = false;
     bruntideFxFrame = cancelFrame(bruntideFxFrame);
-    bruntideFxCanvas.style.opacity = '0';
-    bruntideFxContext.clearRect(
-      0,
-      0,
-      cameraZoom.clientWidth || cinematic.clientWidth,
-      cameraZoom.clientHeight || cinematic.clientHeight
-    );
+    barrensGustContext.clearRect(0, 0, cinematic.clientWidth, cinematic.clientHeight);
+
+    if (bruntideNodes.caveGlow) bruntideNodes.caveGlow.style.display = '';
+    bruntideNodes.torchField.style.opacity = '0';
+    bruntideNodes.torchField.style.backgroundImage = 'none';
+    bruntideNodes.glint.style.opacity = '0';
+    bruntideNodes.breath.style.opacity = '0';
+
+    barrensFx.style.opacity = '';
+    barrensGustCanvas.classList.remove('active');
   }
 
   function hideSubtitle() {
@@ -1096,7 +1078,10 @@
           }, 9_850));
         } else {
           stopBarrensAmbience();
-          if (scene.id === 'bruntide') startBruntideEffects();
+        }
+
+        if (scene.id === 'bruntide') {
+          startBruntideEffects();
         }
 
         // Every regional cut may arrive through the same wind veil. Clear the
@@ -1268,7 +1253,6 @@
   window.addEventListener('resize', () => {
     if (starActive) resizeStarCanvas();
     if (barrensGustActive) resizeBarrensGustCanvas();
-    if (bruntideFxActive) resizeBruntideFxCanvas();
   }, { passive: true });
 
   // Title audio resilience: the homepage secret entrance sets avendorMusicWanted,
