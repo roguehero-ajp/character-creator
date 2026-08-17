@@ -767,12 +767,7 @@
 
     const width = cinematic.clientWidth;
     const height = cinematic.clientHeight;
-    const frame = getBruntideArtFrame();
     barrensGustContext.clearRect(0, 0, width, height);
-    if (frame.width <= 0 || frame.height <= 0) {
-      bruntideFxFrame = requestAnimationFrame(drawBruntideFx);
-      return;
-    }
     barrensGustContext.lineCap = 'round';
 
     for (const gust of barrensGusts) {
@@ -879,7 +874,14 @@
 
     const width = cinematic.clientWidth;
     const height = cinematic.clientHeight;
+    const frame = getBruntideArtFrame();
     barrensGustContext.clearRect(0, 0, width, height);
+
+    if (frame.width <= 0 || frame.height <= 0) {
+      bruntideFxFrame = requestAnimationFrame(drawBruntideFx);
+      return;
+    }
+
     barrensGustContext.lineCap = 'round';
 
     for (const flake of bruntideSnowFlakes) {
