@@ -9,6 +9,7 @@
   const BRUNTIDE_AMBIENCE_VOLUME = 0.18;
   const FREE_KINGDOMS_AMBIENCE_VOLUME = 0.1875;
   const STOUTHOME_AMBIENCE_VOLUME = 0.17;
+  const THELAND_AMBIENCE_VOLUME = 0.16;
   const TITLE_LOOP_FALLBACK_MS = 79_000;
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -40,6 +41,9 @@
   const stouthomeAmbience = new Audio('assets/cinematic/scene-05-stouthome-ambience.wav');
   stouthomeAmbience.preload = 'auto';
   stouthomeAmbience.loop = false;
+  const thelandAmbience = new Audio('assets/cinematic/scene-06-theland-briarwell-ambience.wav');
+  thelandAmbience.preload = 'auto';
+  thelandAmbience.loop = false;
 
   if (
     !stage ||
@@ -74,6 +78,7 @@
   bruntideAmbience.volume = 0;
   freeKingdomsAmbience.volume = 0;
   stouthomeAmbience.volume = 0;
+  thelandAmbience.volume = 0;
 
   /*
    * Prototype 0.2.6 production lock.
@@ -199,22 +204,22 @@
     {
       id: 'theland-briarwell',
       duration: 12_000,
-      image: 'assets/cinematic/scene-06-theland-briarwell.png',
+      image: 'assets/cinematic/scene-06-theland-briarwell-final.png',
       cameraClass: 'camera-theland',
       snowClass: 'light',
       windClass: 'theland',
       subtitles: [
         {
-          at: 400,
-          until: 5_500,
+          at: 380,
+          until: 5_250,
           text:
-            'Toward the coastal lands of Theland... calmly tucked away from the strife and turmoil of the world.'
+            'Toward the coastal lands of Theland... far from the strife and turmoil of the wider world.'
         },
         {
-          at: 5_750,
-          until: 11_650,
+          at: 5_500,
+          until: 11_550,
           text:
-            'Hints of the cold come with the wind, as it brings the first few flakes of snow seen in many years. The signs of another great change hang in the air...'
+            'And into the little town of Briarwell, where the wind carries the first snow seen in many years...'
         }
       ]
     }
@@ -320,6 +325,11 @@
   let stouthomeFxFrame = 0;
   let stouthomeFxActive = false;
   let stouthomeStartedAt = 0;
+  let thelandAmbienceFrame = 0;
+  let thelandFxFrame = 0;
+  let thelandFxActive = false;
+  let thelandStartedAt = 0;
+  let finaleTitleShowing = false;
   let stouthomeCameraAnimation = null;
   let starActive = false;
   let barrensGustActive = false;
@@ -780,6 +790,284 @@
   }
 
 
+
+  const thelandFx = createThelandFxLayer();
+  const finaleTitle = createFinaleTitleCard();
+
+  function createThelandFxLayer() {
+    const root = document.createElement('div');
+    root.id = 'cinematic-theland-fx';
+    root.setAttribute('aria-hidden', 'true');
+    Object.assign(root.style, {
+      position: 'absolute',
+      inset: '0',
+      zIndex: '4',
+      pointerEvents: 'none',
+      opacity: '0',
+      overflow: 'visible',
+      willChange: 'transform, opacity',
+      transformOrigin: '50% 50%'
+    });
+    const canvas = document.createElement('canvas');
+    Object.assign(canvas.style, {
+      position: 'absolute',
+      inset: '0',
+      width: '100%',
+      height: '100%'
+    });
+    root.append(canvas);
+    cameraZoom.append(root);
+    return { root, canvas, context: canvas.getContext('2d') };
+  }
+
+  function createFinaleTitleCard() {
+    const root = document.createElement('div');
+    root.id = 'cinematic-finale-title';
+    root.setAttribute('aria-hidden', 'true');
+    Object.assign(root.style, {
+      position: 'absolute',
+      inset: '0',
+      zIndex: '12',
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      background: 'rgba(0,0,0,0)',
+      opacity: '0',
+      transition: 'opacity 1200ms ease, background 1200ms ease'
+    });
+    const title = document.createElement('div');
+    title.textContent = 'THE RISING TIDES OF AVENDOR';
+    Object.assign(title.style, {
+      color: '#efe8d2',
+      fontFamily: 'Georgia, Times New Roman, serif',
+      fontWeight: '700',
+      letterSpacing: '0.12em',
+      textAlign: 'center',
+      textShadow: '0 2px 10px rgba(0,0,0,.65)',
+      fontSize: 'clamp(1.6rem, 3.4vw, 3.3rem)',
+      margin: '0 1.2rem',
+      opacity: '0',
+      transform: 'translateY(10px)',
+      transition: 'opacity 900ms ease, transform 900ms ease'
+    });
+    const chapter = document.createElement('div');
+    chapter.textContent = 'Chapter 1: Misty Morning Snowfall';
+    Object.assign(chapter.style, {
+      color: '#d7d0be',
+      fontFamily: 'Georgia, Times New Roman, serif',
+      fontWeight: '400',
+      letterSpacing: '0.04em',
+      textAlign: 'center',
+      textShadow: '0 2px 8px rgba(0,0,0,.55)',
+      fontSize: 'clamp(1rem, 2.0vw, 1.65rem)',
+      marginTop: '1rem',
+      opacity: '0',
+      transform: 'translateY(8px)',
+      transition: 'opacity 900ms ease, transform 900ms ease'
+    });
+    root.append(title, chapter);
+    cinematic.append(root);
+    return { root, title, chapter };
+  }
+
+  function hideFinaleTitleCard(immediate = false) {
+    finaleTitleShowing = false;
+    finaleTitle.root.setAttribute('aria-hidden', 'true');
+    if (immediate) {
+      finaleTitle.root.style.transition = 'none';
+      finaleTitle.title.style.transition = 'none';
+      finaleTitle.chapter.style.transition = 'none';
+    }
+    finaleTitle.root.style.opacity = '0';
+    finaleTitle.root.style.background = 'rgba(0,0,0,0)';
+    finaleTitle.title.style.opacity = '0';
+    finaleTitle.title.style.transform = 'translateY(10px)';
+    finaleTitle.chapter.style.opacity = '0';
+    finaleTitle.chapter.style.transform = 'translateY(8px)';
+    if (immediate) {
+      requestAnimationFrame(() => {
+        finaleTitle.root.style.transition = 'opacity 1200ms ease, background 1200ms ease';
+        finaleTitle.title.style.transition = 'opacity 900ms ease, transform 900ms ease';
+        finaleTitle.chapter.style.transition = 'opacity 900ms ease, transform 900ms ease';
+      });
+    }
+  }
+
+  function syncThelandCanvas() {
+    const rect = thelandFx.root.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const width = Math.max(1, Math.round(rect.width * dpr));
+    const height = Math.max(1, Math.round(rect.height * dpr));
+    if (thelandFx.canvas.width !== width || thelandFx.canvas.height !== height) {
+      thelandFx.canvas.width = width;
+      thelandFx.canvas.height = height;
+    }
+    thelandFx.context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { width: rect.width, height: rect.height };
+  }
+
+  function updateThelandTransform() {
+    const artStyle = window.getComputedStyle(sceneArt);
+    thelandFx.root.style.transform = artStyle.transform === 'none' ? 'none' : artStyle.transform;
+    thelandFx.root.style.transformOrigin = artStyle.transformOrigin || '50% 50%';
+  }
+
+  function drawThelandFx(time) {
+    if (!thelandFxActive || !cinematicRunning || sceneIndex !== 5) return;
+    updateThelandTransform();
+    const { width, height } = syncThelandCanvas();
+    const ctx = thelandFx.context;
+    ctx.clearRect(0, 0, width, height);
+    const elapsed = time - thelandStartedAt;
+    const riverX = width * 0.73;
+    const riverY = height * 0.39;
+    const riverW = width * 0.22;
+    const riverH = height * 0.27;
+    for (let i = 0; i < 10; i += 1) {
+      const y = riverY + riverH * (i / 10) + Math.sin(time * 0.0012 + i) * height * 0.0022;
+      const alpha = 0.05 + 0.025 * Math.sin(time * 0.0017 + i * 0.7);
+      ctx.strokeStyle = `rgba(215, 233, 245, ${Math.max(0, alpha).toFixed(3)})`;
+      ctx.lineWidth = Math.max(1, width * 0.001);
+      ctx.beginPath();
+      ctx.moveTo(riverX + width * 0.01 * Math.sin(time * 0.001 + i), y);
+      ctx.lineTo(riverX + riverW - width * 0.015 * Math.cos(time * 0.0012 + i), y + height * 0.0025);
+      ctx.stroke();
+    }
+    const glows = [[0.50,0.58,0.015],[0.54,0.61,0.013],[0.58,0.60,0.012],[0.63,0.58,0.016],[0.45,0.65,0.010],[0.69,0.63,0.011],[0.75,0.58,0.012],[0.41,0.55,0.013]];
+    for (let i = 0; i < glows.length; i += 1) {
+      const [gx, gy, s] = glows[i];
+      const pulse = 0.05 + 0.09 * (0.5 + 0.5 * Math.sin(time * 0.0031 + i * 0.8));
+      const r = Math.max(width, height) * s;
+      const grad = ctx.createRadialGradient(width * gx, height * gy, 0, width * gx, height * gy, r);
+      grad.addColorStop(0, `rgba(255, 217, 135, ${(pulse * 1.55).toFixed(3)})`);
+      grad.addColorStop(0.35, `rgba(255, 181, 87, ${(pulse).toFixed(3)})`);
+      grad.addColorStop(1, 'rgba(255, 145, 54, 0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(width * gx - r, height * gy - r, r * 2, r * 2);
+    }
+    const stacks = [{x:0.52,y:0.50},{x:0.59,y:0.55},{x:0.66,y:0.52},{x:0.74,y:0.51},{x:0.46,y:0.59}];
+    for (let s = 0; s < stacks.length; s += 1) {
+      const stack = stacks[s];
+      for (let i = 0; i < 5; i += 1) {
+        const cycle = ((time * 0.00007) + s * 0.13 + i * 0.18) % 1;
+        const rise = cycle;
+        const alpha = Math.max(0, 0.10 * (1 - rise));
+        const x = width * stack.x + (rise * width * 0.010) + Math.sin(time*0.0011 + i + s) * width * 0.003;
+        const y = height * stack.y - rise * height * (0.08 + i * 0.004);
+        const rx = width * (0.007 + rise * 0.007);
+        const ry = height * (0.010 + rise * 0.010);
+        ctx.fillStyle = `rgba(214, 216, 222, ${alpha.toFixed(3)})`;
+        ctx.beginPath();
+        ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+    const boats = [{x:0.78,y:0.57,w:0.030},{x:0.84,y:0.55,w:0.024}];
+    for (let i = 0; i < boats.length; i += 1) {
+      const boat = boats[i];
+      const bob = Math.sin(time * 0.0022 + i * 1.5) * height * 0.0035;
+      ctx.strokeStyle = 'rgba(236, 229, 214, 0.12)';
+      ctx.lineWidth = Math.max(1, width * 0.0011);
+      ctx.beginPath();
+      ctx.moveTo(width * (boat.x - boat.w*0.5), height * boat.y + bob);
+      ctx.lineTo(width * (boat.x + boat.w*0.5), height * boat.y + bob);
+      ctx.stroke();
+    }
+    const snowAmount = Math.max(0, Math.min(1, (elapsed - 3600) / 5200));
+    const totalFlakes = Math.floor(22 + snowAmount * 95);
+    for (let i = 0; i < totalFlakes; i += 1) {
+      const lane = (i * 0.61803398875) % 1;
+      const phase = ((elapsed * (0.000045 + (i % 7) * 0.000004)) + lane * 1.7) % 1;
+      const x = ((lane * width) + Math.sin(elapsed * 0.001 + i) * width * 0.012 + phase * width * 0.02) % width;
+      const y = phase * height;
+      const size = 0.8 + ((i % 5) * 0.23) + snowAmount * 0.2;
+      const alpha = 0.28 + snowAmount * 0.36;
+      ctx.fillStyle = `rgba(247, 250, 252, ${alpha.toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(x, y, size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    thelandFxFrame = requestAnimationFrame(drawThelandFx);
+  }
+
+  function startThelandEffects() {
+    stopThelandEffects();
+    thelandFxActive = true;
+    thelandStartedAt = performance.now();
+    thelandFx.root.style.opacity = '1';
+    drawThelandFx(thelandStartedAt);
+  }
+
+  function stopThelandEffects() {
+    thelandFxActive = false;
+    thelandFxFrame = cancelFrame(thelandFxFrame);
+    thelandFx.root.style.opacity = '0';
+    thelandFx.root.style.transform = 'none';
+    const rect = thelandFx.root.getBoundingClientRect();
+    thelandFx.context.clearRect(0, 0, rect.width, rect.height);
+  }
+
+  function startThelandAmbience() {
+    thelandAmbienceFrame = cancelFrame(thelandAmbienceFrame);
+    thelandAmbience.currentTime = 0;
+    thelandAmbience.volume = 0.004;
+    const started = thelandAmbience.play();
+    if (started && typeof started.catch === 'function') started.catch(() => {});
+    const beganAt = performance.now();
+    const swell = (now) => {
+      const progress = Math.min(1, (now - beganAt) / 1150);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      thelandAmbience.volume = Math.min(THELAND_AMBIENCE_VOLUME, 0.004 + (THELAND_AMBIENCE_VOLUME - 0.004) * eased);
+      if (progress < 1 && !thelandAmbience.paused) thelandAmbienceFrame = requestAnimationFrame(swell);
+    };
+    thelandAmbienceFrame = requestAnimationFrame(swell);
+  }
+
+  function fadeOutThelandAmbience(duration = 1800) {
+    thelandAmbienceFrame = cancelFrame(thelandAmbienceFrame);
+    if (thelandAmbience.paused) return;
+    const from = thelandAmbience.volume;
+    const beganAt = performance.now();
+    const fade = (now) => {
+      const progress = Math.min(1, (now - beganAt) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      thelandAmbience.volume = Math.max(0, from * (1 - eased));
+      if (progress < 1 && !thelandAmbience.paused) {
+        thelandAmbienceFrame = requestAnimationFrame(fade);
+      } else {
+        thelandAmbience.pause();
+        thelandAmbience.currentTime = 0;
+        thelandAmbience.volume = 0;
+        thelandAmbienceFrame = 0;
+      }
+    };
+    thelandAmbienceFrame = requestAnimationFrame(fade);
+  }
+
+  function stopThelandAmbience() {
+    thelandAmbienceFrame = cancelFrame(thelandAmbienceFrame);
+    thelandAmbience.pause();
+    thelandAmbience.currentTime = 0;
+    thelandAmbience.volume = 0;
+  }
+
+  function showFinaleTitleCard() {
+    if (finaleTitleShowing) return;
+    finaleTitleShowing = true;
+    finaleTitle.root.setAttribute('aria-hidden', 'false');
+    finaleTitle.root.style.opacity = '1';
+    finaleTitle.root.style.background = 'rgba(0,0,0,0.92)';
+    rememberTimer(window.setTimeout(() => {
+      finaleTitle.title.style.opacity = '1';
+      finaleTitle.title.style.transform = 'translateY(0)';
+    }, 700));
+    rememberTimer(window.setTimeout(() => {
+      finaleTitle.chapter.style.opacity = '1';
+      finaleTitle.chapter.style.transform = 'translateY(0)';
+    }, 1700));
+  }
 
   const stouthomeFx = createStouthomeFxLayer();
 
@@ -1599,6 +1887,10 @@
     stopFreeKingdomsAmbience();
     stopStouthomeEffects();
     stopStouthomeAmbience();
+    stopThelandAmbience();
+    stopThelandEffects();
+    stopThelandAmbience();
+    hideFinaleTitleCard(true);
 
     if (scene.snowClass) snow.classList.add(scene.snowClass);
     if (scene.windClass) windLayer.classList.add(scene.windClass);
@@ -1694,6 +1986,16 @@
           }, 9_650));
         }
 
+        if (scene.id === 'theland-briarwell') {
+          startThelandEffects();
+          startThelandAmbience();
+          rememberTimer(window.setTimeout(() => {
+            if (cinematicRunning && sceneIndex === 5) {
+              fadeOutThelandAmbience(1_900);
+            }
+          }, 10_150));
+        }
+
         // Every regional cut may arrive through the same wind veil. Clear the
         // previous wipe shortly after the new scene appears so it can be
         // reused cleanly on the next transition.
@@ -1737,7 +2039,10 @@
     sceneIndex += 1;
 
     if (sceneIndex >= scenes.length) {
-      finishCinematic();
+      showFinaleTitleCard();
+      rememberTimer(window.setTimeout(() => {
+        finishCinematic();
+      }, 4_900));
       return;
     }
 
@@ -1781,6 +2086,8 @@
     stopBruntideEffects();
     stopFreeKingdomsEffects();
     stopStouthomeEffects();
+    stopThelandEffects();
+    hideFinaleTitleCard(true);
     cancelCameraTravel();
 
     sceneArt.className = 'cinematic-art';
@@ -1921,6 +2228,15 @@
       cameraTransform: window.getComputedStyle(sceneArt).transform,
       audioVolume: stouthomeAmbience.volume,
       audioPaused: stouthomeAmbience.paused
+    }),
+    thelandFxVersion: '0.3.27',
+    thelandFxStatus: () => ({
+      active: thelandFxActive,
+      sceneIndex,
+      rootOpacity: thelandFx.root.style.opacity,
+      audioVolume: thelandAmbience.volume,
+      audioPaused: thelandAmbience.paused,
+      finaleTitleShowing
     })
   });
 
