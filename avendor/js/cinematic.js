@@ -6,6 +6,7 @@
   const TITLE_VOLUME = 0.42;
   const CINEMATIC_VOLUME = 0.42;
   const BARRENS_AMBIENCE_VOLUME = 0.12;
+  const BRUNTIDE_AMBIENCE_VOLUME = 0.18;
   const FREE_KINGDOMS_AMBIENCE_VOLUME = 0.1875;
   const TITLE_LOOP_FALLBACK_MS = 79_000;
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -29,6 +30,9 @@
   const cinematicMusic = document.getElementById('cinematic-music');
   const sceneOneWind = document.getElementById('scene-01-wind');
   const barrensAmbience = document.getElementById('scene-02-barrens-ambience');
+  const bruntideAmbience = new Audio('assets/cinematic/scene-03-bruntide-ambience.wav');
+  bruntideAmbience.preload = 'auto';
+  bruntideAmbience.loop = false;
   const freeKingdomsAmbience = new Audio('assets/cinematic/scene-04-free-kingdoms-ambience.wav');
   freeKingdomsAmbience.preload = 'auto';
   freeKingdomsAmbience.loop = false;
@@ -63,6 +67,7 @@
   cinematicMusic.volume = 0.012;
   if (sceneOneWind) sceneOneWind.volume = 0;
   if (barrensAmbience) barrensAmbience.volume = 0;
+  bruntideAmbience.volume = 0;
   freeKingdomsAmbience.volume = 0;
 
   /*
@@ -298,6 +303,7 @@
   let musicFadeFrame = 0;
   let windFadeFrame = 0;
   let barrensAmbienceFrame = 0;
+  let bruntideAmbienceFrame = 0;
   let freeKingdomsAmbienceFrame = 0;
   let barrensGustFrame = 0;
   let bruntideFxFrame = 0;
@@ -761,6 +767,63 @@
       const rect = freeKingdomsFx.root.getBoundingClientRect();
       freeKingdomsFx.context.clearRect(0, 0, rect.width, rect.height);
     }
+  }
+
+  function startBruntideAmbience() {
+    bruntideAmbienceFrame = cancelFrame(bruntideAmbienceFrame);
+    bruntideAmbience.currentTime = 0;
+    bruntideAmbience.volume = 0.004;
+
+    const started = bruntideAmbience.play();
+    if (started && typeof started.catch === 'function') {
+      started.catch(() => {});
+    }
+
+    const beganAt = performance.now();
+    const swell = (now) => {
+      const progress = Math.min(1, (now - beganAt) / 1050);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const target = 0.004 + (BRUNTIDE_AMBIENCE_VOLUME - 0.004) * eased;
+      bruntideAmbience.volume = Math.min(BRUNTIDE_AMBIENCE_VOLUME, target);
+
+      if (progress < 1 && !bruntideAmbience.paused) {
+        bruntideAmbienceFrame = requestAnimationFrame(swell);
+      }
+    };
+
+    bruntideAmbienceFrame = requestAnimationFrame(swell);
+  }
+
+  function fadeOutBruntideAmbience(duration = 1750) {
+    bruntideAmbienceFrame = cancelFrame(bruntideAmbienceFrame);
+    if (bruntideAmbience.paused) return;
+
+    const from = bruntideAmbience.volume;
+    const beganAt = performance.now();
+
+    const fade = (now) => {
+      const progress = Math.min(1, (now - beganAt) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      bruntideAmbience.volume = Math.max(0, from * (1 - eased));
+
+      if (progress < 1 && !bruntideAmbience.paused) {
+        bruntideAmbienceFrame = requestAnimationFrame(fade);
+      } else {
+        bruntideAmbience.pause();
+        bruntideAmbience.currentTime = 0;
+        bruntideAmbience.volume = 0;
+        bruntideAmbienceFrame = 0;
+      }
+    };
+
+    bruntideAmbienceFrame = requestAnimationFrame(fade);
+  }
+
+  function stopBruntideAmbience() {
+    bruntideAmbienceFrame = cancelFrame(bruntideAmbienceFrame);
+    bruntideAmbience.pause();
+    bruntideAmbience.currentTime = 0;
+    bruntideAmbience.volume = 0;
   }
 
   function startFreeKingdomsAmbience() {
@@ -1329,6 +1392,7 @@
     meteor.classList.remove('run');
     stopBarrensEffects();
     stopBruntideEffects();
+    stopBruntideAmbience();
     stopFreeKingdomsEffects();
     stopFreeKingdomsAmbience();
 
@@ -1398,6 +1462,12 @@
 
         if (scene.id === 'bruntide') {
           startBruntideEffects();
+          startBruntideAmbience();
+          rememberTimer(window.setTimeout(() => {
+            if (cinematicRunning && sceneIndex === 2) {
+              fadeOutBruntideAmbience(1_750);
+            }
+          }, 9_650));
         }
 
         if (scene.id === 'free-kingdoms') {
@@ -1489,6 +1559,7 @@
     stopCinematicMusic();
     stopSceneOneWind();
     stopBarrensAmbience();
+    stopBruntideAmbience();
     stopFreeKingdomsAmbience();
     stopStarTwinkle();
     stopBarrensEffects();
@@ -1611,6 +1682,8 @@
       rootOpacity: bruntideFx.root.style.opacity,
       breathOpacity: bruntideFx.breath.style.opacity,
       torchLayers: bruntideFx.torchField.style.backgroundImage ? 'present' : 'none',
+      audioVolume: bruntideAmbience.volume,
+      audioPaused: bruntideAmbience.paused,
       prefersReducedMotion: REDUCED_MOTION.matches
     }),
     freeKingdomsFxVersion: '0.3.13',
