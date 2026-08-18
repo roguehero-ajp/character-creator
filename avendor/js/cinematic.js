@@ -176,7 +176,7 @@
       id: 'stouthome',
       duration: 12_000,
       image: 'assets/cinematic/scene-05-stouthome-final.png',
-      cameraClass: 'camera-stouthome',
+      cameraClass: '',
       snowClass: '',
       windClass: 'stouthome',
       transitionAt: 10_100,
@@ -320,6 +320,7 @@
   let stouthomeFxFrame = 0;
   let stouthomeFxActive = false;
   let stouthomeStartedAt = 0;
+  let stouthomeCameraAnimation = null;
   let starActive = false;
   let barrensGustActive = false;
   let replayGateTimer = null;
@@ -860,8 +861,42 @@
     stouthomeFxFrame = requestAnimationFrame(drawStouthomeFx);
   }
 
+  function startStouthomeCameraPush() {
+    stopStouthomeCameraPush();
+
+    sceneArt.style.transformOrigin = '42.5% 65%';
+
+    if (REDUCED_MOTION.matches || typeof sceneArt.animate !== 'function') {
+      sceneArt.style.transform = 'scale(1.12)';
+      return;
+    }
+
+    stouthomeCameraAnimation = sceneArt.animate(
+      [
+        { transform: 'scale(1.03)', offset: 0 },
+        { transform: 'scale(1.10)', offset: 0.48 },
+        { transform: 'scale(1.22)', offset: 1 }
+      ],
+      {
+        duration: 11_900,
+        easing: 'cubic-bezier(.18,.62,.22,1)',
+        fill: 'forwards'
+      }
+    );
+  }
+
+  function stopStouthomeCameraPush() {
+    if (stouthomeCameraAnimation) {
+      stouthomeCameraAnimation.cancel();
+      stouthomeCameraAnimation = null;
+    }
+    sceneArt.style.transform = '';
+    sceneArt.style.transformOrigin = '';
+  }
+
   function startStouthomeEffects() {
     stopStouthomeEffects();
+    startStouthomeCameraPush();
     stouthomeFxActive = true;
     stouthomeStartedAt = performance.now();
     stouthomeFx.root.style.opacity = '1';
@@ -872,6 +907,7 @@
 
   function stopStouthomeEffects() {
     stouthomeFxActive = false;
+    stopStouthomeCameraPush();
     stouthomeFxFrame = cancelFrame(stouthomeFxFrame);
     stouthomeFx.root.style.opacity = '0';
     stouthomeFx.root.style.transform = 'none';
@@ -1881,6 +1917,8 @@
       rootOpacity: stouthomeFx.root.style.opacity,
       midOpacity: stouthomeFx.mid.style.opacity,
       openOpacity: stouthomeFx.open.style.opacity,
+      cameraPushActive: Boolean(stouthomeCameraAnimation),
+      cameraTransform: window.getComputedStyle(sceneArt).transform,
       audioVolume: stouthomeAmbience.volume,
       audioPaused: stouthomeAmbience.paused
     })
