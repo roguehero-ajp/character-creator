@@ -6,7 +6,7 @@
   const TITLE_VOLUME = 0.42;
   const CINEMATIC_VOLUME = 0.42;
   const BARRENS_AMBIENCE_VOLUME = 0.12;
-  const FREE_KINGDOMS_AMBIENCE_VOLUME = 0.15;
+  const FREE_KINGDOMS_AMBIENCE_VOLUME = 0.1875;
   const TITLE_LOOP_FALLBACK_MS = 79_000;
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
 
