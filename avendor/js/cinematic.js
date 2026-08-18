@@ -6,6 +6,7 @@
   const TITLE_VOLUME = 0.42;
   const CINEMATIC_VOLUME = 0.42;
   const BARRENS_AMBIENCE_VOLUME = 0.12;
+  const FREE_KINGDOMS_AMBIENCE_VOLUME = 0.15;
   const TITLE_LOOP_FALLBACK_MS = 79_000;
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -28,6 +29,9 @@
   const cinematicMusic = document.getElementById('cinematic-music');
   const sceneOneWind = document.getElementById('scene-01-wind');
   const barrensAmbience = document.getElementById('scene-02-barrens-ambience');
+  const freeKingdomsAmbience = new Audio('assets/cinematic/scene-04-free-kingdoms-ambience.wav');
+  freeKingdomsAmbience.preload = 'auto';
+  freeKingdomsAmbience.loop = false;
 
   if (
     !stage ||
@@ -59,6 +63,7 @@
   cinematicMusic.volume = 0.012;
   if (sceneOneWind) sceneOneWind.volume = 0;
   if (barrensAmbience) barrensAmbience.volume = 0;
+  freeKingdomsAmbience.volume = 0;
 
   /*
    * Prototype 0.2.6 production lock.
@@ -135,9 +140,9 @@
       ]
     },
     {
-      id: 'numynor',
+      id: 'free-kingdoms',
       duration: 12_000,
-      image: 'assets/cinematic/scene-04-numynor.png',
+      image: 'assets/cinematic/scene-04-free-kingdoms-final.png',
       cameraClass: 'camera-numynor',
       snowClass: '',
       windClass: 'numynor',
@@ -146,14 +151,14 @@
       subtitles: [
         {
           at: 450,
-          until: 5_250,
-          text: 'Through the barbarian fiefdoms of Numynor...'
+          until: 5_050,
+          text: 'Through the Free Kingdoms...'
         },
         {
-          at: 5_500,
-          until: 11_500,
+          at: 5_300,
+          until: 11_550,
           text:
-            '...full of its ramshackle huts and villages of people willing to fight for pennies, food, or fun...'
+            '...a patchwork of rough fiefdoms and hard-lived settlements, where every road can turn into a quarrel.'
         }
       ]
     },
@@ -293,9 +298,13 @@
   let musicFadeFrame = 0;
   let windFadeFrame = 0;
   let barrensAmbienceFrame = 0;
+  let freeKingdomsAmbienceFrame = 0;
   let barrensGustFrame = 0;
   let bruntideFxFrame = 0;
   let bruntideFxActive = false;
+  let freeKingdomsFxFrame = 0;
+  let freeKingdomsFxActive = false;
+  let freeKingdomsStartedAt = 0;
   let starActive = false;
   let barrensGustActive = false;
   let replayGateTimer = null;
@@ -453,7 +462,7 @@
     // The troll faces toward the soldiers, so the vapour drifts left and rises.
     const left = mouthX - w * 0.82 - p * 4.2;
     const startDrop = 2.4 * (1 - p);
-    const top = mouthY - h * 0.40 - p * 1.5 + startDrop;
+    const top = mouthY - h * 0.46 - p * 1.7 + startDrop;
 
     Object.assign(bruntideFx.breath.style, {
       left: `${left}%`,
@@ -511,6 +520,301 @@
     bruntideFx.torchField.style.backgroundImage = 'none';
     bruntideFx.breath.style.opacity = '0';
     bruntideFx.glint.style.opacity = '0';
+  }
+
+
+
+  /*
+   * Prototype 0.3.13 - Free Kingdoms production pass.
+   *
+   * Scene 4 gets its own independent overlay and ambience. This avoids
+   * coupling the rough settlement valley to Bruntide or Barrens-specific FX.
+   */
+  const freeKingdomsFx = createFreeKingdomsFxLayer();
+  const freeKingdomsSnowFlakes = createFreeKingdomsSnowFlakes(26);
+  const freeKingdomsSmokeStacks = [
+    { x: 21.5, y: 58.2, spread: 0.85, phase: 0.1 },
+    { x: 60.3, y: 53.0, spread: 1.05, phase: 0.6 },
+    { x: 69.0, y: 51.4, spread: 1.10, phase: 1.1 },
+    { x: 77.6, y: 42.5, spread: 0.95, phase: 1.7 },
+    { x: 95.4, y: 44.2, spread: 0.90, phase: 2.2 }
+  ];
+
+  function createFreeKingdomsFxLayer() {
+    const root = document.createElement('div');
+    root.id = 'cinematic-free-kingdoms-fx';
+    root.setAttribute('aria-hidden', 'true');
+    Object.assign(root.style, {
+      position: 'absolute',
+      inset: '0',
+      zIndex: '4',
+      pointerEvents: 'none',
+      opacity: '0',
+      overflow: 'visible',
+      willChange: 'transform, opacity',
+      transformOrigin: '50% 50%'
+    });
+
+    const canvas = document.createElement('canvas');
+    Object.assign(canvas.style, {
+      position: 'absolute',
+      inset: '0',
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none'
+    });
+
+    root.appendChild(canvas);
+    cameraZoom.appendChild(root);
+
+    return {
+      root,
+      canvas,
+      context: canvas.getContext('2d')
+    };
+  }
+
+  function createFreeKingdomsSnowFlakes(count) {
+    let seed = 0x46524545;
+    const random = () => {
+      seed = (1664525 * seed + 1013904223) >>> 0;
+      return seed / 4294967296;
+    };
+
+    const flakes = [];
+    for (let i = 0; i < count; i += 1) {
+      flakes.push({
+        x: random(),
+        y: random(),
+        size: 0.9 + random() * 2.2,
+        speed: 0.45 + random() * 1.05,
+        alpha: 0.10 + random() * 0.20,
+        drift: 10 + random() * 26,
+        streak: 2 + random() * 6,
+        phase: random() * 6000
+      });
+    }
+    return flakes;
+  }
+
+  function syncFreeKingdomsCanvas() {
+    const rect = freeKingdomsFx.root.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const width = Math.max(1, Math.round(rect.width * dpr));
+    const height = Math.max(1, Math.round(rect.height * dpr));
+
+    if (freeKingdomsFx.canvas.width !== width || freeKingdomsFx.canvas.height !== height) {
+      freeKingdomsFx.canvas.width = width;
+      freeKingdomsFx.canvas.height = height;
+    }
+
+    freeKingdomsFx.context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { width: rect.width, height: rect.height };
+  }
+
+  function updateFreeKingdomsTransform() {
+    const artStyle = window.getComputedStyle(sceneArt);
+    freeKingdomsFx.root.style.transform = artStyle.transform === 'none'
+      ? 'none'
+      : artStyle.transform;
+    freeKingdomsFx.root.style.transformOrigin = artStyle.transformOrigin || '50% 50%';
+  }
+
+  function drawFreeKingdomsSmoke(ctx, width, height, time) {
+    for (const stack of freeKingdomsSmokeStacks) {
+      for (let i = 0; i < 6; i += 1) {
+        const cycle = ((time * 0.000065) + stack.phase + i * 0.17) % 1;
+        const rise = cycle;
+        const alpha = Math.max(0, 0.16 * (1 - rise));
+        const x = width * (stack.x / 100) + Math.sin((time * 0.0012) + i + stack.phase) * (width * 0.004 * stack.spread) + rise * width * 0.008;
+        const y = height * (stack.y / 100) - rise * height * (0.07 + i * 0.002);
+        const rx = width * (0.009 + rise * 0.010) * stack.spread;
+        const ry = height * (0.010 + rise * 0.012) * stack.spread;
+        ctx.fillStyle = `rgba(222, 225, 232, ${alpha.toFixed(3)})`;
+        ctx.beginPath();
+        ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function drawFreeKingdomsSnow(ctx, width, height, time, strength) {
+    if (strength <= 0.01) return;
+
+    ctx.lineCap = 'round';
+    for (const flake of freeKingdomsSnowFlakes) {
+      const x = ((flake.x * width) + ((time + flake.phase) * 0.024 * flake.speed)) % (width + 120) - 60;
+      const y = ((flake.y * height) + ((time + flake.phase) * 0.010 * flake.speed)) % (height + 80) - 40;
+      const dx = flake.drift * 0.45;
+      const dy = flake.streak * 0.28;
+      ctx.strokeStyle = `rgba(240, 246, 255, ${(flake.alpha * strength).toFixed(3)})`;
+      ctx.lineWidth = Math.max(0.7, flake.size * 0.30);
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + dx, y + dy);
+      ctx.stroke();
+    }
+  }
+
+  function drawFreeKingdomsMarketGlow(ctx, width, height, time) {
+    const x = width * 0.765;
+    const y = height * 0.625;
+    const flicker = 0.72 + Math.sin(time * 0.0061) * 0.10 + Math.sin(time * 0.0163 + 1.8) * 0.08;
+    const radius = width * (0.030 + flicker * 0.010);
+    const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+    gradient.addColorStop(0, `rgba(255, 223, 160, ${(0.34 * flicker).toFixed(3)})`);
+    gradient.addColorStop(0.38, `rgba(255, 170, 74, ${(0.18 * flicker).toFixed(3)})`);
+    gradient.addColorStop(1, 'rgba(255, 130, 40, 0)');
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawFreeKingdomsRiver(ctx, width, height, time) {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(207, 231, 246, 0.26)';
+    ctx.lineWidth = Math.max(1.1, width * 0.0014);
+    const baseX = width * 0.905;
+    const baseY = height * 0.875;
+    for (let i = 0; i < 5; i += 1) {
+      const wave = Math.sin(time * 0.0034 + i * 0.8);
+      ctx.beginPath();
+      ctx.moveTo(baseX - width * 0.045 + i * width * 0.010, baseY + i * height * 0.008);
+      ctx.quadraticCurveTo(
+        baseX - width * 0.018 + wave * width * 0.005,
+        baseY - height * 0.012 + i * height * 0.006,
+        baseX + width * 0.030,
+        baseY + i * height * 0.009
+      );
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawFreeKingdomsScuffle(ctx, width, height, time) {
+    const cycle = (time + 480) % 2900;
+    const t = cycle / 2900;
+    const spike = Math.max(0, 1 - Math.abs(t - 0.52) / 0.032);
+    if (spike > 0) {
+      const x = width * 0.374;
+      const y = height * 0.742;
+      const r = 4 + spike * 10;
+      ctx.strokeStyle = `rgba(255, 222, 146, ${(spike * 0.92).toFixed(3)})`;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(x - r, y);
+      ctx.lineTo(x + r, y);
+      ctx.moveTo(x, y - r);
+      ctx.lineTo(x, y + r);
+      ctx.stroke();
+    }
+
+    const dustCycle = (time + 920) % 3600;
+    if (dustCycle < 620) {
+      const p = dustCycle / 620;
+      for (let i = 0; i < 4; i += 1) {
+        const px = width * (0.338 + i * 0.018 + p * 0.010);
+        const py = height * (0.815 - p * 0.028 - i * 0.002);
+        ctx.fillStyle = `rgba(140, 120, 90, ${(0.20 * (1 - p)).toFixed(3)})`;
+        ctx.beginPath();
+        ctx.arc(px, py, 2 + i * 0.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function drawFreeKingdomsFx(time) {
+    if (!freeKingdomsFxActive || !cinematicRunning || sceneIndex !== 3) return;
+
+    updateFreeKingdomsTransform();
+    const { width, height } = syncFreeKingdomsCanvas();
+    const ctx = freeKingdomsFx.context;
+    ctx.clearRect(0, 0, width, height);
+
+    const elapsed = time - freeKingdomsStartedAt;
+    const snowStrength = Math.max(0, 1 - (elapsed / 4300));
+
+    drawFreeKingdomsSmoke(ctx, width, height, time);
+    drawFreeKingdomsMarketGlow(ctx, width, height, time);
+    drawFreeKingdomsRiver(ctx, width, height, time);
+    drawFreeKingdomsScuffle(ctx, width, height, time);
+    drawFreeKingdomsSnow(ctx, width, height, time, snowStrength * 0.85);
+
+    freeKingdomsFxFrame = requestAnimationFrame(drawFreeKingdomsFx);
+  }
+
+  function startFreeKingdomsEffects() {
+    stopFreeKingdomsEffects();
+    freeKingdomsFxActive = true;
+    freeKingdomsStartedAt = performance.now();
+    freeKingdomsFx.root.style.opacity = '1';
+    drawFreeKingdomsFx(freeKingdomsStartedAt);
+  }
+
+  function stopFreeKingdomsEffects() {
+    freeKingdomsFxActive = false;
+    freeKingdomsFxFrame = cancelFrame(freeKingdomsFxFrame);
+    freeKingdomsFx.root.style.opacity = '0';
+    freeKingdomsFx.root.style.transform = 'none';
+    if (freeKingdomsFx.context) {
+      const rect = freeKingdomsFx.root.getBoundingClientRect();
+      freeKingdomsFx.context.clearRect(0, 0, rect.width, rect.height);
+    }
+  }
+
+  function startFreeKingdomsAmbience() {
+    freeKingdomsAmbienceFrame = cancelFrame(freeKingdomsAmbienceFrame);
+    freeKingdomsAmbience.currentTime = 0;
+    freeKingdomsAmbience.volume = 0.004;
+    const started = freeKingdomsAmbience.play();
+    if (started && typeof started.catch === 'function') {
+      started.catch(() => {});
+    }
+
+    const beganAt = performance.now();
+    const swell = (now) => {
+      const progress = Math.min(1, (now - beganAt) / 1200);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const target = 0.004 + (FREE_KINGDOMS_AMBIENCE_VOLUME - 0.004) * eased;
+      freeKingdomsAmbience.volume = Math.min(FREE_KINGDOMS_AMBIENCE_VOLUME, target);
+      if (progress < 1 && !freeKingdomsAmbience.paused) {
+        freeKingdomsAmbienceFrame = requestAnimationFrame(swell);
+      }
+    };
+
+    freeKingdomsAmbienceFrame = requestAnimationFrame(swell);
+  }
+
+  function fadeOutFreeKingdomsAmbience(duration = 1700) {
+    freeKingdomsAmbienceFrame = cancelFrame(freeKingdomsAmbienceFrame);
+    if (freeKingdomsAmbience.paused) return;
+
+    const from = freeKingdomsAmbience.volume;
+    const beganAt = performance.now();
+    const fade = (now) => {
+      const progress = Math.min(1, (now - beganAt) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      freeKingdomsAmbience.volume = Math.max(0, from * (1 - eased));
+
+      if (progress < 1 && !freeKingdomsAmbience.paused) {
+        freeKingdomsAmbienceFrame = requestAnimationFrame(fade);
+      } else {
+        freeKingdomsAmbience.pause();
+        freeKingdomsAmbience.currentTime = 0;
+        freeKingdomsAmbience.volume = 0;
+        freeKingdomsAmbienceFrame = 0;
+      }
+    };
+
+    freeKingdomsAmbienceFrame = requestAnimationFrame(fade);
+  }
+
+  function stopFreeKingdomsAmbience() {
+    freeKingdomsAmbienceFrame = cancelFrame(freeKingdomsAmbienceFrame);
+    freeKingdomsAmbience.pause();
+    freeKingdomsAmbience.currentTime = 0;
+    freeKingdomsAmbience.volume = 0;
   }
 
   const twinkleStars = createTwinkleStars(44);
@@ -1025,6 +1329,8 @@
     meteor.classList.remove('run');
     stopBarrensEffects();
     stopBruntideEffects();
+    stopFreeKingdomsEffects();
+    stopFreeKingdomsAmbience();
 
     if (scene.snowClass) snow.classList.add(scene.snowClass);
     if (scene.windClass) windLayer.classList.add(scene.windClass);
@@ -1092,6 +1398,16 @@
 
         if (scene.id === 'bruntide') {
           startBruntideEffects();
+        }
+
+        if (scene.id === 'free-kingdoms') {
+          startFreeKingdomsEffects();
+          startFreeKingdomsAmbience();
+          rememberTimer(window.setTimeout(() => {
+            if (cinematicRunning && sceneIndex === 3) {
+              fadeOutFreeKingdomsAmbience(1_750);
+            }
+          }, 9_650));
         }
 
         // Every regional cut may arrive through the same wind veil. Clear the
@@ -1173,9 +1489,11 @@
     stopCinematicMusic();
     stopSceneOneWind();
     stopBarrensAmbience();
+    stopFreeKingdomsAmbience();
     stopStarTwinkle();
     stopBarrensEffects();
     stopBruntideEffects();
+    stopFreeKingdomsEffects();
     cancelCameraTravel();
 
     sceneArt.className = 'cinematic-art';
@@ -1294,6 +1612,14 @@
       breathOpacity: bruntideFx.breath.style.opacity,
       torchLayers: bruntideFx.torchField.style.backgroundImage ? 'present' : 'none',
       prefersReducedMotion: REDUCED_MOTION.matches
+    }),
+    freeKingdomsFxVersion: '0.3.13',
+    freeKingdomsFxStatus: () => ({
+      active: freeKingdomsFxActive,
+      sceneIndex,
+      rootOpacity: freeKingdomsFx.root.style.opacity,
+      audioVolume: freeKingdomsAmbience.volume,
+      audioPaused: freeKingdomsAmbience.paused
     })
   });
 
