@@ -8,6 +8,7 @@
   const BARRENS_AMBIENCE_VOLUME = 0.12;
   const BRUNTIDE_AMBIENCE_VOLUME = 0.18;
   const FREE_KINGDOMS_AMBIENCE_VOLUME = 0.1875;
+  const STOUTHOME_AMBIENCE_VOLUME = 0.17;
   const TITLE_LOOP_FALLBACK_MS = 79_000;
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -36,6 +37,9 @@
   const freeKingdomsAmbience = new Audio('assets/cinematic/scene-04-free-kingdoms-ambience.wav');
   freeKingdomsAmbience.preload = 'auto';
   freeKingdomsAmbience.loop = false;
+  const stouthomeAmbience = new Audio('assets/cinematic/scene-05-stouthome-ambience.wav');
+  stouthomeAmbience.preload = 'auto';
+  stouthomeAmbience.loop = false;
 
   if (
     !stage ||
@@ -69,6 +73,7 @@
   if (barrensAmbience) barrensAmbience.volume = 0;
   bruntideAmbience.volume = 0;
   freeKingdomsAmbience.volume = 0;
+  stouthomeAmbience.volume = 0;
 
   /*
    * Prototype 0.2.6 production lock.
@@ -170,7 +175,7 @@
     {
       id: 'stouthome',
       duration: 12_000,
-      image: 'assets/cinematic/scene-05-stouthome.png',
+      image: 'assets/cinematic/scene-05-stouthome-final.png',
       cameraClass: 'camera-stouthome',
       snowClass: '',
       windClass: 'stouthome',
@@ -305,12 +310,16 @@
   let barrensAmbienceFrame = 0;
   let bruntideAmbienceFrame = 0;
   let freeKingdomsAmbienceFrame = 0;
+  let stouthomeAmbienceFrame = 0;
   let barrensGustFrame = 0;
   let bruntideFxFrame = 0;
   let bruntideFxActive = false;
   let freeKingdomsFxFrame = 0;
   let freeKingdomsFxActive = false;
   let freeKingdomsStartedAt = 0;
+  let stouthomeFxFrame = 0;
+  let stouthomeFxActive = false;
+  let stouthomeStartedAt = 0;
   let starActive = false;
   let barrensGustActive = false;
   let replayGateTimer = null;
@@ -769,6 +778,248 @@
     }
   }
 
+
+
+  const stouthomeFx = createStouthomeFxLayer();
+
+  function createStouthomeFxLayer() {
+    const root = document.createElement('div');
+    root.id = 'cinematic-stouthome-fx';
+    root.setAttribute('aria-hidden', 'true');
+    Object.assign(root.style, {
+      position: 'absolute',
+      inset: '0',
+      zIndex: '4',
+      pointerEvents: 'none',
+      opacity: '0',
+      overflow: 'visible',
+      willChange: 'transform, opacity',
+      transformOrigin: '50% 50%'
+    });
+
+    const canvas = document.createElement('canvas');
+    Object.assign(canvas.style, {
+      position: 'absolute',
+      inset: '0',
+      width: '100%',
+      height: '100%'
+    });
+
+    root.append(canvas);
+    cameraZoom.append(root);
+    const context = canvas.getContext('2d');
+    return { root, canvas, context };
+  }
+
+  function syncStouthomeCanvas() {
+    const rect = stouthomeFx.root.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const width = Math.max(1, Math.round(rect.width * dpr));
+    const height = Math.max(1, Math.round(rect.height * dpr));
+
+    if (stouthomeFx.canvas.width !== width || stouthomeFx.canvas.height !== height) {
+      stouthomeFx.canvas.width = width;
+      stouthomeFx.canvas.height = height;
+    }
+
+    stouthomeFx.context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { width: rect.width, height: rect.height };
+  }
+
+  function updateStouthomeTransform() {
+    const artStyle = window.getComputedStyle(sceneArt);
+    stouthomeFx.root.style.transform = artStyle.transform === 'none'
+      ? 'none'
+      : artStyle.transform;
+    stouthomeFx.root.style.transformOrigin = artStyle.transformOrigin || '50% 50%';
+  }
+
+  function drawStouthomeSmoke(ctx, width, height, time) {
+    const stacks = [
+      { x: 0.365, y: 0.373, phase: 0.00, spread: 1.10 },
+      { x: 0.455, y: 0.182, phase: 0.29, spread: 0.92 },
+      { x: 0.625, y: 0.545, phase: 0.51, spread: 1.18 }
+    ];
+
+    for (const stack of stacks) {
+      for (let i = 0; i < 5; i += 1) {
+        const cycle = ((time * 0.000060) + stack.phase + i * 0.18) % 1;
+        const rise = cycle;
+        const alpha = Math.max(0, 0.11 * (1 - rise));
+        const x = width * stack.x
+          + Math.sin((time * 0.0013) + i + stack.phase) * (width * 0.0048 * stack.spread)
+          + rise * width * 0.006;
+        const y = height * stack.y - rise * height * (0.060 + i * 0.003);
+        const rx = width * (0.008 + rise * 0.008) * stack.spread;
+        const ry = height * (0.010 + rise * 0.011) * stack.spread;
+
+        ctx.fillStyle = `rgba(218, 220, 226, ${alpha.toFixed(3)})`;
+        ctx.beginPath();
+        ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function drawStouthomeDoorScene(ctx, width, height, elapsed) {
+    const gateX = width * 0.425;
+    const gateTop = height * 0.565;
+    const gateWidth = width * 0.083;
+    const gateHeight = height * 0.190;
+
+    const openStart = 4300;
+    const openEnd = 8900;
+    const progress = Math.max(0, Math.min(1, (elapsed - openStart) / (openEnd - openStart)));
+    const eased = 1 - Math.pow(1 - progress, 3);
+
+    const opening = gateWidth * (0.040 + 0.350 * eased);
+    const leafWidth = gateWidth * 0.52;
+    const archLift = gateHeight * 0.11;
+
+    const interiorLeft = gateX - opening * 0.5;
+    const interiorTop = gateTop + gateHeight * 0.04;
+    const interiorHeight = gateHeight * 0.90;
+
+    // Interior void
+    const doorPath = new Path2D();
+    doorPath.moveTo(interiorLeft, interiorTop + interiorHeight);
+    doorPath.lineTo(interiorLeft, interiorTop + archLift);
+    doorPath.quadraticCurveTo(
+      gateX,
+      interiorTop - gateHeight * 0.14,
+      gateX + opening * 0.5,
+      interiorTop + archLift
+    );
+    doorPath.lineTo(gateX + opening * 0.5, interiorTop + interiorHeight);
+    doorPath.closePath();
+
+    ctx.save();
+    ctx.fillStyle = 'rgba(6, 7, 10, 0.96)';
+    ctx.fill(doorPath);
+
+    // Warm interior glow
+    const glowY = gateTop + gateHeight * 0.82;
+    const glowRadius = Math.max(opening * 1.35, gateHeight * 0.40);
+    const glow = ctx.createRadialGradient(gateX, glowY, 0, gateX, glowY, glowRadius);
+    const glowAlpha = 0.08 + eased * 0.46;
+    glow.addColorStop(0, `rgba(255, 207, 122, ${glowAlpha.toFixed(3)})`);
+    glow.addColorStop(0.42, `rgba(255, 161, 62, ${(glowAlpha * 0.58).toFixed(3)})`);
+    glow.addColorStop(1, 'rgba(255, 118, 24, 0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(
+      gateX - glowRadius,
+      gateTop + gateHeight * 0.25,
+      glowRadius * 2,
+      gateHeight * 1.10
+    );
+
+    // Interior haze / furnace breath
+    if (eased > 0.02) {
+      for (let i = 0; i < 6; i += 1) {
+        const p = ((elapsed * 0.00016) + i * 0.17) % 1;
+        const rise = p;
+        const alpha = Math.max(0, (0.10 + eased * 0.14) * (1 - rise));
+        const x = gateX
+          + (Math.sin(elapsed * 0.0012 + i) * opening * 0.10)
+          + (i - 2.5) * opening * 0.08;
+        const y = gateTop + gateHeight * 0.84 - rise * gateHeight * 0.52;
+        const rx = opening * (0.13 + rise * 0.16);
+        const ry = gateHeight * (0.05 + rise * 0.07);
+        ctx.fillStyle = `rgba(255, 191, 124, ${alpha.toFixed(3)})`;
+        ctx.beginPath();
+        ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Doors
+    const leftRightEdge = gateX - opening * 0.5;
+    const rightLeftEdge = gateX + opening * 0.5;
+    const leftDoorX = leftRightEdge - leafWidth;
+    const rightDoorX = rightLeftEdge;
+
+    const makeDoorGradient = (x0, x1) => {
+      const g = ctx.createLinearGradient(x0, gateTop, x1, gateTop + gateHeight);
+      g.addColorStop(0, 'rgba(43, 48, 59, 0.97)');
+      g.addColorStop(0.50, 'rgba(76, 64, 51, 0.95)');
+      g.addColorStop(1, 'rgba(26, 28, 34, 0.98)');
+      return g;
+    };
+
+    const drawLeaf = (x, mirror = 1) => {
+      ctx.fillStyle = makeDoorGradient(x, x + leafWidth);
+      ctx.fillRect(x, gateTop, leafWidth, gateHeight);
+
+      // panel lines
+      ctx.strokeStyle = 'rgba(135, 116, 90, 0.26)';
+      ctx.lineWidth = Math.max(1.2, width * 0.0012);
+      ctx.beginPath();
+      ctx.rect(x + leafWidth * 0.12, gateTop + gateHeight * 0.07, leafWidth * 0.76, gateHeight * 0.84);
+      ctx.moveTo(x + leafWidth * 0.50, gateTop + gateHeight * 0.08);
+      ctx.lineTo(x + leafWidth * 0.50, gateTop + gateHeight * 0.92);
+      ctx.moveTo(x + leafWidth * 0.12, gateTop + gateHeight * 0.30);
+      ctx.lineTo(x + leafWidth * 0.88, gateTop + gateHeight * 0.30);
+      ctx.moveTo(x + leafWidth * 0.12, gateTop + gateHeight * 0.61);
+      ctx.lineTo(x + leafWidth * 0.88, gateTop + gateHeight * 0.61);
+      ctx.stroke();
+
+      // central seam edge highlight
+      ctx.strokeStyle = mirror < 0
+        ? 'rgba(230, 188, 110, 0.12)'
+        : 'rgba(230, 188, 110, 0.07)';
+      ctx.lineWidth = Math.max(1.0, width * 0.0011);
+      ctx.beginPath();
+      ctx.moveTo(x + (mirror < 0 ? leafWidth - 1 : 1), gateTop + gateHeight * 0.02);
+      ctx.lineTo(x + (mirror < 0 ? leafWidth - 1 : 1), gateTop + gateHeight * 0.98);
+      ctx.stroke();
+    };
+
+    drawLeaf(leftDoorX, -1);
+    drawLeaf(rightDoorX, 1);
+
+    // opening shadow rims
+    ctx.strokeStyle = `rgba(255, 211, 140, ${(0.06 + eased * 0.18).toFixed(3)})`;
+    ctx.lineWidth = Math.max(1.3, width * 0.0015);
+    ctx.stroke(doorPath);
+
+    ctx.restore();
+  }
+
+  function drawStouthomeFx(time) {
+    if (!stouthomeFxActive || !cinematicRunning || sceneIndex !== 4) return;
+
+    updateStouthomeTransform();
+    const { width, height } = syncStouthomeCanvas();
+    const ctx = stouthomeFx.context;
+    ctx.clearRect(0, 0, width, height);
+
+    const elapsed = time - stouthomeStartedAt;
+
+    drawStouthomeSmoke(ctx, width, height, time);
+    drawStouthomeDoorScene(ctx, width, height, elapsed);
+
+    stouthomeFxFrame = requestAnimationFrame(drawStouthomeFx);
+  }
+
+  function startStouthomeEffects() {
+    stopStouthomeEffects();
+    stouthomeFxActive = true;
+    stouthomeStartedAt = performance.now();
+    stouthomeFx.root.style.opacity = '1';
+    drawStouthomeFx(stouthomeStartedAt);
+  }
+
+  function stopStouthomeEffects() {
+    stouthomeFxActive = false;
+    stouthomeFxFrame = cancelFrame(stouthomeFxFrame);
+    stouthomeFx.root.style.opacity = '0';
+    stouthomeFx.root.style.transform = 'none';
+    if (stouthomeFx.context) {
+      const rect = stouthomeFx.root.getBoundingClientRect();
+      stouthomeFx.context.clearRect(0, 0, rect.width, rect.height);
+    }
+  }
+
   function startBruntideAmbience() {
     bruntideAmbienceFrame = cancelFrame(bruntideAmbienceFrame);
     bruntideAmbience.currentTime = 0;
@@ -878,6 +1129,62 @@
     freeKingdomsAmbience.pause();
     freeKingdomsAmbience.currentTime = 0;
     freeKingdomsAmbience.volume = 0;
+  }
+
+
+  function startStouthomeAmbience() {
+    stouthomeAmbienceFrame = cancelFrame(stouthomeAmbienceFrame);
+    stouthomeAmbience.currentTime = 0;
+    stouthomeAmbience.volume = 0.004;
+
+    const started = stouthomeAmbience.play();
+    if (started && typeof started.catch === 'function') {
+      started.catch(() => {});
+    }
+
+    const beganAt = performance.now();
+    const swell = (now) => {
+      const progress = Math.min(1, (now - beganAt) / 1250);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const target = 0.004 + (STOUTHOME_AMBIENCE_VOLUME - 0.004) * eased;
+      stouthomeAmbience.volume = Math.min(STOUTHOME_AMBIENCE_VOLUME, target);
+      if (progress < 1 && !stouthomeAmbience.paused) {
+        stouthomeAmbienceFrame = requestAnimationFrame(swell);
+      }
+    };
+
+    stouthomeAmbienceFrame = requestAnimationFrame(swell);
+  }
+
+  function fadeOutStouthomeAmbience(duration = 1750) {
+    stouthomeAmbienceFrame = cancelFrame(stouthomeAmbienceFrame);
+    if (stouthomeAmbience.paused) return;
+
+    const from = stouthomeAmbience.volume;
+    const beganAt = performance.now();
+    const fade = (now) => {
+      const progress = Math.min(1, (now - beganAt) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      stouthomeAmbience.volume = Math.max(0, from * (1 - eased));
+
+      if (progress < 1 && !stouthomeAmbience.paused) {
+        stouthomeAmbienceFrame = requestAnimationFrame(fade);
+      } else {
+        stouthomeAmbience.pause();
+        stouthomeAmbience.currentTime = 0;
+        stouthomeAmbience.volume = 0;
+        stouthomeAmbienceFrame = 0;
+      }
+    };
+
+    stouthomeAmbienceFrame = requestAnimationFrame(fade);
+  }
+
+  function stopStouthomeAmbience() {
+    stouthomeAmbienceFrame = cancelFrame(stouthomeAmbienceFrame);
+    stouthomeAmbience.pause();
+    stouthomeAmbience.currentTime = 0;
+    stouthomeAmbience.volume = 0;
   }
 
   const twinkleStars = createTwinkleStars(44);
@@ -1395,6 +1702,8 @@
     stopBruntideAmbience();
     stopFreeKingdomsEffects();
     stopFreeKingdomsAmbience();
+    stopStouthomeEffects();
+    stopStouthomeAmbience();
 
     if (scene.snowClass) snow.classList.add(scene.snowClass);
     if (scene.windClass) windLayer.classList.add(scene.windClass);
@@ -1480,6 +1789,16 @@
           }, 9_650));
         }
 
+        if (scene.id === 'stouthome') {
+          startStouthomeEffects();
+          startStouthomeAmbience();
+          rememberTimer(window.setTimeout(() => {
+            if (cinematicRunning && sceneIndex === 4) {
+              fadeOutStouthomeAmbience(1_850);
+            }
+          }, 9_650));
+        }
+
         // Every regional cut may arrive through the same wind veil. Clear the
         // previous wipe shortly after the new scene appears so it can be
         // reused cleanly on the next transition.
@@ -1561,10 +1880,12 @@
     stopBarrensAmbience();
     stopBruntideAmbience();
     stopFreeKingdomsAmbience();
+    stopStouthomeAmbience();
     stopStarTwinkle();
     stopBarrensEffects();
     stopBruntideEffects();
     stopFreeKingdomsEffects();
+    stopStouthomeEffects();
     cancelCameraTravel();
 
     sceneArt.className = 'cinematic-art';
@@ -1693,6 +2014,14 @@
       rootOpacity: freeKingdomsFx.root.style.opacity,
       audioVolume: freeKingdomsAmbience.volume,
       audioPaused: freeKingdomsAmbience.paused
+    }),
+    stouthomeFxVersion: '0.3.24',
+    stouthomeFxStatus: () => ({
+      active: stouthomeFxActive,
+      sceneIndex,
+      rootOpacity: stouthomeFx.root.style.opacity,
+      audioVolume: stouthomeAmbience.volume,
+      audioPaused: stouthomeAmbience.paused
     })
   });
 
