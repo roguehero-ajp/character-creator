@@ -797,33 +797,35 @@
       transformOrigin: '50% 50%'
     });
 
-    const canvas = document.createElement('canvas');
-    Object.assign(canvas.style, {
-      position: 'absolute',
-      inset: '0',
-      width: '100%',
-      height: '100%'
-    });
+    const mid = document.createElement('img');
+    mid.alt = '';
+    mid.decoding = 'async';
+    mid.loading = 'eager';
+    mid.src = 'assets/cinematic/scene-05-stouthome-open-1.png';
 
-    root.append(canvas);
-    cameraZoom.append(root);
-    const context = canvas.getContext('2d');
-    return { root, canvas, context };
-  }
+    const open = document.createElement('img');
+    open.alt = '';
+    open.decoding = 'async';
+    open.loading = 'eager';
+    open.src = 'assets/cinematic/scene-05-stouthome-open-2.png';
 
-  function syncStouthomeCanvas() {
-    const rect = stouthomeFx.root.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const width = Math.max(1, Math.round(rect.width * dpr));
-    const height = Math.max(1, Math.round(rect.height * dpr));
-
-    if (stouthomeFx.canvas.width !== width || stouthomeFx.canvas.height !== height) {
-      stouthomeFx.canvas.width = width;
-      stouthomeFx.canvas.height = height;
+    for (const image of [mid, open]) {
+      Object.assign(image.style, {
+        position: 'absolute',
+        inset: '0',
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'center center',
+        opacity: '0',
+        transition: 'none',
+        willChange: 'opacity'
+      });
+      root.append(image);
     }
 
-    stouthomeFx.context.setTransform(dpr, 0, 0, dpr, 0, 0);
-    return { width: rect.width, height: rect.height };
+    cameraZoom.append(root);
+    return { root, mid, open };
   }
 
   function updateStouthomeTransform() {
@@ -834,169 +836,26 @@
     stouthomeFx.root.style.transformOrigin = artStyle.transformOrigin || '50% 50%';
   }
 
-  function drawStouthomeSmoke(ctx, width, height, time) {
-    const stacks = [
-      { x: 0.365, y: 0.373, phase: 0.00, spread: 1.10 },
-      { x: 0.455, y: 0.182, phase: 0.29, spread: 0.92 },
-      { x: 0.625, y: 0.545, phase: 0.51, spread: 1.18 }
-    ];
-
-    for (const stack of stacks) {
-      for (let i = 0; i < 5; i += 1) {
-        const cycle = ((time * 0.000060) + stack.phase + i * 0.18) % 1;
-        const rise = cycle;
-        const alpha = Math.max(0, 0.11 * (1 - rise));
-        const x = width * stack.x
-          + Math.sin((time * 0.0013) + i + stack.phase) * (width * 0.0048 * stack.spread)
-          + rise * width * 0.006;
-        const y = height * stack.y - rise * height * (0.060 + i * 0.003);
-        const rx = width * (0.008 + rise * 0.008) * stack.spread;
-        const ry = height * (0.010 + rise * 0.011) * stack.spread;
-
-        ctx.fillStyle = `rgba(218, 220, 226, ${alpha.toFixed(3)})`;
-        ctx.beginPath();
-        ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-  }
-
-  function drawStouthomeDoorScene(ctx, width, height, elapsed) {
-    const gateX = width * 0.425;
-    const gateTop = height * 0.565;
-    const gateWidth = width * 0.083;
-    const gateHeight = height * 0.190;
-
-    const openStart = 4300;
-    const openEnd = 8900;
-    const progress = Math.max(0, Math.min(1, (elapsed - openStart) / (openEnd - openStart)));
-    const eased = 1 - Math.pow(1 - progress, 3);
-
-    const opening = gateWidth * (0.040 + 0.350 * eased);
-    const leafWidth = gateWidth * 0.52;
-    const archLift = gateHeight * 0.11;
-
-    const interiorLeft = gateX - opening * 0.5;
-    const interiorTop = gateTop + gateHeight * 0.04;
-    const interiorHeight = gateHeight * 0.90;
-
-    // Interior void
-    const doorPath = new Path2D();
-    doorPath.moveTo(interiorLeft, interiorTop + interiorHeight);
-    doorPath.lineTo(interiorLeft, interiorTop + archLift);
-    doorPath.quadraticCurveTo(
-      gateX,
-      interiorTop - gateHeight * 0.14,
-      gateX + opening * 0.5,
-      interiorTop + archLift
-    );
-    doorPath.lineTo(gateX + opening * 0.5, interiorTop + interiorHeight);
-    doorPath.closePath();
-
-    ctx.save();
-    ctx.fillStyle = 'rgba(6, 7, 10, 0.96)';
-    ctx.fill(doorPath);
-
-    // Warm interior glow
-    const glowY = gateTop + gateHeight * 0.82;
-    const glowRadius = Math.max(opening * 1.35, gateHeight * 0.40);
-    const glow = ctx.createRadialGradient(gateX, glowY, 0, gateX, glowY, glowRadius);
-    const glowAlpha = 0.08 + eased * 0.46;
-    glow.addColorStop(0, `rgba(255, 207, 122, ${glowAlpha.toFixed(3)})`);
-    glow.addColorStop(0.42, `rgba(255, 161, 62, ${(glowAlpha * 0.58).toFixed(3)})`);
-    glow.addColorStop(1, 'rgba(255, 118, 24, 0)');
-    ctx.fillStyle = glow;
-    ctx.fillRect(
-      gateX - glowRadius,
-      gateTop + gateHeight * 0.25,
-      glowRadius * 2,
-      gateHeight * 1.10
-    );
-
-    // Interior haze / furnace breath
-    if (eased > 0.02) {
-      for (let i = 0; i < 6; i += 1) {
-        const p = ((elapsed * 0.00016) + i * 0.17) % 1;
-        const rise = p;
-        const alpha = Math.max(0, (0.10 + eased * 0.14) * (1 - rise));
-        const x = gateX
-          + (Math.sin(elapsed * 0.0012 + i) * opening * 0.10)
-          + (i - 2.5) * opening * 0.08;
-        const y = gateTop + gateHeight * 0.84 - rise * gateHeight * 0.52;
-        const rx = opening * (0.13 + rise * 0.16);
-        const ry = gateHeight * (0.05 + rise * 0.07);
-        ctx.fillStyle = `rgba(255, 191, 124, ${alpha.toFixed(3)})`;
-        ctx.beginPath();
-        ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    // Doors
-    const leftRightEdge = gateX - opening * 0.5;
-    const rightLeftEdge = gateX + opening * 0.5;
-    const leftDoorX = leftRightEdge - leafWidth;
-    const rightDoorX = rightLeftEdge;
-
-    const makeDoorGradient = (x0, x1) => {
-      const g = ctx.createLinearGradient(x0, gateTop, x1, gateTop + gateHeight);
-      g.addColorStop(0, 'rgba(43, 48, 59, 0.97)');
-      g.addColorStop(0.50, 'rgba(76, 64, 51, 0.95)');
-      g.addColorStop(1, 'rgba(26, 28, 34, 0.98)');
-      return g;
-    };
-
-    const drawLeaf = (x, mirror = 1) => {
-      ctx.fillStyle = makeDoorGradient(x, x + leafWidth);
-      ctx.fillRect(x, gateTop, leafWidth, gateHeight);
-
-      // panel lines
-      ctx.strokeStyle = 'rgba(135, 116, 90, 0.26)';
-      ctx.lineWidth = Math.max(1.2, width * 0.0012);
-      ctx.beginPath();
-      ctx.rect(x + leafWidth * 0.12, gateTop + gateHeight * 0.07, leafWidth * 0.76, gateHeight * 0.84);
-      ctx.moveTo(x + leafWidth * 0.50, gateTop + gateHeight * 0.08);
-      ctx.lineTo(x + leafWidth * 0.50, gateTop + gateHeight * 0.92);
-      ctx.moveTo(x + leafWidth * 0.12, gateTop + gateHeight * 0.30);
-      ctx.lineTo(x + leafWidth * 0.88, gateTop + gateHeight * 0.30);
-      ctx.moveTo(x + leafWidth * 0.12, gateTop + gateHeight * 0.61);
-      ctx.lineTo(x + leafWidth * 0.88, gateTop + gateHeight * 0.61);
-      ctx.stroke();
-
-      // central seam edge highlight
-      ctx.strokeStyle = mirror < 0
-        ? 'rgba(230, 188, 110, 0.12)'
-        : 'rgba(230, 188, 110, 0.07)';
-      ctx.lineWidth = Math.max(1.0, width * 0.0011);
-      ctx.beginPath();
-      ctx.moveTo(x + (mirror < 0 ? leafWidth - 1 : 1), gateTop + gateHeight * 0.02);
-      ctx.lineTo(x + (mirror < 0 ? leafWidth - 1 : 1), gateTop + gateHeight * 0.98);
-      ctx.stroke();
-    };
-
-    drawLeaf(leftDoorX, -1);
-    drawLeaf(rightDoorX, 1);
-
-    // opening shadow rims
-    ctx.strokeStyle = `rgba(255, 211, 140, ${(0.06 + eased * 0.18).toFixed(3)})`;
-    ctx.lineWidth = Math.max(1.3, width * 0.0015);
-    ctx.stroke(doorPath);
-
-    ctx.restore();
-  }
-
   function drawStouthomeFx(time) {
     if (!stouthomeFxActive || !cinematicRunning || sceneIndex !== 4) return;
 
     updateStouthomeTransform();
-    const { width, height } = syncStouthomeCanvas();
-    const ctx = stouthomeFx.context;
-    ctx.clearRect(0, 0, width, height);
-
     const elapsed = time - stouthomeStartedAt;
 
-    drawStouthomeSmoke(ctx, width, height, time);
-    drawStouthomeDoorScene(ctx, width, height, elapsed);
+    const fade01Start = 3550;
+    const fade01End = 6200;
+    const fade12Start = 6500;
+    const fade12End = 9300;
+
+    const toUnit = (value, start, end) => {
+      if (value <= start) return 0;
+      if (value >= end) return 1;
+      const progress = (value - start) / (end - start);
+      return 1 - Math.pow(1 - progress, 3);
+    };
+
+    stouthomeFx.mid.style.opacity = toUnit(elapsed, fade01Start, fade01End).toFixed(3);
+    stouthomeFx.open.style.opacity = toUnit(elapsed, fade12Start, fade12End).toFixed(3);
 
     stouthomeFxFrame = requestAnimationFrame(drawStouthomeFx);
   }
@@ -1006,6 +865,8 @@
     stouthomeFxActive = true;
     stouthomeStartedAt = performance.now();
     stouthomeFx.root.style.opacity = '1';
+    stouthomeFx.mid.style.opacity = '0';
+    stouthomeFx.open.style.opacity = '0';
     drawStouthomeFx(stouthomeStartedAt);
   }
 
@@ -1014,10 +875,8 @@
     stouthomeFxFrame = cancelFrame(stouthomeFxFrame);
     stouthomeFx.root.style.opacity = '0';
     stouthomeFx.root.style.transform = 'none';
-    if (stouthomeFx.context) {
-      const rect = stouthomeFx.root.getBoundingClientRect();
-      stouthomeFx.context.clearRect(0, 0, rect.width, rect.height);
-    }
+    stouthomeFx.mid.style.opacity = '0';
+    stouthomeFx.open.style.opacity = '0';
   }
 
   function startBruntideAmbience() {
@@ -2020,6 +1879,8 @@
       active: stouthomeFxActive,
       sceneIndex,
       rootOpacity: stouthomeFx.root.style.opacity,
+      midOpacity: stouthomeFx.mid.style.opacity,
+      openOpacity: stouthomeFx.open.style.opacity,
       audioVolume: stouthomeAmbience.volume,
       audioPaused: stouthomeAmbience.paused
     })
