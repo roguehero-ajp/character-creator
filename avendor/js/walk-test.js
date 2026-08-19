@@ -3,14 +3,20 @@
 
   const stage = document.getElementById('walk-stage');
   const player = document.getElementById('player');
+  const playerCanvas = document.getElementById('player-canvas');
   const mark = document.getElementById('confusion-mark');
   const help = document.getElementById('walk-help');
+  const audio = document.getElementById('avendor-music');
+  const status = document.getElementById('rig-status');
+  const bodyButtons = [...document.querySelectorAll('[data-hero-body]')];
 
   const keys = new Set();
   let x = 0.42;
   let y = 0.70;
   let last = performance.now();
   let wrapping = false;
+  let musicStarted = false;
+  let lastDirection = 'south';
 
   const WALK_SPEED_X = 0.19;
   const WALK_SPEED_Y = 0.17;
@@ -20,7 +26,31 @@
   const MAX_Y = 0.735;
   const NORTH_MIN_X = 0.43;
   const NORTH_MAX_X = 0.63;
+  const FAR_SCALE = 0.52;
+  const NEAR_SCALE = 1.00;
 
+  const Sprite = window.AvendorSpriteEngine?.LayeredSprite;
+  if (!Sprite) {
+    throw new Error('Avendor sprite engine was not loaded before walk-test.js.');
+  }
+
+  const hero = new Sprite(playerCanvas, {
+    body: sessionStorage.getItem('avendorHeroBody') || 'male'
+  });
+
+  audio.volume = 0.42;
+
+  function startMusic() {
+    if (musicStarted) return;
+    musicStarted = true;
+    sessionStorage.setItem('avendorMusicWanted', '1');
+    const p = audio.play();
+    if (p?.catch) p.catch(() => { musicStarted = false; });
+  }
+
+  if (sessionStorage.getItem('avendorMusicWanted') === '1') {
+    startMusic();
+  }
 
   const controls = new Set(['w','a','s','d','arrowup','arrowleft','arrowdown','arrowright']);
 
@@ -29,21 +59,56 @@
     if (!controls.has(key)) return;
     event.preventDefault();
     keys.add(key);
+    startMusic();
   });
 
   window.addEventListener('keyup', (event) => {
     keys.delete(event.key.toLowerCase());
   });
 
+  window.addEventListener('blur', () => keys.clear());
+
   stage.addEventListener('pointerdown', () => {
     stage.focus({ preventScroll: true });
+    startMusic();
   });
 
+  function perspectiveScale() {
+    const t = Math.max(0, Math.min(1, (y - MIN_Y) / (MAX_Y - MIN_Y)));
+    return FAR_SCALE + (NEAR_SCALE - FAR_SCALE) * t;
+  }
+
   function setPosition() {
+    const scale = perspectiveScale();
     player.style.left = `${x * 100}%`;
     player.style.top = `${y * 100}%`;
+    player.style.setProperty('--perspective-scale', scale.toFixed(4));
+    player.style.zIndex = String(30 + Math.round(y * 100));
+
     mark.style.left = `${x * 100}%`;
-    mark.style.top = `${Math.max(.08, y - .17) * 100}%`;
+    mark.style.top = `${Math.max(.08, y - (.17 * scale)) * 100}%`;
+  }
+
+  function directionFromVector(dx, dy) {
+    if (dy < 0) {
+      if (dx < 0) return 'northwest';
+      if (dx > 0) return 'northeast';
+      return 'north';
+    }
+    if (dy > 0) {
+      if (dx < 0) return 'southwest';
+      if (dx > 0) return 'southeast';
+      return 'south';
+    }
+    if (dx < 0) return 'west';
+    if (dx > 0) return 'east';
+    return lastDirection;
+  }
+
+  function updateRigStatus() {
+    if (!status) return;
+    const s = hero.getStatus();
+    status.textContent = `HERO RIG 0.4.0 · ${s.body.toUpperCase()} · ${s.direction.toUpperCase()} · ${s.state.toUpperCase()} ${s.state === 'walk' ? s.frame + 1 : ''}`;
   }
 
   function confused() {
@@ -66,9 +131,34 @@
     wrapping = true;
     x = 0.42;
     y = 0.705;
+    lastDirection = 'south';
+    hero.setMotion('idle', lastDirection);
+    hero.draw();
     setPosition();
     confused();
   }
+
+  async function selectBody(body) {
+    bodyButtons.forEach((button) => {
+      const selected = button.dataset.heroBody === body;
+      button.classList.toggle('selected', selected);
+      button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+    });
+    try {
+      await hero.setBody(body);
+      updateRigStatus();
+    } catch (error) {
+      console.error(error);
+      if (status) status.textContent = 'HERO RIG ASSET LOAD ERROR';
+    }
+  }
+
+  bodyButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.stopPropagation();
+      selectBody(button.dataset.heroBody);
+    });
+  });
 
   function tick(now) {
     const dt = Math.min(.045, (now - last) / 1000);
@@ -82,16 +172,16 @@
     if (keys.has('s') || keys.has('arrowdown')) dy += 1;
 
     const moving = dx !== 0 || dy !== 0;
-    player.classList.toggle('walking', moving && !wrapping);
 
     if (moving && !wrapping) {
+      lastDirection = directionFromVector(dx, dy);
+      hero.setMotion('walk', lastDirection);
+
       const mag = Math.hypot(dx, dy) || 1;
       dx /= mag;
       dy /= mag;
       x += dx * WALK_SPEED_X * dt;
       y += dy * WALK_SPEED_Y * dt;
-      if (dx < 0) player.style.setProperty('--facing', '-1');
-      if (dx > 0) player.style.setProperty('--facing', '1');
 
       x = Math.max(MIN_X, Math.min(MAX_X, x));
       y = Math.min(MAX_Y, y);
@@ -104,12 +194,29 @@
         }
       }
       setPosition();
+    } else if (!wrapping) {
+      hero.setMotion('idle', lastDirection);
     }
 
+    hero.update(now);
+    updateRigStatus();
     requestAnimationFrame(tick);
   }
 
+  const initialBody = BODY_SAFE(sessionStorage.getItem('avendorHeroBody'));
+  function BODY_SAFE(value) { return value === 'female' ? 'female' : 'male'; }
+
+  selectBody(initialBody).finally(() => {
+    hero.setMotion('idle', lastDirection);
+    hero.draw();
+  });
   setPosition();
   requestAnimationFrame(tick);
   stage.focus({ preventScroll: true });
+
+  window.AvendorWalkTest = Object.freeze({
+    hero,
+    getPosition: () => ({ x, y, scale: perspectiveScale() }),
+    setBody: selectBody
+  });
 })();
