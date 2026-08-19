@@ -3,20 +3,32 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Briarwell Walking Test | Avendor</title>
+  <title>Briarwell Hero Rig Test | Avendor</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/avendor.css">
+  <link rel="stylesheet" href="css/hero-rig.css">
 </head>
 <body>
-  <main class="avendor-stage walk-stage" id="walk-stage" style="--stage-ratio: 1449 / 1085" tabindex="0" aria-label="Briarwell walking test. Use W A S D or arrow keys to move.">
+  <main class="avendor-stage walk-stage" id="walk-stage" style="--stage-ratio: 1449 / 1085" tabindex="0" aria-label="Briarwell hero animation test. Use W A S D or arrow keys to move.">
     <img class="stage-art" src="assets/briarwell-square-bg.png" alt="Snowy Lodestone Square in Briarwell">
 
-    <img class="player" id="player" src="assets/hero.png" alt="" aria-hidden="true">
+    <div class="player" id="player" aria-hidden="true">
+      <canvas class="player-canvas" id="player-canvas" width="128" height="240"></canvas>
+    </div>
+
     <div class="confusion-mark" id="confusion-mark" aria-hidden="true">?</div>
-    <div class="walk-help" id="walk-help">WASD or arrow keys to walk. Try heading north up the path.</div>
-    <div class="dev-badge">EARLY MOVEMENT TEST</div>
+
+    <div class="hero-rig-controls" aria-label="Temporary hero body test controls">
+      <span>BODY</span>
+      <button type="button" data-hero-body="male" aria-pressed="true">Male</button>
+      <button type="button" data-hero-body="female" aria-pressed="false">Female</button>
+    </div>
+
+    <div class="walk-help" id="walk-help">WASD or arrow keys to walk. Try all eight directions, then head north up the path.</div>
+    <div class="dev-badge" id="rig-status">HERO RIG 0.4.0 · LOADING</div>
   </main>
   <audio id="avendor-music" src="assets/avendor-theme.mp3" preload="auto" loop></audio>
+  <script src="js/sprite-engine.js"></script>
   <script src="js/walk-test.js"></script>
 </body>
 </html>
