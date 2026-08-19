@@ -1,0 +1,123 @@
+/*
+ * Avendor Hero Rig 0.4.0
+ * Walk-test-only character rendering overrides.
+ * Loaded AFTER avendor.css so the cinematic/title stylesheet remains untouched.
+ */
+
+.walk-stage { touch-action: none; }
+
+.player {
+  --perspective-scale: 1;
+  position: absolute;
+  width: 8.83%;
+  aspect-ratio: 128 / 240;
+  left: 42%;
+  top: 70%;
+  transform-origin: 50% 100%;
+  transform: translate(-50%, -100%) scale(var(--perspective-scale));
+  filter: none;
+  image-rendering: pixelated;
+  user-select: none;
+  pointer-events: none;
+}
+
+.player::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 1.5%;
+  width: 47%;
+  height: 4.8%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(8,10,12,.48) 0%,
+    rgba(8,10,12,.25) 48%,
+    rgba(8,10,12,0) 76%
+  );
+  z-index: 0;
+}
+
+.player-canvas {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  z-index: 1;
+}
+
+/* Disable the old two-step bob. The atlas owns the gait now. */
+.player.walking { animation: none; }
+
+.player.confused {
+  animation: hero-rig-confused 1.5s ease-in-out;
+}
+
+.confusion-mark {
+  z-index: 140;
+}
+
+.walk-help {
+  width: 52%;
+  z-index: 160;
+}
+
+.dev-badge {
+  z-index: 160;
+  background: rgba(7,10,13,.76);
+  letter-spacing: .04em;
+}
+
+.hero-rig-controls {
+  position: absolute;
+  left: 2.2%;
+  top: 5.8%;
+  z-index: 170;
+  display: flex;
+  align-items: center;
+  gap: .35em;
+  padding: .38em .46em;
+  border: 1px solid rgba(211,173,99,.42);
+  border-radius: 3px;
+  background: rgba(6,9,12,.78);
+  font: 700 clamp(7px, .72vw, 12px)/1 ui-monospace, Consolas, monospace;
+  color: #c9b27e;
+}
+
+.hero-rig-controls button {
+  padding: .38em .58em;
+  border: 1px solid rgba(211,173,99,.4);
+  border-radius: 2px;
+  background: rgba(36,41,46,.88);
+  color: #d8c69d;
+  font: inherit;
+  cursor: pointer;
+}
+
+.hero-rig-controls button:hover,
+.hero-rig-controls button:focus-visible {
+  border-color: #d9b66f;
+  color: #fff0bf;
+  outline: none;
+}
+
+.hero-rig-controls button.selected {
+  border-color: #e0ba70;
+  color: #fff0bf;
+  background: rgba(104,76,37,.88);
+  box-shadow: inset 0 0 8px rgba(224,186,112,.14);
+}
+
+@keyframes hero-rig-confused {
+  0%,100% { rotate: 0deg; }
+  18% { rotate: -3deg; }
+  36% { rotate: 3deg; }
+  54% { rotate: -2deg; }
+  72% { rotate: 2deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player.confused { animation: none; }
+}
