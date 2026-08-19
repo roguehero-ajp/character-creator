@@ -8,7 +8,6 @@
   const help = document.getElementById('walk-help');
   const audio = document.getElementById('avendor-music');
   const status = document.getElementById('rig-status');
-  const bodyButtons = [...document.querySelectorAll('[data-hero-body]')];
 
   const keys = new Set();
   let x = 0.42;
@@ -34,9 +33,7 @@
     throw new Error('Avendor sprite engine was not loaded before walk-test.js.');
   }
 
-  const hero = new Sprite(playerCanvas, {
-    body: sessionStorage.getItem('avendorHeroBody') || 'male'
-  });
+  const hero = new Sprite(playerCanvas, { body: 'male' });
 
   audio.volume = 0.42;
 
@@ -108,7 +105,7 @@
   function updateRigStatus() {
     if (!status) return;
     const s = hero.getStatus();
-    status.textContent = `HERO RIG 0.4.0 · ${s.body.toUpperCase()} · ${s.direction.toUpperCase()} · ${s.state.toUpperCase()} ${s.state === 'walk' ? s.frame + 1 : ''}`;
+    status.textContent = `HERO VISUAL 0.4.1 · DEFAULT ${s.body.toUpperCase()} · ${s.direction.toUpperCase()} · ${s.state.toUpperCase()} ${s.state === 'walk' ? s.frame + 1 : ''}`;
   }
 
   function confused() {
@@ -119,7 +116,7 @@
     mark.classList.add('show');
     help.textContent = 'That was... odd.';
     window.setTimeout(() => {
-      help.textContent = 'WASD or arrow keys to walk. Try heading north again.';
+      help.textContent = 'WASD or arrow keys to walk. Try heading north again and watch the perspective scale.';
       player.classList.remove('confused');
       mark.classList.remove('show');
       wrapping = false;
@@ -138,27 +135,17 @@
     confused();
   }
 
-  async function selectBody(body) {
-    bodyButtons.forEach((button) => {
-      const selected = button.dataset.heroBody === body;
-      button.classList.toggle('selected', selected);
-      button.setAttribute('aria-pressed', selected ? 'true' : 'false');
-    });
+
+  async function applyDefaultBody() {
     try {
-      await hero.setBody(body);
+      sessionStorage.setItem('avendorHeroBody', 'male');
+      await hero.setBody('male');
       updateRigStatus();
     } catch (error) {
       console.error(error);
-      if (status) status.textContent = 'HERO RIG ASSET LOAD ERROR';
+      if (status) status.textContent = 'HERO VISUAL ASSET LOAD ERROR';
     }
   }
-
-  bodyButtons.forEach((button) => {
-    button.addEventListener('click', (event) => {
-      event.stopPropagation();
-      selectBody(button.dataset.heroBody);
-    });
-  });
 
   function tick(now) {
     const dt = Math.min(.045, (now - last) / 1000);
@@ -203,10 +190,7 @@
     requestAnimationFrame(tick);
   }
 
-  const initialBody = BODY_SAFE(sessionStorage.getItem('avendorHeroBody'));
-  function BODY_SAFE(value) { return value === 'female' ? 'female' : 'male'; }
-
-  selectBody(initialBody).finally(() => {
+  applyDefaultBody().finally(() => {
     hero.setMotion('idle', lastDirection);
     hero.draw();
   });
@@ -217,6 +201,6 @@
   window.AvendorWalkTest = Object.freeze({
     hero,
     getPosition: () => ({ x, y, scale: perspectiveScale() }),
-    setBody: selectBody
+    setBody: (body = 'male') => hero.setBody(body === 'female' ? 'female' : 'male')
   });
 })();
