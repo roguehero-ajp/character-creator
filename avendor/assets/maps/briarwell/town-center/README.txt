@@ -20,7 +20,20 @@ LOCKED ELEMENTS
 RUNTIME BASE ART
 ----------------
 background/briarwell-town-center.png
+Reference size: 1448 x 1086 pixels.
 
-FUTURE GAMEPLAY DATA
---------------------
-Collision polygons, exit triggers, portal coordinates, depth regions, and NPC anchors should be stored separately from this art folder.
+GAMEPLAY DATA
+-------------
+../../../../data/maps/briarwell-town-center.json
+
+The map data is separate from the painted art and currently defines:
+- Three connected walkable regions.
+- Eight foot-level collision regions fitted to visible object bases.
+- Five outdoor exit triggers.
+- Lodestone Tavern and General Store portals.
+- Perspective scale stops and independent canopy, fence, and prop depth occluders.
+- Five inspectable features and ten unassigned NPC anchors.
+
+The destination scenes and building interiors are still stubs. The walk test
+registers each transition and returns the hero to a safe spawn until that
+destination map exists.
