@@ -199,18 +199,56 @@
   }
 
   function buildOccluders() {
-    const { polygonToCss } = window.AvendorMapEngine;
     const occluders = map.data.depthOccluders || [];
+    const groups = new Map();
+    const svgNamespace = 'http://www.w3.org/2000/svg';
 
     occluders.forEach((definition) => {
-      const layer = document.createElement('div');
-      layer.className = 'scene-occluder';
-      layer.dataset.occluderId = definition.id;
-      layer.style.backgroundImage = `url("${map.data.art.background}")`;
-      layer.style.clipPath = polygonToCss(definition.points, map.width, map.height);
-      layer.style.zIndex = String(map.getDepth(definition.depthY));
-      stage.insertBefore(layer, debugCanvas);
+      const group = groups.get(definition.depthY) || [];
+      group.push(definition);
+      groups.set(definition.depthY, group);
     });
+
+    [...groups.entries()]
+      .sort(([leftDepth], [rightDepth]) => leftDepth - rightDepth)
+      .forEach(([depthY, definitions], index) => {
+        const layer = document.createElementNS(svgNamespace, 'svg');
+        const clipId = `town-center-occlusion-${index}`;
+        layer.classList.add('scene-occluder');
+        layer.dataset.occluderDepth = String(depthY);
+        layer.dataset.occluderIds = definitions.map((definition) => definition.id).join(',');
+        layer.setAttribute('viewBox', `0 0 ${map.width} ${map.height}`);
+        layer.setAttribute('preserveAspectRatio', 'none');
+        layer.setAttribute('aria-hidden', 'true');
+        layer.style.zIndex = String(map.getDepth(depthY));
+
+        const defs = document.createElementNS(svgNamespace, 'defs');
+        const clipPath = document.createElementNS(svgNamespace, 'clipPath');
+        clipPath.id = clipId;
+        clipPath.setAttribute('clipPathUnits', 'userSpaceOnUse');
+        definitions.forEach((definition) => {
+          const polygon = document.createElementNS(svgNamespace, 'polygon');
+          polygon.dataset.occluderId = definition.id;
+          polygon.setAttribute(
+            'points',
+            definition.points.map((point) => point.join(',')).join(' ')
+          );
+          clipPath.appendChild(polygon);
+        });
+        defs.appendChild(clipPath);
+        layer.appendChild(defs);
+
+        const image = document.createElementNS(svgNamespace, 'image');
+        image.setAttribute('href', map.data.art.background);
+        image.setAttribute('x', '0');
+        image.setAttribute('y', '0');
+        image.setAttribute('width', String(map.width));
+        image.setAttribute('height', String(map.height));
+        image.setAttribute('preserveAspectRatio', 'none');
+        image.setAttribute('clip-path', `url(#${clipId})`);
+        layer.appendChild(image);
+        stage.insertBefore(layer, debugCanvas);
+      });
   }
 
   async function buildNpcs() {
