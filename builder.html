@@ -79,6 +79,7 @@ Started: July 2026
   <script defer src="js/combat-equipment.js"></script>
   <script defer src="js/storage.js"></script>
   <script defer src="js/accessibility.js"></script>
+  <script defer src="js/responsive-builder.js"></script>
   <script defer src="js/printing.js"></script>
   <script defer src="js/pdf.js"></script>
   <script defer src="js/app.js"></script>
@@ -91,8 +92,17 @@ Started: July 2026
     <!-- =====================================================
          CONTROL PANEL
          ===================================================== -->
-    <aside class="controls" aria-label="Character builder controls">
-      <h3>Controls</h3>
+    <aside class="controls" id="builder-controls" aria-label="Character builder controls">
+      <h3 class="controls-heading">Controls</h3>
+      <button
+        type="button"
+        class="responsive-controls-toggle"
+        id="responsive-controls-toggle"
+        aria-controls="builder-controls"
+        aria-expanded="true"
+      >
+        Hide Tools &amp; Save
+      </button>
 
       <div>
         <label for="theme-select">Theme</label>
