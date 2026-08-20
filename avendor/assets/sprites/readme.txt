@@ -49,7 +49,12 @@ stack them without per-item animation code.
 
 CURRENT ART
 -----------
-The male and female base bodies in this package are CONSTRUCTION RIGS, not final
-character art. Joint markers and simple under-clothes are intentional. They exist
-to validate silhouette, scale, direction, frame timing and gait before final skins
-and equipment are painted.
+Hero Visual Pass 0.4.3 supplies complete production-scale male and female base
+bodies for every idle direction and every six-frame walk cell. Each frame keeps
+the 128 x 240 master canvas, a bottom-centre anchor and 16 pixels of transparent
+space below the feet. The male silhouette is selectively lengthened through the
+torso and legs while its head size, frame and gameplay footprint remain unchanged.
+
+The sprite engine validates atlas dimensions and full-body frame coverage during
+loading. The automated hero-sprite integrity test also rejects empty, clipped,
+undersized or off-anchor frames before release.

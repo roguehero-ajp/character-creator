@@ -84,6 +84,7 @@
     const frame = spriteStatus.state === 'walk' ? ` ${spriteStatus.frame + 1}` : '';
     const nextText = [
       'TOWN CENTER MAP 0.5.1',
+      `HERO ART ${spriteStatus.artVersion}`,
       spriteStatus.body.toUpperCase(),
       spriteStatus.direction.toUpperCase(),
       `${spriteStatus.state.toUpperCase()}${frame}`,

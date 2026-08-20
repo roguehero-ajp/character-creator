@@ -3,8 +3,11 @@
 
   const FRAME_W = 128;
   const FRAME_H = 240;
+  const DIRECTION_ROWS = 5;
   const WALK_FRAMES = 6;
   const WALK_FRAME_MS = 96;
+  const RIG_VERSION = '0.4.0';
+  const ART_VERSION = '0.4.3';
 
   const ROW = Object.freeze({
     south: 0,
@@ -25,14 +28,16 @@
       {
         id: 'body',
         idle: 'assets/sprites/hero/body/male/idle.png',
-        walk: 'assets/sprites/hero/body/male/walk.png'
+        walk: 'assets/sprites/hero/body/male/walk.png',
+        coverage: 'full-body'
       }
     ],
     female: [
       {
         id: 'body',
         idle: 'assets/sprites/hero/body/female/idle.png',
-        walk: 'assets/sprites/hero/body/female/walk.png'
+        walk: 'assets/sprites/hero/body/female/walk.png',
+        coverage: 'full-body'
       }
     ]
   });
@@ -45,6 +50,73 @@
       img.onerror = () => reject(new Error(`Could not load sprite atlas: ${src}`));
       img.src = src;
     });
+  }
+
+  function validateAtlasShape(image, src, columns) {
+    const expectedWidth = FRAME_W * columns;
+    const expectedHeight = FRAME_H * DIRECTION_ROWS;
+    if (image.naturalWidth !== expectedWidth || image.naturalHeight !== expectedHeight) {
+      throw new Error(
+        `Sprite atlas has the wrong dimensions: ${src} `
+        + `(expected ${expectedWidth}x${expectedHeight}, got ${image.naturalWidth}x${image.naturalHeight})`
+      );
+    }
+  }
+
+  function validateFullBodyFrames(image, src, columns) {
+    const canvas = document.createElement('canvas');
+    canvas.width = FRAME_W;
+    canvas.height = FRAME_H;
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    ctx.imageSmoothingEnabled = false;
+
+    for (let row = 0; row < DIRECTION_ROWS; row += 1) {
+      for (let column = 0; column < columns; column += 1) {
+        ctx.clearRect(0, 0, FRAME_W, FRAME_H);
+        ctx.drawImage(
+          image,
+          column * FRAME_W, row * FRAME_H, FRAME_W, FRAME_H,
+          0, 0, FRAME_W, FRAME_H
+        );
+
+        const pixels = ctx.getImageData(0, 0, FRAME_W, FRAME_H).data;
+        let minY = FRAME_H;
+        let maxY = -1;
+        let visiblePixels = 0;
+
+        for (let index = 3; index < pixels.length; index += 4) {
+          if (pixels[index] < 16) continue;
+          const y = Math.floor((index >> 2) / FRAME_W);
+          minY = Math.min(minY, y);
+          maxY = Math.max(maxY, y);
+          visiblePixels += 1;
+        }
+
+        const visibleHeight = maxY >= minY ? maxY - minY + 1 : 0;
+        if (visiblePixels < 1200 || visibleHeight < 150 || maxY < 208) {
+          throw new Error(
+            `Sprite frame is incomplete: ${src} row ${row}, column ${column} `
+            + `(${visiblePixels} visible pixels, ${visibleHeight}px high, bottom ${maxY})`
+          );
+        }
+      }
+    }
+  }
+
+  async function loadLayer(def) {
+    const [idleImage, walkImage] = await Promise.all([
+      loadImage(def.idle),
+      loadImage(def.walk)
+    ]);
+
+    validateAtlasShape(idleImage, def.idle, 1);
+    validateAtlasShape(walkImage, def.walk, WALK_FRAMES);
+    if (def.coverage === 'full-body') {
+      validateFullBodyFrames(idleImage, def.idle, 1);
+      validateFullBodyFrames(walkImage, def.walk, WALK_FRAMES);
+    }
+
+    return { ...def, idleImage, walkImage };
   }
 
   class LayeredSprite {
@@ -77,11 +149,7 @@
       const token = ++this.loadToken;
       this.ready = false;
 
-      const loaded = await Promise.all(layerDefs.map(async (def) => ({
-        ...def,
-        idleImage: await loadImage(def.idle),
-        walkImage: await loadImage(def.walk)
-      })));
+      const loaded = await Promise.all(layerDefs.map(loadLayer));
 
       if (token !== this.loadToken) return;
       this.layers = loaded;
@@ -92,12 +160,15 @@
     }
 
     setMotion(state, direction) {
-      if (state !== this.state) {
+      const stateChanged = state !== this.state;
+      const directionChanged = Boolean(direction && direction !== this.direction);
+      if (stateChanged) {
         this.state = state;
         this.frame = 0;
         this.lastFrameAt = performance.now();
       }
       if (direction) this.direction = direction;
+      if (this.ready && (stateChanged || directionChanged)) this.draw();
     }
 
     update(now) {
@@ -152,7 +223,9 @@
         direction: this.direction,
         state: this.state,
         frame: this.frame,
-        ready: this.ready
+        ready: this.ready,
+        rigVersion: RIG_VERSION,
+        artVersion: ART_VERSION
       };
     }
   }
@@ -160,8 +233,11 @@
   window.AvendorSpriteEngine = Object.freeze({
     FRAME_W,
     FRAME_H,
+    DIRECTION_ROWS,
     WALK_FRAMES,
     WALK_FRAME_MS,
+    RIG_VERSION,
+    ART_VERSION,
     LayeredSprite,
     presets: BODY_LAYERS
   });

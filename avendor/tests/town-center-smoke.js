@@ -141,6 +141,7 @@ async function assertBrowser() {
     exits: window.AvendorWalkTest.getMap().data.exits.length,
     portals: window.AvendorWalkTest.getMap().data.portals.length,
     anchors: window.AvendorWalkTest.getMap().data.npcAnchors.length,
+    hero: window.AvendorWalkTest.hero.getStatus(),
     start: window.AvendorWalkTest.getPosition()
   }));
 
@@ -148,6 +149,71 @@ async function assertBrowser() {
   assert(snapshot.occluders === snapshot.expectedOccluders, 'Depth occluders were not mounted.');
   assert(snapshot.exits === 5 && snapshot.portals === 2, 'Transition counts are wrong.');
   assert(snapshot.anchors === 10, 'NPC anchor count is wrong.');
+  assert(snapshot.hero.ready, 'Hero sprite did not finish loading.');
+  assert(snapshot.hero.artVersion === '0.4.3', 'Wrong hero art version loaded.');
+
+  const spriteFrames = await page.evaluate(async () => {
+    const hero = window.AvendorWalkTest.hero;
+    const canvas = document.getElementById('player-canvas');
+    const context = canvas.getContext('2d');
+    const directions = [
+      'south', 'southeast', 'east', 'northeast',
+      'north', 'northwest', 'west', 'southwest'
+    ];
+    const results = [];
+
+    function inspect(body, state, direction, frame) {
+      hero.state = state;
+      hero.direction = direction;
+      hero.frame = frame;
+      hero.draw();
+      const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+      let minY = canvas.height;
+      let maxY = -1;
+      let visiblePixels = 0;
+
+      for (let index = 3; index < pixels.length; index += 4) {
+        if (pixels[index] < 16) continue;
+        const y = Math.floor((index >> 2) / canvas.width);
+        minY = Math.min(minY, y);
+        maxY = Math.max(maxY, y);
+        visiblePixels += 1;
+      }
+
+      results.push({
+        body,
+        state,
+        direction,
+        frame,
+        visiblePixels,
+        height: maxY >= minY ? maxY - minY + 1 : 0,
+        bottom: maxY
+      });
+    }
+
+    for (const body of ['male', 'female']) {
+      await window.AvendorWalkTest.setBody(body);
+      for (const direction of directions) {
+        inspect(body, 'idle', direction, 0);
+        for (let frame = 0; frame < 6; frame += 1) {
+          inspect(body, 'walk', direction, frame);
+        }
+      }
+    }
+
+    await window.AvendorWalkTest.setBody('male');
+    hero.setMotion('idle', 'north');
+    return results;
+  });
+
+  assert(spriteFrames.length === 112, 'Not every runtime hero frame was checked.');
+  spriteFrames.forEach((frame) => {
+    const expectedHeight = frame.body === 'male' ? 192 : 180;
+    const label = `${frame.body} ${frame.state} ${frame.direction} frame ${frame.frame}`;
+    assert(frame.visiblePixels >= 1800, `${label} is visually incomplete.`);
+    assert(frame.height === expectedHeight, `${label} rendered at the wrong height.`);
+    assert(frame.bottom >= 222 && frame.bottom <= 223, `${label} missed the foot anchor.`);
+  });
 
   await page.keyboard.down('w');
   await page.waitForTimeout(350);
