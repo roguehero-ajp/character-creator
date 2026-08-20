@@ -12,12 +12,17 @@
 .scene-occluder {
   position: absolute;
   inset: 0;
-  background-position: 0 0;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
   image-rendering: pixelated;
   pointer-events: none;
   user-select: none;
+}
+
+.scene-occluder image {
+  image-rendering: pixelated;
 }
 
 .map-debug-layer {

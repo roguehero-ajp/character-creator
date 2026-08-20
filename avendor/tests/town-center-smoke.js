@@ -15,24 +15,90 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function assertSimplePolygon(region) {
+  const orientation = (a, b, c) => Math.sign(
+    ((b[0] - a[0]) * (c[1] - a[1]))
+      - ((b[1] - a[1]) * (c[0] - a[0]))
+  );
+  const edgesCross = (a, b, c, d) => (
+    orientation(a, b, c) !== orientation(a, b, d)
+      && orientation(c, d, a) !== orientation(c, d, b)
+  );
+  const count = region.points.length;
+
+  for (let left = 0; left < count; left += 1) {
+    for (let right = left + 1; right < count; right += 1) {
+      if (right === (left + 1) % count || left === (right + 1) % count) continue;
+      assert(
+        !edgesCross(
+          region.points[left],
+          region.points[(left + 1) % count],
+          region.points[right],
+          region.points[(right + 1) % count]
+        ),
+        `Occluder polygon crosses itself: ${region.id}`
+      );
+    }
+  }
+}
+
 function loadGeometry() {
   const data = JSON.parse(fs.readFileSync(mapPath, 'utf8'));
   const context = { window: {}, console };
   vm.createContext(context);
   vm.runInContext(fs.readFileSync(enginePath, 'utf8'), context);
-  const map = new context.window.AvendorMapEngine.MapGeometry(data);
-  return { data, map };
+  const engine = context.window.AvendorMapEngine;
+  const map = new engine.MapGeometry(data);
+  return { data, map, pointInPolygon: engine.pointInPolygon };
 }
 
 function assertGeometry() {
-  const { data, map } = loadGeometry();
+  const { data, map, pointInPolygon } = loadGeometry();
 
-  assert(data.version === '0.6.0', 'Wrong Town Center map version.');
+  assert(data.version === '0.6.1', 'Wrong Town Center map version.');
   assert(data.npcs.length === 2, 'Town Center should contain exactly two residents.');
   assert(
     data.npcs.map((npc) => npc.id).join(',') === 'fanny-allwood,lain-menny',
     'Town Center residents are not Fanny Allwood and Lain Menny.'
   );
+
+  const occluderIds = data.depthOccluders.map((region) => region.id);
+  assert(data.depthOccluders.length === 56, 'Town Center occlusion tracing is incomplete.');
+  assert(new Set(occluderIds).size === occluderIds.length, 'Occluder ids must be unique.');
+  assert(
+    new Set(data.depthOccluders.map((region) => region.depthY)).size === 12,
+    'Occluders should collapse into twelve depth-sorted SVG layers.'
+  );
+
+  data.depthOccluders.forEach((region) => {
+    assert(region.points.length >= 3, `Occluder has too few points: ${region.id}`);
+    assertSimplePolygon(region);
+    region.points.forEach(([x, y]) => {
+      assert(
+        x >= 0 && x <= data.referenceSize.width
+          && y >= 0 && y <= data.referenceSize.height,
+        `Occluder point is outside the map: ${region.id}`
+      );
+    });
+    const twiceArea = Math.abs(region.points.reduce((area, [x, y], index) => {
+      const [nextX, nextY] = region.points[(index + 1) % region.points.length];
+      return area + (x * nextY) - (nextX * y);
+    }, 0));
+    assert(twiceArea >= 8, `Occluder polygon has no usable area: ${region.id}`);
+  });
+
+  const isOccludedAt = (x, y, actorY) => data.depthOccluders.some((region) => (
+    region.depthY > actorY && pointInPolygon([x, y], region.points)
+  ));
+  assert(isOccludedAt(370, 520, 590), 'The fruit-stall post no longer occludes the hero.');
+  assert(!isOccludedAt(344, 520, 590), 'The fruit-stall post mask is still too wide on the left.');
+  assert(!isOccludedAt(397, 540, 590), 'The fruit-stall post mask is still too wide on the right.');
+  assert(isOccludedAt(380, 800, 900), 'The Northgate board no longer occludes the hero.');
+  assert(!isOccludedAt(350, 818, 900), 'The gap beneath the Northgate board is painted shut.');
+  assert(isOccludedAt(1270, 846, 820), 'The southeast upper fence rail no longer occludes the hero.');
+  assert(!isOccludedAt(1270, 870, 820), 'The gap between southeast fence rails is painted shut.');
+  assert(isOccludedAt(180, 900, 760), 'The southwest gate no longer occludes the hero.');
+  assert(!isOccludedAt(180, 790, 760), 'The open space above the southwest gate is painted shut.');
 
   const artPath = path.join(avendorRoot, data.art.background);
   const art = fs.readFileSync(artPath);
@@ -147,14 +213,18 @@ async function assertBrowser() {
 
   await page.goto(testUrl, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => (
-    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.6.0')
+    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.6.1')
   ));
 
   const snapshot = await page.evaluate(() => ({
     imageWidth: document.querySelector('.stage-art').naturalWidth,
     imageHeight: document.querySelector('.stage-art').naturalHeight,
-    occluders: document.querySelectorAll('.scene-occluder').length,
-    expectedOccluders: window.AvendorWalkTest.getMap().data.depthOccluders.length,
+    occluderGroups: document.querySelectorAll('.scene-occluder').length,
+    occluderParts: document.querySelectorAll('.scene-occluder polygon').length,
+    expectedOccluderGroups: new Set(
+      window.AvendorWalkTest.getMap().data.depthOccluders.map((region) => region.depthY)
+    ).size,
+    expectedOccluderParts: window.AvendorWalkTest.getMap().data.depthOccluders.length,
     exits: window.AvendorWalkTest.getMap().data.exits.length,
     portals: window.AvendorWalkTest.getMap().data.portals.length,
     residents: window.AvendorWalkTest.getMap().npcs.length,
@@ -169,7 +239,11 @@ async function assertBrowser() {
   }));
 
   assert(snapshot.imageWidth === 1448 && snapshot.imageHeight === 1086, 'Wrong Town Center art loaded.');
-  assert(snapshot.occluders === snapshot.expectedOccluders, 'Depth occluders were not mounted.');
+  assert(
+    snapshot.occluderGroups === snapshot.expectedOccluderGroups,
+    'Depth-sorted occluder groups were not mounted.'
+  );
+  assert(snapshot.occluderParts === snapshot.expectedOccluderParts, 'Occluder polygons were not mounted.');
   assert(snapshot.exits === 5 && snapshot.portals === 2, 'Transition counts are wrong.');
   assert(snapshot.residents === 2 && snapshot.mountedResidents === 2, 'Resident count is wrong.');
   assert(snapshot.npcSprites.every((npc) => npc.ready), 'A resident sprite did not finish loading.');
