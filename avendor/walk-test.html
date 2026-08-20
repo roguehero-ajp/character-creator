@@ -3,14 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Briarwell Townsfolk Hero Test | Avendor</title>
+  <title>Briarwell Town Center Foundation | Avendor</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/avendor.css">
   <link rel="stylesheet" href="css/hero-rig.css">
 </head>
 <body>
-  <main class="avendor-stage walk-stage" id="walk-stage" style="--stage-ratio: 1449 / 1085" tabindex="0" aria-label="Briarwell hero animation test. Use W A S D or arrow keys to move.">
-    <img class="stage-art" src="assets/briarwell-square-bg.png" alt="Snowy Lodestone Square in Briarwell">
+  <main class="avendor-stage walk-stage" id="walk-stage" style="--stage-ratio: 1448 / 1086" tabindex="0" aria-label="Briarwell Town Center gameplay foundation. Use W A S D or arrow keys to move.">
+    <img class="stage-art" src="assets/maps/briarwell/town-center/background/briarwell-town-center.png" alt="Snowy Town Center in Briarwell, with the Lodestone Tavern, fruit stall, General Store and well">
+
+    <canvas class="map-debug-layer" id="map-debug-layer" width="1448" height="1086" aria-hidden="true"></canvas>
 
     <div class="player" id="player" aria-hidden="true">
       <canvas class="player-canvas" id="player-canvas" width="128" height="240"></canvas>
@@ -18,10 +20,20 @@
 
     <div class="confusion-mark" id="confusion-mark" aria-hidden="true">?</div>
 
-    <div class="walk-help" id="walk-help">WASD or arrow keys to walk. This first-pass hero now uses the simple townsfolk visual. Head north up the path and test the scale.</div>
-    <div class="dev-badge" id="rig-status">HERO VISUAL 0.4.1 · MALE DEFAULT · LOADING</div>
+    <div class="interaction-prompt" id="interaction-prompt" aria-hidden="true"></div>
+
+    <div class="hero-rig-controls" aria-label="Development controls">
+      <button type="button" id="body-male" class="selected" aria-pressed="true">Male rig</button>
+      <button type="button" id="body-female" aria-pressed="false">Female rig</button>
+      <button type="button" id="map-debug-toggle" aria-pressed="false">Map debug: off</button>
+    </div>
+
+    <div class="walk-help" id="walk-help">WASD or arrow keys to walk. E or Space inspects nearby features. F2 shows the authored map geometry.</div>
+    <div class="dev-badge" id="rig-status">TOWN CENTER FOUNDATION · LOADING</div>
+    <div class="sr-status" id="scene-status" role="status" aria-live="polite"></div>
   </main>
-  <audio id="avendor-music" src="assets/avendor-theme.mp3" preload="auto" loop></audio>
+  <audio id="avendor-music" src="assets/cinematic/scene-06-theland-briarwell-ambience.wav" preload="auto" loop></audio>
+  <script src="js/map-engine.js"></script>
   <script src="js/sprite-engine.js"></script>
   <script src="js/walk-test.js"></script>
 </body>
