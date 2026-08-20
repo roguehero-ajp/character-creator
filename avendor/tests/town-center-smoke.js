@@ -56,7 +56,10 @@ function assertGeometry() {
     [215, 760, 'behind the southwest fence'],
     [1180, 740, 'behind the southeast fence'],
     [450, 470, 'beside the Lodestone north path'],
-    [1120, 470, 'beside the northeast path']
+    [1120, 470, 'beside the northeast path'],
+    [458, 540, 'through the widened northwest Lodestone passage'],
+    [1016, 540, 'through the widened northeast Lodestone passage'],
+    [1160, 952, 'close to the southeast stone wall']
   ].forEach(([x, y, label]) => {
     assert(map.isWalkable(x, y), `Expected walkable space ${label}.`);
   });
@@ -64,7 +67,8 @@ function assertGeometry() {
   [
     [370, 630, 'fruit-stall post base'],
     [250, 850, 'southwest fence base'],
-    [1190, 750, 'southeast fence base']
+    [1210, 820, 'southeast fence base'],
+    [1205, 970, 'southeast stone wall base']
   ].forEach(([x, y, label]) => {
     assert(!map.isWalkable(x, y), `Expected collision at the ${label}.`);
   });
