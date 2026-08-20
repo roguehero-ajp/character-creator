@@ -50,6 +50,25 @@ function assertGeometry() {
     assert(map.isWalkable(spawn.x, spawn.y), `Spawn is blocked: ${id}`);
   });
 
+  [
+    [350, 470, 'behind the fruit canopy'],
+    [400, 590, 'behind the fruit-stall beam'],
+    [215, 760, 'behind the southwest fence'],
+    [1180, 740, 'behind the southeast fence'],
+    [450, 470, 'beside the Lodestone north path'],
+    [1120, 470, 'beside the northeast path']
+  ].forEach(([x, y, label]) => {
+    assert(map.isWalkable(x, y), `Expected walkable space ${label}.`);
+  });
+
+  [
+    [370, 630, 'fruit-stall post base'],
+    [250, 850, 'southwest fence base'],
+    [1190, 750, 'southeast fence base']
+  ].forEach(([x, y, label]) => {
+    assert(!map.isWalkable(x, y), `Expected collision at the ${label}.`);
+  });
+
   const transitions = [...data.exits, ...data.portals];
   transitions.forEach((transition) => {
     const x = transition.points.reduce((sum, point) => sum + point[0], 0)
@@ -107,13 +126,14 @@ async function assertBrowser() {
 
   await page.goto(testUrl, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => (
-    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.5.0')
+    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.5.1')
   ));
 
   const snapshot = await page.evaluate(() => ({
     imageWidth: document.querySelector('.stage-art').naturalWidth,
     imageHeight: document.querySelector('.stage-art').naturalHeight,
     occluders: document.querySelectorAll('.scene-occluder').length,
+    expectedOccluders: window.AvendorWalkTest.getMap().data.depthOccluders.length,
     exits: window.AvendorWalkTest.getMap().data.exits.length,
     portals: window.AvendorWalkTest.getMap().data.portals.length,
     anchors: window.AvendorWalkTest.getMap().data.npcAnchors.length,
@@ -121,7 +141,7 @@ async function assertBrowser() {
   }));
 
   assert(snapshot.imageWidth === 1448 && snapshot.imageHeight === 1086, 'Wrong Town Center art loaded.');
-  assert(snapshot.occluders === 7, 'Depth occluders were not mounted.');
+  assert(snapshot.occluders === snapshot.expectedOccluders, 'Depth occluders were not mounted.');
   assert(snapshot.exits === 5 && snapshot.portals === 2, 'Transition counts are wrong.');
   assert(snapshot.anchors === 10, 'NPC anchor count is wrong.');
 

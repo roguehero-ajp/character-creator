@@ -83,7 +83,7 @@
     const spriteStatus = hero.getStatus();
     const frame = spriteStatus.state === 'walk' ? ` ${spriteStatus.frame + 1}` : '';
     const nextText = [
-      'TOWN CENTER MAP 0.5.0',
+      'TOWN CENTER MAP 0.5.1',
       spriteStatus.body.toUpperCase(),
       spriteStatus.direction.toUpperCase(),
       `${spriteStatus.state.toUpperCase()}${frame}`,
@@ -328,7 +328,7 @@
       hero.draw();
       setPosition();
       updateInteractionPrompt();
-      setNotice('Briarwell - Town Center map data loaded. Seven solid regions, five outdoor exits, two building portals and ten NPC anchors are active.', 3200);
+      setNotice(`Briarwell - Town Center map data loaded. ${map.data.collisions.length} foot-level collision regions, ${map.data.exits.length} outdoor exits, ${map.data.portals.length} building portals and ${map.data.npcAnchors.length} NPC anchors are active.`, 3200);
     } catch (error) {
       console.error(error);
       status.textContent = 'TOWN CENTER MAP LOAD ERROR';
