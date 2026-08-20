@@ -28,7 +28,7 @@ GAMEPLAY DATA
 
 The map data is separate from the painted art and currently defines:
 - Three connected walkable regions.
-- Eight foot-level collision regions fitted to visible object bases.
+- Nine foot-level collision regions fitted to visible object bases.
 - Five outdoor exit triggers.
 - Lodestone Tavern and General Store portals.
 - Perspective scale stops and independent canopy, fence, and prop depth occluders.
