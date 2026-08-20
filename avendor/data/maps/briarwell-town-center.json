@@ -1,1 +1,239 @@
-vbf
+{
+  "schemaVersion": 1,
+  "id": "briarwell-town-center",
+  "title": "Briarwell - Town Center",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/town-center/background/briarwell-town-center.png"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6
+  },
+  "perspective": {
+    "stops": [
+      { "y": 340, "scale": 0.46 },
+      { "y": 560, "scale": 0.58 },
+      { "y": 800, "scale": 0.78 },
+      { "y": 1060, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 724, "y": 900, "facing": "north" },
+    "from-south": { "x": 724, "y": 990, "facing": "north" },
+    "from-west": { "x": 120, "y": 720, "facing": "east" },
+    "from-east": { "x": 1330, "y": 710, "facing": "west" },
+    "from-northwest": { "x": 405, "y": 500, "facing": "southeast" },
+    "from-northeast": { "x": 1065, "y": 500, "facing": "southwest" },
+    "tavern-return": { "x": 724, "y": 628, "facing": "south" },
+    "store-return": { "x": 1236, "y": 656, "facing": "south" }
+  },
+  "walkable": [
+    {
+      "id": "town-square",
+      "points": [
+        [18, 648], [255, 638], [382, 585], [500, 548], [960, 548],
+        [1088, 585], [1430, 604], [1430, 790], [1225, 804],
+        [1135, 920], [1065, 1068], [372, 1068], [292, 944],
+        [218, 790], [18, 780]
+      ]
+    },
+    {
+      "id": "northwest-road",
+      "points": [
+        [286, 342], [404, 324], [470, 456], [460, 535],
+        [385, 650], [252, 650], [245, 545]
+      ]
+    },
+    {
+      "id": "northeast-road",
+      "points": [
+        [1042, 408], [1102, 314], [1192, 324], [1205, 430],
+        [1138, 579], [1050, 614], [985, 548]
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "fruit-stall",
+      "points": [
+        [0, 350], [300, 342], [380, 420], [430, 646],
+        [325, 696], [0, 690]
+      ]
+    },
+    {
+      "id": "lodestone-tavern",
+      "points": [
+        [420, 226], [1022, 226], [1048, 556], [772, 578],
+        [772, 522], [682, 522], [682, 582], [430, 560]
+      ]
+    },
+    {
+      "id": "general-store",
+      "points": [
+        [1100, 300], [1448, 300], [1448, 618], [1320, 618],
+        [1320, 576], [1280, 560], [1195, 560], [1160, 586],
+        [1160, 626], [1080, 600]
+      ]
+    },
+    {
+      "id": "town-well",
+      "points": [
+        [858, 686], [888, 658], [1018, 658], [1058, 690],
+        [1068, 754], [1038, 796], [884, 804], [842, 762]
+      ]
+    },
+    {
+      "id": "direction-signpost",
+      "points": [
+        [344, 950], [397, 950], [404, 1032], [338, 1032]
+      ]
+    },
+    {
+      "id": "southwest-fence",
+      "points": [
+        [0, 726], [228, 780], [276, 916], [272, 1086], [0, 1086]
+      ]
+    },
+    {
+      "id": "southeast-fence",
+      "points": [
+        [1160, 770], [1448, 760], [1448, 1086], [1060, 1086],
+        [1095, 938]
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "northwest-road",
+      "label": "Northwest road",
+      "destination": "briarwell-northwest",
+      "status": "stub",
+      "fallbackSpawn": "from-south",
+      "preserveNorthWrap": true,
+      "points": [[296, 338], [402, 320], [421, 370], [314, 392]]
+    },
+    {
+      "id": "northeast-road",
+      "label": "Northeast road",
+      "destination": "briarwell-northeast",
+      "status": "stub",
+      "fallbackSpawn": "from-south",
+      "preserveNorthWrap": true,
+      "points": [[1050, 392], [1082, 392], [1090, 448], [1048, 448]]
+    },
+    {
+      "id": "west-road",
+      "label": "West road",
+      "destination": "briarwell-west",
+      "status": "stub",
+      "fallbackSpawn": "from-west",
+      "points": [[18, 666], [86, 666], [86, 770], [18, 770]]
+    },
+    {
+      "id": "east-road",
+      "label": "East road",
+      "destination": "briarwell-east",
+      "status": "stub",
+      "fallbackSpawn": "from-east",
+      "points": [[1362, 638], [1430, 638], [1430, 772], [1362, 772]]
+    },
+    {
+      "id": "south-road",
+      "label": "South road",
+      "destination": "briarwell-south",
+      "status": "stub",
+      "fallbackSpawn": "from-south",
+      "points": [[560, 1018], [1035, 1018], [1060, 1060], [535, 1060]]
+    }
+  ],
+  "portals": [
+    {
+      "id": "lodestone-tavern-door",
+      "label": "Lodestone Tavern",
+      "destination": "lodestone-tavern-interior",
+      "status": "stub",
+      "fallbackSpawn": "tavern-return",
+      "points": [[688, 548], [766, 548], [782, 604], [672, 604]]
+    },
+    {
+      "id": "general-store-door",
+      "label": "General Store",
+      "destination": "general-store-interior",
+      "status": "stub",
+      "fallbackSpawn": "store-return",
+      "points": [[1180, 604], [1280, 604], [1295, 642], [1170, 642]]
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "fruit-stall-front",
+      "depthY": 690,
+      "points": [[0, 344], [314, 338], [400, 420], [436, 690], [0, 708]]
+    },
+    {
+      "id": "well-roof",
+      "depthY": 720,
+      "points": [
+        [842, 618], [880, 584], [918, 548], [950, 512], [1008, 548],
+        [1046, 578], [1064, 622], [1034, 654], [862, 654]
+      ]
+    },
+    {
+      "id": "well-base",
+      "depthY": 800,
+      "points": [
+        [854, 638], [1050, 638], [1065, 700], [1068, 760],
+        [1038, 800], [884, 806], [842, 760], [842, 690]
+      ]
+    },
+    {
+      "id": "signpost-boards",
+      "depthY": 930,
+      "points": [
+        [318, 748], [444, 748], [446, 786], [420, 804], [427, 832],
+        [424, 855], [439, 874], [432, 910], [408, 930], [350, 930],
+        [330, 910], [315, 885], [330, 860], [320, 830], [338, 810]
+      ]
+    },
+    {
+      "id": "signpost-post",
+      "depthY": 1018,
+      "points": [[352, 900], [405, 900], [404, 1036], [338, 1036]]
+    },
+    {
+      "id": "southwest-fence-front",
+      "depthY": 1040,
+      "points": [[0, 716], [270, 778], [284, 1086], [0, 1086]]
+    },
+    {
+      "id": "southeast-fence-front",
+      "depthY": 1040,
+      "points": [[1090, 750], [1448, 744], [1448, 1086], [1050, 1086]]
+    }
+  ],
+  "interactables": [
+    { "id": "fruit-stall", "label": "Fruit vendor's stall", "x": 330, "y": 670, "radius": 82 },
+    { "id": "town-well", "label": "Town well", "x": 830, "y": 744, "radius": 82, "state": "sewer-sealed" },
+    { "id": "direction-signpost", "label": "Road sign", "x": 420, "y": 905, "radius": 76 },
+    { "id": "lodestone-tavern-sign", "label": "Lodestone Tavern sign", "x": 724, "y": 574, "radius": 72 },
+    { "id": "general-store-front", "label": "General Store", "x": 1238, "y": 620, "radius": 72 }
+  ],
+  "npcAnchors": [
+    { "id": "fruit-vendor-service", "x": 382, "y": 630, "facing": "southeast", "role": "vendor" },
+    { "id": "tavern-front-west", "x": 575, "y": 620, "facing": "southeast", "role": "townsfolk" },
+    { "id": "tavern-front-east", "x": 870, "y": 616, "facing": "southwest", "role": "townsfolk" },
+    { "id": "well-west", "x": 790, "y": 742, "facing": "east", "role": "townsfolk" },
+    { "id": "well-east", "x": 1110, "y": 736, "facing": "west", "role": "townsfolk" },
+    { "id": "general-store-front", "x": 1330, "y": 682, "facing": "west", "role": "customer" },
+    { "id": "square-center", "x": 708, "y": 780, "facing": "south", "role": "townsfolk" },
+    { "id": "south-arrival", "x": 790, "y": 980, "facing": "north", "role": "traveller" },
+    { "id": "northwest-arrival", "x": 405, "y": 500, "facing": "southeast", "role": "traveller" },
+    { "id": "northeast-arrival", "x": 1065, "y": 500, "facing": "southwest", "role": "traveller" }
+  ]
+}
