@@ -39,13 +39,12 @@
   transition: opacity .16s ease;
 }
 
-.player {
+.player,
+.map-npc {
   --perspective-scale: 1;
   position: absolute;
   width: 8.83%;
   aspect-ratio: 128 / 240;
-  left: 42%;
-  top: 70%;
   transform-origin: 50% 100%;
   transform: translate(-50%, -100%) scale(var(--perspective-scale));
   filter: none;
@@ -54,7 +53,13 @@
   pointer-events: none;
 }
 
-.player::before {
+.player {
+  left: 42%;
+  top: 70%;
+}
+
+.player::before,
+.map-npc::before {
   content: "";
   position: absolute;
   left: 50%;
@@ -72,7 +77,8 @@
   z-index: 0;
 }
 
-.player-canvas {
+.player-canvas,
+.map-npc-canvas {
   position: relative;
   display: block;
   width: 100%;

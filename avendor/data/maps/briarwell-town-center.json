@@ -2,12 +2,13 @@
   "schemaVersion": 1,
   "id": "briarwell-town-center",
   "title": "Briarwell - Town Center",
+  "version": "0.6.0",
   "referenceSize": {
     "width": 1448,
     "height": 1086
   },
   "art": {
-    "background": "assets/maps/briarwell/town-center/background/briarwell-town-center.png"
+    "background": "assets/maps/briarwell/town-center/background/briarwell-town-center-v2.png"
   },
   "movement": {
     "speedX": 275,
@@ -210,7 +211,10 @@
     {
       "id": "fruit-display-front",
       "depthY": 690,
-      "points": [[0, 500], [350, 500], [410, 570], [436, 690], [0, 708]]
+      "points": [
+        [55, 568], [332, 568], [402, 590], [430, 665],
+        [380, 690], [60, 700], [55, 625]
+      ]
     },
     {
       "id": "well-roof",
@@ -270,16 +274,36 @@
     { "id": "lodestone-tavern-sign", "label": "Lodestone Tavern sign", "x": 724, "y": 574, "radius": 72 },
     { "id": "general-store-front", "label": "General Store", "x": 1238, "y": 620, "radius": 72 }
   ],
-  "npcAnchors": [
-    { "id": "fruit-vendor-service", "x": 382, "y": 630, "facing": "southeast", "role": "vendor" },
-    { "id": "tavern-front-west", "x": 575, "y": 620, "facing": "southeast", "role": "townsfolk" },
-    { "id": "tavern-front-east", "x": 870, "y": 616, "facing": "southwest", "role": "townsfolk" },
-    { "id": "well-west", "x": 790, "y": 742, "facing": "east", "role": "townsfolk" },
-    { "id": "well-east", "x": 1110, "y": 736, "facing": "west", "role": "townsfolk" },
-    { "id": "general-store-front", "x": 1330, "y": 682, "facing": "west", "role": "customer" },
-    { "id": "square-center", "x": 708, "y": 780, "facing": "south", "role": "townsfolk" },
-    { "id": "south-arrival", "x": 790, "y": 980, "facing": "north", "role": "traveller" },
-    { "id": "northwest-arrival", "x": 405, "y": 500, "facing": "southeast", "role": "traveller" },
-    { "id": "northeast-arrival", "x": 1065, "y": 500, "facing": "southwest", "role": "traveller" }
+  "npcs": [
+    {
+      "id": "fanny-allwood",
+      "label": "Fanny Allwood",
+      "role": "fruit vendor",
+      "x": 238,
+      "y": 620,
+      "facing": "south",
+      "interactionX": 238,
+      "interactionY": 690,
+      "interactionRadius": 104,
+      "collisionRadius": 16,
+      "sprite": {
+        "idle": "assets/sprites/npc/briarwell/fanny-allwood/idle.png"
+      },
+      "interactionText": "Fanny Allwood is arranging the fruit at her stall."
+    },
+    {
+      "id": "lain-menny",
+      "label": "Lain Menny",
+      "role": "townsperson",
+      "x": 790,
+      "y": 742,
+      "facing": "east",
+      "interactionRadius": 92,
+      "collisionRadius": 16,
+      "sprite": {
+        "idle": "assets/sprites/npc/briarwell/lain-menny/idle.png"
+      },
+      "interactionText": "Lain Menny: \u201cI thought I heard something down there.\u201d"
+    }
   ]
 }

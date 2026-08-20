@@ -56,5 +56,12 @@ space below the feet. The male silhouette is selectively lengthened through the
 torso and legs while its head size, frame and gameplay footprint remain unchanged.
 
 The sprite engine validates atlas dimensions and full-body frame coverage during
-loading. The automated hero-sprite integrity test also rejects empty, clipped,
-undersized or off-anchor frames before release.
+loading. The automated sprite-integrity test also rejects empty, clipped,
+undersized or off-anchor hero and NPC frames before release.
+
+CURRENT NPC ART
+---------------
+NPC Art 0.1.0 adds the first two named Briarwell residents: Fanny Allwood at the
+Town Center fruit stall and Lain Menny beside the town well. Their stationary
+idle atlases use the shared 128 x 240 cell, bottom-centre foot anchor and five
+authored direction rows. West-facing directions remain available by mirroring.
