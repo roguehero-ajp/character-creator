@@ -21,7 +21,7 @@ function polygons(regions, className) {
   )).join('\n');
 }
 
-const anchors = map.npcAnchors.map((anchor) => (
+const anchors = map.npcs.map((anchor) => (
   `<g class="anchor"><circle cx="${anchor.x}" cy="${anchor.y}" r="9"/>`
   + `<text x="${anchor.x + 14}" y="${anchor.y - 10}">${anchor.id}</text></g>`
 )).join('\n');
@@ -76,7 +76,7 @@ const mvg = [
   "fill '#ffd166'",
   "stroke '#231a08'",
   'stroke-width 3',
-  ...map.npcAnchors.map((anchor) => `circle ${anchor.x},${anchor.y} ${anchor.x + 9},${anchor.y}`)
+  ...map.npcs.map((anchor) => `circle ${anchor.x},${anchor.y} ${anchor.x + 9},${anchor.y}`)
 ].join('\n');
 
 fs.writeFileSync(output, path.extname(output).toLowerCase() === '.svg' ? svg : mvg);

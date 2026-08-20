@@ -27,6 +27,13 @@ function loadGeometry() {
 function assertGeometry() {
   const { data, map } = loadGeometry();
 
+  assert(data.version === '0.6.0', 'Wrong Town Center map version.');
+  assert(data.npcs.length === 2, 'Town Center should contain exactly two residents.');
+  assert(
+    data.npcs.map((npc) => npc.id).join(',') === 'fanny-allwood,lain-menny',
+    'Town Center residents are not Fanny Allwood and Lain Menny.'
+  );
+
   const artPath = path.join(avendorRoot, data.art.background);
   const art = fs.readFileSync(artPath);
   assert(art.toString('ascii', 1, 4) === 'PNG', 'Town Center background is not a PNG.');
@@ -49,6 +56,16 @@ function assertGeometry() {
   Object.entries(data.spawnPoints).forEach(([id, spawn]) => {
     assert(map.isWalkable(spawn.x, spawn.y), `Spawn is blocked: ${id}`);
   });
+
+  data.npcs.forEach((npc) => {
+    assert(!map.isWalkable(npc.x, npc.y), `Resident collision is missing: ${npc.id}`);
+    assert(fs.existsSync(path.join(avendorRoot, npc.sprite.idle)), `Resident sprite is missing: ${npc.id}`);
+  });
+
+  const fanny = map.getNearbyInteractable({ x: 238, y: 690 });
+  assert(fanny?.id === 'fanny-allwood' && fanny.type === 'npc', 'Fanny cannot be reached across her stall.');
+  const lain = map.getNearbyInteractable({ x: 750, y: 742 });
+  assert(lain?.id === 'lain-menny' && lain.type === 'npc', 'Lain cannot be approached beside the well.');
 
   [
     [350, 470, 'behind the fruit canopy'],
@@ -130,7 +147,7 @@ async function assertBrowser() {
 
   await page.goto(testUrl, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => (
-    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.5.1')
+    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.6.0')
   ));
 
   const snapshot = await page.evaluate(() => ({
@@ -140,7 +157,13 @@ async function assertBrowser() {
     expectedOccluders: window.AvendorWalkTest.getMap().data.depthOccluders.length,
     exits: window.AvendorWalkTest.getMap().data.exits.length,
     portals: window.AvendorWalkTest.getMap().data.portals.length,
-    anchors: window.AvendorWalkTest.getMap().data.npcAnchors.length,
+    residents: window.AvendorWalkTest.getMap().npcs.length,
+    mountedResidents: document.querySelectorAll('.map-npc').length,
+    npcSprites: window.AvendorWalkTest.getNpcs().map(({ definition, sprite }) => ({
+      id: definition.id,
+      ready: sprite.getStatus().ready,
+      direction: sprite.getStatus().direction
+    })),
     hero: window.AvendorWalkTest.hero.getStatus(),
     start: window.AvendorWalkTest.getPosition()
   }));
@@ -148,7 +171,13 @@ async function assertBrowser() {
   assert(snapshot.imageWidth === 1448 && snapshot.imageHeight === 1086, 'Wrong Town Center art loaded.');
   assert(snapshot.occluders === snapshot.expectedOccluders, 'Depth occluders were not mounted.');
   assert(snapshot.exits === 5 && snapshot.portals === 2, 'Transition counts are wrong.');
-  assert(snapshot.anchors === 10, 'NPC anchor count is wrong.');
+  assert(snapshot.residents === 2 && snapshot.mountedResidents === 2, 'Resident count is wrong.');
+  assert(snapshot.npcSprites.every((npc) => npc.ready), 'A resident sprite did not finish loading.');
+  assert(
+    snapshot.npcSprites.map((npc) => `${npc.id}:${npc.direction}`).join(',')
+      === 'fanny-allwood:south,lain-menny:east',
+    'A resident is facing the wrong direction.'
+  );
   assert(snapshot.hero.ready, 'Hero sprite did not finish loading.');
   assert(snapshot.hero.artVersion === '0.4.3', 'Wrong hero art version loaded.');
 

@@ -23,6 +23,7 @@
   }
 
   const hero = new Sprite(playerCanvas, { body: 'male' });
+  const npcSprites = new Map();
   const keys = new Set();
   const movementControls = new Set([
     'w', 'a', 's', 'd',
@@ -58,7 +59,7 @@
     help.textContent = message;
     sceneStatus.textContent = message;
     noticeTimer = window.setTimeout(() => {
-      help.textContent = 'WASD or arrow keys to walk. E or Space inspects nearby features. F2 shows the authored map geometry.';
+      help.textContent = 'WASD or arrow keys to walk. E or Space interacts with nearby people and features. F2 shows the authored map geometry.';
     }, duration);
   }
 
@@ -83,7 +84,7 @@
     const spriteStatus = hero.getStatus();
     const frame = spriteStatus.state === 'walk' ? ` ${spriteStatus.frame + 1}` : '';
     const nextText = [
-      'TOWN CENTER MAP 0.5.1',
+      `TOWN CENTER MAP ${map.data.version}`,
       `HERO ART ${spriteStatus.artVersion}`,
       spriteStatus.body.toUpperCase(),
       spriteStatus.direction.toUpperCase(),
@@ -127,7 +128,8 @@
     }
 
     if (nearby.id !== nearbyId) {
-      prompt.textContent = `E  Inspect ${nearby.label}`;
+      const verb = nearby.type === 'npc' ? 'Talk to' : 'Inspect';
+      prompt.textContent = `E  ${verb} ${nearby.label}`;
       nearbyId = nearby.id;
     }
     prompt.classList.add('show');
@@ -142,10 +144,15 @@
       return;
     }
 
+    if (nearby.type === 'npc') {
+      setNotice(nearby.interactionText || `${nearby.label} has nothing to say just now.`, 3200);
+      return;
+    }
+
     const developmentNotes = {
       'town-well': 'Town well interaction registered. The future sewer entrance is sealed in this map state.',
       'direction-signpost': 'Road sign interaction registered: Northgate, Stonefield, Elderwood and Riverrun.',
-      'fruit-stall': 'Fruit vendor interaction anchor registered.',
+      'fruit-stall': 'Fanny Allwood keeps the fruit stall stocked and ready for customers.',
       'lodestone-tavern-sign': 'Lodestone Tavern interaction anchor registered.',
       'general-store-front': 'General Store interaction anchor registered.'
     };
@@ -206,6 +213,36 @@
     });
   }
 
+  async function buildNpcs() {
+    await Promise.all(map.npcs.map(async (definition) => {
+      const element = document.createElement('div');
+      element.className = 'map-npc';
+      element.dataset.npcId = definition.id;
+      element.setAttribute('aria-hidden', 'true');
+      element.style.left = `${(definition.x / map.width) * 100}%`;
+      element.style.top = `${(definition.y / map.height) * 100}%`;
+      element.style.setProperty('--perspective-scale', map.getScale(definition.y).toFixed(4));
+      element.style.zIndex = String(map.getDepth(definition.y));
+
+      const canvas = document.createElement('canvas');
+      canvas.className = 'map-npc-canvas';
+      canvas.width = window.AvendorSpriteEngine.FRAME_W;
+      canvas.height = window.AvendorSpriteEngine.FRAME_H;
+      element.appendChild(canvas);
+      stage.insertBefore(element, debugCanvas);
+
+      const sprite = new Sprite(canvas);
+      npcSprites.set(definition.id, { definition, element, sprite });
+      await sprite.setLayers([{
+        id: 'body',
+        idle: definition.sprite.idle,
+        coverage: 'full-body'
+      }]);
+      sprite.setMotion('idle', definition.facing);
+      sprite.draw();
+    }));
+  }
+
   function setDebug(visible) {
     debugVisible = Boolean(visible);
     debugCanvas.classList.toggle('show', debugVisible);
@@ -213,7 +250,7 @@
     debugButton.setAttribute('aria-pressed', String(debugVisible));
     debugButton.textContent = `Map debug: ${debugVisible ? 'on' : 'off'}`;
     if (debugVisible && map) {
-      setNotice('Map debug: green is walkable, red is solid, blue is an outdoor exit, purple is a door, gold dashed shapes are depth occluders and gold dots are NPC anchors.', 3600);
+      setNotice('Map debug: green is walkable, red is solid, blue is an outdoor exit, purple is a door, gold dashed shapes are depth occluders and gold dots are resident positions.', 3600);
     }
   }
 
@@ -319,6 +356,7 @@
       stageArt.src = map.data.art.background;
       window.AvendorMapEngine.drawDebugMap(debugCanvas, map);
       buildOccluders();
+      await buildNpcs();
 
       const spawn = map.getSpawn('default');
       position = { x: spawn.x, y: spawn.y };
@@ -329,7 +367,7 @@
       hero.draw();
       setPosition();
       updateInteractionPrompt();
-      setNotice(`Briarwell - Town Center map data loaded. ${map.data.collisions.length} foot-level collision regions, ${map.data.exits.length} outdoor exits, ${map.data.portals.length} building portals and ${map.data.npcAnchors.length} NPC anchors are active.`, 3200);
+      setNotice(`Briarwell - Town Center map data loaded. ${map.data.collisions.length} foot-level collision regions, ${map.data.exits.length} outdoor exits, ${map.data.portals.length} building portals and ${map.npcs.length} residents are active.`, 3200);
     } catch (error) {
       console.error(error);
       status.textContent = 'TOWN CENTER MAP LOAD ERROR';
@@ -345,6 +383,7 @@
 
   window.AvendorWalkTest = Object.freeze({
     hero,
+    getNpcs: () => [...npcSprites.values()],
     getMap: () => map,
     getPosition: () => ({
       ...position,

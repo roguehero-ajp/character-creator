@@ -17,29 +17,55 @@ const atlases = [
     body: 'male',
     state: 'idle',
     columns: 1,
-    expectedVisibleHeight: 192,
+    minVisibleHeight: 192,
+    maxVisibleHeight: 192,
+    minVisiblePixels: 1800,
     file: 'assets/sprites/hero/body/male/idle.png'
   },
   {
     body: 'male',
     state: 'walk',
     columns: WALK_COLUMNS,
-    expectedVisibleHeight: 192,
+    minVisibleHeight: 192,
+    maxVisibleHeight: 192,
+    minVisiblePixels: 1800,
     file: 'assets/sprites/hero/body/male/walk.png'
   },
   {
     body: 'female',
     state: 'idle',
     columns: 1,
-    expectedVisibleHeight: 180,
+    minVisibleHeight: 180,
+    maxVisibleHeight: 180,
+    minVisiblePixels: 1800,
     file: 'assets/sprites/hero/body/female/idle.png'
   },
   {
     body: 'female',
     state: 'walk',
     columns: WALK_COLUMNS,
-    expectedVisibleHeight: 180,
+    minVisibleHeight: 180,
+    maxVisibleHeight: 180,
+    minVisiblePixels: 1800,
     file: 'assets/sprites/hero/body/female/walk.png'
+  },
+  {
+    body: 'fanny-allwood',
+    state: 'idle',
+    columns: 1,
+    minVisibleHeight: 176,
+    maxVisibleHeight: 177,
+    minVisiblePixels: 1200,
+    file: 'assets/sprites/npc/briarwell/fanny-allwood/idle.png'
+  },
+  {
+    body: 'lain-menny',
+    state: 'idle',
+    columns: 1,
+    minVisibleHeight: 157,
+    maxVisibleHeight: 158,
+    minVisiblePixels: 1200,
+    file: 'assets/sprites/npc/briarwell/lain-menny/idle.png'
   }
 ];
 
@@ -185,8 +211,11 @@ atlases.forEach((atlas) => {
     for (let column = 0; column < atlas.columns; column += 1) {
       const frame = inspectFrame(image, column, row);
       const label = `${atlas.body} ${atlas.state} row ${row} column ${column}`;
-      assert(frame.visiblePixels >= 1800, `${label} has too little visible body art.`);
-      assert(frame.height === atlas.expectedVisibleHeight, `${label} has the wrong visible height.`);
+      assert(frame.visiblePixels >= atlas.minVisiblePixels, `${label} has too little visible body art.`);
+      assert(
+        frame.height >= atlas.minVisibleHeight && frame.height <= atlas.maxVisibleHeight,
+        `${label} has the wrong visible height.`
+      );
       assert(frame.width >= 40 && frame.width <= 120, `${label} has an invalid silhouette width.`);
       assert(frame.minX >= 4 && frame.maxX <= 123, `${label} is clipped against a side edge.`);
       assert(frame.minY >= 32, `${label} is clipped against the top edge.`);
@@ -206,5 +235,9 @@ assert(
   bodyHeights.get('male') > bodyHeights.get('female'),
   'The male aesthetic-height refinement was lost.'
 );
+assert(
+  bodyHeights.get('fanny-allwood') > bodyHeights.get('lain-menny'),
+  'Lain Menny should remain visibly shorter than Fanny Allwood.'
+);
 
-console.log(`Hero sprite integrity passed (${inspectedFrames} complete frames checked).`);
+console.log(`Sprite integrity passed (${inspectedFrames} complete frames checked).`);

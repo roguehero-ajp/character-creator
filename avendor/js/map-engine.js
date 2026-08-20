@@ -64,6 +64,7 @@
       this.exits = data.exits || [];
       this.portals = data.portals || [];
       this.interactables = data.interactables || [];
+      this.npcs = data.npcs || [];
       this.footRadius = data.movement?.footRadius || 0;
       this.maxStep = data.movement?.maxStep || 6;
     }
@@ -94,7 +95,11 @@
         y + (dy * radius)
       ]);
 
-      return points.every((point) => (
+      const clearsNpcFootprints = this.npcs.every((npc) => (
+        distance({ x, y }, npc) > radius + (npc.collisionRadius || 0)
+      ));
+
+      return clearsNpcFootprints && points.every((point) => (
         point[0] >= 0
         && point[0] <= this.width
         && point[1] >= 0
@@ -141,10 +146,24 @@
     }
 
     getNearbyInteractable(position) {
-      return this.interactables
+      const features = this.interactables.map((candidate) => ({
+        ...candidate,
+        type: 'feature'
+      }));
+      const npcs = this.npcs.map((candidate) => ({
+        ...candidate,
+        type: 'npc',
+        radius: candidate.interactionRadius,
+        interactionTarget: {
+          x: candidate.interactionX ?? candidate.x,
+          y: candidate.interactionY ?? candidate.y
+        }
+      }));
+
+      return [...features, ...npcs]
         .map((candidate) => ({
           ...candidate,
-          distance: distance(position, candidate)
+          distance: distance(position, candidate.interactionTarget || candidate)
         }))
         .filter((candidate) => candidate.distance <= candidate.radius)
         .sort((a, b) => a.distance - b.distance)[0] || null;
@@ -198,7 +217,7 @@
 
     ctx.font = '700 18px ui-monospace, Consolas, monospace';
     ctx.textBaseline = 'bottom';
-    (map.data.npcAnchors || []).forEach((anchor) => {
+    map.npcs.forEach((anchor) => {
       ctx.beginPath();
       ctx.arc(anchor.x, anchor.y, 9, 0, Math.PI * 2);
       ctx.fillStyle = '#ffd166';

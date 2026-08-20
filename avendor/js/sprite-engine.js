@@ -106,14 +106,14 @@
   async function loadLayer(def) {
     const [idleImage, walkImage] = await Promise.all([
       loadImage(def.idle),
-      loadImage(def.walk)
+      def.walk ? loadImage(def.walk) : Promise.resolve(null)
     ]);
 
     validateAtlasShape(idleImage, def.idle, 1);
-    validateAtlasShape(walkImage, def.walk, WALK_FRAMES);
+    if (walkImage) validateAtlasShape(walkImage, def.walk, WALK_FRAMES);
     if (def.coverage === 'full-body') {
       validateFullBodyFrames(idleImage, def.idle, 1);
-      validateFullBodyFrames(walkImage, def.walk, WALK_FRAMES);
+      if (walkImage) validateFullBodyFrames(walkImage, def.walk, WALK_FRAMES);
     }
 
     return { ...def, idleImage, walkImage };
@@ -195,8 +195,6 @@
       const mirrored = Boolean(MIRROR_TO[this.direction]);
       const sourceDirection = MIRROR_TO[this.direction] || this.direction;
       const row = ROW[sourceDirection] ?? ROW.south;
-      const walk = this.state === 'walk';
-      const sx = walk ? this.frame * FRAME_W : 0;
       const sy = row * FRAME_H;
 
       ctx.save();
@@ -207,7 +205,9 @@
       }
 
       for (const layer of this.layers) {
-        const img = walk ? layer.walkImage : layer.idleImage;
+        const useWalk = this.state === 'walk' && layer.walkImage;
+        const img = useWalk ? layer.walkImage : layer.idleImage;
+        const sx = useWalk ? this.frame * FRAME_W : 0;
         ctx.drawImage(
           img,
           sx, sy, FRAME_W, FRAME_H,
