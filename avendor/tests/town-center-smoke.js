@@ -56,7 +56,7 @@ function assertGeometry() {
   const { data, map, pointInPolygon } = loadGeometry();
 
   assert(data.schemaVersion === 2, 'Wrong Town Center map schema version.');
-  assert(data.version === '0.7.0', 'Wrong Town Center map version.');
+  assert(data.version === '0.7.1', 'Wrong Town Center map version.');
   assert(data.npcs.length === 2, 'Town Center should contain exactly two residents.');
   assert(
     data.npcs.map((npc) => npc.id).join(',') === 'fanny-allwood,lain-menny',
@@ -110,6 +110,15 @@ function assertGeometry() {
 
     return visibleSamples / totalSamples;
   };
+  const assertVisibleWalkableSpan = (y, left, right, label) => {
+    for (let x = left; x <= right; x += 1) {
+      assert(map.isWalkable(x, y), `Movement lane is pinched ${label} at ${x},${y}.`);
+      assert(
+        visibleActorEnvelopeFraction(x, y) >= 0.3,
+        `The hero becomes effectively invisible ${label} at ${x},${y}.`
+      );
+    }
+  };
   assert(isOccludedAt(370, 520, 590), 'The fruit-stall post no longer occludes the hero.');
   assert(!isOccludedAt(344, 520, 590), 'The fruit-stall post mask is still too wide on the left.');
   assert(!isOccludedAt(397, 540, 590), 'The fruit-stall post mask is still too wide on the right.');
@@ -154,6 +163,15 @@ function assertGeometry() {
       visibleActorEnvelopeFraction(x, y) >= 0.3,
       `The hero is still effectively invisible ${label}.`
     );
+  });
+
+  [
+    [490, 1035, 1090, 'below the General Store hanging sign'],
+    [520, 1038, 1080, 'beside the General Store barrel and crate'],
+    [540, 1045, 1078, 'between the General Store and Lodestone Tavern'],
+    [570, 1010, 1070, 'where the northeast road opens into the square']
+  ].forEach(([y, left, right, label]) => {
+    assertVisibleWalkableSpan(y, left, right, label);
   });
 
   [
@@ -208,6 +226,7 @@ function assertGeometry() {
     [1055, 470, 'beside the northeast path'],
     [450, 540, 'through the widened northwest Lodestone passage'],
     [1060, 540, 'through the widened northeast Lodestone passage'],
+    [1210, 820, 'beside the southeast lantern post'],
     [1160, 952, 'close to the southeast stone wall']
   ].forEach(([x, y, label]) => {
     assert(map.isWalkable(x, y), `Expected walkable space ${label}.`);
@@ -216,7 +235,7 @@ function assertGeometry() {
   [
     [370, 630, 'fruit-stall post base'],
     [250, 850, 'southwest fence base'],
-    [1210, 820, 'southeast fence base'],
+    [1220, 820, 'southeast fence rail base'],
     [1205, 970, 'southeast stone wall base']
   ].forEach(([x, y, label]) => {
     assert(!map.isWalkable(x, y), `Expected collision at the ${label}.`);
@@ -290,7 +309,7 @@ async function assertBrowser() {
 
   await page.goto(testUrl, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => (
-    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.7.0')
+    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.7.1')
   ));
 
   const snapshot = await page.evaluate(() => ({
