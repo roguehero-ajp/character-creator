@@ -55,7 +55,8 @@ function loadGeometry() {
 function assertGeometry() {
   const { data, map, pointInPolygon } = loadGeometry();
 
-  assert(data.version === '0.6.1', 'Wrong Town Center map version.');
+  assert(data.schemaVersion === 2, 'Wrong Town Center map schema version.');
+  assert(data.version === '0.7.0', 'Wrong Town Center map version.');
   assert(data.npcs.length === 2, 'Town Center should contain exactly two residents.');
   assert(
     data.npcs.map((npc) => npc.id).join(',') === 'fanny-allwood,lain-menny',
@@ -66,8 +67,8 @@ function assertGeometry() {
   assert(data.depthOccluders.length === 56, 'Town Center occlusion tracing is incomplete.');
   assert(new Set(occluderIds).size === occluderIds.length, 'Occluder ids must be unique.');
   assert(
-    new Set(data.depthOccluders.map((region) => region.depthY)).size === 12,
-    'Occluders should collapse into twelve depth-sorted SVG layers.'
+    new Set(data.depthOccluders.map((region) => region.depthY)).size === 15,
+    'Occluders should collapse into fifteen locally depth-sorted SVG layers.'
   );
 
   data.depthOccluders.forEach((region) => {
@@ -90,6 +91,25 @@ function assertGeometry() {
   const isOccludedAt = (x, y, actorY) => data.depthOccluders.some((region) => (
     region.depthY > actorY && pointInPolygon([x, y], region.points)
   ));
+  const visibleActorEnvelopeFraction = (x, y) => {
+    const scale = map.getScale(y);
+    const activeOccluders = data.depthOccluders.filter((region) => region.depthY > y);
+    let visibleSamples = 0;
+    let totalSamples = 0;
+
+    // The male north-idle frame's opaque envelope is x 27..100, y 32..223
+    // inside the 128x240 runtime canvas. Sample that scaled envelope in map space.
+    for (let sampleY = y - (208 * scale); sampleY <= y - (17 * scale); sampleY += 3) {
+      for (let sampleX = x - (37 * scale); sampleX <= x + (36 * scale); sampleX += 3) {
+        totalSamples += 1;
+        if (!activeOccluders.some((region) => pointInPolygon([sampleX, sampleY], region.points))) {
+          visibleSamples += 1;
+        }
+      }
+    }
+
+    return visibleSamples / totalSamples;
+  };
   assert(isOccludedAt(370, 520, 590), 'The fruit-stall post no longer occludes the hero.');
   assert(!isOccludedAt(344, 520, 590), 'The fruit-stall post mask is still too wide on the left.');
   assert(!isOccludedAt(397, 540, 590), 'The fruit-stall post mask is still too wide on the right.');
@@ -99,6 +119,51 @@ function assertGeometry() {
   assert(!isOccludedAt(1270, 870, 820), 'The gap between southeast fence rails is painted shut.');
   assert(isOccludedAt(180, 900, 760), 'The southwest gate no longer occludes the hero.');
   assert(!isOccludedAt(180, 790, 760), 'The open space above the southwest gate is painted shut.');
+  assert(
+    data.depthOccluders.find((region) => region.id === 'lodestone-tavern-front')?.depthY === 560,
+    'The Lodestone foreground still extends below its painted base.'
+  );
+  Object.entries({
+    'general-store-awning': 470,
+    'general-store-hanging-sign': 480,
+    'general-store-left-barrel': 560,
+    'general-store-sign-post': 570,
+    'general-store-left-crate': 570,
+    'general-store-building': 620
+  }).forEach(([id, expectedDepth]) => {
+    assert(
+      data.depthOccluders.find((region) => region.id === id)?.depthY === expectedDepth,
+      `General Store occluder has the wrong local depth: ${id}`
+    );
+  });
+
+  [
+    [365, 375, 'through the northwest exit'],
+    [400, 430, 'along the northwest approach'],
+    [405, 500, 'past the fruit-stall post'],
+    [450, 540, 'into the northwest side of the square'],
+    [1065, 420, 'through the northeast exit'],
+    [1055, 470, 'beneath the General Store sign'],
+    [1060, 480, 'past the General Store hanging sign'],
+    [1060, 500, 'through the narrow northeast lane'],
+    [1060, 540, 'into the northeast side of the square'],
+    [1010, 570, 'past the Lodestone east wall']
+  ].forEach(([x, y, label]) => {
+    assert(map.isWalkable(x, y), `North-road visibility route is blocked ${label}.`);
+    assert(
+      visibleActorEnvelopeFraction(x, y) >= 0.3,
+      `The hero is still effectively invisible ${label}.`
+    );
+  });
+
+  [
+    [450, 430, 'inside the Lodestone northwest wall'],
+    [375, 530, 'inside the fruit-stall post silhouette'],
+    [1016, 540, 'inside the Lodestone northeast wall'],
+    [1120, 470, 'inside the General Store facade']
+  ].forEach(([x, y, label]) => {
+    assert(!map.isWalkable(x, y), `The hero can still enter a fully hidden pocket ${label}.`);
+  });
 
   const artPath = path.join(avendorRoot, data.art.background);
   const art = fs.readFileSync(artPath);
@@ -113,6 +178,7 @@ function assertGeometry() {
   [
     data.art.background,
     'js/map-engine.js',
+    'js/world-map.js',
     'js/sprite-engine.js',
     'js/walk-test.js'
   ].forEach((asset) => {
@@ -138,10 +204,10 @@ function assertGeometry() {
     [400, 590, 'behind the fruit-stall beam'],
     [215, 760, 'behind the southwest fence'],
     [1180, 740, 'behind the southeast fence'],
-    [450, 470, 'beside the Lodestone north path'],
-    [1120, 470, 'beside the northeast path'],
-    [458, 540, 'through the widened northwest Lodestone passage'],
-    [1016, 540, 'through the widened northeast Lodestone passage'],
+    [420, 470, 'beside the Lodestone north path'],
+    [1055, 470, 'beside the northeast path'],
+    [450, 540, 'through the widened northwest Lodestone passage'],
+    [1060, 540, 'through the widened northeast Lodestone passage'],
     [1160, 952, 'close to the southeast stone wall']
   ].forEach(([x, y, label]) => {
     assert(map.isWalkable(x, y), `Expected walkable space ${label}.`);
@@ -166,6 +232,17 @@ function assertGeometry() {
     assert(
       map.getTriggerAt({ x, y })?.id === transition.id,
       `Transition resolves incorrectly: ${transition.id}`
+    );
+    if (transition.status === 'unassigned') {
+      assert(transition.target === null, `Unassigned transition has a provisional target: ${transition.id}`);
+    } else {
+      assert(transition.target?.areaId, `Transition target is missing: ${transition.id}`);
+    }
+    const fallback = map.getExactSpawn(transition.fallbackSpawn);
+    assert(fallback, `Transition fallback spawn is missing: ${transition.id}`);
+    assert(
+      !map.getTriggerAt(fallback),
+      `Transition fallback spawn overlaps a trigger: ${transition.id}`
     );
   });
 
@@ -213,7 +290,7 @@ async function assertBrowser() {
 
   await page.goto(testUrl, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => (
-    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.6.1')
+    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.7.0')
   ));
 
   const snapshot = await page.evaluate(() => ({
@@ -228,6 +305,8 @@ async function assertBrowser() {
     exits: window.AvendorWalkTest.getMap().data.exits.length,
     portals: window.AvendorWalkTest.getMap().data.portals.length,
     residents: window.AvendorWalkTest.getMap().npcs.length,
+    areaId: window.AvendorWalkTest.getArea().id,
+    registryStart: window.AvendorWalkTest.getRegistry().getStart().areaId,
     mountedResidents: document.querySelectorAll('.map-npc').length,
     npcSprites: window.AvendorWalkTest.getNpcs().map(({ definition, sprite }) => ({
       id: definition.id,
@@ -245,6 +324,11 @@ async function assertBrowser() {
   );
   assert(snapshot.occluderParts === snapshot.expectedOccluderParts, 'Occluder polygons were not mounted.');
   assert(snapshot.exits === 5 && snapshot.portals === 2, 'Transition counts are wrong.');
+  assert(
+    snapshot.areaId === 'briarwell-town-center'
+      && snapshot.registryStart === 'briarwell-town-center',
+    'The walk test did not boot through the Briarwell area registry.'
+  );
   assert(snapshot.residents === 2 && snapshot.mountedResidents === 2, 'Resident count is wrong.');
   assert(snapshot.npcSprites.every((npc) => npc.ready), 'A resident sprite did not finish loading.');
   assert(
@@ -330,6 +414,23 @@ async function assertBrowser() {
 
   await page.click('#body-female');
   await page.waitForFunction(() => document.getElementById('rig-status').textContent.includes('FEMALE'));
+  const reload = await page.evaluate(async () => {
+    await window.AvendorWalkTest.loadArea('briarwell-town-center', 'from-south');
+    return {
+      areaId: window.AvendorWalkTest.getArea().id,
+      body: window.AvendorWalkTest.hero.getStatus().body,
+      position: window.AvendorWalkTest.getPosition(),
+      occluderGroups: document.querySelectorAll('.scene-occluder').length,
+      residents: document.querySelectorAll('.map-npc').length
+    };
+  });
+  assert(reload.areaId === 'briarwell-town-center', 'Area reload changed the active area incorrectly.');
+  assert(reload.body === 'female', 'Area reload did not preserve the selected hero body.');
+  assert(reload.position.x === 724 && reload.position.y === 990, 'Area reload used the wrong spawn.');
+  assert(
+    reload.occluderGroups === snapshot.expectedOccluderGroups && reload.residents === 2,
+    'Area reload duplicated or dropped scene layers.'
+  );
   await page.click('#body-male');
   await page.waitForFunction(() => document.getElementById('rig-status').textContent.includes('MALE'));
 

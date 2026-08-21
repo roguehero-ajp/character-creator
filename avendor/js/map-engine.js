@@ -81,6 +81,10 @@
       return this.data.spawnPoints?.[id] || this.data.spawnPoints?.default;
     }
 
+    getExactSpawn(id) {
+      return this.data.spawnPoints?.[id] || null;
+    }
+
     getScale(y) {
       return interpolateStops(y, this.data.perspective?.stops || [], 'scale');
     }

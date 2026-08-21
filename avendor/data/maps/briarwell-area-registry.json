@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "briarwell",
+  "title": "Briarwell",
+  "version": "0.1.0",
+  "start": {
+    "areaId": "briarwell-town-center",
+    "spawnId": "default"
+  },
+  "areas": [
+    {
+      "id": "briarwell-town-center",
+      "areaNumber": null,
+      "title": "Briarwell - Town Center",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-town-center.json"
+    },
+    {
+      "id": "briarwell-northwest-workshops",
+      "areaNumber": null,
+      "title": "Briarwell - Northwest Workshops",
+      "kind": "outdoor",
+      "status": "planned",
+      "map": null
+    },
+    {
+      "id": "lodestone-tavern-interior",
+      "areaNumber": null,
+      "title": "Lodestone Tavern",
+      "kind": "interior",
+      "status": "planned",
+      "map": null
+    },
+    {
+      "id": "general-store-interior",
+      "areaNumber": null,
+      "title": "Briarwell General Store",
+      "kind": "interior",
+      "status": "planned",
+      "map": null
+    }
+  ]
+}

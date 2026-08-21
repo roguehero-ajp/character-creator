@@ -19,12 +19,13 @@ LOCKED ELEMENTS
 
 RUNTIME BASE ART
 ----------------
-background/briarwell-town-center.png
+background/briarwell-town-center-v2.png
 Reference size: 1448 x 1086 pixels.
 
 GAMEPLAY DATA
 -------------
 ../../../../data/maps/briarwell-town-center.json
+../../../../data/maps/briarwell-area-registry.json
 
 The map data is separate from the painted art and currently defines:
 - Three connected walkable regions.
@@ -32,8 +33,10 @@ The map data is separate from the painted art and currently defines:
 - Five outdoor exit triggers.
 - Lodestone Tavern and General Store portals.
 - Perspective scale stops and independent canopy, fence, and prop depth occluders.
-- Five inspectable features and ten unassigned NPC anchors.
+- Five inspectable features and two active resident anchors.
 
-The destination scenes and building interiors are still stubs. The walk test
-registers each transition and returns the hero to a safe spawn until that
-destination map exists.
+The northwest road is registered to the planned Northwest Workshops, whose
+approved return is the Workshops' south road. The other undefined outdoor roads
+remain explicitly unassigned pending the numbered town layout. Building interiors
+remain planned. The area loader returns the hero to a safe authored spawn until a
+destination becomes playable.

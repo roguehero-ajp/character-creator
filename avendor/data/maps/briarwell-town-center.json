@@ -1,14 +1,15 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "briarwell-town-center",
   "title": "Briarwell - Town Center",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "referenceSize": {
     "width": 1448,
     "height": 1086
   },
   "art": {
-    "background": "assets/maps/briarwell/town-center/background/briarwell-town-center-v2.png"
+    "background": "assets/maps/briarwell/town-center/background/briarwell-town-center-v2.png",
+    "alt": "Snowy Town Center in Briarwell, with the Lodestone Tavern, fruit stall, General Store and well"
   },
   "movement": {
     "speedX": 275,
@@ -30,7 +31,7 @@
     "from-west": { "x": 120, "y": 720, "facing": "east" },
     "from-east": { "x": 1330, "y": 710, "facing": "west" },
     "from-northwest": { "x": 405, "y": 500, "facing": "southeast" },
-    "from-northeast": { "x": 1065, "y": 500, "facing": "southwest" },
+    "from-northeast": { "x": 1055, "y": 470, "facing": "southwest" },
     "tavern-return": { "x": 724, "y": 628, "facing": "south" },
     "store-return": { "x": 1236, "y": 656, "facing": "south" }
   },
@@ -47,15 +48,21 @@
     {
       "id": "northwest-road",
       "points": [
-        [286, 342], [404, 324], [470, 456], [480, 535],
-        [420, 650], [252, 650], [245, 545]
+        [286, 342], [398, 324], [404, 360], [412, 390],
+        [425, 420], [438, 450], [448, 480], [456, 520],
+        [460, 548], [420, 650], [398, 650], [394, 620],
+        [394, 510], [370, 500], [315, 460], [305, 430],
+        [292, 400]
       ]
     },
     {
       "id": "northeast-road",
       "points": [
-        [1042, 408], [1102, 314], [1192, 324], [1205, 430],
-        [1138, 579], [1050, 614], [985, 548]
+        [1040, 408], [1048, 372], [1070, 332], [1112, 320],
+        [1106, 350], [1098, 390], [1090, 430], [1074, 460],
+        [1067, 480], [1067, 510], [1068, 550], [1074, 580],
+        [1050, 614], [1010, 590], [1040, 578], [1038, 540],
+        [1038, 500], [1040, 460], [1042, 430]
       ]
     }
   ],
@@ -127,42 +134,49 @@
     {
       "id": "northwest-road",
       "label": "Northwest road",
-      "destination": "briarwell-northwest",
-      "status": "stub",
-      "fallbackSpawn": "from-south",
-      "preserveNorthWrap": true,
+      "direction": "northwest",
+      "status": "planned",
+      "target": {
+        "areaId": "briarwell-northwest-workshops",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-road"
+      },
+      "fallbackSpawn": "from-northwest",
       "points": [[296, 338], [402, 320], [421, 370], [314, 392]]
     },
     {
       "id": "northeast-road",
       "label": "Northeast road",
-      "destination": "briarwell-northeast",
-      "status": "stub",
-      "fallbackSpawn": "from-south",
-      "preserveNorthWrap": true,
+      "direction": "northeast",
+      "status": "unassigned",
+      "target": null,
+      "fallbackSpawn": "from-northeast",
       "points": [[1050, 392], [1082, 392], [1090, 448], [1048, 448]]
     },
     {
       "id": "west-road",
       "label": "West road",
-      "destination": "briarwell-west",
-      "status": "stub",
+      "direction": "west",
+      "status": "unassigned",
+      "target": null,
       "fallbackSpawn": "from-west",
       "points": [[18, 666], [86, 666], [86, 770], [18, 770]]
     },
     {
       "id": "east-road",
       "label": "East road",
-      "destination": "briarwell-east",
-      "status": "stub",
+      "direction": "east",
+      "status": "unassigned",
+      "target": null,
       "fallbackSpawn": "from-east",
       "points": [[1362, 638], [1430, 638], [1430, 772], [1362, 772]]
     },
     {
       "id": "south-road",
       "label": "South road",
-      "destination": "briarwell-south",
-      "status": "stub",
+      "direction": "south",
+      "status": "unassigned",
+      "target": null,
       "fallbackSpawn": "from-south",
       "points": [[560, 1018], [1035, 1018], [1060, 1060], [535, 1060]]
     }
@@ -171,16 +185,20 @@
     {
       "id": "lodestone-tavern-door",
       "label": "Lodestone Tavern",
-      "destination": "lodestone-tavern-interior",
-      "status": "stub",
+      "status": "planned",
+      "target": {
+        "areaId": "lodestone-tavern-interior"
+      },
       "fallbackSpawn": "tavern-return",
       "points": [[688, 548], [766, 548], [782, 604], [672, 604]]
     },
     {
       "id": "general-store-door",
       "label": "General Store",
-      "destination": "general-store-interior",
-      "status": "stub",
+      "status": "planned",
+      "target": {
+        "areaId": "general-store-interior"
+      },
       "fallbackSpawn": "store-return",
       "points": [[1180, 604], [1280, 604], [1295, 642], [1170, 642]]
     }
@@ -188,7 +206,7 @@
   "depthOccluders": [
     {
       "id": "lodestone-tavern-front",
-      "depthY": 580,
+      "depthY": 560,
       "points": [
         [406, 354], [427, 300], [468, 222], [518, 218],
         [570, 270], [615, 166], [688, 72], [718, 48],
@@ -211,7 +229,7 @@
     },
     {
       "id": "general-store-awning",
-      "depthY": 620,
+      "depthY": 470,
       "points": [
         [1108, 382], [1150, 381], [1190, 386], [1234, 390],
         [1284, 394], [1325, 400], [1335, 410], [1328, 430],
@@ -223,12 +241,12 @@
     },
     {
       "id": "general-store-sign-post",
-      "depthY": 620,
+      "depthY": 570,
       "points": [[1084, 350], [1112, 350], [1114, 566], [1087, 566]]
     },
     {
       "id": "general-store-hanging-sign",
-      "depthY": 620,
+      "depthY": 480,
       "points": [
         [1058, 380], [1088, 380], [1098, 400], [1094, 456],
         [1082, 477], [1054, 470], [1044, 445], [1046, 402]
@@ -236,7 +254,7 @@
     },
     {
       "id": "general-store-left-barrel",
-      "depthY": 620,
+      "depthY": 560,
       "points": [
         [1046, 492], [1085, 492], [1095, 518], [1089, 555],
         [1047, 559], [1038, 534]
@@ -244,7 +262,7 @@
     },
     {
       "id": "general-store-left-crate",
-      "depthY": 620,
+      "depthY": 570,
       "points": [
         [1088, 509], [1148, 503], [1168, 522], [1164, 560],
         [1093, 568], [1084, 544]

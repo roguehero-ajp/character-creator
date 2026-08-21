@@ -1,6 +1,10 @@
 (() => {
   'use strict';
 
+  const REGISTRY_URL = 'data/maps/briarwell-area-registry.json';
+  const DEFAULT_HELP = 'WASD or arrow keys to walk. E or Space interacts with nearby people and features. F2 shows the authored map geometry.';
+  const TRANSITION_FADE_MS = 180;
+
   const stage = document.getElementById('walk-stage');
   const stageArt = stage.querySelector('.stage-art');
   const player = document.getElementById('player');
@@ -17,21 +21,26 @@
   const femaleButton = document.getElementById('body-female');
 
   const MapGeometry = window.AvendorMapEngine?.MapGeometry;
+  const AreaRegistry = window.AvendorWorldMap?.AreaRegistry;
   const Sprite = window.AvendorSpriteEngine?.LayeredSprite;
-  if (!MapGeometry || !Sprite) {
-    throw new Error('The map and sprite engines must load before walk-test.js.');
+  if (!MapGeometry || !AreaRegistry || !Sprite) {
+    throw new Error('The map, world-map and sprite engines must load before walk-test.js.');
   }
 
   const hero = new Sprite(playerCanvas, { body: 'male' });
   const npcSprites = new Map();
+  const areaMapCache = new Map();
   const keys = new Set();
   const movementControls = new Set([
     'w', 'a', 's', 'd',
     'arrowup', 'arrowleft', 'arrowdown', 'arrowright'
   ]);
 
+  let registry = null;
+  let currentArea = null;
   let map = null;
   let position = { x: 724, y: 900 };
+  let lastSafePosition = { ...position, facing: 'north' };
   let last = performance.now();
   let lastDirection = 'north';
   let transitionLock = false;
@@ -41,8 +50,13 @@
   let nearbyId = null;
   let noticeTimer = 0;
   let lastStatusText = '';
+  let areaLoadRequestId = 0;
 
   audio.volume = 0.18;
+
+  function delay(duration) {
+    return new Promise((resolve) => window.setTimeout(resolve, duration));
+  }
 
   function startMusic() {
     if (musicStarted) return;
@@ -59,7 +73,7 @@
     help.textContent = message;
     sceneStatus.textContent = message;
     noticeTimer = window.setTimeout(() => {
-      help.textContent = 'WASD or arrow keys to walk. E or Space interacts with nearby people and features. F2 shows the authored map geometry.';
+      help.textContent = DEFAULT_HELP;
     }, duration);
   }
 
@@ -79,12 +93,20 @@
     return lastDirection;
   }
 
+  function getAreaStatusName() {
+    const title = currentArea?.title || map?.data?.title || 'Map';
+    return title
+      .replace(/^Briarwell\s*-\s*/i, '')
+      .replace(/\s*\(unassigned\)$/i, '')
+      .toUpperCase();
+  }
+
   function updateRigStatus() {
     if (!map) return;
     const spriteStatus = hero.getStatus();
     const frame = spriteStatus.state === 'walk' ? ` ${spriteStatus.frame + 1}` : '';
     const nextText = [
-      `TOWN CENTER MAP ${map.data.version}`,
+      `${getAreaStatusName()} MAP ${map.data.version}`,
       `HERO ART ${spriteStatus.artVersion}`,
       spriteStatus.body.toUpperCase(),
       spriteStatus.direction.toUpperCase(),
@@ -115,6 +137,7 @@
   function updateInteractionPrompt() {
     if (!map || transitionLock) {
       prompt.classList.remove('show');
+      prompt.setAttribute('aria-hidden', 'true');
       nearbyId = null;
       return;
     }
@@ -165,43 +188,44 @@
     void player.offsetWidth;
     player.classList.add('confused');
     mark.classList.add('show');
-    setNotice(message, 1500);
+    setNotice(message, 1800);
   }
 
-  function handleTrigger(trigger) {
-    if (!map || transitionLock || activeTriggerId === trigger.id) return;
-    transitionLock = true;
-    activeTriggerId = trigger.id;
-    keys.clear();
-    hero.setMotion('idle', lastDirection);
-
-    const fallback = map.getSpawn(trigger.fallbackSpawn);
-    if (fallback) {
-      position = { x: fallback.x, y: fallback.y };
-      lastDirection = fallback.facing || lastDirection;
-    }
-    setPosition();
-
-    if (trigger.preserveNorthWrap) {
-      triggerConfusion(`${trigger.label} exit registered. Until its destination map exists, the north-wrap test returns the hero to the south.`);
-    } else {
-      const kind = trigger.type === 'portal' ? 'portal' : 'exit';
-      setNotice(`${trigger.label} ${kind} registered -> ${trigger.destination}.`, 1500);
-    }
-
-    window.setTimeout(() => {
-      player.classList.remove('confused');
-      mark.classList.remove('show');
-      transitionLock = false;
-      activeTriggerId = null;
-      setPosition();
-    }, 1500);
+  function preloadMapArt(sceneMap) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.decoding = 'async';
+      image.onload = () => {
+        if (image.naturalWidth !== sceneMap.width || image.naturalHeight !== sceneMap.height) {
+          reject(new Error(
+            `Map art dimensions do not match ${sceneMap.data.id}: `
+            + `${image.naturalWidth}x${image.naturalHeight} instead of ${sceneMap.width}x${sceneMap.height}.`
+          ));
+          return;
+        }
+        resolve(image);
+      };
+      image.onerror = () => reject(new Error(`Could not load map art: ${sceneMap.data.art.background}`));
+      image.src = sceneMap.data.art.background;
+    });
   }
 
-  function buildOccluders() {
-    const occluders = map.data.depthOccluders || [];
+  function getAreaMap(area) {
+    if (!areaMapCache.has(area.id)) {
+      const loading = MapGeometry.load(area.map).catch((error) => {
+        areaMapCache.delete(area.id);
+        throw error;
+      });
+      areaMapCache.set(area.id, loading);
+    }
+    return areaMapCache.get(area.id);
+  }
+
+  function createOccluders(sceneMap, areaId) {
+    const occluders = sceneMap.data.depthOccluders || [];
     const groups = new Map();
     const svgNamespace = 'http://www.w3.org/2000/svg';
+    const safeAreaId = areaId.replace(/[^a-z0-9-]/gi, '-');
 
     occluders.forEach((definition) => {
       const group = groups.get(definition.depthY) || [];
@@ -209,18 +233,18 @@
       groups.set(definition.depthY, group);
     });
 
-    [...groups.entries()]
+    return [...groups.entries()]
       .sort(([leftDepth], [rightDepth]) => leftDepth - rightDepth)
-      .forEach(([depthY, definitions], index) => {
+      .map(([depthY, definitions], index) => {
         const layer = document.createElementNS(svgNamespace, 'svg');
-        const clipId = `town-center-occlusion-${index}`;
+        const clipId = `${safeAreaId}-occlusion-${index}`;
         layer.classList.add('scene-occluder');
         layer.dataset.occluderDepth = String(depthY);
         layer.dataset.occluderIds = definitions.map((definition) => definition.id).join(',');
-        layer.setAttribute('viewBox', `0 0 ${map.width} ${map.height}`);
+        layer.setAttribute('viewBox', `0 0 ${sceneMap.width} ${sceneMap.height}`);
         layer.setAttribute('preserveAspectRatio', 'none');
         layer.setAttribute('aria-hidden', 'true');
-        layer.style.zIndex = String(map.getDepth(depthY));
+        layer.style.zIndex = String(sceneMap.getDepth(depthY));
 
         const defs = document.createElementNS(svgNamespace, 'defs');
         const clipPath = document.createElementNS(svgNamespace, 'clipPath');
@@ -239,38 +263,36 @@
         layer.appendChild(defs);
 
         const image = document.createElementNS(svgNamespace, 'image');
-        image.setAttribute('href', map.data.art.background);
+        image.setAttribute('href', sceneMap.data.art.background);
         image.setAttribute('x', '0');
         image.setAttribute('y', '0');
-        image.setAttribute('width', String(map.width));
-        image.setAttribute('height', String(map.height));
+        image.setAttribute('width', String(sceneMap.width));
+        image.setAttribute('height', String(sceneMap.height));
         image.setAttribute('preserveAspectRatio', 'none');
         image.setAttribute('clip-path', `url(#${clipId})`);
         layer.appendChild(image);
-        stage.insertBefore(layer, debugCanvas);
+        return layer;
       });
   }
 
-  async function buildNpcs() {
-    await Promise.all(map.npcs.map(async (definition) => {
+  async function prepareNpcs(sceneMap) {
+    return Promise.all(sceneMap.npcs.map(async (definition) => {
       const element = document.createElement('div');
       element.className = 'map-npc';
       element.dataset.npcId = definition.id;
       element.setAttribute('aria-hidden', 'true');
-      element.style.left = `${(definition.x / map.width) * 100}%`;
-      element.style.top = `${(definition.y / map.height) * 100}%`;
-      element.style.setProperty('--perspective-scale', map.getScale(definition.y).toFixed(4));
-      element.style.zIndex = String(map.getDepth(definition.y));
+      element.style.left = `${(definition.x / sceneMap.width) * 100}%`;
+      element.style.top = `${(definition.y / sceneMap.height) * 100}%`;
+      element.style.setProperty('--perspective-scale', sceneMap.getScale(definition.y).toFixed(4));
+      element.style.zIndex = String(sceneMap.getDepth(definition.y));
 
       const canvas = document.createElement('canvas');
       canvas.className = 'map-npc-canvas';
       canvas.width = window.AvendorSpriteEngine.FRAME_W;
       canvas.height = window.AvendorSpriteEngine.FRAME_H;
       element.appendChild(canvas);
-      stage.insertBefore(element, debugCanvas);
 
       const sprite = new Sprite(canvas);
-      npcSprites.set(definition.id, { definition, element, sprite });
       await sprite.setLayers([{
         id: 'body',
         idle: definition.sprite.idle,
@@ -278,7 +300,176 @@
       }]);
       sprite.setMotion('idle', definition.facing);
       sprite.draw();
+      return { definition, element, sprite };
     }));
+  }
+
+  function mountPreparedScene(occluders, residents) {
+    stage.querySelectorAll('.scene-occluder, .map-npc').forEach((element) => element.remove());
+    npcSprites.clear();
+
+    occluders.forEach((element) => stage.insertBefore(element, debugCanvas));
+    residents.forEach((record) => {
+      npcSprites.set(record.definition.id, record);
+      stage.insertBefore(record.element, debugCanvas);
+    });
+  }
+
+  async function loadArea(areaId, spawnId = 'default') {
+    const requestId = ++areaLoadRequestId;
+    if (!registry) throw new Error('The Briarwell area registry is not loaded.');
+    const area = registry.getArea(areaId);
+    if (!area) throw new Error(`Unknown Briarwell area: ${areaId}`);
+    if (area.status !== 'playable' || !area.map) {
+      throw new Error(`Briarwell area is not playable yet: ${areaId}`);
+    }
+
+    const nextMap = await getAreaMap(area);
+    if (nextMap.data.id !== area.id) {
+      throw new Error(`Registry/map id mismatch: ${area.id} -> ${nextMap.data.id}`);
+    }
+
+    const spawn = nextMap.getExactSpawn(spawnId);
+    if (!spawn) throw new Error(`Spawn does not exist: ${area.id}/${spawnId}`);
+    if (!nextMap.isWalkable(spawn.x, spawn.y)) {
+      throw new Error(`Spawn is blocked: ${area.id}/${spawnId}`);
+    }
+    if (nextMap.getTriggerAt(spawn)) {
+      throw new Error(`Spawn overlaps a transition trigger: ${area.id}/${spawnId}`);
+    }
+
+    const [, residents] = await Promise.all([
+      preloadMapArt(nextMap),
+      prepareNpcs(nextMap)
+    ]);
+    if (requestId !== areaLoadRequestId) {
+      throw new Error(`Area load was superseded: ${areaId}`);
+    }
+    const occluders = createOccluders(nextMap, area.id);
+
+    mountPreparedScene(occluders, residents);
+    map = nextMap;
+    currentArea = area;
+    position = { x: spawn.x, y: spawn.y };
+    lastDirection = spawn.facing || lastDirection;
+    lastSafePosition = { ...position, facing: lastDirection };
+    activeTriggerId = null;
+    nearbyId = null;
+    lastStatusText = '';
+
+    stage.style.setProperty('--stage-ratio', `${map.width} / ${map.height}`);
+    stage.dataset.areaId = area.id;
+    stage.setAttribute(
+      'aria-label',
+      `${area.title} gameplay map. Use W A S D or arrow keys to move.`
+    );
+    stageArt.src = map.data.art.background;
+    stageArt.alt = map.data.art.alt || area.title;
+    window.AvendorMapEngine.drawDebugMap(debugCanvas, map);
+    hero.setMotion('idle', lastDirection);
+    hero.draw();
+    setPosition();
+    updateInteractionPrompt();
+    return map;
+  }
+
+  function isSafePosition(candidate) {
+    return Boolean(
+      candidate
+      && map.isWalkable(candidate.x, candidate.y)
+      && !map.getTriggerAt(candidate)
+    );
+  }
+
+  function findSafeFallback(trigger) {
+    const candidates = [
+      map.getExactSpawn(trigger.fallbackSpawn),
+      lastSafePosition,
+      map.getExactSpawn('default')
+    ];
+    const authored = candidates.find(isSafePosition);
+    if (authored) return authored;
+
+    for (let radius = 24; radius <= 480; radius += 24) {
+      for (let index = 0; index < 16; index += 1) {
+        const angle = (Math.PI * 2 * index) / 16;
+        const candidate = {
+          x: position.x + (Math.cos(angle) * radius),
+          y: position.y + (Math.sin(angle) * radius),
+          facing: lastDirection
+        };
+        if (isSafePosition(candidate)) return candidate;
+      }
+    }
+    return null;
+  }
+
+  function returnToSafePosition(trigger) {
+    const fallback = findSafeFallback(trigger);
+    if (!fallback) {
+      throw new Error(`No safe fallback is available for ${map.data.id}/${trigger.id}.`);
+    }
+    position = { x: fallback.x, y: fallback.y };
+    lastDirection = fallback.facing || lastDirection;
+    lastSafePosition = { ...position, facing: lastDirection };
+    setPosition();
+  }
+
+  function unavailableTransitionMessage(trigger, resolution) {
+    if (resolution.reason === 'unassigned') {
+      return `${trigger.label} is waiting for the numbered town layout. The hero returned safely.`;
+    }
+    return `${trigger.label} leads to ${resolution.area.title}, which is planned but not playable yet.`;
+  }
+
+  async function handleTrigger(trigger) {
+    if (!map || !registry || transitionLock || activeTriggerId === trigger.id) return;
+    transitionLock = true;
+    activeTriggerId = trigger.id;
+    keys.clear();
+    hero.setMotion('idle', lastDirection);
+    updateInteractionPrompt();
+
+    const sourceMap = map;
+    const resolution = registry.resolveTransition(trigger);
+
+    try {
+      if (resolution.state !== 'ready') {
+        returnToSafePosition(trigger);
+        const message = resolution.state === 'unavailable'
+          ? unavailableTransitionMessage(trigger, resolution)
+          : `${trigger.label} has an incomplete map link. The hero returned safely.`;
+        triggerConfusion(message);
+        await delay(1800);
+        return;
+      }
+
+      stage.classList.add('map-transitioning');
+      setNotice(`Travelling to ${resolution.area.title}...`, 2200);
+      await delay(TRANSITION_FADE_MS);
+
+      try {
+        await loadArea(resolution.targetAreaId, resolution.spawnId);
+        setNotice(`${resolution.area.title} loaded.`, 1800);
+      } catch (error) {
+        console.error(error);
+        if (map === sourceMap) returnToSafePosition(trigger);
+        triggerConfusion(`${trigger.label} could not be loaded. The hero returned safely.`);
+      } finally {
+        stage.classList.remove('map-transitioning');
+        await delay(TRANSITION_FADE_MS);
+      }
+    } catch (error) {
+      console.error(error);
+      setNotice('This transition has no safe return point. Check the map data.', 3200);
+    } finally {
+      player.classList.remove('confused');
+      mark.classList.remove('show');
+      transitionLock = false;
+      activeTriggerId = null;
+      setPosition();
+      updateInteractionPrompt();
+    }
   }
 
   function setDebug(visible) {
@@ -337,8 +528,12 @@
         setPosition();
 
         const trigger = map.getTriggerAt(position);
-        if (trigger) handleTrigger(trigger);
-        else activeTriggerId = null;
+        if (trigger) {
+          void handleTrigger(trigger);
+        } else {
+          activeTriggerId = null;
+          lastSafePosition = { ...position, facing: lastDirection };
+        }
       } else {
         hero.setMotion('idle', lastDirection);
       }
@@ -389,27 +584,48 @@
 
   async function boot() {
     try {
-      map = await MapGeometry.load('data/maps/briarwell-town-center.json');
-      stage.style.setProperty('--stage-ratio', `${map.width} / ${map.height}`);
-      stageArt.src = map.data.art.background;
-      window.AvendorMapEngine.drawDebugMap(debugCanvas, map);
-      buildOccluders();
-      await buildNpcs();
+      registry = await AreaRegistry.load(REGISTRY_URL);
+      const storedBody = sessionStorage.getItem('avendorHeroBody');
+      await setBody(storedBody === 'female' ? 'female' : 'male');
 
-      const spawn = map.getSpawn('default');
-      position = { x: spawn.x, y: spawn.y };
-      lastDirection = spawn.facing;
-      sessionStorage.setItem('avendorHeroBody', 'male');
-      await setBody('male');
+      const start = registry.getStart();
+      const params = new URLSearchParams(window.location.search);
+      const requestedAreaId = params.get('area');
+      const requestedArea = requestedAreaId ? registry.getArea(requestedAreaId) : null;
+      const directEntry = requestedArea?.status === 'playable'
+        ? {
+          areaId: requestedArea.id,
+          spawnId: params.get('spawn') || 'default'
+        }
+        : start;
+
+      try {
+        await loadArea(directEntry.areaId, directEntry.spawnId);
+      } catch (directEntryError) {
+        if (directEntry.areaId === start.areaId && directEntry.spawnId === start.spawnId) {
+          throw directEntryError;
+        }
+        console.warn(directEntryError);
+        await loadArea(start.areaId, start.spawnId);
+      }
+
       hero.setMotion('idle', lastDirection);
       hero.draw();
       setPosition();
       updateInteractionPrompt();
-      setNotice(`Briarwell - Town Center map data loaded. ${map.data.collisions.length} foot-level collision regions, ${map.data.exits.length} outdoor exits, ${map.data.portals.length} building portals and ${map.npcs.length} residents are active.`, 3200);
+      const directEntryWarning = requestedAreaId && requestedArea?.status !== 'playable'
+        ? ` Requested area ${requestedAreaId} is not playable, so the registry start was used.`
+        : '';
+      setNotice(
+        `${currentArea.title} map data loaded. ${map.data.collisions.length} foot-level collision regions, `
+        + `${map.data.exits.length} outdoor exits, ${map.data.portals.length} building portals and `
+        + `${map.npcs.length} residents are active.${directEntryWarning}`,
+        3600
+      );
     } catch (error) {
       console.error(error);
-      status.textContent = 'TOWN CENTER MAP LOAD ERROR';
-      sceneStatus.textContent = 'The Town Center map could not be loaded.';
+      status.textContent = 'BRIARWELL MAP LOAD ERROR';
+      sceneStatus.textContent = 'The Briarwell map registry could not be loaded.';
       help.textContent = 'Map load failed. Open the browser console for details.';
     }
   }
@@ -423,10 +639,13 @@
     hero,
     getNpcs: () => [...npcSprites.values()],
     getMap: () => map,
+    getArea: () => currentArea,
+    getRegistry: () => registry,
     getPosition: () => ({
       ...position,
       scale: map ? map.getScale(position.y) : 1
     }),
+    loadArea,
     setBody,
     setDebug
   });
