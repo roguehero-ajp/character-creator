@@ -9,6 +9,21 @@
   isolation: isolate;
 }
 
+.walk-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4500;
+  background: #070a0d;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+
+.walk-stage.map-transitioning::after {
+  opacity: 1;
+}
+
 .scene-occluder {
   position: absolute;
   inset: 0;
@@ -205,6 +220,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .player.confused { animation: none; }
+  .walk-stage::after,
   .map-debug-layer,
   .interaction-prompt { transition: none; }
 }
