@@ -4,10 +4,10 @@
   const FRAME_W = 128;
   const FRAME_H = 240;
   const DIRECTION_ROWS = 5;
-  const DEFAULT_WALK_FRAMES = 6;
-  const WALK_FRAME_MS = 96;
+  const DEFAULT_WALK_FRAMES = 8;
+  const WALK_FRAME_MS = 72;
   const RIG_VERSION = '0.4.0';
-  const ART_VERSION = '0.4.3';
+  const ART_VERSION = '0.4.4';
 
   const ROW = Object.freeze({
     south: 0,
