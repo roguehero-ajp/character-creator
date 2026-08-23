@@ -40,12 +40,15 @@ const map = new context.window.AvendorMapEngine.MapGeometry(merged);
   [215, 760, 'behind the southwest fence'],
   [250, 850, 'behind the southwest fence rails'],
   [1180, 740, 'behind the southeast fence'],
-  [1210, 820, 'beside the southeast lantern'],
+  [1170, 918, 'beneath the hanging southeast lantern'],
+  [1210, 820, 'beside the southeast lantern post'],
   [1205, 970, 'between the southeast fence and stone wall'],
   [1270, 870, 'in front of the southeast fence rails'],
   [1160, 952, 'near the southeast stone wall'],
   [900, 670, 'behind the well roof but outside the well footprint'],
-  [1060, 540, 'through the General Store/Lodestone approach']
+  [1060, 540, 'through the General Store/Lodestone approach'],
+  [1030, 560, 'along the Lodestone northeast foundation edge'],
+  [1015, 520, 'inside the widened northeast passage']
 ].forEach(([x, y, label]) => {
   assert(map.isWalkable(x, y), `Expected walkable ground ${label} at ${x},${y}.`);
 });
@@ -69,7 +72,43 @@ const transitions = [...data.exits, ...data.portals];
 transitions.forEach((transition) => {
   const x = transition.points.reduce((sum, point) => sum + point[0], 0) / transition.points.length;
   const y = transition.points.reduce((sum, point) => sum + point[1], 0) / transition.points.length;
-  assert(map.isWalkable(x, y), `Transition is unreachable under footprint geometry: ${transition.id}`);
+  assert(map.isWalkable(x, y), `Transition center is blocked under footprint geometry: ${transition.id}`);
 });
+
+function canReach(start, target, step = 5) {
+  const snap = (value) => Math.round(value / step) * step;
+  const queue = [[snap(start.x), snap(start.y)]];
+  const seen = new Set([queue[0].join(',')]);
+  const directions = [
+    [step, 0], [-step, 0], [0, step], [0, -step],
+    [step, step], [step, -step], [-step, step], [-step, -step]
+  ];
+
+  for (let head = 0; head < queue.length; head += 1) {
+    const [x, y] = queue[head];
+    if (Math.hypot(x - target.x, y - target.y) <= step * 2) return true;
+
+    directions.forEach(([dx, dy]) => {
+      const next = [x + dx, y + dy];
+      const key = next.join(',');
+      if (!seen.has(key) && map.isWalkable(next[0], next[1])) {
+        seen.add(key);
+        queue.push(next);
+      }
+    });
+  }
+
+  return false;
+}
+
+const northeastExit = data.exits.find((exit) => exit.id === 'northeast-road');
+const northeastTarget = {
+  x: northeastExit.points.reduce((sum, point) => sum + point[0], 0) / northeastExit.points.length,
+  y: northeastExit.points.reduce((sum, point) => sum + point[1], 0) / northeastExit.points.length
+};
+assert(
+  canReach(data.spawnPoints.default, northeastTarget),
+  'Northeast exit has no connected walkable route from the Town Center.'
+);
 
 console.log('Briarwell Town Center ground-contact footprint checks passed.');
