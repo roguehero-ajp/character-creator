@@ -186,7 +186,7 @@
     }
 
     update(now) {
-      if (!this.ready) return;
+      if (!this.ready) return 0;
       if (this.state === 'walk') {
         const elapsed = now - this.lastFrameAt;
         if (elapsed >= WALK_FRAME_MS) {
@@ -194,11 +194,13 @@
           this.frame = (this.frame + steps) % this.walkFrames;
           this.lastFrameAt += steps * WALK_FRAME_MS;
           this.draw();
+          return steps;
         }
       } else if (this.frame !== 0) {
         this.frame = 0;
         this.draw();
       }
+      return 0;
     }
 
     draw() {
