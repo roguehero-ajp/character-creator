@@ -23,6 +23,7 @@
   const MapGeometry = window.AvendorMapEngine?.MapGeometry;
   const AreaRegistry = window.AvendorWorldMap?.AreaRegistry;
   const Sprite = window.AvendorSpriteEngine?.LayeredSprite;
+  const WALK_STEP_SECONDS = (window.AvendorSpriteEngine?.WALK_FRAME_MS || 110) / 1000;
   if (!MapGeometry || !AreaRegistry || !Sprite) {
     throw new Error('The map, world-map and sprite engines must load before walk-test.js.');
   }
@@ -41,7 +42,6 @@
   let map = null;
   let position = { x: 724, y: 900 };
   let lastSafePosition = { ...position, facing: 'north' };
-  let last = performance.now();
   let lastDirection = 'north';
   let transitionLock = false;
   let activeTriggerId = null;
@@ -504,9 +504,6 @@
   }
 
   function tick(now) {
-    const dt = Math.min(0.045, (now - last) / 1000);
-    last = now;
-
     if (map && !transitionLock) {
       let { dx, dy } = readMovementVector();
       const requestedMovement = dx !== 0 || dy !== 0;
@@ -517,33 +514,41 @@
         dx /= magnitude;
         dy /= magnitude;
 
-        const next = map.resolveMovement(
-          position,
-          dx * map.data.movement.speedX * dt,
-          dy * map.data.movement.speedY * dt
-        );
-        const moved = Math.hypot(next.x - position.x, next.y - position.y) > 0.01;
-        position = next;
-        hero.setMotion(moved ? 'walk' : 'idle', lastDirection);
-        setPosition();
+        hero.setMotion('walk', lastDirection);
+        const advancedFrames = hero.update(now);
 
-        const trigger = map.getTriggerAt(position);
-        if (trigger) {
-          void handleTrigger(trigger);
-        } else {
-          activeTriggerId = null;
-          lastSafePosition = { ...position, facing: lastDirection };
+        if (advancedFrames > 0) {
+          const next = map.resolveMovement(
+            position,
+            dx * map.data.movement.speedX * WALK_STEP_SECONDS,
+            dy * map.data.movement.speedY * WALK_STEP_SECONDS
+          );
+          const moved = Math.hypot(next.x - position.x, next.y - position.y) > 0.01;
+
+          if (moved) {
+            position = next;
+            setPosition();
+
+            const trigger = map.getTriggerAt(position);
+            if (trigger) {
+              void handleTrigger(trigger);
+            } else {
+              activeTriggerId = null;
+              lastSafePosition = { ...position, facing: lastDirection };
+            }
+          }
         }
       } else {
         hero.setMotion('idle', lastDirection);
+        hero.update(now);
       }
 
       updateInteractionPrompt();
     } else {
       hero.setMotion('idle', lastDirection);
+      hero.update(now);
     }
 
-    hero.update(now);
     updateRigStatus();
     requestAnimationFrame(tick);
   }
