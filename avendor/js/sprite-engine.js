@@ -5,7 +5,7 @@
   const FRAME_H = 240;
   const DIRECTION_ROWS = 5;
   const DEFAULT_WALK_FRAMES = 8;
-  const WALK_FRAME_MS = 72;
+  const WALK_FRAME_MS = 110;
   const RIG_VERSION = '0.4.0';
   const ART_VERSION = '0.4.4';
 
