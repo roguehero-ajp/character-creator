@@ -5,7 +5,8 @@
   const FRAME_H = 240;
   const DIRECTION_ROWS = 5;
   const DEFAULT_WALK_FRAMES = 8;
-  const WALK_FRAME_MS = 110;
+  const WALK_FRAME_MS = 20;
+  const WALK_POSE_MS = 110;
   const RIG_VERSION = '0.4.0';
   const ART_VERSION = '0.4.4';
 
@@ -139,6 +140,7 @@
       this.frame = 0;
       this.walkFrames = DEFAULT_WALK_FRAMES;
       this.lastFrameAt = performance.now();
+      this.lastMoveAt = this.lastFrameAt;
       this.layers = [];
       this.ready = false;
       this.loadToken = 0;
@@ -170,6 +172,7 @@
       this.ready = true;
       this.frame = 0;
       this.lastFrameAt = performance.now();
+      this.lastMoveAt = this.lastFrameAt;
       this.draw();
     }
 
@@ -180,6 +183,7 @@
         this.state = state;
         this.frame = 0;
         this.lastFrameAt = performance.now();
+        this.lastMoveAt = this.lastFrameAt;
       }
       if (direction) this.direction = direction;
       if (this.ready && (stateChanged || directionChanged)) this.draw();
@@ -188,17 +192,26 @@
     update(now) {
       if (!this.ready) return 0;
       if (this.state === 'walk') {
-        const elapsed = now - this.lastFrameAt;
-        if (elapsed >= WALK_FRAME_MS) {
-          const steps = Math.floor(elapsed / WALK_FRAME_MS);
-          this.frame = (this.frame + steps) % this.walkFrames;
-          this.lastFrameAt += steps * WALK_FRAME_MS;
+        const poseElapsed = now - this.lastFrameAt;
+        if (poseElapsed >= WALK_POSE_MS) {
+          const poseSteps = Math.floor(poseElapsed / WALK_POSE_MS);
+          this.frame = (this.frame + poseSteps) % this.walkFrames;
+          this.lastFrameAt += poseSteps * WALK_POSE_MS;
           this.draw();
-          return steps;
         }
-      } else if (this.frame !== 0) {
-        this.frame = 0;
-        this.draw();
+
+        const moveElapsed = now - this.lastMoveAt;
+        if (moveElapsed >= WALK_FRAME_MS) {
+          const moveSteps = Math.floor(moveElapsed / WALK_FRAME_MS);
+          this.lastMoveAt += moveSteps * WALK_FRAME_MS;
+          return moveSteps;
+        }
+      } else {
+        this.lastMoveAt = now;
+        if (this.frame !== 0) {
+          this.frame = 0;
+          this.draw();
+        }
       }
       return 0;
     }
@@ -254,6 +267,7 @@
     WALK_FRAMES: DEFAULT_WALK_FRAMES,
     DEFAULT_WALK_FRAMES,
     WALK_FRAME_MS,
+    WALK_POSE_MS,
     RIG_VERSION,
     ART_VERSION,
     LayeredSprite,
