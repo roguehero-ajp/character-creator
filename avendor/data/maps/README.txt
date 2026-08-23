@@ -43,9 +43,33 @@ Every transition must declare an authored fallbackSpawn in its current map.
 Automated topology checks reject duplicate ids/numbers, missing playable maps,
 missing entry spawns, one-way active links and registry/map identity mismatches.
 
+GROUND CONTACT RULE
+-------------------
+Movement collision and visual occlusion are separate systems.
+
+A collision polygon represents only the object's physical footprint: the portion
+that meets the ground and cannot be occupied by the hero's feet. Roofs, rails,
+awnings, signs, tree canopies, upper walls and similar painted structure do not
+become movement blockers merely because they overlap the hero sprite.
+
+Visual overlap belongs in depthOccluders. When the hero walks behind scenery, the
+appropriate painted portion may cover some or all of the hero while the hero's
+foot anchor remains on legal ground.
+
+For legacy maps that need collision refitting without rewriting their primary map
+payload, the map engine supports an optional sibling geometry sidecar named:
+
+  <map-name>-geometry.json
+
+A geometry sidecar supplies replacement walkable and collisions arrays and records
+its model/version. Briarwell Town Center currently uses this migration mechanism
+with model ground-contact-footprints. New maps should author true ground-contact
+footprints from the beginning.
+
 Run after changing the registry or any Briarwell map:
 
   node avendor/tests/briarwell-map-topology.js
+  node avendor/tests/town-center-footprints.js
   AVENDOR_SKIP_BROWSER=1 node avendor/tests/town-center-smoke.js
 
 ART SEPARATION
