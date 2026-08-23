@@ -18,21 +18,16 @@ const geometry = JSON.parse(fs.readFileSync(geometryPath, 'utf8'));
 assert(geometry.areaId === data.id, 'Geometry sidecar is attached to the wrong area.');
 assert(geometry.model === 'ground-contact-footprints', 'Town Center is not using the ground-contact model.');
 
-const merged = {
-  ...data,
-  walkable: geometry.walkable,
-  collisions: geometry.collisions,
-  geometry: {
-    source: 'data/maps/briarwell-town-center-geometry.json',
-    version: geometry.version,
-    model: geometry.model
-  }
-};
-
 const context = { window: {}, console };
 vm.createContext(context);
 vm.runInContext(fs.readFileSync(enginePath, 'utf8'), context);
-const map = new context.window.AvendorMapEngine.MapGeometry(merged);
+const engine = context.window.AvendorMapEngine;
+const merged = engine.applyGeometryOverrides(
+  data,
+  geometry,
+  'data/maps/briarwell-town-center-geometry.json'
+);
+const map = new engine.MapGeometry(merged);
 
 [
   [350, 470, 'behind the fruit canopy'],
@@ -111,4 +106,36 @@ assert(
   'Northeast exit has no connected walkable route from the Town Center.'
 );
 
-console.log('Briarwell Town Center ground-contact footprint checks passed.');
+function visibleActorEnvelopeFraction(x, y) {
+  const scale = map.getScale(y);
+  const activeOccluders = merged.depthOccluders.filter((region) => region.depthY > y);
+  let visibleSamples = 0;
+  let totalSamples = 0;
+
+  for (let sampleY = y - (208 * scale); sampleY <= y - (17 * scale); sampleY += 3) {
+    for (let sampleX = x - (37 * scale); sampleX <= x + (36 * scale); sampleX += 3) {
+      totalSamples += 1;
+      if (!activeOccluders.some((region) => engine.pointInPolygon([sampleX, sampleY], region.points))) {
+        visibleSamples += 1;
+      }
+    }
+  }
+
+  return visibleSamples / totalSamples;
+}
+
+[
+  [1015, 520, 'at the lower northeast pinch'],
+  [1020, 500, 'beside the Lodestone east wall'],
+  [1030, 470, 'midway up the northeast passage'],
+  [1040, 450, 'under the northeast approach'],
+  [1050, 430, 'near the northeast exit']
+].forEach(([x, y, label]) => {
+  const visibleFraction = visibleActorEnvelopeFraction(x, y);
+  assert(
+    visibleFraction >= 0.55,
+    `Hero becomes effectively invisible ${label}: ${(visibleFraction * 100).toFixed(1)}% visible.`
+  );
+});
+
+console.log('Briarwell Town Center ground-contact and northeast visibility checks passed.');
