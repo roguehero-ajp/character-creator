@@ -43,7 +43,7 @@
       if (value <= next.y) {
         const span = next.y - previous.y || 1;
         const t = (value - previous.y) / span;
-        return previous[valueKey] + ((next[valueKey] - previous[valueKey]) * t;
+        return previous[valueKey] + ((next[valueKey] - previous[valueKey]) * t);
       }
     }
 
