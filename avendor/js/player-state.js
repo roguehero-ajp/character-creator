@@ -2,10 +2,13 @@
   'use strict';
 
   const STORAGE_KEY = 'avendorPlayerState.v1';
-  const SCHEMA_VERSION = 1;
+  const SCHEMA_VERSION = 2;
   const BASE_STAT = 5;
   const BONUS_POOL = 8;
+  const STAT_MIN = 1;
   const STAT_MAX = 10;
+  const NATURAL_SKILL_MIN = 1;
+  const NATURAL_SKILL_MAX = 99;
 
   const STAT_KEYS = Object.freeze([
     'strength', 'agility', 'coordination', 'knowledge',
@@ -77,8 +80,28 @@
     ['Throw', 'coordination', 'strength']
   ]);
 
+  function randomInt(minimum, maximum) {
+    const range = maximum - minimum + 1;
+    if (window.crypto?.getRandomValues) {
+      const bucket = new Uint32Array(1);
+      window.crypto.getRandomValues(bucket);
+      return minimum + (bucket[0] % range);
+    }
+    return minimum + Math.floor(Math.random() * range);
+  }
+
+  function rollHiddenLuck() {
+    const rolls = [randomInt(1, 10), randomInt(1, 10), randomInt(1, 10)]
+      .sort((left, right) => left - right);
+    return rolls[1];
+  }
+
   function defaultStats() {
     return Object.fromEntries(STAT_KEYS.map((key) => [key, BASE_STAT]));
+  }
+
+  function defaultNaturalSkillPractice() {
+    return Object.fromEntries(NATURAL_SKILLS.map(([name]) => [name, 0]));
   }
 
   function createDefault() {
@@ -89,6 +112,8 @@
       background: 'farmhand',
       stats: defaultStats(),
       practicedSkills: [],
+      naturalSkillPractice: defaultNaturalSkillPractice(),
+      luck: rollHiddenLuck(),
       reputation: {
         Briarwell: 'Unknown',
         'Town Guard': 'Unknown',
@@ -104,6 +129,14 @@
     return Math.max(minimum, Math.min(maximum, number));
   }
 
+  function pointsSpent(state) {
+    return STAT_KEYS.reduce((sum, key) => sum + (state.stats[key] - BASE_STAT), 0);
+  }
+
+  function pointsRemaining(state) {
+    return Math.max(0, BONUS_POOL - pointsSpent(state));
+  }
+
   function sanitize(candidate) {
     const state = createDefault();
     if (!candidate || typeof candidate !== 'object') return state;
@@ -113,12 +146,25 @@
     if (BACKGROUNDS[candidate.background]) state.background = candidate.background;
 
     for (const key of STAT_KEYS) {
-      state.stats[key] = clampInt(candidate.stats?.[key], BASE_STAT, STAT_MAX);
+      state.stats[key] = clampInt(candidate.stats?.[key], STAT_MIN, STAT_MAX);
     }
 
-    const spent = pointsSpent(state);
-    if (spent > BONUS_POOL) {
+    if (pointsSpent(state) > BONUS_POOL) {
       state.stats = defaultStats();
+    }
+
+    if (Number.isInteger(candidate.luck)) {
+      state.luck = clampInt(candidate.luck, 1, 10);
+    }
+
+    if (candidate.naturalSkillPractice && typeof candidate.naturalSkillPractice === 'object') {
+      for (const [name] of NATURAL_SKILLS) {
+        state.naturalSkillPractice[name] = clampInt(
+          candidate.naturalSkillPractice[name],
+          0,
+          NATURAL_SKILL_MAX - NATURAL_SKILL_MIN
+        );
+      }
     }
 
     const backgroundSkill = BACKGROUNDS[state.background].skill;
@@ -138,14 +184,6 @@
     return state;
   }
 
-  function pointsSpent(state) {
-    return STAT_KEYS.reduce((sum, key) => sum + Math.max(0, state.stats[key] - BASE_STAT), 0);
-  }
-
-  function pointsRemaining(state) {
-    return Math.max(0, BONUS_POOL - pointsSpent(state));
-  }
-
   function getBackground(state) {
     return BACKGROUNDS[state.background] || BACKGROUNDS.farmhand;
   }
@@ -160,11 +198,26 @@
   }
 
   function naturalSkills(state) {
-    return NATURAL_SKILLS.map(([name, left, right]) => ({
-      name,
-      rating: ((state.stats[left] + state.stats[right]) / 2).toFixed(1),
-      formula: `${STAT_LABELS[left]} + ${STAT_LABELS[right]}`
-    }));
+    return NATURAL_SKILLS.map(([name, left, right]) => {
+      const base = state.stats[left] * state.stats[right];
+      const practice = clampInt(state.naturalSkillPractice?.[name], 0, NATURAL_SKILL_MAX);
+      return {
+        name,
+        rating: Math.max(NATURAL_SKILL_MIN, Math.min(NATURAL_SKILL_MAX, base + practice)),
+        formula: `${STAT_LABELS[left]} × ${STAT_LABELS[right]}`
+      };
+    });
+  }
+
+  function addNaturalSkillPractice(candidate, skillName, amount = 1) {
+    if (!NATURAL_SKILLS.some(([name]) => name === skillName)) return candidate;
+    if (!candidate.naturalSkillPractice || typeof candidate.naturalSkillPractice !== 'object') {
+      candidate.naturalSkillPractice = defaultNaturalSkillPractice();
+    }
+    const current = clampInt(candidate.naturalSkillPractice[skillName], 0, NATURAL_SKILL_MAX);
+    const gain = Math.max(0, Number.parseInt(amount, 10) || 0);
+    candidate.naturalSkillPractice[skillName] = Math.min(NATURAL_SKILL_MAX, current + gain);
+    return candidate;
   }
 
   function allPracticedSkills(state) {
@@ -198,7 +251,10 @@
     SCHEMA_VERSION,
     BASE_STAT,
     BONUS_POOL,
+    STAT_MIN,
     STAT_MAX,
+    NATURAL_SKILL_MIN,
+    NATURAL_SKILL_MAX,
     STAT_KEYS,
     STAT_LABELS,
     BACKGROUNDS,
@@ -211,6 +267,7 @@
     getBackground,
     derivedResources,
     naturalSkills,
+    addNaturalSkillPractice,
     allPracticedSkills,
     save,
     load,

@@ -2,10 +2,16 @@
   'use strict';
 
   const PlayerState = window.AvendorPlayerState;
-  const Sprite = window.AvendorSpriteEngine?.LayeredSprite;
-  if (!PlayerState || !Sprite) {
-    throw new Error('Character creator requires player-state.js and sprite-engine.js.');
+  if (!PlayerState) {
+    throw new Error('Character creator requires player-state.js.');
   }
+
+  const PREVIEW_ATLASES = Object.freeze({
+    male: 'assets/sprites/hero/body/male/walk.png',
+    female: 'assets/sprites/hero/body/female/walk.png'
+  });
+  const PREVIEW_FRAME_W = 128;
+  const PREVIEW_FRAME_H = 240;
 
   const form = document.getElementById('character-form');
   const nameInput = document.getElementById('character-name');
@@ -38,9 +44,12 @@
   const beginButton = document.getElementById('begin-character');
   const bodyButtons = [...document.querySelectorAll('[data-body]')];
 
-  const hero = new Sprite(previewCanvas, { body: 'male' });
+  const previewContext = previewCanvas.getContext('2d');
+  previewContext.imageSmoothingEnabled = false;
+
   let state = PlayerState.load();
   let statusTimer = 0;
+  let previewLoadToken = 0;
 
   function setStatus(message, isError = false) {
     window.clearTimeout(statusTimer);
@@ -93,6 +102,36 @@
     }
   }
 
+  function loadPreviewImage(src) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.decoding = 'async';
+      image.onload = () => resolve(image);
+      image.onerror = () => reject(new Error(`Could not load hero preview atlas: ${src}`));
+      image.src = src;
+    });
+  }
+
+  async function drawHeroPreview(body) {
+    const token = ++previewLoadToken;
+    const src = PREVIEW_ATLASES[body] || PREVIEW_ATLASES.male;
+    try {
+      const image = await loadPreviewImage(src);
+      if (token !== previewLoadToken) return;
+      previewContext.clearRect(0, 0, PREVIEW_FRAME_W, PREVIEW_FRAME_H);
+      previewContext.imageSmoothingEnabled = false;
+      previewContext.drawImage(
+        image,
+        0, 0, PREVIEW_FRAME_W, PREVIEW_FRAME_H,
+        0, 0, PREVIEW_FRAME_W, PREVIEW_FRAME_H
+      );
+    } catch (error) {
+      if (token !== previewLoadToken) return;
+      previewContext.clearRect(0, 0, PREVIEW_FRAME_W, PREVIEW_FRAME_H);
+      console.warn(error);
+    }
+  }
+
   async function setBody(body) {
     state.body = body === 'female' ? 'female' : 'male';
     for (const button of bodyButtons) {
@@ -100,9 +139,7 @@
       button.classList.toggle('selected', selected);
       button.setAttribute('aria-pressed', String(selected));
     }
-    await hero.setBody(state.body);
-    hero.setMotion('idle', 'south');
-    hero.draw();
+    await drawHeroPreview(state.body);
   }
 
   function renderStatEditor() {
@@ -113,7 +150,7 @@
       const minus = row.querySelector('[data-action="minus"]');
       const plus = row.querySelector('[data-action="plus"]');
       output.textContent = String(state.stats[key]);
-      minus.disabled = state.stats[key] <= PlayerState.BASE_STAT;
+      minus.disabled = state.stats[key] <= PlayerState.STAT_MIN;
       plus.disabled = state.stats[key] >= PlayerState.STAT_MAX || PlayerState.pointsRemaining(state) <= 0;
     });
   }
@@ -149,7 +186,7 @@
     for (const skill of PlayerState.naturalSkills(state)) {
       const item = document.createElement('div');
       item.title = skill.formula;
-      item.innerHTML = `<span>${skill.name}</span><strong>${skill.rating}</strong>`;
+      item.innerHTML = `<span>${skill.name}</span><strong>${skill.rating}%</strong>`;
       naturalSkills.appendChild(item);
     }
   }
@@ -223,7 +260,7 @@
       return false;
     }
     if (PlayerState.pointsRemaining(state) !== 0) {
-      setStatus('Spend all 8 prototype statistic points first.', true);
+      setStatus('Spend all available statistic points first.', true);
       return false;
     }
     if (state.practicedSkills.length !== 2) {
@@ -243,7 +280,7 @@
     if (button.dataset.action === 'plus') {
       if (PlayerState.pointsRemaining(state) <= 0 || state.stats[key] >= PlayerState.STAT_MAX) return;
       state.stats[key] += 1;
-    } else if (state.stats[key] > PlayerState.BASE_STAT) {
+    } else if (state.stats[key] > PlayerState.STAT_MIN) {
       state.stats[key] -= 1;
     }
     render();
