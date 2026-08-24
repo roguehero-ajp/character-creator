@@ -2,13 +2,14 @@
   'use strict';
 
   const STORAGE_KEY = 'avendorPlayerState.v1';
-  const SCHEMA_VERSION = 3;
+  const SCHEMA_VERSION = 4;
   const BASE_STAT = 5;
   const BONUS_POOL = 8;
   const STAT_MIN = 1;
   const STAT_MAX = 10;
   const NATURAL_SKILL_MIN = 1;
   const NATURAL_SKILL_MAX = 99;
+  const WEAPON_SELF_PRACTICE_CAP = 30;
 
   const STAT_KEYS = Object.freeze([
     'strength', 'agility', 'coordination', 'knowledge',
@@ -65,6 +66,10 @@
     'Bow', 'Shield', 'Lore: Avendor', 'Languages', 'Swimming'
   ]);
 
+  const WEAPON_KEYS = Object.freeze([
+    'Sword', 'Axe', 'Mace', 'Dagger', 'Spear', 'Bow', 'Shield'
+  ]);
+
   const NATURAL_SKILLS = Object.freeze([
     ['Dodge', 'agility', 'perception'],
     ['Climb', 'strength', 'agility'],
@@ -104,6 +109,18 @@
     return Object.fromEntries(NATURAL_SKILLS.map(([name]) => [name, 0]));
   }
 
+  function blankWeaponRecord() {
+    return {
+      familiarity: 0,
+      combatExperience: 0,
+      techniques: []
+    };
+  }
+
+  function defaultWeaponProgress() {
+    return Object.fromEntries(WEAPON_KEYS.map((name) => [name, blankWeaponRecord()]));
+  }
+
   function createDefault() {
     return {
       schemaVersion: SCHEMA_VERSION,
@@ -113,6 +130,7 @@
       stats: defaultStats(),
       practicedSkills: [],
       naturalSkillPractice: defaultNaturalSkillPractice(),
+      weaponProgress: defaultWeaponProgress(),
       luck: rollHiddenLuck(),
       reputation: {
         Briarwell: 'Unknown',
@@ -135,6 +153,32 @@
 
   function pointsRemaining(state) {
     return Math.max(0, BONUS_POOL - pointsSpent(state));
+  }
+
+  function sanitizeWeaponProgress(candidate, state) {
+    if (!candidate.weaponProgress || typeof candidate.weaponProgress !== 'object') return;
+
+    for (const weaponName of WEAPON_KEYS) {
+      const source = candidate.weaponProgress[weaponName];
+      if (!source || typeof source !== 'object') continue;
+
+      state.weaponProgress[weaponName].familiarity = clampInt(
+        source.familiarity,
+        0,
+        WEAPON_SELF_PRACTICE_CAP
+      );
+      state.weaponProgress[weaponName].combatExperience = clampInt(
+        source.combatExperience,
+        0,
+        999999
+      );
+      state.weaponProgress[weaponName].techniques = Array.isArray(source.techniques)
+        ? [...new Set(source.techniques)]
+          .filter((name) => typeof name === 'string' && name.trim())
+          .map((name) => name.trim().slice(0, 40))
+          .slice(0, 30)
+        : [];
+    }
   }
 
   function sanitize(candidate) {
@@ -166,6 +210,8 @@
         );
       }
     }
+
+    sanitizeWeaponProgress(candidate, state);
 
     const backgroundSkill = BACKGROUNDS[state.background].skill;
     const practiced = Array.isArray(candidate.practicedSkills) ? candidate.practicedSkills : [];
@@ -220,6 +266,63 @@
     return candidate;
   }
 
+  function ensureWeaponProgress(candidate, weaponName) {
+    if (!WEAPON_KEYS.includes(weaponName)) return null;
+    if (!candidate.weaponProgress || typeof candidate.weaponProgress !== 'object') {
+      candidate.weaponProgress = defaultWeaponProgress();
+    }
+    if (!candidate.weaponProgress[weaponName] || typeof candidate.weaponProgress[weaponName] !== 'object') {
+      candidate.weaponProgress[weaponName] = blankWeaponRecord();
+    }
+    return candidate.weaponProgress[weaponName];
+  }
+
+  function recordWeaponPractice(candidate, weaponName, amount = 1) {
+    const record = ensureWeaponProgress(candidate, weaponName);
+    if (!record) return candidate;
+    const gain = Math.max(0, Number.parseInt(amount, 10) || 0);
+    const current = clampInt(record.familiarity, 0, WEAPON_SELF_PRACTICE_CAP);
+    record.familiarity = Math.min(WEAPON_SELF_PRACTICE_CAP, current + gain);
+    return candidate;
+  }
+
+  function recordWeaponCombat(candidate, weaponName, amount = 1) {
+    const record = ensureWeaponProgress(candidate, weaponName);
+    if (!record) return candidate;
+    const gain = Math.max(0, Number.parseInt(amount, 10) || 0);
+    record.combatExperience = Math.min(
+      999999,
+      clampInt(record.combatExperience, 0, 999999) + gain
+    );
+    if (gain > 0 && record.familiarity < WEAPON_SELF_PRACTICE_CAP) {
+      record.familiarity = Math.min(
+        WEAPON_SELF_PRACTICE_CAP,
+        clampInt(record.familiarity, 0, WEAPON_SELF_PRACTICE_CAP) + 1
+      );
+    }
+    return candidate;
+  }
+
+  function unlockWeaponTechnique(candidate, weaponName, techniqueName) {
+    const record = ensureWeaponProgress(candidate, weaponName);
+    if (!record) return candidate;
+    const name = String(techniqueName || '').trim().slice(0, 40);
+    if (!name) return candidate;
+    const techniques = Array.isArray(record.techniques) ? record.techniques : [];
+    if (!techniques.includes(name)) techniques.push(name);
+    record.techniques = techniques.slice(0, 30);
+    return candidate;
+  }
+
+  function resetWeaponProgress(candidate, weaponName) {
+    if (!WEAPON_KEYS.includes(weaponName)) return candidate;
+    if (!candidate.weaponProgress || typeof candidate.weaponProgress !== 'object') {
+      candidate.weaponProgress = defaultWeaponProgress();
+    }
+    candidate.weaponProgress[weaponName] = blankWeaponRecord();
+    return candidate;
+  }
+
   function allPracticedSkills(state) {
     const granted = getBackground(state).skill;
     return [granted, ...state.practicedSkills.filter((skill) => skill !== granted)];
@@ -255,10 +358,12 @@
     STAT_MAX,
     NATURAL_SKILL_MIN,
     NATURAL_SKILL_MAX,
+    WEAPON_SELF_PRACTICE_CAP,
     STAT_KEYS,
     STAT_LABELS,
     BACKGROUNDS,
     PRACTICED_SKILLS,
+    WEAPON_KEYS,
     NATURAL_SKILLS,
     createDefault,
     sanitize,
@@ -268,6 +373,10 @@
     derivedResources,
     naturalSkills,
     addNaturalSkillPractice,
+    recordWeaponPractice,
+    recordWeaponCombat,
+    unlockWeaponTechnique,
+    resetWeaponProgress,
     allPracticedSkills,
     save,
     load,
