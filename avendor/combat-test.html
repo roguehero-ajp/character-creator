@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Avendor Sword Combat 0.1</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="css/combat-test.css">
+</head>
+<body>
+  <main class="combat-page" id="combat-page">
+    <header class="combat-header">
+      <div>
+        <p class="eyebrow">The Rising Tides of Avendor</p>
+        <h1>Sword Combat Prototype 0.1</h1>
+        <p class="subtitle">Beginner East/West combat lab. Timing and balance are provisional.</p>
+      </div>
+      <nav class="combat-nav" aria-label="Prototype navigation">
+        <a href="test.html">Title</a>
+        <a href="character-create.html">Character</a>
+        <a href="walk-test.html">Briarwell</a>
+      </nav>
+    </header>
+
+    <section class="combat-layout">
+      <section class="arena-panel">
+        <div class="arena" id="combat-arena" tabindex="0" aria-label="Sword training arena">
+          <div class="arena-backdrop" aria-hidden="true">
+            <div class="beam beam-one"></div>
+            <div class="beam beam-two"></div>
+            <div class="floor-line"></div>
+          </div>
+
+          <div class="training-dummy" id="training-dummy" aria-hidden="true">
+            <div class="dummy-head"></div>
+            <div class="dummy-crossbar"></div>
+            <div class="dummy-post"></div>
+            <div class="dummy-base"></div>
+          </div>
+
+          <div class="fighter" id="fighter" aria-hidden="true">
+            <div class="fighter-mirror" id="fighter-mirror">
+              <div class="fighter-pose" id="fighter-pose">
+                <canvas id="fighter-canvas" width="128" height="240"></canvas>
+                <div class="weapon-anchor" id="weapon-anchor">
+                  <div class="sword" id="sword">
+                    <span class="sword-blade"></span>
+                    <span class="sword-guard"></span>
+                    <span class="sword-grip"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hit-spark" id="hit-spark" aria-hidden="true">✦</div>
+          <div class="combat-callout" id="combat-callout" role="status" aria-live="polite">Ready.</div>
+
+          <div class="arena-hud">
+            <div class="hud-row">
+              <span>Stamina</span>
+              <div class="meter"><i id="stamina-fill"></i></div>
+              <b id="stamina-value">0 / 0</b>
+            </div>
+            <div class="hud-row compact">
+              <span>Weapon</span>
+              <b id="weapon-rank">Sword · Untrained</b>
+            </div>
+          </div>
+
+          <div class="controls-card">
+            <strong>Controls</strong>
+            <span>A / D: step &amp; face</span>
+            <span>J: Quick Cut</span>
+            <span>K: Committed Slash</span>
+            <span>L: Thrust</span>
+            <span>I: Guard</span>
+            <span>Space: Dodge</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="dev-panel">
+        <section>
+          <h2>Attack timing</h2>
+          <div class="attack-grid" id="attack-grid"></div>
+        </section>
+
+        <section>
+          <h2>Practice model <small>developer view only</small></h2>
+          <div class="debug-stat">
+            <span>Self-practice familiarity</span>
+            <b id="familiarity-value">0 / 30</b>
+          </div>
+          <div class="mini-meter"><i id="familiarity-fill"></i></div>
+          <div class="debug-stat">
+            <span>Combat experience</span>
+            <b id="experience-value">0</b>
+          </div>
+          <p>Air swings and dummy work can improve familiarity only to its self-practice ceiling. Real combat can later push weapon growth further.</p>
+        </section>
+
+        <section>
+          <h2>Technique training</h2>
+          <ul class="technique-list" id="technique-list">
+            <li><span>Guard</span><b>Available</b></li>
+            <li><span>Parry</span><b>Locked</b></li>
+            <li><span>Riposte</span><b>Locked</b></li>
+          </ul>
+          <p>Technique unlocks are intentionally separate from simple repetition.</p>
+        </section>
+
+        <section class="debug-actions">
+          <button type="button" id="reset-practice">Reset sword practice</button>
+          <button type="button" id="restore-stamina">Restore stamina</button>
+        </section>
+
+        <p class="prototype-note">
+          The sword motion layer is a mechanics rig, not final combat art. It lets us tune commitment,
+          active hit windows, recovery and practice speed before authoring the production sprite atlas.
+        </p>
+      </aside>
+    </section>
+  </main>
+
+  <script src="js/sprite-engine.js"></script>
+  <script src="js/player-state.js"></script>
+  <script src="js/combat-engine.js"></script>
+  <script src="js/combat-test.js"></script>
+</body>
+</html>
