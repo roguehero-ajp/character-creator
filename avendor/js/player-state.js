@@ -2,7 +2,7 @@
   'use strict';
 
   const STORAGE_KEY = 'avendorPlayerState.v1';
-  const SCHEMA_VERSION = 2;
+  const SCHEMA_VERSION = 3;
   const BASE_STAT = 5;
   const BONUS_POOL = 8;
   const STAT_MIN = 1;
@@ -68,7 +68,7 @@
   const NATURAL_SKILLS = Object.freeze([
     ['Dodge', 'agility', 'perception'],
     ['Climb', 'strength', 'agility'],
-    ['Jump', 'strength', 'agility'],
+    ['Magical Talent', 'knowledge', 'intuition'],
     ['Sneak', 'agility', 'perception'],
     ['Notice', 'perception', 'intuition'],
     ['Search', 'perception', 'knowledge'],
