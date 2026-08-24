@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Avendor: Create a Character</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="css/character-creator.css">
+</head>
+<body>
+  <main class="creator-page" aria-labelledby="creator-title">
+    <header class="creator-header">
+      <div>
+        <p class="eyebrow">The Rising Tides of Avendor</p>
+        <h1 id="creator-title">Create a Character</h1>
+        <p class="creator-subtitle">A playable prototype for Avendor's character system. Balance values are provisional.</p>
+      </div>
+      <a class="header-link" href="test.html">Back to title</a>
+    </header>
+
+    <section class="creator-layout">
+      <form class="creation-panel panel" id="character-form" autocomplete="off">
+        <section class="creation-section">
+          <div class="section-heading">
+            <span class="step-number">I</span>
+            <div>
+              <h2>Identity</h2>
+              <p>Who steps into Briarwell?</p>
+            </div>
+          </div>
+
+          <label class="field-label" for="character-name">Name</label>
+          <input id="character-name" class="text-input" type="text" maxlength="32" placeholder="Enter a name" spellcheck="false">
+
+          <span class="field-label">Body</span>
+          <div class="body-choice" role="group" aria-label="Character body">
+            <button class="choice-button selected" id="choose-male" type="button" data-body="male" aria-pressed="true">Male</button>
+            <button class="choice-button" id="choose-female" type="button" data-body="female" aria-pressed="false">Female</button>
+          </div>
+        </section>
+
+        <section class="creation-section">
+          <div class="section-heading">
+            <span class="step-number">II</span>
+            <div>
+              <h2>Statistics</h2>
+              <p>Everyone begins capable. Spend the prototype bonus pool to shape the person.</p>
+            </div>
+          </div>
+
+          <div class="point-pool" aria-live="polite">
+            <span>Bonus points remaining</span>
+            <strong id="points-remaining">8</strong>
+          </div>
+
+          <div class="stat-editor" id="stat-editor">
+            <div class="stat-row" data-stat="strength"><span><b>Strength</b><small>Power and force</small></span><div><button type="button" data-action="minus" aria-label="Lower Strength">−</button><output>5</output><button type="button" data-action="plus" aria-label="Raise Strength">+</button></div></div>
+            <div class="stat-row" data-stat="agility"><span><b>Agility</b><small>Movement and balance</small></span><div><button type="button" data-action="minus" aria-label="Lower Agility">−</button><output>5</output><button type="button" data-action="plus" aria-label="Raise Agility">+</button></div></div>
+            <div class="stat-row" data-stat="coordination"><span><b>Coordination</b><small>Precision and aim</small></span><div><button type="button" data-action="minus" aria-label="Lower Coordination">−</button><output>5</output><button type="button" data-action="plus" aria-label="Raise Coordination">+</button></div></div>
+            <div class="stat-row" data-stat="knowledge"><span><b>Knowledge</b><small>Learning and reason</small></span><div><button type="button" data-action="minus" aria-label="Lower Knowledge">−</button><output>5</output><button type="button" data-action="plus" aria-label="Raise Knowledge">+</button></div></div>
+            <div class="stat-row" data-stat="intuition"><span><b>Intuition</b><small>Instinct and judgment</small></span><div><button type="button" data-action="minus" aria-label="Lower Intuition">−</button><output>5</output><button type="button" data-action="plus" aria-label="Raise Intuition">+</button></div></div>
+            <div class="stat-row" data-stat="perception"><span><b>Perception</b><small>Senses and awareness</small></span><div><button type="button" data-action="minus" aria-label="Lower Perception">−</button><output>5</output><button type="button" data-action="plus" aria-label="Raise Perception">+</button></div></div>
+            <div class="stat-row" data-stat="charm"><span><b>Charm</b><small>Presence and influence</small></span><div><button type="button" data-action="minus" aria-label="Lower Charm">−</button><output>5</output><button type="button" data-action="plus" aria-label="Raise Charm">+</button></div></div>
+            <div class="stat-row" data-stat="hardiness"><span><b>Hardiness</b><small>Toughness and resilience</small></span><div><button type="button" data-action="minus" aria-label="Lower Hardiness">−</button><output>5</output><button type="button" data-action="plus" aria-label="Raise Hardiness">+</button></div></div>
+          </div>
+          <p class="prototype-note">Prototype rule: every statistic starts at 5; spend 8 bonus points, maximum 10. This is not final balance.</p>
+        </section>
+
+        <section class="creation-section">
+          <div class="section-heading">
+            <span class="step-number">III</span>
+            <div>
+              <h2>Background</h2>
+              <p>A starting history, not a permanent class.</p>
+            </div>
+          </div>
+          <label class="field-label" for="background-select">Background</label>
+          <select class="select-input" id="background-select"></select>
+          <div class="background-card">
+            <strong id="background-name">Farmhand</strong>
+            <p id="background-description"></p>
+            <span>Granted practiced skill: <b id="background-skill"></b></span>
+          </div>
+        </section>
+
+        <section class="creation-section">
+          <div class="section-heading">
+            <span class="step-number">IV</span>
+            <div>
+              <h2>Practiced Skills</h2>
+              <p>Choose two additional skills. Everything else can still be attempted untrained.</p>
+            </div>
+          </div>
+          <div class="skill-counter"><span>Additional skills</span><strong><span id="skills-chosen">0</span> / 2</strong></div>
+          <div class="skill-picker" id="skill-picker"></div>
+        </section>
+      </form>
+
+      <aside class="hero-preview panel" aria-label="Hero preview">
+        <div class="preview-heading">
+          <span>Hero Preview</span>
+          <small>Current rugged exploration rig</small>
+        </div>
+        <div class="preview-stage">
+          <canvas id="hero-preview" width="128" height="240" aria-label="Character sprite preview"></canvas>
+        </div>
+        <div class="preview-caption">
+          <strong id="preview-name">Unnamed</strong>
+          <span id="preview-background">Farmhand</span>
+        </div>
+        <p class="preview-note">The appearance system is intentionally minimal for this prototype. Clothing, hair and equipment layers can grow from this foundation later.</p>
+      </aside>
+
+      <aside class="sheet-panel panel" aria-labelledby="sheet-title">
+        <header class="sheet-header">
+          <div>
+            <p>Avendor Character Record</p>
+            <h2 id="sheet-title">Character Sheet</h2>
+          </div>
+          <span class="sheet-key">Ctrl+S saves</span>
+        </header>
+
+        <div class="sheet-identity">
+          <div><small>Name</small><strong id="sheet-name">Unnamed</strong></div>
+          <div><small>Background</small><strong id="sheet-background">Farmhand</strong></div>
+        </div>
+
+        <section class="sheet-section">
+          <h3>Resources <small>prototype formulas</small></h3>
+          <div class="resource-list">
+            <div class="resource-row health"><span>Health</span><div><i id="health-bar"></i></div><b id="health-value">0</b></div>
+            <div class="resource-row stamina"><span>Stamina</span><div><i id="stamina-bar"></i></div><b id="stamina-value">0</b></div>
+            <div class="resource-row will"><span>Will</span><div><i id="will-bar"></i></div><b id="will-value">0</b></div>
+          </div>
+        </section>
+
+        <section class="sheet-section">
+          <h3>Statistics</h3>
+          <div class="sheet-stats" id="sheet-stats"></div>
+        </section>
+
+        <section class="sheet-section">
+          <h3>Natural Skills <small>simple-average preview</small></h3>
+          <div class="natural-skills" id="natural-skills"></div>
+        </section>
+
+        <section class="sheet-section split-section">
+          <div>
+            <h3>Practiced Skills</h3>
+            <ul class="plain-list" id="practiced-list"></ul>
+          </div>
+          <div>
+            <h3>Reputation</h3>
+            <ul class="plain-list reputation-list" id="reputation-list"></ul>
+          </div>
+        </section>
+
+        <section class="sheet-section conditions-placeholder">
+          <h3>Conditions</h3>
+          <p>None. This space is reserved for temporary states such as Poisoned, Bleeding, Exhausted or Cold.</p>
+        </section>
+      </aside>
+    </section>
+
+    <footer class="creator-actions">
+      <div class="save-status" id="save-status" role="status" aria-live="polite">Prototype ready.</div>
+      <button class="secondary-action" id="reset-character" type="button">Reset</button>
+      <button class="secondary-action" id="save-character" type="button">Save Prototype</button>
+      <button class="primary-action" id="begin-character" type="button">Create Character &amp; Enter Briarwell</button>
+    </footer>
+  </main>
+
+  <script src="js/sprite-engine.js"></script>
+  <script src="js/player-state.js"></script>
+  <script src="js/character-creator.js"></script>
+</body>
+</html>
