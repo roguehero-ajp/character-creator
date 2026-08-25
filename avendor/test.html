@@ -7,6 +7,32 @@
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/avendor.css">
   <link rel="stylesheet" href="css/garius.css">
+  <style>
+    /* Title-screen prototype menu: keep all four choices inside one clean stack. */
+    #title-menu {
+      top: 52.8%;
+      height: 35.5%;
+      padding: 1.1%;
+    }
+
+    #title-menu .title-menu-buttons {
+      gap: clamp(5px, .6vw, 10px);
+    }
+
+    #title-menu .early-test-button {
+      width: 92%;
+      min-height: 0;
+      padding: clamp(6px, .6vw, 10px) clamp(8px, 1vw, 16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(12px, 1.25vw, 21px);
+      line-height: 1.05;
+      text-align: center;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+  </style>
   <link rel="preload" as="image" href="assets/cinematic/scene-01-moons-master.png">
   <link rel="preload" as="image" href="assets/cinematic/scene-02-barrens-final.png">
   <link rel="preload" as="audio" href="assets/cinematic/avendor-sarabande-of-the-north-v7.ogg" type="audio/ogg">
@@ -65,21 +91,12 @@
 
     <section class="intro-cover-panel" id="title-menu" aria-label="Early test menu">
       <div class="title-menu-buttons">
-        <a
-          class="early-test-button"
-          href="character-create.html"
-          style="display:block;text-align:center;text-decoration:none"
-        >Start New Character</a>
+        <a class="early-test-button" href="character-create.html">Start New Character</a>
         <button class="early-test-button" id="early-test" type="button">Early Test</button>
         <button class="early-test-button introduction-button" id="play-introduction" type="button">Introduction</button>
+        <a class="early-test-button" href="combat-test.html">Sword Combat Test</a>
       </div>
     </section>
-
-    <a
-      class="early-test-button"
-      href="combat-test.html"
-      style="position:absolute;left:42%;top:87.4%;width:16%;z-index:20;display:block;padding:.55em .7em;text-align:center;text-decoration:none;font-size:clamp(11px,1.15vw,20px)"
-    >Sword Combat Test</a>
 
     <div class="test-ribbon" id="test-ribbon" style="z-index:15">
       Town Center 0.7.1 · Character 0.1.0 · <a href="combat-test.html" style="color:inherit;text-decoration:underline;text-underline-offset:2px">Sword Combat 0.1</a> · NPC Art 0.1.0 · Hero Art 0.4.3 · Rig 0.4.0 · Garius</div>
