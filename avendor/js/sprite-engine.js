@@ -8,7 +8,7 @@
   const WALK_FRAME_MS = 20;
   const WALK_POSE_MS = 110;
   const RIG_VERSION = '0.4.0';
-  const ART_VERSION = '0.5.1';
+  const ART_VERSION = '0.5.2';
 
   const ROW = Object.freeze({
     south: 0,
