@@ -8,7 +8,7 @@
   const WALK_FRAME_MS = 20;
   const WALK_POSE_MS = 110;
   const RIG_VERSION = '0.4.0';
-  const ART_VERSION = '0.4.4';
+  const ART_VERSION = '0.5.1';
 
   const ROW = Object.freeze({
     south: 0,
@@ -48,10 +48,12 @@
   function loadImage(src) {
     return new Promise((resolve, reject) => {
       const img = new Image();
+      const separator = src.includes('?') ? '&' : '?';
+      const versionedSrc = `${src}${separator}v=${encodeURIComponent(ART_VERSION)}`;
       img.decoding = 'async';
       img.onload = () => resolve(img);
       img.onerror = () => reject(new Error(`Could not load sprite atlas: ${src}`));
-      img.src = src;
+      img.src = versionedSrc;
     });
   }
 
