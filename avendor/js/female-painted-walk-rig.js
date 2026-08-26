@@ -40,7 +40,7 @@
         reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
       };
 
-      image.src = `${BASE}${file}?v=0.7.4`;
+      image.src = `${BASE}${file}?v=0.7.5`;
     });
   }
 
@@ -221,7 +221,7 @@
       images.ponytail,
       [
         cx + 12 + pose.ponytail.x * 0.55,
-        56 + bob + pose.ponytail.y
+        60 + bob + pose.ponytail.y
       ],
       0.115,
       {
@@ -302,7 +302,7 @@
   }
 
   window.AvendorFemalePaintedSouthRig = Object.freeze({
-    version: '0.7.4',
+    version: '0.7.5',
     load,
     drawPose,
     renderAtlas,
