@@ -35,7 +35,7 @@
         resolve(image);
       };
       image.onerror = () => reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
-      image.src = `${BASE}${file}?v=0.8.1`;
+      image.src = `${BASE}${file}?v=0.8.2`;
     });
   }
 
@@ -180,10 +180,13 @@
     drawLeg(ctx, pose, 'screen-left', 0.90);
     drawArm(ctx, arms.far, 'screen-left', 0.90);
 
+    // The torso source reads toward South-West, so mirror it for the
+    // South-East lane rather than twisting the entire body geometry.
     drawCentered(ctx, images.torso, torsoCenter, 0.205, {
       anchorX: 0.50,
       anchorY: 0.51,
       scaleX: 0.82,
+      flipX: true,
       rotate: -0.035 + pose.shoulderTilt * -0.004
     });
 
@@ -227,7 +230,7 @@
   }
 
   window.AvendorFemalePaintedSERig = Object.freeze({
-    version: '0.8.1',
+    version: '0.8.2',
     load,
     drawPose,
     renderAtlas,
