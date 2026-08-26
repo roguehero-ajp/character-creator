@@ -122,7 +122,6 @@
     const debug = Boolean(options.debug);
     const bob = pose.bob;
     const cx = pose.pelvisX;
-    const hipY = 137 + bob;
     const headCenter = [cx, 54 + bob];
     const torsoCenter = [cx, 111 + bob];
     const pelvisCenter = [cx, 143 + bob];
@@ -131,7 +130,6 @@
     ctx.save();
     ctx.imageSmoothingEnabled = true;
 
-    // Ponytail is a rear layer and trails the authored skeletal offset.
     drawCentered(ctx, images.ponytail,
       [cx + 12 + pose.ponytail.x * 0.55, 53 + bob + pose.ponytail.y],
       0.115,
@@ -142,8 +140,6 @@
     const frontSide = pose.support === 'screen-left' ? 'screen-left' : 'screen-right';
 
     drawLeg(ctx, pose, rearSide);
-
-    // Rear arm first.
     drawArm(ctx, arms[rearSide === 'screen-left' ? 'screenLeft' : 'screenRight'], rearSide);
 
     drawCentered(ctx, images.torso, torsoCenter, 0.205, {
@@ -159,8 +155,6 @@
     });
 
     drawLeg(ctx, pose, frontSide);
-
-    // Front arm after torso/pelvis for readable south-facing overlap.
     drawArm(ctx, arms[frontSide === 'screen-left' ? 'screenLeft' : 'screenRight'], frontSide);
 
     drawCentered(ctx, images.head, headCenter, 0.185, {
