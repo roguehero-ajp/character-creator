@@ -35,7 +35,7 @@
         resolve(image);
       };
       image.onerror = () => reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
-      image.src = `${BASE}${file}?v=0.8.0`;
+      image.src = `${BASE}${file}?v=0.8.1`;
     });
   }
 
@@ -154,23 +154,25 @@
     const cx = pose.pelvisX;
     const arms = armJoints(pose);
 
-    const headCenter = [cx + 6, 71 + bob];
+    // Stronger three-quarter head registration for South-East.
+    const headCenter = [cx + 8, 71 + bob];
     const torsoCenter = [cx + 4, 111 + bob];
     const pelvisCenter = [cx + 3, 143 + bob];
 
     ctx.save();
     ctx.imageSmoothingEnabled = true;
 
-    // Ponytail trails toward the upper-left as the body turns South-East.
+    // Ponytail sits farther behind/left of the turned head.
     drawCentered(
       ctx,
       images.ponytail,
-      [cx - 1 + pose.ponytail.x * 0.45, 60 + bob + pose.ponytail.y],
-      0.110,
+      [cx - 4 + pose.ponytail.x * 0.40, 61 + bob + pose.ponytail.y],
+      0.108,
       {
-        anchorX: 0.42,
+        anchorX: 0.38,
         anchorY: 0.20,
-        rotate: -0.10 - pose.ponytail.x * 0.006
+        scaleX: 0.94,
+        rotate: -0.16 - pose.ponytail.x * 0.006
       }
     );
 
@@ -195,11 +197,13 @@
     drawLeg(ctx, pose, 'screen-right', 1.03);
     drawArm(ctx, arms.near, 'screen-right', 1.03);
 
-    drawCentered(ctx, images.head, headCenter, 0.178, {
-      anchorX: 0.50,
+    // The source head is front-facing, so use stronger foreshortening and
+    // an off-centre anchor to make the sprite read as looking South-East.
+    drawCentered(ctx, images.head, headCenter, 0.176, {
+      anchorX: 0.58,
       anchorY: 0.43,
-      scaleX: 0.92,
-      rotate: -0.025 + pose.shoulderTilt * -0.002
+      scaleX: 0.78,
+      rotate: -0.060 + pose.shoulderTilt * -0.002
     });
 
     if (debug) {
@@ -223,7 +227,7 @@
   }
 
   window.AvendorFemalePaintedSERig = Object.freeze({
-    version: '0.8.0',
+    version: '0.8.1',
     load,
     drawPose,
     renderAtlas,
