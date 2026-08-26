@@ -1,0 +1,377 @@
+{
+  "version": "0.7.0",
+  "direction": "south",
+  "frame": {
+    "width": 128,
+    "height": 240,
+    "groundY": 220
+  },
+  "purpose": "Painted modular skin for the validated female South-facing 12-frame skeletal gait.",
+  "terminology": "viewer-relative screen-left / screen-right",
+  "production_engine_changed": false,
+  "parts": {
+    "neutral-reference": {
+      "source_bbox": [
+        54,
+        51,
+        349,
+        963
+      ],
+      "crop_bbox": [
+        48,
+        45,
+        361,
+        975
+      ],
+      "size": [
+        361,
+        975
+      ]
+    },
+    "screen-left-leg-source": {
+      "source_bbox": [
+        497,
+        546,
+        126,
+        511
+      ],
+      "crop_bbox": [
+        491,
+        540,
+        138,
+        523
+      ],
+      "size": [
+        138,
+        523
+      ]
+    },
+    "screen-right-leg-source": {
+      "source_bbox": [
+        883,
+        575,
+        122,
+        500
+      ],
+      "crop_bbox": [
+        877,
+        569,
+        134,
+        512
+      ],
+      "size": [
+        134,
+        512
+      ]
+    },
+    "pelvis": {
+      "source_bbox": [
+        627,
+        467,
+        267,
+        235
+      ],
+      "crop_bbox": [
+        621,
+        461,
+        279,
+        247
+      ],
+      "size": [
+        279,
+        247
+      ]
+    },
+    "ponytail": {
+      "source_bbox": [
+        928,
+        7,
+        304,
+        284
+      ],
+      "crop_bbox": [
+        922,
+        1,
+        316,
+        296
+      ],
+      "size": [
+        316,
+        296
+      ]
+    },
+    "torso": {
+      "source_bbox": [
+        631,
+        251,
+        246,
+        220
+      ],
+      "crop_bbox": [
+        625,
+        245,
+        258,
+        232
+      ],
+      "size": [
+        258,
+        232
+      ]
+    },
+    "head": {
+      "source_bbox": [
+        670,
+        9,
+        166,
+        242
+      ],
+      "crop_bbox": [
+        664,
+        3,
+        178,
+        254
+      ],
+      "size": [
+        178,
+        254
+      ]
+    },
+    "screen-left-upper-arm": {
+      "source_bbox": [
+        432,
+        98,
+        124,
+        186
+      ],
+      "crop_bbox": [
+        426,
+        92,
+        136,
+        198
+      ],
+      "size": [
+        136,
+        198
+      ]
+    },
+    "screen-right-upper-arm": {
+      "source_bbox": [
+        985,
+        245,
+        130,
+        175
+      ],
+      "crop_bbox": [
+        979,
+        239,
+        142,
+        187
+      ],
+      "size": [
+        142,
+        187
+      ]
+    },
+    "screen-left-lower-arm": {
+      "source_bbox": [
+        448,
+        290,
+        93,
+        235
+      ],
+      "crop_bbox": [
+        442,
+        284,
+        105,
+        247
+      ],
+      "size": [
+        105,
+        247
+      ]
+    },
+    "screen-right-lower-arm": {
+      "source_bbox": [
+        1012,
+        423,
+        89,
+        229
+      ],
+      "crop_bbox": [
+        1006,
+        417,
+        101,
+        241
+      ],
+      "size": [
+        101,
+        241
+      ]
+    },
+    "large-pouch": {
+      "source_bbox": [
+        1191,
+        311,
+        113,
+        143
+      ],
+      "crop_bbox": [
+        1185,
+        305,
+        125,
+        155
+      ],
+      "size": [
+        125,
+        155
+      ]
+    },
+    "small-pouch": {
+      "source_bbox": [
+        1321,
+        354,
+        68,
+        105
+      ],
+      "crop_bbox": [
+        1315,
+        348,
+        80,
+        117
+      ],
+      "size": [
+        80,
+        117
+      ]
+    },
+    "vertical-pouch": {
+      "source_bbox": [
+        1201,
+        477,
+        54,
+        140
+      ],
+      "crop_bbox": [
+        1195,
+        471,
+        66,
+        152
+      ],
+      "size": [
+        66,
+        152
+      ]
+    },
+    "canister": {
+      "source_bbox": [
+        1199,
+        627,
+        87,
+        249
+      ],
+      "crop_bbox": [
+        1193,
+        621,
+        99,
+        261
+      ],
+      "size": [
+        99,
+        261
+      ]
+    },
+    "trinkets": {
+      "source_bbox": [
+        1317,
+        494,
+        81,
+        228
+      ],
+      "crop_bbox": [
+        1311,
+        488,
+        93,
+        240
+      ],
+      "size": [
+        93,
+        240
+      ]
+    },
+    "strap": {
+      "source_bbox": [
+        1338,
+        753,
+        54,
+        171
+      ],
+      "crop_bbox": [
+        1332,
+        747,
+        66,
+        183
+      ],
+      "size": [
+        66,
+        183
+      ]
+    },
+    "screen-left-thigh": {
+      "derived_from": "screen-left-leg-source.png",
+      "split": [
+        0,
+        0,
+        138,
+        219
+      ],
+      "size": [
+        138,
+        219
+      ]
+    },
+    "screen-left-shin-boot": {
+      "derived_from": "screen-left-leg-source.png",
+      "split": [
+        0,
+        157,
+        138,
+        523
+      ],
+      "size": [
+        138,
+        366
+      ]
+    },
+    "screen-right-thigh": {
+      "derived_from": "screen-right-leg-source.png",
+      "split": [
+        0,
+        0,
+        134,
+        214
+      ],
+      "size": [
+        134,
+        214
+      ]
+    },
+    "screen-right-shin-boot": {
+      "derived_from": "screen-right-leg-source.png",
+      "split": [
+        0,
+        154,
+        134,
+        512
+      ],
+      "size": [
+        134,
+        358
+      ]
+    }
+  },
+  "notes": [
+    "Arm assets are already separated at elbow joints in the approved source sheet.",
+    "Leg source art was deterministically split into thigh and shin/boot pieces with overlap around the knee.",
+    "The production female walk atlas remains 8 frames until the painted South rig is visually approved."
+  ]
+}
