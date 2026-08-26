@@ -35,7 +35,7 @@
         resolve(image);
       };
       image.onerror = () => reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
-      image.src = `${BASE}${file}?v=0.8.2`;
+      image.src = `${BASE}${file}?v=0.8.3`;
     });
   }
 
@@ -89,8 +89,8 @@
   function armJoints(pose) {
     const bob = pose.bob;
     const cx = pose.pelvisX;
-    const farShoulder = [cx - 8, 93 + bob + pose.shoulderTilt];
-    const nearShoulder = [cx + 13, 91 + bob - pose.shoulderTilt];
+    const rearShoulder = [cx + 13, 91 + bob - pose.shoulderTilt];
+    const frontShoulder = [cx - 8, 93 + bob + pose.shoulderTilt];
 
     function make(shoulder, swing, sideSign) {
       return {
@@ -108,8 +108,8 @@
     }
 
     return {
-      far: make(farShoulder, pose.armSwing, -1),
-      near: make(nearShoulder, -pose.armSwing, 1)
+      rear: make(rearShoulder, -pose.armSwing, 1),
+      front: make(frontShoulder, pose.armSwing, -1)
     };
   }
 
@@ -154,7 +154,6 @@
     const cx = pose.pelvisX;
     const arms = armJoints(pose);
 
-    // Stronger three-quarter head registration for South-East.
     const headCenter = [cx + 8, 71 + bob];
     const torsoCenter = [cx + 4, 111 + bob];
     const pelvisCenter = [cx + 3, 143 + bob];
@@ -162,7 +161,6 @@
     ctx.save();
     ctx.imageSmoothingEnabled = true;
 
-    // Ponytail sits farther behind/left of the turned head.
     drawCentered(
       ctx,
       images.ponytail,
@@ -176,9 +174,9 @@
       }
     );
 
-    // Fixed far/near layering creates the three-quarter turn.
+    // Rear body parts for SE.
     drawLeg(ctx, pose, 'screen-left', 0.90);
-    drawArm(ctx, arms.far, 'screen-left', 0.90);
+    drawArm(ctx, arms.rear, 'screen-right', 0.90);
 
     // The torso source reads toward South-West, so mirror it for the
     // South-East lane rather than twisting the entire body geometry.
@@ -197,11 +195,10 @@
       rotate: -0.025 + pose.hipTilt * 0.006
     });
 
+    // Front body parts for SE.
     drawLeg(ctx, pose, 'screen-right', 1.03);
-    drawArm(ctx, arms.near, 'screen-right', 1.03);
+    drawArm(ctx, arms.front, 'screen-left', 1.03);
 
-    // The source head is front-facing, so use stronger foreshortening and
-    // an off-centre anchor to make the sprite read as looking South-East.
     drawCentered(ctx, images.head, headCenter, 0.176, {
       anchorX: 0.58,
       anchorY: 0.43,
@@ -230,7 +227,7 @@
   }
 
   window.AvendorFemalePaintedSERig = Object.freeze({
-    version: '0.8.2',
+    version: '0.8.3',
     load,
     drawPose,
     renderAtlas,
