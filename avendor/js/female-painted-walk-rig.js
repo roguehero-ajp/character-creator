@@ -2,9 +2,12 @@
   'use strict';
 
   const Skeleton = window.AvendorFemaleSouthRig;
-  if (!Skeleton) throw new Error('female-skeletal-walk-rig.js must load before female-painted-walk-rig.js.');
+  if (!Skeleton) {
+    throw new Error('female-skeletal-walk-rig.js must load before female-painted-walk-rig.js.');
+  }
 
   const BASE = 'assets/sprites/hero/body/female/skeletal-rig/';
+
   const PART_FILES = Object.freeze({
     head: 'head.png',
     ponytail: 'ponytail.png',
@@ -27,26 +30,36 @@
     return new Promise((resolve, reject) => {
       const image = new Image();
       image.decoding = 'async';
+
       image.onload = () => {
         images[name] = image;
         resolve(image);
       };
-      image.onerror = () => reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
-      image.src = `${BASE}${file}?v=0.7.0`;
+
+      image.onerror = () => {
+        reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
+      };
+
+      image.src = `${BASE}${file}?v=0.7.1`;
     });
   }
 
   async function load() {
-    await Promise.all(Object.entries(PART_FILES).map(([name, file]) => loadImage(name, file)));
+    await Promise.all(
+      Object.entries(PART_FILES).map(([name, file]) => loadImage(name, file))
+    );
+
     ready = true;
     return images;
   }
 
   function drawVerticalSegment(ctx, image, from, to, options = {}) {
     if (!image) return;
+
     const dx = to[0] - from[0];
     const dy = to[1] - from[1];
     const targetLength = Math.hypot(dx, dy);
+
     if (targetLength < 1) return;
 
     const pivotX = image.naturalWidth * (options.pivotX ?? 0.5);
@@ -59,23 +72,32 @@
     ctx.translate(from[0], from[1]);
     ctx.rotate(angle);
     ctx.scale(scale, scale);
+
     if (options.flipX) {
       ctx.scale(-1, 1);
       ctx.drawImage(image, pivotX - image.naturalWidth, -pivotY);
     } else {
       ctx.drawImage(image, -pivotX, -pivotY);
     }
+
     ctx.restore();
   }
 
   function drawCentered(ctx, image, center, scale, options = {}) {
     if (!image) return;
+
     ctx.save();
     ctx.translate(center[0], center[1]);
-    if (options.rotate) ctx.rotate(options.rotate);
+
+    if (options.rotate) {
+      ctx.rotate(options.rotate);
+    }
+
     ctx.scale(scale * (options.flipX ? -1 : 1), scale);
+
     const anchorX = image.naturalWidth * (options.anchorX ?? 0.5);
     const anchorY = image.naturalHeight * (options.anchorY ?? 0.5);
+
     ctx.drawImage(image, -anchorX, -anchorY);
     ctx.restore();
   }
@@ -84,15 +106,34 @@
     const bob = pose.bob;
     const cx = pose.pelvisX;
     const shoulderY = 92 + bob;
-    const leftShoulder = [cx - 18, shoulderY + pose.shoulderTilt];
-    const rightShoulder = [cx + 18, shoulderY - pose.shoulderTilt];
 
-    const rightAdvance = (pose.screenRight.toe[0] - cx) - (cx - pose.screenLeft.toe[0]);
+    const leftShoulder = [
+      cx - 18,
+      shoulderY + pose.shoulderTilt
+    ];
+
+    const rightShoulder = [
+      cx + 18,
+      shoulderY - pose.shoulderTilt
+    ];
+
+    const rightAdvance =
+      (pose.screenRight.toe[0] - cx) -
+      (cx - pose.screenLeft.toe[0]);
+
     const swing = Math.max(-12, Math.min(12, rightAdvance * 0.55));
 
     function make(shoulder, localSwing, sideSign) {
-      const elbow = [shoulder[0] + sideSign * (7 + localSwing * 0.25), shoulder[1] + 26 + bob];
-      const hand = [elbow[0] + sideSign * (4 + localSwing * 0.16), elbow[1] + 26];
+      const elbow = [
+        shoulder[0] + sideSign * (7 + localSwing * 0.25),
+        shoulder[1] + 26 + bob
+      ];
+
+      const hand = [
+        elbow[0] + sideSign * (4 + localSwing * 0.16),
+        elbow[1] + 26
+      ];
+
       return { shoulder, elbow, hand };
     }
 
@@ -106,23 +147,67 @@
     const leg = side === 'screen-left' ? pose.screenLeft : pose.screenRight;
     const thigh = side === 'screen-left' ? images.screenLeftThigh : images.screenRightThigh;
     const shin = side === 'screen-left' ? images.screenLeftShinBoot : images.screenRightShinBoot;
-    drawVerticalSegment(ctx, thigh, leg.hip, leg.knee, { lengthFactor: 0.80, scale: 1.08 });
-    drawVerticalSegment(ctx, shin, leg.knee, leg.toe, { lengthFactor: 0.88, scale: 1.03 });
+    const sideSign = side === 'screen-left' ? -1 : 1;
+
+    // Registration correction: keep the validated foot placement,
+    // but move the painted upper-leg roots outward so the thighs
+    // do not visually collapse into each other.
+    const hip = [
+      leg.hip[0] + sideSign * 6,
+      leg.hip[1] + 1
+    ];
+
+    const knee = [
+      leg.knee[0] + sideSign * 3,
+      leg.knee[1] + 1
+    ];
+
+    const toe = [
+      leg.toe[0],
+      leg.toe[1]
+    ];
+
+    drawVerticalSegment(ctx, thigh, hip, knee, {
+      lengthFactor: 0.82,
+      scale: 0.98
+    });
+
+    drawVerticalSegment(ctx, shin, knee, toe, {
+      lengthFactor: 0.90,
+      scale: 1.00
+    });
   }
 
   function drawArm(ctx, joints, side) {
-    const upper = side === 'screen-left' ? images.screenLeftUpperArm : images.screenRightUpperArm;
-    const lower = side === 'screen-left' ? images.screenLeftLowerArm : images.screenRightLowerArm;
-    drawVerticalSegment(ctx, upper, joints.shoulder, joints.elbow, { lengthFactor: 0.83, scale: 1.05 });
-    drawVerticalSegment(ctx, lower, joints.elbow, joints.hand, { lengthFactor: 0.86, scale: 1.00 });
+    const upper = side === 'screen-left'
+      ? images.screenLeftUpperArm
+      : images.screenRightUpperArm;
+
+    const lower = side === 'screen-left'
+      ? images.screenLeftLowerArm
+      : images.screenRightLowerArm;
+
+    drawVerticalSegment(ctx, upper, joints.shoulder, joints.elbow, {
+      lengthFactor: 0.83,
+      scale: 1.05
+    });
+
+    drawVerticalSegment(ctx, lower, joints.elbow, joints.hand, {
+      lengthFactor: 0.86,
+      scale: 1.00
+    });
   }
 
   function drawPose(ctx, pose, options = {}) {
     if (!ready) return;
+
     const debug = Boolean(options.debug);
     const bob = pose.bob;
     const cx = pose.pelvisX;
-    const headCenter = [cx, 54 + bob];
+
+    // Head registration correction: lower the painted head and use
+    // a slightly shallower anchor so it reconnects visually to the torso.
+    const headCenter = [cx, 62 + bob];
     const torsoCenter = [cx, 111 + bob];
     const pelvisCenter = [cx, 143 + bob];
     const arms = armJoints(pose);
@@ -130,19 +215,41 @@
     ctx.save();
     ctx.imageSmoothingEnabled = true;
 
-    drawCentered(ctx, images.ponytail,
-      [cx + 12 + pose.ponytail.x * 0.55, 53 + bob + pose.ponytail.y],
+    // Ponytail is a rear layer and trails the authored skeletal offset.
+    drawCentered(
+      ctx,
+      images.ponytail,
+      [
+        cx + 12 + pose.ponytail.x * 0.55,
+        53 + bob + pose.ponytail.y
+      ],
       0.115,
-      { anchorX: 0.36, anchorY: 0.20, rotate: -pose.ponytail.x * 0.008 }
+      {
+        anchorX: 0.36,
+        anchorY: 0.20,
+        rotate: -pose.ponytail.x * 0.008
+      }
     );
 
-    const rearSide = pose.support === 'screen-left' ? 'screen-right' : 'screen-left';
-    const frontSide = pose.support === 'screen-left' ? 'screen-left' : 'screen-right';
+    const rearSide = pose.support === 'screen-left'
+      ? 'screen-right'
+      : 'screen-left';
+
+    const frontSide = pose.support === 'screen-left'
+      ? 'screen-left'
+      : 'screen-right';
 
     drawLeg(ctx, pose, rearSide);
-    drawArm(ctx, arms[rearSide === 'screen-left' ? 'screenLeft' : 'screenRight'], rearSide);
 
-    drawCentered(ctx, images.torso, torsoCenter, 0.205, {
+    // Rear arm first so it sits behind the torso.
+    drawArm(
+      ctx,
+      arms[rearSide === 'screen-left' ? 'screenLeft' : 'screenRight'],
+      rearSide
+    );
+
+    // Slightly enlarged torso helps close the neck/shoulder join.
+    drawCentered(ctx, images.torso, torsoCenter, 0.210, {
       anchorX: 0.50,
       anchorY: 0.51,
       rotate: pose.shoulderTilt * -0.008
@@ -155,25 +262,37 @@
     });
 
     drawLeg(ctx, pose, frontSide);
-    drawArm(ctx, arms[frontSide === 'screen-left' ? 'screenLeft' : 'screenRight'], frontSide);
 
-    drawCentered(ctx, images.head, headCenter, 0.185, {
+    // Front arm after torso/pelvis for readable south-facing overlap.
+    drawArm(
+      ctx,
+      arms[frontSide === 'screen-left' ? 'screenLeft' : 'screenRight'],
+      frontSide
+    );
+
+    drawCentered(ctx, images.head, headCenter, 0.180, {
       anchorX: 0.50,
-      anchorY: 0.48,
+      anchorY: 0.43,
       rotate: pose.shoulderTilt * -0.004
     });
 
     if (debug) {
-      Skeleton.drawPose(ctx, pose, { debug: true, showGround: true });
+      Skeleton.drawPose(ctx, pose, {
+        debug: true,
+        showGround: true
+      });
     }
+
     ctx.restore();
   }
 
   function renderAtlas(canvas, debug = false) {
     canvas.width = Skeleton.FRAME_W * Skeleton.SOUTH_POSES.length;
     canvas.height = Skeleton.FRAME_H;
+
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     Skeleton.SOUTH_POSES.forEach((pose, index) => {
       ctx.save();
       ctx.translate(index * Skeleton.FRAME_W, 0);
@@ -183,10 +302,13 @@
   }
 
   window.AvendorFemalePaintedSouthRig = Object.freeze({
-    version: '0.7.0',
+    version: '0.7.1',
     load,
     drawPose,
     renderAtlas,
-    get ready() { return ready; }
+
+    get ready() {
+      return ready;
+    }
   });
 })();
