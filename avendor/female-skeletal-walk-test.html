@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Female South Walk Rig 0.7 | Avendor</title>
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: #171311; color: #f3eadf; }
+    main { width: min(1180px, calc(100% - 32px)); margin: 24px auto 48px; }
+    h1 { margin-bottom: 6px; }
+    .lede { margin-top: 0; color: #cfc2b5; max-width: 900px; }
+    .panel { background: #241e1a; border: 1px solid #4c4037; border-radius: 14px; padding: 16px; margin-top: 18px; }
+    .viewer { display: grid; grid-template-columns: 260px 1fr; gap: 22px; align-items: start; }
+    canvas { image-rendering: pixelated; }
+    #pose-canvas { width: 256px; height: 480px; background: #111; border-radius: 10px; border: 1px solid #50463f; }
+    .controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+    button { background: #3a302a; color: #fff7ee; border: 1px solid #65564b; border-radius: 8px; padding: 8px 11px; cursor: pointer; }
+    button:hover, button:focus-visible { background: #4a3d35; }
+    button[aria-pressed="true"] { outline: 2px solid #e8c56a; }
+    .status { display: grid; gap: 8px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 14px; }
+    .pass { color: #83d69a; }
+    .fail { color: #ff8b8b; }
+    .cards { display: grid; grid-template-columns: repeat(6, minmax(130px, 1fr)); gap: 12px; margin-top: 18px; }
+    .pose-card { background: #1b1714; border: 1px solid #4a4038; border-radius: 10px; padding: 9px; cursor: pointer; }
+    .pose-card.selected { border-color: #e8c56a; box-shadow: 0 0 0 1px #e8c56a inset; }
+    .pose-card canvas { display: block; width: 128px; height: 240px; max-width: 100%; margin: 0 auto 7px; background: #111; }
+    .pose-card strong, .pose-card span { display: block; }
+    .pose-card span { color: #bbaea2; font-size: 12px; min-height: 34px; margin-top: 3px; }
+    #atlas { width: 100%; height: auto; max-height: 240px; background: #111; border: 1px solid #4a4038; }
+    .legend { color: #bbaea2; font-size: 13px; }
+    @media (max-width: 900px) { .viewer { grid-template-columns: 1fr; } .cards { grid-template-columns: repeat(3, 1fr); } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Female South-Facing Skeletal Walk Rig 0.7</h1>
+    <p class="lede">Deterministic 12-pose gait proof. This page does not modify the live 8-frame sprite engine or the approved female atlas. Viewer-relative screen-left / screen-right terminology is used throughout.</p>
+
+    <section class="panel viewer">
+      <canvas id="pose-canvas" width="128" height="240" aria-label="Animated South-facing female skeletal walk pose"></canvas>
+      <div>
+        <div class="controls">
+          <button id="play-toggle" type="button" aria-pressed="true">Pause</button>
+          <button id="debug-toggle" type="button" aria-pressed="true">Joint overlay: on</button>
+          <button id="prev-pose" type="button">Previous pose</button>
+          <button id="next-pose" type="button">Next pose</button>
+        </div>
+        <div class="status">
+          <div id="pose-status"></div>
+          <div id="support-status"></div>
+          <div id="validation-status"></div>
+        </div>
+        <p class="legend">Yellow dots are joints. Green marks the planted support toe. Red marks the moving toe. The planted toe remains locked to the shared y=220 ground anchor during load.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>12-frame choreography</h2>
+      <div class="cards" id="pose-cards"></div>
+    </section>
+
+    <section class="panel">
+      <h2>South-row atlas proof</h2>
+      <p class="legend">This is a transparent 1536 × 240 South row generated entirely from the authored pose table. It is a rig diagnostic, not final painted sprite art.</p>
+      <canvas id="atlas" width="1536" height="240"></canvas>
+    </section>
+  </main>
+
+  <script src="js/female-skeletal-walk-rig.js?v=0.7.0"></script>
+  <script>
+    (() => {
+      'use strict';
+      const rig = window.AvendorFemaleSouthRig;
+      const canvas = document.getElementById('pose-canvas');
+      const ctx = canvas.getContext('2d');
+      const atlas = document.getElementById('atlas');
+      const cards = document.getElementById('pose-cards');
+      const poseStatus = document.getElementById('pose-status');
+      const supportStatus = document.getElementById('support-status');
+      const validationStatus = document.getElementById('validation-status');
+      const playToggle = document.getElementById('play-toggle');
+      const debugToggle = document.getElementById('debug-toggle');
+
+      let frame = 0;
+      let playing = true;
+      let debug = true;
+      let lastAdvance = performance.now();
+      const cardNodes = [];
+
+      function drawMain() {
+        ctx.clearRect(0, 0, rig.FRAME_W, rig.FRAME_H);
+        rig.drawPose(ctx, rig.SOUTH_POSES[frame], { debug });
+        const pose = rig.SOUTH_POSES[frame];
+        poseStatus.textContent = `Frame ${frame + 1}/12 · ${pose.phase}`;
+        supportStatus.textContent = `Support: ${pose.support}`;
+        cardNodes.forEach((node, index) => node.classList.toggle('selected', index === frame));
+      }
+
+      function setFrame(next) {
+        frame = (next + rig.SOUTH_POSES.length) % rig.SOUTH_POSES.length;
+        lastAdvance = performance.now();
+        drawMain();
+      }
+
+      rig.SOUTH_POSES.forEach((pose, index) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'pose-card';
+        card.setAttribute('aria-label', `Show frame ${index + 1}: ${pose.phase}`);
+        const mini = document.createElement('canvas');
+        mini.width = rig.FRAME_W;
+        mini.height = rig.FRAME_H;
+        rig.drawPose(mini.getContext('2d'), pose, { debug: true });
+        const title = document.createElement('strong');
+        title.textContent = `Frame ${index + 1}`;
+        const desc = document.createElement('span');
+        desc.textContent = pose.phase;
+        card.append(mini, title, desc);
+        card.addEventListener('click', () => { playing = false; playToggle.textContent = 'Play'; playToggle.setAttribute('aria-pressed', 'false'); setFrame(index); });
+        cards.appendChild(card);
+        cardNodes.push(card);
+      });
+
+      const errors = rig.validateSouthCycle();
+      validationStatus.className = errors.length ? 'fail' : 'pass';
+      validationStatus.textContent = errors.length ? `GAIT VALIDATION FAILED · ${errors.join(' | ')}` : 'GAIT VALIDATION PASSED · 12 poses · contact alternation verified · planted support anchors verified';
+
+      playToggle.addEventListener('click', () => {
+        playing = !playing;
+        playToggle.textContent = playing ? 'Pause' : 'Play';
+        playToggle.setAttribute('aria-pressed', String(playing));
+        lastAdvance = performance.now();
+      });
+
+      debugToggle.addEventListener('click', () => {
+        debug = !debug;
+        debugToggle.textContent = `Joint overlay: ${debug ? 'on' : 'off'}`;
+        debugToggle.setAttribute('aria-pressed', String(debug));
+        drawMain();
+      });
+
+      document.getElementById('prev-pose').addEventListener('click', () => { playing = false; playToggle.textContent = 'Play'; playToggle.setAttribute('aria-pressed', 'false'); setFrame(frame - 1); });
+      document.getElementById('next-pose').addEventListener('click', () => { playing = false; playToggle.textContent = 'Play'; playToggle.setAttribute('aria-pressed', 'false'); setFrame(frame + 1); });
+
+      rig.renderAtlas(atlas, false);
+      drawMain();
+
+      function tick(now) {
+        if (playing && now - lastAdvance >= rig.POSE_MS) {
+          const steps = Math.floor((now - lastAdvance) / rig.POSE_MS);
+          frame = (frame + steps) % rig.SOUTH_POSES.length;
+          lastAdvance += steps * rig.POSE_MS;
+          drawMain();
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>
