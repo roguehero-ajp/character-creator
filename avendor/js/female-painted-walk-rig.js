@@ -40,7 +40,7 @@
         reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
       };
 
-      image.src = `${BASE}${file}?v=0.7.6`;
+      image.src = `${BASE}${file}?v=0.7.7`;
     });
   }
 
@@ -71,7 +71,7 @@
     ctx.save();
     ctx.translate(from[0], from[1]);
     ctx.rotate(angle);
-    ctx.scale(scale, scale);
+    ctx.scale(scale * (options.widthScale ?? 1), scale);
 
     if (options.flipX) {
       ctx.scale(-1, 1);
@@ -93,7 +93,10 @@
       ctx.rotate(options.rotate);
     }
 
-    ctx.scale(scale * (options.flipX ? -1 : 1), scale);
+    ctx.scale(
+      scale * (options.scaleX ?? 1) * (options.flipX ? -1 : 1),
+      scale * (options.scaleY ?? 1)
+    );
 
     const anchorX = image.naturalWidth * (options.anchorX ?? 0.5);
     const anchorY = image.naturalHeight * (options.anchorY ?? 0.5);
@@ -107,15 +110,14 @@
     const cx = pose.pelvisX;
     const shoulderY = 92 + bob;
 
-    // Keep the shoulders tucked closer to the torso than the earlier
-    // sideways-shuffle prototype.
+    // Keep the arms close, but leave a little more hip clearance than 0.7.6.
     const leftShoulder = [
-      cx - 14,
+      cx - 15,
       shoulderY + pose.shoulderTilt * 0.45
     ];
 
     const rightShoulder = [
-      cx + 14,
+      cx + 15,
       shoulderY - pose.shoulderTilt * 0.45
     ];
 
@@ -156,34 +158,38 @@
     const leg = side === 'screen-left' ? pose.screenLeft : pose.screenRight;
     const thigh = side === 'screen-left' ? images.screenLeftThigh : images.screenRightThigh;
     const shin = side === 'screen-left' ? images.screenLeftShinBoot : images.screenRightShinBoot;
-    const sideSign = side === 'screen-left' ? -1 : 1;
+    const cx = pose.pelvisX;
 
-    // Registration correction: keep the validated foot placement,
-    // but move the painted upper-leg roots outward so the thighs
-    // do not visually collapse into each other.
+    // The authored skeleton keeps generous left/right separation for clarity.
+    // Compress only the painted registration toward centre so the south-facing
+    // walk reads as a natural near-single-file foot track.
+    const narrowX = (x, factor) => cx + (x - cx) * factor;
+
     const hip = [
-      leg.hip[0] + sideSign * 6,
+      narrowX(leg.hip[0], 0.58),
       leg.hip[1] + 1
     ];
 
     const knee = [
-      leg.knee[0] + sideSign * 3,
+      narrowX(leg.knee[0], 0.34),
       leg.knee[1] + 1
     ];
 
     const toe = [
-      leg.toe[0],
+      narrowX(leg.toe[0], 0.16),
       leg.toe[1]
     ];
 
     drawVerticalSegment(ctx, thigh, hip, knee, {
       lengthFactor: 0.82,
-      scale: 0.98
+      scale: 0.98,
+      widthScale: 0.90
     });
 
     drawVerticalSegment(ctx, shin, knee, toe, {
       lengthFactor: 0.90,
-      scale: 1.00
+      scale: 1.00,
+      widthScale: 0.94
     });
   }
 
@@ -278,9 +284,11 @@
       rotate: pose.shoulderTilt * -0.008
     });
 
+    // Narrow the pelvis horizontally without changing its vertical size.
     drawCentered(ctx, images.pelvis, pelvisCenter, 0.175, {
       anchorX: 0.50,
       anchorY: 0.54,
+      scaleX: 0.84,
       rotate: pose.hipTilt * 0.010
     });
 
@@ -324,7 +332,7 @@
   }
 
   window.AvendorFemalePaintedSouthRig = Object.freeze({
-    version: '0.7.6',
+    version: '0.7.7',
     load,
     drawPose,
     renderAtlas,
