@@ -40,7 +40,7 @@
         reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
       };
 
-      image.src = `${BASE}${file}?v=0.7.3`;
+      image.src = `${BASE}${file}?v=0.7.4`;
     });
   }
 
@@ -207,7 +207,7 @@
 
     // Head registration correction: lower the painted head and use
     // a slightly shallower anchor so it reconnects visually to the torso.
-    const headCenter = [cx, 78 + bob];
+    const headCenter = [cx, 71 + bob];
     const torsoCenter = [cx, 111 + bob];
     const pelvisCenter = [cx, 143 + bob];
     const arms = armJoints(pose);
@@ -221,7 +221,7 @@
       images.ponytail,
       [
         cx + 12 + pose.ponytail.x * 0.55,
-        63 + bob + pose.ponytail.y
+        56 + bob + pose.ponytail.y
       ],
       0.115,
       {
@@ -302,7 +302,7 @@
   }
 
   window.AvendorFemalePaintedSouthRig = Object.freeze({
-    version: '0.7.3',
+    version: '0.7.4',
     load,
     drawPose,
     renderAtlas,
