@@ -40,7 +40,7 @@
         reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
       };
 
-      image.src = `${BASE}${file}?v=0.7.5`;
+      image.src = `${BASE}${file}?v=0.7.6`;
     });
   }
 
@@ -107,34 +107,43 @@
     const cx = pose.pelvisX;
     const shoulderY = 92 + bob;
 
+    // Keep the shoulders tucked closer to the torso than the earlier
+    // sideways-shuffle prototype.
     const leftShoulder = [
-      cx - 18,
-      shoulderY + pose.shoulderTilt
+      cx - 14,
+      shoulderY + pose.shoulderTilt * 0.45
     ];
 
     const rightShoulder = [
-      cx + 18,
-      shoulderY - pose.shoulderTilt
+      cx + 14,
+      shoulderY - pose.shoulderTilt * 0.45
     ];
 
     const rightAdvance =
       (pose.screenRight.toe[0] - cx) -
       (cx - pose.screenLeft.toe[0]);
 
-    const swing = Math.max(-12, Math.min(12, rightAdvance * 0.55));
+    // Use the leg phase only to decide which arm is forward/back.
+    // Most of the visible travel is vertical/depth, not lateral X motion.
+    const swing = Math.max(-12, Math.min(12, rightAdvance * 0.70));
 
     function make(shoulder, localSwing, sideSign) {
       const elbow = [
-        shoulder[0] + sideSign * (7 + localSwing * 0.25),
-        shoulder[1] + 26 + bob
+        shoulder[0] + sideSign * 3,
+        shoulder[1] + 24 + localSwing * 0.18
       ];
 
       const hand = [
-        elbow[0] + sideSign * (4 + localSwing * 0.16),
-        elbow[1] + 26
+        shoulder[0] + sideSign * 5,
+        shoulder[1] + 49 + localSwing * 0.62
       ];
 
-      return { shoulder, elbow, hand };
+      return {
+        shoulder,
+        elbow,
+        hand,
+        forward: localSwing
+      };
     }
 
     return {
@@ -187,14 +196,18 @@
       ? images.screenLeftLowerArm
       : images.screenRightLowerArm;
 
+    // A tiny depth scale reinforces forward/back motion without making
+    // the arms appear to grow and shrink dramatically.
+    const depthScale = 1 + Math.max(-0.035, Math.min(0.035, joints.forward * 0.0025));
+
     drawVerticalSegment(ctx, upper, joints.shoulder, joints.elbow, {
       lengthFactor: 0.83,
-      scale: 1.05
+      scale: 1.02 * depthScale
     });
 
     drawVerticalSegment(ctx, lower, joints.elbow, joints.hand, {
       lengthFactor: 0.86,
-      scale: 1.00
+      scale: 0.98 * depthScale
     });
   }
 
@@ -231,21 +244,31 @@
       }
     );
 
-    const rearSide = pose.support === 'screen-left'
+    const rearLegSide = pose.support === 'screen-left'
       ? 'screen-right'
       : 'screen-left';
 
-    const frontSide = pose.support === 'screen-left'
+    const frontLegSide = pose.support === 'screen-left'
       ? 'screen-left'
       : 'screen-right';
 
-    drawLeg(ctx, pose, rearSide);
+    // Arm depth is independent from leg layering. The arm with the larger
+    // forward phase is drawn in front, which makes the opposite-arm swing
+    // read naturally in a south-facing walk.
+    const frontArmSide = arms.screenLeft.forward >= arms.screenRight.forward
+      ? 'screen-left'
+      : 'screen-right';
 
-    // Rear arm first so it sits behind the torso.
+    const rearArmSide = frontArmSide === 'screen-left'
+      ? 'screen-right'
+      : 'screen-left';
+
+    drawLeg(ctx, pose, rearLegSide);
+
     drawArm(
       ctx,
-      arms[rearSide === 'screen-left' ? 'screenLeft' : 'screenRight'],
-      rearSide
+      arms[rearArmSide === 'screen-left' ? 'screenLeft' : 'screenRight'],
+      rearArmSide
     );
 
     // Slightly enlarged torso helps close the neck/shoulder join.
@@ -261,13 +284,12 @@
       rotate: pose.hipTilt * 0.010
     });
 
-    drawLeg(ctx, pose, frontSide);
+    drawLeg(ctx, pose, frontLegSide);
 
-    // Front arm after torso/pelvis for readable south-facing overlap.
     drawArm(
       ctx,
-      arms[frontSide === 'screen-left' ? 'screenLeft' : 'screenRight'],
-      frontSide
+      arms[frontArmSide === 'screen-left' ? 'screenLeft' : 'screenRight'],
+      frontArmSide
     );
 
     drawCentered(ctx, images.head, headCenter, 0.180, {
@@ -302,7 +324,7 @@
   }
 
   window.AvendorFemalePaintedSouthRig = Object.freeze({
-    version: '0.7.5',
+    version: '0.7.6',
     load,
     drawPose,
     renderAtlas,
