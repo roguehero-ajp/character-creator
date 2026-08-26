@@ -40,7 +40,7 @@
         reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
       };
 
-      image.src = `${BASE}${file}?v=0.7.7`;
+      image.src = `${BASE}${file}?v=0.7.8`;
     });
   }
 
@@ -110,14 +110,14 @@
     const cx = pose.pelvisX;
     const shoulderY = 92 + bob;
 
-    // Keep the arms close, but leave a little more hip clearance than 0.7.6.
+    // Keep the arms close, but leave a bit more clearance from the hips.
     const leftShoulder = [
-      cx - 15,
+      cx - 17,
       shoulderY + pose.shoulderTilt * 0.45
     ];
 
     const rightShoulder = [
-      cx + 15,
+      cx + 17,
       shoulderY - pose.shoulderTilt * 0.45
     ];
 
@@ -160,36 +160,34 @@
     const shin = side === 'screen-left' ? images.screenLeftShinBoot : images.screenRightShinBoot;
     const cx = pose.pelvisX;
 
-    // The authored skeleton keeps generous left/right separation for clarity.
-    // Compress only the painted registration toward centre so the south-facing
-    // walk reads as a natural near-single-file foot track.
+    // Keep the foot track narrow, but separate the thighs a bit more.
     const narrowX = (x, factor) => cx + (x - cx) * factor;
 
     const hip = [
-      narrowX(leg.hip[0], 0.58),
+      narrowX(leg.hip[0], 0.72),
       leg.hip[1] + 1
     ];
 
     const knee = [
-      narrowX(leg.knee[0], 0.34),
+      narrowX(leg.knee[0], 0.42),
       leg.knee[1] + 1
     ];
 
     const toe = [
-      narrowX(leg.toe[0], 0.16),
+      narrowX(leg.toe[0], 0.18),
       leg.toe[1]
     ];
 
     drawVerticalSegment(ctx, thigh, hip, knee, {
       lengthFactor: 0.82,
-      scale: 0.98,
-      widthScale: 0.90
+      scale: 0.96,
+      widthScale: 0.82
     });
 
     drawVerticalSegment(ctx, shin, knee, toe, {
       lengthFactor: 0.90,
-      scale: 1.00,
-      widthScale: 0.94
+      scale: 0.99,
+      widthScale: 0.91
     });
   }
 
@@ -224,8 +222,6 @@
     const bob = pose.bob;
     const cx = pose.pelvisX;
 
-    // Head registration correction: lower the painted head and use
-    // a slightly shallower anchor so it reconnects visually to the torso.
     const headCenter = [cx, 71 + bob];
     const torsoCenter = [cx, 111 + bob];
     const pelvisCenter = [cx, 143 + bob];
@@ -234,7 +230,6 @@
     ctx.save();
     ctx.imageSmoothingEnabled = true;
 
-    // Ponytail is a rear layer and trails the authored skeletal offset.
     drawCentered(
       ctx,
       images.ponytail,
@@ -258,9 +253,6 @@
       ? 'screen-left'
       : 'screen-right';
 
-    // Arm depth is independent from leg layering. The arm with the larger
-    // forward phase is drawn in front, which makes the opposite-arm swing
-    // read naturally in a south-facing walk.
     const frontArmSide = arms.screenLeft.forward >= arms.screenRight.forward
       ? 'screen-left'
       : 'screen-right';
@@ -277,18 +269,17 @@
       rearArmSide
     );
 
-    // Slightly enlarged torso helps close the neck/shoulder join.
     drawCentered(ctx, images.torso, torsoCenter, 0.210, {
       anchorX: 0.50,
       anchorY: 0.51,
       rotate: pose.shoulderTilt * -0.008
     });
 
-    // Narrow the pelvis horizontally without changing its vertical size.
+    // Widen the pelvis slightly from 0.7.7 for better thigh separation.
     drawCentered(ctx, images.pelvis, pelvisCenter, 0.175, {
       anchorX: 0.50,
       anchorY: 0.54,
-      scaleX: 0.84,
+      scaleX: 0.90,
       rotate: pose.hipTilt * 0.010
     });
 
@@ -332,7 +323,7 @@
   }
 
   window.AvendorFemalePaintedSouthRig = Object.freeze({
-    version: '0.7.7',
+    version: '0.7.8',
     load,
     drawPose,
     renderAtlas,
