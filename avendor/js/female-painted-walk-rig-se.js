@@ -35,7 +35,7 @@
         resolve(image);
       };
       image.onerror = () => reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
-      image.src = `${BASE}${file}?v=0.8.3`;
+      image.src = `${BASE}${file}?v=0.8.4`;
     });
   }
 
@@ -118,16 +118,18 @@
     const thigh = side === 'screen-left' ? images.screenLeftThigh : images.screenRightThigh;
     const shin = side === 'screen-left' ? images.screenLeftShinBoot : images.screenRightShinBoot;
 
+    // In the SE view, screen-left is the leading/front leg and screen-right
+    // is the receding/rear leg. Keep the width cue consistent with depth.
     drawVerticalSegment(ctx, thigh, leg.hip, leg.knee, {
       lengthFactor: 0.82,
       scale: 0.95 * depthScale,
-      widthScale: side === 'screen-left' ? 0.78 : 0.84
+      widthScale: side === 'screen-left' ? 0.84 : 0.78
     });
 
     drawVerticalSegment(ctx, shin, leg.knee, leg.toe, {
       lengthFactor: 0.90,
       scale: 0.98 * depthScale,
-      widthScale: side === 'screen-left' ? 0.87 : 0.93
+      widthScale: side === 'screen-left' ? 0.93 : 0.87
     });
   }
 
@@ -174,8 +176,8 @@
       }
     );
 
-    // Rear body parts for SE.
-    drawLeg(ctx, pose, 'screen-left', 0.90);
+    // Rear body parts for SE: screen-right leg and screen-right arm.
+    drawLeg(ctx, pose, 'screen-right', 0.90);
     drawArm(ctx, arms.rear, 'screen-right', 0.90);
 
     // The torso source reads toward South-West, so mirror it for the
@@ -195,8 +197,8 @@
       rotate: -0.025 + pose.hipTilt * 0.006
     });
 
-    // Front body parts for SE.
-    drawLeg(ctx, pose, 'screen-right', 1.03);
+    // Front body parts for SE: screen-left leg and screen-left arm.
+    drawLeg(ctx, pose, 'screen-left', 1.03);
     drawArm(ctx, arms.front, 'screen-left', 1.03);
 
     drawCentered(ctx, images.head, headCenter, 0.176, {
@@ -227,7 +229,7 @@
   }
 
   window.AvendorFemalePaintedSERig = Object.freeze({
-    version: '0.8.3',
+    version: '0.8.4',
     load,
     drawPose,
     renderAtlas,
