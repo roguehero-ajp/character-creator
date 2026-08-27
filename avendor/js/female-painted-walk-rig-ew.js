@@ -34,7 +34,7 @@
         resolve(image);
       };
       image.onerror = () => reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
-      image.src = `${BASE}${file}?v=0.9.3`;
+      image.src = `${BASE}${file}?v=0.9.4`;
     });
   }
 
@@ -75,6 +75,7 @@
     ctx.save();
     ctx.translate(center[0], center[1]);
     if (options.rotate) ctx.rotate(options.rotate);
+    if (options.filter) ctx.filter = options.filter;
     ctx.scale(
       scale * (options.scaleX ?? 1) * (options.flipX ? -1 : 1),
       scale * (options.scaleY ?? 1)
@@ -183,12 +184,15 @@
     drawLeg(ctx, pose, frontLegSide, 1.02);
     drawArm(ctx, pose, frontArmSide, 1.02);
 
-    // 0.9.3: use the approved visual reference literally as an E/W-only
-    // transparent profile-head asset. No procedural crop or painted geometry.
-    drawCentered(ctx, images.head, [cx + 5, 70 + bob], 0.160, {
-      anchorX: 0.50,
-      anchorY: 0.52,
-      rotate: -0.025 + pose.shoulderTilt * -0.0006
+    // 0.9.4: keep the approved E/W profile asset, but tune its scale,
+    // attachment point and warm/red cast without touching the gait.
+    drawCentered(ctx, images.head, [cx + 4, 77 + bob], 0.148, {
+      anchorX: 0.47,
+      anchorY: 0.69,
+      scaleX: 0.94,
+      scaleY: 0.94,
+      rotate: -0.088 + pose.shoulderTilt * -0.001,
+      filter: 'saturate(0.82) hue-rotate(-8deg) brightness(0.92)'
     });
 
     if (debug) {
@@ -224,7 +228,7 @@
   }
 
   window.AvendorFemalePaintedEWRig = Object.freeze({
-    version: '0.9.3',
+    version: '0.9.4',
     load,
     drawPose,
     renderAtlas,
