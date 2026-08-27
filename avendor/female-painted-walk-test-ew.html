@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Female Painted East-West Walk Rig 0.9.0 | Avendor</title>
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: #171311; color: #f3eadf; }
+    main { width: min(1240px, calc(100% - 32px)); margin: 24px auto 48px; }
+    h1 { margin-bottom: 6px; }
+    .lede { margin-top: 0; color: #cfc2b5; max-width: 980px; }
+    .panel { background: #241e1a; border: 1px solid #4c4037; border-radius: 14px; padding: 16px; margin-top: 18px; }
+    .viewers { display: grid; grid-template-columns: repeat(2, minmax(280px, 1fr)); gap: 22px; }
+    .viewer { display: grid; grid-template-columns: 280px 1fr; gap: 16px; align-items: start; }
+    canvas { image-rendering: pixelated; }
+    .pose-canvas { width: 256px; height: 480px; background: #111; border-radius: 10px; border: 1px solid #50463f; }
+    .controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+    button { background: #3a302a; color: #fff7ee; border: 1px solid #65564b; border-radius: 8px; padding: 8px 11px; cursor: pointer; }
+    button:hover, button:focus-visible { background: #4a3d35; }
+    button[aria-pressed="true"] { outline: 2px solid #e8c56a; }
+    .status { display: grid; gap: 8px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 14px; }
+    .pass { color: #83d69a; }
+    .fail { color: #ff8b8b; }
+    .legend { color: #bbaea2; font-size: 13px; }
+    .atlas-label { margin: 14px 0 6px; }
+    .atlas { width: 100%; height: auto; max-height: 240px; background: #111; border: 1px solid #4a4038; }
+    @media (max-width: 1050px) {
+      .viewers { grid-template-columns: 1fr; }
+      .viewer { grid-template-columns: 280px 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Female Painted East-West Walk Rig 0.9.0</h1>
+    <p class="lede">First isolated true side-profile pass. East is the authored gait and West is a strict mirror, keeping both directions mechanically identical while we tune stride, overlap, arm swing and profile readability.</p>
+
+    <section class="panel">
+      <div class="controls">
+        <button id="play-toggle" type="button" aria-pressed="true">Pause</button>
+        <button id="debug-toggle" type="button" aria-pressed="false">Skeleton overlay: off</button>
+        <button id="prev-pose" type="button">Previous pose</button>
+        <button id="next-pose" type="button">Next pose</button>
+      </div>
+
+      <div class="viewers">
+        <div class="viewer">
+          <canvas id="east-canvas" class="pose-canvas" width="128" height="240"></canvas>
+          <div>
+            <h2>East</h2>
+            <div class="status">
+              <div id="east-status">Loading painted rig assets…</div>
+              <div id="support-status"></div>
+            </div>
+            <p class="legend">Primary authored profile. Watch foot separation, knee lift, arm opposition and whether the torso still feels recognizably like the locked female hero.</p>
+          </div>
+        </div>
+
+        <div class="viewer">
+          <canvas id="west-canvas" class="pose-canvas" width="128" height="240"></canvas>
+          <div>
+            <h2>West</h2>
+            <div class="status">
+              <div id="west-status">Loading painted rig assets…</div>
+              <div id="validation-status"></div>
+            </div>
+            <p class="legend">Exact mirror of East. Any timing or silhouette difference here is therefore a renderer bug rather than a separately authored walk.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>12-frame row proof</h2>
+      <div class="atlas-label">East</div>
+      <canvas id="east-atlas" class="atlas" width="1536" height="240"></canvas>
+      <div class="atlas-label">West</div>
+      <canvas id="west-atlas" class="atlas" width="1536" height="240"></canvas>
+    </section>
+  </main>
+
+  <script src="js/female-skeletal-walk-rig.js?v=0.7.8"></script>
+  <script src="js/female-skeletal-walk-rig-ew.js?v=0.9.0"></script>
+  <script src="js/female-painted-walk-rig-ew.js?v=0.9.0"></script>
+  <script>
+    (() => {
+      'use strict';
+
+      const skeleton = window.AvendorFemaleEWRig;
+      const painted = window.AvendorFemalePaintedEWRig;
+      const eastCanvas = document.getElementById('east-canvas');
+      const westCanvas = document.getElementById('west-canvas');
+      const eastCtx = eastCanvas.getContext('2d');
+      const westCtx = westCanvas.getContext('2d');
+      const eastAtlas = document.getElementById('east-atlas');
+      const westAtlas = document.getElementById('west-atlas');
+      const eastStatus = document.getElementById('east-status');
+      const westStatus = document.getElementById('west-status');
+      const supportStatus = document.getElementById('support-status');
+      const validationStatus = document.getElementById('validation-status');
+      const playToggle = document.getElementById('play-toggle');
+      const debugToggle = document.getElementById('debug-toggle');
+
+      let frame = 0;
+      let playing = true;
+      let debug = false;
+      let lastAdvance = performance.now();
+
+      function drawCurrent() {
+        eastCtx.clearRect(0, 0, skeleton.FRAME_W, skeleton.FRAME_H);
+        westCtx.clearRect(0, 0, skeleton.FRAME_W, skeleton.FRAME_H);
+        const pose = skeleton.EAST_POSES[frame];
+        painted.drawPose(eastCtx, pose, 'east', { debug });
+        painted.drawPose(westCtx, pose, 'west', { debug });
+        eastStatus.textContent = `Frame ${frame + 1}/12 · ${pose.phase}`;
+        westStatus.textContent = `Frame ${frame + 1}/12 · mirrored`;
+        supportStatus.textContent = `Support: ${pose.support}`;
+      }
+
+      function redrawAtlases() {
+        painted.renderAtlas(eastAtlas, 'east', debug);
+        painted.renderAtlas(westAtlas, 'west', debug);
+      }
+
+      function setFrame(next) {
+        frame = (next + skeleton.EAST_POSES.length) % skeleton.EAST_POSES.length;
+        lastAdvance = performance.now();
+        drawCurrent();
+      }
+
+      async function boot() {
+        await painted.load();
+        const errors = skeleton.validateEastCycle();
+        validationStatus.className = errors.length ? 'fail' : 'pass';
+        validationStatus.textContent = errors.length
+          ? `E/W SKELETON VALIDATION FAILED · ${errors.join(' | ')}`
+          : 'E/W SKELETON VALIDATION PASSED · West mirrors East exactly';
+        redrawAtlases();
+        drawCurrent();
+        requestAnimationFrame(tick);
+      }
+
+      playToggle.addEventListener('click', () => {
+        playing = !playing;
+        playToggle.textContent = playing ? 'Pause' : 'Play';
+        playToggle.setAttribute('aria-pressed', String(playing));
+        lastAdvance = performance.now();
+      });
+
+      debugToggle.addEventListener('click', () => {
+        debug = !debug;
+        debugToggle.textContent = `Skeleton overlay: ${debug ? 'on' : 'off'}`;
+        debugToggle.setAttribute('aria-pressed', String(debug));
+        redrawAtlases();
+        drawCurrent();
+      });
+
+      document.getElementById('prev-pose').addEventListener('click', () => {
+        playing = false;
+        playToggle.textContent = 'Play';
+        playToggle.setAttribute('aria-pressed', 'false');
+        setFrame(frame - 1);
+      });
+
+      document.getElementById('next-pose').addEventListener('click', () => {
+        playing = false;
+        playToggle.textContent = 'Play';
+        playToggle.setAttribute('aria-pressed', 'false');
+        setFrame(frame + 1);
+      });
+
+      function tick(now) {
+        if (playing && now - lastAdvance >= skeleton.POSE_MS) {
+          const steps = Math.floor((now - lastAdvance) / skeleton.POSE_MS);
+          frame = (frame + steps) % skeleton.EAST_POSES.length;
+          lastAdvance += steps * skeleton.POSE_MS;
+          drawCurrent();
+        }
+        requestAnimationFrame(tick);
+      }
+
+      boot().catch((error) => {
+        validationStatus.className = 'fail';
+        validationStatus.textContent = error.message;
+        console.error(error);
+      });
+    })();
+  </script>
+</body>
+</html>
