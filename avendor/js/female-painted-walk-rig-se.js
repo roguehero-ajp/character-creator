@@ -35,7 +35,7 @@
         resolve(image);
       };
       image.onerror = () => reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
-      image.src = `${BASE}${file}?v=0.8.4`;
+      image.src = `${BASE}${file}?v=0.8.5`;
     });
   }
 
@@ -89,8 +89,10 @@
   function armJoints(pose) {
     const bob = pose.bob;
     const cx = pose.pelvisX;
-    const rearShoulder = [cx + 13, 91 + bob - pose.shoulderTilt];
-    const frontShoulder = [cx - 8, 93 + bob + pose.shoulderTilt];
+
+    // Stronger SE shoulder depth: screen-right recedes, screen-left advances.
+    const rearShoulder = [cx + 15, 90 + bob - pose.shoulderTilt * 1.10];
+    const frontShoulder = [cx - 11, 94 + bob + pose.shoulderTilt * 1.10];
 
     function make(shoulder, swing, sideSign) {
       return {
@@ -118,15 +120,24 @@
     const thigh = side === 'screen-left' ? images.screenLeftThigh : images.screenRightThigh;
     const shin = side === 'screen-left' ? images.screenLeftShinBoot : images.screenRightShinBoot;
 
-    // In the SE view, screen-left is the leading/front leg and screen-right
-    // is the receding/rear leg. Keep the width cue consistent with depth.
-    drawVerticalSegment(ctx, thigh, leg.hip, leg.knee, {
+    // Preserve the SE depth/read while straightening the visible leg axes.
+    // The gait still advances diagonally, but the limbs no longer lean with it.
+    const knee = [
+      leg.hip[0] + (leg.knee[0] - leg.hip[0]) * 0.35,
+      leg.knee[1]
+    ];
+    const toe = [
+      leg.hip[0] + (leg.toe[0] - leg.hip[0]) * 0.18,
+      leg.toe[1]
+    ];
+
+    drawVerticalSegment(ctx, thigh, leg.hip, knee, {
       lengthFactor: 0.82,
       scale: 0.95 * depthScale,
       widthScale: side === 'screen-left' ? 0.84 : 0.78
     });
 
-    drawVerticalSegment(ctx, shin, leg.knee, leg.toe, {
+    drawVerticalSegment(ctx, shin, knee, toe, {
       lengthFactor: 0.90,
       scale: 0.98 * depthScale,
       widthScale: side === 'screen-left' ? 0.93 : 0.87
@@ -156,9 +167,9 @@
     const cx = pose.pelvisX;
     const arms = armJoints(pose);
 
-    const headCenter = [cx + 8, 71 + bob];
-    const torsoCenter = [cx + 4, 111 + bob];
-    const pelvisCenter = [cx + 3, 143 + bob];
+    const headCenter = [cx + 7, 71 + bob];
+    const torsoCenter = [cx + 3, 111 + bob];
+    const pelvisCenter = [cx + 2, 143 + bob];
 
     ctx.save();
     ctx.imageSmoothingEnabled = true;
@@ -166,13 +177,13 @@
     drawCentered(
       ctx,
       images.ponytail,
-      [cx - 4 + pose.ponytail.x * 0.40, 61 + bob + pose.ponytail.y],
-      0.108,
+      [cx - 6 + pose.ponytail.x * 0.36, 61 + bob + pose.ponytail.y],
+      0.107,
       {
-        anchorX: 0.38,
+        anchorX: 0.40,
         anchorY: 0.20,
-        scaleX: 0.94,
-        rotate: -0.16 - pose.ponytail.x * 0.006
+        scaleX: 0.93,
+        rotate: -0.19 - pose.ponytail.x * 0.006
       }
     );
 
@@ -180,32 +191,32 @@
     drawLeg(ctx, pose, 'screen-right', 0.90);
     drawArm(ctx, arms.rear, 'screen-right', 0.90);
 
-    // The torso source reads toward South-West, so mirror it for the
-    // South-East lane rather than twisting the entire body geometry.
+    // Turn the torso farther toward SE without changing the locked South art.
     drawCentered(ctx, images.torso, torsoCenter, 0.205, {
-      anchorX: 0.50,
+      anchorX: 0.53,
       anchorY: 0.51,
-      scaleX: 0.82,
+      scaleX: 0.76,
       flipX: true,
-      rotate: -0.035 + pose.shoulderTilt * -0.004
+      rotate: -0.045 + pose.shoulderTilt * -0.003
     });
 
     drawCentered(ctx, images.pelvis, pelvisCenter, 0.172, {
-      anchorX: 0.50,
+      anchorX: 0.51,
       anchorY: 0.54,
-      scaleX: 0.84,
-      rotate: -0.025 + pose.hipTilt * 0.006
+      scaleX: 0.83,
+      rotate: -0.030 + pose.hipTilt * 0.004
     });
 
     // Front body parts for SE: screen-left leg and screen-left arm.
     drawLeg(ctx, pose, 'screen-left', 1.03);
     drawArm(ctx, arms.front, 'screen-left', 1.03);
 
-    drawCentered(ctx, images.head, headCenter, 0.176, {
-      anchorX: 0.58,
+    // Increase the three-quarter head read so the screen-left eye dominates.
+    drawCentered(ctx, images.head, headCenter, 0.174, {
+      anchorX: 0.62,
       anchorY: 0.43,
-      scaleX: 0.78,
-      rotate: -0.060 + pose.shoulderTilt * -0.002
+      scaleX: 0.70,
+      rotate: -0.080 + pose.shoulderTilt * -0.0015
     });
 
     if (debug) {
@@ -229,7 +240,7 @@
   }
 
   window.AvendorFemalePaintedSERig = Object.freeze({
-    version: '0.8.4',
+    version: '0.8.5',
     load,
     drawPose,
     renderAtlas,
