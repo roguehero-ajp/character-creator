@@ -35,7 +35,7 @@
         resolve(image);
       };
       image.onerror = () => reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
-      image.src = `${BASE}${file}?v=0.8.6`;
+      image.src = `${BASE}${file}?v=0.8.7`;
     });
   }
 
@@ -167,6 +167,11 @@
     const cx = pose.pelvisX;
     const arms = armJoints(pose);
 
+    // Leg depth follows the active crossing half of the gait; SE arm depth stays fixed.
+    const rightLegFront = pose.phase.includes('screen-right');
+    const rearLegSide = rightLegFront ? 'screen-left' : 'screen-right';
+    const frontLegSide = rightLegFront ? 'screen-right' : 'screen-left';
+
     const headCenter = [cx + 4, 71 + bob];
     const torsoCenter = [cx + 3, 111 + bob];
     const pelvisCenter = [cx + 2, 143 + bob];
@@ -187,8 +192,8 @@
       }
     );
 
-    // Rear body parts for SE: screen-right leg and screen-right arm.
-    drawLeg(ctx, pose, 'screen-right', 0.90);
+    // Rear leg plus the fixed screen-right rear arm.
+    drawLeg(ctx, pose, rearLegSide, 0.90);
     drawArm(ctx, arms.rear, 'screen-right', 0.90);
 
     // Turn the torso farther toward SE without changing the locked South art.
@@ -207,8 +212,8 @@
       rotate: -0.030 + pose.hipTilt * 0.004
     });
 
-    // Front body parts for SE: screen-left leg and screen-left arm.
-    drawLeg(ctx, pose, 'screen-left', 1.03);
+    // Front leg plus the fixed screen-left front arm.
+    drawLeg(ctx, pose, frontLegSide, 1.03);
     drawArm(ctx, arms.front, 'screen-left', 1.03);
 
     // Preserve a natural head width while the anchor and rotation carry the SE half-profile.
@@ -240,7 +245,7 @@
   }
 
   window.AvendorFemalePaintedSERig = Object.freeze({
-    version: '0.8.6',
+    version: '0.8.7',
     load,
     drawPose,
     renderAtlas,
