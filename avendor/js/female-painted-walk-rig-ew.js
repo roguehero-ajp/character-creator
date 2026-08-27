@@ -34,7 +34,7 @@
         resolve(image);
       };
       image.onerror = () => reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
-      image.src = `${BASE}${file}?v=0.9.5`;
+      image.src = `${BASE}${file}?v=0.9.6`;
     });
   }
 
@@ -184,15 +184,15 @@
     drawLeg(ctx, pose, frontLegSide, 1.02);
     drawArm(ctx, pose, frontArmSide, 1.02);
 
-    // 0.9.5: the E/W-only head asset now includes the full jaw and neck.
-    // Render it substantially smaller so the profile matches the body scale
-    // instead of trying to hide the missing lower face with positioning.
-    drawCentered(ctx, images.head, [cx + 4, 80 + bob], 0.122, {
-      anchorX: 0.47,
-      anchorY: 0.60,
+    // 0.9.6: restore the last visible-face E/W profile asset and
+    // tune only its render size/placement. Keep the gait untouched.
+    drawCentered(ctx, images.head, [cx + 4, 78 + bob], 0.136, {
+      anchorX: 0.49,
+      anchorY: 0.57,
       scaleX: 0.94,
       scaleY: 0.94,
-      rotate: -0.060 + pose.shoulderTilt * -0.001
+      rotate: -0.060 + pose.shoulderTilt * -0.0008,
+      filter: 'saturate(0.82) hue-rotate(-8deg) brightness(0.93)'
     });
 
     if (debug) {
@@ -228,7 +228,7 @@
   }
 
   window.AvendorFemalePaintedEWRig = Object.freeze({
-    version: '0.9.5',
+    version: '0.9.6',
     load,
     drawPose,
     renderAtlas,
