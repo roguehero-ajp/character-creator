@@ -4,6 +4,12 @@
   const AREA_STATUSES = Object.freeze(['playable', 'planned']);
   const TRANSITION_STATUSES = Object.freeze(['active', 'planned', 'unassigned']);
   const AREA_KINDS = Object.freeze(['outdoor', 'interior']);
+  const REGISTRY_SCHEMA_VERSIONS = Object.freeze([1, 2]);
+  const CONNECTION_KINDS = Object.freeze([
+    'road', 'alley', 'doorway', 'secret-passage', 'sewer-access'
+  ]);
+  const CONNECTION_VISIBILITIES = Object.freeze(['public', 'hidden']);
+  const CONNECTION_STATUSES = Object.freeze(['active', 'planned']);
   const OUTDOOR_DIRECTIONS = Object.freeze([
     'north', 'northeast', 'east', 'southeast',
     'south', 'southwest', 'west', 'northwest'
@@ -30,7 +36,10 @@
   class AreaRegistry {
     constructor(data) {
       requireValue(data && typeof data === 'object', 'AreaRegistry requires registry data.');
-      requireValue(data.schemaVersion === 1, 'AreaRegistry only supports schemaVersion 1.');
+      requireValue(
+        REGISTRY_SCHEMA_VERSIONS.includes(data.schemaVersion),
+        `AreaRegistry does not support schemaVersion ${data.schemaVersion}.`
+      );
       requireValue(isStableId(data.id), 'AreaRegistry requires a stable kebab-case id.');
       requireValue(isNonEmptyString(data.title), 'AreaRegistry requires a title.');
       requireValue(isNonEmptyString(data.version), 'AreaRegistry requires a version.');
@@ -40,6 +49,10 @@
       this.areas = data.areas;
       this.areaById = new Map();
       this.areaByNumber = new Map();
+      this.connectionById = new Map();
+      this.connectionByEndpoint = new Map();
+      this.cityExitById = new Map();
+      this.cityExitByEndpoint = new Map();
 
       this.areas.forEach((area) => {
         requireValue(isStableId(area.id), 'Every registered area requires a stable kebab-case id.');
@@ -47,6 +60,24 @@
         requireValue(isNonEmptyString(area.title), `Area ${area.id} requires a title.`);
         requireValue(AREA_KINDS.includes(area.kind), `Area ${area.id} has an unsupported kind.`);
         requireValue(AREA_STATUSES.includes(area.status), `Area ${area.id} has an unsupported status.`);
+
+        if (area.planPosition !== null && area.planPosition !== undefined) {
+          requireValue(
+            Number.isInteger(area.planPosition.column) && Number.isInteger(area.planPosition.row),
+            `Area ${area.id} has an invalid planPosition.`
+          );
+        }
+
+        if (area.landmarks !== undefined) {
+          requireValue(Array.isArray(area.landmarks), `Area ${area.id} landmarks must be an array.`);
+          const landmarkIds = new Set();
+          area.landmarks.forEach((landmark) => {
+            requireValue(isStableId(landmark.id), `Area ${area.id} has an invalid landmark id.`);
+            requireValue(!landmarkIds.has(landmark.id), `Area ${area.id} has duplicate landmark ${landmark.id}.`);
+            requireValue(isNonEmptyString(landmark.label), `Area ${area.id}/${landmark.id} requires a label.`);
+            landmarkIds.add(landmark.id);
+          });
+        }
 
         if (area.areaNumber !== null && area.areaNumber !== undefined) {
           requireValue(
@@ -72,6 +103,113 @@
         this.areaById.set(area.id, area);
       });
 
+      this.connections = data.connections || [];
+      this.cityExits = data.cityExits || [];
+      requireValue(Array.isArray(this.connections), 'AreaRegistry connections must be an array.');
+      requireValue(Array.isArray(this.cityExits), 'AreaRegistry cityExits must be an array.');
+      if (data.schemaVersion >= 2) {
+        requireValue(this.connections.length > 0, 'AreaRegistry schemaVersion 2 requires connections.');
+      }
+
+      this.connections.forEach((connection) => {
+        requireValue(isStableId(connection.id), 'Every connection requires a stable kebab-case id.');
+        requireValue(!this.connectionById.has(connection.id), `Duplicate connection id: ${connection.id}`);
+        requireValue(
+          CONNECTION_KINDS.includes(connection.kind),
+          `Connection ${connection.id} has an unsupported kind.`
+        );
+        requireValue(
+          CONNECTION_VISIBILITIES.includes(connection.visibility),
+          `Connection ${connection.id} has unsupported visibility.`
+        );
+        requireValue(
+          CONNECTION_STATUSES.includes(connection.status),
+          `Connection ${connection.id} has an unsupported status.`
+        );
+        requireValue(
+          Array.isArray(connection.endpoints) && connection.endpoints.length === 2,
+          `Connection ${connection.id} requires exactly two endpoints.`
+        );
+        requireValue(
+          connection.endpoints[0].areaId !== connection.endpoints[1].areaId,
+          `Connection ${connection.id} cannot connect an area to itself.`
+        );
+
+        if (['secret-passage', 'sewer-access'].includes(connection.kind)) {
+          requireValue(
+            connection.visibility === 'hidden',
+            `Connection ${connection.id} must remain hidden.`
+          );
+        }
+
+        connection.endpoints.forEach((endpoint) => {
+          const area = this.getArea(endpoint.areaId);
+          requireValue(area, `Connection ${connection.id} names unknown area ${endpoint.areaId}.`);
+          requireValue(
+            isStableId(endpoint.transitionId),
+            `Connection ${connection.id} has an invalid transitionId.`
+          );
+          const key = `${endpoint.areaId}/${endpoint.transitionId}`;
+          requireValue(
+            !this.connectionByEndpoint.has(key),
+            `Transition endpoint belongs to multiple connections: ${key}`
+          );
+
+          if (['road', 'alley'].includes(connection.kind)) {
+            requireValue(area.kind === 'outdoor', `Connection ${connection.id} requires outdoor endpoints.`);
+            requireValue(
+              OUTDOOR_DIRECTIONS.includes(endpoint.direction),
+              `Connection ${connection.id} endpoint ${key} requires a valid direction.`
+            );
+          } else if (endpoint.direction !== undefined) {
+            requireValue(
+              OUTDOOR_DIRECTIONS.includes(endpoint.direction),
+              `Connection ${connection.id} endpoint ${key} has an invalid direction.`
+            );
+          }
+
+          this.connectionByEndpoint.set(key, connection);
+        });
+        if (connection.status === 'active') {
+          requireValue(
+            connection.endpoints.every((endpoint) => this.getArea(endpoint.areaId).status === 'playable'),
+            `Active connection ${connection.id} requires two playable areas.`
+          );
+        }
+        this.connectionById.set(connection.id, connection);
+      });
+
+      this.cityExits.forEach((cityExit) => {
+        requireValue(isStableId(cityExit.id), 'Every city exit requires a stable kebab-case id.');
+        requireValue(!this.cityExitById.has(cityExit.id), `Duplicate city exit id: ${cityExit.id}`);
+        const area = this.getArea(cityExit.areaId);
+        requireValue(area, `City exit ${cityExit.id} names an unknown area.`);
+        requireValue(area.kind === 'outdoor', `City exit ${cityExit.id} requires an outdoor area.`);
+        requireValue(isStableId(cityExit.transitionId), `City exit ${cityExit.id} has an invalid transitionId.`);
+        requireValue(
+          OUTDOOR_DIRECTIONS.includes(cityExit.direction),
+          `City exit ${cityExit.id} requires a valid direction.`
+        );
+        requireValue(
+          TRANSITION_STATUSES.includes(cityExit.status),
+          `City exit ${cityExit.id} has an unsupported status.`
+        );
+        const key = `${cityExit.areaId}/${cityExit.transitionId}`;
+        requireValue(
+          !this.connectionByEndpoint.has(key),
+          `City exit duplicates an internal connection endpoint: ${key}`
+        );
+        requireValue(
+          !this.cityExitByEndpoint.has(key),
+          `Transition endpoint belongs to multiple city exits: ${key}`
+        );
+        if (cityExit.status === 'unassigned') {
+          requireValue(cityExit.target === null, `Unassigned city exit ${cityExit.id} cannot name a target.`);
+        }
+        this.cityExitById.set(cityExit.id, cityExit);
+        this.cityExitByEndpoint.set(key, cityExit);
+      });
+
       requireValue(data.start && typeof data.start === 'object', 'AreaRegistry requires a start entry.');
       const startArea = this.areaById.get(data.start.areaId);
       requireValue(startArea, `Start area is not registered: ${data.start.areaId}`);
@@ -93,6 +231,30 @@
 
     getAreaByNumber(areaNumber) {
       return this.areaByNumber.get(areaNumber) || null;
+    }
+
+    getConnection(id) {
+      return this.connectionById.get(id) || null;
+    }
+
+    getConnectionForTransition(areaId, transitionId) {
+      return this.connectionByEndpoint.get(`${areaId}/${transitionId}`) || null;
+    }
+
+    getConnectionsForArea(areaId, options = {}) {
+      const includeHidden = options.includeHidden === true;
+      return this.connections.filter((connection) => (
+        (includeHidden || connection.visibility === 'public')
+          && connection.endpoints.some((endpoint) => endpoint.areaId === areaId)
+      ));
+    }
+
+    getCityExitsForArea(areaId) {
+      return this.cityExits.filter((cityExit) => cityExit.areaId === areaId);
+    }
+
+    getCityExitForTransition(areaId, transitionId) {
+      return this.cityExitByEndpoint.get(`${areaId}/${transitionId}`) || null;
     }
 
     getStart() {
@@ -221,6 +383,48 @@
           errors.push(`Transition fallback spawn is missing: ${label}`);
         }
 
+        if (registry.data.schemaVersion >= 2) {
+          if (transition.status === 'unassigned') {
+            const cityExit = registry.getCityExitForTransition(area.id, transition.id);
+            if (!cityExit) {
+              errors.push(`Unassigned transition is absent from approved city exits: ${label}`);
+            } else {
+              if (transition.type !== 'exit') {
+                errors.push(`A city exit cannot be a portal: ${label}`);
+              }
+              if (cityExit.direction !== transition.direction) {
+                errors.push(`City-exit direction disagrees with town graph: ${label}`);
+              }
+              if (cityExit.status !== transition.status) {
+                errors.push(`City-exit status disagrees with town graph: ${label}`);
+              }
+            }
+          } else {
+            const connection = registry.getConnectionForTransition(area.id, transition.id);
+            if (!connection) {
+              errors.push(`Transition is absent from the approved town graph: ${label}`);
+            } else {
+              const endpoint = connection.endpoints.find((candidate) => candidate.areaId === area.id);
+              const reciprocal = connection.endpoints.find((candidate) => candidate !== endpoint);
+              if (transition.target?.areaId !== reciprocal.areaId) {
+                errors.push(`Transition target disagrees with town graph: ${label}`);
+              }
+              if (
+                transition.target?.returnTransitionId
+                && transition.target.returnTransitionId !== reciprocal.transitionId
+              ) {
+                errors.push(`Transition reciprocal disagrees with town graph: ${label}`);
+              }
+              if (transition.type === 'exit' && endpoint.direction !== transition.direction) {
+                errors.push(`Transition direction disagrees with town graph: ${label}`);
+              }
+              if (connection.status !== transition.status) {
+                errors.push(`Transition status disagrees with town graph: ${label}`);
+              }
+            }
+          }
+        }
+
         const resolution = registry.resolveTransition(transition);
         if (resolution.state === 'invalid') {
           errors.push(`Invalid transition ${label}: ${resolution.reason}`);
@@ -286,6 +490,10 @@
     AREA_STATUSES,
     TRANSITION_STATUSES,
     AREA_KINDS,
+    REGISTRY_SCHEMA_VERSIONS,
+    CONNECTION_KINDS,
+    CONNECTION_VISIBILITIES,
+    CONNECTION_STATUSES,
     OUTDOOR_DIRECTIONS,
     auditTopology
   });

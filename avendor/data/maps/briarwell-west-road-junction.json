@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-west-road-junction",
+  "title": "Briarwell - West Road Junction",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/west-road-junction/background/briarwell-west-road-junction-v1.png",
+    "alt": "Snowy forest T-junction with open roads west out of Briarwell, east to the town homes and north to Henson's homestead"
+  },
+  "movement": { "speedX": 275, "speedY": 205, "footRadius": 12, "maxStep": 6 },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 660, "scale": 0.76 },
+      { "y": 820, "scale": 0.88 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 540, "facing": "east" },
+    "from-east": { "x": 1300, "y": 540, "facing": "west" },
+    "from-north": { "x": 720, "y": 150, "facing": "south" },
+    "from-west": { "x": 145, "y": 540, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "east-west-road",
+      "points": [[0, 386], [1448, 388], [1448, 684], [1040, 684], [900, 720], [560, 720], [420, 684], [0, 682]]
+    },
+    {
+      "id": "north-road",
+      "points": [[584, 0], [852, 0], [862, 430], [820, 520], [610, 520], [574, 430]]
+    },
+    {
+      "id": "open-junction-center",
+      "points": [[400, 382], [1030, 382], [1080, 570], [930, 720], [520, 720], [370, 580]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "northwest-forest-wall",
+      "points": [[0, 0], [568, 0], [574, 330], [530, 392], [420, 410], [300, 394], [180, 416], [70, 398], [0, 410]]
+    },
+    {
+      "id": "northeast-forest-wall",
+      "points": [[864, 0], [1448, 0], [1448, 414], [1360, 398], [1260, 420], [1150, 400], [1040, 424], [930, 406], [870, 350]]
+    },
+    {
+      "id": "signpost-island-base",
+      "points": [[330, 408], [476, 404], [522, 458], [514, 566], [450, 614], [372, 598], [318, 540]]
+    },
+    {
+      "id": "southwest-forest-wall",
+      "points": [[0, 684], [420, 676], [506, 734], [510, 820], [470, 900], [380, 940], [260, 924], [130, 950], [0, 930]]
+    },
+    {
+      "id": "south-central-forest-and-boulders",
+      "points": [[500, 720], [960, 718], [1010, 780], [1000, 900], [950, 980], [850, 1010], [740, 990], [630, 1020], [540, 980], [494, 900]]
+    },
+    {
+      "id": "southeast-forest-wall",
+      "points": [[950, 684], [1448, 678], [1448, 936], [1340, 920], [1230, 946], [1120, 926], [1020, 950], [970, 880]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "west-road",
+      "label": "West road out of Briarwell",
+      "direction": "west",
+      "status": "unassigned",
+      "target": null,
+      "fallbackSpawn": "from-west",
+      "points": [[6, 426], [92, 426], [92, 640], [6, 640]]
+    },
+    {
+      "id": "east-road",
+      "label": "East road to the western homes",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-western-homes",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-road"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1370, 426], [1442, 426], [1442, 640], [1370, 640]]
+    },
+    {
+      "id": "north-road",
+      "label": "North road to Henson's homestead",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-henson-homestead",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-road"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[620, 6], [816, 6], [816, 86], [620, 86]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "signpost-and-lantern",
+      "depthY": 620,
+      "points": [[318, 372], [486, 370], [530, 452], [522, 570], [450, 620], [368, 604], [308, 540]]
+    },
+    {
+      "id": "southwest-forest-wall",
+      "depthY": 956,
+      "points": [[0, 650], [426, 646], [514, 728], [518, 824], [470, 906], [380, 946], [260, 930], [130, 956], [0, 936]]
+    },
+    {
+      "id": "south-central-forest-and-boulders",
+      "depthY": 1026,
+      "points": [[492, 686], [968, 684], [1018, 774], [1008, 906], [950, 986], [850, 1016], [740, 996], [630, 1026], [532, 986], [486, 900]]
+    },
+    {
+      "id": "southeast-forest-wall",
+      "depthY": 956,
+      "points": [[942, 650], [1448, 644], [1448, 942], [1340, 926], [1230, 952], [1120, 932], [1020, 956], [962, 878]]
+    }
+  ],
+  "interactables": [
+    { "id": "west-junction-signpost", "label": "West-road direction signpost", "x": 420, "y": 620, "radius": 105 },
+    { "id": "west-junction-milestone", "label": "Weathered milestone", "x": 500, "y": 600, "radius": 80 }
+  ],
+  "npcs": []
+}

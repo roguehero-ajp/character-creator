@@ -15,7 +15,7 @@ LOCKED ELEMENTS
 - West exit in front of the fruit vendor.
 - East exit in front of the General Store.
 - South exit at the bottom edge.
-- Tavern and General Store doors reserved as building portals.
+- Active Tavern and General Store building portals.
 
 RUNTIME BASE ART
 ----------------
@@ -29,14 +29,13 @@ GAMEPLAY DATA
 
 The map data is separate from the painted art and currently defines:
 - Three connected walkable regions.
-- Nine foot-level collision regions fitted to visible object bases.
+- Eight foot-level collision regions fitted to visible object bases.
 - Five outdoor exit triggers.
 - Lodestone Tavern and General Store portals.
 - Perspective scale stops and independent canopy, fence, and prop depth occluders.
 - Five inspectable features and two active resident anchors.
 
-The northwest road is registered to the planned Northwest Workshops, whose
-approved return is the Workshops' south road. The other undefined outdoor roads
-remain explicitly unassigned pending the numbered town layout. Building interiors
-remain planned. The area loader returns the hero to a safe authored spawn until a
-destination becomes playable.
+All five roads are registered to their approved destinations: northwest to Area 2,
+northeast to Area 4, west to Area 5, east to Area 6 and south to Area 8. Every road
+destination is playable with a reciprocal transition. The Lodestone Tavern and
+General Store doors are also active and return to their exact Town Center spawns.

@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-town-center",
   "title": "Briarwell - Town Center",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "referenceSize": {
     "width": 1448,
     "height": 1086
@@ -40,8 +40,8 @@
       "id": "town-square",
       "points": [
         [18, 648], [255, 638], [382, 585], [500, 548], [960, 548],
-        [1088, 585], [1430, 604], [1430, 806], [1240, 822],
-        [1190, 930], [1110, 1068], [372, 1068], [292, 944],
+        [1088, 585], [1430, 604], [1430, 930], [1240, 948],
+        [1190, 980], [1110, 1068], [372, 1068], [292, 944],
         [218, 790], [18, 780]
       ]
     },
@@ -118,13 +118,6 @@
       ]
     },
     {
-      "id": "southeast-fence-base",
-      "points": [
-        [1220, 780], [1448, 768], [1448, 816], [1230, 830],
-        [1220, 838]
-      ]
-    },
-    {
       "id": "southeast-stone-wall-base",
       "points": [
         [1240, 908], [1448, 890], [1448, 1086], [1135, 1086],
@@ -137,7 +130,7 @@
       "id": "northwest-road",
       "label": "Northwest road",
       "direction": "northwest",
-      "status": "planned",
+      "status": "active",
       "target": {
         "areaId": "briarwell-northwest-workshops",
         "spawnId": "from-south",
@@ -150,8 +143,12 @@
       "id": "northeast-road",
       "label": "Northeast road",
       "direction": "northeast",
-      "status": "unassigned",
-      "target": null,
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-library-quarter",
+        "spawnId": "from-southwest",
+        "returnTransitionId": "southwest-road"
+      },
       "fallbackSpawn": "from-northeast",
       "points": [[1050, 392], [1082, 392], [1090, 448], [1048, 448]]
     },
@@ -159,8 +156,12 @@
       "id": "west-road",
       "label": "West road",
       "direction": "west",
-      "status": "unassigned",
-      "target": null,
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-western-homes",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-road"
+      },
       "fallbackSpawn": "from-west",
       "points": [[18, 666], [86, 666], [86, 770], [18, 770]]
     },
@@ -168,8 +169,12 @@
       "id": "east-road",
       "label": "East road",
       "direction": "east",
-      "status": "unassigned",
-      "target": null,
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-tannery-warehouses",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-road"
+      },
       "fallbackSpawn": "from-east",
       "points": [[1362, 638], [1430, 638], [1430, 772], [1362, 772]]
     },
@@ -177,8 +182,12 @@
       "id": "south-road",
       "label": "South road",
       "direction": "south",
-      "status": "unassigned",
-      "target": null,
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-south-gate",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-road"
+      },
       "fallbackSpawn": "from-south",
       "points": [[560, 1018], [1035, 1018], [1060, 1060], [535, 1060]]
     }
@@ -187,9 +196,11 @@
     {
       "id": "lodestone-tavern-door",
       "label": "Lodestone Tavern",
-      "status": "planned",
+      "status": "active",
       "target": {
-        "areaId": "lodestone-tavern-interior"
+        "areaId": "lodestone-tavern-interior",
+        "spawnId": "from-town-center",
+        "returnTransitionId": "front-door"
       },
       "fallbackSpawn": "tavern-return",
       "points": [[688, 548], [766, 548], [782, 604], [672, 604]]
@@ -197,9 +208,11 @@
     {
       "id": "general-store-door",
       "label": "General Store",
-      "status": "planned",
+      "status": "active",
       "target": {
-        "areaId": "general-store-interior"
+        "areaId": "general-store-interior",
+        "spawnId": "from-town-center",
+        "returnTransitionId": "front-door"
       },
       "fallbackSpawn": "store-return",
       "points": [[1180, 604], [1280, 604], [1295, 642], [1170, 642]]

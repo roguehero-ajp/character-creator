@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-blight-orphanage",
+  "title": "Briarwell - Ms. Blight's Orphanage",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/blight-orphanage/background/briarwell-blight-orphanage-v1.png",
+    "alt": "Isolated snowy cliffside compound with Ms. Blight's stone orphanage, a separate barn, enclosed courtyard and hidden open side window"
+  },
+  "movement": { "speedX": 275, "speedY": 205, "footRadius": 12, "maxStep": 6 },
+  "perspective": {
+    "stops": [
+      { "y": 300, "scale": 0.46 },
+      { "y": 520, "scale": 0.62 },
+      { "y": 780, "scale": 0.82 },
+      { "y": 1040, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 650, "facing": "north" },
+    "from-alley-window": { "x": 1180, "y": 620, "facing": "west" },
+    "orphanage-return": { "x": 870, "y": 585, "facing": "north" },
+    "barn-return": { "x": 420, "y": 555, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "enclosed-courtyard",
+      "points": [
+        [152, 468], [270, 432], [420, 418], [560, 430],
+        [680, 458], [820, 468], [960, 474], [1080, 500],
+        [1160, 548], [1180, 648], [1120, 716], [1010, 756],
+        [890, 790], [740, 824], [590, 810], [450, 780],
+        [320, 746], [210, 704], [146, 620]
+      ]
+    },
+    {
+      "id": "hidden-window-alley",
+      "points": [[1080, 454], [1294, 446], [1320, 596], [1260, 700], [1110, 714], [1060, 620]]
+    },
+    {
+      "id": "orphanage-front-steps",
+      "points": [[816, 420], [944, 420], [974, 586], [786, 586]]
+    },
+    {
+      "id": "barn-forecourt",
+      "points": [[230, 402], [542, 400], [590, 548], [210, 574]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "barn-foundation-and-cart",
+      "points": [[34, 218], [524, 204], [566, 262], [560, 442], [518, 500], [420, 482], [330, 510], [220, 492], [110, 514], [30, 470]]
+    },
+    {
+      "id": "orphanage-left-foundation",
+      "points": [[582, 54], [872, 48], [872, 430], [820, 430], [788, 486], [690, 478], [610, 500], [574, 442]]
+    },
+    {
+      "id": "orphanage-right-foundation",
+      "points": [[878, 46], [1348, 80], [1390, 150], [1380, 476], [1320, 532], [1250, 514], [1170, 542], [1080, 524], [980, 548], [944, 486], [912, 430], [878, 430]]
+    },
+    {
+      "id": "west-compound-wall-and-locked-gate",
+      "points": [[0, 474], [200, 466], [240, 520], [232, 680], [210, 736], [140, 760], [70, 742], [0, 758]]
+    },
+    {
+      "id": "south-compound-wall-and-locked-gate",
+      "points": [[198, 704], [996, 700], [1046, 756], [1038, 880], [980, 930], [860, 914], [740, 940], [620, 920], [500, 944], [380, 922], [260, 940], [198, 880]]
+    },
+    {
+      "id": "east-cliff-wall-and-barrier",
+      "points": [[1240, 500], [1448, 476], [1448, 930], [1380, 914], [1310, 936], [1230, 904], [1190, 820], [1200, 700]]
+    },
+    {
+      "id": "courtyard-west-lamp-base",
+      "points": [[314, 642], [370, 642], [376, 724], [318, 730]]
+    },
+    {
+      "id": "courtyard-east-lamp-base",
+      "points": [[1080, 650], [1138, 650], [1144, 732], [1084, 738]]
+    }
+  ],
+  "exits": [],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "barn-front",
+      "depthY": 518,
+      "points": [[26, 172], [532, 166], [574, 256], [568, 448], [518, 506], [420, 488], [330, 516], [220, 498], [110, 520], [24, 470]]
+    },
+    {
+      "id": "orphanage-front",
+      "depthY": 554,
+      "points": [[574, 20], [1356, 42], [1398, 144], [1388, 482], [1320, 538], [1250, 520], [1170, 548], [1080, 530], [980, 554], [944, 492], [912, 436], [872, 436], [820, 436], [788, 492], [690, 484], [610, 506], [566, 442]]
+    },
+    {
+      "id": "south-compound-wall",
+      "depthY": 950,
+      "points": [[190, 680], [1004, 676], [1054, 750], [1046, 886], [980, 936], [860, 920], [740, 946], [620, 926], [500, 950], [380, 928], [260, 946], [190, 882]]
+    },
+    {
+      "id": "east-cliff-wall-and-barrier",
+      "depthY": 942,
+      "points": [[1232, 470], [1448, 446], [1448, 936], [1380, 920], [1310, 942], [1230, 910], [1184, 818], [1194, 694]]
+    }
+  ],
+  "interactables": [
+    { "id": "blight-orphanage", "label": "Ms. Blight's orphanage", "x": 870, "y": 585, "radius": 125 },
+    { "id": "blight-barn", "label": "Orphanage barn", "x": 420, "y": 555, "radius": 115 },
+    { "id": "alley-open-window", "label": "Open cliffside window", "x": 1230, "y": 590, "radius": 115 }
+  ],
+  "npcs": []
+}

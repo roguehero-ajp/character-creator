@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.1.0",
+  "version": "0.16.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -10,35 +10,438 @@
   "areas": [
     {
       "id": "briarwell-town-center",
-      "areaNumber": null,
+      "areaNumber": 1,
       "title": "Briarwell - Town Center",
       "kind": "outdoor",
       "status": "playable",
-      "map": "data/maps/briarwell-town-center.json"
+      "map": "data/maps/briarwell-town-center.json",
+      "planPosition": { "column": 1, "row": 1 },
+      "landmarks": [
+        { "id": "lodestone-tavern", "label": "Lodestone Tavern" },
+        { "id": "general-store", "label": "General Store" },
+        { "id": "town-well", "label": "Town well" },
+        { "id": "fruit-vendor", "label": "Fruit vendor" }
+      ]
     },
     {
       "id": "briarwell-northwest-workshops",
-      "areaNumber": null,
+      "areaNumber": 2,
       "title": "Briarwell - Northwest Workshops",
       "kind": "outdoor",
-      "status": "planned",
-      "map": null
+      "status": "playable",
+      "map": "data/maps/briarwell-northwest-workshops.json",
+      "planPosition": { "column": 0, "row": 0 },
+      "landmarks": [
+        { "id": "blacksmith", "label": "Blacksmith", "placement": "top-left" },
+        { "id": "cooper", "label": "Cooper", "placement": "top-center" },
+        { "id": "houses", "label": "Houses", "placement": "left side" }
+      ]
+    },
+    {
+      "id": "briarwell-brewmaster-row",
+      "areaNumber": 3,
+      "title": "Briarwell - Brewmaster Row",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-brewmaster-row.json",
+      "planPosition": { "column": 1, "row": 0 },
+      "landmarks": [
+        { "id": "brewmaster", "label": "Brewmaster", "placement": "bottom-left" },
+        { "id": "houses", "label": "Houses", "placement": "along the top" }
+      ]
+    },
+    {
+      "id": "briarwell-library-quarter",
+      "areaNumber": 4,
+      "title": "Briarwell - Library Quarter",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-library-quarter.json",
+      "planPosition": { "column": 2, "row": 0 },
+      "landmarks": [
+        { "id": "library", "label": "Library" },
+        { "id": "houses", "label": "Houses" },
+        { "id": "cliffside-alley", "label": "Cliffside alley" },
+        { "id": "open-window", "label": "Open window to Ms. Blight's", "placement": "hidden" },
+        { "id": "sewer-grate", "label": "Sewer grate", "placement": "hidden" }
+      ]
+    },
+    {
+      "id": "briarwell-western-homes",
+      "areaNumber": 5,
+      "title": "Briarwell - Western Homes",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-western-homes.json",
+      "planPosition": { "column": 0, "row": 1 },
+      "landmarks": [
+        { "id": "my-house", "label": "My house" },
+        { "id": "houses", "label": "Other houses" },
+        { "id": "fletcher", "label": "Fletcher" }
+      ]
+    },
+    {
+      "id": "briarwell-tannery-warehouses",
+      "areaNumber": 6,
+      "title": "Briarwell - Tannery and Warehouses",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-tannery-warehouses.json",
+      "planPosition": { "column": 2, "row": 1 },
+      "landmarks": [
+        { "id": "tannery", "label": "Tannery" },
+        { "id": "warehouses", "label": "Warehouses" }
+      ]
+    },
+    {
+      "id": "briarwell-ainsley-church",
+      "areaNumber": 7,
+      "title": "Briarwell - Ainsley's and the Church",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-ainsley-church.json",
+      "planPosition": { "column": 0, "row": 2 },
+      "landmarks": [
+        { "id": "ainsley-house", "label": "Ainsley's House for Unwanted Children" },
+        { "id": "church", "label": "Church" },
+        { "id": "sewer-grate", "label": "Alley sewer grate", "placement": "hidden" }
+      ]
+    },
+    {
+      "id": "briarwell-south-gate",
+      "areaNumber": 8,
+      "title": "Briarwell - South Gate",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-south-gate.json",
+      "planPosition": { "column": 1, "row": 2 },
+      "landmarks": [
+        { "id": "guards", "label": "Guards" },
+        { "id": "barracks", "label": "Barracks" },
+        { "id": "city-gate", "label": "Gate out of Briarwell" },
+        { "id": "house", "label": "House" }
+      ]
+    },
+    {
+      "id": "briarwell-docks",
+      "areaNumber": 9,
+      "title": "Briarwell - Docks",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-docks.json",
+      "planPosition": { "column": 2, "row": 2 },
+      "landmarks": [
+        { "id": "docks", "label": "Docks" },
+        { "id": "fisherman-house", "label": "Fisherman's house" },
+        { "id": "sewer-access", "label": "Dockside sewer access", "placement": "hidden" }
+      ]
+    },
+    {
+      "id": "briarwell-mayors-hill",
+      "areaNumber": 10,
+      "title": "Briarwell - Mayor's Hill",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-mayors-hill.json",
+      "planPosition": { "column": 1, "row": -1 },
+      "landmarks": [
+        { "id": "mayor-house", "label": "Mayor's house on the hill" }
+      ]
+    },
+    {
+      "id": "briarwell-blight-orphanage",
+      "areaNumber": 11,
+      "title": "Briarwell - Ms. Blight's Orphanage",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-blight-orphanage.json",
+      "planPosition": { "column": 3, "row": -1 },
+      "landmarks": [
+        { "id": "blight-orphanage", "label": "Ms. Blight's orphanage" },
+        { "id": "barn", "label": "Barn" },
+        { "id": "alley-window", "label": "Open alley window", "placement": "hidden" }
+      ]
+    },
+    {
+      "id": "briarwell-henson-homestead",
+      "areaNumber": 12,
+      "title": "Briarwell - Henson Homestead",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-henson-homestead.json",
+      "planPosition": { "column": -2, "row": 0 },
+      "landmarks": [
+        { "id": "henson-home", "label": "Old Man Henson's place" }
+      ]
+    },
+    {
+      "id": "briarwell-west-road-junction",
+      "areaNumber": null,
+      "title": "Briarwell - West Road Junction",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-west-road-junction.json",
+      "planPosition": { "column": -1, "row": 1 },
+      "landmarks": [
+        { "id": "road-junction", "label": "West road junction" }
+      ]
+    },
+    {
+      "id": "briarwell-sewers",
+      "areaNumber": null,
+      "title": "Briarwell Sewers",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewers.json",
+      "landmarks": [
+        { "id": "sewer-network", "label": "Connected sewer network" }
+      ]
     },
     {
       "id": "lodestone-tavern-interior",
       "areaNumber": null,
       "title": "Lodestone Tavern",
       "kind": "interior",
-      "status": "planned",
-      "map": null
+      "status": "playable",
+      "map": "data/maps/lodestone-tavern-interior.json"
     },
     {
       "id": "general-store-interior",
       "areaNumber": null,
       "title": "Briarwell General Store",
       "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/general-store-interior.json"
+    }
+  ],
+  "connections": [
+    {
+      "id": "town-center-northwest-workshops",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-town-center", "transitionId": "northwest-road", "direction": "northwest" },
+        { "areaId": "briarwell-northwest-workshops", "transitionId": "south-road", "direction": "south" }
+      ]
+    },
+    {
+      "id": "town-center-library-quarter",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-town-center", "transitionId": "northeast-road", "direction": "northeast" },
+        { "areaId": "briarwell-library-quarter", "transitionId": "southwest-road", "direction": "southwest" }
+      ]
+    },
+    {
+      "id": "town-center-western-homes",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-town-center", "transitionId": "west-road", "direction": "west" },
+        { "areaId": "briarwell-western-homes", "transitionId": "east-road", "direction": "east" }
+      ]
+    },
+    {
+      "id": "town-center-tannery-warehouses",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-town-center", "transitionId": "east-road", "direction": "east" },
+        { "areaId": "briarwell-tannery-warehouses", "transitionId": "west-road", "direction": "west" }
+      ]
+    },
+    {
+      "id": "town-center-south-gate",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-town-center", "transitionId": "south-road", "direction": "south" },
+        { "areaId": "briarwell-south-gate", "transitionId": "north-road", "direction": "north" }
+      ]
+    },
+    {
+      "id": "northwest-workshops-brewmaster-row",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-northwest-workshops", "transitionId": "east-road", "direction": "east" },
+        { "areaId": "briarwell-brewmaster-row", "transitionId": "west-road", "direction": "west" }
+      ]
+    },
+    {
+      "id": "brewmaster-row-library-quarter",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-brewmaster-row", "transitionId": "east-road", "direction": "east" },
+        { "areaId": "briarwell-library-quarter", "transitionId": "west-road", "direction": "west" }
+      ]
+    },
+    {
+      "id": "brewmaster-row-mayors-hill",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-brewmaster-row", "transitionId": "north-road", "direction": "north" },
+        { "areaId": "briarwell-mayors-hill", "transitionId": "south-road", "direction": "south" }
+      ]
+    },
+    {
+      "id": "western-homes-ainsley-church",
+      "kind": "alley",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-western-homes", "transitionId": "south-alley", "direction": "south" },
+        { "areaId": "briarwell-ainsley-church", "transitionId": "north-alley", "direction": "north" }
+      ]
+    },
+    {
+      "id": "western-homes-west-road-junction",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-western-homes", "transitionId": "west-road", "direction": "west" },
+        { "areaId": "briarwell-west-road-junction", "transitionId": "east-road", "direction": "east" }
+      ]
+    },
+    {
+      "id": "tannery-warehouses-docks",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-tannery-warehouses", "transitionId": "south-road", "direction": "south" },
+        { "areaId": "briarwell-docks", "transitionId": "north-road", "direction": "north" }
+      ]
+    },
+    {
+      "id": "ainsley-church-south-gate",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-ainsley-church", "transitionId": "east-road", "direction": "east" },
+        { "areaId": "briarwell-south-gate", "transitionId": "west-road", "direction": "west" }
+      ]
+    },
+    {
+      "id": "south-gate-docks",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-south-gate", "transitionId": "east-road", "direction": "east" },
+        { "areaId": "briarwell-docks", "transitionId": "west-road", "direction": "west" }
+      ]
+    },
+    {
+      "id": "west-road-junction-henson-homestead",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-west-road-junction", "transitionId": "north-road", "direction": "north" },
+        { "areaId": "briarwell-henson-homestead", "transitionId": "south-road", "direction": "south" }
+      ]
+    },
+    {
+      "id": "library-quarter-blight-open-window",
+      "kind": "secret-passage",
+      "visibility": "hidden",
       "status": "planned",
-      "map": null
+      "endpoints": [
+        { "areaId": "briarwell-library-quarter", "transitionId": "blight-open-window" },
+        { "areaId": "briarwell-blight-orphanage", "transitionId": "alley-window" }
+      ]
+    },
+    {
+      "id": "town-center-well-sewers",
+      "kind": "sewer-access",
+      "visibility": "hidden",
+      "status": "planned",
+      "endpoints": [
+        { "areaId": "briarwell-town-center", "transitionId": "well-sewer-access" },
+        { "areaId": "briarwell-sewers", "transitionId": "town-center-well-ladder" }
+      ]
+    },
+    {
+      "id": "library-alley-sewers",
+      "kind": "sewer-access",
+      "visibility": "hidden",
+      "status": "planned",
+      "endpoints": [
+        { "areaId": "briarwell-library-quarter", "transitionId": "sewer-grate" },
+        { "areaId": "briarwell-sewers", "transitionId": "cliffside-alley-ladder" }
+      ]
+    },
+    {
+      "id": "ainsley-alley-sewers",
+      "kind": "sewer-access",
+      "visibility": "hidden",
+      "status": "planned",
+      "endpoints": [
+        { "areaId": "briarwell-ainsley-church", "transitionId": "sewer-grate" },
+        { "areaId": "briarwell-sewers", "transitionId": "ainsley-alley-ladder" }
+      ]
+    },
+    {
+      "id": "docks-sewers",
+      "kind": "sewer-access",
+      "visibility": "hidden",
+      "status": "planned",
+      "endpoints": [
+        { "areaId": "briarwell-docks", "transitionId": "sewer-access" },
+        { "areaId": "briarwell-sewers", "transitionId": "docks-ladder" }
+      ]
+    },
+    {
+      "id": "town-center-lodestone-tavern",
+      "kind": "doorway",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-town-center", "transitionId": "lodestone-tavern-door" },
+        { "areaId": "lodestone-tavern-interior", "transitionId": "front-door" }
+      ]
+    },
+    {
+      "id": "town-center-general-store",
+      "kind": "doorway",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-town-center", "transitionId": "general-store-door" },
+        { "areaId": "general-store-interior", "transitionId": "front-door" }
+      ]
+    }
+  ],
+  "cityExits": [
+    {
+      "id": "west-road-out-of-briarwell",
+      "areaId": "briarwell-west-road-junction",
+      "transitionId": "west-road",
+      "direction": "west",
+      "status": "unassigned",
+      "target": null
+    },
+    {
+      "id": "south-gate-out-of-briarwell",
+      "areaId": "briarwell-south-gate",
+      "transitionId": "south-road",
+      "direction": "south",
+      "status": "unassigned",
+      "target": null
     }
   ]
 }

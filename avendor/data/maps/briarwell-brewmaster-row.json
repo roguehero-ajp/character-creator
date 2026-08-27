@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-brewmaster-row",
+  "title": "Briarwell - Brewmaster Row",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/brewmaster-row/background/briarwell-brewmaster-row-v1.png",
+    "alt": "Snowy Briarwell Brewmaster Row with a copper brewery, houses and west, east and uphill roads"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.40 },
+      { "y": 420, "scale": 0.52 },
+      { "y": 700, "scale": 0.72 },
+      { "y": 1010, "scale": 0.96 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 820, "y": 700, "facing": "north" },
+    "from-west": { "x": 145, "y": 455, "facing": "east" },
+    "from-east": { "x": 1315, "y": 500, "facing": "west" },
+    "from-north": { "x": 775, "y": 340, "facing": "south" },
+    "brewmaster-return": { "x": 650, "y": 850, "facing": "west" },
+    "houses-return": { "x": 1040, "y": 560, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "brewmaster-junction",
+      "points": [
+        [0, 310], [245, 312], [430, 370], [600, 420],
+        [680, 420], [698, 300], [716, 178], [838, 166],
+        [872, 300], [900, 420], [1080, 448], [1260, 430],
+        [1448, 414], [1448, 572], [1280, 586], [1300, 650],
+        [1290, 780], [1220, 955], [600, 955], [570, 900],
+        [590, 820], [620, 730], [610, 640], [540, 550],
+        [300, 548], [0, 548]
+      ]
+    },
+    {
+      "id": "north-road",
+      "points": [
+        [710, 178], [838, 166], [884, 430], [842, 520],
+        [670, 512], [684, 390]
+      ]
+    },
+    {
+      "id": "west-road",
+      "points": [[0, 306], [290, 312], [520, 404], [540, 552], [0, 552]]
+    },
+    {
+      "id": "east-road",
+      "points": [[1110, 438], [1448, 410], [1448, 580], [1200, 590]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "northwest-houses-base",
+      "points": [
+        [262, 326], [676, 326], [710, 370], [710, 434],
+        [640, 462], [548, 442], [472, 458], [390, 438],
+        [300, 446], [260, 406]
+      ]
+    },
+    {
+      "id": "northeast-houses-base",
+      "points": [
+        [886, 332], [1448, 324], [1448, 454], [1380, 470],
+        [1290, 452], [1200, 472], [1110, 454], [1020, 474],
+        [930, 452], [880, 408]
+      ]
+    },
+    {
+      "id": "brewmaster-building-base",
+      "points": [
+        [0, 690], [390, 688], [510, 726], [590, 786],
+        [610, 870], [568, 930], [460, 952], [330, 930],
+        [220, 966], [0, 958]
+      ]
+    },
+    {
+      "id": "brewmaster-casks-and-grain-base",
+      "points": [
+        [350, 810], [566, 810], [625, 850], [626, 944],
+        [560, 980], [418, 970], [350, 930]
+      ]
+    },
+    {
+      "id": "south-retaining-wall-base",
+      "points": [
+        [0, 984], [380, 978], [570, 992], [790, 984],
+        [1010, 990], [1230, 980], [1448, 984], [1448, 1086], [0, 1086]
+      ]
+    },
+    {
+      "id": "southeast-tree-line-base",
+      "points": [
+        [1290, 610], [1448, 580], [1448, 982], [1260, 976],
+        [1218, 916], [1250, 820]
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "west-road",
+      "label": "West road to the Northwest Workshops",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-northwest-workshops",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-road"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[6, 376], [92, 376], [92, 522], [6, 522]]
+    },
+    {
+      "id": "east-road",
+      "label": "East road to the Library Quarter",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-library-quarter",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-road"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1370, 440], [1442, 430], [1442, 548], [1370, 558]]
+    },
+    {
+      "id": "north-road",
+      "label": "Uphill road to the Mayor's house",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mayors-hill",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-road"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[730, 176], [828, 170], [850, 238], [716, 242]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "northwest-house-front-props",
+      "depthY": 470,
+      "points": [
+        [430, 336], [704, 336], [710, 420], [660, 456],
+        [570, 438], [500, 456], [430, 438]
+      ]
+    },
+    {
+      "id": "northeast-house-front-props",
+      "depthY": 480,
+      "points": [
+        [900, 334], [1448, 326], [1448, 462], [1320, 458],
+        [1200, 470], [1080, 462], [960, 474], [894, 426]
+      ]
+    },
+    {
+      "id": "brewmaster-copper-kettle",
+      "depthY": 914,
+      "points": [
+        [34, 572], [298, 572], [332, 620], [324, 790],
+        [284, 872], [212, 914], [80, 904], [26, 822]
+      ]
+    },
+    {
+      "id": "brewmaster-front-casks",
+      "depthY": 960,
+      "points": [
+        [306, 742], [560, 746], [616, 824], [614, 938],
+        [542, 968], [412, 954], [330, 918]
+      ]
+    },
+    {
+      "id": "south-retaining-wall",
+      "depthY": 1038,
+      "points": [
+        [0, 966], [250, 960], [500, 968], [740, 962],
+        [980, 970], [1220, 958], [1448, 966], [1448, 1086], [0, 1086]
+      ]
+    }
+  ],
+  "interactables": [
+    { "id": "brewmaster-workshop", "label": "Brewmaster's workshop", "x": 620, "y": 860, "radius": 110 },
+    { "id": "copper-brew-kettle", "label": "Copper brew kettle", "x": 350, "y": 875, "radius": 96 },
+    { "id": "northwest-houses", "label": "Northwest row houses", "x": 600, "y": 500, "radius": 82 },
+    { "id": "northeast-houses", "label": "Northeast row houses", "x": 1060, "y": 520, "radius": 82 }
+  ],
+  "npcs": []
+}
