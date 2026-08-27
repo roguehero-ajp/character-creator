@@ -8,7 +8,7 @@
 
   const BASE = 'assets/sprites/hero/body/female/skeletal-rig/';
   const PART_FILES = Object.freeze({
-    head: 'head.png',
+    head: 'head-profile-ew.png',
     ponytail: 'ponytail.png',
     torso: 'torso.png',
     pelvis: 'pelvis.png',
@@ -34,7 +34,7 @@
         resolve(image);
       };
       image.onerror = () => reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
-      image.src = `${BASE}${file}?v=0.9.2`;
+      image.src = `${BASE}${file}?v=0.9.3`;
     });
   }
 
@@ -82,102 +82,6 @@
     const anchorX = image.naturalWidth * (options.anchorX ?? 0.5);
     const anchorY = image.naturalHeight * (options.anchorY ?? 0.5);
     ctx.drawImage(image, -anchorX, -anchorY);
-    ctx.restore();
-  }
-
-  function traceProfile(ctx, w, h) {
-    ctx.beginPath();
-    ctx.moveTo(-w * 0.24, h * 0.38);
-    ctx.bezierCurveTo(-w * 0.37, h * 0.25, -w * 0.39, -h * 0.14, -w * 0.28, -h * 0.32);
-    ctx.bezierCurveTo(-w * 0.17, -h * 0.46, w * 0.07, -h * 0.47, w * 0.18, -h * 0.34);
-    ctx.bezierCurveTo(w * 0.25, -h * 0.26, w * 0.27, -h * 0.13, w * 0.29, -h * 0.07);
-    ctx.bezierCurveTo(w * 0.31, -h * 0.01, w * 0.42, h * 0.015, w * 0.45, h * 0.055);
-    ctx.bezierCurveTo(w * 0.43, h * 0.085, w * 0.36, h * 0.095, w * 0.33, h * 0.115);
-    ctx.bezierCurveTo(w * 0.35, h * 0.145, w * 0.39, h * 0.155, w * 0.375, h * 0.18);
-    ctx.bezierCurveTo(w * 0.36, h * 0.205, w * 0.395, h * 0.22, w * 0.365, h * 0.245);
-    ctx.bezierCurveTo(w * 0.33, h * 0.31, w * 0.27, h * 0.375, w * 0.17, h * 0.405);
-    ctx.bezierCurveTo(w * 0.04, h * 0.45, -w * 0.10, h * 0.455, -w * 0.24, h * 0.38);
-    ctx.closePath();
-  }
-
-  function drawProfileHead(ctx, image, center, scale, options = {}) {
-    if (!image) return;
-
-    const w = image.naturalWidth;
-    const h = image.naturalHeight;
-    const scaleX = options.scaleX ?? 0.94;
-    const scaleY = options.scaleY ?? 1;
-
-    ctx.save();
-    ctx.translate(center[0], center[1]);
-    if (options.rotate) ctx.rotate(options.rotate);
-    ctx.scale(scale * scaleX, scale * scaleY);
-
-    // Authored East-facing silhouette: curved rear skull, forehead, nose,
-    // lips and chin. The source painting supplies near-side skin/hair texture
-    // inside the shape rather than being visibly chopped in half.
-    traceProfile(ctx, w, h);
-    ctx.fillStyle = '#bd8068';
-    ctx.fill();
-
-    ctx.save();
-    traceProfile(ctx, w, h);
-    ctx.clip();
-    ctx.drawImage(
-      image,
-      w * 0.36, h * 0.05, w * 0.59, h * 0.90,
-      -w * 0.18, -h * 0.43, w * 0.61, h * 0.88
-    );
-    ctx.restore();
-
-    // Rear hair cap keeps the ponytail visually behind the skull.
-    ctx.save();
-    ctx.globalAlpha = 0.82;
-    ctx.fillStyle = '#4b312c';
-    ctx.beginPath();
-    ctx.moveTo(-w * 0.25, h * 0.34);
-    ctx.bezierCurveTo(-w * 0.36, h * 0.16, -w * 0.37, -h * 0.17, -w * 0.27, -h * 0.32);
-    ctx.bezierCurveTo(-w * 0.15, -h * 0.45, w * 0.04, -h * 0.45, w * 0.15, -h * 0.34);
-    ctx.bezierCurveTo(w * 0.07, -h * 0.26, -w * 0.015, -h * 0.20, -w * 0.07, -h * 0.10);
-    ctx.bezierCurveTo(-w * 0.10, h * 0.07, -w * 0.11, h * 0.23, -w * 0.06, h * 0.34);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
-
-    // One visible eye only. West mirrors this exact authored East head.
-    ctx.fillStyle = '#3a2725';
-    ctx.strokeStyle = '#3a2725';
-    ctx.lineCap = 'round';
-    ctx.lineWidth = w * 0.016;
-    ctx.beginPath();
-    ctx.moveTo(w * 0.07, -h * 0.165);
-    ctx.quadraticCurveTo(w * 0.125, -h * 0.185, w * 0.18, -h * 0.16);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.ellipse(w * 0.145, -h * 0.105, w * 0.028, h * 0.012, -0.08, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Painted contour accents strengthen the side-profile read at sprite size.
-    ctx.strokeStyle = 'rgba(103, 59, 50, 0.78)';
-    ctx.lineWidth = w * 0.013;
-    ctx.beginPath();
-    ctx.moveTo(w * 0.205, -h * 0.075);
-    ctx.quadraticCurveTo(w * 0.285, -h * 0.015, w * 0.325, h * 0.05);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(w * 0.315, h * 0.18);
-    ctx.quadraticCurveTo(w * 0.35, h * 0.19, w * 0.375, h * 0.18);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(w * 0.27, h * 0.31);
-    ctx.quadraticCurveTo(w * 0.235, h * 0.345, w * 0.18, h * 0.36);
-    ctx.stroke();
-
-    traceProfile(ctx, w, h);
-    ctx.strokeStyle = 'rgba(58, 39, 37, 0.82)';
-    ctx.lineWidth = w * 0.012;
-    ctx.stroke();
-
     ctx.restore();
   }
 
@@ -279,10 +183,12 @@
     drawLeg(ctx, pose, frontLegSide, 1.02);
     drawArm(ctx, pose, frontArmSide, 1.02);
 
-    drawProfileHead(ctx, images.head, [cx + 3, 71 + bob], 0.174, {
-      scaleX: 0.94,
-      scaleY: 1.00,
-      rotate: -0.095 + pose.shoulderTilt * -0.001
+    // 0.9.3: use the approved visual reference literally as an E/W-only
+    // transparent profile-head asset. No procedural crop or painted geometry.
+    drawCentered(ctx, images.head, [cx + 5, 70 + bob], 0.160, {
+      anchorX: 0.50,
+      anchorY: 0.52,
+      rotate: -0.025 + pose.shoulderTilt * -0.0006
     });
 
     if (debug) {
@@ -318,7 +224,7 @@
   }
 
   window.AvendorFemalePaintedEWRig = Object.freeze({
-    version: '0.9.2',
+    version: '0.9.3',
     load,
     drawPose,
     renderAtlas,
