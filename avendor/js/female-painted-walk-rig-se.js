@@ -35,7 +35,7 @@
         resolve(image);
       };
       image.onerror = () => reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
-      image.src = `${BASE}${file}?v=0.8.5`;
+      image.src = `${BASE}${file}?v=0.8.6`;
     });
   }
 
@@ -167,7 +167,7 @@
     const cx = pose.pelvisX;
     const arms = armJoints(pose);
 
-    const headCenter = [cx + 7, 71 + bob];
+    const headCenter = [cx + 4, 71 + bob];
     const torsoCenter = [cx + 3, 111 + bob];
     const pelvisCenter = [cx + 2, 143 + bob];
 
@@ -211,12 +211,12 @@
     drawLeg(ctx, pose, 'screen-left', 1.03);
     drawArm(ctx, arms.front, 'screen-left', 1.03);
 
-    // Increase the three-quarter head read so the screen-left eye dominates.
+    // Preserve a natural head width while the anchor and rotation carry the SE half-profile.
     drawCentered(ctx, images.head, headCenter, 0.174, {
-      anchorX: 0.62,
+      anchorX: 0.63,
       anchorY: 0.43,
-      scaleX: 0.70,
-      rotate: -0.080 + pose.shoulderTilt * -0.0015
+      scaleX: 0.81,
+      rotate: -0.090 + pose.shoulderTilt * -0.0015
     });
 
     if (debug) {
@@ -240,7 +240,7 @@
   }
 
   window.AvendorFemalePaintedSERig = Object.freeze({
-    version: '0.8.5',
+    version: '0.8.6',
     load,
     drawPose,
     renderAtlas,
