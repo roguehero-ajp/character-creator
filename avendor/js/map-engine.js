@@ -50,6 +50,71 @@
     return stops[stops.length - 1][valueKey];
   }
 
+  function geometrySidecarUrl(url) {
+    const match = String(url).match(/^(.*)\.json(\?.*)?$/i);
+    return match ? `${match[1]}-geometry.json${match[2] || ''}` : null;
+  }
+
+  function applyGeometryOverrides(data, geometry, source = null) {
+    if (geometry.areaId !== data.id) {
+      throw new Error(`Geometry sidecar area mismatch: ${geometry.areaId || '(missing)'} != ${data.id}`);
+    }
+    if (!Array.isArray(geometry.walkable) || !Array.isArray(geometry.collisions)) {
+      throw new TypeError('Geometry sidecar is incomplete.');
+    }
+
+    let depthOccluders = data.depthOccluders || [];
+    const depthOverrides = geometry.depthOccluderOverrides || [];
+    if (!Array.isArray(depthOverrides)) {
+      throw new TypeError('Geometry depthOccluderOverrides must be an array when provided.');
+    }
+
+    if (depthOverrides.length) {
+      const overridesById = new Map(depthOverrides.map((override) => [override.id, override]));
+      const knownIds = new Set(depthOccluders.map((region) => region.id));
+      overridesById.forEach((override, id) => {
+        if (!knownIds.has(id)) throw new Error(`Unknown depth occluder override: ${id}`);
+        if (!Array.isArray(override.points) || override.points.length < 3) {
+          throw new TypeError(`Depth occluder override has no usable polygon: ${id}`);
+        }
+      });
+      depthOccluders = depthOccluders.map((region) => (
+        overridesById.has(region.id) ? { ...region, ...overridesById.get(region.id) } : region
+      ));
+    }
+
+    return {
+      ...data,
+      walkable: geometry.walkable,
+      collisions: geometry.collisions,
+      depthOccluders,
+      geometry: {
+        source,
+        version: geometry.version || null,
+        model: geometry.model || null
+      }
+    };
+  }
+
+  async function applyGeometrySidecar(url, data) {
+    const sidecarUrl = geometrySidecarUrl(url);
+    if (!sidecarUrl) return data;
+
+    let response;
+    try {
+      response = await fetch(sidecarUrl, { cache: 'no-store' });
+    } catch (_) {
+      return data;
+    }
+
+    if (response.status === 404) return data;
+    if (!response.ok) {
+      throw new Error(`Could not load map geometry (${response.status}): ${sidecarUrl}`);
+    }
+
+    return applyGeometryOverrides(data, await response.json(), sidecarUrl);
+  }
+
   class MapGeometry {
     constructor(data) {
       if (!data?.referenceSize?.width || !data?.referenceSize?.height) {
@@ -74,7 +139,8 @@
       if (!response.ok) {
         throw new Error(`Could not load map data (${response.status}): ${url}`);
       }
-      return new MapGeometry(await response.json());
+      const data = await applyGeometrySidecar(url, await response.json());
+      return new MapGeometry(data);
     }
 
     getSpawn(id = 'default') {
@@ -242,6 +308,7 @@
     pointInPolygon,
     pointInAnyPolygon,
     polygonToCss,
+    applyGeometryOverrides,
     drawDebugMap
   });
 })();

@@ -4,10 +4,11 @@
   const FRAME_W = 128;
   const FRAME_H = 240;
   const DIRECTION_ROWS = 5;
-  const WALK_FRAMES = 6;
-  const WALK_FRAME_MS = 96;
+  const DEFAULT_WALK_FRAMES = 8;
+  const WALK_FRAME_MS = 20;
+  const WALK_POSE_MS = 110;
   const RIG_VERSION = '0.4.0';
-  const ART_VERSION = '0.4.3';
+  const ART_VERSION = '0.5.2';
 
   const ROW = Object.freeze({
     south: 0,
@@ -29,6 +30,7 @@
         id: 'body',
         idle: 'assets/sprites/hero/body/male/idle.png',
         walk: 'assets/sprites/hero/body/male/walk.png',
+        walkFrames: DEFAULT_WALK_FRAMES,
         coverage: 'full-body'
       }
     ],
@@ -37,6 +39,7 @@
         id: 'body',
         idle: 'assets/sprites/hero/body/female/idle.png',
         walk: 'assets/sprites/hero/body/female/walk.png',
+        walkFrames: DEFAULT_WALK_FRAMES,
         coverage: 'full-body'
       }
     ]
@@ -45,10 +48,12 @@
   function loadImage(src) {
     return new Promise((resolve, reject) => {
       const img = new Image();
+      const separator = src.includes('?') ? '&' : '?';
+      const versionedSrc = `${src}${separator}v=${encodeURIComponent(ART_VERSION)}`;
       img.decoding = 'async';
       img.onload = () => resolve(img);
       img.onerror = () => reject(new Error(`Could not load sprite atlas: ${src}`));
-      img.src = src;
+      img.src = versionedSrc;
     });
   }
 
@@ -104,19 +109,22 @@
   }
 
   async function loadLayer(def) {
+    const walkFrames = Number.isInteger(def.walkFrames) && def.walkFrames > 0
+      ? def.walkFrames
+      : DEFAULT_WALK_FRAMES;
     const [idleImage, walkImage] = await Promise.all([
       loadImage(def.idle),
       def.walk ? loadImage(def.walk) : Promise.resolve(null)
     ]);
 
     validateAtlasShape(idleImage, def.idle, 1);
-    if (walkImage) validateAtlasShape(walkImage, def.walk, WALK_FRAMES);
+    if (walkImage) validateAtlasShape(walkImage, def.walk, walkFrames);
     if (def.coverage === 'full-body') {
       validateFullBodyFrames(idleImage, def.idle, 1);
-      if (walkImage) validateFullBodyFrames(walkImage, def.walk, WALK_FRAMES);
+      if (walkImage) validateFullBodyFrames(walkImage, def.walk, walkFrames);
     }
 
-    return { ...def, idleImage, walkImage };
+    return { ...def, walkFrames, idleImage, walkImage };
   }
 
   class LayeredSprite {
@@ -132,7 +140,9 @@
       this.direction = 'south';
       this.state = 'idle';
       this.frame = 0;
+      this.walkFrames = DEFAULT_WALK_FRAMES;
       this.lastFrameAt = performance.now();
+      this.lastMoveAt = this.lastFrameAt;
       this.layers = [];
       this.ready = false;
       this.loadToken = 0;
@@ -152,10 +162,19 @@
       const loaded = await Promise.all(layerDefs.map(loadLayer));
 
       if (token !== this.loadToken) return;
+      const walkFrameCounts = [...new Set(
+        loaded.filter((layer) => layer.walkImage).map((layer) => layer.walkFrames)
+      )];
+      if (walkFrameCounts.length > 1) {
+        throw new Error(`Sprite layers disagree on walk frame count: ${walkFrameCounts.join(', ')}`);
+      }
+
       this.layers = loaded;
+      this.walkFrames = walkFrameCounts[0] || DEFAULT_WALK_FRAMES;
       this.ready = true;
       this.frame = 0;
       this.lastFrameAt = performance.now();
+      this.lastMoveAt = this.lastFrameAt;
       this.draw();
     }
 
@@ -166,25 +185,37 @@
         this.state = state;
         this.frame = 0;
         this.lastFrameAt = performance.now();
+        this.lastMoveAt = this.lastFrameAt;
       }
       if (direction) this.direction = direction;
       if (this.ready && (stateChanged || directionChanged)) this.draw();
     }
 
     update(now) {
-      if (!this.ready) return;
+      if (!this.ready) return 0;
       if (this.state === 'walk') {
-        const elapsed = now - this.lastFrameAt;
-        if (elapsed >= WALK_FRAME_MS) {
-          const steps = Math.floor(elapsed / WALK_FRAME_MS);
-          this.frame = (this.frame + steps) % WALK_FRAMES;
-          this.lastFrameAt += steps * WALK_FRAME_MS;
+        const poseElapsed = now - this.lastFrameAt;
+        if (poseElapsed >= WALK_POSE_MS) {
+          const poseSteps = Math.floor(poseElapsed / WALK_POSE_MS);
+          this.frame = (this.frame + poseSteps) % this.walkFrames;
+          this.lastFrameAt += poseSteps * WALK_POSE_MS;
           this.draw();
         }
-      } else if (this.frame !== 0) {
-        this.frame = 0;
-        this.draw();
+
+        const moveElapsed = now - this.lastMoveAt;
+        if (moveElapsed >= WALK_FRAME_MS) {
+          const moveSteps = Math.floor(moveElapsed / WALK_FRAME_MS);
+          this.lastMoveAt += moveSteps * WALK_FRAME_MS;
+          return moveSteps;
+        }
+      } else {
+        this.lastMoveAt = now;
+        if (this.frame !== 0) {
+          this.frame = 0;
+          this.draw();
+        }
       }
+      return 0;
     }
 
     draw() {
@@ -223,6 +254,7 @@
         direction: this.direction,
         state: this.state,
         frame: this.frame,
+        walkFrames: this.walkFrames,
         ready: this.ready,
         rigVersion: RIG_VERSION,
         artVersion: ART_VERSION
@@ -234,8 +266,10 @@
     FRAME_W,
     FRAME_H,
     DIRECTION_ROWS,
-    WALK_FRAMES,
+    WALK_FRAMES: DEFAULT_WALK_FRAMES,
+    DEFAULT_WALK_FRAMES,
     WALK_FRAME_MS,
+    WALK_POSE_MS,
     RIG_VERSION,
     ART_VERSION,
     LayeredSprite,
