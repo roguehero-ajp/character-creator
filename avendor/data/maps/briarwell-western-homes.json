@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-western-homes",
+  "title": "Briarwell - Western Homes",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/western-homes/background/briarwell-western-homes-v1.png",
+    "alt": "Snowy Briarwell residential quarter with the hero's home, neighboring house, Fletcher and three roads"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6
+  },
+  "perspective": {
+    "stops": [
+      { "y": 430, "scale": 0.50 },
+      { "y": 600, "scale": 0.62 },
+      { "y": 820, "scale": 0.80 },
+      { "y": 1060, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 730, "y": 700, "facing": "north" },
+    "from-east": { "x": 1300, "y": 650, "facing": "west" },
+    "from-west": { "x": 150, "y": 690, "facing": "east" },
+    "from-south": { "x": 720, "y": 950, "facing": "north" },
+    "home-return": { "x": 720, "y": 560, "facing": "north" },
+    "fletcher-return": { "x": 1080, "y": 650, "facing": "north" },
+    "neighbor-return": { "x": 430, "y": 700, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "western-homes-square",
+      "points": [
+        [0, 580], [260, 560], [420, 520], [560, 500],
+        [960, 488], [1080, 510], [1220, 490], [1448, 470],
+        [1448, 738], [1260, 760], [1080, 790], [950, 840],
+        [900, 1086], [520, 1086], [500, 920], [430, 840],
+        [300, 800], [0, 780]
+      ]
+    },
+    {
+      "id": "west-road",
+      "points": [[0, 574], [330, 550], [530, 610], [520, 790], [0, 798]]
+    },
+    {
+      "id": "east-road",
+      "points": [[1080, 505], [1448, 465], [1448, 746], [1190, 770]]
+    },
+    {
+      "id": "south-alley",
+      "points": [[500, 760], [950, 760], [920, 1086], [520, 1086]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "hero-home-base",
+      "points": [
+        [470, 398], [980, 398], [1000, 450], [976, 506],
+        [870, 526], [790, 508], [700, 536], [610, 514],
+        [520, 528], [468, 478]
+      ]
+    },
+    {
+      "id": "neighbor-house-base",
+      "points": [
+        [48, 510], [442, 510], [480, 552], [470, 630],
+        [400, 670], [310, 652], [230, 676], [140, 654], [58, 668]
+      ]
+    },
+    {
+      "id": "fletcher-building-base",
+      "points": [
+        [930, 414], [1370, 414], [1410, 470], [1400, 548],
+        [1320, 576], [1240, 556], [1160, 588], [1070, 566],
+        [970, 586], [924, 530]
+      ]
+    },
+    {
+      "id": "fletcher-workbench-base",
+      "points": [[1050, 500], [1248, 500], [1290, 570], [1270, 632], [1080, 634], [1030, 578]]
+    },
+    {
+      "id": "southwest-yard-wall-base",
+      "points": [
+        [0, 760], [478, 748], [532, 802], [524, 936],
+        [470, 990], [360, 1004], [250, 982], [120, 1006], [0, 996]
+      ]
+    },
+    {
+      "id": "southeast-yard-wall-base",
+      "points": [
+        [900, 748], [1448, 736], [1448, 1010], [1330, 1000],
+        [1220, 1018], [1100, 994], [980, 1002], [912, 944]
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "east-road",
+      "label": "East road to Town Center",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-town-center",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-road"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1370, 560], [1442, 548], [1442, 710], [1370, 720]]
+    },
+    {
+      "id": "west-road",
+      "label": "West road to the outer junction",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-west-road-junction",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-road"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[6, 620], [92, 620], [92, 758], [6, 758]]
+    },
+    {
+      "id": "south-alley",
+      "label": "South alley toward Ainsley's and the church",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-ainsley-church",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-alley"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[570, 1018], [870, 1018], [900, 1080], [540, 1080]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "hero-home-front",
+      "depthY": 540,
+      "points": [
+        [468, 260], [980, 260], [1010, 426], [984, 510],
+        [870, 530], [790, 510], [700, 540], [610, 516], [520, 532], [462, 474]
+      ]
+    },
+    {
+      "id": "neighbor-house-front",
+      "depthY": 680,
+      "points": [
+        [46, 330], [444, 330], [488, 540], [474, 638],
+        [400, 674], [310, 656], [220, 680], [130, 660], [50, 670]
+      ]
+    },
+    {
+      "id": "fletcher-awning-and-bows",
+      "depthY": 640,
+      "points": [
+        [926, 330], [1368, 330], [1410, 472], [1402, 548],
+        [1320, 578], [1250, 560], [1262, 632], [1070, 638],
+        [1028, 580], [968, 590], [922, 528]
+      ]
+    },
+    {
+      "id": "southwest-yard-wall",
+      "depthY": 1000,
+      "points": [
+        [0, 736], [486, 730], [542, 790], [534, 938],
+        [470, 994], [350, 1010], [240, 988], [110, 1012], [0, 1002]
+      ]
+    },
+    {
+      "id": "southeast-yard-wall",
+      "depthY": 1010,
+      "points": [
+        [892, 730], [1448, 716], [1448, 1018], [1320, 1006],
+        [1210, 1022], [1090, 1000], [970, 1008], [904, 944]
+      ]
+    }
+  ],
+  "interactables": [
+    { "id": "my-house", "label": "My house", "x": 720, "y": 560, "radius": 96 },
+    { "id": "neighbor-house", "label": "Neighboring house", "x": 430, "y": 700, "radius": 82 },
+    { "id": "fletcher-workshop", "label": "Fletcher's workshop", "x": 1080, "y": 650, "radius": 110 }
+  ],
+  "npcs": []
+}

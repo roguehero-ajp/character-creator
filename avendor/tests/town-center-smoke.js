@@ -3,7 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
-const { chromium } = require('playwright');
+const skipBrowser = process.env.AVENDOR_SKIP_BROWSER === '1';
+const { chromium } = skipBrowser ? {} : require('playwright');
 
 const avendorRoot = path.resolve(__dirname, '..');
 const mapPath = path.join(avendorRoot, 'data/maps/briarwell-town-center.json');
@@ -56,7 +57,8 @@ function assertGeometry() {
   const { data, map, pointInPolygon } = loadGeometry();
 
   assert(data.schemaVersion === 2, 'Wrong Town Center map schema version.');
-  assert(data.version === '0.7.1', 'Wrong Town Center map version.');
+  assert(data.version === '0.8.0', 'Wrong Town Center map version.');
+  assert(data.collisions.length === 8, 'Town Center should contain eight foot-level obstacles.');
   assert(data.npcs.length === 2, 'Town Center should contain exactly two residents.');
   assert(
     data.npcs.map((npc) => npc.id).join(',') === 'fanny-allwood,lain-menny',
@@ -119,6 +121,11 @@ function assertGeometry() {
       );
     }
   };
+  const assertWalkableSpan = (y, left, right, label) => {
+    for (let x = left; x <= right; x += 1) {
+      assert(map.isWalkable(x, y), `Movement lane is pinched ${label} at ${x},${y}.`);
+    }
+  };
   assert(isOccludedAt(370, 520, 590), 'The fruit-stall post no longer occludes the hero.');
   assert(!isOccludedAt(344, 520, 590), 'The fruit-stall post mask is still too wide on the left.');
   assert(!isOccludedAt(397, 540, 590), 'The fruit-stall post mask is still too wide on the right.');
@@ -175,6 +182,15 @@ function assertGeometry() {
   });
 
   [
+    [780, 1100, 1400, 'across the upper east approach'],
+    [820, 1100, 1400, 'along the southeast fence approach'],
+    [850, 1100, 1400, 'through the southeast fence line'],
+    [880, 1100, 1400, 'up to the southeast stone wall']
+  ].forEach(([y, left, right, label]) => {
+    assertWalkableSpan(y, left, right, label);
+  });
+
+  [
     [450, 430, 'inside the Lodestone northwest wall'],
     [375, 530, 'inside the fruit-stall post silhouette'],
     [1016, 540, 'inside the Lodestone northeast wall'],
@@ -227,6 +243,7 @@ function assertGeometry() {
     [450, 540, 'through the widened northwest Lodestone passage'],
     [1060, 540, 'through the widened northeast Lodestone passage'],
     [1210, 820, 'beside the southeast lantern post'],
+    [1400, 850, 'through the widened southeast fence line'],
     [1160, 952, 'close to the southeast stone wall']
   ].forEach(([x, y, label]) => {
     assert(map.isWalkable(x, y), `Expected walkable space ${label}.`);
@@ -235,7 +252,7 @@ function assertGeometry() {
   [
     [370, 630, 'fruit-stall post base'],
     [250, 850, 'southwest fence base'],
-    [1220, 820, 'southeast fence rail base'],
+    [1400, 900, 'southeast stone wall east end'],
     [1205, 970, 'southeast stone wall base']
   ].forEach(([x, y, label]) => {
     assert(!map.isWalkable(x, y), `Expected collision at the ${label}.`);
@@ -309,7 +326,7 @@ async function assertBrowser() {
 
   await page.goto(testUrl, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => (
-    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.7.1')
+    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.8.0')
   ));
 
   const snapshot = await page.evaluate(() => ({
@@ -453,17 +470,63 @@ async function assertBrowser() {
   await page.click('#body-male');
   await page.waitForFunction(() => document.getElementById('rig-status').textContent.includes('MALE'));
 
+  const townAudit = await page.evaluate(async () => {
+    const walkTest = window.AvendorWalkTest;
+    const playableAreas = walkTest.getRegistry().areas.filter((area) => area.status === 'playable');
+    const results = [];
+
+    for (const area of playableAreas) {
+      const sceneMap = await walkTest.loadArea(area.id, 'default');
+      const stageArt = document.querySelector('.stage-art');
+      if (stageArt.decode) await stageArt.decode().catch(() => {});
+      results.push({
+        areaId: area.id,
+        mapId: sceneMap.data.id,
+        width: stageArt.naturalWidth,
+        height: stageArt.naturalHeight,
+        position: walkTest.getPosition(),
+        expectedPosition: sceneMap.data.spawnPoints.default,
+        occluderParts: document.querySelectorAll('.scene-occluder polygon').length,
+        expectedOccluderParts: sceneMap.data.depthOccluders.length,
+        mountedResidents: document.querySelectorAll('.map-npc').length,
+        expectedResidents: sceneMap.npcs.length,
+        stageAreaId: document.getElementById('walk-stage').dataset.areaId
+      });
+    }
+
+    return results;
+  });
+  assert(townAudit.length === 16, 'The browser did not load all 16 playable Briarwell maps.');
+  townAudit.forEach((area) => {
+    assert(area.areaId === area.mapId && area.areaId === area.stageAreaId, `Wrong map mounted for ${area.areaId}.`);
+    assert(area.width === 1448 && area.height === 1086, `Wrong background dimensions for ${area.areaId}.`);
+    assert(
+      area.position.x === area.expectedPosition.x && area.position.y === area.expectedPosition.y,
+      `Wrong default spawn mounted for ${area.areaId}.`
+    );
+    assert(
+      area.occluderParts === area.expectedOccluderParts,
+      `Occluder parts were duplicated or dropped for ${area.areaId}.`
+    );
+    assert(
+      area.mountedResidents === area.expectedResidents,
+      `Resident layers were duplicated or dropped for ${area.areaId}.`
+    );
+  });
+  await page.evaluate(() => window.AvendorWalkTest.loadArea('briarwell-sewers', 'default'));
+  await page.screenshot({ path: '/tmp/avendor-briarwell-sewers-debug.png' });
+
   await browser.close();
   assert(failures.length === 0, failures.join('\n'));
 }
 
 (async () => {
   assertGeometry();
-  if (process.env.AVENDOR_SKIP_BROWSER === '1') {
+  if (skipBrowser) {
     console.log('Briarwell Town Center geometry checks passed; browser smoke check skipped.');
   } else {
     await assertBrowser();
-    console.log('Briarwell Town Center smoke checks passed.');
+    console.log('Briarwell complete town smoke checks passed.');
   }
 })().catch((error) => {
   console.error(error.stack || error.message);

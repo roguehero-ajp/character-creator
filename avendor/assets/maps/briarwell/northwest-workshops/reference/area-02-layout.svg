@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1448" height="1086" viewBox="0 0 1448 1086" role="img" aria-labelledby="title desc">
+  <title id="title">Briarwell Area 2 production layout</title>
+  <desc id="desc">Wireframe placing the Blacksmith at top-left, Cooper at top-center, two houses along the left, a south road to Town Center and an east road to Area 3.</desc>
+  <defs>
+    <linearGradient id="snow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9e6ee"/>
+      <stop offset="1" stop-color="#aebfca"/>
+    </linearGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a9a69e"/>
+      <stop offset="1" stop-color="#827f79"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#18232c" flood-opacity="0.28"/>
+    </filter>
+    <style>
+      .boundary { fill: none; stroke: #314554; stroke-width: 14; }
+      .building { stroke: #293844; stroke-width: 7; filter: url(#shadow); }
+      .roof { stroke: #293844; stroke-width: 7; stroke-linejoin: round; }
+      .label { fill: #182731; font-family: Georgia, serif; font-weight: 700; text-anchor: middle; }
+      .small { fill: #334b5a; font-family: Arial, sans-serif; font-size: 22px; text-anchor: middle; }
+      .route { fill: url(#road); stroke: #efe7d2; stroke-width: 7; stroke-dasharray: 20 14; }
+      .approach { fill: #d4c89f; fill-opacity: 0.72; stroke: #7d6a3b; stroke-width: 4; stroke-dasharray: 12 10; }
+      .door { fill: #7c4d2d; stroke: #372b25; stroke-width: 5; }
+      .exit { fill: #5ea8c9; fill-opacity: 0.82; stroke: #174d67; stroke-width: 6; }
+      .exit-label { fill: #fffdf3; font-family: Arial, sans-serif; font-size: 25px; font-weight: 700; text-anchor: middle; }
+      .note { fill: #193243; font-family: Arial, sans-serif; font-size: 21px; }
+    </style>
+  </defs>
+
+  <rect width="1448" height="1086" fill="url(#snow)"/>
+  <path d="M0 0H1448V1086H0Z" class="boundary"/>
+
+  <path class="route" d="M616 1086 L605 908 Q610 760 730 670 Q870 580 1070 620 L1448 620 L1448 840 L1090 840 Q920 820 865 900 L850 1086 Z"/>
+  <path class="approach" d="M290 452 L535 450 L596 612 L486 706 L254 668 Z"/>
+  <path class="approach" d="M602 438 L922 438 L1022 595 L894 690 L616 634 Z"/>
+
+  <g aria-label="Blacksmith building">
+    <rect x="66" y="170" width="430" height="310" rx="12" fill="#7d6253" class="building"/>
+    <path d="M40 190 L278 62 L524 190 Z" fill="#4c5962" class="roof"/>
+    <rect x="112" y="84" width="72" height="146" fill="#55453e" stroke="#293844" stroke-width="7"/>
+    <rect x="358" y="332" width="82" height="148" class="door"/>
+    <rect x="122" y="292" width="118" height="94" fill="#e68f42" stroke="#4c3023" stroke-width="6"/>
+    <text x="278" y="245" class="label" font-size="42">BLACKSMITH</text>
+    <text x="278" y="280" class="small">top-left landmark</text>
+  </g>
+
+  <g aria-label="Blacksmith forecourt">
+    <path d="M336 552 L380 510 L424 552 L412 596 L350 596 Z" fill="#3f4b50" stroke="#202b31" stroke-width="6"/>
+    <rect x="370" y="594" width="20" height="42" fill="#473a33"/>
+    <text x="425" y="650" class="small">forge / anvil approach</text>
+  </g>
+
+  <g aria-label="Cooper building">
+    <rect x="548" y="188" width="408" height="286" rx="12" fill="#9a7752" class="building"/>
+    <path d="M520 204 L752 80 L986 204 Z" fill="#64717a" class="roof"/>
+    <rect x="704" y="332" width="88" height="142" class="door"/>
+    <text x="752" y="255" class="label" font-size="42">COOPER</text>
+    <text x="752" y="290" class="small">top-center landmark</text>
+    <g fill="#7a4d2e" stroke="#332820" stroke-width="5">
+      <ellipse cx="866" cy="370" rx="38" ry="18"/>
+      <rect x="828" y="370" width="76" height="72"/>
+      <ellipse cx="866" cy="442" rx="38" ry="18"/>
+    </g>
+  </g>
+
+  <g aria-label="House one">
+    <rect x="34" y="548" width="248" height="190" rx="10" fill="#8d765f" class="building"/>
+    <path d="M18 566 L154 478 L300 566 Z" fill="#586b78" class="roof"/>
+    <rect x="178" y="640" width="62" height="98" class="door"/>
+    <text x="150" y="616" class="label" font-size="28">HOUSE</text>
+  </g>
+
+  <g aria-label="House two">
+    <rect x="54" y="792" width="278" height="190" rx="10" fill="#806d61" class="building"/>
+    <path d="M35 810 L187 716 L350 810 Z" fill="#536773" class="roof"/>
+    <rect x="210" y="882" width="64" height="100" class="door"/>
+    <text x="188" y="858" class="label" font-size="28">HOUSE</text>
+  </g>
+
+  <g aria-label="Open circulation zone">
+    <ellipse cx="786" cy="756" rx="292" ry="178" fill="#f3f0e5" fill-opacity="0.30" stroke="#3d697d" stroke-width="5" stroke-dasharray="17 13"/>
+    <text x="786" y="750" class="label" font-size="34">OPEN WALKABLE CENTER</text>
+    <text x="786" y="788" class="small">keep both workshop forecourts connected</text>
+  </g>
+
+  <g aria-label="East exit">
+    <rect x="1350" y="648" width="98" height="162" class="exit"/>
+    <text x="1389" y="708" class="exit-label" transform="rotate(-90 1389 708)">EAST ROAD</text>
+    <text x="1175" y="876" class="note">to Area 3 Brewmaster Row</text>
+  </g>
+
+  <g aria-label="South exit">
+    <rect x="642" y="1000" width="198" height="86" class="exit"/>
+    <text x="741" y="1053" class="exit-label">SOUTH ROAD</text>
+    <text x="866" y="980" class="note">to Area 1 Town Center</text>
+  </g>
+
+  <g aria-label="Layout notes">
+    <rect x="1010" y="54" width="380" height="404" rx="18" fill="#f7f2df" fill-opacity="0.90" stroke="#365363" stroke-width="5"/>
+    <text x="1200" y="102" class="label" font-size="30">LAYOUT CONTRACT</text>
+    <text x="1044" y="148" class="note">• 1448 × 1086 production canvas</text>
+    <text x="1044" y="188" class="note">• Blacksmith remains top-left</text>
+    <text x="1044" y="228" class="note">• Cooper remains top-center</text>
+    <text x="1044" y="268" class="note">• One or two houses stay left</text>
+    <text x="1044" y="308" class="note">• Broad south/east circulation</text>
+    <text x="1044" y="348" class="note">• No north or west exits</text>
+    <text x="1044" y="388" class="note">• Collide only at object bases</text>
+    <text x="1044" y="428" class="note">• Layer tall props for occlusion</text>
+  </g>
+</svg>

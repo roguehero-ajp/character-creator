@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "id": "general-store-interior",
+  "title": "Briarwell General Store",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/general-store/background/general-store-interior-v1.png",
+    "alt": "Empty practical General Store with one snowy front door, stocked shelves and service counter"
+  },
+  "movement": { "speedX": 260, "speedY": 195, "footRadius": 12, "maxStep": 6 },
+  "perspective": {
+    "stops": [
+      { "y": 360, "scale": 0.56 },
+      { "y": 560, "scale": 0.70 },
+      { "y": 800, "scale": 0.88 },
+      { "y": 1080, "scale": 1.04 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 500, "facing": "south" },
+    "from-town-center": { "x": 720, "y": 500, "facing": "south" },
+    "counter-return": { "x": 850, "y": 650, "facing": "east" },
+    "shelves-return": { "x": 350, "y": 600, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "customer-floor",
+      "points": [
+        [530, 360], [820, 360], [880, 410], [980, 470],
+        [1080, 560], [1170, 700], [1190, 860], [1180, 1086],
+        [170, 1086], [170, 820], [180, 650], [230, 520],
+        [380, 440]
+      ]
+    },
+    {
+      "id": "left-shelf-aisle",
+      "points": [[190, 400], [530, 390], [610, 500], [580, 680], [390, 740], [200, 650]]
+    },
+    {
+      "id": "counter-aisle",
+      "points": [[760, 390], [980, 380], [1110, 500], [1120, 680], [960, 750], [790, 650]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "left-shelves-and-back-stock",
+      "points": [[0, 0], [520, 0], [540, 300], [510, 430], [450, 480], [330, 490], [240, 540], [0, 610]]
+    },
+    {
+      "id": "left-foreground-crates",
+      "points": [[0, 570], [150, 570], [180, 690], [170, 830], [100, 870], [0, 850]]
+    },
+    {
+      "id": "service-counter-and-right-shelves",
+      "points": [[830, 270], [1448, 250], [1448, 720], [1340, 740], [1240, 700], [1130, 710], [1020, 650], [900, 570], [830, 470]]
+    },
+    {
+      "id": "right-foreground-stock",
+      "points": [[1180, 550], [1448, 530], [1448, 900], [1350, 900], [1260, 850], [1190, 780]]
+    }
+  ],
+  "exits": [],
+  "portals": [
+    {
+      "id": "front-door",
+      "label": "Front door to Briarwell Town Center",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-town-center",
+        "spawnId": "store-return",
+        "returnTransitionId": "general-store-door"
+      },
+      "fallbackSpawn": "from-town-center",
+      "points": [[600, 350], [820, 350], [830, 430], [590, 430]]
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "left-shelves-front",
+      "depthY": 616,
+      "points": [[0, 0], [526, 0], [546, 300], [516, 436], [450, 486], [330, 496], [240, 546], [0, 616]]
+    },
+    {
+      "id": "left-foreground-crates-front",
+      "depthY": 876,
+      "points": [[0, 558], [156, 558], [186, 690], [176, 836], [100, 876], [0, 856]]
+    },
+    {
+      "id": "service-counter-front",
+      "depthY": 746,
+      "points": [[824, 258], [1448, 238], [1448, 726], [1340, 746], [1240, 706], [1130, 716], [1020, 656], [894, 570], [824, 470]]
+    },
+    {
+      "id": "right-foreground-stock-front",
+      "depthY": 906,
+      "points": [[1174, 538], [1448, 518], [1448, 906], [1350, 906], [1260, 856], [1184, 780]]
+    }
+  ],
+  "interactables": [
+    { "id": "general-store-counter", "label": "General Store counter", "x": 960, "y": 670, "radius": 145 },
+    { "id": "general-store-shelves", "label": "Shelves of household goods", "x": 350, "y": 600, "radius": 135 },
+    { "id": "general-store-supplies", "label": "Crates and baskets of supplies", "x": 1230, "y": 820, "radius": 125 }
+  ],
+  "npcs": []
+}

@@ -4,8 +4,12 @@ const fs = require('fs');
 const path = require('path');
 
 const avendorRoot = path.resolve(__dirname, '..');
+const mapArgument = process.argv[3];
+const mapPath = mapArgument
+  ? (path.isAbsolute(mapArgument) ? mapArgument : path.resolve(avendorRoot, mapArgument))
+  : path.join(avendorRoot, 'data/maps/briarwell-town-center.json');
 const map = JSON.parse(fs.readFileSync(
-  path.join(avendorRoot, 'data/maps/briarwell-town-center.json'),
+  mapPath,
   'utf8'
 ));
 const output = process.argv[2] || '/tmp/avendor-town-center-debug.mvg';
@@ -31,17 +35,23 @@ const interactables = map.interactables.map((item) => (
   + `<text x="${item.x + 12}" y="${item.y + 5}">${item.id}</text></g>`
 )).join('\n');
 
+const spawns = Object.entries(map.spawnPoints).map(([id, spawn]) => (
+  `<g class="spawn"><circle cx="${spawn.x}" cy="${spawn.y}" r="11"/>`
+  + `<text x="${spawn.x + 15}" y="${spawn.y - 12}">${id}</text></g>`
+)).join('\n');
+
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <style>
     polygon { stroke-width: 3; }
-    .walkable { fill: #2ecc7130; stroke: #68ffa4d9; }
-    .collision { fill: #e74c3c44; stroke: #ff6c5ef2; }
-    .exit { fill: #3498db55; stroke: #69cdfff2; }
-    .portal { fill: #9b59b655; stroke: #e68efff2; }
-    .occluder { fill: #fff4c20f; stroke: #ffe27ac7; stroke-dasharray: 14 8; }
+    .walkable { fill: #2ecc71; fill-opacity: 0.19; stroke: #68ffa4; stroke-opacity: 0.85; }
+    .collision { fill: #e74c3c; fill-opacity: 0.27; stroke: #ff6c5e; stroke-opacity: 0.95; }
+    .exit { fill: #3498db; fill-opacity: 0.34; stroke: #69cdff; stroke-opacity: 0.95; }
+    .portal { fill: #9b59b6; fill-opacity: 0.34; stroke: #e68eff; stroke-opacity: 0.95; }
+    .occluder { fill: #fff4c2; fill-opacity: 0.06; stroke: #ffe27a; stroke-opacity: 0.78; stroke-dasharray: 14 8; }
     .anchor circle { fill: #ffd166; stroke: #231a08; stroke-width: 3; }
-    .anchor text, .interactable text { fill: #fff0b8; stroke: #000; stroke-width: 4; paint-order: stroke; font: 700 18px monospace; }
+    .spawn circle { fill: #68d5ff; stroke: #082b3a; stroke-width: 3; }
+    .anchor text, .interactable text, .spawn text { fill: #fff0b8; stroke: #000; stroke-width: 4; paint-order: stroke; font: 700 18px monospace; }
     .interactable circle { fill: none; stroke: #ffae42; stroke-width: 3; stroke-dasharray: 10 7; }
   </style>
   ${polygons(map.walkable, 'walkable')}
@@ -51,6 +61,7 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   ${polygons(map.depthOccluders, 'occluder')}
   ${interactables}
   ${anchors}
+  ${spawns}
 </svg>`;
 
 function mvgPolygons(regions, fill, stroke) {

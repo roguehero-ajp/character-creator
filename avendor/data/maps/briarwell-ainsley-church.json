@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-ainsley-church",
+  "title": "Briarwell - Ainsley's and the Church",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/ainsley-church/background/briarwell-ainsley-church-v1.png",
+    "alt": "Snowy Briarwell district with Ainsley's House for Unwanted Children, a separate church, north alley and east road"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6
+  },
+  "perspective": {
+    "stops": [
+      { "y": 340, "scale": 0.46 },
+      { "y": 560, "scale": 0.60 },
+      { "y": 800, "scale": 0.80 },
+      { "y": 1020, "scale": 0.97 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 800, "y": 700, "facing": "north" },
+    "from-north": { "x": 790, "y": 500, "facing": "south" },
+    "from-east": { "x": 1320, "y": 600, "facing": "west" },
+    "ainsley-return": { "x": 620, "y": 650, "facing": "north" },
+    "church-return": { "x": 1000, "y": 650, "facing": "north" },
+    "grate-return": { "x": 210, "y": 760, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "ainsley-church-courtyard",
+      "points": [
+        [260, 548], [690, 548], [704, 440], [742, 340],
+        [832, 340], [860, 450], [860, 558], [1120, 548],
+        [1280, 510], [1448, 360], [1448, 714], [1320, 730],
+        [1240, 790], [1190, 840], [1160, 800], [1080, 780],
+        [900, 794], [720, 780], [520, 800], [340, 780],
+        [260, 700]
+      ]
+    },
+    {
+      "id": "north-alley",
+      "points": [[704, 340], [834, 336], [872, 570], [688, 572]]
+    },
+    {
+      "id": "east-road",
+      "points": [[1110, 548], [1448, 350], [1448, 724], [1240, 780]]
+    },
+    {
+      "id": "sewer-side-alley",
+      "points": [
+        [78, 520], [270, 520], [310, 620], [294, 820],
+        [250, 900], [104, 900], [62, 820]
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "ainsley-house-base",
+      "points": [
+        [0, 420], [680, 420], [720, 474], [710, 558],
+        [640, 610], [540, 590], [450, 620], [350, 600],
+        [250, 630], [140, 608], [0, 624]
+      ]
+    },
+    {
+      "id": "church-base",
+      "points": [
+        [824, 408], [1270, 400], [1320, 460], [1310, 560],
+        [1240, 612], [1150, 590], [1070, 624], [980, 600],
+        [890, 626], [824, 566]
+      ]
+    },
+    {
+      "id": "ainsley-sewer-grate",
+      "points": [[120, 668], [206, 666], [218, 724], [130, 734]]
+    },
+    {
+      "id": "west-alley-buildings-base",
+      "points": [
+        [0, 560], [108, 548], [128, 620], [110, 850],
+        [80, 930], [0, 938]
+      ]
+    },
+    {
+      "id": "south-garden-wall-base",
+      "points": [
+        [250, 770], [900, 758], [1100, 770], [1180, 830],
+        [1172, 1000], [1080, 1030], [900, 1018], [720, 1040],
+        [520, 1020], [360, 1034], [260, 980]
+      ]
+    },
+    {
+      "id": "southeast-wall-base",
+      "points": [
+        [1150, 720], [1448, 704], [1448, 1086], [1120, 1086],
+        [1100, 1000], [1140, 860]
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "north-alley",
+      "label": "North alley to the Western Homes",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-western-homes",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-alley"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[730, 338], [824, 338], [842, 404], [716, 406]]
+    },
+    {
+      "id": "east-road",
+      "label": "East road to the South Gate",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-south-gate",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-road"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1370, 430], [1442, 390], [1442, 674], [1370, 698]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "ainsley-house-front",
+      "depthY": 630,
+      "points": [
+        [0, 170], [680, 170], [724, 470], [714, 562],
+        [640, 614], [540, 594], [450, 624], [350, 604],
+        [250, 634], [140, 612], [0, 628]
+      ]
+    },
+    {
+      "id": "church-front",
+      "depthY": 635,
+      "points": [
+        [822, 86], [1272, 86], [1324, 458], [1314, 564],
+        [1240, 616], [1150, 594], [1070, 628], [980, 604],
+        [890, 630], [820, 564]
+      ]
+    },
+    {
+      "id": "grate-alley-well-roof",
+      "depthY": 860,
+      "points": [[206, 600], [360, 598], [404, 660], [394, 824], [346, 860], [250, 840]]
+    },
+    {
+      "id": "south-garden-wall",
+      "depthY": 1040,
+      "points": [
+        [244, 742], [910, 734], [1110, 746], [1190, 820],
+        [1182, 1008], [1080, 1038], [900, 1026], [720, 1048],
+        [520, 1028], [350, 1042], [252, 982]
+      ]
+    },
+    {
+      "id": "east-road-wall-and-lantern",
+      "depthY": 850,
+      "points": [
+        [1170, 520], [1250, 514], [1268, 596], [1250, 720],
+        [1210, 780], [1170, 760]
+      ]
+    }
+  ],
+  "interactables": [
+    { "id": "ainsley-house", "label": "Ainsley's House for Unwanted Children", "x": 620, "y": 650, "radius": 104 },
+    { "id": "briarwell-church", "label": "Briarwell church", "x": 1000, "y": 650, "radius": 104 },
+    { "id": "ainsley-sewer-grate", "label": "Iron alley grate", "x": 210, "y": 760, "radius": 78, "state": "sewer-sealed" }
+  ],
+  "npcs": []
+}

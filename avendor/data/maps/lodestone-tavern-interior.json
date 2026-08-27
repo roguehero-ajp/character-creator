@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 2,
+  "id": "lodestone-tavern-interior",
+  "title": "Lodestone Tavern",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/lodestone-tavern/background/lodestone-tavern-interior-v1.png",
+    "alt": "Warm empty common room inside the Lodestone Tavern with one snowy front door"
+  },
+  "movement": { "speedX": 260, "speedY": 195, "footRadius": 12, "maxStep": 6 },
+  "perspective": {
+    "stops": [
+      { "y": 360, "scale": 0.56 },
+      { "y": 560, "scale": 0.70 },
+      { "y": 800, "scale": 0.88 },
+      { "y": 1080, "scale": 1.04 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 500, "facing": "south" },
+    "from-town-center": { "x": 720, "y": 500, "facing": "south" },
+    "hearth-return": { "x": 430, "y": 600, "facing": "west" },
+    "bar-return": { "x": 900, "y": 600, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "common-room-floor",
+      "points": [
+        [540, 350], [880, 350], [960, 410], [1050, 480],
+        [1120, 580], [1140, 700], [1100, 820], [1120, 1086],
+        [330, 1086], [340, 920], [350, 820], [370, 700],
+        [410, 580], [470, 470]
+      ]
+    },
+    {
+      "id": "hearth-side-aisle",
+      "points": [[260, 430], [540, 400], [620, 520], [590, 680], [430, 730], [280, 650]]
+    },
+    {
+      "id": "bar-side-aisle",
+      "points": [[820, 390], [1080, 390], [1160, 500], [1140, 650], [980, 700], [830, 620]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "hearth-and-west-wall",
+      "points": [[0, 0], [340, 0], [360, 180], [350, 500], [290, 570], [220, 560], [150, 600], [0, 600]]
+    },
+    {
+      "id": "northwest-table-and-chairs",
+      "points": [[330, 270], [570, 270], [594, 390], [560, 480], [460, 506], [356, 462]]
+    },
+    {
+      "id": "southwest-table-and-benches",
+      "points": [[0, 520], [370, 520], [410, 650], [394, 930], [300, 1030], [0, 1030]]
+    },
+    {
+      "id": "bar-stools-and-barrels",
+      "points": [[930, 250], [1448, 220], [1448, 620], [1320, 650], [1180, 620], [1060, 630], [980, 556], [930, 430]]
+    },
+    {
+      "id": "southeast-table-and-benches",
+      "points": [[1060, 570], [1448, 550], [1448, 1040], [1320, 1040], [1200, 980], [1120, 860]]
+    }
+  ],
+  "exits": [],
+  "portals": [
+    {
+      "id": "front-door",
+      "label": "Front door to Briarwell Town Center",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-town-center",
+        "spawnId": "tavern-return",
+        "returnTransitionId": "lodestone-tavern-door"
+      },
+      "fallbackSpawn": "from-town-center",
+      "points": [[630, 350], [830, 350], [840, 425], [620, 425]]
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "hearth-and-west-wall-front",
+      "depthY": 606,
+      "points": [[0, 0], [346, 0], [366, 180], [356, 506], [290, 576], [220, 566], [150, 606], [0, 606]]
+    },
+    {
+      "id": "northwest-table-front",
+      "depthY": 512,
+      "points": [[324, 258], [576, 258], [600, 392], [560, 486], [460, 512], [350, 468]]
+    },
+    {
+      "id": "southwest-table-front",
+      "depthY": 1036,
+      "points": [[0, 508], [376, 508], [416, 650], [400, 936], [300, 1036], [0, 1036]]
+    },
+    {
+      "id": "bar-front",
+      "depthY": 656,
+      "points": [[924, 238], [1448, 208], [1448, 626], [1320, 656], [1180, 626], [1060, 636], [974, 556], [924, 430]]
+    },
+    {
+      "id": "southeast-table-front",
+      "depthY": 1046,
+      "points": [[1054, 558], [1448, 538], [1448, 1046], [1320, 1046], [1200, 986], [1114, 860]]
+    }
+  ],
+  "interactables": [
+    { "id": "lodestone-hearth", "label": "Lodestone hearth", "x": 360, "y": 570, "radius": 125 },
+    { "id": "lodestone-bar", "label": "Lodestone bar", "x": 1000, "y": 620, "radius": 140 },
+    { "id": "lodestone-common-tables", "label": "Common-room tables", "x": 430, "y": 700, "radius": 115 }
+  ],
+  "npcs": []
+}

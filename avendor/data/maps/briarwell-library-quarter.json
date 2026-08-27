@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-library-quarter",
+  "title": "Briarwell - Library Quarter",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/library-quarter/background/briarwell-library-quarter-v1.png",
+    "alt": "Snowy Briarwell Library Quarter with a civic library, houses, public roads and a cliffside alley"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6
+  },
+  "perspective": {
+    "stops": [
+      { "y": 440, "scale": 0.50 },
+      { "y": 620, "scale": 0.62 },
+      { "y": 820, "scale": 0.80 },
+      { "y": 1060, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 620, "y": 790, "facing": "north" },
+    "from-west": { "x": 145, "y": 700, "facing": "east" },
+    "from-southwest": { "x": 470, "y": 955, "facing": "northeast" },
+    "library-return": { "x": 850, "y": 620, "facing": "north" },
+    "houses-return": { "x": 940, "y": 1025, "facing": "north" },
+    "window-return": { "x": 1310, "y": 620, "facing": "north" },
+    "grate-return": { "x": 1310, "y": 850, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "library-square",
+      "points": [
+        [0, 548], [250, 530], [380, 520], [520, 548],
+        [650, 600], [860, 606], [1030, 620], [1110, 690],
+        [1150, 800], [1130, 900], [1070, 970], [980, 1040],
+        [760, 1086], [150, 1086], [0, 970]
+      ]
+    },
+    {
+      "id": "west-road",
+      "points": [[0, 540], [330, 520], [560, 590], [570, 800], [0, 830]]
+    },
+    {
+      "id": "southwest-road",
+      "points": [[0, 820], [320, 790], [620, 880], [790, 1086], [120, 1086], [0, 980]]
+    },
+    {
+      "id": "cliffside-alley",
+      "points": [
+        [1190, 520], [1280, 408], [1385, 402], [1418, 520],
+        [1410, 760], [1390, 930], [1340, 1008], [1230, 1020],
+        [1150, 970], [1120, 900], [1150, 790]
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "library-building-base",
+      "points": [
+        [454, 426], [1250, 418], [1280, 470], [1272, 556],
+        [1170, 582], [1060, 560], [980, 592], [884, 566],
+        [790, 590], [680, 562], [570, 584], [470, 550]
+      ]
+    },
+    {
+      "id": "library-left-courtyard-wall",
+      "points": [
+        [338, 500], [730, 500], [778, 538], [770, 618],
+        [690, 650], [580, 628], [470, 646], [380, 620], [330, 568]
+      ]
+    },
+    {
+      "id": "library-right-courtyard-wall",
+      "points": [
+        [988, 540], [1198, 538], [1230, 584], [1210, 686],
+        [1140, 710], [1060, 684], [996, 650]
+      ]
+    },
+    {
+      "id": "lower-houses-base",
+      "points": [
+        [646, 650], [1120, 640], [1200, 700], [1212, 870],
+        [1160, 962], [1060, 1014], [920, 1000], [820, 974],
+        [700, 984], [632, 930]
+      ]
+    },
+    {
+      "id": "house-crates-and-barrels-base",
+      "points": [[928, 872], [1128, 866], [1162, 936], [1110, 988], [942, 976], [906, 922]]
+    },
+    {
+      "id": "alley-sewer-grate",
+      "points": [[1280, 754], [1368, 748], [1380, 804], [1290, 816]]
+    },
+    {
+      "id": "southeast-cliff-wall-base",
+      "points": [
+        [1330, 930], [1448, 900], [1448, 1086], [1190, 1086],
+        [1194, 1032], [1260, 994]
+      ]
+    },
+    {
+      "id": "southwest-lantern-wall-base",
+      "points": [[0, 828], [104, 824], [126, 910], [94, 980], [0, 982]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "west-road",
+      "label": "West road to Brewmaster Row",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-brewmaster-row",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-road"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[6, 620], [92, 620], [92, 790], [6, 790]]
+    },
+    {
+      "id": "southwest-road",
+      "label": "Southwest road to Town Center",
+      "direction": "southwest",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-town-center",
+        "spawnId": "from-northeast",
+        "returnTransitionId": "northeast-road"
+      },
+      "fallbackSpawn": "from-southwest",
+      "points": [[260, 1018], [620, 1018], [674, 1080], [210, 1080]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "library-left-courtyard-wall",
+      "depthY": 660,
+      "points": [
+        [330, 470], [760, 470], [790, 526], [780, 620],
+        [690, 656], [580, 632], [470, 652], [370, 620], [320, 556]
+      ]
+    },
+    {
+      "id": "library-right-courtyard-wall",
+      "depthY": 710,
+      "points": [
+        [982, 516], [1214, 516], [1242, 576], [1218, 690],
+        [1140, 714], [1052, 686], [990, 648]
+      ]
+    },
+    {
+      "id": "lower-houses-front",
+      "depthY": 1000,
+      "points": [
+        [642, 610], [1160, 610], [1220, 700], [1214, 886],
+        [1160, 970], [1060, 1012], [920, 998], [800, 976],
+        [690, 988], [628, 920]
+      ]
+    },
+    {
+      "id": "alley-lantern",
+      "depthY": 920,
+      "points": [[1300, 536], [1342, 536], [1348, 662], [1332, 700], [1304, 692], [1294, 650]]
+    },
+    {
+      "id": "southwest-lantern",
+      "depthY": 980,
+      "points": [[0, 714], [40, 710], [54, 850], [40, 900], [6, 890]]
+    }
+  ],
+  "interactables": [
+    { "id": "briarwell-library", "label": "Briarwell Library", "x": 850, "y": 670, "radius": 110 },
+    { "id": "library-quarter-houses", "label": "Library Quarter houses", "x": 1050, "y": 1010, "radius": 130 },
+    { "id": "alley-open-window", "label": "Open alley window", "x": 1310, "y": 620, "radius": 78, "state": "secret-undiscovered" },
+    { "id": "alley-sewer-grate", "label": "Iron sewer grate", "x": 1310, "y": 850, "radius": 78, "state": "sewer-sealed" }
+  ],
+  "npcs": []
+}

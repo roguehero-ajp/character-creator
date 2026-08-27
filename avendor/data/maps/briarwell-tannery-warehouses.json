@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-tannery-warehouses",
+  "title": "Briarwell - Tannery and Warehouses",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/tannery-warehouses/background/briarwell-tannery-warehouses-v1.png",
+    "alt": "Snowy Briarwell eastern work quarter with a Tannery, warehouses, west road and downhill docks road"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6
+  },
+  "perspective": {
+    "stops": [
+      { "y": 340, "scale": 0.46 },
+      { "y": 560, "scale": 0.60 },
+      { "y": 800, "scale": 0.80 },
+      { "y": 1060, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 720, "facing": "north" },
+    "from-west": { "x": 120, "y": 690, "facing": "east" },
+    "from-south": { "x": 650, "y": 950, "facing": "north" },
+    "tannery-return": { "x": 720, "y": 680, "facing": "northwest" },
+    "warehouse-return": { "x": 1000, "y": 600, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "industrial-yard",
+      "points": [
+        [0, 330], [240, 320], [400, 380], [560, 460],
+        [730, 500], [900, 500], [1040, 530], [1150, 620],
+        [1140, 740], [1080, 820], [940, 920], [850, 1086],
+        [430, 1086], [390, 970], [300, 880], [180, 810],
+        [70, 700], [0, 650]
+      ]
+    },
+    {
+      "id": "west-road",
+      "points": [[0, 320], [270, 316], [500, 410], [520, 650], [0, 678]]
+    },
+    {
+      "id": "south-road",
+      "points": [[390, 770], [930, 770], [860, 1086], [420, 1086]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "tannery-building-base",
+      "points": [
+        [42, 286], [650, 286], [690, 340], [680, 414],
+        [600, 448], [510, 430], [420, 454], [330, 436],
+        [230, 458], [120, 438], [38, 400]
+      ]
+    },
+    {
+      "id": "tannery-vats-and-racks-base",
+      "points": [
+        [72, 350], [720, 344], [786, 412], [782, 548],
+        [720, 620], [620, 658], [500, 638], [390, 668],
+        [270, 648], [150, 670], [70, 620]
+      ]
+    },
+    {
+      "id": "main-warehouse-base",
+      "points": [
+        [794, 292], [1310, 286], [1360, 340], [1350, 438],
+        [1270, 490], [1160, 472], [1080, 500], [970, 482],
+        [870, 510], [800, 458]
+      ]
+    },
+    {
+      "id": "east-warehouse-base",
+      "points": [
+        [1110, 440], [1448, 430], [1448, 782], [1370, 810],
+        [1260, 786], [1160, 800], [1088, 740]
+      ]
+    },
+    {
+      "id": "foreground-warehouse-base",
+      "points": [
+        [858, 800], [1448, 786], [1448, 1086], [820, 1086],
+        [800, 1000], [824, 900]
+      ]
+    },
+    {
+      "id": "southwest-loading-wall-base",
+      "points": [
+        [0, 700], [330, 698], [406, 760], [402, 900],
+        [350, 978], [250, 1002], [130, 986], [0, 1010]
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "west-road",
+      "label": "West road to Town Center",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-town-center",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-road"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[6, 450], [92, 450], [92, 640], [6, 640]]
+    },
+    {
+      "id": "south-road",
+      "label": "Downhill road to the docks",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-docks",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-road"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[470, 1018], [820, 1018], [850, 1080], [440, 1080]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "tannery-front-racks",
+      "depthY": 670,
+      "points": [
+        [66, 330], [730, 326], [792, 408], [788, 552],
+        [724, 624], [620, 664], [500, 642], [390, 674],
+        [270, 654], [145, 676], [64, 620]
+      ]
+    },
+    {
+      "id": "main-warehouse-loading-apron",
+      "depthY": 520,
+      "points": [
+        [792, 270], [1320, 270], [1370, 338], [1360, 444],
+        [1270, 494], [1160, 476], [1080, 504], [970, 486],
+        [870, 514], [794, 458]
+      ]
+    },
+    {
+      "id": "east-warehouse-front",
+      "depthY": 810,
+      "points": [
+        [1100, 392], [1448, 382], [1448, 790], [1370, 814],
+        [1260, 790], [1160, 804], [1084, 738]
+      ]
+    },
+    {
+      "id": "foreground-warehouse-front",
+      "depthY": 1030,
+      "points": [
+        [850, 760], [1448, 748], [1448, 1086], [810, 1086],
+        [792, 996], [816, 890]
+      ]
+    },
+    {
+      "id": "southwest-loading-wall",
+      "depthY": 1010,
+      "points": [
+        [0, 676], [338, 674], [414, 748], [410, 906],
+        [350, 984], [250, 1008], [130, 992], [0, 1016]
+      ]
+    }
+  ],
+  "interactables": [
+    { "id": "tannery", "label": "Tannery", "x": 720, "y": 680, "radius": 118 },
+    { "id": "tannery-vats", "label": "Tanning vats and drying racks", "x": 560, "y": 700, "radius": 96 },
+    { "id": "warehouse-loading-apron", "label": "Warehouse loading apron", "x": 1000, "y": 600, "radius": 110 }
+  ],
+  "npcs": []
+}

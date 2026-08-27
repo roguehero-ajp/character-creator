@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mayors-hill",
+  "title": "Briarwell - Mayor's Hill",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mayors-hill/background/briarwell-mayors-hill-v1.png",
+    "alt": "Snowy Mayor's Hill with a manor, terraced winter garden, broad forecourt and one south road"
+  },
+  "movement": { "speedX": 275, "speedY": 205, "footRadius": 12, "maxStep": 6 },
+  "perspective": {
+    "stops": [
+      { "y": 260, "scale": 0.44 },
+      { "y": 500, "scale": 0.60 },
+      { "y": 760, "scale": 0.80 },
+      { "y": 1060, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 730, "y": 620, "facing": "north" },
+    "from-south": { "x": 730, "y": 940, "facing": "north" },
+    "mayor-house-return": { "x": 810, "y": 340, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "hill-road-and-forecourt",
+      "points": [
+        [318, 1086], [1126, 1086], [1120, 920], [1100, 760],
+        [1090, 590], [1050, 470], [990, 402], [914, 368],
+        [862, 326], [584, 326], [526, 364], [454, 398],
+        [394, 472], [356, 590], [334, 760], [324, 920]
+      ]
+    },
+    {
+      "id": "upper-manor-forecourt",
+      "points": [[470, 238], [1010, 232], [1060, 314], [1000, 398], [450, 398], [400, 320]]
+    },
+    {
+      "id": "front-steps",
+      "points": [[738, 190], [874, 190], [900, 330], [708, 330]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "mayor-manor-left-foundation",
+      "points": [[604, 62], [794, 54], [794, 190], [748, 190], [720, 238], [610, 242], [574, 192]]
+    },
+    {
+      "id": "mayor-manor-right-foundation",
+      "points": [[800, 52], [1078, 58], [1110, 112], [1098, 192], [1030, 234], [900, 232], [872, 190], [800, 190]]
+    },
+    {
+      "id": "west-terrace-wall-and-fence",
+      "points": [[216, 214], [620, 208], [684, 260], [674, 346], [610, 390], [500, 374], [400, 396], [300, 380], [214, 334]]
+    },
+    {
+      "id": "east-terrace-wall-and-fence",
+      "points": [[884, 214], [1240, 210], [1290, 264], [1280, 350], [1210, 390], [1110, 374], [1010, 400], [914, 374], [872, 322]]
+    },
+    {
+      "id": "west-statue-base",
+      "points": [[454, 166], [536, 164], [548, 250], [502, 282], [456, 252]]
+    },
+    {
+      "id": "west-forecourt-lamp-base",
+      "points": [[640, 278], [690, 278], [696, 350], [644, 354]]
+    },
+    {
+      "id": "east-forecourt-lamp-base",
+      "points": [[836, 270], [888, 270], [894, 342], [840, 346]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "south-road",
+      "label": "South road to Brewmaster Row",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-brewmaster-row",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-road"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[510, 1018], [940, 1018], [974, 1080], [478, 1080]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "mayor-manor-front",
+      "depthY": 244,
+      "points": [[594, 24], [1088, 24], [1118, 108], [1104, 198], [1030, 240], [900, 238], [872, 196], [800, 196], [748, 196], [720, 244], [608, 248], [568, 190]]
+    },
+    {
+      "id": "west-terrace-wall-and-fence",
+      "depthY": 402,
+      "points": [[208, 190], [626, 186], [692, 254], [682, 350], [610, 396], [500, 380], [400, 402], [300, 386], [208, 334]]
+    },
+    {
+      "id": "east-terrace-wall-and-fence",
+      "depthY": 406,
+      "points": [[878, 190], [1248, 188], [1298, 258], [1288, 354], [1210, 396], [1110, 380], [1010, 406], [910, 380], [866, 318]]
+    },
+    {
+      "id": "west-statue",
+      "depthY": 286,
+      "points": [[440, 126], [544, 124], [556, 252], [502, 288], [448, 256]]
+    }
+  ],
+  "interactables": [
+    { "id": "mayor-house", "label": "Mayor's house", "x": 810, "y": 340, "radius": 125 },
+    { "id": "mayors-hill-statue", "label": "Civic statue", "x": 500, "y": 300, "radius": 95 }
+  ],
+  "npcs": []
+}

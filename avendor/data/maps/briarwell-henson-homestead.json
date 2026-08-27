@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-henson-homestead",
+  "title": "Briarwell - Henson Homestead",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/henson-homestead/background/briarwell-henson-homestead-v1.png",
+    "alt": "Snowy Henson homestead with a cottage workshop, winter garden, handmade mechanisms, broad yard and one south road"
+  },
+  "movement": { "speedX": 275, "speedY": 205, "footRadius": 12, "maxStep": 6 },
+  "perspective": {
+    "stops": [
+      { "y": 300, "scale": 0.46 },
+      { "y": 520, "scale": 0.62 },
+      { "y": 780, "scale": 0.82 },
+      { "y": 1060, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 670, "facing": "north" },
+    "from-south": { "x": 720, "y": 950, "facing": "north" },
+    "henson-house-return": { "x": 710, "y": 430, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "homestead-yard-and-road",
+      "points": [
+        [300, 1086], [1110, 1086], [1096, 920], [1080, 800],
+        [1050, 700], [1010, 610], [972, 530], [920, 458],
+        [840, 408], [620, 408], [540, 442], [470, 500],
+        [410, 590], [360, 710], [330, 850]
+      ]
+    },
+    {
+      "id": "house-forecourt",
+      "points": [[460, 344], [1010, 342], [1060, 444], [980, 520], [470, 516], [404, 442]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "henson-house-left-foundation",
+      "points": [[500, 92], [706, 88], [736, 142], [730, 330], [692, 382], [610, 390], [530, 370], [492, 318]]
+    },
+    {
+      "id": "henson-house-right-and-lean-to-base",
+      "points": [[728, 88], [1110, 164], [1148, 232], [1138, 398], [1080, 440], [980, 424], [900, 448], [800, 424], [760, 382], [732, 326]]
+    },
+    {
+      "id": "west-winter-garden-wall",
+      "points": [[0, 208], [412, 200], [466, 254], [456, 392], [410, 440], [320, 424], [220, 450], [110, 430], [0, 446]]
+    },
+    {
+      "id": "east-work-wheel-base",
+      "points": [[1000, 406], [1148, 402], [1190, 462], [1170, 548], [1090, 574], [1010, 536]]
+    },
+    {
+      "id": "east-saw-and-hoist-base",
+      "points": [[926, 550], [1300, 530], [1330, 600], [1308, 724], [1240, 768], [1150, 742], [1060, 766], [970, 724], [920, 646]]
+    },
+    {
+      "id": "west-yard-wall-base",
+      "points": [[0, 470], [284, 462], [338, 520], [330, 790], [290, 910], [220, 950], [110, 934], [0, 962]]
+    },
+    {
+      "id": "east-yard-wall-base",
+      "points": [[1190, 704], [1448, 680], [1448, 978], [1340, 950], [1260, 970], [1194, 912]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "south-road",
+      "label": "South road to the western junction",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-west-road-junction",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-road"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[500, 1018], [940, 1018], [974, 1080], [468, 1080]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "henson-house-and-lean-to-front",
+      "depthY": 452,
+      "points": [[492, 54], [1118, 128], [1156, 226], [1146, 404], [1080, 446], [980, 430], [900, 454], [800, 430], [760, 388], [692, 388], [610, 396], [530, 376], [486, 318]]
+    },
+    {
+      "id": "west-winter-garden-wall",
+      "depthY": 456,
+      "points": [[0, 180], [418, 176], [474, 248], [464, 398], [410, 446], [320, 430], [220, 456], [110, 436], [0, 452]]
+    },
+    {
+      "id": "east-work-machines",
+      "depthY": 774,
+      "points": [[914, 390], [1310, 382], [1340, 594], [1316, 730], [1240, 774], [1150, 748], [1060, 772], [970, 730], [912, 642]]
+    },
+    {
+      "id": "west-yard-wall",
+      "depthY": 968,
+      "points": [[0, 440], [290, 436], [346, 514], [338, 796], [290, 916], [220, 956], [110, 940], [0, 968]]
+    }
+  ],
+  "interactables": [
+    { "id": "henson-home", "label": "Old Man Henson's place", "x": 710, "y": 430, "radius": 120 },
+    { "id": "henson-work-machines", "label": "Henson's handmade mechanisms", "x": 1030, "y": 620, "radius": 130 },
+    { "id": "henson-winter-garden", "label": "Winter garden", "x": 350, "y": 460, "radius": 100 }
+  ],
+  "npcs": []
+}

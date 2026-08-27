@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-docks",
+  "title": "Briarwell - Docks",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/docks/background/briarwell-docks-v1.png",
+    "alt": "Snowy Briarwell harbor with a broad western road, northern town road, fisherman's house, stone quay, wooden piers and a hidden sewer culvert"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6
+  },
+  "perspective": {
+    "stops": [
+      { "y": 260, "scale": 0.42 },
+      { "y": 480, "scale": 0.56 },
+      { "y": 740, "scale": 0.78 },
+      { "y": 1060, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 560, "y": 500, "facing": "south" },
+    "from-north": { "x": 575, "y": 330, "facing": "south" },
+    "from-west": { "x": 145, "y": 500, "facing": "east" },
+    "fisherman-house-return": { "x": 760, "y": 500, "facing": "east" },
+    "main-pier": { "x": 610, "y": 760, "facing": "southeast" }
+  },
+  "walkable": [
+    {
+      "id": "harbor-loading-square",
+      "points": [
+        [0, 270], [430, 250], [520, 238], [640, 252],
+        [735, 300], [810, 356], [920, 404], [1100, 420],
+        [1280, 410], [1448, 400], [1448, 626], [1320, 634],
+        [1210, 618], [1100, 640], [990, 620], [880, 648],
+        [760, 628], [650, 652], [530, 628], [410, 654],
+        [290, 634], [160, 664], [0, 676]
+      ]
+    },
+    {
+      "id": "north-road",
+      "points": [[470, 230], [650, 228], [724, 330], [690, 480], [430, 470]]
+    },
+    {
+      "id": "west-road",
+      "points": [[0, 268], [350, 258], [520, 330], [522, 628], [0, 680]]
+    },
+    {
+      "id": "main-harbor-pier",
+      "points": [
+        [382, 620], [530, 602], [652, 668], [770, 744],
+        [878, 830], [1008, 930], [1170, 1086], [708, 1086],
+        [612, 996], [540, 914], [470, 838], [400, 770]
+      ]
+    },
+    {
+      "id": "west-pier-apron",
+      "points": [[250, 720], [420, 664], [548, 724], [600, 858], [420, 900], [250, 818]]
+    },
+    {
+      "id": "fishery-deck",
+      "points": [[1010, 548], [1448, 522], [1448, 792], [1270, 800], [1160, 724], [1060, 678]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "northwest-village-wall-base",
+      "points": [[0, 178], [466, 178], [500, 228], [462, 280], [330, 294], [210, 282], [86, 304], [0, 290]]
+    },
+    {
+      "id": "northeast-village-and-wall-base",
+      "points": [[674, 176], [1010, 170], [1070, 230], [1050, 302], [970, 334], [880, 318], [790, 340], [710, 310]]
+    },
+    {
+      "id": "fisherman-house-base",
+      "points": [
+        [782, 292], [1448, 270], [1448, 548], [1370, 580],
+        [1280, 566], [1190, 592], [1090, 574], [995, 600],
+        [900, 574], [820, 590], [780, 536]
+      ]
+    },
+    {
+      "id": "west-stone-quay-wall-base",
+      "points": [[0, 618], [350, 596], [398, 628], [390, 704], [330, 742], [220, 730], [110, 754], [0, 744]]
+    },
+    {
+      "id": "main-stone-quay-wall-base",
+      "points": [
+        [568, 532], [740, 530], [820, 554], [940, 540], [1060, 560],
+        [1180, 544], [1310, 562], [1448, 548], [1448, 686],
+        [1340, 700], [1240, 684], [1140, 708], [1040, 690],
+        [940, 710], [840, 694], [760, 710], [680, 694], [590, 716], [558, 654]
+      ]
+    },
+    {
+      "id": "central-fishing-boat",
+      "points": [[790, 650], [1040, 636], [1100, 690], [1070, 772], [970, 812], [860, 792], [790, 736]]
+    },
+    {
+      "id": "west-moored-boat",
+      "points": [[170, 794], [338, 774], [400, 824], [390, 928], [300, 976], [208, 948], [162, 876]]
+    },
+    {
+      "id": "main-pier-lantern-base",
+      "points": [[446, 846], [510, 842], [520, 916], [452, 922]]
+    },
+    {
+      "id": "foreground-pier-cargo",
+      "points": [[672, 934], [914, 926], [994, 1000], [1010, 1086], [652, 1086], [626, 1010]]
+    },
+    {
+      "id": "east-dock-cargo-and-posts",
+      "points": [[1160, 642], [1448, 620], [1448, 810], [1320, 816], [1220, 782], [1150, 714]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "north-road",
+      "label": "North road to the Tannery and warehouses",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-tannery-warehouses",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-road"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[488, 234], [646, 232], [682, 286], [466, 292]]
+    },
+    {
+      "id": "west-road",
+      "label": "West road to the South Gate",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-south-gate",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-road"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[6, 354], [92, 350], [92, 620], [6, 632]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "fisherman-house-front",
+      "depthY": 604,
+      "points": [
+        [776, 126], [1448, 116], [1448, 554], [1370, 586],
+        [1280, 572], [1190, 598], [1090, 580], [995, 606],
+        [900, 580], [816, 596], [774, 538]
+      ]
+    },
+    {
+      "id": "west-stone-quay-wall",
+      "depthY": 756,
+      "points": [[0, 590], [354, 568], [404, 624], [396, 708], [330, 748], [220, 736], [110, 760], [0, 750]]
+    },
+    {
+      "id": "main-stone-quay-wall-and-culvert",
+      "depthY": 716,
+      "points": [
+        [562, 492], [742, 492], [824, 548], [940, 520], [1060, 540],
+        [1180, 522], [1310, 540], [1448, 526], [1448, 692],
+        [1340, 706], [1240, 690], [1140, 714], [1040, 696],
+        [940, 716], [840, 700], [760, 716], [680, 700], [590, 722], [552, 654]
+      ]
+    },
+    {
+      "id": "main-pier-lantern",
+      "depthY": 926,
+      "points": [[428, 736], [518, 734], [526, 918], [448, 928]]
+    },
+    {
+      "id": "foreground-pier-cargo",
+      "depthY": 1086,
+      "points": [[666, 900], [920, 894], [1002, 994], [1018, 1086], [644, 1086], [618, 1006]]
+    },
+    {
+      "id": "east-dock-cargo-and-posts",
+      "depthY": 822,
+      "points": [[1152, 610], [1448, 588], [1448, 816], [1320, 822], [1220, 788], [1144, 710]]
+    }
+  ],
+  "interactables": [
+    { "id": "fisherman-house", "label": "Fisherman's house", "x": 785, "y": 500, "radius": 145 },
+    { "id": "harbor-piers", "label": "Briarwell harbor piers", "x": 610, "y": 760, "radius": 125 },
+    { "id": "dockside-sewer-access", "label": "Barred dockside sewer culvert", "x": 1115, "y": 610, "radius": 140 }
+  ],
+  "npcs": []
+}
