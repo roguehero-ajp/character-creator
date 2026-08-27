@@ -34,7 +34,7 @@
         resolve(image);
       };
       image.onerror = () => reject(new Error(`Could not load painted rig asset: ${BASE}${file}`));
-      image.src = `${BASE}${file}?v=0.9.0`;
+      image.src = `${BASE}${file}?v=0.9.1`;
     });
   }
 
@@ -81,6 +81,35 @@
     );
     const anchorX = image.naturalWidth * (options.anchorX ?? 0.5);
     const anchorY = image.naturalHeight * (options.anchorY ?? 0.5);
+    ctx.drawImage(image, -anchorX, -anchorY);
+    ctx.restore();
+  }
+
+  function drawProfileHead(ctx, image, center, scale, options = {}) {
+    if (!image) return;
+
+    const scaleX = options.scaleX ?? 0.90;
+    const scaleY = options.scaleY ?? 1;
+    const anchorX = image.naturalWidth * (options.anchorX ?? 0.68);
+    const anchorY = image.naturalHeight * (options.anchorY ?? 0.43);
+    const rearCrop = image.naturalWidth * (options.rearCrop ?? 0.44);
+
+    ctx.save();
+    ctx.translate(center[0], center[1]);
+    if (options.rotate) ctx.rotate(options.rotate);
+    ctx.scale(scale * scaleX, scale * scaleY);
+
+    // The source head is front-facing. Crop away the far side instead of
+    // squeezing the whole face sideways, leaving one eye/cheek to read as
+    // a true East-facing profile. West mirrors this exact treatment.
+    ctx.beginPath();
+    ctx.rect(
+      -anchorX + rearCrop,
+      -anchorY,
+      image.naturalWidth - rearCrop,
+      image.naturalHeight
+    );
+    ctx.clip();
     ctx.drawImage(image, -anchorX, -anchorY);
     ctx.restore();
   }
@@ -183,11 +212,12 @@
     drawLeg(ctx, pose, frontLegSide, 1.02);
     drawArm(ctx, pose, frontArmSide, 1.02);
 
-    drawCentered(ctx, images.head, [cx + 5, 71 + bob], 0.174, {
-      anchorX: 0.67,
+    drawProfileHead(ctx, images.head, [cx + 3, 71 + bob], 0.174, {
+      anchorX: 0.68,
       anchorY: 0.43,
-      scaleX: 0.72,
-      rotate: -0.105 + pose.shoulderTilt * -0.001
+      scaleX: 0.90,
+      rearCrop: 0.44,
+      rotate: -0.095 + pose.shoulderTilt * -0.001
     });
 
     if (debug) {
@@ -223,7 +253,7 @@
   }
 
   window.AvendorFemalePaintedEWRig = Object.freeze({
-    version: '0.9.0',
+    version: '0.9.1',
     load,
     drawPose,
     renderAtlas,
