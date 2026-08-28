@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "id": "briarwell-west-road-junction",
   "title": "Briarwell - West Road Junction",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
     "background": "assets/maps/briarwell/west-road-junction/background/briarwell-west-road-junction-v1.png",
-    "alt": "Snowy forest T-junction with open roads west out of Briarwell, east to the town homes and north to Henson's homestead"
+    "alt": "Snowy forest T-junction with a rustic town-boundary fence, open roads west out of Briarwell, east to the town homes and north to Henson's homestead"
   },
   "movement": { "speedX": 275, "speedY": 205, "footRadius": 12, "maxStep": 6 },
   "perspective": {
@@ -45,6 +45,14 @@
     {
       "id": "northeast-forest-wall",
       "points": [[864, 0], [1448, 0], [1448, 414], [1360, 398], [1260, 420], [1150, 400], [1040, 424], [930, 406], [870, 350]]
+    },
+    {
+      "id": "north-boundary-fence-left-base",
+      "points": [[500, 344], [628, 338], [634, 365], [502, 372]]
+    },
+    {
+      "id": "north-boundary-fence-right-base",
+      "points": [[812, 329], [940, 333], [940, 360], [812, 357]]
     },
     {
       "id": "signpost-island-base",
