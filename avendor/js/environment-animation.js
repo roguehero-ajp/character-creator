@@ -2,6 +2,8 @@
   'use strict';
 
   const STYLE_ID = 'avendor-environment-animation-style';
+  const WIDTH = 1448;
+  const HEIGHT = 1086;
 
   function ensureStyles() {
     if (document.getElementById(STYLE_ID)) return;
@@ -91,10 +93,10 @@
   function addParticle(layer, className, x, y, width, height, variables = {}) {
     const element = document.createElement('div');
     element.className = className;
-    element.style.left = percent(x, 1448);
-    element.style.top = percent(y, 1086);
-    if (width) element.style.width = percent(width, 1448);
-    if (height) element.style.height = percent(height, 1086);
+    element.style.left = percent(x, WIDTH);
+    element.style.top = percent(y, HEIGHT);
+    if (width) element.style.width = percent(width, WIDTH);
+    if (height) element.style.height = percent(height, HEIGHT);
     Object.entries(variables).forEach(([name, value]) => element.style.setProperty(name, value));
     layer.appendChild(element);
     return element;
@@ -130,23 +132,35 @@
     });
   }
 
-  function mount(stage, map) {
+  function mountForArea(stage, areaId) {
     ensureStyles();
     stage.querySelectorAll('.environment-animation-layer').forEach((element) => element.remove());
+    if (areaId !== 'briarwell-northwest-workshops') return null;
 
     const layer = document.createElement('div');
     layer.className = 'environment-animation-layer';
-    layer.dataset.areaId = map.data.id;
+    layer.dataset.areaId = areaId;
     layer.setAttribute('aria-hidden', 'true');
     layer.style.zIndex = '900';
     stage.insertBefore(layer, stage.querySelector('.map-debug-layer'));
-
-    if (map.data.id === 'briarwell-northwest-workshops') {
-      mountNorthwestForge(layer);
-    }
-
+    mountNorthwestForge(layer);
     return layer;
   }
 
-  window.AvendorEnvironmentAnimation = Object.freeze({ mount });
+  function observe(stage) {
+    let currentAreaId = null;
+    const sync = () => {
+      const areaId = stage.dataset.areaId || null;
+      if (areaId === currentAreaId) return;
+      currentAreaId = areaId;
+      mountForArea(stage, areaId);
+    };
+    new MutationObserver(sync).observe(stage, { attributes: true, attributeFilter: ['data-area-id'] });
+    sync();
+  }
+
+  const stage = document.getElementById('walk-stage');
+  if (stage) observe(stage);
+
+  window.AvendorEnvironmentAnimation = Object.freeze({ mountForArea, observe });
 })();
