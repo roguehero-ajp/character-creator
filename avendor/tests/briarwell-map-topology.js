@@ -618,7 +618,23 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const southGate = maps['briarwell-south-gate'];
   assert(southGate, 'Area 8 must load as a playable runtime map.');
-  assert(southGate.version === '0.1.0', 'Area 8 must start at runtime map version 0.1.0.');
+  assert(southGate.version === '0.2.0', 'Area 8 must expose the cleaned South Gate geometry.');
+  assert(
+    southGate.art.background.endsWith('/briarwell-south-gate-v4.png'),
+    'Area 8 must use the lightly snow-dusted welcome-sign background.'
+  );
+  assert(southGate.collisions.length === 9, 'Area 8 must contain nine visible ground footprints.');
+  const welcomeSign = southGate.depthOccluders.find(
+    (region) => region.id === 'welcome-to-briarwell-sign'
+  );
+  assert(
+    welcomeSign?.depthY === 710,
+    'The Welcome to Briarwell sign must remain an overhead depth layer.'
+  );
+  assert(
+    !southGate.collisions.some((region) => region.id.includes('welcome')),
+    'The overhead welcome sign must never become a ground collision.'
+  );
   assert(southGate.exits.length === 4, 'Area 8 must expose north, west, east and south roads.');
   const gateNorth = southGate.exits.find((exit) => exit.id === 'north-road');
   const gateWest = southGate.exits.find((exit) => exit.id === 'west-road');
@@ -660,16 +676,35 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     [720, 400, 'north approach'],
     [145, 460, 'west approach'],
     [1320, 520, 'east approach'],
-    [720, 930, 'open city-gate approach']
+    [720, 610, 'road beneath the overhead welcome sign'],
+    [330, 820, 'ground behind the west foreground wall'],
+    [1180, 820, 'ground behind the east foreground wall'],
+    [540, 800, 'ground behind the open west gate leaf'],
+    [860, 800, 'ground behind the open east gate leaf'],
+    [720, 930, 'open city-gate approach'],
+    [720, 1020, 'road outside the city gate']
   ].forEach(([x, y, label]) => {
     assert(gateGeometry.isWalkable(x, y), `Area 8 ${label} is not walkable.`);
   });
   [
-    [320, 390, 'house foundation'],
-    [1030, 360, 'barracks foundation'],
-    [560, 380, 'guardhouse foundation'],
-    [430, 760, 'west gate tower'],
-    [1000, 760, 'east gate tower']
+    [520, 100, 1340, 20, 'across the mustering square'],
+    [800, 620, 820, 10, 'through the open gate throat'],
+    [1000, 580, 860, 10, 'along the road beyond the gate']
+  ].forEach(([y, left, right, step, label]) => {
+    for (let x = left; x <= right; x += step) {
+      assert(gateGeometry.isWalkable(x, y), `Area 8 path pinches ${label} at ${x},${y}.`);
+    }
+  });
+  [
+    [320, 420, 'house foundation'],
+    [1030, 420, 'barracks foundation'],
+    [560, 420, 'guardhouse foundation'],
+    [330, 950, 'west wall foundation'],
+    [1200, 965, 'east wall foundation'],
+    [570, 910, 'open west gate leaf ground edge'],
+    [820, 924, 'open east gate leaf ground edge'],
+    [425, 920, 'west gate brazier'],
+    [968, 920, 'east gate brazier']
   ].forEach(([x, y, label]) => {
     assert(!gateGeometry.isWalkable(x, y), `Area 8 ${label} does not block at its visible base.`);
   });
