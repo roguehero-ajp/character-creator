@@ -1,0 +1,36 @@
+/*
+ * Avendor decorative environment tuning.
+ *
+ * Moving background copies are visual-only. They must never become a second
+ * character-visibility system; authored depthOccluders own that responsibility.
+ */
+
+.walk-stage .dock-boat-window {
+  /* Player depth begins above 1000; keep decorative boat copies below it. */
+  z-index: 930 !important;
+}
+
+/* Tight hull masks keep nearby dock boards out of the bobbing crop. */
+.walk-stage .dock-boat-window[data-boat="central"] {
+  clip-path: polygon(
+    8.5% 10.5%,
+    76.5% 7%,
+    93.5% 35%,
+    85% 77%,
+    59% 92%,
+    25% 85%,
+    6% 56%
+  ) !important;
+}
+
+.walk-stage .dock-boat-window[data-boat="west"] {
+  clip-path: polygon(
+    12% 13%,
+    69.5% 7%,
+    92% 29%,
+    89% 72%,
+    57% 92%,
+    22% 81%,
+    8% 48%
+  ) !important;
+}
