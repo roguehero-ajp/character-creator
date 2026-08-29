@@ -46,7 +46,7 @@
         --dock-light-alpha: .52;
         --dock-water-alpha: .18;
         --dock-mist-alpha: .035;
-        --dock-smoke-peak: .42;
+        --dock-smoke-peak: .54;
       }
       .walk-stage[data-daypart="day"] .environment-animation-layer {
         --forge-pulse-min: .36;
@@ -57,7 +57,7 @@
         --dock-light-alpha: .12;
         --dock-water-alpha: .10;
         --dock-mist-alpha: .010;
-        --dock-smoke-peak: .34;
+        --dock-smoke-peak: .46;
       }
       .walk-stage[data-daypart="dawn"] .environment-animation-layer {
         --forge-pulse-min: .50;
@@ -68,7 +68,7 @@
         --dock-light-alpha: .34;
         --dock-water-alpha: .15;
         --dock-mist-alpha: .075;
-        --dock-smoke-peak: .46;
+        --dock-smoke-peak: .62;
       }
       .walk-stage[data-daypart="dusk"] .environment-animation-layer {
         --forge-pulse-min: .58;
@@ -79,7 +79,7 @@
         --dock-light-alpha: .56;
         --dock-water-alpha: .18;
         --dock-mist-alpha: .035;
-        --dock-smoke-peak: .44;
+        --dock-smoke-peak: .60;
       }
       .walk-stage[data-daypart="night"] .environment-animation-layer {
         --forge-pulse-min: .78;
@@ -90,7 +90,7 @@
         --dock-light-alpha: .82;
         --dock-water-alpha: .23;
         --dock-mist-alpha: .060;
-        --dock-smoke-peak: .32;
+        --dock-smoke-peak: .48;
       }
 
       .forge-glow {
@@ -134,9 +134,9 @@
         animation-delay: var(--smoke-delay, 0s);
       }
       .dock-smoke {
-        background: radial-gradient(circle, rgba(114,119,124,.52), rgba(88,95,102,.22) 54%, rgba(70,78,86,.04) 72%, rgba(70,78,86,0) 82%);
-        filter: blur(4px);
-        animation: avendor-dock-smoke var(--smoke-duration, 7s) ease-out infinite;
+        background: radial-gradient(circle, rgba(210,216,221,.64), rgba(151,160,168,.34) 48%, rgba(102,112,121,.12) 70%, rgba(70,78,86,0) 84%);
+        filter: blur(3px);
+        animation: avendor-dock-smoke var(--smoke-duration, 8.2s) ease-out infinite;
         animation-delay: var(--smoke-delay, 0s);
       }
 
@@ -244,10 +244,10 @@
         100% { opacity: 0; transform: translate(var(--smoke-drift, 20px), -120px) scale(1.75); }
       }
       @keyframes avendor-dock-smoke {
-        0% { opacity: 0; transform: translate(0, 0) scale(.58); }
-        12% { opacity: var(--dock-smoke-peak); }
-        72% { opacity: calc(var(--dock-smoke-peak) * .62); }
-        100% { opacity: 0; transform: translate(var(--smoke-drift, -38px), -128px) scale(1.9); }
+        0% { opacity: 0; transform: translate(0, 0) scale(.52); }
+        10% { opacity: var(--dock-smoke-peak); }
+        76% { opacity: calc(var(--dock-smoke-peak) * .68); }
+        100% { opacity: 0; transform: translate(var(--smoke-drift, -38px), -132px) scale(1.95); }
       }
       @keyframes avendor-water-shimmer {
         from { background-position: 0 0, 0 0; }
@@ -428,8 +428,8 @@
     });
 
     [
-      [310, 290, 82, 82, '5.0s', '-1.1s'],
-      [625, 295, 76, 78, '4.8s', '-2.2s'],
+      [310, 275, 82, 82, '5.0s', '-1.1s'],
+      [625, 290, 76, 78, '4.8s', '-2.2s'],
       [463, 873, 108, 116, '4.5s', '-.6s'],
       [1014, 353, 104, 100, '4.9s', '-1.9s'],
       [1142, 270, 126, 108, '5.2s', '-2.7s'],
@@ -441,10 +441,12 @@
       });
     });
 
+    // addParticle uses top-left placement; these clouds are authored to emerge above the chimney cap.
     [
-      [1320, 112, 64, 48, '8.0s', '-1.1s', '-42px'],
-      [1328, 100, 76, 58, '9.2s', '-4.4s', '-56px'],
-      [1312, 120, 52, 42, '7.3s', '-2.8s', '-30px']
+      [1284, 66, 88, 64, '8.8s', '-1.0s', '-44px'],
+      [1294, 54, 102, 76, '10.0s', '-4.2s', '-60px'],
+      [1276, 78, 76, 58, '8.0s', '-2.7s', '-34px'],
+      [1290, 62, 94, 70, '10.8s', '-6.4s', '-52px']
     ].forEach(([x, y, width, height, duration, delay, drift]) => {
       addParticle(layer, 'dock-smoke', x, y, width, height, {
         '--smoke-duration': duration,
