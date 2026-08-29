@@ -2,14 +2,14 @@
   "schemaVersion": 2,
   "id": "briarwell-northwest-workshops",
   "title": "Briarwell - Northwest Workshops",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": {
     "width": 1448,
     "height": 1086
   },
   "art": {
-    "background": "assets/maps/briarwell/northwest-workshops/background/briarwell-northwest-workshops-v1.png",
-    "alt": "Snowy Briarwell workshop district with a Blacksmith, Cooper, houses and open cobblestone roads"
+    "background": "assets/maps/briarwell/northwest-workshops/background/briarwell-northwest-workshops-v2.png",
+    "alt": "Snowy Briarwell workshop square with a Blacksmith, Cooper, closed northern edge, an east road and a southwest return route"
   },
   "movement": {
     "speedX": 275,
@@ -26,9 +26,9 @@
     ]
   },
   "spawnPoints": {
-    "default": { "x": 820, "y": 790, "facing": "north" },
-    "from-south": { "x": 820, "y": 950, "facing": "north" },
-    "from-east": { "x": 1290, "y": 565, "facing": "west" },
+    "default": { "x": 760, "y": 790, "facing": "north" },
+    "from-southwest": { "x": 620, "y": 955, "facing": "northeast" },
+    "from-east": { "x": 1300, "y": 625, "facing": "west" },
     "smith-return": { "x": 560, "y": 640, "facing": "north" },
     "cooper-return": { "x": 930, "y": 640, "facing": "north" }
   },
@@ -36,24 +36,24 @@
     {
       "id": "workshop-square",
       "points": [
-        [270, 520], [1110, 510], [1110, 470], [1160, 420],
-        [1230, 382], [1448, 350], [1448, 620], [1370, 650],
-        [1360, 760], [1320, 900], [1270, 1086], [485, 1086],
-        [430, 1030], [500, 980], [500, 900], [475, 825],
-        [450, 740], [430, 690], [400, 620], [330, 560]
+        [286, 510], [1070, 496], [1130, 508], [1200, 520],
+        [1290, 504], [1448, 520], [1448, 760], [1320, 768],
+        [1210, 822], [1140, 910], [1070, 1086], [410, 1086],
+        [344, 1010], [382, 912], [418, 828], [405, 744],
+        [382, 670], [340, 592]
       ]
     },
     {
       "id": "east-road",
       "points": [
-        [1080, 485], [1145, 420], [1225, 378], [1448, 342],
-        [1448, 630], [1360, 660], [1240, 635], [1110, 575]
+        [1080, 505], [1180, 500], [1310, 500], [1448, 520],
+        [1448, 760], [1330, 768], [1212, 720], [1110, 632]
       ]
     },
     {
-      "id": "south-road",
+      "id": "southwest-road",
       "points": [
-        [565, 900], [1125, 900], [1275, 1086], [475, 1086]
+        [348, 868], [760, 878], [840, 1086], [360, 1086]
       ]
     }
   ],
@@ -88,6 +88,13 @@
       ]
     },
     {
+      "id": "east-work-yard-base",
+      "points": [
+        [1110, 392], [1448, 356], [1448, 502], [1360, 518],
+        [1270, 514], [1195, 548], [1125, 540]
+      ]
+    },
+    {
       "id": "upper-left-house-base",
       "points": [
         [0, 610], [268, 610], [326, 650], [330, 706],
@@ -105,24 +112,25 @@
     {
       "id": "southeast-wall-base",
       "points": [
-        [1330, 690], [1448, 664], [1448, 970], [1388, 958],
-        [1320, 918], [1288, 848]
+        [1150, 758], [1448, 704], [1448, 1086], [1080, 1086],
+        [1080, 964], [1112, 858]
       ]
     }
   ],
   "exits": [
     {
-      "id": "south-road",
-      "label": "South road to Town Center",
-      "direction": "south",
+      "id": "southwest-road",
+      "label": "Southwest road to Town Center",
+      "direction": "southwest",
+      "worldDirection": "southeast",
       "status": "active",
       "target": {
         "areaId": "briarwell-town-center",
         "spawnId": "from-northwest",
         "returnTransitionId": "northwest-road"
       },
-      "fallbackSpawn": "from-south",
-      "points": [[610, 1018], [1075, 1018], [1115, 1080], [570, 1080]]
+      "fallbackSpawn": "from-southwest",
+      "points": [[430, 1012], [760, 1012], [810, 1080], [390, 1080]]
     },
     {
       "id": "east-road",
@@ -135,7 +143,7 @@
         "returnTransitionId": "west-road"
       },
       "fallbackSpawn": "from-east",
-      "points": [[1382, 388], [1442, 370], [1442, 584], [1382, 604]]
+      "points": [[1378, 548], [1442, 540], [1442, 724], [1378, 732]]
     }
   ],
   "portals": [],
@@ -172,9 +180,25 @@
       "points": [[1070, 438], [1182, 440], [1198, 540], [1160, 580], [1080, 572]]
     },
     {
+      "id": "east-work-yard",
+      "depthY": 575,
+      "points": [
+        [1100, 320], [1448, 292], [1448, 548], [1350, 560],
+        [1270, 548], [1180, 574], [1110, 548]
+      ]
+    },
+    {
       "id": "lower-house-front-lantern",
       "depthY": 990,
       "points": [[274, 766], [316, 766], [322, 922], [302, 956], [276, 944], [264, 900]]
+    },
+    {
+      "id": "southeast-wall-front",
+      "depthY": 1000,
+      "points": [
+        [1100, 700], [1448, 658], [1448, 1086], [1070, 1086],
+        [1068, 946], [1110, 820]
+      ]
     },
     {
       "id": "southeast-lantern-post",
@@ -189,7 +213,7 @@
     { "id": "blacksmith-forge", "label": "Blacksmith's forge", "x": 548, "y": 608, "radius": 100 },
     { "id": "blacksmith-anvil", "label": "Blacksmith's anvil", "x": 462, "y": 620, "radius": 78 },
     { "id": "cooper-workshop", "label": "Cooper's workshop", "x": 930, "y": 616, "radius": 110 },
-    { "id": "workshop-houses", "label": "Workshop district houses", "x": 470, "y": 988, "radius": 86 }
+    { "id": "workshop-houses", "label": "Workshop district houses", "x": 520, "y": 930, "radius": 110 }
   ],
   "npcs": []
 }
