@@ -65,9 +65,10 @@ function transitionCenter(transition) {
   };
 }
 
-assert(baseMapData.version === '0.4.0', 'Docks map version is not the user-traced 0.4 pass.');
-assert(mapData.geometry.version === '0.4.0', 'Docks geometry sidecar version is not 0.4.0.');
-assert(mapData.geometry.model === 'user-traced-smooth-slide', 'Docks is not using the user-traced geometry model.');
+assert(baseMapData.version === '0.4.0', 'Docks base map version drifted from the user-traced 0.4 pass.');
+assert(mapData.geometry.version === '0.4.1', 'Docks geometry sidecar is not on the traced visibility pass.');
+assert(mapData.geometry.model === 'user-traced-smooth-slide-visibility',
+  'Docks is not using the traced movement + visibility geometry model.');
 assert(mapData.movement.resolver === 'smooth-slide', 'Docks is not using Movement Engine 0.6 smooth sliding.');
 assert(mapData.movement.footRadiusX === 10 && mapData.movement.footRadiusY === 6,
   'Docks foot ellipse drifted from the approved Movement Engine 0.6 prototype.');
@@ -77,6 +78,11 @@ assert(map.collisions.length === 1, 'Docks traced geometry should need only the 
 assert(map.collisions[0].id === 'main-pier-lantern-base', 'Unexpected collision survived the traced Docks cleanup.');
 assert(map.walkable.some((region) => region.id === 'future-lake-ferry-boat-deck'),
   'Future lake ferry deck walkable region is missing.');
+assert(Array.isArray(geometryData.depthOccluders), 'Docks geometry sidecar does not explicitly author visibility occluders.');
+assert(mapData.depthOccluders.length === 0,
+  'Legacy Docks depth occluders should not hide the hero once traced visibility authoring is active.');
+assert(baseMapData.depthOccluders.length > 0,
+  'The contract no longer proves that the sidecar replaces legacy depth occluders.');
 
 const reachability = gridReachability(baseMapData.spawnPoints.default);
 
@@ -109,23 +115,9 @@ assert(!isReachable(reachability, ferryDeck),
 
 const ferry = baseMapData.interactables.find((entry) => entry.id === 'west-moored-boat');
 assert(ferry?.state === 'future-lake-ferry', 'West moored boat is not tagged for the future lake ferry system.');
+assert(engineSource.includes("Object.prototype.hasOwnProperty.call(geometry, 'depthOccluders')"),
+  'Map engine cannot replace legacy occlusion with geometry-sidecar authored occluders.');
+assert(engineSource.includes('validateDepthOccluder'),
+  'Map engine does not validate traced visibility occluders.');
 
-const depthIds = new Set(baseMapData.depthOccluders.map((entry) => entry.id));
-assert(depthIds.has('west-moored-boat'), 'West ferry boat depth occluder is missing.');
-assert(depthIds.has('central-fishing-boat'), 'Central fishing boat depth occluder is missing.');
-
-const hiddenDebugOccluders = new Set(
-  baseMapData.depthOccluders.filter((entry) => entry.debug === false).map((entry) => entry.id)
-);
-[
-  'central-fishing-boat',
-  'west-moored-boat',
-  'main-pier-lantern',
-  'foreground-pier-cargo-left',
-  'foreground-pier-cargo-right',
-  'east-dock-cargo-and-posts'
-].forEach((id) => assert(hiddenDebugOccluders.has(id), `Lower Docks debug occluder should stay hidden: ${id}`));
-assert(engineSource.includes('.filter((region) => region.debug !== false)'),
-  'Map debugger does not respect per-occluder debug visibility.');
-
-console.log('Briarwell Docks user-traced geometry and future ferry contract checks passed.');
+console.log('Briarwell Docks traced movement and visibility contract checks passed.');
