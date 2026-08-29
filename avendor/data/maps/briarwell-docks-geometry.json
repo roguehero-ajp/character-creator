@@ -1,7 +1,7 @@
 {
   "areaId": "briarwell-docks",
-  "version": "0.4.0",
-  "model": "user-traced-smooth-slide",
+  "version": "0.4.1",
+  "model": "user-traced-smooth-slide-visibility",
   "walkable": [
     {
       "id": "harbor-and-east-deck-trace",
@@ -21,5 +21,6 @@
       "id": "main-pier-lantern-base",
       "points": [[460,852],[495,850],[502,914],[464,918]]
     }
-  ]
+  ],
+  "depthOccluders": []
 }
