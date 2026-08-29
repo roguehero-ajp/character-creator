@@ -33,9 +33,11 @@ assert(source.includes('dock-boat-window'), 'Docks bounded boat float layer is m
 assert(source.includes('dock-lantern-glow'), 'Docks lantern glow effect is missing.');
 assert(source.includes('dock-smoke'), 'Docks chimney smoke effect is missing.');
 assert(source.includes('dock-mist'), 'Docks cold-air mist effect is missing.');
-assert(source.includes('[310, 290, 82, 82'), 'West harbor lamp glow is no longer calibrated to the painted lamp.');
-assert(source.includes('[625, 295, 76, 78'), 'Central harbor lamp glow is no longer calibrated to the painted lamp.');
-assert(source.includes('[1320, 112, 64, 48'), 'Foreground fishery chimney smoke is no longer anchored to the chimney.');
+assert(source.includes('[310, 275, 82, 82'), 'West harbor lamp glow is no longer calibrated to the painted lamp.');
+assert(source.includes('[625, 290, 76, 78'), 'Central harbor lamp glow is no longer calibrated to the painted lamp.');
+assert(source.includes('[1284, 66, 88, 64'), 'Foreground fishery chimney smoke is no longer calibrated above the chimney cap.');
+assert(source.includes('--dock-smoke-peak: .54;'), 'Base Docks chimney smoke visibility has drifted below the calibrated level.');
+assert(source.includes('--dock-smoke-peak: .62;'), 'Dawn Docks chimney smoke visibility has drifted below the calibrated level.');
 assert(source.includes("mountDockBoatWindow(stage, 'central')"), 'Central fishing boat float window is missing.');
 assert(source.includes("mountDockBoatWindow(stage, 'west')"), 'West moored boat float window is missing.');
 assert(!source.includes('setInterval('), 'Environment animation should rely on browser animation timing, not unmanaged intervals.');
