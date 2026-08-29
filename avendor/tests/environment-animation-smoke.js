@@ -16,7 +16,7 @@ assert(source.includes("briarwell-northwest-workshops"), 'Northwest Workshops ha
 assert(source.includes("briarwell-west-road-junction"), 'West Road Junction has no boundary-overlay registration.');
 assert(source.includes("briarwell-docks"), 'Briarwell Docks has no native environment registration.');
 assert(source.includes('MutationObserver'), 'Environment animation does not react to map-area changes.');
-assert(source.includes(".environment-animation-layer, .boundary-overlay-layer, .dock-boat-copy"), 'Environment layers are not fully cleaned up on transition.');
+assert(source.includes(".environment-animation-layer, .boundary-overlay-layer, .dock-boat-window"), 'Environment layers are not fully cleaned up on transition.');
 assert(source.includes('prefers-reduced-motion'), 'Native animation layer does not respect reduced-motion preference.');
 assert(source.includes('forge-glow'), 'Forge glow effect is missing.');
 assert(source.includes('forge-core'), 'Forge fire core effect is missing.');
@@ -27,14 +27,14 @@ assert(source.includes('[data-daypart="night"]'), 'Environment animation is not 
 assert(!source.includes('mountNorthBoundary'), 'Northwest Workshops still mounts the temporary north-boundary overlay.');
 assert(source.includes('mountWestJunctionFence'), 'West Road Junction fence overlay is missing.');
 assert(source.includes('mountDocks'), 'Docks environment mount is missing.');
-assert(source.includes('dock-water-zone'), 'Docks moving-water effect is missing.');
+assert(source.includes('dock-water-window'), 'Docks bounded moving-water effect is missing.');
 assert(source.includes('dock-water-ripple'), 'Docks waterline ripple effect is missing.');
-assert(source.includes('dock-boat-copy'), 'Docks boat float layer is missing.');
+assert(source.includes('dock-boat-window'), 'Docks bounded boat float layer is missing.');
 assert(source.includes('dock-lantern-glow'), 'Docks lantern glow effect is missing.');
 assert(source.includes('dock-smoke'), 'Docks chimney smoke effect is missing.');
 assert(source.includes('dock-mist'), 'Docks cold-air mist effect is missing.');
-assert(source.includes("mountDockBoatCopy(stage, 'central', 1812)"), 'Central fishing boat depth-aware float layer is missing.');
-assert(source.includes("mountDockBoatCopy(stage, 'west', 1978)"), 'West moored boat depth-aware float layer is missing.');
+assert(source.includes("mountDockBoatWindow(stage, 'central')"), 'Central fishing boat float window is missing.');
+assert(source.includes("mountDockBoatWindow(stage, 'west')"), 'West moored boat float window is missing.');
 assert(!source.includes('setInterval('), 'Environment animation should rely on browser animation timing, not unmanaged intervals.');
 assert(!source.includes('requestAnimationFrame('), 'Environment animation should not add a competing frame loop for decorative CSS effects.');
 
