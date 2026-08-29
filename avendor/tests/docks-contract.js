@@ -84,6 +84,22 @@ assert(mapData.depthOccluders.length === 0,
 assert(baseMapData.depthOccluders.length > 0,
   'The contract no longer proves that the sidecar replaces legacy depth occluders.');
 
+const syntheticOccluder = {
+  id: 'visibility-probe',
+  depthY: 640,
+  points: [[500,520],[620,520],[620,640],[500,640]]
+};
+const visibilityProbe = applyGeometryOverrides(baseMapData, {
+  ...geometryData,
+  depthOccluders: [syntheticOccluder]
+}, 'visibility-probe.json');
+assert(visibilityProbe.depthOccluders.length === 1,
+  'A traced visibility occluder did not replace the legacy occluder set.');
+assert(visibilityProbe.depthOccluders[0].id === 'visibility-probe',
+  'A traced visibility occluder lost its authored id.');
+assert(visibilityProbe.depthOccluders[0].depthY === 640,
+  'A traced visibility occluder lost its authored depth line.');
+
 const reachability = gridReachability(baseMapData.spawnPoints.default);
 
 Object.entries(baseMapData.spawnPoints).forEach(([id, spawn]) => {
