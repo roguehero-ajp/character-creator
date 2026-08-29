@@ -21,6 +21,7 @@
     25% 85%,
     6% 56%
   ) !important;
+  animation-duration: 4.1s !important;
 }
 
 .walk-stage .dock-boat-window[data-boat="west"] {
@@ -33,4 +34,121 @@
     22% 81%,
     8% 48%
   ) !important;
+  animation-duration: 4.7s !important;
+  animation-delay: -1.35s !important;
+}
+
+/* Lanterns keep their daypart opacity but flicker with irregular flame energy. */
+.walk-stage .dock-lantern-glow {
+  animation-name: avendor-lantern-flicker !important;
+  animation-duration: 2.9s !important;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+}
+
+@keyframes avendor-lantern-flicker {
+  0%, 18%, 42%, 71%, 100% {
+    transform: translate(-50%, -50%) scale(.985);
+    filter: blur(3px) brightness(.94);
+  }
+  7%, 31%, 59%, 86% {
+    transform: translate(-50%, -50%) scale(1.035);
+    filter: blur(3px) brightness(1.18);
+  }
+  11%, 35%, 63%, 90% {
+    transform: translate(-50%, -50%) scale(1.005);
+    filter: blur(3px) brightness(1.03);
+  }
+}
+
+/* Two distant Docks birds. Decorative only, beneath hero and occluder depth. */
+.walk-stage .dock-bird-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 920;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.walk-stage .dock-bird {
+  --bird-scale: 1;
+  position: absolute;
+  width: 24px;
+  height: 12px;
+  opacity: .66;
+  pointer-events: none;
+  transform-origin: center;
+}
+
+.walk-stage .dock-bird::before,
+.walk-stage .dock-bird::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  width: 13px;
+  height: 7px;
+  border-top: 2px solid rgba(31, 37, 44, .9);
+  border-radius: 50% 50% 0 0;
+}
+
+.walk-stage .dock-bird::before {
+  left: 0;
+  transform-origin: 100% 35%;
+  animation: avendor-bird-wing-left .62s ease-in-out infinite alternate;
+}
+
+.walk-stage .dock-bird::after {
+  right: 0;
+  transform-origin: 0 35%;
+  animation: avendor-bird-wing-right .62s ease-in-out infinite alternate;
+}
+
+.walk-stage .dock-bird-a {
+  left: -4%;
+  top: 13%;
+  animation: avendor-bird-flight-a 13.5s linear infinite;
+}
+
+.walk-stage .dock-bird-b {
+  --bird-scale: .76;
+  left: 27%;
+  top: 18%;
+  opacity: .50;
+  animation: avendor-bird-flight-b 17.2s linear infinite;
+  animation-delay: -7.4s;
+}
+
+.walk-stage[data-daypart="dawn"] .dock-bird { opacity: .58; }
+.walk-stage[data-daypart="dusk"] .dock-bird { opacity: .38; }
+.walk-stage[data-daypart="night"] .dock-bird { opacity: .08; }
+
+@keyframes avendor-bird-wing-left {
+  from { transform: rotate(17deg) translateY(0); }
+  to { transform: rotate(-13deg) translateY(2px); }
+}
+
+@keyframes avendor-bird-wing-right {
+  from { transform: rotate(-17deg) translateY(0); }
+  to { transform: rotate(13deg) translateY(2px); }
+}
+
+@keyframes avendor-bird-flight-a {
+  0% { transform: translate3d(0, 0, 0) scale(var(--bird-scale)); }
+  24% { transform: translate3d(27vw, -10px, 0) scale(var(--bird-scale)); }
+  53% { transform: translate3d(57vw, 4px, 0) scale(var(--bird-scale)); }
+  78% { transform: translate3d(82vw, -8px, 0) scale(var(--bird-scale)); }
+  100% { transform: translate3d(108vw, 1px, 0) scale(var(--bird-scale)); }
+}
+
+@keyframes avendor-bird-flight-b {
+  0% { transform: translate3d(0, 0, 0) scale(var(--bird-scale)); }
+  31% { transform: translate3d(20vw, 7px, 0) scale(var(--bird-scale)); }
+  64% { transform: translate3d(43vw, -6px, 0) scale(var(--bird-scale)); }
+  100% { transform: translate3d(72vw, 2px, 0) scale(var(--bird-scale)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .walk-stage .dock-bird-layer {
+    display: none;
+  }
 }
