@@ -46,7 +46,7 @@
         --dock-light-alpha: .52;
         --dock-water-alpha: .18;
         --dock-mist-alpha: .035;
-        --dock-smoke-peak: .24;
+        --dock-smoke-peak: .42;
       }
       .walk-stage[data-daypart="day"] .environment-animation-layer {
         --forge-pulse-min: .36;
@@ -57,7 +57,7 @@
         --dock-light-alpha: .12;
         --dock-water-alpha: .10;
         --dock-mist-alpha: .010;
-        --dock-smoke-peak: .18;
+        --dock-smoke-peak: .34;
       }
       .walk-stage[data-daypart="dawn"] .environment-animation-layer {
         --forge-pulse-min: .50;
@@ -68,7 +68,7 @@
         --dock-light-alpha: .34;
         --dock-water-alpha: .15;
         --dock-mist-alpha: .075;
-        --dock-smoke-peak: .24;
+        --dock-smoke-peak: .46;
       }
       .walk-stage[data-daypart="dusk"] .environment-animation-layer {
         --forge-pulse-min: .58;
@@ -79,7 +79,7 @@
         --dock-light-alpha: .56;
         --dock-water-alpha: .18;
         --dock-mist-alpha: .035;
-        --dock-smoke-peak: .22;
+        --dock-smoke-peak: .44;
       }
       .walk-stage[data-daypart="night"] .environment-animation-layer {
         --forge-pulse-min: .78;
@@ -90,7 +90,7 @@
         --dock-light-alpha: .82;
         --dock-water-alpha: .23;
         --dock-mist-alpha: .060;
-        --dock-smoke-peak: .16;
+        --dock-smoke-peak: .32;
       }
 
       .forge-glow {
@@ -134,8 +134,8 @@
         animation-delay: var(--smoke-delay, 0s);
       }
       .dock-smoke {
-        background: radial-gradient(circle, rgba(92,96,101,.30), rgba(80,87,94,.10) 58%, rgba(70,78,86,0) 78%);
-        filter: blur(5px);
+        background: radial-gradient(circle, rgba(114,119,124,.52), rgba(88,95,102,.22) 54%, rgba(70,78,86,.04) 72%, rgba(70,78,86,0) 82%);
+        filter: blur(4px);
         animation: avendor-dock-smoke var(--smoke-duration, 7s) ease-out infinite;
         animation-delay: var(--smoke-delay, 0s);
       }
@@ -244,10 +244,10 @@
         100% { opacity: 0; transform: translate(var(--smoke-drift, 20px), -120px) scale(1.75); }
       }
       @keyframes avendor-dock-smoke {
-        0% { opacity: 0; transform: translate(0, 0) scale(.6); }
-        18% { opacity: var(--dock-smoke-peak); }
-        70% { opacity: calc(var(--dock-smoke-peak) * .55); }
-        100% { opacity: 0; transform: translate(var(--smoke-drift, -38px), -112px) scale(1.72); }
+        0% { opacity: 0; transform: translate(0, 0) scale(.58); }
+        12% { opacity: var(--dock-smoke-peak); }
+        72% { opacity: calc(var(--dock-smoke-peak) * .62); }
+        100% { opacity: 0; transform: translate(var(--smoke-drift, -38px), -128px) scale(1.9); }
       }
       @keyframes avendor-water-shimmer {
         from { background-position: 0 0, 0 0; }
@@ -428,8 +428,8 @@
     });
 
     [
-      [88, 278, 82, 82, '5.0s', '-1.1s'],
-      [614, 281, 76, 78, '4.8s', '-2.2s'],
+      [310, 290, 82, 82, '5.0s', '-1.1s'],
+      [625, 295, 76, 78, '4.8s', '-2.2s'],
       [463, 873, 108, 116, '4.5s', '-.6s'],
       [1014, 353, 104, 100, '4.9s', '-1.9s'],
       [1142, 270, 126, 108, '5.2s', '-2.7s'],
@@ -442,8 +442,9 @@
     });
 
     [
-      [1366, 112, 54, 40, '8.2s', '-1.2s', '-38px'],
-      [1378, 102, 64, 48, '9.0s', '-4.7s', '-48px']
+      [1320, 112, 64, 48, '8.0s', '-1.1s', '-42px'],
+      [1328, 100, 76, 58, '9.2s', '-4.4s', '-56px'],
+      [1312, 120, 52, 42, '7.3s', '-2.8s', '-30px']
     ].forEach(([x, y, width, height, duration, delay, drift]) => {
       addParticle(layer, 'dock-smoke', x, y, width, height, {
         '--smoke-duration': duration,
