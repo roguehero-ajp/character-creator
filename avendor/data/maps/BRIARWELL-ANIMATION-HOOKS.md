@@ -63,13 +63,18 @@ The approved Northwest Workshops painting is the canonical composition and dusk 
 - gate collision stays static until a real open/close gameplay state exists
 
 ### Area 9: Docks
-- highest environmental-animation priority
-- lake/harbor surface motion
-- tiny moored-boat bob, visual transform only
-- rope/flag movement
-- pier lantern flicker
-- culvert water shimmer
-- never move collision with decorative boat bobbing
+- native harbor pass implemented in map/environment version 0.2
+- three clipped water-shimmer regions cover the visible harbor basins without changing collision
+- west moored boat and central fishing boat use tiny asynchronous depth-aware float layers
+- matching static hull collision remains authoritative while the visual boat copies move only a few pixels
+- waterline ripple loops reinforce the floating illusion around both boats and the culvert basin
+- foreground/street/fishery lantern glows scale by daypart, strongest at night and restrained by day
+- fisherman's-house chimney smoke drifts independently with daypart-aware opacity
+- cold-air harbor mist is strongest at dawn, present lightly at night, and almost absent by day
+- Docks geometry 0.2 explicitly connects the loading square, quay stairs, main pier, west berth and lower fishery deck
+- large monolithic quay/cargo blockers were split so visible boardwalks stay usable while water, hulls and true obstacles remain solid
+- both boats and the pier cargo now have authored depth occluders
+- dedicated `tests/docks-contract.js` protects stairs, berth/deck reachability, water boundaries, hull collisions, exits and boat anchors
 
 ### Area 10: Mayor's Hill
 - manor chimney smoke
