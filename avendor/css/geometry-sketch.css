@@ -1,0 +1,120 @@
+.geometry-sketch-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 4200;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  cursor: crosshair;
+}
+
+.geometry-sketch-layer.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.geometry-sketch-panel {
+  position: absolute;
+  right: 2.2%;
+  top: 5.8%;
+  z-index: 5300;
+  width: min(38%, 520px);
+  padding: .55em;
+  border: 1px solid rgba(211,173,99,.58);
+  border-radius: 4px;
+  background: rgba(5,8,11,.92);
+  color: #e0d1ad;
+  font: 700 clamp(7px, .72vw, 12px)/1.3 ui-monospace, Consolas, monospace;
+  box-shadow: 0 8px 24px rgba(0,0,0,.38);
+}
+
+.geometry-sketch-panel[hidden] {
+  display: none;
+}
+
+.geometry-sketch-heading,
+.geometry-sketch-tools {
+  display: flex;
+  align-items: center;
+  gap: .42em;
+  flex-wrap: wrap;
+}
+
+.geometry-sketch-heading {
+  justify-content: space-between;
+  margin-bottom: .48em;
+}
+
+.geometry-sketch-heading strong {
+  color: #fff1bd;
+}
+
+#geometry-sketch-map,
+#geometry-sketch-coords {
+  color: #aebac4;
+  font-weight: 600;
+}
+
+.geometry-sketch-tools button {
+  padding: .38em .55em;
+  border: 1px solid rgba(211,173,99,.42);
+  border-radius: 2px;
+  background: rgba(36,41,46,.92);
+  color: #d8c69d;
+  font: inherit;
+  cursor: pointer;
+}
+
+.geometry-sketch-tools button:hover,
+.geometry-sketch-tools button:focus-visible {
+  border-color: #e0ba70;
+  color: #fff2c5;
+  outline: none;
+}
+
+#geometry-sketch-walkable.selected {
+  border-color: rgba(104,255,164,.95);
+  color: #b9ffd1;
+  background: rgba(24,93,55,.82);
+}
+
+#geometry-sketch-blocked.selected {
+  border-color: rgba(255,108,94,.98);
+  color: #ffd0ca;
+  background: rgba(111,43,36,.84);
+}
+
+.geometry-sketch-instructions {
+  margin: .5em 0;
+  color: #c6bdab;
+  font-weight: 600;
+}
+
+#geometry-sketch-output {
+  box-sizing: border-box;
+  width: 100%;
+  height: 9.5em;
+  resize: vertical;
+  border: 1px solid rgba(211,173,99,.28);
+  border-radius: 2px;
+  padding: .45em;
+  background: rgba(0,0,0,.44);
+  color: #bdcbd3;
+  font: 600 .92em/1.35 ui-monospace, Consolas, monospace;
+}
+
+.walk-stage.geometry-sketch-active .player,
+.walk-stage.geometry-sketch-active .map-npc,
+.walk-stage.geometry-sketch-active .interaction-prompt {
+  opacity: .72;
+}
+
+@media (max-width: 900px) {
+  .geometry-sketch-panel {
+    width: 54%;
+  }
+}

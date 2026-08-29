@@ -7,6 +7,7 @@
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/avendor.css">
   <link rel="stylesheet" href="css/hero-rig.css">
+  <link rel="stylesheet" href="css/geometry-sketch.css">
 </head>
 <body>
   <main class="avendor-stage walk-stage" id="walk-stage" style="--stage-ratio: 1448 / 1086" tabindex="0" aria-label="Briarwell area navigation foundation. Use W A S D or arrow keys to move.">
@@ -15,6 +16,7 @@
     <div class="daypart-overlay" id="daypart-overlay" aria-hidden="true"></div>
 
     <canvas class="map-debug-layer" id="map-debug-layer" width="1448" height="1086" aria-hidden="true"></canvas>
+    <canvas class="geometry-sketch-layer" id="geometry-sketch-layer" width="1448" height="1086" aria-label="Map geometry sketch surface"></canvas>
 
     <div class="player" id="player" aria-hidden="true">
       <canvas class="player-canvas" id="player-canvas" width="128" height="240"></canvas>
@@ -28,8 +30,27 @@
       <button type="button" id="body-male" class="selected" aria-pressed="true">Male rig</button>
       <button type="button" id="body-female" aria-pressed="false">Female rig</button>
       <button type="button" id="map-debug-toggle" aria-pressed="false">Map debug: off</button>
+      <button type="button" id="geometry-sketch-toggle" aria-pressed="false">Geometry sketch: off</button>
       <button type="button" id="daypart-cycle" data-daypart="dusk">Daypart: dusk</button>
     </div>
+
+    <section class="geometry-sketch-panel" id="geometry-sketch-panel" hidden aria-label="Geometry sketch controls">
+      <div class="geometry-sketch-heading">
+        <strong>Geometry sketch</strong>
+        <span id="geometry-sketch-map">No map loaded</span>
+        <span id="geometry-sketch-coords">x -, y -</span>
+      </div>
+      <div class="geometry-sketch-tools">
+        <button type="button" id="geometry-sketch-walkable" class="selected" aria-pressed="true">Walkable</button>
+        <button type="button" id="geometry-sketch-blocked" aria-pressed="false">Blocked</button>
+        <button type="button" id="geometry-sketch-undo">Undo point</button>
+        <button type="button" id="geometry-sketch-close">Close shape</button>
+        <button type="button" id="geometry-sketch-clear">Clear all</button>
+        <button type="button" id="geometry-sketch-copy">Copy JSON</button>
+      </div>
+      <div class="geometry-sketch-instructions">Click around the edge of an area. Green = walkable, red = blocked. Close Shape stores the polygon. Sketches do not alter live collision until they are committed to the map.</div>
+      <textarea id="geometry-sketch-output" readonly spellcheck="false" aria-label="Geometry sketch JSON output"></textarea>
+    </section>
 
     <div class="walk-help" id="walk-help">WASD or arrow keys to walk. E or Space interacts with nearby people and features. F2 shows the authored map geometry.</div>
     <div class="dev-badge" id="rig-status">BRIARWELL MAP REGISTRY · LOADING</div>
@@ -42,6 +63,7 @@
   <script src="js/world-time.js"></script>
   <script src="js/environment-animation.js"></script>
   <script src="js/walk-test.js"></script>
+  <script src="js/geometry-sketch.js"></script>
   <script src="js/town-music.js"></script>
   <script src="js/town-wind.js"></script>
 </body>
