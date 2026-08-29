@@ -63,7 +63,12 @@ function transitionCenter(transition) {
 
 const reachability = gridReachability(mapData.spawnPoints.default);
 
-assert(mapData.version === '0.2.0', 'Docks map version is not the 0.2 movement/environment pass.');
+assert(mapData.version === '0.3.0', 'Docks map version is not the Movement Engine 0.6 test pass.');
+assert(mapData.movement.resolver === 'smooth-slide', 'Docks is not opted into the smooth-slide resolver.');
+assert(mapData.movement.footRadiusX === 10, 'Docks horizontal foot radius drifted from the 0.6 prototype.');
+assert(mapData.movement.footRadiusY === 6, 'Docks vertical foot radius drifted from the 0.6 prototype.');
+assert(Array.isArray(mapData.movement.slideAngles) && mapData.movement.slideAngles.length >= 6,
+  'Docks smooth-slide angle probes are missing.');
 assert(mapData.exits.length === 2, 'Docks should keep exactly two road exits.');
 assert(mapData.exits.some((exit) => exit.id === 'north-road'), 'Docks north road is missing.');
 assert(mapData.exits.some((exit) => exit.id === 'west-road'), 'Docks west road is missing.');
@@ -105,9 +110,23 @@ const depthIds = new Set(mapData.depthOccluders.map((entry) => entry.id));
 assert(depthIds.has('west-moored-boat'), 'West boat depth occluder is missing.');
 assert(depthIds.has('central-fishing-boat'), 'Central boat depth occluder is missing.');
 
+const hiddenDebugOccluders = new Set(
+  mapData.depthOccluders.filter((entry) => entry.debug === false).map((entry) => entry.id)
+);
+[
+  'central-fishing-boat',
+  'west-moored-boat',
+  'main-pier-lantern',
+  'foreground-pier-cargo-left',
+  'foreground-pier-cargo-right',
+  'east-dock-cargo-and-posts'
+].forEach((id) => assert(hiddenDebugOccluders.has(id), `Lower Docks debug occluder should be hidden: ${id}`));
+assert(engineSource.includes('.filter((region) => region.debug !== false)'),
+  'Map debugger does not respect per-occluder debug visibility.');
+
 const featureIds = new Set(mapData.interactables.map((entry) => entry.id));
 assert(featureIds.has('west-moored-boat'), 'West boat interaction anchor is missing.');
 assert(featureIds.has('central-fishing-boat'), 'Central boat interaction anchor is missing.');
 assert(featureIds.has('dockside-sewer-access'), 'Dockside sewer interaction anchor is missing.');
 
-console.log('Briarwell Docks movement and harbor contract checks passed.');
+console.log('Briarwell Docks Movement Engine 0.6 and harbor contract checks passed.');

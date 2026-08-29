@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-docks",
   "title": "Briarwell - Docks",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "referenceSize": {
     "width": 1448,
     "height": 1086
@@ -14,7 +14,11 @@
   "movement": {
     "speedX": 275,
     "speedY": 205,
+    "resolver": "smooth-slide",
     "footRadius": 12,
+    "footRadiusX": 10,
+    "footRadiusY": 6,
+    "slideAngles": [10,20,30,40,50,60,70,80],
     "maxStep": 6
   },
   "perspective": {
@@ -164,31 +168,37 @@
     {
       "id": "central-fishing-boat",
       "depthY": 812,
+      "debug": false,
       "points": [[786,620],[1048,614],[1112,680],[1080,780],[978,820],[850,804],[780,738]]
     },
     {
       "id": "west-moored-boat",
       "depthY": 978,
+      "debug": false,
       "points": [[164,774],[344,760],[410,816],[402,936],[304,984],[194,956],[150,868]]
     },
     {
       "id": "main-pier-lantern",
       "depthY": 926,
+      "debug": false,
       "points": [[428,736],[518,734],[526,918],[448,928]]
     },
     {
       "id": "foreground-pier-cargo-left",
       "depthY": 1050,
+      "debug": false,
       "points": [[670,894],[800,892],[840,956],[838,1050],[660,1050],[626,980]]
     },
     {
       "id": "foreground-pier-cargo-right",
       "depthY": 1086,
+      "debug": false,
       "points": [[804,900],[946,894],[996,968],[1012,1086],[812,1086],[796,1002]]
     },
     {
       "id": "east-dock-cargo-and-posts",
       "depthY": 850,
+      "debug": false,
       "points": [[1230,586],[1448,568],[1448,850],[1350,856],[1290,818],[1230,704]]
     }
   ],
