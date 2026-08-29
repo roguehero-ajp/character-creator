@@ -66,39 +66,29 @@ function transitionCenter(transition) {
 }
 
 assert(baseMapData.version === '0.4.0', 'Docks base map version drifted from the user-traced 0.4 pass.');
-assert(mapData.geometry.version === '0.4.1', 'Docks geometry sidecar is not on the traced visibility pass.');
-assert(mapData.geometry.model === 'user-traced-smooth-slide-visibility',
-  'Docks is not using the traced movement + visibility geometry model.');
+assert(mapData.geometry.version === '0.4.2', 'Docks geometry sidecar is not on the authored visibility pass.');
+assert(mapData.geometry.model === 'user-traced-smooth-slide-visibility-authored',
+  'Docks is not using the authored traced movement + visibility model.');
 assert(mapData.movement.resolver === 'smooth-slide', 'Docks is not using Movement Engine 0.6 smooth sliding.');
 assert(mapData.movement.footRadiusX === 10 && mapData.movement.footRadiusY === 6,
   'Docks foot ellipse drifted from the approved Movement Engine 0.6 prototype.');
 
-assert(map.walkable.length === 3, 'Docks should use exactly three user-traced walkable regions.');
-assert(map.collisions.length === 1, 'Docks traced geometry should need only the pier-lantern collision.');
-assert(map.collisions[0].id === 'main-pier-lantern-base', 'Unexpected collision survived the traced Docks cleanup.');
+assert(map.walkable.length === 3, 'Docks should keep exactly three user-traced walkable regions.');
+assert(map.collisions.length === 0, 'Docks should not retain the obsolete southern-pier collision.');
 assert(map.walkable.some((region) => region.id === 'future-lake-ferry-boat-deck'),
   'Future lake ferry deck walkable region is missing.');
-assert(Array.isArray(geometryData.depthOccluders), 'Docks geometry sidecar does not explicitly author visibility occluders.');
-assert(mapData.depthOccluders.length === 0,
-  'Legacy Docks depth occluders should not hide the hero once traced visibility authoring is active.');
-assert(baseMapData.depthOccluders.length > 0,
-  'The contract no longer proves that the sidecar replaces legacy depth occluders.');
 
-const syntheticOccluder = {
-  id: 'visibility-probe',
-  depthY: 640,
-  points: [[500,520],[620,520],[620,640],[500,640]]
-};
-const visibilityProbe = applyGeometryOverrides(baseMapData, {
-  ...geometryData,
-  depthOccluders: [syntheticOccluder]
-}, 'visibility-probe.json');
-assert(visibilityProbe.depthOccluders.length === 1,
-  'A traced visibility occluder did not replace the legacy occluder set.');
-assert(visibilityProbe.depthOccluders[0].id === 'visibility-probe',
-  'A traced visibility occluder lost its authored id.');
-assert(visibilityProbe.depthOccluders[0].depthY === 640,
-  'A traced visibility occluder lost its authored depth line.');
+assert(Array.isArray(geometryData.depthOccluders), 'Docks geometry sidecar does not author visibility occluders.');
+assert(mapData.depthOccluders.length === 41, 'Docks should load all 41 user-traced visibility occluders.');
+assert(new Set(mapData.depthOccluders.map((entry) => entry.id)).size === 41,
+  'Docks traced visibility occluder ids are not unique.');
+mapData.depthOccluders.forEach((entry) => {
+  assert(Array.isArray(entry.points) && entry.points.length >= 3, `Occluder polygon is invalid: ${entry.id}.`);
+  const maxY = Math.max(...entry.points.map(([, y]) => y));
+  assert(entry.depthY === maxY, `Occluder depth line does not match its traced base: ${entry.id}.`);
+});
+assert(baseMapData.depthOccluders.length > 0,
+  'The contract no longer proves the sidecar replaces the legacy Docks depth masks.');
 
 const reachability = gridReachability(baseMapData.spawnPoints.default);
 
@@ -136,4 +126,4 @@ assert(engineSource.includes("Object.prototype.hasOwnProperty.call(geometry, 'de
 assert(engineSource.includes('validateDepthOccluder'),
   'Map engine does not validate traced visibility occluders.');
 
-console.log('Briarwell Docks traced movement and visibility contract checks passed.');
+console.log('Briarwell Docks authored movement and visibility contract checks passed.');
