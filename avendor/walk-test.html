@@ -43,12 +43,13 @@
       <div class="geometry-sketch-tools">
         <button type="button" id="geometry-sketch-walkable" class="selected" aria-pressed="true">Walkable</button>
         <button type="button" id="geometry-sketch-blocked" aria-pressed="false">Blocked</button>
+        <button type="button" id="geometry-sketch-occluder" aria-pressed="false">Occluder</button>
         <button type="button" id="geometry-sketch-undo">Undo point</button>
         <button type="button" id="geometry-sketch-close">Close shape</button>
         <button type="button" id="geometry-sketch-clear">Clear all</button>
         <button type="button" id="geometry-sketch-copy">Copy JSON</button>
       </div>
-      <div class="geometry-sketch-instructions">Click around the edge of an area. Green = walkable, red = blocked. Close Shape stores the polygon. Sketches do not alter live collision until they are committed to the map.</div>
+      <div class="geometry-sketch-instructions">Click around the edge of an area. Green = walkable, red = blocked, gold = visibility occluder. An occluder automatically uses its lowest traced point as the depth line: hero feet above that line pass behind it; feet below it stay visible in front. Close Shape stores the polygon. Shortcuts: 1 walkable, 2 blocked, 3 occluder.</div>
       <textarea id="geometry-sketch-output" readonly spellcheck="false" aria-label="Geometry sketch JSON output"></textarea>
     </section>
 

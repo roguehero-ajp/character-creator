@@ -16,12 +16,19 @@ assert(html.includes('id="geometry-sketch-layer"'), 'Geometry sketch canvas is m
 assert(html.includes('id="geometry-sketch-toggle"'), 'Geometry sketch toggle is missing.');
 assert(html.includes('id="geometry-sketch-walkable"'), 'Walkable sketch tool is missing.');
 assert(html.includes('id="geometry-sketch-blocked"'), 'Blocked sketch tool is missing.');
+assert(html.includes('id="geometry-sketch-occluder"'), 'Occluder sketch tool is missing.');
 assert(html.includes('id="geometry-sketch-copy"'), 'Geometry sketch export control is missing.');
+assert(html.includes('3 occluder'), 'Geometry sketch instructions do not expose the occluder shortcut.');
 assert(html.includes('js/geometry-sketch.js'), 'walk-test.html does not load the geometry sketch module.');
 assert(html.includes('css/geometry-sketch.css'), 'walk-test.html does not load geometry sketch styles.');
 
 assert(source.includes("kind = 'walkable'"), 'Geometry sketch does not default to walkable mode.');
-assert(source.includes("kind === 'collision'"), 'Geometry sketch does not support blocked/collision polygons.');
+assert(source.includes("nextKind === 'collision' || nextKind === 'occluder'"),
+  'Geometry sketch does not support occluder polygons.');
+assert(source.includes('getDepthY'), 'Geometry sketch does not derive occluder depth from the traced base.');
+assert(source.includes("shape.kind === 'occluder'"), 'Geometry sketch does not serialise occluder shapes.');
+assert(source.includes('depthOccluders: occluders'), 'Geometry sketch JSON does not export depth occluders.');
+assert(source.includes("key === '3'"), 'Geometry sketch does not provide the 3-key occluder shortcut.');
 assert(source.includes('mapPointFromEvent'), 'Geometry sketch does not convert pointer locations into map coordinates.');
 assert(source.includes('closeShape'), 'Geometry sketch cannot close/store polygons.');
 assert(source.includes('undoPoint'), 'Geometry sketch cannot undo vertices.');
@@ -35,5 +42,6 @@ assert(!source.includes('setInterval('), 'Geometry sketch should not introduce a
 assert(css.includes('.geometry-sketch-layer.show'), 'Geometry sketch canvas has no active display state.');
 assert(css.includes('#geometry-sketch-walkable.selected'), 'Walkable tool has no distinct visual state.');
 assert(css.includes('#geometry-sketch-blocked.selected'), 'Blocked tool has no distinct visual state.');
+assert(css.includes('#geometry-sketch-occluder.selected'), 'Occluder tool has no distinct visual state.');
 
-console.log('Geometry sketch debugger smoke checks passed.');
+console.log('Geometry sketch debugger walkable, blocked and occluder smoke checks passed.');

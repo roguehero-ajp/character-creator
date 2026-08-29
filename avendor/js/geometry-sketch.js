@@ -9,6 +9,7 @@
   const coordsLabel = document.getElementById('geometry-sketch-coords');
   const walkableButton = document.getElementById('geometry-sketch-walkable');
   const blockedButton = document.getElementById('geometry-sketch-blocked');
+  const occluderButton = document.getElementById('geometry-sketch-occluder');
   const undoButton = document.getElementById('geometry-sketch-undo');
   const closeButton = document.getElementById('geometry-sketch-close');
   const clearButton = document.getElementById('geometry-sketch-clear');
@@ -54,11 +55,32 @@
     };
   }
 
+  function paletteForKind(polygonKind) {
+    if (polygonKind === 'collision') {
+      return {
+        stroke: 'rgba(255,108,94,.98)',
+        fill: 'rgba(231,76,60,.28)'
+      };
+    }
+    if (polygonKind === 'occluder') {
+      return {
+        stroke: 'rgba(255,226,122,.98)',
+        fill: 'rgba(255,210,92,.20)'
+      };
+    }
+    return {
+      stroke: 'rgba(104,255,164,.98)',
+      fill: 'rgba(46,204,113,.24)'
+    };
+  }
+
+  function getDepthY(points) {
+    return points.reduce((maximum, point) => Math.max(maximum, point.y), 0);
+  }
+
   function paintPolygon(points, polygonKind, isCurrent = false) {
     if (!points.length) return;
-    const walkable = polygonKind === 'walkable';
-    const stroke = walkable ? 'rgba(104,255,164,.98)' : 'rgba(255,108,94,.98)';
-    const fill = walkable ? 'rgba(46,204,113,.24)' : 'rgba(231,76,60,.28)';
+    const { stroke, fill } = paletteForKind(polygonKind);
 
     ctx.beginPath();
     points.forEach((point, index) => {
@@ -69,8 +91,10 @@
     ctx.fillStyle = fill;
     ctx.strokeStyle = stroke;
     ctx.lineWidth = isCurrent ? 4 : 3;
+    if (polygonKind === 'occluder') ctx.setLineDash([12, 7]);
     if (!isCurrent && points.length >= 3) ctx.fill();
     ctx.stroke();
+    ctx.setLineDash([]);
 
     points.forEach((point, index) => {
       ctx.beginPath();
@@ -81,6 +105,20 @@
       ctx.lineWidth = 2;
       ctx.stroke();
     });
+
+    if (polygonKind === 'occluder' && points.length >= 3) {
+      const depthY = getDepthY(points);
+      const depthPoint = points.reduce((best, point) => point.y >= best.y ? point : best, points[0]);
+      ctx.beginPath();
+      ctx.moveTo(Math.max(0, depthPoint.x - 26), depthY);
+      ctx.lineTo(Math.min(canvas.width, depthPoint.x + 26), depthY);
+      ctx.strokeStyle = '#fff3b8';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.font = '700 16px ui-monospace, Consolas, monospace';
+      ctx.fillStyle = '#fff3b8';
+      ctx.fillText(`depth ${depthY}`, Math.min(canvas.width - 100, depthPoint.x + 8), Math.max(18, depthY - 8));
+    }
   }
 
   function draw() {
@@ -103,12 +141,20 @@
         id: `${prefix}-sketch-${index + 1}`,
         points: shape.points.map(({ x, y }) => [x, y])
       }));
+    const occluders = shapes
+      .filter((shape) => shape.kind === 'occluder')
+      .map((shape, index) => ({
+        id: `occluder-sketch-${index + 1}`,
+        depthY: getDepthY(shape.points),
+        points: shape.points.map(({ x, y }) => [x, y])
+      }));
 
     return JSON.stringify({
       areaId: map.data.id,
       referenceSize: { width: map.width, height: map.height },
       walkable: withIds('walkable', 'walkable'),
-      collisions: withIds('collision', 'collision')
+      collisions: withIds('collision', 'collision'),
+      depthOccluders: occluders
     }, null, 2);
   }
 
@@ -137,11 +183,14 @@
   }
 
   function setKind(nextKind) {
-    kind = nextKind === 'collision' ? 'collision' : 'walkable';
+    if (nextKind === 'collision' || nextKind === 'occluder') kind = nextKind;
+    else kind = 'walkable';
     walkableButton.classList.toggle('selected', kind === 'walkable');
     blockedButton.classList.toggle('selected', kind === 'collision');
+    occluderButton?.classList.toggle('selected', kind === 'occluder');
     walkableButton.setAttribute('aria-pressed', String(kind === 'walkable'));
     blockedButton.setAttribute('aria-pressed', String(kind === 'collision'));
+    occluderButton?.setAttribute('aria-pressed', String(kind === 'occluder'));
     draw();
   }
 
@@ -150,15 +199,17 @@
       coordsLabel.textContent = 'Need at least 3 points';
       return;
     }
-    shapes.push({
+    const stored = {
       kind,
       points: currentPoints.map((point) => ({ ...point }))
-    });
+    };
+    shapes.push(stored);
     currentPoints = [];
     hoverPoint = null;
     refreshOutput();
     draw();
-    coordsLabel.textContent = `${shapes.length} shape${shapes.length === 1 ? '' : 's'} stored`;
+    const depthNote = stored.kind === 'occluder' ? ` · depth ${getDepthY(stored.points)}` : '';
+    coordsLabel.textContent = `${shapes.length} shape${shapes.length === 1 ? '' : 's'} stored${depthNote}`;
   }
 
   function undoPoint() {
@@ -262,6 +313,9 @@
     } else if (key === '2') {
       event.preventDefault();
       setKind('collision');
+    } else if (key === '3') {
+      event.preventDefault();
+      setKind('occluder');
     } else if (key === 'enter') {
       event.preventDefault();
       closeShape();
@@ -277,6 +331,7 @@
   toggle.addEventListener('click', () => setActive(!active));
   walkableButton.addEventListener('click', () => setKind('walkable'));
   blockedButton.addEventListener('click', () => setKind('collision'));
+  occluderButton?.addEventListener('click', () => setKind('occluder'));
   undoButton.addEventListener('click', undoPoint);
   closeButton.addEventListener('click', closeShape);
   clearButton.addEventListener('click', clearSketches);
