@@ -10,6 +10,9 @@
   const walkableButton = document.getElementById('geometry-sketch-walkable');
   const blockedButton = document.getElementById('geometry-sketch-blocked');
   const occluderButton = document.getElementById('geometry-sketch-occluder');
+  const animationButton = document.getElementById('geometry-sketch-animation');
+  const animationLabelWrap = document.getElementById('geometry-sketch-animation-label-wrap');
+  const animationLabelInput = document.getElementById('geometry-sketch-animation-label');
   const undoButton = document.getElementById('geometry-sketch-undo');
   const closeButton = document.getElementById('geometry-sketch-close');
   const clearButton = document.getElementById('geometry-sketch-clear');
@@ -68,6 +71,12 @@
         fill: 'rgba(255,210,92,.20)'
       };
     }
+    if (polygonKind === 'animation') {
+      return {
+        stroke: 'rgba(91,228,255,.98)',
+        fill: 'rgba(55,196,225,.20)'
+      };
+    }
     return {
       stroke: 'rgba(104,255,164,.98)',
       fill: 'rgba(46,204,113,.24)'
@@ -78,7 +87,26 @@
     return points.reduce((maximum, point) => Math.max(maximum, point.y), 0);
   }
 
-  function paintPolygon(points, polygonKind, isCurrent = false) {
+  function getBounds(points) {
+    const xs = points.map((point) => point.x);
+    const ys = points.map((point) => point.y);
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const top = Math.min(...ys);
+    const bottom = Math.max(...ys);
+    return {
+      x: left,
+      y: top,
+      width: right - left,
+      height: bottom - top,
+      center: [
+        Math.round((left + right) / 2),
+        Math.round((top + bottom) / 2)
+      ]
+    };
+  }
+
+  function paintPolygon(points, polygonKind, isCurrent = false, label = '') {
     if (!points.length) return;
     const { stroke, fill } = paletteForKind(polygonKind);
 
@@ -92,6 +120,7 @@
     ctx.strokeStyle = stroke;
     ctx.lineWidth = isCurrent ? 4 : 3;
     if (polygonKind === 'occluder') ctx.setLineDash([12, 7]);
+    if (polygonKind === 'animation') ctx.setLineDash([8, 5]);
     if (!isCurrent && points.length >= 3) ctx.fill();
     ctx.stroke();
     ctx.setLineDash([]);
@@ -119,16 +148,36 @@
       ctx.fillStyle = '#fff3b8';
       ctx.fillText(`depth ${depthY}`, Math.min(canvas.width - 100, depthPoint.x + 8), Math.max(18, depthY - 8));
     }
+
+    if (polygonKind === 'animation' && points.length >= 3) {
+      const bounds = getBounds(points);
+      const displayLabel = (label || 'animation').slice(0, 48);
+      ctx.font = '700 16px ui-monospace, Consolas, monospace';
+      ctx.fillStyle = '#c8f8ff';
+      ctx.fillText(
+        displayLabel,
+        Math.max(6, Math.min(canvas.width - 180, bounds.center[0] + 8)),
+        Math.max(18, bounds.center[1] - 8)
+      );
+      ctx.beginPath();
+      ctx.arc(bounds.center[0], bounds.center[1], 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#5be4ff';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0,0,0,.88)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
   }
 
   function draw() {
     resizeForMap();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    shapes.forEach((shape) => paintPolygon(shape.points, shape.kind));
+    shapes.forEach((shape) => paintPolygon(shape.points, shape.kind, false, shape.label || ''));
 
     if (currentPoints.length) {
       const preview = hoverPoint ? [...currentPoints, hoverPoint] : currentPoints;
-      paintPolygon(preview, kind, true);
+      const previewLabel = kind === 'animation' ? animationLabelInput?.value.trim() || 'animation' : '';
+      paintPolygon(preview, kind, true, previewLabel);
     }
   }
 
@@ -148,13 +197,31 @@
         depthY: getDepthY(shape.points),
         points: shape.points.map(({ x, y }) => [x, y])
       }));
+    const animationZones = shapes
+      .filter((shape) => shape.kind === 'animation')
+      .map((shape, index) => {
+        const bounds = getBounds(shape.points);
+        return {
+          id: `animation-sketch-${index + 1}`,
+          label: shape.label || 'animation',
+          bounds: {
+            x: bounds.x,
+            y: bounds.y,
+            width: bounds.width,
+            height: bounds.height
+          },
+          center: bounds.center,
+          points: shape.points.map(({ x, y }) => [x, y])
+        };
+      });
 
     return JSON.stringify({
       areaId: map.data.id,
       referenceSize: { width: map.width, height: map.height },
       walkable: withIds('walkable', 'walkable'),
       collisions: withIds('collision', 'collision'),
-      depthOccluders: occluders
+      depthOccluders: occluders,
+      animationZones
     }, null, 2);
   }
 
@@ -183,14 +250,17 @@
   }
 
   function setKind(nextKind) {
-    if (nextKind === 'collision' || nextKind === 'occluder') kind = nextKind;
+    if (nextKind === 'collision' || nextKind === 'occluder' || nextKind === 'animation') kind = nextKind;
     else kind = 'walkable';
     walkableButton.classList.toggle('selected', kind === 'walkable');
     blockedButton.classList.toggle('selected', kind === 'collision');
     occluderButton?.classList.toggle('selected', kind === 'occluder');
+    animationButton?.classList.toggle('selected', kind === 'animation');
     walkableButton.setAttribute('aria-pressed', String(kind === 'walkable'));
     blockedButton.setAttribute('aria-pressed', String(kind === 'collision'));
     occluderButton?.setAttribute('aria-pressed', String(kind === 'occluder'));
+    animationButton?.setAttribute('aria-pressed', String(kind === 'animation'));
+    if (animationLabelWrap) animationLabelWrap.hidden = kind !== 'animation';
     draw();
   }
 
@@ -203,13 +273,17 @@
       kind,
       points: currentPoints.map((point) => ({ ...point }))
     };
+    if (kind === 'animation') {
+      stored.label = animationLabelInput?.value.trim() || 'animation';
+    }
     shapes.push(stored);
     currentPoints = [];
     hoverPoint = null;
     refreshOutput();
     draw();
     const depthNote = stored.kind === 'occluder' ? ` · depth ${getDepthY(stored.points)}` : '';
-    coordsLabel.textContent = `${shapes.length} shape${shapes.length === 1 ? '' : 's'} stored${depthNote}`;
+    const animationNote = stored.kind === 'animation' ? ` · ${stored.label}` : '';
+    coordsLabel.textContent = `${shapes.length} shape${shapes.length === 1 ? '' : 's'} stored${depthNote}${animationNote}`;
   }
 
   function undoPoint() {
@@ -219,6 +293,9 @@
       const previous = shapes.pop();
       kind = previous.kind;
       currentPoints = previous.points.map((point) => ({ ...point }));
+      if (previous.kind === 'animation' && animationLabelInput) {
+        animationLabelInput.value = previous.label || '';
+      }
       setKind(kind);
     }
     refreshOutput();
@@ -298,9 +375,19 @@
     undoPoint();
   });
 
+  animationLabelInput?.addEventListener('input', draw);
+
   window.addEventListener('keydown', (event) => {
     if (!active) return;
     const key = event.key.toLowerCase();
+
+    if (event.target === animationLabelInput) {
+      if (key === 'escape') {
+        event.preventDefault();
+        setActive(false);
+      }
+      return;
+    }
 
     if (blockedKeys.has(key)) {
       event.preventDefault();
@@ -316,6 +403,9 @@
     } else if (key === '3') {
       event.preventDefault();
       setKind('occluder');
+    } else if (key === '4') {
+      event.preventDefault();
+      setKind('animation');
     } else if (key === 'enter') {
       event.preventDefault();
       closeShape();
@@ -332,6 +422,7 @@
   walkableButton.addEventListener('click', () => setKind('walkable'));
   blockedButton.addEventListener('click', () => setKind('collision'));
   occluderButton?.addEventListener('click', () => setKind('occluder'));
+  animationButton?.addEventListener('click', () => setKind('animation'));
   undoButton.addEventListener('click', undoPoint);
   closeButton.addEventListener('click', closeShape);
   clearButton.addEventListener('click', clearSketches);
@@ -353,6 +444,7 @@
     exportJson: serialise,
     getShapes: () => shapes.map((shape) => ({
       kind: shape.kind,
+      label: shape.label || null,
       points: shape.points.map((point) => ({ ...point }))
     }))
   });
