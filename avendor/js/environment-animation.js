@@ -7,14 +7,28 @@
   const SVG_NS = 'http://www.w3.org/2000/svg';
   const DOCKS_ART = 'assets/maps/briarwell/docks/background/briarwell-docks-v1.png';
 
+  const DOCK_BOATS = Object.freeze({
+    central: Object.freeze({
+      left: 52.5, top: 55.2, width: 25.5, height: 21.5,
+      clipPath: 'polygon(6.7% 8.4%, 78.8% 4.7%, 96.1% 34.4%, 87.5% 79.5%, 58.8% 95.3%, 22.4% 87.0%, 3.9% 55.8%)',
+      imageWidth: 392.16, imageHeight: 465.12, imageLeft: -205.88, imageTop: -256.74,
+      zIndex: 1812
+    }),
+    west: Object.freeze({
+      left: 9.5, top: 68.8, width: 19.9, height: 23.0,
+      clipPath: 'polygon(9.5% 10.4%, 71.9% 4.3%, 95.0% 27.4%, 92.0% 75.7%, 57.8% 95.7%, 19.6% 84.3%, 5.0% 47.8%)',
+      imageWidth: 502.51, imageHeight: 434.78, imageLeft: -47.74, imageTop: -299.13,
+      zIndex: 1978
+    })
+  });
+
   function ensureStyles() {
     if (document.getElementById(STYLE_ID)) return;
     const style = document.createElement('style');
     style.id = STYLE_ID;
     style.textContent = `
       .environment-animation-layer,
-      .boundary-overlay-layer,
-      .dock-boat-copy {
+      .boundary-overlay-layer {
         position: absolute;
         inset: 0;
         width: 100%;
@@ -41,9 +55,9 @@
         --forge-core-max: .88;
         --forge-smoke-peak: .24;
         --dock-light-alpha: .12;
-        --dock-water-alpha: .12;
-        --dock-mist-alpha: .012;
-        --dock-smoke-peak: .20;
+        --dock-water-alpha: .10;
+        --dock-mist-alpha: .010;
+        --dock-smoke-peak: .18;
       }
       .walk-stage[data-daypart="dawn"] .environment-animation-layer {
         --forge-pulse-min: .50;
@@ -52,9 +66,9 @@
         --forge-core-max: .96;
         --forge-smoke-peak: .27;
         --dock-light-alpha: .34;
-        --dock-water-alpha: .17;
-        --dock-mist-alpha: .105;
-        --dock-smoke-peak: .27;
+        --dock-water-alpha: .15;
+        --dock-mist-alpha: .075;
+        --dock-smoke-peak: .24;
       }
       .walk-stage[data-daypart="dusk"] .environment-animation-layer {
         --forge-pulse-min: .58;
@@ -63,9 +77,9 @@
         --forge-core-max: 1;
         --forge-smoke-peak: .30;
         --dock-light-alpha: .56;
-        --dock-water-alpha: .22;
-        --dock-mist-alpha: .045;
-        --dock-smoke-peak: .25;
+        --dock-water-alpha: .18;
+        --dock-mist-alpha: .035;
+        --dock-smoke-peak: .22;
       }
       .walk-stage[data-daypart="night"] .environment-animation-layer {
         --forge-pulse-min: .78;
@@ -73,13 +87,13 @@
         --forge-core-min: .90;
         --forge-core-max: 1;
         --forge-smoke-peak: .22;
-        --dock-light-alpha: .88;
-        --dock-water-alpha: .29;
-        --dock-mist-alpha: .085;
-        --dock-smoke-peak: .18;
+        --dock-light-alpha: .82;
+        --dock-water-alpha: .23;
+        --dock-mist-alpha: .060;
+        --dock-smoke-peak: .16;
       }
 
-      .environment-animation-layer .forge-glow {
+      .forge-glow {
         position: absolute;
         border-radius: 50%;
         transform: translate(-50%, -50%);
@@ -88,7 +102,7 @@
         filter: blur(4px);
         animation: avendor-forge-pulse 1.35s ease-in-out infinite alternate;
       }
-      .environment-animation-layer .forge-core {
+      .forge-core {
         position: absolute;
         transform: translate(-50%, -50%);
         border-radius: 48% 52% 50% 50%;
@@ -96,7 +110,7 @@
         filter: blur(1px);
         animation: avendor-forge-core .42s ease-in-out infinite alternate;
       }
-      .environment-animation-layer .forge-ember {
+      .forge-ember {
         position: absolute;
         width: 4px;
         height: 4px;
@@ -107,98 +121,100 @@
         animation-delay: var(--ember-delay, 0s);
         opacity: 0;
       }
-      .environment-animation-layer .forge-smoke,
-      .environment-animation-layer .dock-smoke {
+      .forge-smoke,
+      .dock-smoke {
         position: absolute;
         border-radius: 50%;
         opacity: 0;
       }
-      .environment-animation-layer .forge-smoke {
+      .forge-smoke {
         background: radial-gradient(circle, rgba(82,78,76,.34), rgba(82,78,76,.14) 58%, rgba(82,78,76,0) 76%);
         filter: blur(5px);
         animation: avendor-smoke-rise var(--smoke-duration, 5.5s) ease-out infinite;
         animation-delay: var(--smoke-delay, 0s);
       }
-      .environment-animation-layer .dock-smoke {
-        background: radial-gradient(circle, rgba(92,96,101,.34), rgba(80,87,94,.13) 58%, rgba(70,78,86,0) 78%);
-        filter: blur(7px);
+      .dock-smoke {
+        background: radial-gradient(circle, rgba(92,96,101,.30), rgba(80,87,94,.10) 58%, rgba(70,78,86,0) 78%);
+        filter: blur(5px);
         animation: avendor-dock-smoke var(--smoke-duration, 7s) ease-out infinite;
         animation-delay: var(--smoke-delay, 0s);
       }
 
-      .environment-animation-layer .dock-water-zone {
+      /* Performance rule: water effects are bounded to their authored basins, never full-stage layers. */
+      .dock-water-window {
         position: absolute;
-        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .dock-water-window::before {
+        content: '';
+        position: absolute;
+        inset: -8%;
         opacity: var(--dock-water-alpha);
         mix-blend-mode: screen;
         background:
-          repeating-linear-gradient(164deg, transparent 0 19px, rgba(205,229,241,.30) 20px 22px, transparent 23px 49px),
-          repeating-linear-gradient(8deg, transparent 0 31px, rgba(135,176,198,.16) 32px 34px, transparent 35px 66px);
-        background-size: 210% 160%, 170% 130%;
-        filter: blur(.45px);
-        animation: avendor-water-shimmer var(--water-duration, 8s) linear infinite;
+          repeating-linear-gradient(164deg, transparent 0 21px, rgba(205,229,241,.28) 22px 24px, transparent 25px 52px),
+          repeating-linear-gradient(8deg, transparent 0 35px, rgba(135,176,198,.14) 36px 38px, transparent 39px 72px);
+        background-size: 165% 140%, 145% 120%;
+        animation: avendor-water-shimmer var(--water-duration, 9s) linear infinite;
         animation-delay: var(--water-delay, 0s);
       }
-      .environment-animation-layer .dock-water-ripple {
+      .dock-water-ripple {
         position: absolute;
-        border: 2px solid rgba(191,221,234,.54);
+        border: 2px solid rgba(191,221,234,.48);
         border-left-color: transparent;
         border-right-color: transparent;
         border-radius: 50%;
         opacity: 0;
         transform: translate(-50%, -50%) scale(.65,.42);
-        animation: avendor-water-ripple var(--ripple-duration, 4.6s) ease-out infinite;
+        animation: avendor-water-ripple var(--ripple-duration, 5.2s) ease-out infinite;
         animation-delay: var(--ripple-delay, 0s);
-        filter: blur(.25px);
       }
-      .environment-animation-layer .dock-lantern-glow {
+      .dock-lantern-glow {
         position: absolute;
         border-radius: 50%;
         transform: translate(-50%, -50%);
-        background: radial-gradient(circle, rgba(255,226,146,.94) 0%, rgba(255,171,64,.42) 22%, rgba(240,112,30,.15) 48%, rgba(240,112,30,0) 74%);
+        background: radial-gradient(circle, rgba(255,226,146,.90) 0%, rgba(255,171,64,.38) 22%, rgba(240,112,30,.12) 48%, rgba(240,112,30,0) 72%);
         mix-blend-mode: screen;
         opacity: var(--dock-light-alpha);
-        filter: blur(4px);
-        animation: avendor-lantern-breathe var(--light-duration, 3.8s) ease-in-out infinite alternate;
+        filter: blur(3px);
+        animation: avendor-lantern-breathe var(--light-duration, 4.2s) ease-in-out infinite alternate;
         animation-delay: var(--light-delay, 0s);
       }
-      .environment-animation-layer .dock-mist {
+      .dock-mist {
         position: absolute;
         border-radius: 50%;
-        background: radial-gradient(ellipse at center, rgba(205,221,232,.54), rgba(171,197,213,.18) 52%, rgba(160,190,209,0) 78%);
-        filter: blur(18px);
+        background: radial-gradient(ellipse at center, rgba(205,221,232,.46), rgba(171,197,213,.14) 52%, rgba(160,190,209,0) 78%);
+        filter: blur(12px);
         opacity: var(--dock-mist-alpha);
-        animation: avendor-dock-mist var(--mist-duration, 12s) ease-in-out infinite alternate;
+        animation: avendor-dock-mist var(--mist-duration, 15s) ease-in-out infinite alternate;
         animation-delay: var(--mist-delay, 0s);
       }
 
-      .dock-boat-copy {
-        background-image: url('${DOCKS_ART}');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        will-change: transform;
+      /* Performance rule: each boat is a small crop window, not a full-screen duplicate of the map. */
+      .dock-boat-window {
+        position: absolute;
+        pointer-events: none;
+        overflow: hidden;
       }
-      .dock-boat-copy[data-boat="central"] {
-        clip-path: polygon(54.2% 57.0%, 72.6% 56.2%, 77.0% 62.6%, 74.8% 72.3%, 67.5% 75.7%, 58.2% 73.9%, 53.5% 67.2%);
-        transform-origin: 65% 68%;
-        animation: avendor-boat-central 5.6s ease-in-out infinite alternate;
+      .dock-boat-image {
+        position: absolute;
+        max-width: none;
+        max-height: none;
+        user-select: none;
+        pointer-events: none;
       }
-      .dock-boat-copy[data-boat="west"] {
-        clip-path: polygon(11.4% 71.2%, 23.8% 69.8%, 28.4% 75.1%, 27.8% 86.2%, 21.0% 90.8%, 13.4% 88.2%, 10.5% 79.8%);
-        transform-origin: 20% 82%;
-        animation: avendor-boat-west 6.4s ease-in-out infinite alternate;
+      .dock-boat-window[data-boat="central"] {
+        animation: avendor-boat-central 5.9s ease-in-out infinite alternate;
+      }
+      .dock-boat-window[data-boat="west"] {
+        animation: avendor-boat-west 6.7s ease-in-out infinite alternate;
         animation-delay: -2.1s;
       }
-      .walk-stage[data-daypart="day"] .dock-boat-copy {
-        filter: brightness(1.15) saturate(.90) contrast(.96) hue-rotate(-3deg);
-      }
-      .walk-stage[data-daypart="dawn"] .dock-boat-copy {
-        filter: brightness(.98) saturate(.89) contrast(.97) hue-rotate(-7deg);
-      }
-      .walk-stage[data-daypart="dusk"] .dock-boat-copy { filter: none; }
-      .walk-stage[data-daypart="night"] .dock-boat-copy {
-        filter: brightness(.58) saturate(.72) contrast(1.04) hue-rotate(9deg);
-      }
+      .walk-stage[data-daypart="night"] .dock-boat-window { opacity: .72; }
+      .walk-stage[data-daypart="dawn"] .dock-boat-window { opacity: .90; }
+      .walk-stage[data-daypart="day"] .dock-boat-window,
+      .walk-stage[data-daypart="dusk"] .dock-boat-window { opacity: 1; }
 
       .boundary-overlay-layer .fence-shadow {
         fill: none;
@@ -231,44 +247,44 @@
         0% { opacity: 0; transform: translate(0, 0) scale(.6); }
         18% { opacity: var(--dock-smoke-peak); }
         70% { opacity: calc(var(--dock-smoke-peak) * .55); }
-        100% { opacity: 0; transform: translate(var(--smoke-drift, -38px), -118px) scale(1.9); }
+        100% { opacity: 0; transform: translate(var(--smoke-drift, -38px), -112px) scale(1.72); }
       }
       @keyframes avendor-water-shimmer {
         from { background-position: 0 0, 0 0; }
-        to { background-position: -210px 82px, 160px -48px; }
+        to { background-position: -128px 52px, 96px -28px; }
       }
       @keyframes avendor-water-ripple {
-        0% { opacity: 0; transform: translate(-50%, -50%) scale(.55,.34); }
-        22% { opacity: calc(var(--dock-water-alpha) * 1.8); }
-        100% { opacity: 0; transform: translate(-50%, -50%) scale(1.24,.66); }
+        0% { opacity: 0; transform: translate(-50%, -50%) scale(.58,.38); }
+        24% { opacity: calc(var(--dock-water-alpha) * 1.55); }
+        100% { opacity: 0; transform: translate(-50%, -50%) scale(1.18,.62); }
       }
       @keyframes avendor-lantern-breathe {
-        from { transform: translate(-50%, -50%) scale(.96); }
-        to { transform: translate(-50%, -50%) scale(1.035); }
+        from { transform: translate(-50%, -50%) scale(.97); }
+        to { transform: translate(-50%, -50%) scale(1.025); }
       }
       @keyframes avendor-dock-mist {
-        from { transform: translate3d(-12px, 2px, 0) scale(.96); }
-        to { transform: translate3d(18px, -3px, 0) scale(1.04); }
+        from { transform: translate3d(-8px, 2px, 0) scale(.97); }
+        to { transform: translate3d(12px, -2px, 0) scale(1.03); }
       }
       @keyframes avendor-boat-central {
-        from { transform: translate3d(0, 1px, 0) rotate(-.14deg); }
-        to { transform: translate3d(0, -2px, 0) rotate(.16deg); }
+        from { transform: translate3d(0, .6px, 0) rotate(-.10deg); }
+        to { transform: translate3d(0, -1.4px, 0) rotate(.11deg); }
       }
       @keyframes avendor-boat-west {
-        from { transform: translate3d(0, 1.5px, 0) rotate(.16deg); }
-        to { transform: translate3d(0, -2.2px, 0) rotate(-.18deg); }
+        from { transform: translate3d(0, .8px, 0) rotate(.11deg); }
+        to { transform: translate3d(0, -1.6px, 0) rotate(-.12deg); }
       }
 
       @media (prefers-reduced-motion: reduce) {
         .environment-animation-layer *,
-        .dock-boat-copy { animation: none !important; }
-        .environment-animation-layer .forge-glow { opacity: var(--forge-pulse-min); }
-        .environment-animation-layer .forge-core { opacity: var(--forge-core-min); }
-        .environment-animation-layer .forge-ember,
-        .environment-animation-layer .forge-smoke,
-        .environment-animation-layer .dock-smoke,
-        .environment-animation-layer .dock-mist { display: none; }
-        .environment-animation-layer .dock-water-ripple { opacity: 0; }
+        .dock-boat-window { animation: none !important; }
+        .forge-glow { opacity: var(--forge-pulse-min); }
+        .forge-core { opacity: var(--forge-core-min); }
+        .forge-ember,
+        .forge-smoke,
+        .dock-smoke,
+        .dock-mist { display: none; }
+        .dock-water-ripple { opacity: 0; }
       }
     `;
     document.head.appendChild(style);
@@ -347,47 +363,77 @@
     });
   }
 
-  function addWaterZone(layer, clipPath, duration, delay) {
-    const zone = document.createElement('div');
-    zone.className = 'dock-water-zone';
-    zone.style.clipPath = clipPath;
-    zone.style.setProperty('--water-duration', duration);
-    zone.style.setProperty('--water-delay', delay);
-    layer.appendChild(zone);
+  function addWaterWindow(layer, left, top, width, height, clipPath, duration, delay) {
+    const windowElement = document.createElement('div');
+    windowElement.className = 'dock-water-window';
+    windowElement.style.left = `${left}%`;
+    windowElement.style.top = `${top}%`;
+    windowElement.style.width = `${width}%`;
+    windowElement.style.height = `${height}%`;
+    windowElement.style.clipPath = clipPath;
+    windowElement.style.setProperty('--water-duration', duration);
+    windowElement.style.setProperty('--water-delay', delay);
+    layer.appendChild(windowElement);
   }
 
-  function mountDockBoatCopy(stage, boat, zIndex) {
-    const copy = document.createElement('div');
-    copy.className = 'dock-boat-copy';
-    copy.dataset.areaId = 'briarwell-docks';
-    copy.dataset.boat = boat;
-    copy.setAttribute('aria-hidden', 'true');
-    copy.style.zIndex = String(zIndex);
-    stage.insertBefore(copy, stage.querySelector('.map-debug-layer'));
+  function mountDockBoatWindow(stage, boatId) {
+    const definition = DOCK_BOATS[boatId];
+    if (!definition) return;
+
+    const windowElement = document.createElement('div');
+    windowElement.className = 'dock-boat-window';
+    windowElement.dataset.areaId = 'briarwell-docks';
+    windowElement.dataset.boat = boatId;
+    windowElement.setAttribute('aria-hidden', 'true');
+    windowElement.style.left = `${definition.left}%`;
+    windowElement.style.top = `${definition.top}%`;
+    windowElement.style.width = `${definition.width}%`;
+    windowElement.style.height = `${definition.height}%`;
+    windowElement.style.clipPath = definition.clipPath;
+    windowElement.style.zIndex = String(definition.zIndex);
+
+    const image = document.createElement('img');
+    image.className = 'dock-boat-image';
+    image.src = DOCKS_ART;
+    image.alt = '';
+    image.draggable = false;
+    image.style.width = `${definition.imageWidth}%`;
+    image.style.height = `${definition.imageHeight}%`;
+    image.style.left = `${definition.imageLeft}%`;
+    image.style.top = `${definition.imageTop}%`;
+    windowElement.appendChild(image);
+
+    stage.insertBefore(windowElement, stage.querySelector('.map-debug-layer'));
   }
 
   function mountDocks(stage, layer) {
-    addWaterZone(layer, 'polygon(0% 64%, 18% 63%, 13% 72%, 12% 85%, 34% 100%, 0% 100%)', '8.8s', '-2.4s');
-    addWaterZone(layer, 'polygon(39% 58%, 55% 58%, 67% 72%, 80% 100%, 66% 100%, 54% 84%, 42% 76%)', '7.2s', '-4.1s');
-    addWaterZone(layer, 'polygon(66% 61%, 83% 61%, 100% 65%, 100% 100%, 76% 100%, 71% 85%, 62% 76%)', '9.6s', '-1.2s');
+    addWaterWindow(layer, 0, 63, 34, 37,
+      'polygon(0% 2.7%, 52.9% 0%, 38.2% 24.3%, 35.3% 59.5%, 100% 100%, 0% 100%)',
+      '10.8s', '-2.4s');
+    addWaterWindow(layer, 39, 58, 41, 42,
+      'polygon(0% 0%, 39.0% 0%, 68.3% 33.3%, 100% 100%, 65.9% 100%, 36.6% 61.9%, 7.3% 42.9%)',
+      '9.4s', '-4.1s');
+    addWaterWindow(layer, 62, 61, 38, 39,
+      'polygon(10.5% 0%, 55.3% 0%, 100% 10.3%, 100% 100%, 36.8% 100%, 23.7% 61.5%, 0% 38.5%)',
+      '11.6s', '-1.2s');
 
-    addParticle(layer, 'dock-water-ripple', 286, 920, 238, 78, {
-      '--ripple-duration': '5.2s', '--ripple-delay': '-1.8s'
+    addParticle(layer, 'dock-water-ripple', 286, 920, 220, 72, {
+      '--ripple-duration': '6.0s', '--ripple-delay': '-1.8s'
     });
-    addParticle(layer, 'dock-water-ripple', 930, 792, 310, 88, {
-      '--ripple-duration': '4.6s', '--ripple-delay': '-3.1s'
+    addParticle(layer, 'dock-water-ripple', 930, 792, 270, 78, {
+      '--ripple-duration': '5.6s', '--ripple-delay': '-3.1s'
     });
-    addParticle(layer, 'dock-water-ripple', 1118, 705, 210, 62, {
-      '--ripple-duration': '5.8s', '--ripple-delay': '-.7s'
+    addParticle(layer, 'dock-water-ripple', 1118, 705, 190, 56, {
+      '--ripple-duration': '6.4s', '--ripple-delay': '-.7s'
     });
 
     [
-      [88, 278, 92, 92, '4.6s', '-1.1s'],
-      [614, 281, 84, 86, '4.1s', '-2.2s'],
-      [463, 873, 122, 132, '3.8s', '-.6s'],
-      [1014, 353, 118, 112, '4.3s', '-1.9s'],
-      [1142, 270, 146, 124, '4.8s', '-2.7s'],
-      [1174, 360, 110, 104, '4.4s', '-.9s']
+      [88, 278, 82, 82, '5.0s', '-1.1s'],
+      [614, 281, 76, 78, '4.8s', '-2.2s'],
+      [463, 873, 108, 116, '4.5s', '-.6s'],
+      [1014, 353, 104, 100, '4.9s', '-1.9s'],
+      [1142, 270, 126, 108, '5.2s', '-2.7s'],
+      [1174, 360, 98, 92, '5.0s', '-.9s']
     ].forEach(([x, y, width, height, duration, delay]) => {
       addParticle(layer, 'dock-lantern-glow', x, y, width, height, {
         '--light-duration': duration,
@@ -396,9 +442,8 @@
     });
 
     [
-      [1366, 112, 58, 44, '7.3s', '-1.2s', '-42px'],
-      [1378, 102, 72, 54, '8.4s', '-4.7s', '-54px'],
-      [1354, 124, 46, 38, '6.8s', '-3.0s', '-32px']
+      [1366, 112, 54, 40, '8.2s', '-1.2s', '-38px'],
+      [1378, 102, 64, 48, '9.0s', '-4.7s', '-48px']
     ].forEach(([x, y, width, height, duration, delay, drift]) => {
       addParticle(layer, 'dock-smoke', x, y, width, height, {
         '--smoke-duration': duration,
@@ -407,15 +452,15 @@
       });
     });
 
-    addParticle(layer, 'dock-mist', 265, 868, 520, 150, {
-      '--mist-duration': '13.5s', '--mist-delay': '-5.2s'
+    addParticle(layer, 'dock-mist', 265, 868, 430, 120, {
+      '--mist-duration': '16.5s', '--mist-delay': '-5.2s'
     });
-    addParticle(layer, 'dock-mist', 1030, 880, 700, 176, {
-      '--mist-duration': '15.2s', '--mist-delay': '-2.6s'
+    addParticle(layer, 'dock-mist', 1030, 880, 560, 136, {
+      '--mist-duration': '18.2s', '--mist-delay': '-2.6s'
     });
 
-    mountDockBoatCopy(stage, 'central', 1812);
-    mountDockBoatCopy(stage, 'west', 1978);
+    mountDockBoatWindow(stage, 'central');
+    mountDockBoatWindow(stage, 'west');
   }
 
   function addFenceSegment(group, x0, x1, y0, slope) {
@@ -466,7 +511,7 @@
 
   function mountForArea(stage, areaId) {
     ensureStyles();
-    stage.querySelectorAll('.environment-animation-layer, .boundary-overlay-layer, .dock-boat-copy').forEach((element) => element.remove());
+    stage.querySelectorAll('.environment-animation-layer, .boundary-overlay-layer, .dock-boat-window').forEach((element) => element.remove());
 
     if (areaId === 'briarwell-northwest-workshops') {
       const layer = createEnvironmentLayer(stage, areaId);
