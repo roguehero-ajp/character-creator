@@ -66,6 +66,16 @@
     return match ? `${match[1]}-geometry.json${match[2] || ''}` : null;
   }
 
+  function validateDepthOccluder(region, label = 'Depth occluder') {
+    if (!region?.id) throw new TypeError(`${label} is missing an id.`);
+    if (!Array.isArray(region.points) || region.points.length < 3) {
+      throw new TypeError(`${label} has no usable polygon: ${region.id}`);
+    }
+    if (!Number.isFinite(region.depthY)) {
+      throw new TypeError(`${label} is missing a finite depthY: ${region.id}`);
+    }
+  }
+
   function applyGeometryOverrides(data, geometry, source = null) {
     if (geometry.areaId !== data.id) {
       throw new Error(`Geometry sidecar area mismatch: ${geometry.areaId || '(missing)'} != ${data.id}`);
@@ -74,7 +84,17 @@
       throw new TypeError('Geometry sidecar is incomplete.');
     }
 
-    let depthOccluders = data.depthOccluders || [];
+    let depthOccluders;
+    if (Object.prototype.hasOwnProperty.call(geometry, 'depthOccluders')) {
+      if (!Array.isArray(geometry.depthOccluders)) {
+        throw new TypeError('Geometry depthOccluders must be an array when provided.');
+      }
+      geometry.depthOccluders.forEach((region) => validateDepthOccluder(region, 'Geometry depth occluder'));
+      depthOccluders = geometry.depthOccluders;
+    } else {
+      depthOccluders = data.depthOccluders || [];
+    }
+
     const depthOverrides = geometry.depthOccluderOverrides || [];
     if (!Array.isArray(depthOverrides)) {
       throw new TypeError('Geometry depthOccluderOverrides must be an array when provided.');
@@ -85,9 +105,8 @@
       const knownIds = new Set(depthOccluders.map((region) => region.id));
       overridesById.forEach((override, id) => {
         if (!knownIds.has(id)) throw new Error(`Unknown depth occluder override: ${id}`);
-        if (!Array.isArray(override.points) || override.points.length < 3) {
-          throw new TypeError(`Depth occluder override has no usable polygon: ${id}`);
-        }
+        const merged = { ...depthOccluders.find((region) => region.id === id), ...override };
+        validateDepthOccluder(merged, 'Depth occluder override');
       });
       depthOccluders = depthOccluders.map((region) => (
         overridesById.has(region.id) ? { ...region, ...overridesById.get(region.id) } : region
