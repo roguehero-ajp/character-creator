@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-docks",
   "title": "Briarwell - Docks",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "referenceSize": {
     "width": 1448,
     "height": 1086
@@ -34,7 +34,7 @@
     "from-north": { "x": 575, "y": 330, "facing": "south" },
     "from-west": { "x": 145, "y": 500, "facing": "east" },
     "fisherman-house-return": { "x": 760, "y": 500, "facing": "east" },
-    "main-pier": { "x": 610, "y": 760, "facing": "southeast" }
+    "main-pier": { "x": 612, "y": 760, "facing": "southeast" }
   },
   "walkable": [
     {
@@ -206,7 +206,7 @@
     { "id": "fisherman-house", "label": "Fisherman's house", "x": 785, "y": 500, "radius": 145 },
     { "id": "harbor-piers", "label": "Briarwell harbor piers", "x": 610, "y": 760, "radius": 125 },
     { "id": "dockside-sewer-access", "label": "Barred dockside sewer culvert", "x": 1115, "y": 610, "radius": 165, "state": "sewer-sealed" },
-    { "id": "west-moored-boat", "label": "Moored harbor boat", "x": 300, "y": 850, "radius": 135 },
+    { "id": "west-moored-boat", "label": "Moored harbor boat", "x": 300, "y": 850, "radius": 135, "state": "future-lake-ferry" },
     { "id": "central-fishing-boat", "label": "Fishing boat", "x": 940, "y": 705, "radius": 140 }
   ],
   "npcs": []
