@@ -9,6 +9,7 @@
     [Math.SQRT1_2, -Math.SQRT1_2],
     [-Math.SQRT1_2, -Math.SQRT1_2]
   ]);
+  const DEFAULT_SLIDE_ANGLES = Object.freeze([10, 20, 30, 40, 50, 60, 70, 80]);
 
   function pointInPolygon(point, polygon) {
     const [x, y] = point;
@@ -48,6 +49,16 @@
     }
 
     return stops[stops.length - 1][valueKey];
+  }
+
+  function rotateVector(dx, dy, degrees) {
+    const radians = degrees * (Math.PI / 180);
+    const cosine = Math.cos(radians);
+    const sine = Math.sin(radians);
+    return {
+      x: (dx * cosine) - (dy * sine),
+      y: (dx * sine) + (dy * cosine)
+    };
   }
 
   function geometrySidecarUrl(url) {
@@ -131,7 +142,13 @@
       this.interactables = data.interactables || [];
       this.npcs = data.npcs || [];
       this.footRadius = data.movement?.footRadius || 0;
+      this.footRadiusX = data.movement?.footRadiusX ?? this.footRadius;
+      this.footRadiusY = data.movement?.footRadiusY ?? this.footRadius;
       this.maxStep = data.movement?.maxStep || 6;
+      this.movementResolver = data.movement?.resolver || 'legacy-axis';
+      this.slideAngles = Array.isArray(data.movement?.slideAngles) && data.movement.slideAngles.length
+        ? data.movement.slideAngles
+        : DEFAULT_SLIDE_ANGLES;
     }
 
     static async load(url) {
@@ -159,14 +176,27 @@
       return 1000 + Math.round(y);
     }
 
-    isWalkable(x, y, radius = this.footRadius * this.getScale(y)) {
+    getFootprint(y, radiusOverride = null) {
+      if (typeof radiusOverride === 'number') {
+        return { radiusX: radiusOverride, radiusY: radiusOverride };
+      }
+      const scale = this.getScale(y);
+      return {
+        radiusX: this.footRadiusX * scale,
+        radiusY: this.footRadiusY * scale
+      };
+    }
+
+    isWalkable(x, y, radiusOverride = null) {
+      const { radiusX, radiusY } = this.getFootprint(y, radiusOverride);
       const points = SAMPLE_DIRECTIONS.map(([dx, dy]) => [
-        x + (dx * radius),
-        y + (dy * radius)
+        x + (dx * radiusX),
+        y + (dy * radiusY)
       ]);
+      const npcRadius = Math.max(radiusX, radiusY);
 
       const clearsNpcFootprints = this.npcs.every((npc) => (
-        distance({ x, y }, npc) > radius + (npc.collisionRadius || 0)
+        distance({ x, y }, npc) > npcRadius + (npc.collisionRadius || 0)
       ));
 
       return clearsNpcFootprints && points.every((point) => (
@@ -179,7 +209,7 @@
       ));
     }
 
-    resolveStep(position, dx, dy) {
+    resolveStepLegacy(position, dx, dy) {
       const full = { x: position.x + dx, y: position.y + dy };
       if (this.isWalkable(full.x, full.y)) return full;
 
@@ -190,6 +220,31 @@
       if (dy && this.isWalkable(vertical.x, vertical.y)) return vertical;
 
       return { ...position };
+    }
+
+    resolveStepSmooth(position, dx, dy) {
+      const full = { x: position.x + dx, y: position.y + dy };
+      if (this.isWalkable(full.x, full.y)) return full;
+      if (!dx && !dy) return { ...position };
+
+      for (const angle of this.slideAngles) {
+        for (const sign of [1, -1]) {
+          const rotated = rotateVector(dx, dy, angle * sign);
+          const candidate = {
+            x: position.x + rotated.x,
+            y: position.y + rotated.y
+          };
+          if (this.isWalkable(candidate.x, candidate.y)) return candidate;
+        }
+      }
+
+      return this.resolveStepLegacy(position, dx, dy);
+    }
+
+    resolveStep(position, dx, dy) {
+      return this.movementResolver === 'smooth-slide'
+        ? this.resolveStepSmooth(position, dx, dy)
+        : this.resolveStepLegacy(position, dx, dy);
     }
 
     resolveMovement(position, dx, dy) {
@@ -280,9 +335,11 @@
       ctx, region, 'rgba(155, 89, 182, .34)', 'rgba(230, 142, 255, .95)'
     ));
     ctx.setLineDash([14, 8]);
-    (map.data.depthOccluders || []).forEach((region) => drawPolygon(
-      ctx, region, 'rgba(255, 244, 194, .06)', 'rgba(255, 226, 122, .78)'
-    ));
+    (map.data.depthOccluders || [])
+      .filter((region) => region.debug !== false)
+      .forEach((region) => drawPolygon(
+        ctx, region, 'rgba(255, 244, 194, .06)', 'rgba(255, 226, 122, .78)'
+      ));
     ctx.setLineDash([]);
 
     ctx.font = '700 18px ui-monospace, Consolas, monospace';
