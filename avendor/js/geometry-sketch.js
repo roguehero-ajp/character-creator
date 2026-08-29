@@ -1,0 +1,304 @@
+(() => {
+  'use strict';
+
+  const stage = document.getElementById('walk-stage');
+  const canvas = document.getElementById('geometry-sketch-layer');
+  const toggle = document.getElementById('geometry-sketch-toggle');
+  const panel = document.getElementById('geometry-sketch-panel');
+  const mapLabel = document.getElementById('geometry-sketch-map');
+  const coordsLabel = document.getElementById('geometry-sketch-coords');
+  const walkableButton = document.getElementById('geometry-sketch-walkable');
+  const blockedButton = document.getElementById('geometry-sketch-blocked');
+  const undoButton = document.getElementById('geometry-sketch-undo');
+  const closeButton = document.getElementById('geometry-sketch-close');
+  const clearButton = document.getElementById('geometry-sketch-clear');
+  const copyButton = document.getElementById('geometry-sketch-copy');
+  const output = document.getElementById('geometry-sketch-output');
+  const walkTest = window.AvendorWalkTest;
+
+  if (!stage || !canvas || !toggle || !panel || !walkTest) return;
+
+  const ctx = canvas.getContext('2d');
+  const blockedKeys = new Set([
+    'w', 'a', 's', 'd',
+    'arrowup', 'arrowleft', 'arrowdown', 'arrowright',
+    'e', ' '
+  ]);
+
+  let active = false;
+  let kind = 'walkable';
+  let areaId = null;
+  let shapes = [];
+  let currentPoints = [];
+  let hoverPoint = null;
+
+  function getMap() {
+    return walkTest.getMap();
+  }
+
+  function resizeForMap() {
+    const map = getMap();
+    if (!map) return;
+    if (canvas.width !== map.width) canvas.width = map.width;
+    if (canvas.height !== map.height) canvas.height = map.height;
+  }
+
+  function mapPointFromEvent(event) {
+    const map = getMap();
+    if (!map) return null;
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return null;
+    return {
+      x: Math.max(0, Math.min(map.width, Math.round(((event.clientX - rect.left) / rect.width) * map.width))),
+      y: Math.max(0, Math.min(map.height, Math.round(((event.clientY - rect.top) / rect.height) * map.height)))
+    };
+  }
+
+  function paintPolygon(points, polygonKind, isCurrent = false) {
+    if (!points.length) return;
+    const walkable = polygonKind === 'walkable';
+    const stroke = walkable ? 'rgba(104,255,164,.98)' : 'rgba(255,108,94,.98)';
+    const fill = walkable ? 'rgba(46,204,113,.24)' : 'rgba(231,76,60,.28)';
+
+    ctx.beginPath();
+    points.forEach((point, index) => {
+      if (index === 0) ctx.moveTo(point.x, point.y);
+      else ctx.lineTo(point.x, point.y);
+    });
+    if (!isCurrent && points.length >= 3) ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = isCurrent ? 4 : 3;
+    if (!isCurrent && points.length >= 3) ctx.fill();
+    ctx.stroke();
+
+    points.forEach((point, index) => {
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, index === 0 ? 6 : 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = index === 0 ? '#fff3b8' : stroke;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0,0,0,.88)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    });
+  }
+
+  function draw() {
+    resizeForMap();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    shapes.forEach((shape) => paintPolygon(shape.points, shape.kind));
+
+    if (currentPoints.length) {
+      const preview = hoverPoint ? [...currentPoints, hoverPoint] : currentPoints;
+      paintPolygon(preview, kind, true);
+    }
+  }
+
+  function serialise() {
+    const map = getMap();
+    if (!map) return '';
+    const withIds = (targetKind, prefix) => shapes
+      .filter((shape) => shape.kind === targetKind)
+      .map((shape, index) => ({
+        id: `${prefix}-sketch-${index + 1}`,
+        points: shape.points.map(({ x, y }) => [x, y])
+      }));
+
+    return JSON.stringify({
+      areaId: map.data.id,
+      referenceSize: { width: map.width, height: map.height },
+      walkable: withIds('walkable', 'walkable'),
+      collisions: withIds('collision', 'collision')
+    }, null, 2);
+  }
+
+  function refreshOutput() {
+    output.value = serialise();
+  }
+
+  function clearSketches() {
+    shapes = [];
+    currentPoints = [];
+    hoverPoint = null;
+    refreshOutput();
+    draw();
+  }
+
+  function syncArea() {
+    const map = getMap();
+    const nextAreaId = map?.data?.id || stage.dataset.areaId || null;
+    if (nextAreaId !== areaId) {
+      areaId = nextAreaId;
+      clearSketches();
+    }
+    mapLabel.textContent = nextAreaId || 'No map loaded';
+    resizeForMap();
+    draw();
+  }
+
+  function setKind(nextKind) {
+    kind = nextKind === 'collision' ? 'collision' : 'walkable';
+    walkableButton.classList.toggle('selected', kind === 'walkable');
+    blockedButton.classList.toggle('selected', kind === 'collision');
+    walkableButton.setAttribute('aria-pressed', String(kind === 'walkable'));
+    blockedButton.setAttribute('aria-pressed', String(kind === 'collision'));
+    draw();
+  }
+
+  function closeShape() {
+    if (currentPoints.length < 3) {
+      coordsLabel.textContent = 'Need at least 3 points';
+      return;
+    }
+    shapes.push({
+      kind,
+      points: currentPoints.map((point) => ({ ...point }))
+    });
+    currentPoints = [];
+    hoverPoint = null;
+    refreshOutput();
+    draw();
+    coordsLabel.textContent = `${shapes.length} shape${shapes.length === 1 ? '' : 's'} stored`;
+  }
+
+  function undoPoint() {
+    if (currentPoints.length) {
+      currentPoints.pop();
+    } else if (shapes.length) {
+      const previous = shapes.pop();
+      kind = previous.kind;
+      currentPoints = previous.points.map((point) => ({ ...point }));
+      setKind(kind);
+    }
+    refreshOutput();
+    draw();
+  }
+
+  async function copyJson() {
+    const text = serialise();
+    if (!text) return;
+    output.value = text;
+    try {
+      await navigator.clipboard.writeText(text);
+      coordsLabel.textContent = 'JSON copied';
+    } catch (_) {
+      output.focus();
+      output.select();
+      document.execCommand('copy');
+      stage.focus({ preventScroll: true });
+      coordsLabel.textContent = 'JSON selected/copied';
+    }
+  }
+
+  function setActive(nextActive) {
+    active = Boolean(nextActive);
+    if (active) {
+      window.dispatchEvent(new Event('blur'));
+      walkTest.setDebug(true);
+      syncArea();
+      panel.hidden = false;
+      canvas.classList.add('show');
+      stage.classList.add('geometry-sketch-active');
+      toggle.classList.add('selected');
+      toggle.setAttribute('aria-pressed', 'true');
+      toggle.textContent = 'Geometry sketch: on';
+      coordsLabel.textContent = 'Click to add vertices';
+    } else {
+      panel.hidden = true;
+      canvas.classList.remove('show');
+      stage.classList.remove('geometry-sketch-active');
+      toggle.classList.remove('selected');
+      toggle.setAttribute('aria-pressed', 'false');
+      toggle.textContent = 'Geometry sketch: off';
+      hoverPoint = null;
+      draw();
+      stage.focus({ preventScroll: true });
+    }
+  }
+
+  canvas.addEventListener('pointerdown', (event) => {
+    if (!active || event.button !== 0) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const point = mapPointFromEvent(event);
+    if (!point) return;
+    currentPoints.push(point);
+    hoverPoint = point;
+    coordsLabel.textContent = `x ${point.x}, y ${point.y} · ${currentPoints.length} point${currentPoints.length === 1 ? '' : 's'}`;
+    draw();
+  });
+
+  canvas.addEventListener('pointermove', (event) => {
+    if (!active) return;
+    hoverPoint = mapPointFromEvent(event);
+    if (hoverPoint) coordsLabel.textContent = `x ${hoverPoint.x}, y ${hoverPoint.y}`;
+    draw();
+  });
+
+  canvas.addEventListener('pointerleave', () => {
+    if (!active) return;
+    hoverPoint = null;
+    draw();
+  });
+
+  canvas.addEventListener('contextmenu', (event) => {
+    if (!active) return;
+    event.preventDefault();
+    undoPoint();
+  });
+
+  window.addEventListener('keydown', (event) => {
+    if (!active) return;
+    const key = event.key.toLowerCase();
+
+    if (blockedKeys.has(key)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return;
+    }
+    if (key === '1') {
+      event.preventDefault();
+      setKind('walkable');
+    } else if (key === '2') {
+      event.preventDefault();
+      setKind('collision');
+    } else if (key === 'enter') {
+      event.preventDefault();
+      closeShape();
+    } else if (key === 'backspace') {
+      event.preventDefault();
+      undoPoint();
+    } else if (key === 'escape') {
+      event.preventDefault();
+      setActive(false);
+    }
+  }, true);
+
+  toggle.addEventListener('click', () => setActive(!active));
+  walkableButton.addEventListener('click', () => setKind('walkable'));
+  blockedButton.addEventListener('click', () => setKind('collision'));
+  undoButton.addEventListener('click', undoPoint);
+  closeButton.addEventListener('click', closeShape);
+  clearButton.addEventListener('click', clearSketches);
+  copyButton.addEventListener('click', copyJson);
+
+  new MutationObserver(syncArea).observe(stage, {
+    attributes: true,
+    attributeFilter: ['data-area-id']
+  });
+
+  syncArea();
+  refreshOutput();
+
+  window.AvendorGeometrySketch = Object.freeze({
+    setActive,
+    clear: clearSketches,
+    closeShape,
+    setKind,
+    exportJson: serialise,
+    getShapes: () => shapes.map((shape) => ({
+      kind: shape.kind,
+      points: shape.points.map((point) => ({ ...point }))
+    }))
+  });
+})();
