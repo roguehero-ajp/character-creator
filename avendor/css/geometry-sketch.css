@@ -22,7 +22,7 @@
   right: 2.2%;
   top: 5.8%;
   z-index: 5300;
-  width: min(38%, 520px);
+  width: min(42%, 590px);
   padding: .55em;
   border: 1px solid rgba(211,173,99,.58);
   border-radius: 4px;
@@ -88,6 +88,13 @@
   background: rgba(111,43,36,.84);
 }
 
+#geometry-sketch-occluder.selected {
+  border-color: rgba(255,226,122,.98);
+  color: #fff1bd;
+  background: rgba(108,82,28,.88);
+  box-shadow: inset 0 0 10px rgba(255,226,122,.12);
+}
+
 .geometry-sketch-instructions {
   margin: .5em 0;
   color: #c6bdab;
@@ -97,7 +104,7 @@
 #geometry-sketch-output {
   box-sizing: border-box;
   width: 100%;
-  height: 9.5em;
+  height: 10.5em;
   resize: vertical;
   border: 1px solid rgba(211,173,99,.28);
   border-radius: 2px;
@@ -115,6 +122,6 @@
 
 @media (max-width: 900px) {
   .geometry-sketch-panel {
-    width: 54%;
+    width: 58%;
   }
 }
