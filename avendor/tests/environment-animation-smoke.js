@@ -6,12 +6,14 @@ const path = require('path');
 const avendorRoot = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(avendorRoot, 'walk-test.html'), 'utf8');
 const source = fs.readFileSync(path.join(avendorRoot, 'js/environment-animation.js'), 'utf8');
+const tuning = fs.readFileSync(path.join(avendorRoot, 'css/environment-animation-tuning.css'), 'utf8');
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
 assert(html.includes('js/environment-animation.js'), 'Walk test does not load the native environment animation layer.');
+assert(html.includes('css/environment-animation-tuning.css'), 'Walk test does not load environment animation tuning.');
 assert(source.includes("briarwell-northwest-workshops"), 'Northwest Workshops has no native animation registration.');
 assert(source.includes("briarwell-west-road-junction"), 'West Road Junction has no boundary-overlay registration.');
 assert(source.includes("briarwell-docks"), 'Briarwell Docks has no native environment registration.');
@@ -40,6 +42,11 @@ assert(source.includes('--dock-smoke-peak: .54;'), 'Base Docks chimney smoke vis
 assert(source.includes('--dock-smoke-peak: .62;'), 'Dawn Docks chimney smoke visibility has drifted below the calibrated level.');
 assert(source.includes("mountDockBoatWindow(stage, 'central')"), 'Central fishing boat float window is missing.');
 assert(source.includes("mountDockBoatWindow(stage, 'west')"), 'West moored boat float window is missing.');
+assert(tuning.includes('z-index: 930 !important'), 'Decorative Docks boat copies can rise into hero depth again.');
+assert(tuning.includes('.dock-boat-window[data-boat="central"]'), 'Central boat hull mask tuning is missing.');
+assert(tuning.includes('.dock-boat-window[data-boat="west"]'), 'West boat hull mask tuning is missing.');
+assert(tuning.includes('93.5% 35%'), 'Central boat mask drifted back toward the dock edge.');
+assert(tuning.includes('92% 29%'), 'West boat mask drifted back toward the dock edge.');
 assert(!source.includes('setInterval('), 'Environment animation should rely on browser animation timing, not unmanaged intervals.');
 assert(!source.includes('requestAnimationFrame('), 'Environment animation should not add a competing frame loop for decorative CSS effects.');
 
