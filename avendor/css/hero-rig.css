@@ -24,6 +24,84 @@
   opacity: 1;
 }
 
+/*
+ * Phase 1 world-time lighting.
+ * Geometry and source art stay identical between dayparts; only presentation changes.
+ */
+.walk-stage > .stage-art,
+.walk-stage .scene-occluder image {
+  transition: filter 1.15s ease;
+}
+
+.walk-stage[data-daypart="day"] > .stage-art,
+.walk-stage[data-daypart="day"] .scene-occluder image {
+  filter: brightness(1.15) saturate(.90) contrast(.96) hue-rotate(-3deg);
+}
+
+.walk-stage[data-daypart="dawn"] > .stage-art,
+.walk-stage[data-daypart="dawn"] .scene-occluder image {
+  filter: brightness(.98) saturate(.89) contrast(.97) hue-rotate(-7deg);
+}
+
+.walk-stage[data-daypart="dusk"] > .stage-art,
+.walk-stage[data-daypart="dusk"] .scene-occluder image {
+  filter: none;
+}
+
+.walk-stage[data-daypart="night"] > .stage-art,
+.walk-stage[data-daypart="night"] .scene-occluder image {
+  filter: brightness(.58) saturate(.72) contrast(1.04) hue-rotate(9deg);
+}
+
+.daypart-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3000;
+  pointer-events: none;
+  opacity: 0;
+  background: transparent;
+  transition: opacity 1.15s ease, background 1.15s ease;
+}
+
+.walk-stage[data-daypart="day"] .daypart-overlay {
+  opacity: .18;
+  background: rgba(191, 216, 231, .20);
+  mix-blend-mode: screen;
+}
+
+.walk-stage[data-daypart="dawn"] .daypart-overlay {
+  opacity: .36;
+  background: linear-gradient(
+    180deg,
+    rgba(123, 102, 144, .42) 0%,
+    rgba(203, 148, 112, .26) 42%,
+    rgba(67, 83, 109, .18) 100%
+  );
+  mix-blend-mode: soft-light;
+}
+
+.walk-stage[data-daypart="dusk"] .daypart-overlay {
+  opacity: .16;
+  background: linear-gradient(
+    180deg,
+    rgba(78, 86, 130, .18) 0%,
+    rgba(142, 91, 69, .15) 44%,
+    rgba(32, 42, 61, .16) 100%
+  );
+  mix-blend-mode: soft-light;
+}
+
+.walk-stage[data-daypart="night"] .daypart-overlay {
+  opacity: .74;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 41, 76, .74) 0%,
+    rgba(8, 23, 48, .78) 54%,
+    rgba(4, 12, 28, .86) 100%
+  );
+  mix-blend-mode: multiply;
+}
+
 .scene-occluder {
   position: absolute;
   inset: 0;
@@ -169,6 +247,11 @@
   box-shadow: inset 0 0 8px rgba(224,186,112,.14);
 }
 
+#daypart-cycle {
+  min-width: 8.6em;
+  text-transform: capitalize;
+}
+
 .interaction-prompt {
   position: absolute;
   left: 50%;
@@ -219,8 +302,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .player.confused { animation: none; }
-  .walk-stage::after,
-  .map-debug-layer,
-  .interaction-prompt { transition: none; }
+  .walk-stage > .stage-art,
+  .walk-stage .scene-occluder image,
+  .daypart-overlay {
+    transition: none;
+  }
 }
