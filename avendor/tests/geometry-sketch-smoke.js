@@ -17,18 +17,27 @@ assert(html.includes('id="geometry-sketch-toggle"'), 'Geometry sketch toggle is 
 assert(html.includes('id="geometry-sketch-walkable"'), 'Walkable sketch tool is missing.');
 assert(html.includes('id="geometry-sketch-blocked"'), 'Blocked sketch tool is missing.');
 assert(html.includes('id="geometry-sketch-occluder"'), 'Occluder sketch tool is missing.');
+assert(html.includes('id="geometry-sketch-animation"'), 'Animation placement sketch tool is missing.');
+assert(html.includes('id="geometry-sketch-animation-label"'), 'Animation placement label input is missing.');
 assert(html.includes('id="geometry-sketch-copy"'), 'Geometry sketch export control is missing.');
-assert(html.includes('3 occluder'), 'Geometry sketch instructions do not expose the occluder shortcut.');
+assert(html.includes('4 animation'), 'Geometry sketch instructions do not expose the animation shortcut.');
 assert(html.includes('js/geometry-sketch.js'), 'walk-test.html does not load the geometry sketch module.');
 assert(html.includes('css/geometry-sketch.css'), 'walk-test.html does not load geometry sketch styles.');
 
 assert(source.includes("kind = 'walkable'"), 'Geometry sketch does not default to walkable mode.');
-assert(source.includes("nextKind === 'collision' || nextKind === 'occluder'"),
-  'Geometry sketch does not support occluder polygons.');
+assert(source.includes("nextKind === 'collision' || nextKind === 'occluder' || nextKind === 'animation'"),
+  'Geometry sketch does not support all four polygon kinds.');
 assert(source.includes('getDepthY'), 'Geometry sketch does not derive occluder depth from the traced base.');
+assert(source.includes('getBounds'), 'Geometry sketch does not calculate animation bounds and centre.');
 assert(source.includes("shape.kind === 'occluder'"), 'Geometry sketch does not serialise occluder shapes.');
+assert(source.includes("shape.kind === 'animation'"), 'Geometry sketch does not serialise animation placement shapes.');
 assert(source.includes('depthOccluders: occluders'), 'Geometry sketch JSON does not export depth occluders.');
+assert(source.includes('animationZones'), 'Geometry sketch JSON does not export animation placement zones.');
+assert(source.includes('bounds:'), 'Animation placement export is missing an exact bounding box.');
+assert(source.includes('center: bounds.center'), 'Animation placement export is missing a centre point.');
 assert(source.includes("key === '3'"), 'Geometry sketch does not provide the 3-key occluder shortcut.');
+assert(source.includes("key === '4'"), 'Geometry sketch does not provide the 4-key animation shortcut.');
+assert(source.includes('animationLabelInput'), 'Geometry sketch does not preserve animation intent labels.');
 assert(source.includes('mapPointFromEvent'), 'Geometry sketch does not convert pointer locations into map coordinates.');
 assert(source.includes('closeShape'), 'Geometry sketch cannot close/store polygons.');
 assert(source.includes('undoPoint'), 'Geometry sketch cannot undo vertices.');
@@ -43,5 +52,7 @@ assert(css.includes('.geometry-sketch-layer.show'), 'Geometry sketch canvas has 
 assert(css.includes('#geometry-sketch-walkable.selected'), 'Walkable tool has no distinct visual state.');
 assert(css.includes('#geometry-sketch-blocked.selected'), 'Blocked tool has no distinct visual state.');
 assert(css.includes('#geometry-sketch-occluder.selected'), 'Occluder tool has no distinct visual state.');
+assert(css.includes('#geometry-sketch-animation.selected'), 'Animation placement tool has no distinct visual state.');
+assert(css.includes('.geometry-sketch-animation-label'), 'Animation placement label has no styled editing state.');
 
-console.log('Geometry sketch debugger walkable, blocked and occluder smoke checks passed.');
+console.log('Geometry sketch debugger walkable, blocked, occluder and animation-zone smoke checks passed.');

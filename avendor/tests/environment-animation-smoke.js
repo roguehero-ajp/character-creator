@@ -55,7 +55,11 @@ assert(tuning.includes('animation-duration: 4.7s !important'), 'West boat bobbin
 assert(tuning.includes('@keyframes avendor-lantern-flicker'), 'Docks lantern flame flicker tuning is missing.');
 assert(tuning.includes('brightness(1.18)'), 'Docks lantern flicker no longer has a visible warm flare.');
 assert(tuning.includes('.dock-bird-layer'), 'Docks bird layer styles are missing.');
-assert(tuning.includes('z-index: 920'), 'Docks birds can rise into hero/occluder depth.');
+assert(tuning.includes('z-index: 945'), 'Docks birds are no longer safely below playable hero depth.');
+assert(tuning.includes('width: 42px'), 'Docks birds have drifted back to an unreadably tiny silhouette.');
+assert(tuning.includes('border-top: 3px solid'), 'Docks bird wing silhouette is too faint to evaluate.');
+assert(tuning.includes('top: 16%') && tuning.includes('top: 22%'), 'Docks bird flight paths drifted out of the authored upper-scene band.');
+assert(tuning.includes('[data-daypart="dusk"] .dock-bird { opacity: .66; }'), 'Docks birds are too faint in the default dusk test state.');
 assert(tuning.includes('.dock-bird-a') && tuning.includes('.dock-bird-b'), 'Docks does not style both ambient birds.');
 assert(tuning.includes('@media (prefers-reduced-motion: reduce)'), 'Docks ambience tuning does not respect reduced motion.');
 
@@ -69,4 +73,4 @@ assert(!ambientLife.includes('requestAnimationFrame('), 'Docks birds should not 
 assert(!source.includes('setInterval('), 'Environment animation should rely on browser animation timing, not unmanaged intervals.');
 assert(!source.includes('requestAnimationFrame('), 'Environment animation should not add a competing frame loop for decorative CSS effects.');
 
-console.log('Native environment animation, Docks bobbing, lantern flicker and bird ambience smoke checks passed.');
+console.log('Native environment animation, Docks bobbing, lantern flicker and visible bird ambience smoke checks passed.');
