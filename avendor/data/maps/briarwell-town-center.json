@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-town-center",
   "title": "Briarwell - Town Center",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "referenceSize": {
     "width": 1448,
     "height": 1086
@@ -133,8 +133,8 @@
       "status": "active",
       "target": {
         "areaId": "briarwell-northwest-workshops",
-        "spawnId": "from-south",
-        "returnTransitionId": "south-road"
+        "spawnId": "from-southwest",
+        "returnTransitionId": "southwest-road"
       },
       "fallbackSpawn": "from-northwest",
       "points": [[296, 338], [402, 320], [421, 370], [314, 392]]

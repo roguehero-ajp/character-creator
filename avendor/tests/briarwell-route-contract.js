@@ -20,6 +20,10 @@ function getTransition(areaId, transitionId) {
   return transitionsFor(maps.get(areaId) || {}).find((transition) => transition.id === transitionId);
 }
 
+function routeDirection(transition) {
+  return transition.worldDirection || transition.direction;
+}
+
 function oppositeDirection(direction) {
   return ({
     north: 'south', south: 'north', east: 'west', west: 'east',
@@ -48,8 +52,8 @@ function assertConnection(connection) {
 
   if (connection.visibility === 'public' && connection.kind === 'road') {
     assert(oppositeDirection(left.direction) === right.direction, `Public road directions are not reciprocal: ${connection.id}`);
-    assert(leftTransition.direction === left.direction, `Registry/map direction mismatch: ${connection.id}/${left.areaId}`);
-    assert(rightTransition.direction === right.direction, `Registry/map direction mismatch: ${connection.id}/${right.areaId}`);
+    assert(routeDirection(leftTransition) === left.direction, `Registry/map world-direction mismatch: ${connection.id}/${left.areaId}`);
+    assert(routeDirection(rightTransition) === right.direction, `Registry/map world-direction mismatch: ${connection.id}/${right.areaId}`);
   }
 }
 
@@ -58,7 +62,7 @@ registry.connections.forEach(assertConnection);
 registry.cityExits.forEach((cityExit) => {
   const transition = getTransition(cityExit.areaId, cityExit.transitionId);
   assert(transition, `City exit transition is missing: ${cityExit.id}`);
-  assert(transition.direction === cityExit.direction, `City exit direction mismatch: ${cityExit.id}`);
+  assert(routeDirection(transition) === cityExit.direction, `City exit direction mismatch: ${cityExit.id}`);
   assert(transition.status === cityExit.status, `City exit status mismatch: ${cityExit.id}`);
   assert(transition.target === null, `Unassigned city exit unexpectedly has a map target: ${cityExit.id}`);
 });

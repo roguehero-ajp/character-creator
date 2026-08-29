@@ -1,15 +1,22 @@
 # Briarwell environmental animation hooks
 
-Planning inventory for the later Synfig/environment pass. These are visual layers only unless explicitly promoted to a gameplay state. Static collision remains authoritative by default.
+Planning inventory for the native environment pass. These are visual layers only unless explicitly promoted to a gameplay state. Static collision remains authoritative by default.
 
 ## Shared exterior hooks
 
+- visual dayparts: dawn, day, dusk and night use the same authored geometry and source composition
 - snowfall: sparse foreground and background flakes; keep gameplay silhouettes readable
 - chimney smoke: slow irregular drift, no collision
 - lantern/fire light: subtle luminance flicker rather than large sprite motion
 - hanging signs/cloth: restrained wind response
 - water: low-amplitude surface shimmer/ripple where visible
 - depth rule: animated foreground layers must preserve the map's existing occlusion intent
+
+## Daypart foundation
+
+Phase 1 is presentation-only. `js/world-time.js` owns the current visual daypart and exposes a manual setter/cycle control for testing. The renderer changes color grading, ambient tint and effect intensity without changing exits, collisions, spawn points, NPC schedules or shop states.
+
+The approved Northwest Workshops painting is the canonical composition and dusk benchmark. Other dayparts are rendered from the same geometry-safe composition so time-of-day changes cannot cause map drift. A later gameplay-time phase may add NPC/shop schedules, but those states must be explicit and must never be inferred from the rendered lighting.
 
 ## Priority screens
 
@@ -21,8 +28,10 @@ Planning inventory for the later Synfig/environment pass. These are visual layer
 ### Area 2: Northwest Workshops
 - forge/fire glow and ember flicker
 - chimney/forge smoke
+- forge intensity responds to the visual daypart
+- approved v2 background permanently closes the northward visual route
+- only east and southwest exits are authored
 - optional hammer/workshop ambient loop later
-- future north-boundary houses/wall remain static collision
 
 ### Area 3: Brewmaster Row
 - chimney smoke
@@ -79,8 +88,9 @@ Planning inventory for the later Synfig/environment pass. These are visual layer
 
 ### West Road Junction
 - tree/wind ambience
-- future wooden town-boundary fence remains static collision
+- wooden town-boundary fence is native SVG presentation with matching static collision
+- broad Henson-road opening remains navigation-authoritative
 
 ## Implementation rule
 
-Synfig output should be layered above/below the static background through named environment slots. Decorative animation must not redefine walkable polygons, exits, spawn points, or collision footprints. Any animation that truly changes navigation (gate opening, moving obstruction, bridge state) must use an explicit gameplay state and a matching collision-state change rather than deriving collision from rendered frames.
+Native CSS/DOM/SVG/canvas environment output should be layered above/below the static background through named environment slots. Decorative animation must not redefine walkable polygons, exits, spawn points, or collision footprints. Any animation that truly changes navigation (gate opening, moving obstruction, bridge state) must use an explicit gameplay state and a matching collision-state change rather than deriving collision from rendered frames.

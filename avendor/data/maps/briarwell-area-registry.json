@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -222,7 +222,7 @@
       "status": "active",
       "endpoints": [
         { "areaId": "briarwell-town-center", "transitionId": "northwest-road", "direction": "northwest" },
-        { "areaId": "briarwell-northwest-workshops", "transitionId": "south-road", "direction": "south" }
+        { "areaId": "briarwell-northwest-workshops", "transitionId": "southwest-road", "direction": "southeast" }
       ]
     },
     {

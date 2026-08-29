@@ -22,9 +22,10 @@ assert(source.includes('forge-core'), 'Forge fire core effect is missing.');
 assert(source.includes('forge-ember'), 'Forge ember effect is missing.');
 assert(source.includes('forge-smoke'), 'Forge smoke effect is missing.');
 assert(source.includes("addParticle(layer, 'forge-glow', 414, 431"), 'Forge glow is no longer calibrated to the painted hearth.');
-assert(source.includes('mountNorthBoundary'), 'Northwest Workshops north-boundary overlay is missing.');
+assert(source.includes('[data-daypart="night"]'), 'Forge animation is not daypart-aware.');
+assert(!source.includes('mountNorthBoundary'), 'Northwest Workshops still mounts the temporary north-boundary overlay.');
 assert(source.includes('mountWestJunctionFence'), 'West Road Junction fence overlay is missing.');
 assert(!source.includes('setInterval('), 'Environment animation should rely on browser animation timing, not unmanaged intervals.');
 assert(!source.includes('requestAnimationFrame('), 'Environment animation should not add a competing frame loop for decorative CSS effects.');
 
-console.log('Native environment animation and boundary-overlay smoke checks passed.');
+console.log('Native environment animation smoke checks passed.');
