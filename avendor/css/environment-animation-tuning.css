@@ -65,7 +65,7 @@
 .walk-stage .dock-bird-layer {
   position: absolute;
   inset: 0;
-  z-index: 920;
+  z-index: 945;
   overflow: hidden;
   pointer-events: none;
 }
@@ -73,9 +73,9 @@
 .walk-stage .dock-bird {
   --bird-scale: 1;
   position: absolute;
-  width: 24px;
-  height: 12px;
-  opacity: .66;
+  width: 42px;
+  height: 20px;
+  opacity: .88;
   pointer-events: none;
   transform-origin: center;
 }
@@ -84,11 +84,11 @@
 .walk-stage .dock-bird::after {
   content: '';
   position: absolute;
-  top: 4px;
-  width: 13px;
-  height: 7px;
-  border-top: 2px solid rgba(31, 37, 44, .9);
-  border-radius: 50% 50% 0 0;
+  top: 6px;
+  width: 22px;
+  height: 11px;
+  border-top: 3px solid rgba(18, 23, 29, .98);
+  border-radius: 52% 52% 0 0;
 }
 
 .walk-stage .dock-bird::before {
@@ -104,23 +104,23 @@
 }
 
 .walk-stage .dock-bird-a {
-  left: -4%;
-  top: 13%;
-  animation: avendor-bird-flight-a 13.5s linear infinite;
+  left: -2%;
+  top: 16%;
+  animation: avendor-bird-flight-a 12.8s linear infinite;
 }
 
 .walk-stage .dock-bird-b {
-  --bird-scale: .76;
-  left: 27%;
-  top: 18%;
-  opacity: .50;
-  animation: avendor-bird-flight-b 17.2s linear infinite;
-  animation-delay: -7.4s;
+  --bird-scale: .82;
+  left: 18%;
+  top: 22%;
+  opacity: .72;
+  animation: avendor-bird-flight-b 16.4s linear infinite;
+  animation-delay: -6.2s;
 }
 
-.walk-stage[data-daypart="dawn"] .dock-bird { opacity: .58; }
-.walk-stage[data-daypart="dusk"] .dock-bird { opacity: .38; }
-.walk-stage[data-daypart="night"] .dock-bird { opacity: .08; }
+.walk-stage[data-daypart="dawn"] .dock-bird { opacity: .80; }
+.walk-stage[data-daypart="dusk"] .dock-bird { opacity: .66; }
+.walk-stage[data-daypart="night"] .dock-bird { opacity: .18; }
 
 @keyframes avendor-bird-wing-left {
   from { transform: rotate(17deg) translateY(0); }
@@ -144,7 +144,7 @@
   0% { transform: translate3d(0, 0, 0) scale(var(--bird-scale)); }
   31% { transform: translate3d(20vw, 7px, 0) scale(var(--bird-scale)); }
   64% { transform: translate3d(43vw, -6px, 0) scale(var(--bird-scale)); }
-  100% { transform: translate3d(72vw, 2px, 0) scale(var(--bird-scale)); }
+  100% { transform: translate3d(82vw, 2px, 0) scale(var(--bird-scale)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
