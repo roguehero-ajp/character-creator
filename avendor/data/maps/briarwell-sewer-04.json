@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-sewer-04",
+  "title": "Briarwell Sewers - Area 4",
+  "version": "1.0.0",
+  "sewerAreaNumber": 4,
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/sewers/background/sewer-area-04-v1.png",
+    "alt": "Sewer Area 4 with north and east tunnels and a ladder to the alley beside Ainsley's"
+  },
+  "movement": {
+    "speedX": 265,
+    "speedY": 198,
+    "footRadiusX": 12,
+    "footRadiusY": 8,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 260,
+        "scale": 0.5
+      },
+      {
+        "y": 480,
+        "scale": 0.64
+      },
+      {
+        "y": 720,
+        "scale": 0.8
+      },
+      {
+        "y": 940,
+        "scale": 0.94
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 724,
+      "y": 650,
+      "facing": "north"
+    },
+    "from-north": {
+      "x": 724,
+      "y": 410,
+      "facing": "south"
+    },
+    "from-east": {
+      "x": 1095,
+      "y": 650,
+      "facing": "west"
+    },
+    "from-ainsley-alley": {
+      "x": 450,
+      "y": 470,
+      "facing": "southeast"
+    }
+  },
+  "walkable": [
+    {
+      "id": "central-dry-floor",
+      "points": [
+        [
+          118,
+          302
+        ],
+        [
+          1330,
+          302
+        ],
+        [
+          1390,
+          418
+        ],
+        [
+          1390,
+          918
+        ],
+        [
+          1318,
+          974
+        ],
+        [
+          130,
+          974
+        ],
+        [
+          58,
+          918
+        ],
+        [
+          58,
+          418
+        ]
+      ]
+    },
+    {
+      "id": "north-approach",
+      "points": [
+        [
+          538,
+          180
+        ],
+        [
+          910,
+          180
+        ],
+        [
+          940,
+          430
+        ],
+        [
+          508,
+          430
+        ]
+      ]
+    },
+    {
+      "id": "east-approach",
+      "points": [
+        [
+          1050,
+          336
+        ],
+        [
+          1446,
+          336
+        ],
+        [
+          1446,
+          870
+        ],
+        [
+          1050,
+          870
+        ]
+      ]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-tunnel",
+      "label": "North tunnel to Sewer Area 3",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-03",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-tunnel"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [
+        [
+          568,
+          220
+        ],
+        [
+          880,
+          220
+        ],
+        [
+          914,
+          348
+        ],
+        [
+          534,
+          348
+        ]
+      ]
+    },
+    {
+      "id": "east-tunnel",
+      "label": "East tunnel to Sewer Area 5",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-05",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-tunnel"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [
+        [
+          1186,
+          424
+        ],
+        [
+          1432,
+          424
+        ],
+        [
+          1432,
+          812
+        ],
+        [
+          1186,
+          812
+        ]
+      ]
+    }
+  ],
+  "portals": [
+    {
+      "id": "ainsley-alley-ladder",
+      "label": "Climb to the alley beside Ainsley's",
+      "status": "active",
+      "activation": "interact",
+      "target": {
+        "areaId": "briarwell-ainsley-church",
+        "spawnId": "grate-return",
+        "returnTransitionId": "sewer-grate"
+      },
+      "fallbackSpawn": "from-ainsley-alley",
+      "points": [
+        [
+          118,
+          120
+        ],
+        [
+          430,
+          120
+        ],
+        [
+          480,
+          470
+        ],
+        [
+          180,
+          500
+        ]
+      ],
+      "interactionTarget": {
+        "x": 440,
+        "y": 440
+      },
+      "radius": 165
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "foreground-masonry",
+      "depthY": 1000,
+      "points": [
+        [
+          0,
+          974
+        ],
+        [
+          1448,
+          974
+        ],
+        [
+          1448,
+          1086
+        ],
+        [
+          0,
+          1086
+        ]
+      ]
+    }
+  ],
+  "interactables": [],
+  "npcs": []
+}

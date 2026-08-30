@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-sewer-14",
+  "title": "Briarwell Sewers - Area 14",
+  "version": "1.0.0",
+  "sewerAreaNumber": 14,
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/sewers/background/sewer-area-14-v1.png",
+    "alt": "Sewer Area 14 with a south tunnel and natural cave ladder rising near Ms. Blight's property"
+  },
+  "movement": {
+    "speedX": 265,
+    "speedY": 198,
+    "footRadiusX": 12,
+    "footRadiusY": 8,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 260,
+        "scale": 0.5
+      },
+      {
+        "y": 480,
+        "scale": 0.64
+      },
+      {
+        "y": 720,
+        "scale": 0.8
+      },
+      {
+        "y": 940,
+        "scale": 0.94
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 724,
+      "y": 650,
+      "facing": "north"
+    },
+    "from-south": {
+      "x": 724,
+      "y": 800,
+      "facing": "north"
+    },
+    "from-blight-cave": {
+      "x": 724,
+      "y": 455,
+      "facing": "south"
+    }
+  },
+  "walkable": [
+    {
+      "id": "central-dry-floor",
+      "points": [
+        [
+          118,
+          302
+        ],
+        [
+          1330,
+          302
+        ],
+        [
+          1390,
+          418
+        ],
+        [
+          1390,
+          918
+        ],
+        [
+          1318,
+          974
+        ],
+        [
+          130,
+          974
+        ],
+        [
+          58,
+          918
+        ],
+        [
+          58,
+          418
+        ]
+      ]
+    },
+    {
+      "id": "south-approach",
+      "points": [
+        [
+          438,
+          742
+        ],
+        [
+          1010,
+          742
+        ],
+        [
+          1038,
+          1084
+        ],
+        [
+          410,
+          1084
+        ]
+      ]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "south-tunnel",
+      "label": "South tunnel to Sewer Area 11",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-11",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-tunnel"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [
+        [
+          500,
+          872
+        ],
+        [
+          948,
+          872
+        ],
+        [
+          992,
+          1062
+        ],
+        [
+          456,
+          1062
+        ]
+      ]
+    }
+  ],
+  "portals": [
+    {
+      "id": "blight-cave-ladder",
+      "label": "Climb through the cave near Ms. Blight's",
+      "status": "active",
+      "activation": "interact",
+      "target": {
+        "areaId": "briarwell-blight-orphanage",
+        "spawnId": "cave-return",
+        "returnTransitionId": "sewer-cave"
+      },
+      "fallbackSpawn": "from-blight-cave",
+      "points": [
+        [
+          542,
+          94
+        ],
+        [
+          906,
+          94
+        ],
+        [
+          944,
+          430
+        ],
+        [
+          504,
+          430
+        ]
+      ],
+      "interactionTarget": {
+        "x": 724,
+        "y": 430
+      },
+      "radius": 175
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "foreground-masonry",
+      "depthY": 1000,
+      "points": [
+        [
+          0,
+          974
+        ],
+        [
+          1448,
+          974
+        ],
+        [
+          1448,
+          1086
+        ],
+        [
+          0,
+          1086
+        ]
+      ]
+    }
+  ],
+  "interactables": [],
+  "npcs": []
+}

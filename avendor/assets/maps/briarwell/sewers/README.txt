@@ -1,45 +1,66 @@
-BRIARWELL - SEWERS
-==================
+BRIARWELL - SEWERS 1.0
+======================
 
-PROVISIONAL FOUNDATION
-----------------------
-- This single-screen hub is a temporary playable scaffold, not the final sewer
-  design. Briarwell's actual sewer network will be more complicated and may use
-  multiple rooms, junctions or screens.
-- The four approved access contracts remain stable: Town Center well, Library
-  Quarter cliff alley, Ainsley's alley and the dockside culvert.
-- Current art and geometry exist to exercise those anchors safely while the final
-  sewer layout is designed; they may be replaced wholesale later.
+CANONICAL NETWORK
+-----------------
+The provisional single-screen hub has been replaced by Jay's canonical sewer
+plan: Sewer Areas 1 through 15 plus one hidden ancient dwarven chamber.
 
-RUNTIME BASE ART
-----------------
-background/briarwell-sewers-v2.png
-Reference size: 1448 x 1086 pixels.
+Surface access:
+- Area 1: Town Center well.
+- Area 4: alley beside Ainsley's.
+- Area 7: dockside culvert and ladder.
+- Area 14: cave near Ms. Blight's property.
+
+Special rooms:
+- Area 1 contains the spring-fed municipal well cistern. Clear running water
+  enters a raised reservoir used by the well bucket. An intact masonry divider
+  and one-way overflow keep the lower sewer water physically separate.
+- Area 5 hides the southern dwarven door behind a Perception test.
+- Area 15 contains ten kobolds, including a wizard and champion.
+- The dwarven chamber contains a wall-mounted two-handed battle axe and a chest
+  reserved for chainmail armour, 350 silver and 20 gold.
+
+RUNTIME ART
+-----------
+All production backgrounds are in background/ and render at 1448 x 1086.
+Several ordinary corridor rooms deliberately share a matching topology template;
+surface-access rooms, the kobold lair, Area 1 and the secret chamber use unique art.
+
+The former background/briarwell-sewers-v2.png remains as an unused historical
+reference for the provisional hub. It is not loaded by the runtime.
 
 GAMEPLAY DATA
 -------------
-../../../../data/maps/briarwell-sewers.json
-../../../../data/maps/briarwell-area-registry.json
+../../../../data/maps/briarwell-sewer-01.json
+through
+../../../../data/maps/briarwell-sewer-15.json
+../../../../data/maps/briarwell-sewer-secret.json
 
-The provisional sewer hub has functional v1 art and geometry but exposes no
-automatic portal. Each ladder remains an interactable clue until the matching
-surface feature is opened by future discovery/state logic. This prevents a sealed
-grate or well from becoming a normal map-edge transition while leaving the final
-network free to become substantially more complex.
+The generated JSON source is:
+../../../../data/maps/build-briarwell-sewers.mjs
 
-GEOMETRY RULES
---------------
-- The broad dry-stone floor remains connected between all four access landmarks.
-- Water channels, shaft walls, culvert masonry and the south wall remain solid.
-- All four authored arrival spawns sit on dry visible ground outside collision.
-- No walkable polygon touches an image edge or implies an extra sewer route.
+Run from the repository root with:
+node avendor/data/maps/build-briarwell-sewers.mjs
+
+The area registry owns every reciprocal tunnel and surface connection. Gameplay
+geometry remains separate from the painted art.
+
+INTERACTION CONTRACT
+--------------------
+- Ordinary sewer tunnels transition automatically at their authored edge.
+- Surface ladders, grates, caves and the Town Center well require E or Space.
+- Area 5's hidden dwarven door rolls 1d10 + Perception against 12. Discovery is
+  stored in avendorDiscoveries.v1 and the player presses E again to enter.
+- Treasure and the kobold party are inspectable, but inventory and combat handoff
+  remain reserved for their dedicated systems.
 
 PRODUCTION CHECKLIST
 --------------------
-[x] Provisional runtime background at 1448 x 1086.
-[x] Runtime map JSON with four safe arrival anchors.
-[x] Initial collision, occlusion and interaction pass.
-[x] Automated geometry and registry tests.
-[ ] Surface-feature discovery and two-way traversal logic.
-[ ] Replace the single-screen scaffold with Jay's full sewer design.
-[ ] Playwright hidden-route screenshots from Areas 1, 4, 7 and 9.
+[x] Areas 1-15 and secret chamber registered as separate playable maps.
+[x] Complete reciprocal topology.
+[x] Four two-way surface access routes.
+[x] Clean spring-fed well art and collision separation.
+[x] Perception-gated dwarven chamber.
+[x] Kobold lair and exact treasure record.
+[x] Direct-entry URLs and automated topology/runtime checks.

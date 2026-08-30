@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-ainsley-church",
   "title": "Briarwell - Ainsley's and the Church",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": {
     "width": 1448,
     "height": 1086
@@ -31,7 +31,7 @@
     "from-east": { "x": 1320, "y": 600, "facing": "west" },
     "ainsley-return": { "x": 620, "y": 650, "facing": "north" },
     "church-return": { "x": 1000, "y": 650, "facing": "north" },
-    "grate-return": { "x": 210, "y": 760, "facing": "north" }
+    "grate-return": { "x": 255, "y": 730, "facing": "north" }
   },
   "walkable": [
     {
@@ -133,7 +133,23 @@
       "points": [[1370, 430], [1442, 390], [1442, 674], [1370, 698]]
     }
   ],
-  "portals": [],
+  "portals": [
+    {
+      "id": "sewer-grate",
+      "label": "Open the grate beside Ainsley's",
+      "status": "active",
+      "activation": "interact",
+      "target": {
+        "areaId": "briarwell-sewer-04",
+        "spawnId": "from-ainsley-alley",
+        "returnTransitionId": "ainsley-alley-ladder"
+      },
+      "fallbackSpawn": "grate-return",
+      "points": [[122, 650], [286, 650], [310, 810], [104, 810]],
+      "interactionTarget": { "x": 210, "y": 760 },
+      "radius": 88
+    }
+  ],
   "depthOccluders": [
     {
       "id": "ainsley-house-front",
@@ -178,8 +194,7 @@
   ],
   "interactables": [
     { "id": "ainsley-house", "label": "Ainsley's House for Unwanted Children", "x": 620, "y": 650, "radius": 104 },
-    { "id": "briarwell-church", "label": "Briarwell church", "x": 1000, "y": 650, "radius": 104 },
-    { "id": "ainsley-sewer-grate", "label": "Iron alley grate", "x": 210, "y": 760, "radius": 78, "state": "sewer-sealed" }
+    { "id": "briarwell-church", "label": "Briarwell church", "x": 1000, "y": 650, "radius": 104 }
   ],
   "npcs": []
 }

@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-blight-orphanage",
   "title": "Briarwell - Ms. Blight's Orphanage",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
     "background": "assets/maps/briarwell/blight-orphanage/background/briarwell-blight-orphanage-v1.png",
@@ -21,7 +21,8 @@
     "default": { "x": 720, "y": 650, "facing": "north" },
     "from-alley-window": { "x": 1180, "y": 620, "facing": "west" },
     "orphanage-return": { "x": 870, "y": 585, "facing": "north" },
-    "barn-return": { "x": 420, "y": 555, "facing": "north" }
+    "barn-return": { "x": 420, "y": 555, "facing": "north" },
+    "cave-return": { "x": 1160, "y": 680, "facing": "east" }
   },
   "walkable": [
     {
@@ -82,7 +83,23 @@
     }
   ],
   "exits": [],
-  "portals": [],
+  "portals": [
+    {
+      "id": "sewer-cave",
+      "label": "Enter the cave beside Ms. Blight's",
+      "status": "active",
+      "activation": "interact",
+      "target": {
+        "areaId": "briarwell-sewer-14",
+        "spawnId": "from-blight-cave",
+        "returnTransitionId": "blight-cave-ladder"
+      },
+      "fallbackSpawn": "cave-return",
+      "points": [[1160, 570], [1330, 548], [1350, 724], [1160, 742]],
+      "interactionTarget": { "x": 1245, "y": 660 },
+      "radius": 125
+    }
+  ],
   "depthOccluders": [
     {
       "id": "barn-front",

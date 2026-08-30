@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-sewer-07",
+  "title": "Briarwell Sewers - Area 7",
+  "version": "1.0.0",
+  "sewerAreaNumber": 7,
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/sewers/background/sewer-area-07-v1.png",
+    "alt": "Sewer Area 7 with north and west tunnels and a stone stair and ladder rising to the docks"
+  },
+  "movement": {
+    "speedX": 265,
+    "speedY": 198,
+    "footRadiusX": 12,
+    "footRadiusY": 8,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 260,
+        "scale": 0.5
+      },
+      {
+        "y": 480,
+        "scale": 0.64
+      },
+      {
+        "y": 720,
+        "scale": 0.8
+      },
+      {
+        "y": 940,
+        "scale": 0.94
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 724,
+      "y": 650,
+      "facing": "north"
+    },
+    "from-north": {
+      "x": 724,
+      "y": 410,
+      "facing": "south"
+    },
+    "from-west": {
+      "x": 353,
+      "y": 650,
+      "facing": "east"
+    },
+    "from-docks": {
+      "x": 724,
+      "y": 800,
+      "facing": "north"
+    }
+  },
+  "walkable": [
+    {
+      "id": "central-dry-floor",
+      "points": [
+        [
+          118,
+          302
+        ],
+        [
+          1330,
+          302
+        ],
+        [
+          1390,
+          418
+        ],
+        [
+          1390,
+          918
+        ],
+        [
+          1318,
+          974
+        ],
+        [
+          130,
+          974
+        ],
+        [
+          58,
+          918
+        ],
+        [
+          58,
+          418
+        ]
+      ]
+    },
+    {
+      "id": "north-approach",
+      "points": [
+        [
+          538,
+          180
+        ],
+        [
+          910,
+          180
+        ],
+        [
+          940,
+          430
+        ],
+        [
+          508,
+          430
+        ]
+      ]
+    },
+    {
+      "id": "west-approach",
+      "points": [
+        [
+          2,
+          336
+        ],
+        [
+          398,
+          336
+        ],
+        [
+          398,
+          870
+        ],
+        [
+          2,
+          870
+        ]
+      ]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-tunnel",
+      "label": "North tunnel to Sewer Area 8",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-08",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-tunnel"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [
+        [
+          568,
+          220
+        ],
+        [
+          880,
+          220
+        ],
+        [
+          914,
+          348
+        ],
+        [
+          534,
+          348
+        ]
+      ]
+    },
+    {
+      "id": "west-tunnel",
+      "label": "West tunnel to Sewer Area 6",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-06",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-tunnel"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [
+        [
+          16,
+          424
+        ],
+        [
+          262,
+          424
+        ],
+        [
+          262,
+          812
+        ],
+        [
+          16,
+          812
+        ]
+      ]
+    }
+  ],
+  "portals": [
+    {
+      "id": "docks-ladder",
+      "label": "Climb to the Briarwell docks",
+      "status": "active",
+      "activation": "interact",
+      "target": {
+        "areaId": "briarwell-docks",
+        "spawnId": "sewer-return",
+        "returnTransitionId": "sewer-access"
+      },
+      "fallbackSpawn": "from-docks",
+      "points": [
+        [
+          520,
+          770
+        ],
+        [
+          928,
+          770
+        ],
+        [
+          982,
+          1080
+        ],
+        [
+          466,
+          1080
+        ]
+      ],
+      "interactionTarget": {
+        "x": 724,
+        "y": 820
+      },
+      "radius": 180
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "foreground-masonry",
+      "depthY": 1000,
+      "points": [
+        [
+          0,
+          974
+        ],
+        [
+          1448,
+          974
+        ],
+        [
+          1448,
+          1086
+        ],
+        [
+          0,
+          1086
+        ]
+      ]
+    }
+  ],
+  "interactables": [],
+  "npcs": []
+}

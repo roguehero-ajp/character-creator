@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-sewer-01",
+  "title": "Briarwell Sewers - Area 1",
+  "version": "1.0.0",
+  "sewerAreaNumber": 1,
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/sewers/background/sewer-area-01-v1.png",
+    "alt": "Spring-fed Sewer Area 1 beneath the Town Center well, with a raised clear-water cistern separated from the lower sewer channels"
+  },
+  "movement": {
+    "speedX": 265,
+    "speedY": 198,
+    "footRadiusX": 12,
+    "footRadiusY": 8,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 260,
+        "scale": 0.5
+      },
+      {
+        "y": 480,
+        "scale": 0.64
+      },
+      {
+        "y": 720,
+        "scale": 0.8
+      },
+      {
+        "y": 940,
+        "scale": 0.94
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 724,
+      "y": 650,
+      "facing": "north"
+    },
+    "from-north": {
+      "x": 724,
+      "y": 410,
+      "facing": "south"
+    },
+    "from-east": {
+      "x": 1095,
+      "y": 650,
+      "facing": "west"
+    },
+    "from-west": {
+      "x": 353,
+      "y": 650,
+      "facing": "east"
+    },
+    "from-town-center-well": {
+      "x": 600,
+      "y": 455,
+      "facing": "southeast"
+    }
+  },
+  "walkable": [
+    {
+      "id": "central-dry-floor",
+      "points": [
+        [
+          118,
+          302
+        ],
+        [
+          1330,
+          302
+        ],
+        [
+          1390,
+          418
+        ],
+        [
+          1390,
+          918
+        ],
+        [
+          1318,
+          974
+        ],
+        [
+          130,
+          974
+        ],
+        [
+          58,
+          918
+        ],
+        [
+          58,
+          418
+        ]
+      ]
+    },
+    {
+      "id": "north-approach",
+      "points": [
+        [
+          538,
+          180
+        ],
+        [
+          910,
+          180
+        ],
+        [
+          940,
+          430
+        ],
+        [
+          508,
+          430
+        ]
+      ]
+    },
+    {
+      "id": "east-approach",
+      "points": [
+        [
+          1050,
+          336
+        ],
+        [
+          1446,
+          336
+        ],
+        [
+          1446,
+          870
+        ],
+        [
+          1050,
+          870
+        ]
+      ]
+    },
+    {
+      "id": "west-approach",
+      "points": [
+        [
+          2,
+          336
+        ],
+        [
+          398,
+          336
+        ],
+        [
+          398,
+          870
+        ],
+        [
+          2,
+          870
+        ]
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "raised-clean-water-cistern",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          620,
+          0
+        ],
+        [
+          654,
+          286
+        ],
+        [
+          610,
+          382
+        ],
+        [
+          532,
+          442
+        ],
+        [
+          0,
+          442
+        ]
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "north-tunnel",
+      "label": "North tunnel to Sewer Area 13",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-13",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-tunnel"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [
+        [
+          568,
+          220
+        ],
+        [
+          880,
+          220
+        ],
+        [
+          914,
+          348
+        ],
+        [
+          534,
+          348
+        ]
+      ]
+    },
+    {
+      "id": "east-tunnel",
+      "label": "East tunnel to Sewer Area 10",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-10",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-tunnel"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [
+        [
+          1186,
+          424
+        ],
+        [
+          1432,
+          424
+        ],
+        [
+          1432,
+          812
+        ],
+        [
+          1186,
+          812
+        ]
+      ]
+    },
+    {
+      "id": "west-tunnel",
+      "label": "West tunnel to Sewer Area 2",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-02",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-tunnel"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [
+        [
+          16,
+          424
+        ],
+        [
+          262,
+          424
+        ],
+        [
+          262,
+          812
+        ],
+        [
+          16,
+          812
+        ]
+      ]
+    }
+  ],
+  "portals": [
+    {
+      "id": "town-center-well-ladder",
+      "label": "Climb to the Town Center well",
+      "status": "active",
+      "activation": "interact",
+      "target": {
+        "areaId": "briarwell-town-center",
+        "spawnId": "well-return",
+        "returnTransitionId": "well-sewer-access"
+      },
+      "fallbackSpawn": "from-town-center-well",
+      "points": [
+        [
+          318,
+          220
+        ],
+        [
+          500,
+          220
+        ],
+        [
+          552,
+          430
+        ],
+        [
+          390,
+          470
+        ]
+      ],
+      "interactionTarget": {
+        "x": 545,
+        "y": 430
+      },
+      "radius": 155
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "foreground-masonry",
+      "depthY": 1000,
+      "points": [
+        [
+          0,
+          974
+        ],
+        [
+          1448,
+          974
+        ],
+        [
+          1448,
+          1086
+        ],
+        [
+          0,
+          1086
+        ]
+      ]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "clean-spring-cistern",
+      "label": "Spring-fed well cistern",
+      "x": 500,
+      "y": 375,
+      "radius": 118,
+      "interactionText": "Clear spring water fills the raised well cistern. Its overflow falls one-way into the lower sewer channel, safely beyond the masonry divider."
+    }
+  ],
+  "npcs": []
+}

@@ -282,7 +282,9 @@
 
     getTriggerAt(position) {
       const point = [position.x, position.y];
-      const portal = this.portals.find((candidate) => pointInPolygon(point, candidate.points));
+      const portal = this.portals.find((candidate) => (
+        candidate.activation !== 'interact' && pointInPolygon(point, candidate.points)
+      ));
       if (portal) return { ...portal, type: 'portal' };
 
       const exit = this.exits.find((candidate) => pointInPolygon(point, candidate.points));
@@ -290,6 +292,13 @@
     }
 
     getNearbyInteractable(position) {
+      const transitionPortals = this.portals
+        .filter((candidate) => candidate.activation === 'interact')
+        .map((candidate) => ({
+          ...candidate,
+          type: 'transition',
+          interactionTarget: candidate.interactionTarget || candidate
+        }));
       const features = this.interactables.map((candidate) => ({
         ...candidate,
         type: 'feature'
@@ -304,7 +313,7 @@
         }
       }));
 
-      return [...features, ...npcs]
+      return [...transitionPortals, ...features, ...npcs]
         .map((candidate) => ({
           ...candidate,
           distance: distance(position, candidate.interactionTarget || candidate)

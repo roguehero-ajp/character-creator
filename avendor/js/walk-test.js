@@ -2,6 +2,7 @@
   'use strict';
 
   const REGISTRY_URL = 'data/maps/briarwell-area-registry.json';
+  const DISCOVERY_STORAGE_KEY = 'avendorDiscoveries.v1';
   const DEFAULT_HELP = 'WASD or arrow keys to walk. E or Space interacts with nearby people and features. F2 shows the authored map geometry.';
   const TRANSITION_FADE_MS = 180;
 
@@ -75,6 +76,56 @@
     noticeTimer = window.setTimeout(() => {
       help.textContent = DEFAULT_HELP;
     }, duration);
+  }
+
+  function readDiscoveries() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(DISCOVERY_STORAGE_KEY) || '[]');
+      return new Set(Array.isArray(stored) ? stored : []);
+    } catch (_) {
+      return new Set();
+    }
+  }
+
+  function isDiscovered(discoveryId) {
+    return Boolean(discoveryId && readDiscoveries().has(discoveryId));
+  }
+
+  function rememberDiscovery(discoveryId) {
+    if (!discoveryId) return;
+    const discoveries = readDiscoveries();
+    discoveries.add(discoveryId);
+    localStorage.setItem(DISCOVERY_STORAGE_KEY, JSON.stringify([...discoveries].sort()));
+  }
+
+  function randomInt(minimum, maximum) {
+    const range = maximum - minimum + 1;
+    if (window.crypto?.getRandomValues) {
+      const bucket = new Uint32Array(1);
+      window.crypto.getRandomValues(bucket);
+      return minimum + (bucket[0] % range);
+    }
+    return minimum + Math.floor(Math.random() * range);
+  }
+
+  function runTransitionCheck(transition) {
+    const check = transition.check;
+    if (!check || isDiscovered(check.discoveryId)) return true;
+    if (check.type !== 'stat') return false;
+
+    const state = window.AvendorPlayerState?.load?.();
+    const statValue = Number(state?.stats?.[check.stat]) || 5;
+    const roll = randomInt(1, 10);
+    const total = statValue + roll;
+    if (total >= check.target) {
+      rememberDiscovery(check.discoveryId);
+      setNotice(`${check.successText} Perception test: ${total}/${check.target}.`, 4200);
+      updateInteractionPrompt();
+      return false;
+    }
+
+    setNotice(`${check.failureText} Perception test: ${total}/${check.target}.`, 3600);
+    return false;
   }
 
   function directionFromVector(dx, dy) {
@@ -151,7 +202,10 @@
     }
 
     if (nearby.id !== nearbyId) {
-      const verb = nearby.type === 'npc' ? 'Talk to' : 'Inspect';
+      let verb = nearby.type === 'npc' ? 'Talk to' : 'Inspect';
+      if (nearby.type === 'transition') {
+        verb = nearby.check && !isDiscovered(nearby.check.discoveryId) ? 'Inspect' : 'Use';
+      }
       prompt.textContent = `E  ${verb} ${nearby.label}`;
       nearbyId = nearby.id;
     }
@@ -172,6 +226,12 @@
       return;
     }
 
+    if (nearby.type === 'transition') {
+      if (!runTransitionCheck(nearby)) return;
+      void handleTrigger(nearby);
+      return;
+    }
+
     const developmentNotes = {
       'town-well': 'Town well interaction registered. The future sewer entrance is sealed in this map state.',
       'direction-signpost': 'Road sign interaction registered: Northgate, Stonefield, Elderwood and Riverrun.',
@@ -179,7 +239,11 @@
       'lodestone-tavern-sign': 'Lodestone Tavern interaction anchor registered.',
       'general-store-front': 'General Store interaction anchor registered.'
     };
-    setNotice(developmentNotes[nearby.id] || `${nearby.label} interaction registered.`);
+    setNotice(
+      nearby.interactionText
+      || developmentNotes[nearby.id]
+      || `${nearby.label} interaction registered.`
+    );
   }
 
   function triggerConfusion(message) {
