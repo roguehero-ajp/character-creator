@@ -4,8 +4,8 @@
   const FRAME_W = 128;
   const FRAME_H = 240;
   const FLOOR_Y = 226;
-  const LAB_VERSION = '0.1.0';
-  const WALK_POSE_MS = 110;
+  const LAB_VERSION = '0.2.0';
+  const BASE_WALK_POSE_MS = 110;
 
   const canvas = document.getElementById('hero-animation-canvas');
   const ctx = canvas?.getContext('2d');
@@ -21,6 +21,11 @@
   const resetPoseButton = document.getElementById('lab-reset-pose');
   const resetAllButton = document.getElementById('lab-reset-all');
   const copyButton = document.getElementById('lab-copy');
+  const viewModeButtons = [...document.querySelectorAll('[data-view-mode]')];
+  const bodyOpacityInput = document.getElementById('lab-body-opacity');
+  const bodyOpacityValue = document.getElementById('lab-body-opacity-value');
+  const speedInput = document.getElementById('lab-speed');
+  const speedValue = document.getElementById('lab-speed-value');
 
   if (!canvas || !ctx || !poseStrip || !sliderGrid || !measurementGrid || !output) return;
 
@@ -35,6 +40,23 @@
     thigh: 52,
     shin: 50,
     foot: 24
+  });
+
+  const BODY_PALETTE = Object.freeze({
+    outline: '#171617',
+    hair: '#4a3025',
+    hairShadow: '#322018',
+    skin: '#c68e63',
+    skinShadow: '#9d6949',
+    shirt: '#d8c8a8',
+    shirtShadow: '#a99a80',
+    tunic: '#7c4930',
+    tunicShadow: '#563224',
+    trousers: '#454b50',
+    trousersShadow: '#30353a',
+    boot: '#30251f',
+    bootShadow: '#1e1916',
+    belt: '#3b271d'
   });
 
   const POSE_ORDER = Object.freeze([
@@ -130,6 +152,9 @@
   let selectedPoseId = 'idle';
   let playing = false;
   let lastPlaybackAt = performance.now();
+  let viewMode = 'both';
+  let bodyOpacity = 0.90;
+  let speedPercent = 100;
   const sliderRecords = new Map();
 
   function radians(degrees) {
@@ -202,7 +227,7 @@
     ctx.stroke();
   }
 
-  function joint(point, radius, fill, alpha = 1) {
+  function joint(point, radius, fill, alpha = ctx.globalAlpha) {
     ctx.save();
     ctx.globalAlpha = alpha;
     ctx.beginPath();
@@ -213,6 +238,124 @@
     ctx.strokeStyle = '#081014';
     ctx.stroke();
     ctx.restore();
+  }
+
+  function fillPolygon(points, fill, stroke = BODY_PALETTE.outline, lineWidth = 1.5) {
+    ctx.beginPath();
+    points.forEach((point, index) => {
+      if (index === 0) ctx.moveTo(point.x, point.y);
+      else ctx.lineTo(point.x, point.y);
+    });
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+    if (stroke) {
+      ctx.lineWidth = lineWidth;
+      ctx.strokeStyle = stroke;
+      ctx.stroke();
+    }
+  }
+
+  function drawBody(pose, options = {}) {
+    const points = buildSkeleton(pose);
+    const ghost = Boolean(options.ghost);
+    const alpha = options.alpha ?? bodyOpacity;
+    const palette = ghost
+      ? {
+          outline: 'rgba(118,220,237,.38)', hair: 'rgba(94,180,194,.22)', hairShadow: 'rgba(94,180,194,.16)',
+          skin: 'rgba(126,219,235,.24)', skinShadow: 'rgba(126,219,235,.17)', shirt: 'rgba(126,219,235,.18)',
+          shirtShadow: 'rgba(126,219,235,.13)', tunic: 'rgba(126,219,235,.20)', tunicShadow: 'rgba(126,219,235,.14)',
+          trousers: 'rgba(126,219,235,.17)', trousersShadow: 'rgba(126,219,235,.12)', boot: 'rgba(126,219,235,.15)',
+          bootShadow: 'rgba(126,219,235,.10)', belt: 'rgba(126,219,235,.18)'
+        }
+      : BODY_PALETTE;
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+
+    line(points.farHip, points.farKnee, 12, palette.trousersShadow);
+    line(points.farKnee, points.farAnkle, 10, palette.trousersShadow);
+    line(points.farAnkle, points.farToe, 8, palette.bootShadow);
+    line(points.farShoulder, points.farElbow, 10, palette.shirtShadow);
+    line(points.farElbow, points.farWrist, 8, palette.skinShadow);
+    joint(points.farWrist, 4.3, palette.skinShadow);
+
+    const torsoTopY = points.shoulder.y - 8;
+    const torsoBottomY = points.pelvis.y + 14;
+    fillPolygon([
+      { x: points.shoulder.x - 10, y: torsoTopY },
+      { x: points.shoulder.x + 11, y: torsoTopY + 1 },
+      { x: points.pelvis.x + 12, y: torsoBottomY },
+      { x: points.pelvis.x - 10, y: torsoBottomY - 1 }
+    ], palette.tunic, palette.outline, 1.3);
+
+    ctx.fillStyle = palette.belt;
+    ctx.fillRect(points.pelvis.x - 10, points.pelvis.y + 5, 22, 4);
+
+    line(points.nearHip, points.nearKnee, 14, palette.trousers);
+    line(points.nearKnee, points.nearAnkle, 12, palette.trousers);
+    line(points.nearAnkle, points.nearToe, 10, palette.boot);
+    line(points.nearShoulder, points.nearElbow, 12, palette.shirt);
+    line(points.nearElbow, points.nearWrist, 9, palette.skin);
+    joint(points.nearWrist, 4.6, palette.skin);
+
+    line(points.shoulder, points.neck, 7, palette.skinShadow);
+
+    ctx.beginPath();
+    ctx.ellipse(
+      points.head.x,
+      points.head.y,
+      MEASUREMENTS.headRadius * .80,
+      MEASUREMENTS.headRadius * 1.02,
+      0,
+      0,
+      Math.PI * 2
+    );
+    ctx.fillStyle = palette.skin;
+    ctx.fill();
+    ctx.lineWidth = 1.4;
+    ctx.strokeStyle = palette.outline;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.ellipse(
+      points.head.x - 3,
+      points.head.y - 7,
+      MEASUREMENTS.headRadius * .76,
+      MEASUREMENTS.headRadius * .62,
+      -0.12,
+      Math.PI,
+      Math.PI * 2
+    );
+    ctx.lineTo(points.head.x - 12, points.head.y + 3);
+    ctx.quadraticCurveTo(points.head.x - 7, points.head.y - 2, points.head.x - 1, points.head.y - 1);
+    ctx.fillStyle = palette.hair;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(points.head.x + 10, points.head.y - 2);
+    ctx.lineTo(points.head.x + 17, points.head.y + 1);
+    ctx.lineTo(points.head.x + 10, points.head.y + 4);
+    ctx.closePath();
+    ctx.fillStyle = palette.skin;
+    ctx.fill();
+    ctx.strokeStyle = palette.outline;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    if (!ghost) {
+      ctx.fillStyle = '#1b1512';
+      ctx.fillRect(Math.round(points.head.x + 8), Math.round(points.head.y - 4), 2, 2);
+      ctx.strokeStyle = palette.hairShadow;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(points.head.x - 11, points.head.y + 1);
+      ctx.quadraticCurveTo(points.head.x - 7, points.head.y + 7, points.head.x - 3, points.head.y + 8);
+      ctx.stroke();
+    }
+
+    ctx.restore();
+    return points;
   }
 
   function drawRig(pose, options = {}) {
@@ -274,6 +417,10 @@
     return index === 1 ? 'walk8' : POSE_ORDER[index - 1];
   }
 
+  function currentPlaybackPoseMs() {
+    return Math.max(40, BASE_WALK_POSE_MS * (100 / speedPercent));
+  }
+
   function draw() {
     ctx.clearRect(0, 0, FRAME_W, FRAME_H);
 
@@ -295,8 +442,15 @@
     ctx.restore();
 
     const previous = previousPoseId();
-    if (onionToggle.checked && previous) drawRig(poses[previous], { ghost: true, alpha: .42 });
-    const points = drawRig(poses[selectedPoseId]);
+    if (onionToggle.checked && previous) {
+      if (viewMode !== 'skeleton') drawBody(poses[previous], { ghost: true, alpha: bodyOpacity * .30 });
+      if (viewMode !== 'body') drawRig(poses[previous], { ghost: true, alpha: .34 });
+    }
+
+    let points;
+    if (viewMode !== 'skeleton') points = drawBody(poses[selectedPoseId], { alpha: bodyOpacity });
+    if (viewMode !== 'body') points = drawRig(poses[selectedPoseId]);
+    if (!points) points = buildSkeleton(poses[selectedPoseId]);
 
     const footMarkers = [
       ['N', points.nearAnkle],
@@ -317,7 +471,13 @@
       body: 'male',
       frameSize: { width: FRAME_W, height: FRAME_H },
       floorY: FLOOR_Y,
-      walkPoseMs: WALK_POSE_MS,
+      baseWalkPoseMs: BASE_WALK_POSE_MS,
+      preview: {
+        viewMode,
+        bodyOpacity: Number(bodyOpacity.toFixed(2)),
+        speedPercent,
+        poseMs: Math.round(currentPlaybackPoseMs())
+      },
       measurements: { ...MEASUREMENTS },
       poseOrder: [...POSE_ORDER],
       poses
@@ -418,8 +578,9 @@
   function syncSliders() {
     const pose = poses[selectedPoseId];
     sliderRecords.forEach(({ input, value, unit }, key) => {
-      input.value = String(pose[key]);
-      value.textContent = `${pose[key]}${unit}`;
+      const resolved = Number.isFinite(pose[key]) ? pose[key] : DEFAULT_POSES[selectedPoseId][key];
+      input.value = String(resolved);
+      value.textContent = `${resolved}${unit}`;
     });
   }
 
@@ -429,7 +590,7 @@
     syncSliders();
     draw();
     refreshOutput();
-    setStatus(`${POSE_LABELS[selectedPoseId]} reset to the canonical 0.1 pose.`);
+    setStatus(`${POSE_LABELS[selectedPoseId]} reset to the canonical 0.2 pose.`);
   }
 
   function resetAll() {
@@ -438,7 +599,7 @@
     syncSliders();
     draw();
     refreshOutput();
-    setStatus('All nine poses reset to the canonical 0.1 cycle.');
+    setStatus('All nine poses reset to the canonical 0.2 cycle.');
   }
 
   async function copyJson() {
@@ -455,6 +616,36 @@
     }
   }
 
+  function setViewMode(nextMode) {
+    if (!['body', 'both', 'skeleton'].includes(nextMode)) nextMode = 'both';
+    viewMode = nextMode;
+    viewModeButtons.forEach((button) => {
+      const selected = button.dataset.viewMode === viewMode;
+      button.classList.toggle('selected', selected);
+      button.setAttribute('aria-pressed', String(selected));
+    });
+    draw();
+    refreshOutput();
+    setStatus(`Preview mode: ${viewMode === 'both' ? 'body + rig' : viewMode}.`);
+  }
+
+  function syncBodyOpacity() {
+    const percent = Math.max(25, Math.min(100, Number(bodyOpacityInput?.value || 90)));
+    bodyOpacity = percent / 100;
+    if (bodyOpacityValue) bodyOpacityValue.textContent = `${percent}%`;
+    draw();
+    refreshOutput();
+  }
+
+  function syncPlaybackSpeed() {
+    speedPercent = Math.max(20, Math.min(200, Number(speedInput?.value || 100)));
+    const poseMs = Math.round(currentPlaybackPoseMs());
+    if (speedValue) speedValue.textContent = `${speedPercent}% · ${poseMs} ms/frame`;
+    lastPlaybackAt = performance.now();
+    refreshOutput();
+    if (playing) setStatus(`Playing east walk at ${speedPercent}% speed · ${poseMs} ms per pose.`);
+  }
+
   function togglePlayback() {
     playing = !playing;
     playButton.setAttribute('aria-pressed', String(playing));
@@ -462,18 +653,20 @@
     if (playing) {
       if (selectedPoseId === 'idle') selectPose('walk1', { fromPlayback: true });
       lastPlaybackAt = performance.now();
-      setStatus('Playing east walk cycle at 110 ms per pose.');
+      const poseMs = Math.round(currentPlaybackPoseMs());
+      setStatus(`Playing east walk at ${speedPercent}% speed · ${poseMs} ms per pose.`);
     }
   }
 
   function playbackTick(now) {
-    if (playing && now - lastPlaybackAt >= WALK_POSE_MS) {
+    const poseMs = currentPlaybackPoseMs();
+    if (playing && now - lastPlaybackAt >= poseMs) {
       const elapsed = now - lastPlaybackAt;
-      const steps = Math.max(1, Math.floor(elapsed / WALK_POSE_MS));
+      const steps = Math.max(1, Math.floor(elapsed / poseMs));
       const currentWalkIndex = Math.max(0, POSE_ORDER.indexOf(selectedPoseId) - 1);
       const nextWalkIndex = (currentWalkIndex + steps) % 8;
       selectPose(`walk${nextWalkIndex + 1}`, { fromPlayback: true });
-      lastPlaybackAt += steps * WALK_POSE_MS;
+      lastPlaybackAt += steps * poseMs;
     }
     requestAnimationFrame(playbackTick);
   }
@@ -485,6 +678,9 @@
   resetPoseButton.addEventListener('click', resetPose);
   resetAllButton.addEventListener('click', resetAll);
   copyButton.addEventListener('click', copyJson);
+  viewModeButtons.forEach((button) => button.addEventListener('click', () => setViewMode(button.dataset.viewMode)));
+  bodyOpacityInput?.addEventListener('input', syncBodyOpacity);
+  speedInput?.addEventListener('input', syncPlaybackSpeed);
 
   window.addEventListener('keydown', (event) => {
     if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
@@ -503,6 +699,8 @@
   buildPoseStrip();
   buildMeasurements();
   buildSliders();
+  syncBodyOpacity();
+  syncPlaybackSpeed();
   selectPose('idle');
   refreshOutput();
   requestAnimationFrame(playbackTick);
@@ -513,6 +711,7 @@
     getPoses: () => JSON.parse(JSON.stringify(poses)),
     exportJson: serialise,
     selectPose,
+    setViewMode,
     resetPose,
     resetAll
   });
