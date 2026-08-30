@@ -56,9 +56,11 @@ assert(tuning.includes('@keyframes avendor-lantern-flicker'), 'Docks lantern fla
 assert(tuning.includes('brightness(1.18)'), 'Docks lantern flicker no longer has a visible warm flare.');
 assert(tuning.includes('.dock-bird-layer'), 'Docks bird layer styles are missing.');
 assert(tuning.includes('z-index: 945'), 'Docks birds are no longer safely below playable hero depth.');
-assert(tuning.includes('width: 42px'), 'Docks birds have drifted back to an unreadably tiny silhouette.');
+assert(tuning.includes('width: 50px'), 'Docks birds have drifted back to an unreadably tiny silhouette.');
 assert(tuning.includes('border-top: 3px solid'), 'Docks bird wing silhouette is too faint to evaluate.');
-assert(tuning.includes('top: 16%') && tuning.includes('top: 22%'), 'Docks bird flight paths drifted out of the authored upper-scene band.');
+assert(tuning.includes('top: 9%') && tuning.includes('top: 13%'), 'Docks birds are no longer flying in the higher blue-sky band.');
+assert(tuning.includes('avendor-bird-flight-a 18.5s'), 'Primary Docks bird flight is no longer using the slower approved cadence.');
+assert(tuning.includes('avendor-bird-flight-b 22s'), 'Secondary Docks bird flight is no longer using the slower approved cadence.');
 assert(tuning.includes('[data-daypart="dusk"] .dock-bird { opacity: .66; }'), 'Docks birds are too faint in the default dusk test state.');
 assert(tuning.includes('.dock-bird-a') && tuning.includes('.dock-bird-b'), 'Docks does not style both ambient birds.');
 assert(tuning.includes('@media (prefers-reduced-motion: reduce)'), 'Docks ambience tuning does not respect reduced motion.');
@@ -73,4 +75,4 @@ assert(!ambientLife.includes('requestAnimationFrame('), 'Docks birds should not 
 assert(!source.includes('setInterval('), 'Environment animation should rely on browser animation timing, not unmanaged intervals.');
 assert(!source.includes('requestAnimationFrame('), 'Environment animation should not add a competing frame loop for decorative CSS effects.');
 
-console.log('Native environment animation, Docks bobbing, lantern flicker and visible bird ambience smoke checks passed.');
+console.log('Native environment animation, Docks bobbing, lantern flicker and higher slower bird ambience smoke checks passed.');
