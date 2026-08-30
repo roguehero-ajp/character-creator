@@ -1,12 +1,12 @@
 (() => {
   'use strict';
 
-  const VERSION = '0.4.0';
+  const VERSION = '0.5.0';
   const FRAME_W = 128;
   const FRAME_H = 240;
   const FLOOR_Y = 226;
   const CONTACT_TOLERANCE = 3;
-  const CANDIDATE_URL = 'data/hero-animation/male-east-west-candidate-0.1.json';
+  const CANDIDATE_URL = 'data/hero-animation/male-east-west-candidate-0.2.json';
 
   const lab = window.AvendorHeroAnimationLab;
   const sourceCanvas = document.getElementById('hero-animation-canvas');
@@ -28,6 +28,7 @@
   const transitionButton = document.getElementById('lab-test-transition');
   const seamButton = document.getElementById('lab-test-seam');
   const directionButtons = [...document.querySelectorAll('[data-validation-direction]')];
+  const bodyStyleButtons = [...document.querySelectorAll('[data-body-style]')];
   const candidateStatus = document.getElementById('lab-candidate-status');
   const nearFootCard = document.getElementById('lab-near-foot-card');
   const nearFootValue = document.getElementById('lab-near-foot-value');
@@ -115,7 +116,7 @@
     targetCtx.drawImage(sourceCanvas, 0, 0, FRAME_W, FRAME_H);
   }
 
-  function drawContactGuide(ctx, pose, mirrored = false) {
+  function drawContactGuide(targetCtx, pose, mirrored = false) {
     const feet = buildFeet(pose);
     const entries = [
       { ankle: feet.nearAnkle, toe: feet.nearToe, label: 'N' },
@@ -128,18 +129,18 @@
       const footX = (ankle.x + toe.x) / 2;
       const x = mirrored ? FRAME_W - footX : footX;
       const y = Math.min(FLOOR_Y, Math.max(ankle.y, toe.y));
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(x, y, 3.2, 0, Math.PI * 2);
-      ctx.fillStyle = planted ? '#9cffb1' : '#efc982';
-      ctx.fill();
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = 'rgba(5,9,12,.9)';
-      ctx.stroke();
-      ctx.font = '700 6px ui-monospace, Consolas, monospace';
-      ctx.fillStyle = planted ? '#baffc8' : '#f6d69a';
-      ctx.fillText(label, Math.max(2, Math.min(FRAME_W - 8, x + 4)), Math.max(8, y - 4));
-      ctx.restore();
+      targetCtx.save();
+      targetCtx.beginPath();
+      targetCtx.arc(x, y, 3.2, 0, Math.PI * 2);
+      targetCtx.fillStyle = planted ? '#9cffb1' : '#efc982';
+      targetCtx.fill();
+      targetCtx.lineWidth = 1;
+      targetCtx.strokeStyle = 'rgba(5,9,12,.9)';
+      targetCtx.stroke();
+      targetCtx.font = '700 6px ui-monospace, Consolas, monospace';
+      targetCtx.fillStyle = planted ? '#baffc8' : '#f6d69a';
+      targetCtx.fillText(label, Math.max(2, Math.min(FRAME_W - 8, x + 4)), Math.max(8, y - 4));
+      targetCtx.restore();
     });
   }
 
@@ -212,8 +213,8 @@
     candidate.poseOrder.forEach((poseId) => applyCandidatePose(poseId));
     lab.selectPose('idle');
     refreshValidationPreview();
-    if (candidateStatus) candidateStatus.innerHTML = '<strong>Saved candidate loaded</strong> · corrected Walk 4 · west mirrors east';
-    if (status) status.textContent = 'Saved male east/west candidate loaded · ready for 0.4 validation.';
+    if (candidateStatus) candidateStatus.innerHTML = '<strong>Saved candidate 0.2 loaded</strong> · corrected Walk 4 · west mirrors east';
+    if (status) status.textContent = 'Saved male east/west candidate 0.2 loaded · ready for 0.5 Hero Look validation.';
   }
 
   function poseDuration() {
@@ -288,11 +289,12 @@
       applyCandidateAll();
     } catch (error) {
       if (candidateStatus) candidateStatus.textContent = `Candidate load failed: ${error.message}`;
-      if (status) status.textContent = 'Could not load saved candidate. Current lab poses remain editable.';
+      if (status) status.textContent = 'Could not load saved candidate 0.2. Canonical fallback poses remain editable.';
     }
   }
 
   directionButtons.forEach((button) => button.addEventListener('click', () => setDirectionMode(button.dataset.validationDirection)));
+  bodyStyleButtons.forEach((button) => button.addEventListener('click', () => queueMicrotask(refreshValidationPreview)));
   transitionButton?.addEventListener('click', () => startValidation('transition'));
   seamButton?.addEventListener('click', () => startValidation('seam'));
   playButton?.addEventListener('click', () => {
@@ -329,7 +331,7 @@
     queueMicrotask(() => {
       applyCandidatePose(poseId);
       refreshValidationPreview();
-      if (status) status.textContent = `${poseId.toUpperCase()} reset to the saved east/west candidate.`;
+      if (status) status.textContent = `${poseId.toUpperCase()} reset to saved candidate 0.2.`;
     });
   });
 

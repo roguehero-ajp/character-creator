@@ -37,9 +37,10 @@ h2 { margin: 0 0 .65rem; font: 700 1rem/1.2 Georgia, serif; color: #f0d8a4; }
 .drag-hint { margin: .7rem .2rem .05rem; color: #9fbfc5; font-size: .72rem; line-height: 1.4; }
 .drag-hint strong { color: #c8f6ff; }
 .preview-toolbar { display: grid; gap: .7rem; margin: 0 0 .9rem; padding: .72rem; border: 1px solid rgba(119,223,240,.14); border-radius: 4px; background: rgba(8,13,17,.58); }
-.view-mode { display: flex; align-items: center; justify-content: center; gap: .35rem; flex-wrap: wrap; }
-.view-mode > span { margin-right: .3rem; color: #9bc3ca; font-size: .76rem; }
-.view-mode button { padding: .36rem .55rem; font-size: .74rem; }
+.view-mode, .body-style { display: flex; align-items: center; justify-content: center; gap: .35rem; flex-wrap: wrap; }
+.view-mode > span, .body-style > span { margin-right: .3rem; color: #9bc3ca; font-size: .76rem; }
+.view-mode button, .body-style button { padding: .36rem .55rem; font-size: .74rem; }
+.body-style { padding-bottom: .6rem; border-bottom: 1px solid rgba(215,180,107,.12); }
 .compact-slider { display: grid; grid-template-columns: 8rem minmax(110px, 1fr) 9rem; gap: .55rem; align-items: center; color: #c4d3d5; font-size: .75rem; }
 .compact-slider input[type="range"] { width: 100%; accent-color: #7bddeb; }
 .compact-slider output { color: #9bdce6; text-align: right; white-space: nowrap; }
