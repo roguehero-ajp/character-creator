@@ -3,29 +3,74 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Avendor Hero Animation Lab 0.3</title>
+  <title>Avendor Hero Animation Lab 0.4</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/hero-animation-lab.css">
+  <link rel="stylesheet" href="css/hero-animation-lab-validation.css">
 </head>
 <body>
   <main class="animation-lab" aria-labelledby="lab-title">
     <header class="lab-header">
       <div>
         <p class="eyebrow">AVENDOR DEVELOPMENT TOOL</p>
-        <h1 id="lab-title">Hero Animation Lab <span>0.3</span></h1>
-        <p>Canonical east-facing male rig with direct joint editing. Drag pose handles on the hero or use the grouped precision controls; locked measurements keep the anatomy consistent across every frame.</p>
+        <h1 id="lab-title">Hero Animation Lab <span>0.4</span></h1>
+        <p>East/west validation bench for the saved male walk candidate. Compare the authored east master with its mirrored west version, test idle transitions and the loop seam, and watch foot contact before production rendering.</p>
       </div>
       <a class="back-link" href="walk-test.html">Back to walk test</a>
     </header>
 
     <section class="lab-grid">
       <div class="stage-panel">
+        <div class="validation-toolbar" aria-label="East west validation controls">
+          <div class="validation-toolbar-row" role="group" aria-label="Validation direction">
+            <span>Direction</span>
+            <button type="button" data-validation-direction="east" class="selected" aria-pressed="true">East</button>
+            <button type="button" data-validation-direction="west" aria-pressed="false">West mirror</button>
+            <button type="button" data-validation-direction="compare" aria-pressed="false">East + West</button>
+          </div>
+          <div class="validation-toolbar-row" role="group" aria-label="Validation playback tests">
+            <span>Tests</span>
+            <button type="button" id="lab-test-transition" aria-pressed="false">Idle → Walk → Idle</button>
+            <button type="button" id="lab-test-seam" aria-pressed="false">Walk 8 ↔ Walk 1 seam</button>
+          </div>
+          <p class="validation-source" id="lab-candidate-status">Loading saved east/west candidate…</p>
+        </div>
+
         <div class="canvas-shell">
           <div class="canvas-stack">
             <canvas id="hero-animation-canvas" width="128" height="240" aria-label="East-facing hero body and skeleton preview"></canvas>
             <canvas id="hero-animation-handle-canvas" width="128" height="240" aria-label="Draggable hero pose joint handles"></canvas>
           </div>
-          <p class="drag-hint"><strong>Direct pose editing:</strong> grab a glowing joint handle and drag it. Limb lengths stay locked; the matching precision slider updates automatically.</p>
+          <p class="drag-hint"><strong>East master editing:</strong> grab a glowing joint handle and drag it. Limb lengths stay locked; west is generated from this same pose data.</p>
+        </div>
+
+        <div class="validation-preview-shell" id="lab-west-preview-shell" hidden>
+          <h3>Mirrored West Validation</h3>
+          <canvas id="lab-west-preview-canvas" width="128" height="240" aria-label="Mirrored west-facing hero validation preview"></canvas>
+          <p class="validation-compare-note">West is a non-destructive mirror of the east master. Return to East to drag joints.</p>
+        </div>
+
+        <div class="validation-compare-shell" id="lab-compare-shell" hidden>
+          <div class="validation-compare-card">
+            <h3>East Master</h3>
+            <canvas id="lab-compare-east" width="128" height="240" aria-label="East-facing validation comparison"></canvas>
+          </div>
+          <div class="validation-compare-card">
+            <h3>West Mirror</h3>
+            <canvas id="lab-compare-west" width="128" height="240" aria-label="West-facing validation comparison"></canvas>
+          </div>
+        </div>
+
+        <div class="foot-contact-panel" aria-label="Foot contact diagnostics">
+          <div class="foot-contact-card" id="lab-near-foot-card" data-contact="travel">
+            <span>Near foot</span>
+            <strong id="lab-near-foot-value">Calculating…</strong>
+          </div>
+          <div class="foot-contact-card" id="lab-far-foot-card" data-contact="travel">
+            <span>Far foot</span>
+            <strong id="lab-far-foot-value">Calculating…</strong>
+          </div>
+          <p class="foot-contact-summary" id="lab-foot-summary">Loading foot contact…</p>
         </div>
 
         <div class="preview-toolbar" aria-label="Hero preview controls">
@@ -78,7 +123,7 @@
       <div class="section-heading">
         <div>
           <h2>Pose data</h2>
-          <p class="hint">Export is development metadata only. The rigged body is a motion/silhouette preview and does not replace the production PNG atlas yet.</p>
+          <p class="hint">The saved candidate is loaded automatically. Reset returns to that candidate; export remains development pose metadata until we promote this cycle to production sprites.</p>
         </div>
         <div class="export-actions">
           <button type="button" id="lab-reset-all">Reset all</button>
@@ -90,5 +135,6 @@
   </main>
   <script src="js/hero-animation-lab.js"></script>
   <script src="js/hero-animation-lab-drag.js"></script>
+  <script src="js/hero-animation-lab-validation.js"></script>
 </body>
 </html>
