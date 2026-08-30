@@ -5,6 +5,7 @@
   const FRAME_H = 240;
   const FLOOR_Y = 226;
   const LAB_VERSION = '0.2.0';
+  const UI_VERSION = '0.5.0';
   const BASE_WALK_POSE_MS = 110;
 
   const canvas = document.getElementById('hero-animation-canvas');
@@ -22,6 +23,7 @@
   const resetAllButton = document.getElementById('lab-reset-all');
   const copyButton = document.getElementById('lab-copy');
   const viewModeButtons = [...document.querySelectorAll('[data-view-mode]')];
+  const bodyStyleButtons = [...document.querySelectorAll('[data-body-style]')];
   const bodyOpacityInput = document.getElementById('lab-body-opacity');
   const bodyOpacityValue = document.getElementById('lab-body-opacity-value');
   const speedInput = document.getElementById('lab-speed');
@@ -59,6 +61,33 @@
     belt: '#3b271d'
   });
 
+  const HERO_PALETTE = Object.freeze({
+    outline: '#181310',
+    hair: '#4b3022',
+    hairShadow: '#2e1d16',
+    skin: '#c98f65',
+    skinShadow: '#9e684a',
+    shirt: '#cdbb98',
+    shirtShadow: '#96866c',
+    tunic: '#7d4a2f',
+    tunicShadow: '#54301f',
+    tunicLight: '#956040',
+    trousers: '#45484a',
+    trousersShadow: '#303235',
+    boot: '#39291f',
+    bootShadow: '#241b16',
+    belt: '#3a251a',
+    buckle: '#a8884f'
+  });
+
+  const GHOST_PALETTE = Object.freeze({
+    outline: 'rgba(118,220,237,.38)', hair: 'rgba(94,180,194,.22)', hairShadow: 'rgba(94,180,194,.16)',
+    skin: 'rgba(126,219,235,.24)', skinShadow: 'rgba(126,219,235,.17)', shirt: 'rgba(126,219,235,.18)',
+    shirtShadow: 'rgba(126,219,235,.13)', tunic: 'rgba(126,219,235,.20)', tunicShadow: 'rgba(126,219,235,.14)',
+    tunicLight: 'rgba(126,219,235,.22)', trousers: 'rgba(126,219,235,.17)', trousersShadow: 'rgba(126,219,235,.12)',
+    boot: 'rgba(126,219,235,.15)', bootShadow: 'rgba(126,219,235,.10)', belt: 'rgba(126,219,235,.18)', buckle: 'rgba(126,219,235,.22)'
+  });
+
   const POSE_ORDER = Object.freeze([
     'idle',
     'walk1', 'walk2', 'walk3', 'walk4',
@@ -71,59 +100,60 @@
     walk5: 'W5', walk6: 'W6', walk7: 'W7', walk8: 'W8'
   });
 
+  // Fallback pose data is kept byte-for-value aligned with male-east-west-candidate-0.2.json.
   const DEFAULT_POSES = Object.freeze({
     idle: Object.freeze({
       pelvisY: 126, torsoLean: 1, headForward: 4,
-      nearUpperArm: 4, nearForearm: 2, farUpperArm: -5, farForearm: -2,
+      nearUpperArm: 4, nearForearm: 16, farUpperArm: -5, farForearm: -2,
       nearThigh: 2, nearShin: 0, farThigh: -3, farShin: 2,
       nearFoot: 0, farFoot: 0
     }),
     walk1: Object.freeze({
-      pelvisY: 126, torsoLean: 2, headForward: 5,
-      nearUpperArm: -22, nearForearm: -12, farUpperArm: 22, farForearm: 10,
-      nearThigh: 22, nearShin: -5, farThigh: -24, farShin: 13,
+      pelvisY: 124, torsoLean: 2, headForward: 5,
+      nearUpperArm: -22, nearForearm: -12, farUpperArm: 22, farForearm: 29,
+      nearThigh: 22, nearShin: -5, farThigh: -8, farShin: -5,
       nearFoot: 0, farFoot: 4
     }),
     walk2: Object.freeze({
-      pelvisY: 128, torsoLean: 3, headForward: 5,
-      nearUpperArm: -16, nearForearm: -8, farUpperArm: 16, farForearm: 8,
-      nearThigh: 16, nearShin: 10, farThigh: -18, farShin: 2,
+      pelvisY: 125, torsoLean: 3, headForward: 5,
+      nearUpperArm: -16, nearForearm: -8, farUpperArm: 16, farForearm: 21,
+      nearThigh: 35, nearShin: 6, farThigh: -8, farShin: -13,
       nearFoot: 1, farFoot: 2
     }),
     walk3: Object.freeze({
-      pelvisY: 127, torsoLean: 2, headForward: 5,
+      pelvisY: 124, torsoLean: 2, headForward: 5,
       nearUpperArm: -8, nearForearm: -4, farUpperArm: 8, farForearm: 4,
-      nearThigh: 7, nearShin: 24, farThigh: -7, farShin: -12,
+      nearThigh: 21, nearShin: 7, farThigh: 0, farShin: -12,
       nearFoot: 3, farFoot: -2
     }),
     walk4: Object.freeze({
-      pelvisY: 124, torsoLean: 1, headForward: 4,
-      nearUpperArm: 8, nearForearm: 4, farUpperArm: -8, farForearm: -4,
-      nearThigh: -10, nearShin: 28, farThigh: 11, farShin: -8,
+      pelvisY: 123, torsoLean: 1, headForward: 4,
+      nearUpperArm: 10, nearForearm: 26, farUpperArm: -6, farForearm: 9,
+      nearThigh: 11, nearShin: -8, farThigh: -1, farShin: -5,
       nearFoot: 5, farFoot: 0
     }),
     walk5: Object.freeze({
-      pelvisY: 126, torsoLean: 2, headForward: 5,
-      nearUpperArm: 22, nearForearm: 10, farUpperArm: -22, farForearm: -12,
-      nearThigh: -24, nearShin: 13, farThigh: 22, farShin: -5,
-      nearFoot: 4, farFoot: 0
+      pelvisY: 122, torsoLean: 2, headForward: 5,
+      nearUpperArm: 7, nearForearm: 36, farUpperArm: -22, farForearm: -11,
+      nearThigh: 3, nearShin: -9, farThigh: 23, farShin: 9,
+      nearFoot: 4, farFoot: 5
     }),
     walk6: Object.freeze({
-      pelvisY: 128, torsoLean: 3, headForward: 5,
-      nearUpperArm: 16, nearForearm: 8, farUpperArm: -16, farForearm: -8,
-      nearThigh: -18, nearShin: 2, farThigh: 16, farShin: 10,
+      pelvisY: 125, torsoLean: 3, headForward: 5,
+      nearUpperArm: 5, nearForearm: 23, farUpperArm: -16, farForearm: -8,
+      nearThigh: -7, nearShin: -10, farThigh: 33, farShin: 14,
       nearFoot: 2, farFoot: 1
     }),
     walk7: Object.freeze({
       pelvisY: 127, torsoLean: 2, headForward: 5,
-      nearUpperArm: 8, nearForearm: 4, farUpperArm: -8, farForearm: -4,
-      nearThigh: -7, nearShin: -12, farThigh: 7, farShin: 24,
+      nearUpperArm: 8, nearForearm: 15, farUpperArm: -8, farForearm: -4,
+      nearThigh: -7, nearShin: -12, farThigh: 26, farShin: 4,
       nearFoot: -2, farFoot: 3
     }),
     walk8: Object.freeze({
       pelvisY: 124, torsoLean: 1, headForward: 4,
       nearUpperArm: -8, nearForearm: -4, farUpperArm: 8, farForearm: 4,
-      nearThigh: 11, nearShin: -8, farThigh: -10, farShin: 28,
+      nearThigh: 16, nearShin: -8, farThigh: 6, farShin: -4,
       nearFoot: 0, farFoot: 5
     })
   });
@@ -153,6 +183,7 @@
   let playing = false;
   let lastPlaybackAt = performance.now();
   let viewMode = 'both';
+  let bodyStyle = 'hero';
   let bodyOpacity = 0.90;
   let speedPercent = 100;
   const sliderRecords = new Map();
@@ -208,7 +239,7 @@
     const farAnkle = fromDown(farKnee, MEASUREMENTS.shin, pose.farShin);
 
     return {
-      pelvis, shoulder, neck, head,
+      pelvis, shoulder, neck, headBase, head,
       nearShoulder, farShoulder, nearHip, farHip,
       nearElbow, nearWrist, farElbow, farWrist,
       nearKnee, nearAnkle, farKnee, farAnkle,
@@ -256,19 +287,38 @@
     }
   }
 
-  function drawBody(pose, options = {}) {
+  function pointBetween(a, b, t) {
+    return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
+  }
+
+  function segmentPolygon(a, b, startHalfWidth, endHalfWidth) {
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    const length = Math.max(0.001, Math.hypot(dx, dy));
+    const px = -dy / length;
+    const py = dx / length;
+    return [
+      { x: a.x + px * startHalfWidth, y: a.y + py * startHalfWidth },
+      { x: a.x - px * startHalfWidth, y: a.y - py * startHalfWidth },
+      { x: b.x - px * endHalfWidth, y: b.y - py * endHalfWidth },
+      { x: b.x + px * endHalfWidth, y: b.y + py * endHalfWidth }
+    ];
+  }
+
+  function drawSegment(a, b, startHalfWidth, endHalfWidth, fill, outline) {
+    fillPolygon(segmentPolygon(a, b, startHalfWidth, endHalfWidth), fill, outline, 1.15);
+  }
+
+  function paletteFor(style, ghost) {
+    if (ghost) return GHOST_PALETTE;
+    return style === 'hero' ? HERO_PALETTE : BODY_PALETTE;
+  }
+
+  function drawProxyBody(pose, options = {}) {
     const points = buildSkeleton(pose);
     const ghost = Boolean(options.ghost);
     const alpha = options.alpha ?? bodyOpacity;
-    const palette = ghost
-      ? {
-          outline: 'rgba(118,220,237,.38)', hair: 'rgba(94,180,194,.22)', hairShadow: 'rgba(94,180,194,.16)',
-          skin: 'rgba(126,219,235,.24)', skinShadow: 'rgba(126,219,235,.17)', shirt: 'rgba(126,219,235,.18)',
-          shirtShadow: 'rgba(126,219,235,.13)', tunic: 'rgba(126,219,235,.20)', tunicShadow: 'rgba(126,219,235,.14)',
-          trousers: 'rgba(126,219,235,.17)', trousersShadow: 'rgba(126,219,235,.12)', boot: 'rgba(126,219,235,.15)',
-          bootShadow: 'rgba(126,219,235,.10)', belt: 'rgba(126,219,235,.18)'
-        }
-      : BODY_PALETTE;
+    const palette = paletteFor('proxy', ghost);
 
     ctx.save();
     ctx.globalAlpha = alpha;
@@ -302,15 +352,7 @@
     line(points.shoulder, points.neck, 7, palette.skinShadow);
 
     ctx.beginPath();
-    ctx.ellipse(
-      points.head.x,
-      points.head.y,
-      MEASUREMENTS.headRadius * .80,
-      MEASUREMENTS.headRadius * 1.02,
-      0,
-      0,
-      Math.PI * 2
-    );
+    ctx.ellipse(points.head.x, points.head.y, MEASUREMENTS.headRadius * .80, MEASUREMENTS.headRadius * 1.02, 0, 0, Math.PI * 2);
     ctx.fillStyle = palette.skin;
     ctx.fill();
     ctx.lineWidth = 1.4;
@@ -318,15 +360,7 @@
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.ellipse(
-      points.head.x - 3,
-      points.head.y - 7,
-      MEASUREMENTS.headRadius * .76,
-      MEASUREMENTS.headRadius * .62,
-      -0.12,
-      Math.PI,
-      Math.PI * 2
-    );
+    ctx.ellipse(points.head.x - 3, points.head.y - 7, MEASUREMENTS.headRadius * .76, MEASUREMENTS.headRadius * .62, -0.12, Math.PI, Math.PI * 2);
     ctx.lineTo(points.head.x - 12, points.head.y + 3);
     ctx.quadraticCurveTo(points.head.x - 7, points.head.y - 2, points.head.x - 1, points.head.y - 1);
     ctx.fillStyle = palette.hair;
@@ -356,6 +390,186 @@
 
     ctx.restore();
     return points;
+  }
+
+  function drawHeroArm(points, side, palette, far = false) {
+    const shoulder = points[`${side}Shoulder`];
+    const elbow = points[`${side}Elbow`];
+    const wrist = points[`${side}Wrist`];
+    const sleeveFill = far ? palette.shirtShadow : palette.shirt;
+    const skinFill = far ? palette.skinShadow : palette.skin;
+    const cuff = pointBetween(elbow, wrist, .78);
+
+    drawSegment(shoulder, elbow, far ? 5.2 : 6.2, far ? 4.5 : 5.1, sleeveFill, palette.outline);
+    drawSegment(elbow, cuff, far ? 4.4 : 5.0, far ? 3.6 : 4.1, sleeveFill, palette.outline);
+    drawSegment(cuff, wrist, far ? 3.5 : 4.0, far ? 3.0 : 3.4, skinFill, palette.outline);
+    joint(wrist, far ? 3.8 : 4.2, skinFill);
+  }
+
+  function drawHeroLeg(points, side, palette, far = false) {
+    const hip = points[`${side}Hip`];
+    const knee = points[`${side}Knee`];
+    const ankle = points[`${side}Ankle`];
+    const toe = points[`${side}Toe`];
+    const trouserFill = far ? palette.trousersShadow : palette.trousers;
+    const bootFill = far ? palette.bootShadow : palette.boot;
+    const bootTop = pointBetween(knee, ankle, .56);
+
+    drawSegment(hip, knee, far ? 6.0 : 7.0, far ? 5.1 : 5.8, trouserFill, palette.outline);
+    drawSegment(knee, bootTop, far ? 5.1 : 5.8, far ? 4.5 : 5.1, trouserFill, palette.outline);
+    drawSegment(bootTop, ankle, far ? 4.8 : 5.4, far ? 4.4 : 5.0, bootFill, palette.outline);
+    drawSegment(ankle, toe, far ? 4.5 : 5.2, far ? 3.1 : 3.7, bootFill, palette.outline);
+    joint(ankle, far ? 4.4 : 5.0, bootFill);
+  }
+
+  function drawHeroTorso(points, palette) {
+    const shoulderAxis = segmentPolygon(points.farShoulder, points.nearShoulder, 0, 0);
+    void shoulderAxis;
+    const shoulder = points.shoulder;
+    const pelvis = points.pelvis;
+    const dx = pelvis.x - shoulder.x;
+    const dy = pelvis.y - shoulder.y;
+    const length = Math.max(0.001, Math.hypot(dx, dy));
+    const px = -dy / length;
+    const py = dx / length;
+    const downX = dx / length;
+    const downY = dy / length;
+    const top = pointBetween(shoulder, pelvis, .04);
+    const waist = pointBetween(shoulder, pelvis, .83);
+    const hem = { x: pelvis.x + downX * 17, y: pelvis.y + downY * 17 };
+
+    fillPolygon([
+      { x: top.x + px * 12.5, y: top.y + py * 12.5 },
+      { x: top.x - px * 11.5, y: top.y - py * 11.5 },
+      { x: waist.x - px * 10.0, y: waist.y - py * 10.0 },
+      { x: hem.x - px * 12.2, y: hem.y - py * 12.2 },
+      { x: hem.x + px * 11.2, y: hem.y + py * 11.2 },
+      { x: waist.x + px * 10.5, y: waist.y + py * 10.5 }
+    ], palette.tunic, palette.outline, 1.35);
+
+    ctx.save();
+    ctx.strokeStyle = palette.tunicLight;
+    ctx.lineWidth = 1.1;
+    ctx.beginPath();
+    ctx.moveTo(top.x + px * 5, top.y + py * 5);
+    ctx.lineTo(hem.x + px * 4, hem.y + py * 4);
+    ctx.stroke();
+    ctx.restore();
+
+    const beltCenter = pointBetween(shoulder, pelvis, .9);
+    line(
+      { x: beltCenter.x + px * 10.3, y: beltCenter.y + py * 10.3 },
+      { x: beltCenter.x - px * 10.3, y: beltCenter.y - py * 10.3 },
+      3.6,
+      palette.belt
+    );
+    if (palette.buckle) joint({ x: beltCenter.x + px * 1.4, y: beltCenter.y + py * 1.4 }, 1.7, palette.buckle);
+  }
+
+  function drawHeroHead(points, palette, ghost) {
+    const h = points.head;
+
+    // Neck and nape bridge the articulated torso into the profile head.
+    drawSegment(points.shoulder, points.neck, 4.4, 3.5, palette.skinShadow, palette.outline);
+    drawSegment(points.neck, { x: h.x - 5, y: h.y + 10 }, 3.8, 4.6, palette.skin, palette.outline);
+
+    // Hair mass first so the face profile owns the readable front edge.
+    ctx.beginPath();
+    ctx.moveTo(h.x - 13, h.y + 7);
+    ctx.bezierCurveTo(h.x - 17, h.y - 2, h.x - 14, h.y - 13, h.x - 5, h.y - 17);
+    ctx.bezierCurveTo(h.x + 3, h.y - 20, h.x + 10, h.y - 15, h.x + 11, h.y - 9);
+    ctx.lineTo(h.x + 6, h.y - 5);
+    ctx.lineTo(h.x + 2, h.y - 9);
+    ctx.quadraticCurveTo(h.x - 1, h.y - 3, h.x - 5, h.y + 2);
+    ctx.lineTo(h.x - 7, h.y + 11);
+    ctx.closePath();
+    ctx.fillStyle = palette.hair;
+    ctx.fill();
+    ctx.strokeStyle = palette.outline;
+    ctx.lineWidth = 1.25;
+    ctx.stroke();
+
+    // East-facing profile with a brow, nose bridge, nose tip, mouth, chin and jaw.
+    ctx.beginPath();
+    ctx.moveTo(h.x - 7, h.y - 13);
+    ctx.bezierCurveTo(h.x + 1, h.y - 16, h.x + 8, h.y - 12, h.x + 10, h.y - 7);
+    ctx.quadraticCurveTo(h.x + 11, h.y - 4, h.x + 12, h.y - 2);
+    ctx.lineTo(h.x + 17, h.y + 1);
+    ctx.quadraticCurveTo(h.x + 14, h.y + 3, h.x + 11, h.y + 3.5);
+    ctx.quadraticCurveTo(h.x + 13, h.y + 6, h.x + 10, h.y + 7);
+    ctx.quadraticCurveTo(h.x + 9, h.y + 12, h.x + 4, h.y + 14);
+    ctx.quadraticCurveTo(h.x - 2, h.y + 16, h.x - 8, h.y + 10);
+    ctx.quadraticCurveTo(h.x - 11, h.y + 4, h.x - 10, h.y - 5);
+    ctx.quadraticCurveTo(h.x - 10, h.y - 10, h.x - 7, h.y - 13);
+    ctx.closePath();
+    ctx.fillStyle = palette.skin;
+    ctx.fill();
+    ctx.strokeStyle = palette.outline;
+    ctx.lineWidth = 1.35;
+    ctx.stroke();
+
+    // Fringe and sideburn reclaim the top/back edge after the face fill.
+    ctx.beginPath();
+    ctx.moveTo(h.x - 8, h.y - 13);
+    ctx.quadraticCurveTo(h.x + 1, h.y - 18, h.x + 8, h.y - 12);
+    ctx.lineTo(h.x + 4, h.y - 7);
+    ctx.lineTo(h.x + 1, h.y - 10);
+    ctx.lineTo(h.x - 2, h.y - 5);
+    ctx.lineTo(h.x - 7, h.y - 1);
+    ctx.closePath();
+    ctx.fillStyle = palette.hair;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(h.x - 8, h.y - 2);
+    ctx.quadraticCurveTo(h.x - 10, h.y + 5, h.x - 6, h.y + 9);
+    ctx.strokeStyle = palette.hairShadow;
+    ctx.lineWidth = 2.2;
+    ctx.stroke();
+
+    if (!ghost) {
+      ctx.fillStyle = '#211712';
+      ctx.fillRect(Math.round(h.x + 7), Math.round(h.y - 6), 2, 2);
+      ctx.strokeStyle = palette.outline;
+      ctx.lineWidth = .85;
+      ctx.beginPath();
+      ctx.moveTo(h.x + 10, h.y + 6);
+      ctx.lineTo(h.x + 12, h.y + 6);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(h.x - 4, h.y, 2.2, 0, Math.PI * 2);
+      ctx.strokeStyle = palette.skinShadow;
+      ctx.stroke();
+    }
+  }
+
+  function drawHeroBody(pose, options = {}) {
+    const points = buildSkeleton(pose);
+    const ghost = Boolean(options.ghost);
+    const alpha = options.alpha ?? bodyOpacity;
+    const palette = paletteFor('hero', ghost);
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+
+    // Painter's order is intentional: far limbs, body/head, near limbs.
+    drawHeroLeg(points, 'far', palette, true);
+    drawHeroArm(points, 'far', palette, true);
+
+    drawHeroTorso(points, palette);
+    drawHeroHead(points, palette, ghost);
+
+    drawHeroLeg(points, 'near', palette, false);
+    drawHeroArm(points, 'near', palette, false);
+
+    ctx.restore();
+    return points;
+  }
+
+  function drawBody(pose, options = {}) {
+    return bodyStyle === 'hero'
+      ? drawHeroBody(pose, options)
+      : drawProxyBody(pose, options);
   }
 
   function drawRig(pose, options = {}) {
@@ -474,6 +688,7 @@
       baseWalkPoseMs: BASE_WALK_POSE_MS,
       preview: {
         viewMode,
+        bodyStyle,
         bodyOpacity: Number(bodyOpacity.toFixed(2)),
         speedPercent,
         poseMs: Math.round(currentPlaybackPoseMs())
@@ -508,7 +723,7 @@
     });
     syncSliders();
     draw();
-    setStatus(`${POSE_LABELS[id]} selected · proportions locked · east profile`);
+    setStatus(`${POSE_LABELS[id]} selected · ${bodyStyle === 'hero' ? 'Hero Look' : 'Proxy'} · east profile`);
   }
 
   function stepPose(delta) {
@@ -629,6 +844,19 @@
     setStatus(`Preview mode: ${viewMode === 'both' ? 'body + rig' : viewMode}.`);
   }
 
+  function setBodyStyle(nextStyle) {
+    if (!['proxy', 'hero'].includes(nextStyle)) nextStyle = 'hero';
+    bodyStyle = nextStyle;
+    bodyStyleButtons.forEach((button) => {
+      const selected = button.dataset.bodyStyle === bodyStyle;
+      button.classList.toggle('selected', selected);
+      button.setAttribute('aria-pressed', String(selected));
+    });
+    draw();
+    refreshOutput();
+    setStatus(`Body style: ${bodyStyle === 'hero' ? 'Hero Look' : 'Proxy'}. Same rig, same pose data.`);
+  }
+
   function syncBodyOpacity() {
     const percent = Math.max(25, Math.min(100, Number(bodyOpacityInput?.value || 90)));
     bodyOpacity = percent / 100;
@@ -679,6 +907,7 @@
   resetAllButton.addEventListener('click', resetAll);
   copyButton.addEventListener('click', copyJson);
   viewModeButtons.forEach((button) => button.addEventListener('click', () => setViewMode(button.dataset.viewMode)));
+  bodyStyleButtons.forEach((button) => button.addEventListener('click', () => setBodyStyle(button.dataset.bodyStyle)));
   bodyOpacityInput?.addEventListener('input', syncBodyOpacity);
   speedInput?.addEventListener('input', syncPlaybackSpeed);
 
@@ -699,6 +928,7 @@
   buildPoseStrip();
   buildMeasurements();
   buildSliders();
+  setBodyStyle('hero');
   syncBodyOpacity();
   syncPlaybackSpeed();
   selectPose('idle');
@@ -707,11 +937,14 @@
 
   window.AvendorHeroAnimationLab = Object.freeze({
     version: LAB_VERSION,
+    uiVersion: UI_VERSION,
     measurements: MEASUREMENTS,
     getPoses: () => JSON.parse(JSON.stringify(poses)),
+    getBodyStyle: () => bodyStyle,
     exportJson: serialise,
     selectPose,
     setViewMode,
+    setBodyStyle,
     resetPose,
     resetAll
   });
