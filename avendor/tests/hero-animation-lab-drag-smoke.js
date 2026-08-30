@@ -12,9 +12,9 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-assert(html.includes('Hero Animation Lab 0.3'), 'Hero Animation Lab page was not advanced to 0.3.');
+assert(html.includes('Hero Animation Lab <span>0.5</span>'), 'Hero Animation Lab page was not advanced to 0.5.');
 assert(html.includes('id="hero-animation-handle-canvas"'), 'Direct-manipulation handle canvas is missing.');
-assert(html.includes('Direct pose editing:'), 'Hero Animation Lab does not explain direct joint dragging.');
+assert(html.includes('East master editing:'), 'Hero Animation Lab does not explain direct east-master joint dragging.');
 assert(html.includes('js/hero-animation-lab-drag.js'), 'Direct-manipulation module is not loaded.');
 assert(source.includes("const VERSION = '0.3.0'"), 'Hero Animation Lab drag module version contract is missing.');
 assert(source.includes('const CONTROL_GROUPS = Object.freeze'), 'Grouped pose-control definition is missing.');
@@ -42,4 +42,4 @@ assert(css.includes('cursor: grab'), 'Drag-handle canvas does not communicate dr
 assert(css.includes('.pose-control-group'), 'Grouped pose-control sections have no layout.');
 assert(css.includes('.pose-control-group h3'), 'Grouped pose-control headings have no styling.');
 
-console.log('Hero Animation Lab 0.3 draggable-joint and grouped-control smoke checks passed.');
+console.log('Hero Animation Lab 0.5 draggable-joint and grouped-control smoke checks passed.');
