@@ -55,6 +55,7 @@ h2 { margin: 0 0 .65rem; font: 700 1rem/1.2 Georgia, serif; color: #f0d8a4; }
 .hint { margin: .55rem 0 0; color: #918d84; font-size: .74rem; line-height: 1.4; }
 .slider-grid { display: grid; gap: .9rem; }
 .pose-control-group { padding: .72rem; border: 1px solid rgba(119,223,240,.12); border-radius: 4px; background: rgba(8,13,17,.34); }
+.pose-control-group + .pose-control-group { margin-top: 0; }
 .pose-control-group h3 { margin: 0 0 .65rem; padding-bottom: .45rem; border-bottom: 1px solid rgba(215,180,107,.14); color: #d9bd81; font: 700 .82rem/1.2 Georgia, serif; letter-spacing: .015em; }
 .pose-control-group-grid { display: grid; gap: .62rem; }
 .slider-row { display: grid; grid-template-columns: 8.8rem 1fr 3.2rem; gap: .55rem; align-items: center; }
