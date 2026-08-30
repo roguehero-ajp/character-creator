@@ -21,6 +21,8 @@
   const status = document.getElementById('lab-status');
   const speedInput = document.getElementById('lab-speed');
   const playButton = document.getElementById('lab-play');
+  const prevButton = document.getElementById('lab-prev');
+  const nextButton = document.getElementById('lab-next');
   const resetPoseButton = document.getElementById('lab-reset-pose');
   const resetAllButton = document.getElementById('lab-reset-all');
   const transitionButton = document.getElementById('lab-test-transition');
@@ -99,7 +101,7 @@
       : `TRAVEL · ${Math.abs(rounded).toFixed(1)} px below floor`;
   }
 
-  function drawMirror(targetCtx, canvas) {
+  function drawMirror(targetCtx) {
     targetCtx.clearRect(0, 0, FRAME_W, FRAME_H);
     targetCtx.save();
     targetCtx.translate(FRAME_W, 0);
@@ -165,11 +167,11 @@
   function refreshValidationPreview() {
     const pose = lab.getPoses()[selectedPoseId()];
     if (!pose) return;
-    drawMirror(westCtx, westCanvas);
+    drawMirror(westCtx);
     drawContactGuide(westCtx, pose, true);
     drawEast(compareEastCtx);
     drawContactGuide(compareEastCtx, pose, false);
-    drawMirror(compareWestCtx, compareWestCanvas);
+    drawMirror(compareWestCtx);
     drawContactGuide(compareWestCtx, pose, true);
     refreshFootDiagnostics();
   }
@@ -297,7 +299,19 @@
     if (validationMode) stopValidation(false);
     queueMicrotask(refreshValidationPreview);
   });
-  sliderGrid?.addEventListener('input', () => queueMicrotask(refreshValidationPreview));
+  prevButton?.addEventListener('click', () => {
+    if (validationMode) stopValidation(false);
+  });
+  nextButton?.addEventListener('click', () => {
+    if (validationMode) stopValidation(false);
+  });
+  poseStrip.addEventListener('click', (event) => {
+    if (validationMode && event.target.closest('button[data-pose-id]')) stopValidation(false);
+  });
+  sliderGrid?.addEventListener('input', () => {
+    if (validationMode) stopValidation(false);
+    queueMicrotask(refreshValidationPreview);
+  });
   document.querySelectorAll('[data-view-mode]').forEach((button) => button.addEventListener('click', () => queueMicrotask(refreshValidationPreview)));
   document.getElementById('lab-body-opacity')?.addEventListener('input', () => queueMicrotask(refreshValidationPreview));
   document.getElementById('lab-onion')?.addEventListener('change', () => queueMicrotask(refreshValidationPreview));
@@ -310,6 +324,7 @@
 
   resetPoseButton?.addEventListener('click', () => {
     if (!candidate) return;
+    stopValidation(false);
     const poseId = selectedPoseId();
     queueMicrotask(() => {
       applyCandidatePose(poseId);
@@ -320,6 +335,7 @@
 
   resetAllButton?.addEventListener('click', () => {
     if (!candidate) return;
+    stopValidation(false);
     queueMicrotask(applyCandidateAll);
   });
 
