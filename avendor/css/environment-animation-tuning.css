@@ -73,8 +73,8 @@
 .walk-stage .dock-bird {
   --bird-scale: 1;
   position: absolute;
-  width: 42px;
-  height: 20px;
+  width: 50px;
+  height: 24px;
   opacity: .88;
   pointer-events: none;
   transform-origin: center;
@@ -84,9 +84,9 @@
 .walk-stage .dock-bird::after {
   content: '';
   position: absolute;
-  top: 6px;
-  width: 22px;
-  height: 11px;
+  top: 7px;
+  width: 26px;
+  height: 13px;
   border-top: 3px solid rgba(18, 23, 29, .98);
   border-radius: 52% 52% 0 0;
 }
@@ -105,17 +105,17 @@
 
 .walk-stage .dock-bird-a {
   left: -2%;
-  top: 16%;
-  animation: avendor-bird-flight-a 12.8s linear infinite;
+  top: 9%;
+  animation: avendor-bird-flight-a 18.5s linear infinite;
 }
 
 .walk-stage .dock-bird-b {
-  --bird-scale: .82;
+  --bird-scale: .86;
   left: 18%;
-  top: 22%;
+  top: 13%;
   opacity: .72;
-  animation: avendor-bird-flight-b 16.4s linear infinite;
-  animation-delay: -6.2s;
+  animation: avendor-bird-flight-b 22s linear infinite;
+  animation-delay: -7.5s;
 }
 
 .walk-stage[data-daypart="dawn"] .dock-bird { opacity: .80; }
@@ -134,17 +134,17 @@
 
 @keyframes avendor-bird-flight-a {
   0% { transform: translate3d(0, 0, 0) scale(var(--bird-scale)); }
-  24% { transform: translate3d(27vw, -10px, 0) scale(var(--bird-scale)); }
-  53% { transform: translate3d(57vw, 4px, 0) scale(var(--bird-scale)); }
-  78% { transform: translate3d(82vw, -8px, 0) scale(var(--bird-scale)); }
+  24% { transform: translate3d(27vw, -7px, 0) scale(var(--bird-scale)); }
+  53% { transform: translate3d(57vw, 3px, 0) scale(var(--bird-scale)); }
+  78% { transform: translate3d(82vw, -6px, 0) scale(var(--bird-scale)); }
   100% { transform: translate3d(108vw, 1px, 0) scale(var(--bird-scale)); }
 }
 
 @keyframes avendor-bird-flight-b {
   0% { transform: translate3d(0, 0, 0) scale(var(--bird-scale)); }
-  31% { transform: translate3d(20vw, 7px, 0) scale(var(--bird-scale)); }
-  64% { transform: translate3d(43vw, -6px, 0) scale(var(--bird-scale)); }
-  100% { transform: translate3d(82vw, 2px, 0) scale(var(--bird-scale)); }
+  31% { transform: translate3d(24vw, 5px, 0) scale(var(--bird-scale)); }
+  64% { transform: translate3d(52vw, -4px, 0) scale(var(--bird-scale)); }
+  100% { transform: translate3d(92vw, 2px, 0) scale(var(--bird-scale)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
