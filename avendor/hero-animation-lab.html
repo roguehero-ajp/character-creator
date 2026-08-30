@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Avendor Hero Animation Lab 0.2</title>
+  <title>Avendor Hero Animation Lab 0.3</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/hero-animation-lab.css">
 </head>
@@ -12,8 +12,8 @@
     <header class="lab-header">
       <div>
         <p class="eyebrow">AVENDOR DEVELOPMENT TOOL</p>
-        <h1 id="lab-title">Hero Animation Lab <span>0.2</span></h1>
-        <p>Canonical east-facing male rig with a rigged body preview. Body measurements stay locked across every pose while the walk motion, preview layer and playback speed can be tuned safely.</p>
+        <h1 id="lab-title">Hero Animation Lab <span>0.3</span></h1>
+        <p>Canonical east-facing male rig with direct joint editing. Drag pose handles on the hero or use the grouped precision controls; locked measurements keep the anatomy consistent across every frame.</p>
       </div>
       <a class="back-link" href="walk-test.html">Back to walk test</a>
     </header>
@@ -21,7 +21,11 @@
     <section class="lab-grid">
       <div class="stage-panel">
         <div class="canvas-shell">
-          <canvas id="hero-animation-canvas" width="128" height="240" aria-label="East-facing hero body and skeleton preview"></canvas>
+          <div class="canvas-stack">
+            <canvas id="hero-animation-canvas" width="128" height="240" aria-label="East-facing hero body and skeleton preview"></canvas>
+            <canvas id="hero-animation-handle-canvas" width="128" height="240" aria-label="Draggable hero pose joint handles"></canvas>
+          </div>
+          <p class="drag-hint"><strong>Direct pose editing:</strong> grab a glowing joint handle and drag it. Limb lengths stay locked; the matching precision slider updates automatically.</p>
         </div>
 
         <div class="preview-toolbar" aria-label="Hero preview controls">
@@ -57,7 +61,7 @@
         <section>
           <h2>Locked proportions</h2>
           <div class="measurement-grid" id="lab-measurements"></div>
-          <p class="hint">These measurements drive both the skeleton and the body preview. Changing anatomy belongs in the rig definition, not in an individual pose.</p>
+          <p class="hint">These measurements drive both the skeleton and the body preview. Dragging changes pose only; changing anatomy belongs in the rig definition, not in an individual frame.</p>
         </section>
 
         <section>
@@ -85,5 +89,6 @@
     </section>
   </main>
   <script src="js/hero-animation-lab.js"></script>
+  <script src="js/hero-animation-lab-drag.js"></script>
 </body>
 </html>
