@@ -1,0 +1,31 @@
+/* Geometry Sketch floating-panel movement. Kept separate from drawing styles. */
+.geometry-sketch-heading {
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  border-radius: 3px;
+  padding: .18em .28em;
+  margin: -.18em -.28em .48em;
+}
+
+.geometry-sketch-heading:hover {
+  background: rgba(91,228,255,.055);
+}
+
+.geometry-sketch-heading strong::before {
+  content: "⋮⋮";
+  display: inline-block;
+  margin-right: .45em;
+  color: rgba(91,228,255,.72);
+  letter-spacing: -.22em;
+  transform: translateX(-.06em);
+}
+
+.geometry-sketch-panel.geometry-panel-dragging .geometry-sketch-heading {
+  cursor: grabbing;
+  background: rgba(91,228,255,.09);
+}
+
+.geometry-sketch-panel.geometry-panel-dragging {
+  box-shadow: 0 12px 34px rgba(0,0,0,.52), 0 0 0 1px rgba(91,228,255,.18);
+}
