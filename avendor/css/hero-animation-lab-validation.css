@@ -1,0 +1,117 @@
+/* Hero Animation Lab 0.4 validation layer. */
+.validation-toolbar {
+  display: grid;
+  gap: .7rem;
+  margin: 0 0 .9rem;
+  padding: .75rem;
+  border: 1px solid rgba(119,223,240,.16);
+  border-radius: 4px;
+  background: rgba(8,13,17,.68);
+}
+.validation-toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  flex-wrap: wrap;
+}
+.validation-toolbar-row > span {
+  margin-right: .3rem;
+  color: #9bc3ca;
+  font-size: .76rem;
+}
+.validation-toolbar button {
+  padding: .38rem .58rem;
+  font-size: .74rem;
+}
+.validation-source {
+  margin: 0;
+  color: #83b7c0;
+  font-size: .7rem;
+  text-align: center;
+}
+.validation-source strong { color: #c8f6ff; }
+.validation-preview-shell[hidden],
+.validation-compare-shell[hidden] { display: none; }
+.validation-preview-shell {
+  width: min(100%, 430px);
+  margin: 0 auto 1rem;
+  padding: .75rem;
+  border: 1px solid rgba(119,223,240,.18);
+  background: #0a0f14;
+}
+.validation-preview-shell h3,
+.validation-compare-card h3 {
+  margin: 0 0 .55rem;
+  color: #d9bd81;
+  font: 700 .82rem/1.2 Georgia, serif;
+  text-align: center;
+}
+.validation-preview-shell canvas,
+.validation-compare-card canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 128 / 240;
+  image-rendering: pixelated;
+  background: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px), #101820;
+  background-size: 16px 16px;
+}
+.validation-compare-shell {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+  margin: 0 auto 1rem;
+}
+.validation-compare-card {
+  padding: .65rem;
+  border: 1px solid rgba(119,223,240,.16);
+  background: #0a0f14;
+}
+.validation-compare-note {
+  margin: .55rem 0 0;
+  color: #8faeb5;
+  font-size: .68rem;
+  line-height: 1.35;
+  text-align: center;
+}
+.foot-contact-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .5rem;
+  margin: 0 0 .9rem;
+}
+.foot-contact-card {
+  padding: .55rem .65rem;
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 3px;
+  background: #121a21;
+}
+.foot-contact-card span {
+  display: block;
+  color: #9bb6bc;
+  font-size: .68rem;
+}
+.foot-contact-card strong {
+  display: block;
+  margin-top: .18rem;
+  font-size: .78rem;
+}
+.foot-contact-card[data-contact="planted"] strong { color: #9cffb1; }
+.foot-contact-card[data-contact="travel"] strong { color: #efc982; }
+.foot-contact-summary {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #8fb9c1;
+  font-size: .7rem;
+  text-align: center;
+}
+.validation-test-active {
+  border-color: #75e2f3 !important;
+  color: #d6fbff !important;
+  background: #164653 !important;
+}
+@media (max-width: 560px) {
+  .validation-compare-shell { grid-template-columns: 1fr; }
+  .foot-contact-panel { grid-template-columns: 1fr; }
+  .foot-contact-summary { grid-column: auto; }
+}
