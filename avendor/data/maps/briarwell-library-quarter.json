@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-library-quarter",
   "title": "Briarwell - Library Quarter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": {
     "width": 1448,
     "height": 1086
@@ -181,8 +181,7 @@
   "interactables": [
     { "id": "briarwell-library", "label": "Briarwell Library", "x": 850, "y": 670, "radius": 110 },
     { "id": "library-quarter-houses", "label": "Library Quarter houses", "x": 1050, "y": 1010, "radius": 130 },
-    { "id": "alley-open-window", "label": "Open alley window", "x": 1310, "y": 620, "radius": 78, "state": "secret-undiscovered" },
-    { "id": "alley-sewer-grate", "label": "Iron sewer grate", "x": 1310, "y": 850, "radius": 78, "state": "sewer-sealed" }
+    { "id": "alley-open-window", "label": "Open alley window", "x": 1310, "y": 620, "radius": 78, "state": "secret-undiscovered" }
   ],
   "npcs": []
 }

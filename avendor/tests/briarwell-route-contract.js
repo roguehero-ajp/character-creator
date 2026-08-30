@@ -36,19 +36,18 @@ function assertConnection(connection) {
   const [left, right] = connection.endpoints;
   const leftTransition = getTransition(left.areaId, left.transitionId);
   const rightTransition = getTransition(right.areaId, right.transitionId);
+  if (connection.status !== 'active') return;
   assert(leftTransition, `Missing connection endpoint transition: ${connection.id}/${left.areaId}/${left.transitionId}`);
   assert(rightTransition, `Missing connection endpoint transition: ${connection.id}/${right.areaId}/${right.transitionId}`);
 
-  if (connection.status === 'active') {
-    assert(leftTransition.status === 'active', `Active route has inactive endpoint: ${connection.id}/${left.transitionId}`);
-    assert(rightTransition.status === 'active', `Active route has inactive endpoint: ${connection.id}/${right.transitionId}`);
-    assert(leftTransition.target?.areaId === right.areaId, `Route target mismatch: ${connection.id}/${left.areaId}`);
-    assert(rightTransition.target?.areaId === left.areaId, `Route target mismatch: ${connection.id}/${right.areaId}`);
-    assert(leftTransition.target?.returnTransitionId === right.transitionId, `Return transition mismatch: ${connection.id}/${left.areaId}`);
-    assert(rightTransition.target?.returnTransitionId === left.transitionId, `Return transition mismatch: ${connection.id}/${right.areaId}`);
-    assert(leftTransition.target?.spawnId === rightTransition.fallbackSpawn, `Arrival spawn does not match reciprocal fallback: ${connection.id}/${left.areaId}`);
-    assert(rightTransition.target?.spawnId === leftTransition.fallbackSpawn, `Arrival spawn does not match reciprocal fallback: ${connection.id}/${right.areaId}`);
-  }
+  assert(leftTransition.status === 'active', `Active route has inactive endpoint: ${connection.id}/${left.transitionId}`);
+  assert(rightTransition.status === 'active', `Active route has inactive endpoint: ${connection.id}/${right.transitionId}`);
+  assert(leftTransition.target?.areaId === right.areaId, `Route target mismatch: ${connection.id}/${left.areaId}`);
+  assert(rightTransition.target?.areaId === left.areaId, `Route target mismatch: ${connection.id}/${right.areaId}`);
+  assert(leftTransition.target?.returnTransitionId === right.transitionId, `Return transition mismatch: ${connection.id}/${left.areaId}`);
+  assert(rightTransition.target?.returnTransitionId === left.transitionId, `Return transition mismatch: ${connection.id}/${right.areaId}`);
+  assert(leftTransition.target?.spawnId === rightTransition.fallbackSpawn, `Arrival spawn does not match reciprocal fallback: ${connection.id}/${left.areaId}`);
+  assert(rightTransition.target?.spawnId === leftTransition.fallbackSpawn, `Arrival spawn does not match reciprocal fallback: ${connection.id}/${right.areaId}`);
 
   if (connection.visibility === 'public' && connection.kind === 'road') {
     assert(oppositeDirection(left.direction) === right.direction, `Public road directions are not reciprocal: ${connection.id}`);

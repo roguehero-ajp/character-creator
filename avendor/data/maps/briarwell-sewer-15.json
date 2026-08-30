@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-sewer-15",
+  "title": "Briarwell Sewers - Area 15",
+  "version": "1.0.0",
+  "sewerAreaNumber": 15,
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/sewers/background/sewer-area-15-v1.png",
+    "alt": "Sewer Area 15, a dead-end kobold lair occupied by ordinary kobolds, a robed wizard and an armoured champion"
+  },
+  "movement": {
+    "speedX": 265,
+    "speedY": 198,
+    "footRadiusX": 12,
+    "footRadiusY": 8,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 260,
+        "scale": 0.5
+      },
+      {
+        "y": 480,
+        "scale": 0.64
+      },
+      {
+        "y": 720,
+        "scale": 0.8
+      },
+      {
+        "y": 940,
+        "scale": 0.94
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 724,
+      "y": 650,
+      "facing": "north"
+    },
+    "from-east": {
+      "x": 1095,
+      "y": 650,
+      "facing": "west"
+    }
+  },
+  "walkable": [
+    {
+      "id": "central-dry-floor",
+      "points": [
+        [
+          118,
+          302
+        ],
+        [
+          1330,
+          302
+        ],
+        [
+          1390,
+          418
+        ],
+        [
+          1390,
+          918
+        ],
+        [
+          1318,
+          974
+        ],
+        [
+          130,
+          974
+        ],
+        [
+          58,
+          918
+        ],
+        [
+          58,
+          418
+        ]
+      ]
+    },
+    {
+      "id": "east-approach",
+      "points": [
+        [
+          1050,
+          336
+        ],
+        [
+          1446,
+          336
+        ],
+        [
+          1446,
+          870
+        ],
+        [
+          1050,
+          870
+        ]
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "kobold-war-party",
+      "points": [
+        [
+          84,
+          80
+        ],
+        [
+          1364,
+          80
+        ],
+        [
+          1364,
+          566
+        ],
+        [
+          1010,
+          610
+        ],
+        [
+          438,
+          610
+        ],
+        [
+          84,
+          566
+        ]
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "east-tunnel",
+      "label": "East tunnel to Sewer Area 8",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-08",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-tunnel"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [
+        [
+          1186,
+          424
+        ],
+        [
+          1432,
+          424
+        ],
+        [
+          1432,
+          812
+        ],
+        [
+          1186,
+          812
+        ]
+      ]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "foreground-masonry",
+      "depthY": 1000,
+      "points": [
+        [
+          0,
+          974
+        ],
+        [
+          1448,
+          974
+        ],
+        [
+          1448,
+          1086
+        ],
+        [
+          0,
+          1086
+        ]
+      ]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "kobold-war-party",
+      "label": "Kobold war party",
+      "x": 724,
+      "y": 590,
+      "radius": 270,
+      "state": "combat-encounter",
+      "interactionText": "Ten kobolds hold the lair ahead. A robed wizard and heavily armoured champion stand among them; approaching farther will require combat."
+    }
+  ],
+  "npcs": []
+}

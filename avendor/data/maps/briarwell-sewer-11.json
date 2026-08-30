@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-sewer-11",
+  "title": "Briarwell Sewers - Area 11",
+  "version": "1.0.0",
+  "sewerAreaNumber": 11,
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/sewers/background/sewer-junction-nsw-v1.png",
+    "alt": "Briarwell Sewers - Area 11, an underground stone passage with north, south, west routes"
+  },
+  "movement": {
+    "speedX": 265,
+    "speedY": 198,
+    "footRadiusX": 12,
+    "footRadiusY": 8,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 260,
+        "scale": 0.5
+      },
+      {
+        "y": 480,
+        "scale": 0.64
+      },
+      {
+        "y": 720,
+        "scale": 0.8
+      },
+      {
+        "y": 940,
+        "scale": 0.94
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 724,
+      "y": 650,
+      "facing": "north"
+    },
+    "from-north": {
+      "x": 724,
+      "y": 410,
+      "facing": "south"
+    },
+    "from-south": {
+      "x": 724,
+      "y": 800,
+      "facing": "north"
+    },
+    "from-west": {
+      "x": 353,
+      "y": 650,
+      "facing": "east"
+    }
+  },
+  "walkable": [
+    {
+      "id": "central-dry-floor",
+      "points": [
+        [
+          118,
+          302
+        ],
+        [
+          1330,
+          302
+        ],
+        [
+          1390,
+          418
+        ],
+        [
+          1390,
+          918
+        ],
+        [
+          1318,
+          974
+        ],
+        [
+          130,
+          974
+        ],
+        [
+          58,
+          918
+        ],
+        [
+          58,
+          418
+        ]
+      ]
+    },
+    {
+      "id": "north-approach",
+      "points": [
+        [
+          538,
+          180
+        ],
+        [
+          910,
+          180
+        ],
+        [
+          940,
+          430
+        ],
+        [
+          508,
+          430
+        ]
+      ]
+    },
+    {
+      "id": "south-approach",
+      "points": [
+        [
+          438,
+          742
+        ],
+        [
+          1010,
+          742
+        ],
+        [
+          1038,
+          1084
+        ],
+        [
+          410,
+          1084
+        ]
+      ]
+    },
+    {
+      "id": "west-approach",
+      "points": [
+        [
+          2,
+          336
+        ],
+        [
+          398,
+          336
+        ],
+        [
+          398,
+          870
+        ],
+        [
+          2,
+          870
+        ]
+      ]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-tunnel",
+      "label": "North tunnel to Sewer Area 14",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-14",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-tunnel"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [
+        [
+          568,
+          220
+        ],
+        [
+          880,
+          220
+        ],
+        [
+          914,
+          348
+        ],
+        [
+          534,
+          348
+        ]
+      ]
+    },
+    {
+      "id": "south-tunnel",
+      "label": "South tunnel to Sewer Area 9",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-09",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-tunnel"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [
+        [
+          500,
+          872
+        ],
+        [
+          948,
+          872
+        ],
+        [
+          992,
+          1062
+        ],
+        [
+          456,
+          1062
+        ]
+      ]
+    },
+    {
+      "id": "west-tunnel",
+      "label": "West tunnel to Sewer Area 12",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-12",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-tunnel"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [
+        [
+          16,
+          424
+        ],
+        [
+          262,
+          424
+        ],
+        [
+          262,
+          812
+        ],
+        [
+          16,
+          812
+        ]
+      ]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "foreground-masonry",
+      "depthY": 1000,
+      "points": [
+        [
+          0,
+          974
+        ],
+        [
+          1448,
+          974
+        ],
+        [
+          1448,
+          1086
+        ],
+        [
+          0,
+          1086
+        ]
+      ]
+    }
+  ],
+  "interactables": [],
+  "npcs": []
+}

@@ -91,14 +91,23 @@ function assertTransitionUsability(map, data, reachability) {
     const height = Math.max(...ys) - Math.min(...ys);
 
     assert(width >= 40 || height >= 40, `Transition target is too fiddly: ${data.id}/${transition.id}`);
-    assert(map.isWalkable(center.x, center.y), `Transition center is blocked: ${data.id}/${transition.id}`);
-    assert(isReachable(reachability, center, 18), `Transition is outside the main play-space: ${data.id}/${transition.id}`);
-    assert(map.getTriggerAt(center)?.id === transition.id, `Transition center resolves incorrectly: ${data.id}/${transition.id}`);
-
     const fallback = map.getExactSpawn(transition.fallbackSpawn);
     assert(fallback, `Fallback spawn is missing: ${data.id}/${transition.id}`);
     assert(map.isWalkable(fallback.x, fallback.y), `Fallback spawn is blocked: ${data.id}/${transition.id}`);
     assert(!map.getTriggerAt(fallback), `Fallback spawn immediately retriggers: ${data.id}/${transition.id}`);
+
+    if (transition.activation === 'interact') {
+      assert(
+        map.getNearbyInteractable(fallback)?.id === transition.id,
+        `Interacted transition has no reachable approach: ${data.id}/${transition.id}`
+      );
+      return;
+    }
+
+    assert(map.isWalkable(center.x, center.y), `Transition center is blocked: ${data.id}/${transition.id}`);
+    assert(isReachable(reachability, center, 18), `Transition is outside the main play-space: ${data.id}/${transition.id}`);
+    assert(map.getTriggerAt(center)?.id === transition.id, `Transition center resolves incorrectly: ${data.id}/${transition.id}`);
+
   });
 }
 

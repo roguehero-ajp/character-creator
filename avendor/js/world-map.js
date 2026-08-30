@@ -6,7 +6,7 @@
   const AREA_KINDS = Object.freeze(['outdoor', 'interior']);
   const REGISTRY_SCHEMA_VERSIONS = Object.freeze([1, 2]);
   const CONNECTION_KINDS = Object.freeze([
-    'road', 'alley', 'doorway', 'secret-passage', 'sewer-access'
+    'road', 'alley', 'doorway', 'secret-passage', 'sewer-access', 'sewer-tunnel'
   ]);
   const CONNECTION_VISIBILITIES = Object.freeze(['public', 'hidden']);
   const CONNECTION_STATUSES = Object.freeze(['active', 'planned']);
@@ -392,7 +392,7 @@
               if (transition.type !== 'exit') {
                 errors.push(`A city exit cannot be a portal: ${label}`);
               }
-              if (cityExit.direction !== transition.direction) {
+              if (cityExit.direction !== (transition.worldDirection || transition.direction)) {
                 errors.push(`City-exit direction disagrees with town graph: ${label}`);
               }
               if (cityExit.status !== transition.status) {
@@ -415,7 +415,10 @@
               ) {
                 errors.push(`Transition reciprocal disagrees with town graph: ${label}`);
               }
-              if (transition.type === 'exit' && endpoint.direction !== transition.direction) {
+              if (
+                transition.type === 'exit'
+                && endpoint.direction !== (transition.worldDirection || transition.direction)
+              ) {
                 errors.push(`Transition direction disagrees with town graph: ${label}`);
               }
               if (connection.status !== transition.status) {

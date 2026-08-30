@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-sewer-02",
+  "title": "Briarwell Sewers - Area 2",
+  "version": "1.0.0",
+  "sewerAreaNumber": 2,
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/sewers/background/sewer-corner-es-v1.png",
+    "alt": "Briarwell Sewers - Area 2, an underground stone passage with east, south routes"
+  },
+  "movement": {
+    "speedX": 265,
+    "speedY": 198,
+    "footRadiusX": 12,
+    "footRadiusY": 8,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 260,
+        "scale": 0.5
+      },
+      {
+        "y": 480,
+        "scale": 0.64
+      },
+      {
+        "y": 720,
+        "scale": 0.8
+      },
+      {
+        "y": 940,
+        "scale": 0.94
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 724,
+      "y": 650,
+      "facing": "north"
+    },
+    "from-east": {
+      "x": 1095,
+      "y": 650,
+      "facing": "west"
+    },
+    "from-south": {
+      "x": 724,
+      "y": 800,
+      "facing": "north"
+    }
+  },
+  "walkable": [
+    {
+      "id": "central-dry-floor",
+      "points": [
+        [
+          118,
+          302
+        ],
+        [
+          1330,
+          302
+        ],
+        [
+          1390,
+          418
+        ],
+        [
+          1390,
+          918
+        ],
+        [
+          1318,
+          974
+        ],
+        [
+          130,
+          974
+        ],
+        [
+          58,
+          918
+        ],
+        [
+          58,
+          418
+        ]
+      ]
+    },
+    {
+      "id": "east-approach",
+      "points": [
+        [
+          1050,
+          336
+        ],
+        [
+          1446,
+          336
+        ],
+        [
+          1446,
+          870
+        ],
+        [
+          1050,
+          870
+        ]
+      ]
+    },
+    {
+      "id": "south-approach",
+      "points": [
+        [
+          438,
+          742
+        ],
+        [
+          1010,
+          742
+        ],
+        [
+          1038,
+          1084
+        ],
+        [
+          410,
+          1084
+        ]
+      ]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "east-tunnel",
+      "label": "East tunnel to Sewer Area 1",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-01",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-tunnel"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [
+        [
+          1186,
+          424
+        ],
+        [
+          1432,
+          424
+        ],
+        [
+          1432,
+          812
+        ],
+        [
+          1186,
+          812
+        ]
+      ]
+    },
+    {
+      "id": "south-tunnel",
+      "label": "South tunnel to Sewer Area 3",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-sewer-03",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-tunnel"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [
+        [
+          500,
+          872
+        ],
+        [
+          948,
+          872
+        ],
+        [
+          992,
+          1062
+        ],
+        [
+          456,
+          1062
+        ]
+      ]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "foreground-masonry",
+      "depthY": 1000,
+      "points": [
+        [
+          0,
+          974
+        ],
+        [
+          1448,
+          974
+        ],
+        [
+          1448,
+          1086
+        ],
+        [
+          0,
+          1086
+        ]
+      ]
+    }
+  ],
+  "interactables": [],
+  "npcs": []
+}

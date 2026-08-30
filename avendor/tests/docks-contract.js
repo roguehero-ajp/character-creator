@@ -65,7 +65,7 @@ function transitionCenter(transition) {
   };
 }
 
-assert(baseMapData.version === '0.4.0', 'Docks base map version drifted from the user-traced 0.4 pass.');
+assert(baseMapData.version === '0.5.0', 'Docks base map must include the active Sewer Area 7 access.');
 assert(mapData.geometry.version === '0.4.2', 'Docks geometry sidecar is not on the authored visibility pass.');
 assert(mapData.geometry.model === 'user-traced-smooth-slide-visibility-authored',
   'Docks is not using the authored traced movement + visibility model.');

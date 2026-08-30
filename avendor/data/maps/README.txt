@@ -6,7 +6,7 @@ BRIARWELL REGISTRY
 briarwell-area-registry.json is the single source of truth for Briarwell area
 identity, availability and approved travel topology. Schema version 2 locks the
 12 numbered surface areas, the unnumbered western road junction, the connected
-sewer network and the two currently planned building interiors.
+15-area sewer network, its hidden dwarven chamber and two building interiors.
 
 Each entry keeps three different concerns separate:
 
@@ -25,7 +25,7 @@ AREA STATUS
 
 Only approved area identities belong in the registry, and only playable entries
 may provide a map path. All Town Center transitions name approved destinations.
-All five of its surface roads are active; the two building doorways remain planned.
+All five of its surface roads and the two building doorways are active.
 The two roads leaving Briarwell remain cityExits
 with status unassigned and target null until their world-map destinations are
 approved. The loader returns the hero to a safe local spawn when a planned,
@@ -41,6 +41,7 @@ geometry. Each connection has exactly two unique area/transition endpoints.
   doorway         Public building entrance.
   secret-passage  Hidden authored route; never player-facing navigation.
   sewer-access    Hidden surface-to-sewer route.
+  sewer-tunnel    Public navigation inside the underground network.
 
 visibility is either public or hidden. Secret passages and sewer entrances must
 remain hidden. status is planned until both endpoint maps are playable, then may
@@ -51,8 +52,9 @@ The current graph contains:
   13 road connections
    1 alley connection
    2 doorway connections
-   1 hidden open-window passage between Areas 4 and 11
-   4 hidden sewer entrances at Areas 1, 4, 7 and 9
+   2 hidden passages: the open window and ancient dwarven chamber
+   4 hidden sewer entrances at Areas 1, 7, 9 and 11
+  17 public tunnels inside the sewer network
 
 cityExits separately records the western road beyond the Area 5 junction and the
 south road beyond Area 8. This keeps unresolved world geography out of the town's
@@ -68,7 +70,7 @@ Map schemaVersion 2 uses explicit transition targets:
 
 Outdoor exits also declare their geographically meaningful direction. Reciprocal
 screen edges do not have to be mathematical opposites: for example, Town Center's
-northwest road enters the Workshops through that screen's south road.
+northwest road enters the Workshops through that screen's southwest road.
 
 Every transition must declare an authored fallbackSpawn in its current map.
 Automated topology checks reject duplicate ids/numbers, duplicate route endpoints,

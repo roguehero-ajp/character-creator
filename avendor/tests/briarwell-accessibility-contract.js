@@ -90,6 +90,17 @@ function assertResolvableInteraction(map, reachability, feature, type) {
 }
 
 function assertPortalApproach(map, reachability, portal) {
+  if (portal.activation === 'interact') {
+    const target = portal.interactionTarget;
+    const candidates = nearbyReachablePoints(reachability, target, portal.radius);
+    const resolvingPoint = candidates.find((point) => {
+      const result = map.getNearbyInteractable(point);
+      return result?.id === portal.id && result?.type === 'transition';
+    });
+    assert(resolvingPoint, `Interactive portal has no reachable approach: ${map.data.id}/${portal.id}`);
+    return;
+  }
+
   const xs = portal.points.map(([x]) => x);
   const ys = portal.points.map(([, y]) => y);
   const minX = Math.min(...xs);

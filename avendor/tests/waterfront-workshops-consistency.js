@@ -64,8 +64,8 @@ function assertWorkshops(engine) {
     [1400, 840, 'the southeast wall base']
   ]);
 
-  assertTransition(map, data, 'south-road', { x: 820, y: 950 }, { x: 820, y: 1045 });
-  assertTransition(map, data, 'east-road', { x: 1290, y: 565 }, { x: 1410, y: 500 });
+  assertTransition(map, data, 'southwest-road', { x: 620, y: 955 }, { x: 600, y: 1045 });
+  assertTransition(map, data, 'east-road', { x: 1290, y: 565 }, { x: 1410, y: 625 });
 
   const smith = map.getNearbyInteractable({ x: 560, y: 640 });
   assert(smith?.id === 'blacksmith-forge', 'Blacksmith forge is not naturally reachable from its return position.');

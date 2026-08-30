@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -187,14 +187,169 @@
       ]
     },
     {
-      "id": "briarwell-sewers",
+      "id": "briarwell-sewer-01",
       "areaNumber": null,
-      "title": "Briarwell Sewers",
+      "sewerAreaNumber": 1,
+      "title": "Briarwell Sewers - Area 1",
       "kind": "interior",
       "status": "playable",
-      "map": "data/maps/briarwell-sewers.json",
+      "map": "data/maps/briarwell-sewer-01.json",
       "landmarks": [
-        { "id": "sewer-network", "label": "Connected sewer network" }
+        { "id": "spring-cistern", "label": "Spring-fed Town Center well cistern" }
+      ]
+    },
+    {
+      "id": "briarwell-sewer-02",
+      "areaNumber": null,
+      "sewerAreaNumber": 2,
+      "title": "Briarwell Sewers - Area 2",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-02.json"
+    },
+    {
+      "id": "briarwell-sewer-03",
+      "areaNumber": null,
+      "sewerAreaNumber": 3,
+      "title": "Briarwell Sewers - Area 3",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-03.json"
+    },
+    {
+      "id": "briarwell-sewer-04",
+      "areaNumber": null,
+      "sewerAreaNumber": 4,
+      "title": "Briarwell Sewers - Area 4",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-04.json",
+      "landmarks": [
+        { "id": "ainsley-access", "label": "Ladder to the alley beside Ainsley's" }
+      ]
+    },
+    {
+      "id": "briarwell-sewer-05",
+      "areaNumber": null,
+      "sewerAreaNumber": 5,
+      "title": "Briarwell Sewers - Area 5",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-05.json",
+      "landmarks": [
+        { "id": "dwarven-door", "label": "Hidden dwarven doorway", "placement": "hidden" }
+      ]
+    },
+    {
+      "id": "briarwell-sewer-06",
+      "areaNumber": null,
+      "sewerAreaNumber": 6,
+      "title": "Briarwell Sewers - Area 6",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-06.json"
+    },
+    {
+      "id": "briarwell-sewer-07",
+      "areaNumber": null,
+      "sewerAreaNumber": 7,
+      "title": "Briarwell Sewers - Area 7",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-07.json",
+      "landmarks": [
+        { "id": "dock-access", "label": "Ladder and stair to the docks" }
+      ]
+    },
+    {
+      "id": "briarwell-sewer-08",
+      "areaNumber": null,
+      "sewerAreaNumber": 8,
+      "title": "Briarwell Sewers - Area 8",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-08.json"
+    },
+    {
+      "id": "briarwell-sewer-09",
+      "areaNumber": null,
+      "sewerAreaNumber": 9,
+      "title": "Briarwell Sewers - Area 9",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-09.json"
+    },
+    {
+      "id": "briarwell-sewer-10",
+      "areaNumber": null,
+      "sewerAreaNumber": 10,
+      "title": "Briarwell Sewers - Area 10",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-10.json"
+    },
+    {
+      "id": "briarwell-sewer-11",
+      "areaNumber": null,
+      "sewerAreaNumber": 11,
+      "title": "Briarwell Sewers - Area 11",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-11.json"
+    },
+    {
+      "id": "briarwell-sewer-12",
+      "areaNumber": null,
+      "sewerAreaNumber": 12,
+      "title": "Briarwell Sewers - Area 12",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-12.json"
+    },
+    {
+      "id": "briarwell-sewer-13",
+      "areaNumber": null,
+      "sewerAreaNumber": 13,
+      "title": "Briarwell Sewers - Area 13",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-13.json"
+    },
+    {
+      "id": "briarwell-sewer-14",
+      "areaNumber": null,
+      "sewerAreaNumber": 14,
+      "title": "Briarwell Sewers - Area 14",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-14.json",
+      "landmarks": [
+        { "id": "blight-cave", "label": "Cave near Ms. Blight's property" }
+      ]
+    },
+    {
+      "id": "briarwell-sewer-15",
+      "areaNumber": null,
+      "sewerAreaNumber": 15,
+      "title": "Briarwell Sewers - Area 15",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-15.json",
+      "landmarks": [
+        { "id": "kobold-lair", "label": "Kobold lair" }
+      ]
+    },
+    {
+      "id": "briarwell-sewer-secret",
+      "areaNumber": null,
+      "sewerAreaNumber": null,
+      "title": "Briarwell Sewers - Ancient Dwarven Chamber",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-sewer-secret.json",
+      "landmarks": [
+        { "id": "ancient-battle-axe", "label": "Ancient two-handed battle axe" },
+        { "id": "dwarven-treasure", "label": "Iron-banded treasure chest" }
       ]
     },
     {
@@ -369,40 +524,220 @@
       "id": "town-center-well-sewers",
       "kind": "sewer-access",
       "visibility": "hidden",
-      "status": "planned",
+      "status": "active",
       "endpoints": [
         { "areaId": "briarwell-town-center", "transitionId": "well-sewer-access" },
-        { "areaId": "briarwell-sewers", "transitionId": "town-center-well-ladder" }
-      ]
-    },
-    {
-      "id": "library-alley-sewers",
-      "kind": "sewer-access",
-      "visibility": "hidden",
-      "status": "planned",
-      "endpoints": [
-        { "areaId": "briarwell-library-quarter", "transitionId": "sewer-grate" },
-        { "areaId": "briarwell-sewers", "transitionId": "cliffside-alley-ladder" }
+        { "areaId": "briarwell-sewer-01", "transitionId": "town-center-well-ladder" }
       ]
     },
     {
       "id": "ainsley-alley-sewers",
       "kind": "sewer-access",
       "visibility": "hidden",
-      "status": "planned",
+      "status": "active",
       "endpoints": [
         { "areaId": "briarwell-ainsley-church", "transitionId": "sewer-grate" },
-        { "areaId": "briarwell-sewers", "transitionId": "ainsley-alley-ladder" }
+        { "areaId": "briarwell-sewer-04", "transitionId": "ainsley-alley-ladder" }
       ]
     },
     {
       "id": "docks-sewers",
       "kind": "sewer-access",
       "visibility": "hidden",
-      "status": "planned",
+      "status": "active",
       "endpoints": [
         { "areaId": "briarwell-docks", "transitionId": "sewer-access" },
-        { "areaId": "briarwell-sewers", "transitionId": "docks-ladder" }
+        { "areaId": "briarwell-sewer-07", "transitionId": "docks-ladder" }
+      ]
+    },
+    {
+      "id": "blight-cave-sewers",
+      "kind": "sewer-access",
+      "visibility": "hidden",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-blight-orphanage", "transitionId": "sewer-cave" },
+        { "areaId": "briarwell-sewer-14", "transitionId": "blight-cave-ladder" }
+      ]
+    },
+    {
+      "id": "sewer-01-02",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-01", "transitionId": "west-tunnel", "direction": "west" },
+        { "areaId": "briarwell-sewer-02", "transitionId": "east-tunnel", "direction": "east" }
+      ]
+    },
+    {
+      "id": "sewer-02-03",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-02", "transitionId": "south-tunnel", "direction": "south" },
+        { "areaId": "briarwell-sewer-03", "transitionId": "north-tunnel", "direction": "north" }
+      ]
+    },
+    {
+      "id": "sewer-03-04",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-03", "transitionId": "south-tunnel", "direction": "south" },
+        { "areaId": "briarwell-sewer-04", "transitionId": "north-tunnel", "direction": "north" }
+      ]
+    },
+    {
+      "id": "sewer-04-05",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-04", "transitionId": "east-tunnel", "direction": "east" },
+        { "areaId": "briarwell-sewer-05", "transitionId": "west-tunnel", "direction": "west" }
+      ]
+    },
+    {
+      "id": "sewer-05-06",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-05", "transitionId": "east-tunnel", "direction": "east" },
+        { "areaId": "briarwell-sewer-06", "transitionId": "west-tunnel", "direction": "west" }
+      ]
+    },
+    {
+      "id": "sewer-06-07",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-06", "transitionId": "east-tunnel", "direction": "east" },
+        { "areaId": "briarwell-sewer-07", "transitionId": "west-tunnel", "direction": "west" }
+      ]
+    },
+    {
+      "id": "sewer-07-08",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-07", "transitionId": "north-tunnel", "direction": "north" },
+        { "areaId": "briarwell-sewer-08", "transitionId": "south-tunnel", "direction": "south" }
+      ]
+    },
+    {
+      "id": "sewer-08-09",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-08", "transitionId": "north-tunnel", "direction": "north" },
+        { "areaId": "briarwell-sewer-09", "transitionId": "south-tunnel", "direction": "south" }
+      ]
+    },
+    {
+      "id": "sewer-09-10",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-09", "transitionId": "west-tunnel", "direction": "west" },
+        { "areaId": "briarwell-sewer-10", "transitionId": "east-tunnel", "direction": "east" }
+      ]
+    },
+    {
+      "id": "sewer-01-10",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-01", "transitionId": "east-tunnel", "direction": "east" },
+        { "areaId": "briarwell-sewer-10", "transitionId": "west-tunnel", "direction": "west" }
+      ]
+    },
+    {
+      "id": "sewer-10-12",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-10", "transitionId": "north-tunnel", "direction": "north" },
+        { "areaId": "briarwell-sewer-12", "transitionId": "south-tunnel", "direction": "south" }
+      ]
+    },
+    {
+      "id": "sewer-09-11",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-09", "transitionId": "north-tunnel", "direction": "north" },
+        { "areaId": "briarwell-sewer-11", "transitionId": "south-tunnel", "direction": "south" }
+      ]
+    },
+    {
+      "id": "sewer-11-12",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-11", "transitionId": "west-tunnel", "direction": "west" },
+        { "areaId": "briarwell-sewer-12", "transitionId": "east-tunnel", "direction": "east" }
+      ]
+    },
+    {
+      "id": "sewer-11-14",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-11", "transitionId": "north-tunnel", "direction": "north" },
+        { "areaId": "briarwell-sewer-14", "transitionId": "south-tunnel", "direction": "south" }
+      ]
+    },
+    {
+      "id": "sewer-12-13",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-12", "transitionId": "west-tunnel", "direction": "west" },
+        { "areaId": "briarwell-sewer-13", "transitionId": "east-tunnel", "direction": "east" }
+      ]
+    },
+    {
+      "id": "sewer-01-13",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-01", "transitionId": "north-tunnel", "direction": "north" },
+        { "areaId": "briarwell-sewer-13", "transitionId": "south-tunnel", "direction": "south" }
+      ]
+    },
+    {
+      "id": "sewer-08-15",
+      "kind": "sewer-tunnel",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-08", "transitionId": "west-tunnel", "direction": "west" },
+        { "areaId": "briarwell-sewer-15", "transitionId": "east-tunnel", "direction": "east" }
+      ]
+    },
+    {
+      "id": "sewer-05-secret-chamber",
+      "kind": "secret-passage",
+      "visibility": "hidden",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-sewer-05", "transitionId": "hidden-dwarven-door", "direction": "south" },
+        { "areaId": "briarwell-sewer-secret", "transitionId": "north-passage", "direction": "north" }
       ]
     },
     {

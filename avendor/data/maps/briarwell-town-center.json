@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-town-center",
   "title": "Briarwell - Town Center",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "referenceSize": {
     "width": 1448,
     "height": 1086
@@ -33,7 +33,8 @@
     "from-northwest": { "x": 405, "y": 500, "facing": "southeast" },
     "from-northeast": { "x": 1055, "y": 470, "facing": "southwest" },
     "tavern-return": { "x": 724, "y": 628, "facing": "south" },
-    "store-return": { "x": 1236, "y": 656, "facing": "south" }
+    "store-return": { "x": 1236, "y": 656, "facing": "south" },
+    "well-return": { "x": 830, "y": 842, "facing": "north" }
   },
   "walkable": [
     {
@@ -216,6 +217,21 @@
       },
       "fallbackSpawn": "store-return",
       "points": [[1180, 604], [1280, 604], [1295, 642], [1170, 642]]
+    },
+    {
+      "id": "well-sewer-access",
+      "label": "Descend through the Town Center well",
+      "status": "active",
+      "activation": "interact",
+      "target": {
+        "areaId": "briarwell-sewer-01",
+        "spawnId": "from-town-center-well",
+        "returnTransitionId": "town-center-well-ladder"
+      },
+      "fallbackSpawn": "well-return",
+      "points": [[770, 688], [888, 688], [908, 794], [752, 794]],
+      "interactionTarget": { "x": 830, "y": 770 },
+      "radius": 105
     }
   ],
   "depthOccluders": [
@@ -612,7 +628,6 @@
   ],
   "interactables": [
     { "id": "fruit-stall", "label": "Fruit vendor's stall", "x": 330, "y": 670, "radius": 82 },
-    { "id": "town-well", "label": "Town well", "x": 830, "y": 744, "radius": 82, "state": "sewer-sealed" },
     { "id": "direction-signpost", "label": "Road sign", "x": 420, "y": 905, "radius": 76 },
     { "id": "lodestone-tavern-sign", "label": "Lodestone Tavern sign", "x": 724, "y": 574, "radius": 72 },
     { "id": "general-store-front", "label": "General Store", "x": 1238, "y": 620, "radius": 72 }

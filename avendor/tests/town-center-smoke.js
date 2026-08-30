@@ -57,7 +57,7 @@ function assertGeometry() {
   const { data, map, pointInPolygon } = loadGeometry();
 
   assert(data.schemaVersion === 2, 'Wrong Town Center map schema version.');
-  assert(data.version === '0.8.0', 'Wrong Town Center map version.');
+  assert(data.version === '0.9.0', 'Wrong Town Center map version.');
   assert(data.collisions.length === 8, 'Town Center should contain eight foot-level obstacles.');
   assert(data.npcs.length === 2, 'Town Center should contain exactly two residents.');
   assert(
@@ -213,6 +213,7 @@ function assertGeometry() {
     data.art.background,
     'js/map-engine.js',
     'js/world-map.js',
+    'js/player-state.js',
     'js/sprite-engine.js',
     'js/walk-test.js'
   ].forEach((asset) => {
@@ -260,6 +261,19 @@ function assertGeometry() {
 
   const transitions = [...data.exits, ...data.portals];
   transitions.forEach((transition) => {
+    const fallback = map.getExactSpawn(transition.fallbackSpawn);
+    assert(fallback, `Transition fallback spawn is missing: ${transition.id}`);
+    assert(
+      !map.getTriggerAt(fallback),
+      `Transition fallback spawn overlaps a trigger: ${transition.id}`
+    );
+    if (transition.activation === 'interact') {
+      assert(
+        map.getNearbyInteractable(fallback)?.id === transition.id,
+        `Interactive transition is unreachable: ${transition.id}`
+      );
+      return;
+    }
     const x = transition.points.reduce((sum, point) => sum + point[0], 0)
       / transition.points.length;
     const y = transition.points.reduce((sum, point) => sum + point[1], 0)
@@ -274,12 +288,6 @@ function assertGeometry() {
     } else {
       assert(transition.target?.areaId, `Transition target is missing: ${transition.id}`);
     }
-    const fallback = map.getExactSpawn(transition.fallbackSpawn);
-    assert(fallback, `Transition fallback spawn is missing: ${transition.id}`);
-    assert(
-      !map.getTriggerAt(fallback),
-      `Transition fallback spawn overlaps a trigger: ${transition.id}`
-    );
   });
 
   const step = 5;
@@ -311,7 +319,9 @@ function assertGeometry() {
   }
 
   transitions.forEach((transition) => {
-    assert(found.has(transition.id), `Transition is disconnected: ${transition.id}`);
+    if (transition.activation !== 'interact') {
+      assert(found.has(transition.id), `Transition is disconnected: ${transition.id}`);
+    }
   });
 }
 
@@ -326,7 +336,7 @@ async function assertBrowser() {
 
   await page.goto(testUrl, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => (
-    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.8.0')
+    document.getElementById('rig-status')?.textContent.includes('TOWN CENTER MAP 0.9.0')
   ));
 
   const snapshot = await page.evaluate(() => ({
@@ -359,7 +369,7 @@ async function assertBrowser() {
     'Depth-sorted occluder groups were not mounted.'
   );
   assert(snapshot.occluderParts === snapshot.expectedOccluderParts, 'Occluder polygons were not mounted.');
-  assert(snapshot.exits === 5 && snapshot.portals === 2, 'Transition counts are wrong.');
+  assert(snapshot.exits === 5 && snapshot.portals === 3, 'Transition counts are wrong.');
   assert(
     snapshot.areaId === 'briarwell-town-center'
       && snapshot.registryStart === 'briarwell-town-center',
@@ -496,7 +506,7 @@ async function assertBrowser() {
 
     return results;
   });
-  assert(townAudit.length === 16, 'The browser did not load all 16 playable Briarwell maps.');
+  assert(townAudit.length === 31, 'The browser did not load all 31 playable Briarwell maps.');
   townAudit.forEach((area) => {
     assert(area.areaId === area.mapId && area.areaId === area.stageAreaId, `Wrong map mounted for ${area.areaId}.`);
     assert(area.width === 1448 && area.height === 1086, `Wrong background dimensions for ${area.areaId}.`);
@@ -513,8 +523,8 @@ async function assertBrowser() {
       `Resident layers were duplicated or dropped for ${area.areaId}.`
     );
   });
-  await page.evaluate(() => window.AvendorWalkTest.loadArea('briarwell-sewers', 'default'));
-  await page.screenshot({ path: '/tmp/avendor-briarwell-sewers-debug.png' });
+  await page.evaluate(() => window.AvendorWalkTest.loadArea('briarwell-sewer-01', 'default'));
+  await page.screenshot({ path: '/tmp/avendor-briarwell-sewer-01-debug.png' });
 
   await browser.close();
   assert(failures.length === 0, failures.join('\n'));

@@ -132,6 +132,17 @@ function assertPlayableMapGeometry(MapGeometry, areaId, data) {
     assert(fallback, `Fallback spawn is missing: ${areaId}/${transition.id}`);
     assert(!geometry.getTriggerAt(fallback), `Fallback overlaps a transition: ${areaId}/${transition.id}`);
 
+    if (transition.activation === 'interact') {
+      const target = transition.interactionTarget;
+      assert(target, `Interaction target is missing: ${areaId}/${transition.id}`);
+      assert(!geometry.getTriggerAt(fallback), `Interactive portal became an automatic trigger: ${areaId}/${transition.id}`);
+      assert(
+        geometry.getNearbyInteractable(fallback)?.id === transition.id,
+        `Interactive portal resolves incorrectly: ${areaId}/${transition.id}`
+      );
+      return;
+    }
+
     const center = {
       x: transition.points.reduce((total, point) => total + point[0], 0) / transition.points.length,
       y: transition.points.reduce((total, point) => total + point[1], 0) / transition.points.length
@@ -170,7 +181,9 @@ function assertPlayableMapGeometry(MapGeometry, areaId, data) {
   }
 
   transitions.forEach((transition) => {
-    assert(found.has(transition.id), `Transition is disconnected: ${areaId}/${transition.id}`);
+    if (transition.activation !== 'interact') {
+      assert(found.has(transition.id), `Transition is disconnected: ${areaId}/${transition.id}`);
+    }
   });
 }
 
@@ -199,13 +212,13 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   const topology = engine.auditTopology(registry, maps);
 
   assert(registryData.schemaVersion === 2, 'Briarwell must use the route-graph registry schema.');
-  assert(registryData.version === '0.16.0', 'The complete Briarwell map foundation requires registry version 0.16.0.');
-  assert(registryData.areas.length === 16, 'Briarwell must register 12 surface areas and four support areas.');
-  assert(registryData.connections.length === 21, 'Briarwell must preserve all 21 approved internal connections.');
+  assert(registryData.version === '0.18.0', 'The complete Briarwell sewer network requires registry version 0.18.0.');
+  assert(registryData.areas.length === 31, 'Briarwell must register 12 surface areas, 16 sewer areas and three support interiors.');
+  assert(registryData.connections.length === 39, 'Briarwell must preserve all 39 approved internal connections.');
   assert(registryData.cityExits.length === 2, 'Briarwell must preserve both roads out of town.');
   assert(
-    Object.keys(maps).length === 16,
-    'Briarwell must load 12 numbered maps, the west junction, sewer hub and two Town Center interiors.'
+    Object.keys(maps).length === 31,
+    'Briarwell must load 12 numbered maps, the west junction, 16 sewer maps and two Town Center interiors.'
   );
   assert(topology.errors.length === 0, topology.errors.join('\n'));
   const unavailableTransitionCount = Object.values(maps)
@@ -256,7 +269,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const townCenter = maps['briarwell-town-center'];
   const expectedTownRoads = {
-    'northwest-road': ['northwest', 'briarwell-northwest-workshops', 'from-south', 'south-road'],
+    'northwest-road': ['northwest', 'briarwell-northwest-workshops', 'from-southwest', 'southwest-road'],
     'northeast-road': ['northeast', 'briarwell-library-quarter', 'from-southwest', 'southwest-road'],
     'west-road': ['west', 'briarwell-western-homes', 'from-east', 'east-road'],
     'east-road': ['east', 'briarwell-tannery-warehouses', 'from-west', 'west-road'],
@@ -303,11 +316,12 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   assert(kindCounts.road === 13, 'Briarwell must preserve 13 public road connections.');
   assert(kindCounts.alley === 1, 'Briarwell must preserve the Ainsley alley connection.');
   assert(kindCounts.doorway === 2, 'Briarwell must preserve the two Town Center doorways.');
-  assert(kindCounts['secret-passage'] === 1, 'Briarwell must preserve the open-window secret passage.');
+  assert(kindCounts['secret-passage'] === 2, 'Briarwell must preserve the open-window and dwarven secret passages.');
   assert(kindCounts['sewer-access'] === 4, 'Briarwell must preserve all four sewer entrances.');
+  assert(kindCounts['sewer-tunnel'] === 17, 'Briarwell must preserve all 17 internal sewer tunnels.');
   assert(
-    registryData.connections.filter((connection) => connection.visibility === 'hidden').length === 5,
-    'Only the open-window route and four sewer entrances should be hidden.'
+    registryData.connections.filter((connection) => connection.visibility === 'hidden').length === 6,
+    'Only the open-window route, four sewer entrances and dwarven chamber should be hidden.'
   );
 
   const libraryPublic = registry.getConnectionsForArea('briarwell-library-quarter');
@@ -316,7 +330,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     { includeHidden: true }
   );
   assert(libraryPublic.length === 2, 'Area 4 must publicly connect to Town Center and Area 3.');
-  assert(libraryAll.length === 4, 'Area 4 must also retain its hidden window and sewer routes.');
+  assert(libraryAll.length === 3, 'Area 4 must also retain its hidden window route.');
 
   const secret = registry.getConnection('library-quarter-blight-open-window');
   assert(secret?.visibility === 'hidden', "Ms. Blight's window route must not appear in public navigation.");
@@ -328,18 +342,21 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const sewerSurfaceNumbers = registryData.connections
     .filter((connection) => connection.kind === 'sewer-access')
-    .map((connection) => connection.endpoints.find((endpoint) => endpoint.areaId !== 'briarwell-sewers'))
+    .map((connection) => connection.endpoints.find((endpoint) => !endpoint.areaId.startsWith('briarwell-sewer-')))
     .map((endpoint) => registry.getArea(endpoint.areaId).areaNumber)
     .sort((left, right) => left - right);
   assert(
-    sewerSurfaceNumbers.join(',') === '1,4,7,9',
-    'The sewer network must surface only at the well, cliff alley, Ainsley alley and docks.'
+    sewerSurfaceNumbers.join(',') === '1,7,9,11',
+    "The sewer network must surface only at the well, Ainsley's alley, docks and Ms. Blight's cave."
   );
 
   const publicReachable = collectReachableAreas(registry, 'briarwell-town-center', false);
   const allReachable = collectReachableAreas(registry, 'briarwell-town-center', true);
   assert(publicReachable.size === 14, 'The public route graph must connect every non-secret Briarwell area.');
-  assert(!publicReachable.has('briarwell-sewers'), 'The sewers must not appear in public navigation.');
+  assert(
+    ![...publicReachable].some((areaId) => areaId.startsWith('briarwell-sewer-')),
+    'The sewers must not appear in public navigation.'
+  );
   assert(
     !publicReachable.has('briarwell-blight-orphanage'),
     "Ms. Blight's isolated grounds must not appear in public navigation."
@@ -353,16 +370,16 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const workshops = maps['briarwell-northwest-workshops'];
   assert(workshops, 'Area 2 must load as a playable runtime map.');
-  assert(workshops.version === '0.1.0', 'Area 2 must start at runtime map version 0.1.0.');
-  assert(workshops.exits.length === 2, 'Area 2 must expose only its south and east roads.');
-  const workshopSouth = workshops.exits.find((exit) => exit.id === 'south-road');
+  assert(workshops.version === '0.2.0', 'Area 2 must expose the corrected workshop road geometry.');
+  assert(workshops.exits.length === 2, 'Area 2 must expose only its southwest and east roads.');
+  const workshopSouth = workshops.exits.find((exit) => exit.id === 'southwest-road');
   const workshopEast = workshops.exits.find((exit) => exit.id === 'east-road');
   assert(
     workshopSouth?.status === 'active'
       && workshopSouth.target?.areaId === 'briarwell-town-center'
       && workshopSouth.target?.spawnId === 'from-northwest'
       && workshopSouth.target?.returnTransitionId === 'northwest-road',
-    'Area 2 south road must return precisely to Town Center northwest.'
+    'Area 2 southwest road must return precisely to Town Center northwest.'
   );
   assert(
     workshopEast?.status === 'active'
@@ -440,7 +457,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const libraryQuarter = maps['briarwell-library-quarter'];
   assert(libraryQuarter, 'Area 4 must load as a playable runtime map.');
-  assert(libraryQuarter.version === '0.1.0', 'Area 4 must start at runtime map version 0.1.0.');
+  assert(libraryQuarter.version === '0.2.0', 'Area 4 must remove the obsolete sewer-grate route.');
   assert(libraryQuarter.exits.length === 2, 'Area 4 must expose only west and southwest public roads.');
   assert(libraryQuarter.portals.length === 0, 'Area 4 hidden routes must not appear as normal navigation triggers.');
   const libraryWest = libraryQuarter.exits.find((exit) => exit.id === 'west-road');
@@ -461,7 +478,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   );
   const hiddenFeatureIds = new Set(libraryQuarter.interactables.map((feature) => feature.id));
   assert(hiddenFeatureIds.has('alley-open-window'), 'Area 4 must preserve the open-window clue.');
-  assert(hiddenFeatureIds.has('alley-sewer-grate'), 'Area 4 must preserve the alley sewer grate.');
+  assert(!hiddenFeatureIds.has('alley-sewer-grate'), 'Area 4 must not advertise the removed sewer route.');
   const libraryGeometry = new MapGeometry(libraryQuarter);
   [
     [620, 790, 'open civic square'],
@@ -573,9 +590,15 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const ainsleyChurch = maps['briarwell-ainsley-church'];
   assert(ainsleyChurch, 'Area 7 must load as a playable runtime map.');
-  assert(ainsleyChurch.version === '0.1.0', 'Area 7 must start at runtime map version 0.1.0.');
+  assert(ainsleyChurch.version === '0.2.0', 'Area 7 must expose the active sewer access beside Ainsley\'s.');
   assert(ainsleyChurch.exits.length === 2, 'Area 7 must expose only north alley and east road.');
-  assert(ainsleyChurch.portals.length === 0, 'Area 7 sewer access must not appear as normal navigation.');
+  assert(
+    ainsleyChurch.portals.length === 1
+      && ainsleyChurch.portals[0].id === 'sewer-grate'
+      && ainsleyChurch.portals[0].activation === 'interact'
+      && ainsleyChurch.portals[0].target?.areaId === 'briarwell-sewer-04',
+    "Area 7 must expose one interacted sewer grate to Sewer Area 4."
+  );
   const ainsleyNorth = ainsleyChurch.exits.find((exit) => exit.id === 'north-alley');
   const ainsleyEast = ainsleyChurch.exits.find((exit) => exit.id === 'east-road');
   assert(
@@ -590,10 +613,6 @@ function assertBriarwellRegistry(engine, MapGeometry) {
       && ainsleyEast.target?.areaId === 'briarwell-south-gate'
       && ainsleyEast.target?.returnTransitionId === 'west-road',
     'Area 7 east road must load the South Gate through its west road.'
-  );
-  assert(
-    ainsleyChurch.interactables.some((feature) => feature.id === 'ainsley-sewer-grate'),
-    'Area 7 must preserve its hidden alley-grate clue.'
   );
   const ainsleyGeometry = new MapGeometry(ainsleyChurch);
   [
@@ -711,9 +730,15 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const docks = maps['briarwell-docks'];
   assert(docks, 'Area 9 must load as a playable runtime map.');
-  assert(docks.version === '0.1.0', 'Area 9 must start at runtime map version 0.1.0.');
+  assert(docks.version === '0.5.0', 'Area 9 must expose the active dockside sewer access.');
   assert(docks.exits.length === 2, 'Area 9 must expose only north and west roads.');
-  assert(docks.portals.length === 0, 'Area 9 sewer access must not appear as normal navigation.');
+  assert(
+    docks.portals.length === 1
+      && docks.portals[0].id === 'sewer-access'
+      && docks.portals[0].activation === 'interact'
+      && docks.portals[0].target?.areaId === 'briarwell-sewer-07',
+    'Area 9 must expose one interacted dockside access to Sewer Area 7.'
+  );
   const docksNorth = docks.exits.find((exit) => exit.id === 'north-road');
   const docksWest = docks.exits.find((exit) => exit.id === 'west-road');
   assert(
@@ -730,10 +755,6 @@ function assertBriarwellRegistry(engine, MapGeometry) {
       && docksWest.target?.returnTransitionId === 'east-road',
     'Area 9 west road must return precisely to Area 8.'
   );
-  assert(
-    docks.interactables.some((feature) => feature.id === 'dockside-sewer-access'),
-    'Area 9 must preserve its hidden dockside sewer clue.'
-  );
   const docksGeometry = new MapGeometry(docks);
   [
     [560, 500, 'loading square'],
@@ -747,7 +768,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   [
     [980, 500, "fisherman's-house foundation"],
     [200, 690, 'west quay wall'],
-    [700, 650, 'main quay wall'],
+    [900, 600, 'main quay wall'],
     [900, 720, 'central fishing boat'],
     [790, 1010, 'foreground pier cargo']
   ].forEach(([x, y, label]) => {
@@ -785,10 +806,14 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const blightOrphanage = maps['briarwell-blight-orphanage'];
   assert(blightOrphanage, 'Area 11 must load as a playable runtime map.');
-  assert(blightOrphanage.version === '0.1.0', 'Area 11 must start at runtime map version 0.1.0.');
+  assert(blightOrphanage.version === '0.2.0', 'Area 11 must expose the cave access to the sewers.');
   assert(
-    blightOrphanage.exits.length === 0 && blightOrphanage.portals.length === 0,
-    'Area 11 must not expose an ordinary road or automatic secret trigger.'
+    blightOrphanage.exits.length === 0
+      && blightOrphanage.portals.length === 1
+      && blightOrphanage.portals[0].id === 'sewer-cave'
+      && blightOrphanage.portals[0].activation === 'interact'
+      && blightOrphanage.portals[0].target?.areaId === 'briarwell-sewer-14',
+    'Area 11 must expose only one interacted cave access to Sewer Area 14.'
   );
   assert(
     blightOrphanage.interactables.some((feature) => feature.id === 'alley-open-window'),
@@ -848,7 +873,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const westJunction = maps['briarwell-west-road-junction'];
   assert(westJunction, 'The western junction must load as a playable runtime map.');
-  assert(westJunction.version === '0.1.0', 'The western junction must start at runtime map version 0.1.0.');
+  assert(westJunction.version === '0.1.1', 'The western junction must expose the corrected collision geometry.');
   assert(westJunction.exits.length === 3, 'The western junction must expose west, east and north roads only.');
   const junctionWest = westJunction.exits.find((exit) => exit.id === 'west-road');
   const junctionEast = westJunction.exits.find((exit) => exit.id === 'east-road');
@@ -894,52 +919,130 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     assert(!junctionGeometry.isWalkable(x, y), `Western junction ${label} does not block at its visible base.`);
   });
 
-  const sewers = maps['briarwell-sewers'];
-  assert(sewers, 'The Briarwell sewer hub must load as a playable runtime map.');
-  assert(sewers.version === '0.1.0', 'The sewer hub must start at runtime map version 0.1.0.');
-  assert(
-    sewers.exits.length === 0 && sewers.portals.length === 0,
-    'Sealed sewer routes must not become automatic exits or portals.'
-  );
-  assert(
-    sewers.interactables.map((feature) => feature.id).sort().join('|')
-      === [
-        'ainsley-alley-ladder',
-        'cliffside-alley-ladder',
-        'docks-ladder',
-        'town-center-well-ladder'
-      ].join('|'),
-    'The sewer hub must expose exactly its four state-gated access landmarks.'
-  );
-  assert(
-    sewers.interactables.every((feature) => feature.state === 'sewer-route-sealed'),
-    'All sewer access landmarks must remain sealed until state logic is implemented.'
-  );
-  const sewerGeometry = new MapGeometry(sewers);
-  [
-    [720, 560, 'central maintenance floor'],
-    [420, 400, 'Town Center well approach'],
-    [1000, 440, 'cliffside alley approach'],
-    [500, 780, "Ainsley's alley approach"],
-    [910, 790, 'docks approach']
-  ].forEach(([x, y, label]) => {
-    assert(sewerGeometry.isWalkable(x, y), `Sewer ${label} is not walkable.`);
+  const sewerTopology = {
+    1: [['north', 13], ['east', 10], ['west', 2]],
+    2: [['east', 1], ['south', 3]],
+    3: [['north', 2], ['south', 4]],
+    4: [['north', 3], ['east', 5]],
+    5: [['east', 6], ['west', 4]],
+    6: [['east', 7], ['west', 5]],
+    7: [['north', 8], ['west', 6]],
+    8: [['north', 9], ['south', 7], ['west', 15]],
+    9: [['north', 11], ['south', 8], ['west', 10]],
+    10: [['north', 12], ['east', 9], ['west', 1]],
+    11: [['north', 14], ['south', 9], ['west', 12]],
+    12: [['east', 11], ['south', 10], ['west', 13]],
+    13: [['east', 12], ['south', 1]],
+    14: [['south', 11]],
+    15: [['east', 8]]
+  };
+  const sewerMaps = Array.from({ length: 15 }, (_, index) => (
+    maps[`briarwell-sewer-${String(index + 1).padStart(2, '0')}`]
+  ));
+  assert(sewerMaps.every(Boolean), 'All 15 numbered Briarwell sewer maps must load.');
+  sewerMaps.forEach((sewer, index) => {
+    const areaNumber = index + 1;
+    assert(sewer.version === '1.0.0', `Sewer Area ${areaNumber} must use runtime map version 1.0.0.`);
+    const actualLinks = sewer.exits
+      .map((exit) => [exit.direction, Number(exit.target.areaId.slice(-2))])
+      .sort((left, right) => left[0].localeCompare(right[0]));
+    const expectedLinks = sewerTopology[areaNumber]
+      .slice()
+      .sort((left, right) => left[0].localeCompare(right[0]));
+    assert(
+      JSON.stringify(actualLinks) === JSON.stringify(expectedLinks),
+      `Sewer Area ${areaNumber} does not match Jay's approved map topology.`
+    );
   });
-  [
-    [250, 180, 'Town Center well shaft'],
-    [760, 190, 'upper water channel'],
-    [1220, 210, 'cliffside ladder shaft'],
-    [180, 690, "Ainsley's access masonry"],
-    [1200, 760, 'dock culvert water'],
-    [720, 1000, 'closed south wall']
-  ].forEach(([x, y, label]) => {
-    assert(!sewerGeometry.isWalkable(x, y), `Sewer ${label} does not block at its visible base.`);
+
+  const expectedSewerPortals = {
+    1: ['town-center-well-ladder', 'briarwell-town-center'],
+    4: ['ainsley-alley-ladder', 'briarwell-ainsley-church'],
+    5: ['hidden-dwarven-door', 'briarwell-sewer-secret'],
+    7: ['docks-ladder', 'briarwell-docks'],
+    14: ['blight-cave-ladder', 'briarwell-blight-orphanage']
+  };
+  sewerMaps.forEach((sewer, index) => {
+    const areaNumber = index + 1;
+    const expectedPortal = expectedSewerPortals[areaNumber];
+    assert(
+      sewer.portals.length === (expectedPortal ? 1 : 0),
+      `Sewer Area ${areaNumber} has an unexpected access portal count.`
+    );
+    if (!expectedPortal) return;
+    assert(
+      sewer.portals[0].id === expectedPortal[0]
+        && sewer.portals[0].target?.areaId === expectedPortal[1]
+        && sewer.portals[0].activation === 'interact',
+      `Sewer Area ${areaNumber} has the wrong interacted access portal.`
+    );
   });
+
+  const areaOne = sewerMaps[0];
+  const cleanCistern = areaOne.interactables.find((feature) => feature.id === 'clean-spring-cistern');
+  assert(
+    areaOne.art.background.endsWith('/sewer-area-01-v1.png')
+      && areaOne.art.alt.includes('raised clear-water cistern')
+      && areaOne.collisions.some((region) => region.id === 'raised-clean-water-cistern')
+      && cleanCistern?.interactionText.includes('Clear spring water')
+      && cleanCistern?.interactionText.includes('one-way')
+      && cleanCistern?.interactionText.includes('masonry divider'),
+    'Sewer Area 1 must unmistakably separate the spring-fed well cistern from the lower sewer water.'
+  );
+
+  const areaFiveDoor = sewerMaps[4].portals.find((portal) => portal.id === 'hidden-dwarven-door');
+  assert(
+    areaFiveDoor?.check?.type === 'stat'
+      && areaFiveDoor.check.stat === 'perception'
+      && areaFiveDoor.check.target === 12
+      && areaFiveDoor.check.discoveryId === 'briarwell-sewer-dwarven-door',
+    'Sewer Area 5 must guard the dwarven chamber with the approved Perception 12 discovery check.'
+  );
+
+  const areaSevenDock = sewerMaps[6].portals.find((portal) => portal.id === 'docks-ladder');
+  assert(
+    areaSevenDock?.target?.areaId === 'briarwell-docks',
+    'Sewer Area 7 must preserve Jay\'s added exit to the docks.'
+  );
+
+  const kobolds = sewerMaps[14].interactables.find((feature) => feature.id === 'kobold-war-party');
+  assert(
+    sewerMaps[14].exits.length === 1
+      && sewerMaps[14].exits[0].direction === 'east'
+      && kobolds?.interactionText.includes('Ten kobolds')
+      && kobolds?.interactionText.includes('wizard')
+      && kobolds?.interactionText.includes('champion'),
+    'Sewer Area 15 must contain ten kobolds, including the wizard and champion, behind its east-only route.'
+  );
+
+  const dwarvenChamber = maps['briarwell-sewer-secret'];
+  assert(dwarvenChamber?.version === '1.0.0', 'The ancient dwarven chamber must load at version 1.0.0.');
+  assert(
+    dwarvenChamber.exits.length === 1
+      && dwarvenChamber.exits[0].target?.areaId === 'briarwell-sewer-05',
+    'The ancient dwarven chamber must return only to Sewer Area 5.'
+  );
+  const axe = dwarvenChamber.interactables.find((feature) => feature.id === 'ancient-two-handed-battle-axe');
+  const chest = dwarvenChamber.interactables.find((feature) => feature.id === 'dwarven-treasure-chest');
+  assert(
+    axe?.interactionText.includes('two-handed battle axe')
+      && chest?.interactionText.includes('chainmail armour')
+      && chest?.interactionText.includes('350 silver')
+      && chest?.interactionText.includes('20 gold'),
+    'The dwarven chamber must preserve the approved axe and exact chest contents.'
+  );
+
   assert(
     registryData.connections
       .filter((connection) => connection.kind === 'sewer-access')
-      .every((connection) => connection.status === 'planned' && connection.visibility === 'hidden'),
-    'All four sewer connections must remain hidden and state-gated.'
+      .every((connection) => connection.status === 'active' && connection.visibility === 'hidden'),
+    'All four surface sewer connections must be active, interacted and hidden from public navigation.'
+  );
+  assert(
+    registryData.connections
+      .filter((connection) => connection.kind === 'sewer-tunnel')
+      .every((connection) => connection.status === 'active' && connection.visibility === 'public'),
+    'All 17 internal sewer tunnels must be active within the underground network.'
   );
 
   const tavern = maps['lodestone-tavern-interior'];
