@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Avendor Hero Animation Lab 0.1</title>
+  <title>Avendor Hero Animation Lab 0.2</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/hero-animation-lab.css">
 </head>
@@ -12,8 +12,8 @@
     <header class="lab-header">
       <div>
         <p class="eyebrow">AVENDOR DEVELOPMENT TOOL</p>
-        <h1 id="lab-title">Hero Animation Lab <span>0.1</span></h1>
-        <p>Canonical east-facing male rig. Body measurements are locked across every pose; only pose angles and a small vertical gait offset are editable.</p>
+        <h1 id="lab-title">Hero Animation Lab <span>0.2</span></h1>
+        <p>Canonical east-facing male rig with a rigged body preview. Body measurements stay locked across every pose while the walk motion, preview layer and playback speed can be tuned safely.</p>
       </div>
       <a class="back-link" href="walk-test.html">Back to walk test</a>
     </header>
@@ -21,8 +21,28 @@
     <section class="lab-grid">
       <div class="stage-panel">
         <div class="canvas-shell">
-          <canvas id="hero-animation-canvas" width="128" height="240" aria-label="East-facing hero skeleton preview"></canvas>
+          <canvas id="hero-animation-canvas" width="128" height="240" aria-label="East-facing hero body and skeleton preview"></canvas>
         </div>
+
+        <div class="preview-toolbar" aria-label="Hero preview controls">
+          <div class="view-mode" role="group" aria-label="Preview layer">
+            <span>Preview</span>
+            <button type="button" data-view-mode="body" aria-pressed="false">Body</button>
+            <button type="button" data-view-mode="both" class="selected" aria-pressed="true">Body + rig</button>
+            <button type="button" data-view-mode="skeleton" aria-pressed="false">Rig</button>
+          </div>
+          <label class="compact-slider" for="lab-body-opacity">
+            <span>Body opacity</span>
+            <input type="range" id="lab-body-opacity" min="25" max="100" step="5" value="90">
+            <output id="lab-body-opacity-value" for="lab-body-opacity">90%</output>
+          </label>
+          <label class="compact-slider" for="lab-speed">
+            <span>Animation speed</span>
+            <input type="range" id="lab-speed" min="20" max="200" step="5" value="100">
+            <output id="lab-speed-value" for="lab-speed">100% · 110 ms/frame</output>
+          </label>
+        </div>
+
         <div class="playback-row">
           <button type="button" id="lab-prev">◀ Previous</button>
           <button type="button" id="lab-play" aria-pressed="false">▶ Play walk</button>
@@ -37,7 +57,7 @@
         <section>
           <h2>Locked proportions</h2>
           <div class="measurement-grid" id="lab-measurements"></div>
-          <p class="hint">These numbers are shared by every frame. Changing anatomy belongs in the rig definition, not in an individual pose.</p>
+          <p class="hint">These measurements drive both the skeleton and the body preview. Changing anatomy belongs in the rig definition, not in an individual pose.</p>
         </section>
 
         <section>
@@ -54,7 +74,7 @@
       <div class="section-heading">
         <div>
           <h2>Pose data</h2>
-          <p class="hint">Export is development metadata only. It does not replace the current PNG atlases yet.</p>
+          <p class="hint">Export is development metadata only. The rigged body is a motion/silhouette preview and does not replace the production PNG atlas yet.</p>
         </div>
         <div class="export-actions">
           <button type="button" id="lab-reset-all">Reset all</button>
