@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Avendor Hero Animation Lab 0.1</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="css/hero-animation-lab.css">
+</head>
+<body>
+  <main class="animation-lab" aria-labelledby="lab-title">
+    <header class="lab-header">
+      <div>
+        <p class="eyebrow">AVENDOR DEVELOPMENT TOOL</p>
+        <h1 id="lab-title">Hero Animation Lab <span>0.1</span></h1>
+        <p>Canonical east-facing male rig. Body measurements are locked across every pose; only pose angles and a small vertical gait offset are editable.</p>
+      </div>
+      <a class="back-link" href="walk-test.html">Back to walk test</a>
+    </header>
+
+    <section class="lab-grid">
+      <div class="stage-panel">
+        <div class="canvas-shell">
+          <canvas id="hero-animation-canvas" width="128" height="240" aria-label="East-facing hero skeleton preview"></canvas>
+        </div>
+        <div class="playback-row">
+          <button type="button" id="lab-prev">◀ Previous</button>
+          <button type="button" id="lab-play" aria-pressed="false">▶ Play walk</button>
+          <button type="button" id="lab-next">Next ▶</button>
+          <label><input type="checkbox" id="lab-onion" checked> Onion skin</label>
+        </div>
+        <div class="pose-strip" id="lab-pose-strip" aria-label="Pose timeline"></div>
+        <div class="lab-status" id="lab-status" role="status" aria-live="polite">Loading rig…</div>
+      </div>
+
+      <aside class="editor-panel">
+        <section>
+          <h2>Locked proportions</h2>
+          <div class="measurement-grid" id="lab-measurements"></div>
+          <p class="hint">These numbers are shared by every frame. Changing anatomy belongs in the rig definition, not in an individual pose.</p>
+        </section>
+
+        <section>
+          <div class="section-heading">
+            <h2>Pose controls</h2>
+            <button type="button" id="lab-reset-pose">Reset pose</button>
+          </div>
+          <div class="slider-grid" id="lab-sliders"></div>
+        </section>
+      </aside>
+    </section>
+
+    <section class="export-panel">
+      <div class="section-heading">
+        <div>
+          <h2>Pose data</h2>
+          <p class="hint">Export is development metadata only. It does not replace the current PNG atlases yet.</p>
+        </div>
+        <div class="export-actions">
+          <button type="button" id="lab-reset-all">Reset all</button>
+          <button type="button" id="lab-copy">Copy JSON</button>
+        </div>
+      </div>
+      <textarea id="lab-output" readonly spellcheck="false" aria-label="Hero animation pose JSON"></textarea>
+    </section>
+  </main>
+  <script src="js/hero-animation-lab.js"></script>
+</body>
+</html>
