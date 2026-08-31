@@ -5,7 +5,7 @@
   const FRAME_H = 240;
   const FLOOR_Y = 226;
   const LAB_VERSION = '0.2.0';
-  const UI_VERSION = '0.5.0';
+  const UI_VERSION = '0.5.1';
   const BASE_WALK_POSE_MS = 110;
 
   const canvas = document.getElementById('hero-animation-canvas');
@@ -61,31 +61,42 @@
     belt: '#3b271d'
   });
 
+  // 0.5.1 is intentionally a lab-only near-final skin: recognisable hero identity,
+  // clean articulated parts, but no production atlas pixels are copied or modified.
   const HERO_PALETTE = Object.freeze({
-    outline: '#181310',
+    outline: '#211711',
+    outlineSoft: '#38261b',
     hair: '#4b3022',
-    hairShadow: '#2e1d16',
-    skin: '#c98f65',
-    skinShadow: '#9e684a',
-    shirt: '#cdbb98',
-    shirtShadow: '#96866c',
-    tunic: '#7d4a2f',
-    tunicShadow: '#54301f',
-    tunicLight: '#956040',
-    trousers: '#45484a',
-    trousersShadow: '#303235',
-    boot: '#39291f',
-    bootShadow: '#241b16',
+    hairShadow: '#2d1d16',
+    hairLight: '#76503a',
+    skin: '#ca936c',
+    skinShadow: '#9d6749',
+    skinLight: '#e0b089',
+    shirt: '#d6c39b',
+    shirtShadow: '#9b896c',
+    shirtLight: '#ead9b5',
+    tunic: '#7b4d34',
+    tunicShadow: '#503124',
+    tunicLight: '#a46d4a',
+    trousers: '#454b4f',
+    trousersShadow: '#303438',
+    trousersLight: '#62696d',
+    boot: '#3b2b21',
+    bootShadow: '#241a15',
+    bootLight: '#5d4432',
     belt: '#3a251a',
-    buckle: '#a8884f'
+    buckle: '#ad8a4d'
   });
 
   const GHOST_PALETTE = Object.freeze({
-    outline: 'rgba(118,220,237,.38)', hair: 'rgba(94,180,194,.22)', hairShadow: 'rgba(94,180,194,.16)',
-    skin: 'rgba(126,219,235,.24)', skinShadow: 'rgba(126,219,235,.17)', shirt: 'rgba(126,219,235,.18)',
-    shirtShadow: 'rgba(126,219,235,.13)', tunic: 'rgba(126,219,235,.20)', tunicShadow: 'rgba(126,219,235,.14)',
-    tunicLight: 'rgba(126,219,235,.22)', trousers: 'rgba(126,219,235,.17)', trousersShadow: 'rgba(126,219,235,.12)',
-    boot: 'rgba(126,219,235,.15)', bootShadow: 'rgba(126,219,235,.10)', belt: 'rgba(126,219,235,.18)', buckle: 'rgba(126,219,235,.22)'
+    outline: 'rgba(118,220,237,.38)', outlineSoft: 'rgba(118,220,237,.25)',
+    hair: 'rgba(94,180,194,.22)', hairShadow: 'rgba(94,180,194,.16)', hairLight: 'rgba(126,219,235,.22)',
+    skin: 'rgba(126,219,235,.24)', skinShadow: 'rgba(126,219,235,.17)', skinLight: 'rgba(126,219,235,.27)',
+    shirt: 'rgba(126,219,235,.18)', shirtShadow: 'rgba(126,219,235,.13)', shirtLight: 'rgba(126,219,235,.21)',
+    tunic: 'rgba(126,219,235,.20)', tunicShadow: 'rgba(126,219,235,.14)', tunicLight: 'rgba(126,219,235,.22)',
+    trousers: 'rgba(126,219,235,.17)', trousersShadow: 'rgba(126,219,235,.12)', trousersLight: 'rgba(126,219,235,.20)',
+    boot: 'rgba(126,219,235,.15)', bootShadow: 'rgba(126,219,235,.10)', bootLight: 'rgba(126,219,235,.18)',
+    belt: 'rgba(126,219,235,.18)', buckle: 'rgba(126,219,235,.22)'
   });
 
   const POSE_ORDER = Object.freeze([
@@ -392,18 +403,113 @@
     return points;
   }
 
+  function drawRoundedSegment(a, b, width, fill, outline, outlineExtra = 2.4) {
+    line(a, b, width + outlineExtra, outline);
+    line(a, b, width, fill);
+  }
+
+  function drawSoftJoint(point, radius, fill, outline) {
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, radius + 1.1, 0, Math.PI * 2);
+    ctx.fillStyle = outline;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+
+  function drawEllipse(center, radiusX, radiusY, rotation, fill, outline, lineWidth = 1.2) {
+    ctx.beginPath();
+    ctx.ellipse(center.x, center.y, radiusX, radiusY, rotation, 0, Math.PI * 2);
+    ctx.fillStyle = fill;
+    ctx.fill();
+    if (outline) {
+      ctx.lineWidth = lineWidth;
+      ctx.strokeStyle = outline;
+      ctx.stroke();
+    }
+  }
+
+  function segmentAngle(a, b) {
+    return Math.atan2(b.y - a.y, b.x - a.x);
+  }
+
+  function heroColors(palette, far) {
+    return {
+      tunic: far ? palette.tunicShadow : palette.tunic,
+      shirt: far ? palette.shirtShadow : palette.shirt,
+      skin: far ? palette.skinShadow : palette.skin,
+      trousers: far ? palette.trousersShadow : palette.trousers,
+      boot: far ? palette.bootShadow : palette.boot
+    };
+  }
+
+  function drawHeroHand(elbow, wrist, fill, palette, far) {
+    const angle = segmentAngle(elbow, wrist);
+    const center = {
+      x: wrist.x + Math.cos(angle) * 1.8,
+      y: wrist.y + Math.sin(angle) * 1.8
+    };
+    drawEllipse(center, far ? 4.2 : 4.7, far ? 3.0 : 3.3, angle, fill, palette.outline, 1.05);
+    if (!far && palette.skinLight) {
+      ctx.save();
+      ctx.strokeStyle = palette.skinLight;
+      ctx.lineWidth = .8;
+      ctx.beginPath();
+      ctx.moveTo(center.x - Math.sin(angle) * 1.2, center.y + Math.cos(angle) * 1.2);
+      ctx.lineTo(center.x + Math.cos(angle) * 2.4, center.y + Math.sin(angle) * 2.4);
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+
   function drawHeroArm(points, side, palette, far = false) {
     const shoulder = points[`${side}Shoulder`];
     const elbow = points[`${side}Elbow`];
     const wrist = points[`${side}Wrist`];
-    const sleeveFill = far ? palette.shirtShadow : palette.shirt;
-    const skinFill = far ? palette.skinShadow : palette.skin;
-    const cuff = pointBetween(elbow, wrist, .78);
+    const colors = heroColors(palette, far);
+    const tunicSleeveEnd = pointBetween(shoulder, elbow, .28);
+    const shirtSleeveEnd = pointBetween(shoulder, elbow, .62);
 
-    drawSegment(shoulder, elbow, far ? 5.2 : 6.2, far ? 4.5 : 5.1, sleeveFill, palette.outline);
-    drawSegment(elbow, cuff, far ? 4.4 : 5.0, far ? 3.6 : 4.1, sleeveFill, palette.outline);
-    drawSegment(cuff, wrist, far ? 3.5 : 4.0, far ? 3.0 : 3.4, skinFill, palette.outline);
-    joint(wrist, far ? 3.8 : 4.2, skinFill);
+    // Rounded overlapping pieces deliberately preserve the smoother 0.4 anatomy read.
+    drawRoundedSegment(shoulder, tunicSleeveEnd, far ? 9.5 : 11.5, colors.tunic, palette.outline);
+    drawSoftJoint(tunicSleeveEnd, far ? 4.3 : 5.1, colors.tunic, palette.outline);
+    drawRoundedSegment(tunicSleeveEnd, shirtSleeveEnd, far ? 8.0 : 9.3, colors.shirt, palette.outline);
+    drawRoundedSegment(shirtSleeveEnd, elbow, far ? 7.5 : 8.6, colors.shirt, palette.outline);
+    drawSoftJoint(elbow, far ? 3.7 : 4.2, colors.skin, palette.outline);
+    drawRoundedSegment(elbow, wrist, far ? 6.6 : 7.5, colors.skin, palette.outline);
+
+    // A simple rolled sleeve edge and shaped hand keep the body recognisably clothed.
+    line(
+      pointBetween(tunicSleeveEnd, shirtSleeveEnd, .86),
+      pointBetween(tunicSleeveEnd, shirtSleeveEnd, .99),
+      far ? 7.9 : 9.0,
+      far ? palette.shirtShadow : palette.shirtLight
+    );
+    drawHeroHand(elbow, wrist, colors.skin, palette, far);
+  }
+
+  function drawHeroBoot(ankle, toe, fill, palette, far) {
+    const angle = segmentAngle(ankle, toe);
+    drawRoundedSegment(ankle, toe, far ? 8.8 : 10.2, fill, palette.outline, 2.2);
+
+    // Extend the sole slightly past the toe so the planted foot reads cleanly at 128×240.
+    const soleStart = {
+      x: ankle.x + Math.sin(angle) * (far ? 3.7 : 4.2),
+      y: ankle.y - Math.cos(angle) * (far ? 3.7 : 4.2)
+    };
+    const soleEnd = {
+      x: toe.x + Math.cos(angle) * 2.8 + Math.sin(angle) * (far ? 3.0 : 3.5),
+      y: toe.y + Math.sin(angle) * 2.8 - Math.cos(angle) * (far ? 3.0 : 3.5)
+    };
+    line(soleStart, soleEnd, far ? 2.2 : 2.7, palette.bootShadow);
+
+    if (!far && palette.bootLight) {
+      const shineA = pointBetween(ankle, toe, .35);
+      const shineB = pointBetween(ankle, toe, .72);
+      line(shineA, shineB, 1.2, palette.bootLight);
+    }
   }
 
   function drawHeroLeg(points, side, palette, far = false) {
@@ -411,134 +517,203 @@
     const knee = points[`${side}Knee`];
     const ankle = points[`${side}Ankle`];
     const toe = points[`${side}Toe`];
-    const trouserFill = far ? palette.trousersShadow : palette.trousers;
-    const bootFill = far ? palette.bootShadow : palette.boot;
-    const bootTop = pointBetween(knee, ankle, .56);
+    const colors = heroColors(palette, far);
+    const bootTop = pointBetween(knee, ankle, .57);
 
-    drawSegment(hip, knee, far ? 6.0 : 7.0, far ? 5.1 : 5.8, trouserFill, palette.outline);
-    drawSegment(knee, bootTop, far ? 5.1 : 5.8, far ? 4.5 : 5.1, trouserFill, palette.outline);
-    drawSegment(bootTop, ankle, far ? 4.8 : 5.4, far ? 4.4 : 5.0, bootFill, palette.outline);
-    drawSegment(ankle, toe, far ? 4.5 : 5.2, far ? 3.1 : 3.7, bootFill, palette.outline);
-    joint(ankle, far ? 4.4 : 5.0, bootFill);
+    drawRoundedSegment(hip, knee, far ? 11.0 : 13.0, colors.trousers, palette.outline);
+    drawSoftJoint(knee, far ? 5.0 : 5.8, colors.trousers, palette.outline);
+    drawRoundedSegment(knee, bootTop, far ? 9.5 : 11.0, colors.trousers, palette.outline);
+
+    // Narrow at the calf and broaden at the foot, matching the current rugged-costume read.
+    drawRoundedSegment(bootTop, ankle, far ? 8.5 : 9.8, colors.boot, palette.outline);
+    line(pointBetween(knee, bootTop, .88), bootTop, far ? 9.1 : 10.5, palette.bootLight || colors.boot);
+    drawSoftJoint(ankle, far ? 4.1 : 4.8, colors.boot, palette.outline);
+    drawHeroBoot(ankle, toe, colors.boot, palette, far);
+
+    if (!far && palette.trousersLight) {
+      line(pointBetween(hip, knee, .18), pointBetween(hip, knee, .54), 1.0, palette.trousersLight);
+    }
   }
 
   function drawHeroTorso(points, palette) {
-    const shoulderAxis = segmentPolygon(points.farShoulder, points.nearShoulder, 0, 0);
-    void shoulderAxis;
     const shoulder = points.shoulder;
     const pelvis = points.pelvis;
     const dx = pelvis.x - shoulder.x;
     const dy = pelvis.y - shoulder.y;
     const length = Math.max(0.001, Math.hypot(dx, dy));
-    const px = -dy / length;
-    const py = dx / length;
     const downX = dx / length;
     const downY = dy / length;
-    const top = pointBetween(shoulder, pelvis, .04);
-    const waist = pointBetween(shoulder, pelvis, .83);
+    const px = -downY;
+    const py = downX;
+    const frontX = -px;
+    const frontY = -py;
+    const backX = px;
+    const backY = py;
+
+    const chest = pointBetween(shoulder, pelvis, .30);
+    const waist = pointBetween(shoulder, pelvis, .78);
     const hem = { x: pelvis.x + downX * 17, y: pelvis.y + downY * 17 };
 
+    // Shirt underlayer gives the neck and shoulder transition a human shape.
     fillPolygon([
-      { x: top.x + px * 12.5, y: top.y + py * 12.5 },
-      { x: top.x - px * 11.5, y: top.y - py * 11.5 },
-      { x: waist.x - px * 10.0, y: waist.y - py * 10.0 },
-      { x: hem.x - px * 12.2, y: hem.y - py * 12.2 },
-      { x: hem.x + px * 11.2, y: hem.y + py * 11.2 },
-      { x: waist.x + px * 10.5, y: waist.y + py * 10.5 }
-    ], palette.tunic, palette.outline, 1.35);
+      { x: shoulder.x + backX * 10.5 - downX * 4, y: shoulder.y + backY * 10.5 - downY * 4 },
+      { x: shoulder.x + frontX * 11.8 - downX * 3, y: shoulder.y + frontY * 11.8 - downY * 3 },
+      { x: chest.x + frontX * 11.5, y: chest.y + frontY * 11.5 },
+      { x: waist.x + frontX * 8.4, y: waist.y + frontY * 8.4 },
+      { x: waist.x + backX * 8.0, y: waist.y + backY * 8.0 },
+      { x: chest.x + backX * 9.5, y: chest.y + backY * 9.5 }
+    ], palette.shirt, palette.outline, 1.25);
 
+    // Side-profile tunic: slightly fuller at chest and hem, tucked at the belt.
+    fillPolygon([
+      { x: shoulder.x + backX * 9.3 + downX * 3, y: shoulder.y + backY * 9.3 + downY * 3 },
+      { x: shoulder.x + frontX * 10.8 + downX * 4, y: shoulder.y + frontY * 10.8 + downY * 4 },
+      { x: chest.x + frontX * 12.4, y: chest.y + frontY * 12.4 },
+      { x: waist.x + frontX * 9.2, y: waist.y + frontY * 9.2 },
+      { x: hem.x + frontX * 11.7, y: hem.y + frontY * 11.7 },
+      { x: hem.x + backX * 10.7, y: hem.y + backY * 10.7 },
+      { x: waist.x + backX * 8.5, y: waist.y + backY * 8.5 },
+      { x: chest.x + backX * 9.8, y: chest.y + backY * 9.8 }
+    ], palette.tunic, palette.outline, 1.45);
+
+    // Back shadow and front highlight add volume without pretending to be final pixel art.
     ctx.save();
-    ctx.strokeStyle = palette.tunicLight;
-    ctx.lineWidth = 1.1;
+    ctx.strokeStyle = palette.tunicShadow;
+    ctx.lineWidth = 2.0;
+    ctx.lineCap = 'round';
     ctx.beginPath();
-    ctx.moveTo(top.x + px * 5, top.y + py * 5);
-    ctx.lineTo(hem.x + px * 4, hem.y + py * 4);
+    ctx.moveTo(chest.x + backX * 7.6, chest.y + backY * 7.6);
+    ctx.lineTo(hem.x + backX * 8.2, hem.y + backY * 8.2);
+    ctx.stroke();
+
+    ctx.strokeStyle = palette.tunicLight;
+    ctx.lineWidth = 1.0;
+    ctx.beginPath();
+    ctx.moveTo(chest.x + frontX * 8.4, chest.y + frontY * 8.4);
+    ctx.lineTo(waist.x + frontX * 7.1, waist.y + frontY * 7.1);
     ctx.stroke();
     ctx.restore();
 
-    const beltCenter = pointBetween(shoulder, pelvis, .9);
+    const beltCenter = pointBetween(shoulder, pelvis, .88);
     line(
-      { x: beltCenter.x + px * 10.3, y: beltCenter.y + py * 10.3 },
-      { x: beltCenter.x - px * 10.3, y: beltCenter.y - py * 10.3 },
-      3.6,
+      { x: beltCenter.x + backX * 9.0, y: beltCenter.y + backY * 9.0 },
+      { x: beltCenter.x + frontX * 10.0, y: beltCenter.y + frontY * 10.0 },
+      4.0,
       palette.belt
     );
-    if (palette.buckle) joint({ x: beltCenter.x + px * 1.4, y: beltCenter.y + py * 1.4 }, 1.7, palette.buckle);
+
+    if (palette.buckle) {
+      const buckle = { x: beltCenter.x + frontX * 7.2, y: beltCenter.y + frontY * 7.2 };
+      drawEllipse(buckle, 2.2, 1.8, segmentAngle(shoulder, pelvis), palette.buckle, palette.outlineSoft, .8);
+    }
+
+    // Tiny front split gives the tunic hem a readable medieval garment edge in motion.
+    const splitTop = { x: pelvis.x + downX * 9 + frontX * 5.0, y: pelvis.y + downY * 9 + frontY * 5.0 };
+    const splitBottom = { x: hem.x + frontX * 4.2, y: hem.y + frontY * 4.2 };
+    line(splitTop, splitBottom, 1.1, palette.tunicShadow);
   }
 
   function drawHeroHead(points, palette, ghost) {
     const h = points.head;
 
-    // Neck and nape bridge the articulated torso into the profile head.
-    drawSegment(points.shoulder, points.neck, 4.4, 3.5, palette.skinShadow, palette.outline);
-    drawSegment(points.neck, { x: h.x - 5, y: h.y + 10 }, 3.8, 4.6, palette.skin, palette.outline);
+    // Neck sits inside the shirt/tunic silhouette rather than looking pasted beneath the head.
+    drawRoundedSegment(points.shoulder, points.neck, 6.8, palette.skinShadow, palette.outline, 2.0);
+    const neckTop = { x: h.x - 5.5, y: h.y + 11.0 };
+    drawRoundedSegment(points.neck, neckTop, 7.2, palette.skin, palette.outline, 2.0);
 
-    // Hair mass first so the face profile owns the readable front edge.
+    // Profile face. East is the authored master: forehead → nose → lips → chin → jaw.
     ctx.beginPath();
-    ctx.moveTo(h.x - 13, h.y + 7);
-    ctx.bezierCurveTo(h.x - 17, h.y - 2, h.x - 14, h.y - 13, h.x - 5, h.y - 17);
-    ctx.bezierCurveTo(h.x + 3, h.y - 20, h.x + 10, h.y - 15, h.x + 11, h.y - 9);
-    ctx.lineTo(h.x + 6, h.y - 5);
-    ctx.lineTo(h.x + 2, h.y - 9);
-    ctx.quadraticCurveTo(h.x - 1, h.y - 3, h.x - 5, h.y + 2);
-    ctx.lineTo(h.x - 7, h.y + 11);
-    ctx.closePath();
-    ctx.fillStyle = palette.hair;
-    ctx.fill();
-    ctx.strokeStyle = palette.outline;
-    ctx.lineWidth = 1.25;
-    ctx.stroke();
-
-    // East-facing profile with a brow, nose bridge, nose tip, mouth, chin and jaw.
-    ctx.beginPath();
-    ctx.moveTo(h.x - 7, h.y - 13);
-    ctx.bezierCurveTo(h.x + 1, h.y - 16, h.x + 8, h.y - 12, h.x + 10, h.y - 7);
-    ctx.quadraticCurveTo(h.x + 11, h.y - 4, h.x + 12, h.y - 2);
-    ctx.lineTo(h.x + 17, h.y + 1);
-    ctx.quadraticCurveTo(h.x + 14, h.y + 3, h.x + 11, h.y + 3.5);
-    ctx.quadraticCurveTo(h.x + 13, h.y + 6, h.x + 10, h.y + 7);
-    ctx.quadraticCurveTo(h.x + 9, h.y + 12, h.x + 4, h.y + 14);
-    ctx.quadraticCurveTo(h.x - 2, h.y + 16, h.x - 8, h.y + 10);
-    ctx.quadraticCurveTo(h.x - 11, h.y + 4, h.x - 10, h.y - 5);
-    ctx.quadraticCurveTo(h.x - 10, h.y - 10, h.x - 7, h.y - 13);
+    ctx.moveTo(h.x - 7.5, h.y - 13.5);
+    ctx.bezierCurveTo(h.x - 1.5, h.y - 17.5, h.x + 6.5, h.y - 15.0, h.x + 9.0, h.y - 9.0);
+    ctx.quadraticCurveTo(h.x + 10.5, h.y - 5.5, h.x + 10.7, h.y - 2.8);
+    ctx.quadraticCurveTo(h.x + 13.0, h.y - 1.2, h.x + 16.2, h.y + .6);
+    ctx.quadraticCurveTo(h.x + 13.7, h.y + 3.2, h.x + 10.5, h.y + 3.3);
+    ctx.quadraticCurveTo(h.x + 12.7, h.y + 5.1, h.x + 11.2, h.y + 6.7);
+    ctx.quadraticCurveTo(h.x + 10.0, h.y + 11.4, h.x + 5.0, h.y + 14.0);
+    ctx.quadraticCurveTo(h.x - 1.0, h.y + 16.8, h.x - 7.7, h.y + 10.2);
+    ctx.quadraticCurveTo(h.x - 11.1, h.y + 4.2, h.x - 10.6, h.y - 4.5);
+    ctx.quadraticCurveTo(h.x - 10.2, h.y - 10.4, h.x - 7.5, h.y - 13.5);
     ctx.closePath();
     ctx.fillStyle = palette.skin;
     ctx.fill();
+    ctx.lineWidth = 1.45;
     ctx.strokeStyle = palette.outline;
-    ctx.lineWidth = 1.35;
     ctx.stroke();
 
-    // Fringe and sideburn reclaim the top/back edge after the face fill.
+    // Brown hair silhouette is deliberately closer to the in-world hero than the 0.5 cutout.
     ctx.beginPath();
-    ctx.moveTo(h.x - 8, h.y - 13);
-    ctx.quadraticCurveTo(h.x + 1, h.y - 18, h.x + 8, h.y - 12);
-    ctx.lineTo(h.x + 4, h.y - 7);
-    ctx.lineTo(h.x + 1, h.y - 10);
-    ctx.lineTo(h.x - 2, h.y - 5);
-    ctx.lineTo(h.x - 7, h.y - 1);
+    ctx.moveTo(h.x - 11.5, h.y + 6.8);
+    ctx.bezierCurveTo(h.x - 16.2, h.y - 1.0, h.x - 14.0, h.y - 12.0, h.x - 5.0, h.y - 17.3);
+    ctx.bezierCurveTo(h.x + 1.0, h.y - 20.0, h.x + 8.0, h.y - 16.7, h.x + 9.0, h.y - 11.0);
+    ctx.lineTo(h.x + 5.0, h.y - 8.0);
+    ctx.lineTo(h.x + 2.0, h.y - 10.7);
+    ctx.quadraticCurveTo(h.x - 1.0, h.y - 6.3, h.x - 3.0, h.y - 2.0);
+    ctx.quadraticCurveTo(h.x - 6.0, h.y + 2.0, h.x - 7.0, h.y + 8.5);
+    ctx.closePath();
+    ctx.fillStyle = palette.hair;
+    ctx.fill();
+    ctx.lineWidth = 1.25;
+    ctx.strokeStyle = palette.outline;
+    ctx.stroke();
+
+    // Fringe, nape and a small sideburn make the profile read as one head rather than two shapes.
+    ctx.beginPath();
+    ctx.moveTo(h.x - 7.5, h.y - 13.0);
+    ctx.quadraticCurveTo(h.x - .5, h.y - 18.1, h.x + 7.6, h.y - 12.0);
+    ctx.lineTo(h.x + 3.2, h.y - 7.2);
+    ctx.lineTo(h.x + .3, h.y - 10.0);
+    ctx.lineTo(h.x - 3.0, h.y - 4.2);
+    ctx.lineTo(h.x - 7.2, h.y - 1.0);
     ctx.closePath();
     ctx.fillStyle = palette.hair;
     ctx.fill();
 
-    ctx.beginPath();
-    ctx.moveTo(h.x - 8, h.y - 2);
-    ctx.quadraticCurveTo(h.x - 10, h.y + 5, h.x - 6, h.y + 9);
     ctx.strokeStyle = palette.hairShadow;
-    ctx.lineWidth = 2.2;
+    ctx.lineWidth = 2.4;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(h.x - 9.0, h.y - 1.0);
+    ctx.quadraticCurveTo(h.x - 10.0, h.y + 5.4, h.x - 6.3, h.y + 9.5);
     ctx.stroke();
 
     if (!ghost) {
-      ctx.fillStyle = '#211712';
-      ctx.fillRect(Math.round(h.x + 7), Math.round(h.y - 6), 2, 2);
-      ctx.strokeStyle = palette.outline;
-      ctx.lineWidth = .85;
+      // Eye, brow, ear and mouth are intentionally restrained at this scale.
+      ctx.strokeStyle = palette.hairShadow;
+      ctx.lineWidth = 1.2;
       ctx.beginPath();
-      ctx.moveTo(h.x + 10, h.y + 6);
-      ctx.lineTo(h.x + 12, h.y + 6);
+      ctx.moveTo(h.x + 5.8, h.y - 7.2);
+      ctx.lineTo(h.x + 9.0, h.y - 7.6);
       ctx.stroke();
+
+      ctx.fillStyle = '#211711';
       ctx.beginPath();
-      ctx.arc(h.x - 4, h.y, 2.2, 0, Math.PI * 2);
+      ctx.arc(h.x + 7.6, h.y - 5.2, 1.15, 0, Math.PI * 2);
+      ctx.fill();
+
       ctx.strokeStyle = palette.skinShadow;
+      ctx.lineWidth = .9;
+      ctx.beginPath();
+      ctx.moveTo(h.x + 10.3, h.y + 6.3);
+      ctx.quadraticCurveTo(h.x + 12.0, h.y + 6.8, h.x + 13.0, h.y + 6.0);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(h.x - 3.7, h.y + .4, 2.3, 0, Math.PI * 2);
+      ctx.strokeStyle = palette.skinShadow;
+      ctx.stroke();
+
+      ctx.strokeStyle = palette.hairLight;
+      ctx.lineWidth = .9;
+      ctx.beginPath();
+      ctx.moveTo(h.x - 9.0, h.y - 8.6);
+      ctx.quadraticCurveTo(h.x - 3.0, h.y - 16.0, h.x + 3.8, h.y - 13.7);
+      ctx.stroke();
+
+      ctx.strokeStyle = palette.skinLight;
+      ctx.lineWidth = .7;
+      ctx.beginPath();
+      ctx.moveTo(h.x + 9.8, h.y - 2.0);
+      ctx.lineTo(h.x + 13.3, h.y + .3);
       ctx.stroke();
     }
   }
@@ -723,7 +898,7 @@
     });
     syncSliders();
     draw();
-    setStatus(`${POSE_LABELS[id]} selected · ${bodyStyle === 'hero' ? 'Hero Look' : 'Proxy'} · east profile`);
+    setStatus(`${POSE_LABELS[id]} selected · ${bodyStyle === 'hero' ? 'Hero 0.5.1 skin' : 'Proxy'} · east profile`);
   }
 
   function stepPose(delta) {
@@ -854,7 +1029,7 @@
     });
     draw();
     refreshOutput();
-    setStatus(`Body style: ${bodyStyle === 'hero' ? 'Hero Look' : 'Proxy'}. Same rig, same pose data.`);
+    setStatus(`Body style: ${bodyStyle === 'hero' ? 'Hero 0.5.1 near-final skin' : 'Proxy'}. Same rig, same pose data.`);
   }
 
   function syncBodyOpacity() {
