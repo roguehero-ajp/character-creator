@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Avendor Sword Combat 0.1</title>
+  <title>Avendor Sword Combat 0.6</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/combat-test.css">
 </head>
@@ -12,8 +12,8 @@
     <header class="combat-header">
       <div>
         <p class="eyebrow">The Rising Tides of Avendor</p>
-        <h1>Sword Combat Prototype 0.1</h1>
-        <p class="subtitle">Beginner East/West combat lab. Timing and balance are provisional.</p>
+        <h1>Sword Combat Prototype 0.6</h1>
+        <p class="subtitle">Combat-only East/West production hero test · candidate 0.3 · 105 ms walk cadence.</p>
       </div>
       <nav class="combat-nav" aria-label="Prototype navigation">
         <a href="test.html">Title</a>
@@ -116,14 +116,13 @@
         </section>
 
         <p class="prototype-note">
-          The sword motion layer is a mechanics rig, not final combat art. It lets us tune commitment,
-          active hit windows, recovery and practice speed before authoring the production sprite atlas.
+          Hero locomotion is now the combat-only 0.6 production East/West test. The eight-frame walk is pre-rendered from approved candidate 0.3 at 105 ms per pose; West is mirrored by the fighter container. Briarwell still uses the existing production atlases.
         </p>
       </aside>
     </section>
   </main>
 
-  <script src="js/sprite-engine.js"></script>
+  <script src="js/combat-production-sprite.js"></script>
   <script src="js/player-state.js"></script>
   <script src="js/combat-engine.js"></script>
   <script src="js/combat-test.js"></script>
