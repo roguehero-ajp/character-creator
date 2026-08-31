@@ -1,1 +1,0 @@
-Preparing binary Area 15 background upload.
