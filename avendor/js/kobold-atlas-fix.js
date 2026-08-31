@@ -4,6 +4,7 @@
   const style = document.createElement('style');
   style.textContent = `
     .kobold-runtime-sprite {
+      aspect-ratio: 5 / 6 !important;
       background-image: url("assets/sprites/creatures/kobolds/kobold-walk-ew.svg") !important;
       background-size: 600% 400% !important;
     }
