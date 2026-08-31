@@ -14,20 +14,12 @@
 <body>
   <main class="avendor-stage walk-stage" id="walk-stage" style="--stage-ratio: 1448 / 1086" tabindex="0" aria-label="Briarwell area navigation foundation. Use W A S D or arrow keys to move.">
     <img class="stage-art" src="assets/maps/briarwell/town-center/background/briarwell-town-center-v2.png" alt="Snowy Town Center in Briarwell, with the Lodestone Tavern, fruit stall, General Store and well">
-
     <div class="daypart-overlay" id="daypart-overlay" aria-hidden="true"></div>
-
     <canvas class="map-debug-layer" id="map-debug-layer" width="1448" height="1086" aria-hidden="true"></canvas>
     <canvas class="geometry-sketch-layer" id="geometry-sketch-layer" width="1448" height="1086" aria-label="Map geometry sketch surface"></canvas>
-
-    <div class="player" id="player" aria-hidden="true">
-      <canvas class="player-canvas" id="player-canvas" width="128" height="240"></canvas>
-    </div>
-
+    <div class="player" id="player" aria-hidden="true"><canvas class="player-canvas" id="player-canvas" width="128" height="240"></canvas></div>
     <div class="confusion-mark" id="confusion-mark" aria-hidden="true">?</div>
-
     <div class="interaction-prompt" id="interaction-prompt" aria-hidden="true"></div>
-
     <div class="hero-rig-controls" aria-label="Development controls">
       <button type="button" id="body-male" class="selected" aria-pressed="true">Male rig</button>
       <button type="button" id="body-female" aria-pressed="false">Female rig</button>
@@ -35,31 +27,19 @@
       <button type="button" id="geometry-sketch-toggle" aria-pressed="false">Geometry sketch: off</button>
       <button type="button" id="daypart-cycle" data-daypart="dusk">Daypart: dusk</button>
     </div>
-
     <section class="geometry-sketch-panel" id="geometry-sketch-panel" hidden aria-label="Geometry sketch controls">
-      <div class="geometry-sketch-heading">
-        <strong>Geometry sketch</strong>
-        <span id="geometry-sketch-map">No map loaded</span>
-        <span id="geometry-sketch-coords">x -, y -</span>
-      </div>
+      <div class="geometry-sketch-heading"><strong>Geometry sketch</strong><span id="geometry-sketch-map">No map loaded</span><span id="geometry-sketch-coords">x -, y -</span></div>
       <div class="geometry-sketch-tools">
         <button type="button" id="geometry-sketch-walkable" class="selected" aria-pressed="true">Walkable</button>
         <button type="button" id="geometry-sketch-blocked" aria-pressed="false">Blocked</button>
         <button type="button" id="geometry-sketch-occluder" aria-pressed="false">Occluder</button>
         <button type="button" id="geometry-sketch-animation" aria-pressed="false">Animation</button>
-        <button type="button" id="geometry-sketch-undo">Undo point</button>
-        <button type="button" id="geometry-sketch-close">Close shape</button>
-        <button type="button" id="geometry-sketch-clear">Clear all</button>
-        <button type="button" id="geometry-sketch-copy">Copy JSON</button>
+        <button type="button" id="geometry-sketch-undo">Undo point</button><button type="button" id="geometry-sketch-close">Close shape</button><button type="button" id="geometry-sketch-clear">Clear all</button><button type="button" id="geometry-sketch-copy">Copy JSON</button>
       </div>
-      <label class="geometry-sketch-animation-label" id="geometry-sketch-animation-label-wrap" hidden>
-        <span>Animation label</span>
-        <input type="text" id="geometry-sketch-animation-label" maxlength="80" placeholder="e.g. chimney smoke, birds, water ripple">
-      </label>
+      <label class="geometry-sketch-animation-label" id="geometry-sketch-animation-label-wrap" hidden><span>Animation label</span><input type="text" id="geometry-sketch-animation-label" maxlength="80" placeholder="e.g. chimney smoke, birds, water ripple"></label>
       <div class="geometry-sketch-instructions">Click around the edge of an area. Green = walkable, red = blocked, gold = visibility occluder, cyan = animation placement zone. Animation zones export their exact polygon, bounds and centre point; add a label so the intended effect is unambiguous. An occluder uses its lowest traced point as the depth line. Close Shape stores the polygon. Shortcuts: 1 walkable, 2 blocked, 3 occluder, 4 animation.</div>
       <textarea id="geometry-sketch-output" readonly spellcheck="false" aria-label="Geometry sketch JSON output"></textarea>
     </section>
-
     <div class="walk-help" id="walk-help">WASD or arrow keys to walk. E or Space interacts with nearby people and features. F2 shows the authored map geometry.</div>
     <div class="dev-badge" id="rig-status">BRIARWELL MAP REGISTRY · LOADING</div>
     <div class="sr-status" id="scene-status" role="status" aria-live="polite"></div>
@@ -76,6 +56,7 @@
   <script src="js/kobold-encounters.js"></script>
   <script src="js/walk-test.js"></script>
   <script src="js/kobold-sewer-runtime.js"></script>
+  <script src="js/kobold-atlas-fix.js"></script>
   <script src="js/geometry-sketch.js"></script>
   <script src="js/geometry-sketch-panel-drag.js"></script>
   <script src="js/town-music.js"></script>
