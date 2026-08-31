@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Avendor Hero Animation Lab 0.5.1</title>
+  <title>Avendor Hero Animation Lab 0.5.2</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/hero-animation-lab.css">
   <link rel="stylesheet" href="css/hero-animation-lab-validation.css">
@@ -13,8 +13,8 @@
     <header class="lab-header">
       <div>
         <p class="eyebrow">AVENDOR DEVELOPMENT TOOL</p>
-        <h1 id="lab-title">Hero Animation Lab <span>0.5.1</span></h1>
-        <p>East/west validation bench for the saved male walk candidate. The Hero body is now a lab-only, near-final Briarwell-style skin built from clean articulated body parts on the same skeleton, so silhouette, overlap and identity can be judged before any production atlas rendering.</p>
+        <h1 id="lab-title">Hero Animation Lab <span>0.5.2</span></h1>
+        <p>East/west validation bench for the approved candidate 0.3. Compare the same authored motion on male and female lab-only hero silhouettes before deciding whether either body needs its own gait tuning or production atlas rendering.</p>
       </div>
       <a class="back-link" href="walk-test.html">Back to walk test</a>
     </header>
@@ -33,7 +33,7 @@
             <button type="button" id="lab-test-transition" aria-pressed="false">Idle → Walk → Idle</button>
             <button type="button" id="lab-test-seam" aria-pressed="false">Walk 8 ↔ Walk 1 seam</button>
           </div>
-          <p class="validation-source" id="lab-candidate-status">Loading saved east/west candidate 0.2…</p>
+          <p class="validation-source" id="lab-candidate-status">Loading approved east/west candidate 0.3…</p>
         </div>
 
         <div class="canvas-shell">
@@ -74,10 +74,15 @@
         </div>
 
         <div class="preview-toolbar" aria-label="Hero preview controls">
+          <div class="body-style hero-gender" role="group" aria-label="Hero body">
+            <span>Hero body</span>
+            <button type="button" data-hero-gender="male" class="selected" aria-pressed="true">Male</button>
+            <button type="button" data-hero-gender="female" aria-pressed="false">Female</button>
+          </div>
           <div class="body-style" role="group" aria-label="Body style">
             <span>Body style</span>
             <button type="button" data-body-style="proxy" aria-pressed="false">Proxy</button>
-            <button type="button" data-body-style="hero" class="selected" aria-pressed="true">Hero 0.5.1</button>
+            <button type="button" data-body-style="hero" class="selected" aria-pressed="true">Hero skin</button>
           </div>
           <div class="view-mode" role="group" aria-label="Preview layer">
             <span>Preview</span>
@@ -92,8 +97,8 @@
           </label>
           <label class="compact-slider" for="lab-speed">
             <span>Animation speed</span>
-            <input type="range" id="lab-speed" min="20" max="200" step="5" value="100">
-            <output id="lab-speed-value" for="lab-speed">100% · 110 ms/frame</output>
+            <input type="range" id="lab-speed" min="20" max="200" step="5" value="105">
+            <output id="lab-speed-value" for="lab-speed">105% · 105 ms/frame</output>
           </label>
         </div>
 
@@ -111,7 +116,7 @@
         <section>
           <h2>Locked proportions</h2>
           <div class="measurement-grid" id="lab-measurements"></div>
-          <p class="hint">These measurements drive the Proxy, near-final Hero skin, and skeleton from the same joint data. Dragging changes pose only; changing anatomy belongs in the rig definition, not in an individual frame.</p>
+          <p class="hint">Candidate 0.3 drives both hero-body previews from the same joint data. The female button changes the validation silhouette first; gait values stay shared until the motion itself gives us a reason to split them.</p>
         </section>
 
         <section>
@@ -128,7 +133,7 @@
       <div class="section-heading">
         <div>
           <h2>Pose data</h2>
-          <p class="hint">The saved candidate 0.2 is loaded automatically. You can also paste a JSON export from an earlier Animation Lab version to restore its pose values onto the current rig and Hero skin.</p>
+          <p class="hint">Approved candidate 0.3 is the reset baseline. Paste JSON still lets you compare older or experimental pose sets without changing the saved candidate.</p>
         </div>
         <div class="export-actions">
           <button type="button" id="lab-reset-all">Reset all</button>
@@ -143,5 +148,7 @@
   <script src="js/hero-animation-lab-drag.js"></script>
   <script src="js/hero-animation-lab-validation.js"></script>
   <script src="js/hero-animation-lab-import.js"></script>
+  <script src="js/hero-animation-lab-candidate-0.3.js"></script>
+  <script src="js/hero-animation-lab-gender.js"></script>
 </body>
 </html>
