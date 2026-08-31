@@ -1,1 +1,107 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="5792" height="1086" viewBox="0 0 5792 1086"><rect width="5792" height="1086" fill="#111312"/><rect y="650" width="5792" height="280" fill="#36332d"/><rect y="930" width="5792" height="156" fill="#0c292d"/><g fill="#292a27" stroke="#171815" stroke-width="3">
+<svg xmlns="http://www.w3.org/2000/svg" width="5792" height="1086" viewBox="0 0 5792 1086">
+  <defs>
+    <linearGradient id="wallShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#171a19"/><stop offset="1" stop-color="#30312d"/></linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15363a"/><stop offset="1" stop-color="#081d21"/></linearGradient>
+    <radialGradient id="torchGlow"><stop offset="0" stop-color="#d78d3c" stop-opacity=".5"/><stop offset="1" stop-color="#d78d3c" stop-opacity="0"/></radialGradient>
+    <pattern id="bricks" width="140" height="84" patternUnits="userSpaceOnUse">
+      <rect width="140" height="84" fill="#292a27"/>
+      <path d="M0 0H140M0 42H140M0 84H140M70 0V42M35 42V84M105 42V84" stroke="#171815" stroke-width="4"/>
+      <path d="M2 3H68M72 3H138M2 45H33M37 45H103M107 45H138" stroke="#3b3b35" stroke-width="3" opacity=".65"/>
+    </pattern>
+    <pattern id="floor" width="180" height="92" patternUnits="userSpaceOnUse">
+      <rect width="180" height="92" fill="#38342d"/>
+      <path d="M0 0H180M0 46H180M0 92H180M90 0V46M45 46V92M135 46V92" stroke="#211f1b" stroke-width="4"/>
+      <path d="M4 4H86M94 4H176" stroke="#4b473d" stroke-width="3" opacity=".5"/>
+    </pattern>
+    <g id="torch">
+      <ellipse cx="0" cy="0" rx="100" ry="115" fill="url(#torchGlow)"/>
+      <path d="M-5 28H5V105H-5Z" fill="#6b4c2b"/>
+      <path d="M0 -24C-17 5-12 26 0 33C12 24 18 6 0-24Z" fill="#df963f"/>
+      <path d="M0 -8C-7 6-5 17 1 20C7 13 8 3 0-8Z" fill="#ffd27a"/>
+    </g>
+    <g id="crate">
+      <rect x="0" y="0" width="92" height="72" rx="2" fill="#765033" stroke="#2b2119" stroke-width="5"/>
+      <path d="M5 5L87 67M87 5L5 67" stroke="#3b2b1c" stroke-width="6"/>
+    </g>
+    <g id="barrel">
+      <path d="M6 10Q35 -2 64 10V78Q35 92 6 78Z" fill="#755036" stroke="#2a2119" stroke-width="5"/>
+      <path d="M6 28H64M6 62H64" stroke="#34342f" stroke-width="6"/>
+    </g>
+    <g id="banner">
+      <path d="M0 0H112V162L84 144L56 174L28 144L0 162Z" fill="#702b25" stroke="#351916" stroke-width="5"/>
+      <circle cx="56" cy="60" r="18" fill="none" stroke="#b28b62" stroke-width="5"/>
+      <path d="M56 78V124M30 100H82" stroke="#b28b62" stroke-width="5"/>
+    </g>
+    <g id="alcove">
+      <path d="M0 410V200A190 190 0 0 1 380 200V410Z" fill="#090a0a"/>
+      <path d="M-12 410V195A202 202 0 0 1 392 195V410" fill="none" stroke="#59584f" stroke-width="20"/>
+      <circle cx="190" cy="265" r="58" fill="#151716" stroke="#6a6659" stroke-width="8"/>
+      <path d="M154 223V307M174 215V315M194 211V319M214 215V315M234 223V307" stroke="#6f6b5d" stroke-width="6"/>
+    </g>
+  </defs>
+
+  <rect width="5792" height="1086" fill="#0c0e0e"/>
+  <rect x="0" y="0" width="5792" height="650" fill="url(#wallShade)"/>
+  <rect x="0" y="35" width="5792" height="615" fill="url(#bricks)"/>
+  <rect x="0" y="650" width="5792" height="280" fill="url(#floor)"/>
+  <rect x="0" y="930" width="5792" height="156" fill="url(#water)"/>
+  <path d="M0 930H5792" stroke="#5f5a4c" stroke-width="14"/>
+
+  <!-- west final chamber: no west exit -->
+  <rect x="90" y="535" width="1150" height="115" fill="#4a473f" stroke="#24221f" stroke-width="8"/>
+  <path d="M320 650V610H1010V650M390 610V575H940V610M460 575V540H870V575" fill="#4e4a40" stroke="#24221f" stroke-width="8"/>
+  <path d="M530 550V276H728V550" fill="#6f4c31" stroke="#38251b" stroke-width="9"/>
+  <path d="M505 276H753L704 188H557Z" fill="#775238" stroke="#38251b" stroke-width="9"/>
+  <rect x="574" y="338" width="110" height="170" fill="#6f2a25" stroke="#391a17" stroke-width="7"/>
+  <use href="#banner" x="172" y="120"/>
+  <use href="#banner" x="1042" y="120"/>
+  <use href="#torch" x="270" y="284"/>
+  <use href="#torch" x="1015" y="284"/>
+  <use href="#crate" x="120" y="706"/>
+  <use href="#crate" x="1030" y="720"/>
+  <use href="#barrel" x="230" y="690"/>
+  <use href="#barrel" x="1140" y="680"/>
+
+  <!-- wave corridors -->
+  <use href="#alcove" x="1630" y="120"/>
+  <use href="#alcove" x="3010" y="120"/>
+  <use href="#alcove" x="4370" y="120"/>
+  <use href="#banner" x="2470" y="165"/>
+  <use href="#banner" x="3840" y="155"/>
+  <use href="#banner" x="4710" y="180"/>
+  <use href="#torch" x="1510" y="280"/>
+  <use href="#torch" x="2820" y="270"/>
+  <use href="#torch" x="4210" y="275"/>
+  <use href="#torch" x="5180" y="282"/>
+
+  <!-- section masonry -->
+  <g fill="#494941" stroke="#242522" stroke-width="5">
+    <rect x="1425" y="0" width="46" height="930"/>
+    <rect x="2873" y="0" width="46" height="930"/>
+    <rect x="4321" y="0" width="46" height="930"/>
+  </g>
+
+  <!-- clutter increases toward west -->
+  <g>
+    <use href="#crate" x="1320" y="760"/><use href="#barrel" x="1505" y="720"/>
+    <use href="#crate" x="2010" y="700"/><use href="#crate" x="2165" y="770"/><use href="#barrel" x="2320" y="705"/>
+    <use href="#crate" x="3290" y="735"/><use href="#barrel" x="3450" y="705"/><use href="#crate" x="3630" y="790"/>
+    <use href="#crate" x="4620" y="725"/><use href="#barrel" x="4810" y="700"/><use href="#crate" x="5000" y="785"/>
+  </g>
+
+  <!-- east entrance only -->
+  <path d="M5480 650V430A155 155 0 0 1 5790 430V650Z" fill="#070808"/>
+  <path d="M5466 650V425A170 170 0 0 1 5806 425" fill="none" stroke="#666257" stroke-width="20"/>
+  <path d="M5350 650H5792V900H5260Z" fill="#39362f" stroke="#25231f" stroke-width="6"/>
+
+  <!-- drains and water detail -->
+  <g fill="#07171a" stroke="#585347" stroke-width="6">
+    <ellipse cx="310" cy="925" rx="52" ry="66"/><ellipse cx="850" cy="925" rx="52" ry="66"/><ellipse cx="1390" cy="925" rx="52" ry="66"/>
+    <ellipse cx="1930" cy="925" rx="52" ry="66"/><ellipse cx="2470" cy="925" rx="52" ry="66"/><ellipse cx="3010" cy="925" rx="52" ry="66"/>
+    <ellipse cx="3550" cy="925" rx="52" ry="66"/><ellipse cx="4090" cy="925" rx="52" ry="66"/><ellipse cx="4630" cy="925" rx="52" ry="66"/>
+    <ellipse cx="5170" cy="925" rx="52" ry="66"/>
+  </g>
+  <g stroke="#3d696a" stroke-width="4" opacity=".65">
+    <path d="M40 988H360M480 1030H920M1090 975H1450M1610 1014H2100M2290 980H2660M2860 1034H3380M3560 986H4020M4260 1022H4770M4980 980H5530"/>
+  </g>
+</svg>
