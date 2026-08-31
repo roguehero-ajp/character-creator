@@ -128,10 +128,11 @@
       <div class="section-heading">
         <div>
           <h2>Pose data</h2>
-          <p class="hint">The saved candidate 0.2 is loaded automatically. Reset returns to that candidate; the 0.5.1 Hero skin remains a lab-only visual shell until this cycle is explicitly approved for production sprite rendering.</p>
+          <p class="hint">The saved candidate 0.2 is loaded automatically. You can also paste a JSON export from an earlier Animation Lab version to restore its pose values onto the current rig and Hero skin.</p>
         </div>
         <div class="export-actions">
           <button type="button" id="lab-reset-all">Reset all</button>
+          <button type="button" id="lab-paste">Paste JSON</button>
           <button type="button" id="lab-copy">Copy JSON</button>
         </div>
       </div>
@@ -141,5 +142,6 @@
   <script src="js/hero-animation-lab.js"></script>
   <script src="js/hero-animation-lab-drag.js"></script>
   <script src="js/hero-animation-lab-validation.js"></script>
+  <script src="js/hero-animation-lab-import.js"></script>
 </body>
 </html>
