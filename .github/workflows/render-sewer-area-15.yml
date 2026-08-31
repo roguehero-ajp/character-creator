@@ -1,0 +1,43 @@
+name: Render Sewer Area 15 PNG
+
+on:
+  push:
+    branches:
+      - codex/kobold-sprites-0.1
+    paths:
+      - 'avendor/assets/maps/briarwell/sewers/background/sewer-area-15-v2.svg'
+      - '.github/workflows/render-sewer-area-15.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/kobold-sprites-0.1
+      - name: Install SVG renderer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y librsvg2-bin
+      - name: Render production PNG
+        run: |
+          rsvg-convert \
+            --width 5792 \
+            --height 1086 \
+            avendor/assets/maps/briarwell/sewers/background/sewer-area-15-v2.svg \
+            > avendor/assets/maps/briarwell/sewers/background/sewer-area-15-v2.png
+      - name: Commit rendered PNG
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add avendor/assets/maps/briarwell/sewers/background/sewer-area-15-v2.png
+          if git diff --cached --quiet; then
+            echo "PNG already current."
+          else
+            git commit -m "Render Sewer Area 15 production PNG"
+            git push origin HEAD:codex/kobold-sprites-0.1
+          fi
