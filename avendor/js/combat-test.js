@@ -2,10 +2,10 @@
   'use strict';
 
   const PlayerState = window.AvendorPlayerState;
-  const Sprite = window.AvendorSpriteEngine?.LayeredSprite;
+  const Sprite = window.AvendorCombatProductionSprite?.CombatHeroSprite;
   const Combat = window.AvendorCombatEngine;
   if (!PlayerState || !Sprite || !Combat) {
-    throw new Error('Combat test requires sprite-engine.js, player-state.js and combat-engine.js.');
+    throw new Error('Combat test requires combat-production-sprite.js, player-state.js and combat-engine.js.');
   }
 
   const arena = document.getElementById('combat-arena');
@@ -168,6 +168,7 @@
       return;
     }
 
+    hero.setMotion('idle');
     stamina -= timing.staminaCost;
     renderStamina();
     action = {
@@ -216,6 +217,7 @@
       setCallout('Not enough stamina to dodge.', 900);
       return;
     }
+    hero.setMotion('idle');
     stamina -= cost;
     dodgingUntil = now + 520;
     fighter.style.setProperty('--dodge-offset', `${-facing * 42}px`);
@@ -225,16 +227,22 @@
   }
 
   function updateMovement(deltaSeconds, now) {
-    if (action || guarding || now < dodgingUntil) return;
     let direction = 0;
-    if (keys.has('a') || keys.has('arrowleft')) direction -= 1;
-    if (keys.has('d') || keys.has('arrowright')) direction += 1;
-    if (!direction) return;
+    const movementBlocked = Boolean(action || guarding || now < dodgingUntil);
+
+    if (!movementBlocked) {
+      if (keys.has('a') || keys.has('arrowleft')) direction -= 1;
+      if (keys.has('d') || keys.has('arrowright')) direction += 1;
+    }
+
+    hero.setMotion(direction ? 'walk' : 'idle');
+    if (!direction) return 0;
 
     setFacing(direction);
     x += direction * 18 * deltaSeconds;
     x = Math.max(12, Math.min(82, x));
     setFighterPosition();
+    return direction;
   }
 
   function updateGuard(deltaSeconds) {
@@ -259,6 +267,7 @@
     lastFrameAt = now;
 
     updateMovement(deltaSeconds, now);
+    hero.update(now);
     updateAttack(now);
     updateGuard(deltaSeconds);
     updateStamina(deltaSeconds, now);
@@ -285,6 +294,7 @@
     if (key === 'i') {
       event.preventDefault();
       if (action || performance.now() < dodgingUntil) return;
+      hero.setMotion('idle');
       guarding = true;
       setCallout('Guard', 450);
       return;
@@ -327,7 +337,7 @@
   async function boot() {
     const body = state.body === 'female' ? 'female' : 'male';
     await hero.setBody(body);
-    hero.setMotion('idle', 'east');
+    hero.setMotion('idle');
     hero.draw();
 
     staminaMax = PlayerState.derivedResources(state).stamina;
