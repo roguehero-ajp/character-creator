@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Avendor Hero Animation Lab 0.5</title>
+  <title>Avendor Hero Animation Lab 0.5.1</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="css/hero-animation-lab.css">
   <link rel="stylesheet" href="css/hero-animation-lab-validation.css">
@@ -13,8 +13,8 @@
     <header class="lab-header">
       <div>
         <p class="eyebrow">AVENDOR DEVELOPMENT TOOL</p>
-        <h1 id="lab-title">Hero Animation Lab <span>0.5</span></h1>
-        <p>East/west validation bench for the saved male walk candidate. Compare the authored east master with its mirrored west version, test idle transitions and the loop seam, and judge the articulated Hero Look against the original proxy before production rendering.</p>
+        <h1 id="lab-title">Hero Animation Lab <span>0.5.1</span></h1>
+        <p>East/west validation bench for the saved male walk candidate. The Hero body is now a lab-only, near-final Briarwell-style skin built from clean articulated body parts on the same skeleton, so silhouette, overlap and identity can be judged before any production atlas rendering.</p>
       </div>
       <a class="back-link" href="walk-test.html">Back to walk test</a>
     </header>
@@ -77,7 +77,7 @@
           <div class="body-style" role="group" aria-label="Body style">
             <span>Body style</span>
             <button type="button" data-body-style="proxy" aria-pressed="false">Proxy</button>
-            <button type="button" data-body-style="hero" class="selected" aria-pressed="true">Hero</button>
+            <button type="button" data-body-style="hero" class="selected" aria-pressed="true">Hero 0.5.1</button>
           </div>
           <div class="view-mode" role="group" aria-label="Preview layer">
             <span>Preview</span>
@@ -111,7 +111,7 @@
         <section>
           <h2>Locked proportions</h2>
           <div class="measurement-grid" id="lab-measurements"></div>
-          <p class="hint">These measurements drive the Proxy, Hero Look, and skeleton from the same joint data. Dragging changes pose only; changing anatomy belongs in the rig definition, not in an individual frame.</p>
+          <p class="hint">These measurements drive the Proxy, near-final Hero skin, and skeleton from the same joint data. Dragging changes pose only; changing anatomy belongs in the rig definition, not in an individual frame.</p>
         </section>
 
         <section>
@@ -128,7 +128,7 @@
       <div class="section-heading">
         <div>
           <h2>Pose data</h2>
-          <p class="hint">The saved candidate 0.2 is loaded automatically. Reset returns to that candidate; export remains development pose metadata until we promote this cycle to production sprites.</p>
+          <p class="hint">The saved candidate 0.2 is loaded automatically. Reset returns to that candidate; the 0.5.1 Hero skin remains a lab-only visual shell until this cycle is explicitly approved for production sprite rendering.</p>
         </div>
         <div class="export-actions">
           <button type="button" id="lab-reset-all">Reset all</button>

@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '0.5.0';
+  const VERSION = '0.5.1';
   const FRAME_W = 128;
   const FRAME_H = 240;
   const FLOOR_Y = 226;
@@ -214,7 +214,7 @@
     lab.selectPose('idle');
     refreshValidationPreview();
     if (candidateStatus) candidateStatus.innerHTML = '<strong>Saved candidate 0.2 loaded</strong> · corrected Walk 4 · west mirrors east';
-    if (status) status.textContent = 'Saved male east/west candidate 0.2 loaded · ready for 0.5 Hero Look validation.';
+    if (status) status.textContent = 'Saved male east/west candidate 0.2 loaded · ready for 0.5.1 near-final Hero skin validation.';
   }
 
   function poseDuration() {
