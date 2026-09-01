@@ -2,15 +2,15 @@
   "schemaVersion": 2,
   "id": "briarwell-sewer-15",
   "title": "Briarwell Sewers - Area 15",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "sewerAreaNumber": 15,
   "referenceSize": {
-    "width": 5792,
-    "height": 1086
+    "width": 2048,
+    "height": 682
   },
   "art": {
-    "background": "assets/maps/briarwell/sewers/background/sewer-area-15-v2.png",
-    "alt": "A long kobold-held sewer stronghold entered from the east, with three defensive stretches leading west to the chieftain chamber"
+    "background": "assets/maps/briarwell/sewers/background/sewer-area-15-v3.png",
+    "alt": "A torchlit kobold throne hall in the Briarwell sewers, entered from the east and narrowing west toward the chieftain's skull-draped throne"
   },
   "movement": {
     "speedX": 265,
@@ -22,24 +22,47 @@
   },
   "perspective": {
     "stops": [
-      { "y": 260, "scale": 0.5 },
-      { "y": 480, "scale": 0.64 },
-      { "y": 720, "scale": 0.8 },
-      { "y": 940, "scale": 0.94 }
+      { "y": 160, "scale": 0.5 },
+      { "y": 300, "scale": 0.64 },
+      { "y": 450, "scale": 0.8 },
+      { "y": 600, "scale": 0.94 }
     ]
   },
   "spawnPoints": {
-    "default": { "x": 5420, "y": 650, "facing": "west" },
-    "from-east": { "x": 5480, "y": 650, "facing": "west" }
+    "default": { "x": 1900, "y": 466, "facing": "west" },
+    "from-east": { "x": 1900, "y": 466, "facing": "west" }
   },
   "walkable": [
     {
-      "id": "stronghold-floor",
-      "points": [[72,330],[5720,330],[5768,420],[5768,900],[5700,974],[92,974],[28,900],[28,420]]
-    },
-    {
-      "id": "east-approach",
-      "points": [[5360,350],[5790,350],[5790,860],[5360,860]]
+      "id": "chieftain-hall-walkway",
+      "points": [
+        [48,438],
+        [210,430],
+        [390,426],
+        [575,430],
+        [780,428],
+        [1000,432],
+        [1220,431],
+        [1430,429],
+        [1630,430],
+        [1810,431],
+        [1930,425],
+        [1998,414],
+        [2048,414],
+        [2048,500],
+        [1998,500],
+        [1930,494],
+        [1810,495],
+        [1630,498],
+        [1430,498],
+        [1220,499],
+        [1000,500],
+        [780,501],
+        [575,503],
+        [390,502],
+        [210,498],
+        [48,497]
+      ]
     }
   ],
   "collisions": [],
@@ -55,7 +78,12 @@
         "returnTransitionId": "west-tunnel"
       },
       "fallbackSpawn": "from-east",
-      "points": [[5650,420],[5790,420],[5790,812],[5650,812]]
+      "points": [
+        [1996,418],
+        [2048,418],
+        [2048,497],
+        [1996,497]
+      ]
     }
   ],
   "portals": [],
@@ -68,39 +96,39 @@
     "groups": [
       {
         "id": "wave-1",
-        "detectionRadius": 760,
+        "detectionRadius": 240,
         "members": [
-          { "variant": "regular", "x": 5070, "y": 610 },
-          { "variant": "regular", "x": 4950, "y": 720 },
-          { "variant": "regular", "x": 5140, "y": 800 }
+          { "variant": "regular", "x": 1770, "y": 458 },
+          { "variant": "regular", "x": 1685, "y": 486 },
+          { "variant": "regular", "x": 1840, "y": 486 }
         ]
       },
       {
         "id": "wave-2",
-        "detectionRadius": 760,
+        "detectionRadius": 245,
         "members": [
-          { "variant": "regular", "x": 3880, "y": 640 },
-          { "variant": "regular", "x": 3740, "y": 760 }
+          { "variant": "regular", "x": 1450, "y": 456 },
+          { "variant": "regular", "x": 1350, "y": 486 }
         ]
       },
       {
         "id": "wave-3",
-        "detectionRadius": 760,
+        "detectionRadius": 250,
         "members": [
-          { "variant": "regular", "x": 2700, "y": 610 },
-          { "variant": "regular", "x": 2560, "y": 720 },
-          { "variant": "regular", "x": 2790, "y": 810 }
+          { "variant": "regular", "x": 1090, "y": 456 },
+          { "variant": "regular", "x": 990, "y": 486 },
+          { "variant": "regular", "x": 1170, "y": 486 }
         ]
       },
       {
         "id": "final-chamber",
-        "detectionRadius": 880,
+        "detectionRadius": 285,
         "members": [
-          { "variant": "regular", "x": 1200, "y": 790 },
-          { "variant": "champion", "x": 1000, "y": 690 },
-          { "variant": "chieftain", "x": 790, "y": 700 },
-          { "variant": "wizard", "x": 600, "y": 620 },
-          { "variant": "regular", "x": 430, "y": 790 }
+          { "variant": "regular", "x": 650, "y": 486 },
+          { "variant": "champion", "x": 540, "y": 456 },
+          { "variant": "chieftain", "x": 370, "y": 458 },
+          { "variant": "wizard", "x": 255, "y": 456 },
+          { "variant": "regular", "x": 155, "y": 486 }
         ]
       }
     ]
