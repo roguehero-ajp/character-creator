@@ -1,0 +1,61 @@
+name: Assemble Painted Kobold Atlas
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - codex/kobold-painted-sprites-0.2
+    paths:
+      - '.github/workflows/assemble-kobold-painted-atlas.yml'
+      - '.github/tmp/kobold-painted-ew.part*'
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/kobold-painted-sprites-0.2
+      - name: Assemble painted AVIF
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat \
+            .github/tmp/kobold-painted-ew.part00 \
+            .github/tmp/kobold-painted-ew.part01 \
+            .github/tmp/kobold-painted-ew.part02 \
+            .github/tmp/kobold-painted-ew.part03 \
+            .github/tmp/kobold-painted-ew.part04 \
+            .github/tmp/kobold-painted-ew.part05 \
+            | base64 -d > avendor/assets/sprites/creatures/kobolds/kobold-painted-ew.avif
+      - name: Verify atlas bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(stat -c%s avendor/assets/sprites/creatures/kobolds/kobold-painted-ew.avif)" = "35699"
+          echo "3a72920fd375d8bef487912947308b60451119c28c237cd40e26c505470def7f  avendor/assets/sprites/creatures/kobolds/kobold-painted-ew.avif" | sha256sum -c -
+      - name: Verify atlas dimensions
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          dims="$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 avendor/assets/sprites/creatures/kobolds/kobold-painted-ew.avif | head -n 1)"
+          test "$dims" = "1536x1024"
+          echo "Verified atlas: $dims"
+      - name: Commit painted atlas
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add avendor/assets/sprites/creatures/kobolds/kobold-painted-ew.avif
+          if git diff --cached --quiet; then
+            echo "Atlas already current."
+          else
+            git commit -m "Assemble painted kobold atlas"
+            git push origin HEAD:codex/kobold-painted-sprites-0.2
+          fi
