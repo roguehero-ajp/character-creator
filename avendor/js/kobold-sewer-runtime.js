@@ -5,14 +5,9 @@
   const FRAME_COUNT = 6;
   const WALK_FRAME_MS = 150;
   const ATTACK_DISTANCE = 112;
+  const SHEET = 'assets/sprites/creatures/kobolds/kobold-painted-ew.avif';
 
-  const SHEETS = Object.freeze({
-    regular: 'assets/sprites/creatures/kobolds/regular-walk-ew.webp',
-    champion: 'assets/sprites/creatures/kobolds/champion-walk-ew.webp',
-    wizard: 'assets/sprites/creatures/kobolds/wizard-walk-ew.webp',
-    chieftain: 'assets/sprites/creatures/kobolds/chieftain-walk-ew.webp'
-  });
-
+  const ROWS = Object.freeze({ regular: 0, champion: 1, wizard: 2, chieftain: 3 });
   const SPEEDS = Object.freeze({ regular: 92, champion: 72, wizard: 64, chieftain: 60 });
   const DISPLAY_WIDTH = Object.freeze({ regular: 176, champion: 194, wizard: 180, chieftain: 214 });
 
@@ -32,7 +27,7 @@
       transform-origin: 50% 100%;
       transform: translate(-50%, -100%) scale(var(--kobold-scale, 1));
       background-repeat: no-repeat;
-      background-size: 600% 100%;
+      background-size: 600% 400%;
       image-rendering: auto;
       filter: drop-shadow(0 5px 3px rgba(0,0,0,.42));
       pointer-events: none;
@@ -76,7 +71,8 @@
     element.dataset.koboldId = definition.id;
     element.dataset.variant = definition.variant;
     element.setAttribute('aria-hidden', 'true');
-    element.style.backgroundImage = `url("${SHEETS[definition.variant] || SHEETS.regular}")`;
+    element.style.backgroundImage = `url("${SHEET}")`;
+    element.style.backgroundPositionY = `${((ROWS[definition.variant] ?? ROWS.regular) / 3) * 100}%`;
     element.style.width = `${(DISPLAY_WIDTH[definition.variant] / VIEWPORT_WIDTH) * 100}%`;
     stage.insertBefore(element, debugCanvas || geometryCanvas || null);
 
@@ -203,7 +199,7 @@
     const localFrame = moving ? Math.floor(now / WALK_FRAME_MS) % 3 : 0;
     const atlasFrame = record.facing === 'east' ? localFrame : localFrame + 3;
     record.frame = atlasFrame;
-    record.element.style.backgroundPosition = `${(atlasFrame / (FRAME_COUNT - 1)) * 100}% 0`;
+    record.element.style.backgroundPositionX = `${(atlasFrame / (FRAME_COUNT - 1)) * 100}%`;
   }
 
   function updateKobold(record, sceneMap, heroPosition, dt, now) {
