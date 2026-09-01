@@ -1,33 +1,33 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "briarwell-kobolds-0.2",
-  "frameWidth": 320,
-  "frameHeight": 320,
+  "frameWidth": 256,
+  "frameHeight": 256,
   "columns": 6,
-  "rows": 1,
+  "rows": 4,
+  "atlas": {
+    "file": "kobold-painted-ew.avif",
+    "rowOrder": ["regular", "champion", "wizard", "chieftain"]
+  },
   "facing": {
     "east": [0, 1, 2],
     "west": [3, 4, 5]
   },
-  "atlases": {
+  "variants": {
     "regular": {
-      "file": "regular-walk-ew.webp",
       "weapon": "short-sword",
       "role": "standard melee"
     },
     "champion": {
-      "file": "champion-walk-ew.webp",
       "weapon": "mace",
       "offHand": "shield",
       "role": "armoured enforcer"
     },
     "wizard": {
-      "file": "wizard-walk-ew.webp",
       "weapon": "staff",
       "role": "ranged magic"
     },
     "chieftain": {
-      "file": "chieftain-walk-ew.webp",
       "weapon": "axe",
       "role": "boss leader"
     }
@@ -42,5 +42,5 @@
     "source": "painted",
     "alpha": true
   },
-  "notes": "Painted east/west walk atlases. The middle/pass frame uses a feet-together pose. The legacy kobold-walk-ew.svg is retained only as a historical reference and is not loaded by the runtime. The Area 15 encounter remains 3 regular, then 2 regular, then 3 regular, then champion + wizard + chieftain + 2 regular kobolds."
+  "notes": "High-detail painted east/west walk atlas. The middle/pass frame uses a feet-together pose. The legacy kobold-walk-ew.svg is retained only as a historical reference and is not loaded by the runtime. Area 15 remains 3 regular, then 2 regular, then 3 regular, then champion + wizard + chieftain + 2 regular kobolds."
 }
