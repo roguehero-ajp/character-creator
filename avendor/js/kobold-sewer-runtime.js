@@ -7,10 +7,10 @@
   const ATTACK_DISTANCE = 112;
 
   const SHEETS = Object.freeze({
-    regular: 'assets/sprites/creatures/kobolds/regular-walk-ew.png',
-    champion: 'assets/sprites/creatures/kobolds/champion-walk-ew.png',
-    wizard: 'assets/sprites/creatures/kobolds/wizard-walk-ew.png',
-    chieftain: 'assets/sprites/creatures/kobolds/chieftain-walk-ew.png'
+    regular: 'assets/sprites/creatures/kobolds/regular-walk-ew.webp',
+    champion: 'assets/sprites/creatures/kobolds/champion-walk-ew.webp',
+    wizard: 'assets/sprites/creatures/kobolds/wizard-walk-ew.webp',
+    chieftain: 'assets/sprites/creatures/kobolds/chieftain-walk-ew.webp'
   });
 
   const SPEEDS = Object.freeze({ regular: 92, champion: 72, wizard: 64, chieftain: 60 });
@@ -33,7 +33,7 @@
       transform: translate(-50%, -100%) scale(var(--kobold-scale, 1));
       background-repeat: no-repeat;
       background-size: 600% 100%;
-      image-rendering: pixelated;
+      image-rendering: auto;
       filter: drop-shadow(0 5px 3px rgba(0,0,0,.42));
       pointer-events: none;
       user-select: none;
