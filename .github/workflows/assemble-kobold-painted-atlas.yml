@@ -24,7 +24,8 @@ jobs:
         run: |
           set -euo pipefail
           cat \
-            .github/tmp/kobold-painted-ew.part00 \
+            .github/tmp/kobold-painted-ew.part00a \
+            .github/tmp/kobold-painted-ew.part00b \
             .github/tmp/kobold-painted-ew.part01 \
             .github/tmp/kobold-painted-ew.part02 \
             .github/tmp/kobold-painted-ew.part03 \
