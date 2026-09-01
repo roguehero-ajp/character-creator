@@ -1,33 +1,33 @@
 {
-  "schemaVersion": 1,
-  "id": "briarwell-kobolds-0.1",
-  "atlas": "kobold-walk-ew.svg",
-  "frameWidth": 160,
-  "frameHeight": 192,
+  "schemaVersion": 2,
+  "id": "briarwell-kobolds-0.2",
+  "frameWidth": 320,
+  "frameHeight": 320,
   "columns": 6,
-  "rows": 4,
+  "rows": 1,
   "facing": {
     "east": [0, 1, 2],
     "west": [3, 4, 5]
   },
-  "variants": {
+  "atlases": {
     "regular": {
-      "row": 0,
+      "file": "regular-walk-ew.webp",
       "weapon": "short-sword",
       "role": "standard melee"
     },
     "champion": {
-      "row": 1,
+      "file": "champion-walk-ew.webp",
       "weapon": "mace",
+      "offHand": "shield",
       "role": "armoured enforcer"
     },
     "wizard": {
-      "row": 2,
+      "file": "wizard-walk-ew.webp",
       "weapon": "staff",
       "role": "ranged magic"
     },
     "chieftain": {
-      "row": 3,
+      "file": "chieftain-walk-ew.webp",
       "weapon": "axe",
       "role": "boss leader"
     }
@@ -37,5 +37,10 @@
     "recommendedFrameMs": 150,
     "loop": true
   },
-  "notes": "Production kobold movement is intentionally lightweight: east/west only, three walking poses per direction. The final sewer encounter is planned as 3 regular, then 2 regular, then 3 regular, then champion + wizard + chieftain + 2 regular kobolds."
+  "rendering": {
+    "mode": "smooth",
+    "source": "painted",
+    "alpha": true
+  },
+  "notes": "Painted east/west walk atlases. The middle/pass frame uses a feet-together pose. The legacy kobold-walk-ew.svg is retained only as a historical reference and is not loaded by the runtime. The Area 15 encounter remains 3 regular, then 2 regular, then 3 regular, then champion + wizard + chieftain + 2 regular kobolds."
 }
