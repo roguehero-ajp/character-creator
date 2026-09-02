@@ -212,12 +212,12 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   const topology = engine.auditTopology(registry, maps);
 
   assert(registryData.schemaVersion === 2, 'Briarwell must use the route-graph registry schema.');
-  assert(registryData.version === '0.19.0', 'The south-outskirts expansion requires registry version 0.19.0.');
-  assert(registryData.areas.length === 37, 'Briarwell must register the town, sewers, support interiors and six south-outskirts maps.');
-  assert(registryData.connections.length === 45, 'Briarwell must preserve all 45 approved internal connections.');
+  assert(registryData.version === '0.20.0', 'The Forest F5 expansion requires registry version 0.20.0.');
+  assert(registryData.areas.length === 39, 'Briarwell must register the town, sewers, support interiors, seven playable outskirts maps and planned F7.');
+  assert(registryData.connections.length === 47, 'Briarwell must preserve all 47 approved internal connections.');
   assert(registryData.cityExits.length === 2, 'Briarwell must preserve both roads out of town.');
   assert(
-    Object.keys(maps).length === 37,
+    Object.keys(maps).length === 38,
     'Briarwell must load every town, sewer, support-interior and south-outskirts map.'
   );
   assert(topology.errors.length === 0, topology.errors.join('\n'));
@@ -313,7 +313,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     counts[connection.kind] = (counts[connection.kind] || 0) + 1;
     return counts;
   }, {});
-  assert(kindCounts.road === 19, 'Briarwell must preserve 13 town roads and six south-outskirts road connections.');
+  assert(kindCounts.road === 21, 'Briarwell must preserve 13 town roads and eight south-outskirts road connections.');
   assert(kindCounts.alley === 1, 'Briarwell must preserve the Ainsley alley connection.');
   assert(kindCounts.doorway === 2, 'Briarwell must preserve the two Town Center doorways.');
   assert(kindCounts['secret-passage'] === 2, 'Briarwell must preserve the open-window and dwarven secret passages.');
@@ -352,7 +352,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const publicReachable = collectReachableAreas(registry, 'briarwell-town-center', false);
   const allReachable = collectReachableAreas(registry, 'briarwell-town-center', true);
-  assert(publicReachable.size === 20, 'The public route graph must connect the town and all six south-outskirts areas.');
+  assert(publicReachable.size === 22, 'The public route graph must connect the town, seven playable outskirts areas and planned F7.');
   assert(
     ![...publicReachable].some((areaId) => areaId.startsWith('briarwell-sewer-')),
     'The sewers must not appear in public navigation.'
