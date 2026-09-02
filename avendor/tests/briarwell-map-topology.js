@@ -212,13 +212,13 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   const topology = engine.auditTopology(registry, maps);
 
   assert(registryData.schemaVersion === 2, 'Briarwell must use the route-graph registry schema.');
-  assert(registryData.version === '0.18.0', 'The complete Briarwell sewer network requires registry version 0.18.0.');
-  assert(registryData.areas.length === 31, 'Briarwell must register 12 surface areas, 16 sewer areas and three support interiors.');
-  assert(registryData.connections.length === 39, 'Briarwell must preserve all 39 approved internal connections.');
+  assert(registryData.version === '0.19.0', 'The south-outskirts expansion requires registry version 0.19.0.');
+  assert(registryData.areas.length === 37, 'Briarwell must register the town, sewers, support interiors and six south-outskirts maps.');
+  assert(registryData.connections.length === 45, 'Briarwell must preserve all 45 approved internal connections.');
   assert(registryData.cityExits.length === 2, 'Briarwell must preserve both roads out of town.');
   assert(
-    Object.keys(maps).length === 31,
-    'Briarwell must load 12 numbered maps, the west junction, 16 sewer maps and two Town Center interiors.'
+    Object.keys(maps).length === 37,
+    'Briarwell must load every town, sewer, support-interior and south-outskirts map.'
   );
   assert(topology.errors.length === 0, topology.errors.join('\n'));
   const unavailableTransitionCount = Object.values(maps)
@@ -313,7 +313,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     counts[connection.kind] = (counts[connection.kind] || 0) + 1;
     return counts;
   }, {});
-  assert(kindCounts.road === 13, 'Briarwell must preserve 13 public road connections.');
+  assert(kindCounts.road === 19, 'Briarwell must preserve 13 town roads and six south-outskirts road connections.');
   assert(kindCounts.alley === 1, 'Briarwell must preserve the Ainsley alley connection.');
   assert(kindCounts.doorway === 2, 'Briarwell must preserve the two Town Center doorways.');
   assert(kindCounts['secret-passage'] === 2, 'Briarwell must preserve the open-window and dwarven secret passages.');
@@ -352,7 +352,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const publicReachable = collectReachableAreas(registry, 'briarwell-town-center', false);
   const allReachable = collectReachableAreas(registry, 'briarwell-town-center', true);
-  assert(publicReachable.size === 14, 'The public route graph must connect every non-secret Briarwell area.');
+  assert(publicReachable.size === 20, 'The public route graph must connect the town and all six south-outskirts areas.');
   assert(
     ![...publicReachable].some((areaId) => areaId.startsWith('briarwell-sewer-')),
     'The sewers must not appear in public navigation.'
@@ -364,9 +364,9 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   assert(allReachable.size === registryData.areas.length, 'Hidden routes must complete the full town graph.');
 
   const westExit = registry.getCityExitForTransition('briarwell-west-road-junction', 'west-road');
-  const southExit = registry.getCityExitForTransition('briarwell-south-gate', 'south-road');
+  const bridgeExit = registry.getCityExitForTransition('briarwell-broken-bridge', 'east-road');
   assert(westExit?.status === 'unassigned' && westExit.target === null, 'The west city exit must stay unassigned.');
-  assert(southExit?.status === 'unassigned' && southExit.target === null, 'The south city exit must stay unassigned.');
+  assert(bridgeExit?.status === 'unassigned' && bridgeExit.target === null, 'The Bushavic road must stay blocked at the broken bridge.');
 
   const workshops = maps['briarwell-northwest-workshops'];
   assert(workshops, 'Area 2 must load as a playable runtime map.');
@@ -637,7 +637,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const southGate = maps['briarwell-south-gate'];
   assert(southGate, 'Area 8 must load as a playable runtime map.');
-  assert(southGate.version === '0.2.0', 'Area 8 must expose the cleaned South Gate geometry.');
+  assert(southGate.version === '0.3.0', 'Area 8 must expose the active south-outskirts route.');
   assert(
     southGate.art.background.endsWith('/briarwell-south-gate-v4.png'),
     'Area 8 must use the lightly snow-dusted welcome-sign background.'
@@ -681,13 +681,11 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     'Area 8 east road must load the docks through its west road.'
   );
   assert(
-    gateSouth?.status === 'unassigned' && gateSouth.target === null,
-    'Area 8 south road must remain an explicit target-free city exit.'
-  );
-  assert(
-    registry.getCityExitForTransition('briarwell-south-gate', 'south-road')?.id
-      === 'south-gate-out-of-briarwell',
-    'Area 8 south road must be claimed by the approved city-exit contract.'
+    gateSouth?.status === 'active'
+      && gateSouth.target?.areaId === 'briarwell-forest-f1'
+      && gateSouth.target?.spawnId === 'from-north'
+      && gateSouth.target?.returnTransitionId === 'north-road',
+    'Area 8 south road must load Forest F1 through its north road.'
   );
   const gateGeometry = new MapGeometry(southGate);
   [
@@ -942,7 +940,8 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   assert(sewerMaps.every(Boolean), 'All 15 numbered Briarwell sewer maps must load.');
   sewerMaps.forEach((sewer, index) => {
     const areaNumber = index + 1;
-    assert(sewer.version === '1.0.0', `Sewer Area ${areaNumber} must use runtime map version 1.0.0.`);
+    const expectedVersion = areaNumber === 15 ? '1.2.0' : '1.0.0';
+    assert(sewer.version === expectedVersion, `Sewer Area ${areaNumber} must use runtime map version ${expectedVersion}.`);
     const actualLinks = sewer.exits
       .map((exit) => [exit.direction, Number(exit.target.areaId.slice(-2))])
       .sort((left, right) => left[0].localeCompare(right[0]));
@@ -1005,18 +1004,20 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     'Sewer Area 7 must preserve Jay\'s added exit to the docks.'
   );
 
-  const kobolds = sewerMaps[14].interactables.find((feature) => feature.id === 'kobold-war-party');
+  const koboldMembers = sewerMaps[14].koboldEncounters.groups
+    .flatMap((group) => group.members);
   assert(
     sewerMaps[14].exits.length === 1
       && sewerMaps[14].exits[0].direction === 'east'
-      && kobolds?.interactionText.includes('Ten kobolds')
-      && kobolds?.interactionText.includes('wizard')
-      && kobolds?.interactionText.includes('champion'),
-    'Sewer Area 15 must contain ten kobolds, including the wizard and champion, behind its east-only route.'
+      && koboldMembers.length === 13
+      && koboldMembers.some((member) => member.variant === 'wizard')
+      && koboldMembers.some((member) => member.variant === 'champion')
+      && koboldMembers.some((member) => member.variant === 'chieftain'),
+    'Sewer Area 15 must preserve all four encounter waves, including the wizard, champion and chieftain, behind its east-only route.'
   );
 
   const dwarvenChamber = maps['briarwell-sewer-secret'];
-  assert(dwarvenChamber?.version === '1.0.0', 'The ancient dwarven chamber must load at version 1.0.0.');
+  assert(dwarvenChamber?.version === '1.0.2', 'The ancient dwarven chamber must load at version 1.0.2.');
   assert(
     dwarvenChamber.exits.length === 1
       && dwarvenChamber.exits[0].target?.areaId === 'briarwell-sewer-05',

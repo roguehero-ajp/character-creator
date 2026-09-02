@@ -481,7 +481,8 @@
 
   function unavailableTransitionMessage(trigger, resolution) {
     if (resolution.reason === 'unassigned') {
-      return `${trigger.label} is waiting for the numbered town layout. The hero returned safely.`;
+      return trigger.unavailableText
+        || `${trigger.label} is not currently passable. The hero returned safely.`;
     }
     return `${trigger.label} leads to ${resolution.area.title}, which is planned but not playable yet.`;
   }

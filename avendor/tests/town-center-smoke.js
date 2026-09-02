@@ -494,6 +494,8 @@ async function assertBrowser() {
         mapId: sceneMap.data.id,
         width: stageArt.naturalWidth,
         height: stageArt.naturalHeight,
+        expectedWidth: sceneMap.width,
+        expectedHeight: sceneMap.height,
         position: walkTest.getPosition(),
         expectedPosition: sceneMap.data.spawnPoints.default,
         occluderParts: document.querySelectorAll('.scene-occluder polygon').length,
@@ -506,10 +508,13 @@ async function assertBrowser() {
 
     return results;
   });
-  assert(townAudit.length === 31, 'The browser did not load all 31 playable Briarwell maps.');
+  assert(townAudit.length === 37, 'The browser did not load all 37 playable Briarwell maps.');
   townAudit.forEach((area) => {
     assert(area.areaId === area.mapId && area.areaId === area.stageAreaId, `Wrong map mounted for ${area.areaId}.`);
-    assert(area.width === 1448 && area.height === 1086, `Wrong background dimensions for ${area.areaId}.`);
+    assert(
+      area.width === area.expectedWidth && area.height === area.expectedHeight,
+      `Wrong background dimensions for ${area.areaId}.`
+    );
     assert(
       area.position.x === area.expectedPosition.x && area.position.y === area.expectedPosition.y,
       `Wrong default spawn mounted for ${area.areaId}.`

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f3",
+  "title": "Briarwell Forest - F3",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/f3/background/briarwell-forest-f3-v1.png",
+    "alt": "A misty forest passage entered from F2 at the northwest and leaving only through the south trail to F4"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 650, "y": 590, "facing": "south" },
+    "from-northwest": { "x": 340, "y": 175, "facing": "southeast" },
+    "from-south": { "x": 720, "y": 930, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "northwest-trail",
+      "points": [[175, 0], [510, 0], [650, 430], [470, 580], [120, 340]]
+    },
+    {
+      "id": "forest-passage",
+      "points": [[360, 350], [980, 330], [1070, 650], [920, 850], [850, 1086], [540, 1086], [420, 820], [300, 560]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "northwest-path",
+      "label": "Northwest trail to Forest F2",
+      "direction": "northwest",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f2",
+        "spawnId": "from-southeast",
+        "returnTransitionId": "southeast-path"
+      },
+      "fallbackSpawn": "from-northwest",
+      "points": [[245, 8], [430, 8], [455, 88], [220, 88]]
+    },
+    {
+      "id": "south-path",
+      "label": "South trail to Forest F4",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f4",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[610, 1008], [815, 1008], [830, 1078], [595, 1078]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}

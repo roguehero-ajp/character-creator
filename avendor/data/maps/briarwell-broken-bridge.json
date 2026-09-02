@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-broken-bridge",
+  "title": "Briarwell Outskirts - Broken Bridge",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/broken-bridge/background/briarwell-broken-bridge-v1.png",
+    "alt": "A destroyed stone bridge east of Forest F4, with the accessible west bank ending at a wide uncrossable river gap and a distant road on the far bank"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 330, "y": 620, "facing": "east" },
+    "from-west": { "x": 145, "y": 610, "facing": "east" },
+    "bridge-return": { "x": 560, "y": 600, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "west-bank-road",
+      "points": [[0, 340], [360, 330], [580, 410], [670, 620], [570, 870], [0, 1086]]
+    },
+    {
+      "id": "broken-bridge-approach",
+      "points": [[280, 360], [770, 360], [805, 540], [700, 690], [270, 660]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "north-parapet-rubble",
+      "points": [[490, 385], [690, 375], [750, 430], [705, 465], [500, 455]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "west-path",
+      "label": "West road to Forest F4",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f4",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 430], [92, 420], [92, 820], [8, 830]]
+    },
+    {
+      "id": "east-road",
+      "label": "Ruined road toward Bushavic",
+      "direction": "east",
+      "status": "unassigned",
+      "target": null,
+      "fallbackSpawn": "bridge-return",
+      "unavailableText": "The bridge is destroyed. The road toward Bushavic is unreachable from this bank.",
+      "points": [[670, 500], [790, 500], [790, 625], [670, 625]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "broken-span",
+      "label": "Broken bridge",
+      "x": 650,
+      "y": 640,
+      "radius": 120,
+      "interactionText": "The center span is gone. Cold water churns far below the fractured stonework."
+    }
+  ],
+  "npcs": []
+}

@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f2",
+  "title": "Briarwell Forest - F2",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/f2/background/briarwell-forest-f2-v1.png",
+    "alt": "A forest fork south of F1 where a central tree and boulders divide the future southwest trail from the open southeast trail to F3"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 360, "facing": "south" },
+    "from-north": { "x": 720, "y": 165, "facing": "south" },
+    "from-southeast": { "x": 1160, "y": 920, "facing": "northwest" }
+  },
+  "walkable": [
+    {
+      "id": "north-trail",
+      "points": [[575, 0], [875, 0], [900, 470], [520, 470]]
+    },
+    {
+      "id": "fork-clearing",
+      "points": [[380, 350], [1040, 350], [1160, 580], [1010, 730], [440, 730], [280, 570]]
+    },
+    {
+      "id": "southwest-trail-reserve",
+      "points": [[300, 520], [570, 560], [520, 820], [365, 1020], [80, 1086], [20, 900]]
+    },
+    {
+      "id": "southeast-trail",
+      "points": [[860, 520], [1160, 500], [1300, 720], [1428, 1086], [1040, 1086], [900, 820]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "central-tree-and-boulders",
+      "points": [[565, 530], [850, 500], [960, 675], [880, 850], [650, 890], [500, 730]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "north-path",
+      "label": "North trail to Forest F1",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f1",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[650, 8], [800, 8], [810, 85], [640, 85]]
+    },
+    {
+      "id": "southeast-path",
+      "label": "Southeast trail to Forest F3",
+      "direction": "southeast",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f3",
+        "spawnId": "from-northwest",
+        "returnTransitionId": "northwest-path"
+      },
+      "fallbackSpawn": "from-southeast",
+      "points": [[1120, 990], [1340, 1010], [1400, 1078], [1080, 1078]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "southwest-trail-marker",
+      "label": "Southwest forest trail",
+      "x": 360,
+      "y": 900,
+      "radius": 100,
+      "interactionText": "The southwest trail continues deeper into the forest, beyond the current route."
+    }
+  ],
+  "npcs": []
+}
