@@ -236,6 +236,11 @@
   ],
   "depthOccluders": [
     {
+      "id": "general-store-sign-post",
+      "depthY": 497,
+      "points": [[1109, 497], [1104, 355], [1082, 352], [1090, 486]]
+    },
+    {
       "id": "fruit-canopy-roof",
       "depthY": 575,
       "points": [
