@@ -1,1 +1,121 @@
-{"schemaVersion":1,"areaId":"briarwell-town-center","version":"0.3.1","model":"ground-contact-footprints","walkable":[{"id":"town-square-ground","points":[[1005,503],[1020,477],[1038,476],[1039,461],[1047,411],[1057,396],[1067,393],[1082,403],[1088,449],[1084,470],[1088,488],[1089,499],[1080,520],[1058,523],[1054,538],[1072,542],[1097,553],[1131,553],[1160,544],[1189,550],[1264,558],[1285,571],[1297,572],[1311,589],[1334,595],[1312,610],[1226,588],[1220,619],[1345,660],[1396,641],[1433,643],[1433,966],[1237,985],[1187,979],[1157,997],[1152,1056],[369,1067],[315,1022],[387,1005],[415,1004],[419,972],[375,961],[300,923],[3,850],[12,654],[86,670],[106,684],[133,691],[153,682],[190,690],[254,677],[263,669],[309,668],[321,662],[363,664],[391,647],[427,635],[434,590],[408,561],[322,525],[286,348],[399,337],[420,396],[410,416],[418,465],[436,466],[480,495],[527,530],[548,539],[586,551],[614,557],[648,556],[683,528],[751,522],[791,546],[837,545],[866,535],[887,516],[921,504],[985,507]]}],"collisions":[{"id":"fruit-display-footprint","points":[[0,655],[100,674],[180,680],[260,682],[320,674],[382,650],[395,675],[320,706],[0,700]]},{"id":"fruit-canopy-left-post-footprint","points":[[30,606],[54,606],[58,628],[28,628]]},{"id":"fruit-canopy-right-post-footprint","points":[[358,620],[384,620],[390,646],[352,646]]},{"id":"lodestone-left-foundation","points":[[480,540],[672,548],[672,574],[480,558]]},{"id":"lodestone-right-foundation","points":[[782,550],[978,544],[988,555],[782,574]]},{"id":"general-store-left-foundation","points":[[1090,560],[1160,580],[1160,610],[1080,600]]},{"id":"general-store-right-foundation","points":[[1320,576],[1448,570],[1448,620],[1320,620]]},{"id":"general-store-sign-post-footprint","points":[[1087,552],[1114,552],[1116,574],[1086,574]]},{"id":"general-store-left-barrel-footprint","points":[[1045,555],[1090,555],[1090,565],[1045,565]]},{"id":"general-store-left-crate-footprint","points":[[1088,552],[1166,548],[1168,572],[1090,576]]},{"id":"town-well-footprint","points":[[852,724],[868,700],[900,685],[950,680],[1002,684],[1038,700],[1058,724],[1064,756],[1044,782],[1012,797],[900,804],[866,790],[844,762]]},{"id":"direction-signpost-footprint","points":[[370,996],[410,996],[412,1030],[368,1032]]},{"id":"southwest-stone-wall-footprint","points":[[0,986],[86,982],[92,1010],[0,1012]]},{"id":"southwest-gate-footprint","points":[[86,1000],[244,998],[262,1024],[230,1048],[86,1048],[62,1026]]},{"id":"southeast-fence-footprint","points":[[1190,1000],[1228,1000],[1312,916],[1346,916],[1408,914],[1448,914],[1448,946],[1408,946],[1346,950],[1312,950],[1228,1034],[1190,1034]]},{"id":"southeast-stone-wall-footprint","points":[[1168,1050],[1448,1040],[1448,1086],[1160,1086]]}],"depthOccluderOverrides":[{"id":"lodestone-tavern-front","points":[[406,354],[427,300],[468,222],[518,218],[570,270],[615,166],[688,72],[718,48],[750,70],[825,224],[850,136],[888,178],[1004,296],[1018,348],[1014,400],[1008,450],[1000,500],[990,545],[978,558],[772,578],[772,522],[682,522],[682,582],[470,560],[468,520],[462,486],[468,452],[452,424],[428,399],[406,376]]}]}
+{
+  "schemaVersion": 1,
+  "areaId": "briarwell-town-center",
+  "version": "0.3.2",
+  "model": "ground-contact-footprints",
+  "walkable": [
+    {
+      "id": "town-square-ground",
+      "points": [
+        [1005,503],[1020,477],[1038,476],[1039,461],[1047,411],[1057,396],[1067,393],[1082,403],[1088,449],[1084,470],[1088,488],[1089,499],[1080,520],[1058,523],[1054,538],[1072,542],[1097,553],[1131,553],[1160,544],[1189,550],[1264,558],[1285,571],[1297,572],[1311,589],[1334,595],[1312,610],[1226,588],[1220,619],[1345,660],[1396,641],[1433,643],[1433,966],[1237,985],[1187,979],[1157,997],[1152,1056],[369,1067],[315,1022],[387,1005],[415,1004],[419,972],[375,961],[300,923],[3,850],[12,654],[86,670],[106,684],[133,691],[153,682],[190,690],[254,677],[263,669],[309,668],[321,662],[363,664],[391,647],[427,635],[434,590],[408,561],[322,525],[286,348],[399,337],[420,396],[410,416],[418,465],[436,466],[480,495],[527,530],[548,539],[586,551],[614,557],[648,556],[683,528],[751,522],[791,546],[837,545],[866,535],[887,516],[921,504],[985,507]
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "fruit-canopy-left-post-footprint",
+      "points": [[30,606],[54,606],[58,628],[28,628]]
+    },
+    {
+      "id": "town-well-footprint",
+      "points": [[852,724],[868,700],[900,685],[950,680],[1002,684],[1038,700],[1058,724],[1064,756],[1044,782],[1012,797],[900,804],[866,790],[844,762]]
+    },
+    {
+      "id": "southeast-stone-wall-footprint",
+      "points": [[1168,1050],[1448,1040],[1448,1086],[1160,1086]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "northwest-road",
+      "label": "Northwest road",
+      "direction": "northwest",
+      "status": "active",
+      "target": {"areaId":"briarwell-northwest-workshops","spawnId":"from-southwest","returnTransitionId":"southwest-road"},
+      "fallbackSpawn": "from-northwest",
+      "points": [[296,338],[402,320],[421,370],[314,392]]
+    },
+    {
+      "id": "northeast-road",
+      "label": "Northeast road",
+      "direction": "northeast",
+      "status": "active",
+      "target": {"areaId":"briarwell-library-quarter","spawnId":"from-southwest","returnTransitionId":"southwest-road"},
+      "fallbackSpawn": "from-northeast",
+      "points": [[1050,392],[1082,392],[1090,448],[1048,448]]
+    },
+    {
+      "id": "west-road",
+      "label": "West road",
+      "direction": "west",
+      "status": "active",
+      "target": {"areaId":"briarwell-western-homes","spawnId":"from-east","returnTransitionId":"east-road"},
+      "fallbackSpawn": "from-west",
+      "points": [[18,666],[86,666],[86,770],[18,770]]
+    },
+    {
+      "id": "east-road",
+      "label": "East road",
+      "direction": "east",
+      "status": "active",
+      "target": {"areaId":"briarwell-tannery-warehouses","spawnId":"from-west","returnTransitionId":"west-road"},
+      "fallbackSpawn": "from-east",
+      "points": [[1362,638],[1430,638],[1430,772],[1362,772]]
+    },
+    {
+      "id": "south-road",
+      "label": "South road",
+      "direction": "south",
+      "status": "active",
+      "target": {"areaId":"briarwell-south-gate","spawnId":"from-north","returnTransitionId":"north-road"},
+      "fallbackSpawn": "from-south",
+      "points": [[560,1018],[1035,1018],[1060,1060],[535,1060]]
+    }
+  ],
+  "spawnPoints": {
+    "default": {"x":724,"y":900,"facing":"north"},
+    "from-south": {"x":724,"y":990,"facing":"north"},
+    "from-west": {"x":120,"y":720,"facing":"east"},
+    "from-east": {"x":1330,"y":710,"facing":"west"},
+    "from-northwest": {"x":405,"y":500,"facing":"southeast"},
+    "from-northeast": {"x":1055,"y":470,"facing":"southwest"},
+    "tavern-return": {"x":724,"y":628,"facing":"south"},
+    "store-return": {"x":1236,"y":656,"facing":"south"},
+    "well-return": {"x":830,"y":842,"facing":"north"}
+  },
+  "portals": [
+    {
+      "id": "lodestone-tavern-door",
+      "label": "Lodestone Tavern",
+      "status": "active",
+      "target": {"areaId":"lodestone-tavern-interior","spawnId":"from-town-center","returnTransitionId":"front-door"},
+      "fallbackSpawn": "tavern-return",
+      "points": [[684,516],[762,516],[778,572],[668,572]]
+    },
+    {
+      "id": "general-store-door",
+      "label": "General Store",
+      "status": "active",
+      "target": {"areaId":"general-store-interior","spawnId":"from-town-center","returnTransitionId":"front-door"},
+      "fallbackSpawn": "store-return",
+      "points": [[1162,535],[1262,535],[1277,573],[1152,573]]
+    },
+    {
+      "id": "well-sewer-access",
+      "label": "Descend through the Town Center well",
+      "status": "active",
+      "activation": "interact",
+      "target": {"areaId":"briarwell-sewer-01","spawnId":"from-town-center-well","returnTransitionId":"town-center-well-ladder"},
+      "fallbackSpawn": "well-return",
+      "points": [[872,596],[990,596],[1010,702],[854,702]],
+      "interactionTarget": {"x":830,"y":770},
+      "radius": 105
+    }
+  ],
+  "depthOccluderOverrides": [
+    {
+      "id": "lodestone-tavern-front",
+      "points": [[406,354],[427,300],[468,222],[518,218],[570,270],[615,166],[688,72],[718,48],[750,70],[825,224],[850,136],[888,178],[1004,296],[1018,348],[1014,400],[1008,450],[1000,500],[990,545],[978,558],[772,578],[772,522],[682,522],[682,582],[470,560],[468,520],[462,486],[468,452],[452,424],[428,399],[406,376]]
+    }
+  ]
+}
