@@ -109,6 +109,7 @@
   background: rgba(27,75,111,.90);
 }
 
+#geometry-sketch-move-entrance.selected,
 #geometry-sketch-move-spawn.selected {
   border-color: rgba(232,185,255,.98);
   color: #f4dcff;
