@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f1",
+  "title": "Briarwell Forest - F1",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/f1/background/briarwell-forest-f1-v1.png",
+    "alt": "The first forest crossing south of Briarwell, with the South Gate road to the north, the graveyard path to the west and the F2 trail to the south"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 620, "facing": "south" },
+    "from-north": { "x": 720, "y": 170, "facing": "south" },
+    "from-west": { "x": 155, "y": 515, "facing": "east" },
+    "from-south": { "x": 720, "y": 930, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "north-road",
+      "points": [[570, 0], [880, 0], [940, 470], [500, 470]]
+    },
+    {
+      "id": "crossing",
+      "points": [[0, 320], [560, 300], [1010, 390], [1080, 650], [930, 810], [430, 800], [0, 690]]
+    },
+    {
+      "id": "south-trail",
+      "points": [[430, 560], [1010, 560], [950, 1086], [470, 1086]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-road",
+      "label": "North road to Briarwell South Gate",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-south-gate",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-road"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[650, 8], [800, 8], [810, 85], [640, 85]]
+    },
+    {
+      "id": "west-path",
+      "label": "West path to the graveyard",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-graveyard",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 410], [92, 405], [92, 620], [8, 625]]
+    },
+    {
+      "id": "south-path",
+      "label": "South trail to Forest F2",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f2",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[620, 1008], [820, 1008], [830, 1078], [610, 1078]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}

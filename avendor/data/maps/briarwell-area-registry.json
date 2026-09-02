@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -367,6 +367,76 @@
       "kind": "interior",
       "status": "playable",
       "map": "data/maps/general-store-interior.json"
+    },
+    {
+      "id": "briarwell-forest-f1",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F1",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f1.json",
+      "planPosition": { "column": 1, "row": 3 },
+      "landmarks": [
+        { "id": "graveyard-turnoff", "label": "West path to the graveyard" }
+      ]
+    },
+    {
+      "id": "briarwell-graveyard",
+      "areaNumber": null,
+      "title": "Briarwell Outskirts - Graveyard",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-graveyard.json",
+      "planPosition": { "column": 0, "row": 3 },
+      "landmarks": [
+        { "id": "old-stone-crypt", "label": "Old stone crypt" }
+      ]
+    },
+    {
+      "id": "briarwell-forest-f2",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F2",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f2.json",
+      "planPosition": { "column": 1, "row": 4 },
+      "landmarks": [
+        { "id": "forest-fork", "label": "Forest fork toward F3 and F5" }
+      ]
+    },
+    {
+      "id": "briarwell-forest-f3",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F3",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f3.json",
+      "planPosition": { "column": 2, "row": 5 }
+    },
+    {
+      "id": "briarwell-forest-f4",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F4",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f4.json",
+      "planPosition": { "column": 2, "row": 6 },
+      "landmarks": [
+        { "id": "bridge-road", "label": "East road to the broken bridge" }
+      ]
+    },
+    {
+      "id": "briarwell-broken-bridge",
+      "areaNumber": null,
+      "title": "Briarwell Outskirts - Broken Bridge",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-broken-bridge.json",
+      "planPosition": { "column": 3, "row": 6 },
+      "landmarks": [
+        { "id": "broken-span", "label": "Destroyed bridge span" },
+        { "id": "bushavic-road", "label": "Inaccessible road toward Bushavic" }
+      ]
     }
   ],
   "connections": [
@@ -418,6 +488,66 @@
       "endpoints": [
         { "areaId": "briarwell-town-center", "transitionId": "south-road", "direction": "south" },
         { "areaId": "briarwell-south-gate", "transitionId": "north-road", "direction": "north" }
+      ]
+    },
+    {
+      "id": "south-gate-forest-f1",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-south-gate", "transitionId": "south-road", "direction": "south" },
+        { "areaId": "briarwell-forest-f1", "transitionId": "north-road", "direction": "north" }
+      ]
+    },
+    {
+      "id": "forest-f1-graveyard",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f1", "transitionId": "west-path", "direction": "west" },
+        { "areaId": "briarwell-graveyard", "transitionId": "east-path", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f1-f2",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f1", "transitionId": "south-path", "direction": "south" },
+        { "areaId": "briarwell-forest-f2", "transitionId": "north-path", "direction": "north" }
+      ]
+    },
+    {
+      "id": "forest-f2-f3",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f2", "transitionId": "southeast-path", "direction": "southeast" },
+        { "areaId": "briarwell-forest-f3", "transitionId": "northwest-path", "direction": "northwest" }
+      ]
+    },
+    {
+      "id": "forest-f3-f4",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f3", "transitionId": "south-path", "direction": "south" },
+        { "areaId": "briarwell-forest-f4", "transitionId": "north-path", "direction": "north" }
+      ]
+    },
+    {
+      "id": "forest-f4-broken-bridge",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f4", "transitionId": "east-path", "direction": "east" },
+        { "areaId": "briarwell-broken-bridge", "transitionId": "west-path", "direction": "west" }
       ]
     },
     {
@@ -771,10 +901,10 @@
       "target": null
     },
     {
-      "id": "south-gate-out-of-briarwell",
-      "areaId": "briarwell-south-gate",
-      "transitionId": "south-road",
-      "direction": "south",
+      "id": "broken-bridge-road-to-bushavic",
+      "areaId": "briarwell-broken-bridge",
+      "transitionId": "east-road",
+      "direction": "east",
       "status": "unassigned",
       "target": null
     }

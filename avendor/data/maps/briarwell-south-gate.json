@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-south-gate",
   "title": "Briarwell - South Gate",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "referenceSize": {
     "width": 1448,
     "height": 1086
@@ -162,10 +162,14 @@
     },
     {
       "id": "south-road",
-      "label": "Road out of Briarwell",
+      "label": "South road to Forest F1",
       "direction": "south",
-      "status": "unassigned",
-      "target": null,
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f1",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-road"
+      },
       "fallbackSpawn": "from-south",
       "points": [[632, 1018], [802, 1018], [824, 1080], [610, 1080]]
     }

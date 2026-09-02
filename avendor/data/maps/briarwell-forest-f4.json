@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f4",
+  "title": "Briarwell Forest - F4",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/f4/background/briarwell-forest-f4-v1.png",
+    "alt": "A riverside forest clearing below F3 with an open east road leading directly to the broken bridge"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 700, "y": 590, "facing": "east" },
+    "from-north": { "x": 650, "y": 170, "facing": "south" },
+    "from-east": { "x": 1280, "y": 480, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "north-trail",
+      "points": [[520, 0], [780, 0], [870, 430], [450, 430]]
+    },
+    {
+      "id": "riverside-clearing",
+      "points": [[180, 300], [1050, 280], [1190, 450], [1130, 700], [850, 860], [300, 930], [80, 740]]
+    },
+    {
+      "id": "east-road",
+      "points": [[850, 320], [1448, 300], [1448, 650], [850, 680]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-path",
+      "label": "North trail to Forest F3",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f3",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[585, 8], [725, 8], [735, 85], [575, 85]]
+    },
+    {
+      "id": "east-path",
+      "label": "East road to the broken bridge",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-broken-bridge",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1360, 390], [1446, 380], [1446, 590], [1360, 600]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}

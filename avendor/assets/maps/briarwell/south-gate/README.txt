@@ -23,9 +23,9 @@ GAMEPLAY DATA
 ../../../../data/maps/briarwell-south-gate.json
 ../../../../data/maps/briarwell-area-registry.json
 
-Area 8 is playable from Town Center, Area 7 and the docks. Its three internal roads
-are active. The open south gate is an explicit cityExit with status unassigned and target null; it
-must not invent a world destination before Jay approves one.
+Area 8 is playable from Town Center, Area 7, the docks and Forest F1. All four
+roads are active. The open south gate is the northern end of the first approved
+south-outskirts route.
 
 GEOMETRY RULES
 --------------
@@ -35,15 +35,15 @@ GEOMETRY RULES
 - The hero may approach or pass behind tall foreground masonry while depth layers preserve it.
 - The overhead welcome sign is an occluder, never a ground collision.
 - Gate towers, open doors and the welcome sign retain foreground depth coverage.
-- The unassigned south trigger always returns the hero to its safe local spawn.
+- The active south trigger arrives safely at the north side of Forest F1.
 
 PRODUCTION CHECKLIST
 --------------------
 [x] Production-candidate background at 1448 x 1086.
-[x] Runtime map JSON with north/west/east routes and explicit city exit.
+[x] Runtime map JSON with active north/west/east/south routes.
 [x] All four triggers reachable from every spawn.
 [x] Town Center-style pathway, footprint and occlusion cleanup.
 [x] Barracks, guardhouse, house and gate interaction anchors.
-[x] City-exit contract enforced by topology audit.
+[x] F1 connection and reciprocal spawn contract enforced by topology audit.
 [x] Automated geometry and topology tests.
 [ ] Playwright traversal screenshots from Town Center and Area 7.

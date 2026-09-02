@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-graveyard",
+  "title": "Briarwell Outskirts - Graveyard",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/graveyard/background/briarwell-graveyard-v1.png",
+    "alt": "An old walled graveyard west of Briarwell Forest F1, with weathered headstones, a stone crypt and one open path at the east edge"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 850, "y": 650, "facing": "east" },
+    "from-east": { "x": 1260, "y": 620, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "graveyard-clearing",
+      "points": [[170, 430], [430, 350], [850, 350], [1160, 390], [1320, 500], [1320, 820], [1120, 950], [720, 990], [360, 910], [160, 730]]
+    },
+    {
+      "id": "east-path",
+      "points": [[1080, 400], [1448, 350], [1448, 900], [1080, 890]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "crypt-foundation",
+      "points": [[480, 350], [790, 350], [810, 425], [465, 430]]
+    },
+    {
+      "id": "southwest-grave-cluster",
+      "points": [[190, 690], [350, 680], [410, 790], [320, 885], [185, 820]]
+    },
+    {
+      "id": "southeast-monument-base",
+      "points": [[960, 760], [1110, 740], [1170, 850], [1050, 915], [935, 860]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "east-path",
+      "label": "East path to Forest F1",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f1",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1360, 450], [1446, 440], [1446, 820], [1360, 830]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "old-stone-crypt",
+      "label": "Old stone crypt",
+      "x": 630,
+      "y": 475,
+      "radius": 115,
+      "interactionText": "The crypt predates Briarwell's present walls. Its sealed door bears no family name."
+    }
+  ],
+  "npcs": []
+}
