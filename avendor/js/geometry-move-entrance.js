@@ -128,6 +128,11 @@
     button.setAttribute('aria-pressed', String(active));
     if (active) {
       geometrySketch.setKind('walkable');
+      ordinaryToolIds.forEach((id) => {
+        const tool = document.getElementById(id);
+        tool?.classList.remove('selected');
+        tool?.setAttribute('aria-pressed', 'false');
+      });
       button.classList.add('selected');
       button.setAttribute('aria-pressed', 'true');
       canvas.style.cursor = 'move';
