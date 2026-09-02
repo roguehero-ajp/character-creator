@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-forest-f2",
   "title": "Briarwell Forest - F2",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
     "background": "assets/maps/briarwell/south-outskirts/f2/background/briarwell-forest-f2-v1.png",
@@ -26,6 +26,7 @@
   "spawnPoints": {
     "default": { "x": 720, "y": 360, "facing": "south" },
     "from-north": { "x": 720, "y": 165, "facing": "south" },
+    "from-southwest": { "x": 300, "y": 900, "facing": "northeast" },
     "from-southeast": { "x": 1160, "y": 920, "facing": "northwest" }
   },
   "walkable": [
@@ -78,19 +79,23 @@
       },
       "fallbackSpawn": "from-southeast",
       "points": [[1120, 990], [1340, 1010], [1400, 1078], [1080, 1078]]
+    },
+    {
+      "id": "southwest-path",
+      "label": "Southwest trail to Forest F5",
+      "direction": "southwest",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f5",
+        "spawnId": "from-northeast",
+        "returnTransitionId": "northeast-path"
+      },
+      "fallbackSpawn": "from-southwest",
+      "points": [[45, 930], [175, 960], [315, 1078], [55, 1078]]
     }
   ],
   "portals": [],
   "depthOccluders": [],
-  "interactables": [
-    {
-      "id": "southwest-trail-marker",
-      "label": "Southwest forest trail",
-      "x": 360,
-      "y": 900,
-      "radius": 100,
-      "interactionText": "The southwest trail continues deeper into the forest, beyond the current route."
-    }
-  ],
+  "interactables": [],
   "npcs": []
 }

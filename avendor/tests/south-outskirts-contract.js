@@ -61,13 +61,15 @@ const southAreaIds = [
   'briarwell-forest-f2',
   'briarwell-forest-f3',
   'briarwell-forest-f4',
+  'briarwell-forest-f5',
   'briarwell-broken-bridge'
 ];
 southAreaIds.forEach((areaId) => {
   const area = getArea(areaId);
   const map = mapByArea.get(areaId);
+  const expectedVersion = areaId === 'briarwell-forest-f2' ? '0.2.0' : '0.1.0';
   assert(area?.status === 'playable' && area.kind === 'outdoor', `South-outskirts area is not playable: ${areaId}`);
-  assert(map?.id === areaId && map.version === '0.1.0', `South-outskirts map identity/version mismatch: ${areaId}`);
+  assert(map?.id === areaId && map.version === expectedVersion, `South-outskirts map identity/version mismatch: ${areaId}`);
 });
 
 const southGate = getTransition('briarwell-south-gate', 'south-road');
@@ -99,6 +101,11 @@ assertConnection(
   'briarwell-forest-f3/northwest-path/northwest'
 );
 assertConnection(
+  'forest-f2-f5',
+  'briarwell-forest-f2/southwest-path/southwest',
+  'briarwell-forest-f5/northeast-path/northeast'
+);
+assertConnection(
   'forest-f3-f4',
   'briarwell-forest-f3/south-path/south',
   'briarwell-forest-f4/north-path/north'
@@ -113,8 +120,19 @@ const f1 = getArea('briarwell-forest-f1').planPosition;
 const graveyard = getArea('briarwell-graveyard').planPosition;
 const f4 = getArea('briarwell-forest-f4').planPosition;
 const bridge = getArea('briarwell-broken-bridge').planPosition;
+const f2 = getArea('briarwell-forest-f2').planPosition;
+const f5 = getArea('briarwell-forest-f5').planPosition;
+const f7Area = getArea('briarwell-forest-f7');
 assert(graveyard.column < f1.column && graveyard.row === f1.row, 'The graveyard must remain directly west of F1.');
 assert(bridge.column > f4.column && bridge.row === f4.row, 'The broken bridge must remain directly east of F4.');
+assert(f5.column < f2.column && f5.row > f2.row, 'F5 must remain southwest of F2.');
+assert(
+  f7Area.status === 'planned'
+    && f7Area.map === null
+    && f7Area.planPosition.column < f5.column
+    && f7Area.planPosition.row === f5.row,
+  'F7 must remain a planned screen directly west of F5.'
+);
 
 const graveyardMap = mapByArea.get('briarwell-graveyard');
 assert(
@@ -126,8 +144,35 @@ assert(
 
 const f2Map = mapByArea.get('briarwell-forest-f2');
 assert(
-  f2Map.exits.map((exit) => exit.direction).sort().join(',') === 'north,southeast',
-  'F2 must expose the F1 and F3 routes while reserving the southwest F5 trail.'
+  f2Map.version === '0.2.0'
+    && f2Map.exits.map((exit) => exit.direction).sort().join(',') === 'north,southeast,southwest',
+  'F2 must expose its active F1, F3 and F5 routes.'
+);
+const f2Southwest = getTransition('briarwell-forest-f2', 'southwest-path');
+assert(
+  f2Southwest?.status === 'active'
+    && f2Southwest.target?.areaId === 'briarwell-forest-f5'
+    && f2Southwest.target?.returnTransitionId === 'northeast-path',
+  'F2 southwest must load F5 through its northeast path.'
+);
+
+const f5Map = mapByArea.get('briarwell-forest-f5');
+const f5Northeast = getTransition('briarwell-forest-f5', 'northeast-path');
+const f5West = getTransition('briarwell-forest-f5', 'west-path');
+const f5F7Connection = getConnection('forest-f5-f7');
+assert(
+  f5Map.exits.length === 2
+    && f5Northeast?.status === 'active'
+    && f5Northeast.target?.areaId === 'briarwell-forest-f2'
+    && f5West?.status === 'planned'
+    && f5West.target?.areaId === 'briarwell-forest-f7',
+  'F5 must connect northeast to F2 and reserve only its west route to F7.'
+);
+assert(
+  f5F7Connection?.status === 'planned'
+    && f5F7Connection.endpoints.some((endpoint) => endpoint.direction === 'west')
+    && f5F7Connection.endpoints.some((endpoint) => endpoint.direction === 'east'),
+  'The F5-F7 connection must remain a reciprocal planned west/east road.'
 );
 
 const brokenBridgeMap = mapByArea.get('briarwell-broken-bridge');
@@ -149,7 +194,9 @@ assert(
 
 const MapGeometry = loadMapEngine().MapGeometry;
 const bridgeGeometry = new MapGeometry(brokenBridgeMap);
+const f5Geometry = new MapGeometry(f5Map);
 assert(!bridgeGeometry.isWalkable(1100, 540), 'The far bank must not be reachable across the destroyed span.');
+assert(!f5Geometry.isWalkable(720, 900), 'F5 must not expose an accidental south exit below the fallen limbs.');
 
 const walkTestSource = fs.readFileSync(path.join(avendorRoot, 'js/walk-test.js'), 'utf8');
 assert(count(walkTestSource, "window.addEventListener('keydown'") === 1, 'The walk runtime must register one keydown listener.');

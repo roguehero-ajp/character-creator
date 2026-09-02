@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f5",
+  "title": "Briarwell Forest - F5",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/f5/background/briarwell-forest-f5-v1.png",
+    "alt": "A lightly snow-dusted forest bend connecting west toward F7 and northeast toward F2, with every other boundary closed by trees, rocks, roots and fallen limbs"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 700, "y": 590, "facing": "northeast" },
+    "from-northeast": { "x": 1160, "y": 175, "facing": "southwest" },
+    "from-west": { "x": 150, "y": 540, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "west-trail",
+      "points": [[0, 325], [300, 305], [520, 440], [500, 650], [280, 735], [0, 750]]
+    },
+    {
+      "id": "forest-bend",
+      "points": [[270, 300], [960, 260], [1190, 350], [1160, 585], [970, 690], [560, 700], [340, 610]]
+    },
+    {
+      "id": "northeast-trail",
+      "points": [[920, 0], [1370, 0], [1370, 310], [1160, 470], [900, 390]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "central-boulder-cluster",
+      "points": [[370, 385], [705, 350], [775, 430], [665, 510], [410, 500]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "northeast-path",
+      "label": "Northeast trail to Forest F2",
+      "direction": "northeast",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f2",
+        "spawnId": "from-southwest",
+        "returnTransitionId": "southwest-path"
+      },
+      "fallbackSpawn": "from-northeast",
+      "points": [[1040, 8], [1280, 8], [1300, 85], [1020, 85]]
+    },
+    {
+      "id": "west-path",
+      "label": "West trail to Forest F7",
+      "direction": "west",
+      "status": "planned",
+      "target": {
+        "areaId": "briarwell-forest-f7",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 410], [92, 400], [92, 665], [8, 675]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}

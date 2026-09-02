@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -437,6 +437,24 @@
         { "id": "broken-span", "label": "Destroyed bridge span" },
         { "id": "bushavic-road", "label": "Inaccessible road toward Bushavic" }
       ]
+    },
+    {
+      "id": "briarwell-forest-f5",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F5",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f5.json",
+      "planPosition": { "column": 0, "row": 5 }
+    },
+    {
+      "id": "briarwell-forest-f7",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F7",
+      "kind": "outdoor",
+      "status": "planned",
+      "map": null,
+      "planPosition": { "column": -1, "row": 5 }
     }
   ],
   "connections": [
@@ -528,6 +546,26 @@
       "endpoints": [
         { "areaId": "briarwell-forest-f2", "transitionId": "southeast-path", "direction": "southeast" },
         { "areaId": "briarwell-forest-f3", "transitionId": "northwest-path", "direction": "northwest" }
+      ]
+    },
+    {
+      "id": "forest-f2-f5",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f2", "transitionId": "southwest-path", "direction": "southwest" },
+        { "areaId": "briarwell-forest-f5", "transitionId": "northeast-path", "direction": "northeast" }
+      ]
+    },
+    {
+      "id": "forest-f5-f7",
+      "kind": "road",
+      "visibility": "public",
+      "status": "planned",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f5", "transitionId": "west-path", "direction": "west" },
+        { "areaId": "briarwell-forest-f7", "transitionId": "east-path", "direction": "east" }
       ]
     },
     {
