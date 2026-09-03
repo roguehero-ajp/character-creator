@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "id": "briarwell-forest-f5",
   "title": "Briarwell Forest - F5",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
-    "background": "assets/maps/briarwell/south-outskirts/f5/background/briarwell-forest-f5-v1.png",
-    "alt": "A lightly snow-dusted forest bend connecting west toward F7 and northeast toward F2, with every other boundary closed by trees, rocks, roots and fallen limbs"
+    "background": "assets/maps/briarwell/south-outskirts/f5/background/briarwell-forest-f5-v2.png",
+    "alt": "A broad, lightly snow-dusted wagon road bending between Forest F7 to the west and Forest F2 to the northeast, with every other boundary closed by dense trees, rocks and roots"
   },
   "movement": {
     "speedX": 275,
@@ -42,12 +42,7 @@
       "points": [[920, 0], [1370, 0], [1370, 310], [1160, 470], [900, 390]]
     }
   ],
-  "collisions": [
-    {
-      "id": "central-boulder-cluster",
-      "points": [[370, 385], [705, 350], [775, 430], [665, 510], [410, 500]]
-    }
-  ],
+  "collisions": [],
   "exits": [
     {
       "id": "northeast-path",
@@ -66,7 +61,7 @@
       "id": "west-path",
       "label": "West trail to Forest F7",
       "direction": "west",
-      "status": "planned",
+      "status": "active",
       "target": {
         "areaId": "briarwell-forest-f7",
         "spawnId": "from-east",

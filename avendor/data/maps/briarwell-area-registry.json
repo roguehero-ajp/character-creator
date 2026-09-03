@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -448,13 +448,67 @@
       "planPosition": { "column": 0, "row": 5 }
     },
     {
+      "id": "briarwell-forest-f6",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F6",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f6.json",
+      "planPosition": { "column": -1, "row": 4 }
+    },
+    {
       "id": "briarwell-forest-f7",
       "areaNumber": null,
       "title": "Briarwell Forest - F7",
       "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f7.json",
+      "planPosition": { "column": -1, "row": 5 }
+    },
+    {
+      "id": "briarwell-forest-f8",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F8",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f8.json",
+      "planPosition": { "column": -2, "row": 4 }
+    },
+    {
+      "id": "briarwell-forest-f9",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F9",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f9.json",
+      "planPosition": { "column": -2, "row": 5 }
+    },
+    {
+      "id": "briarwell-forest-f10",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F10",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f10.json",
+      "planPosition": { "column": -2, "row": 6 }
+    },
+    {
+      "id": "briarwell-witchwood-w1",
+      "areaNumber": null,
+      "title": "Witchwood - W1",
+      "kind": "outdoor",
       "status": "planned",
       "map": null,
-      "planPosition": { "column": -1, "row": 5 }
+      "planPosition": { "column": -3, "row": 5 }
+    },
+    {
+      "id": "briarwell-witchwood-w2",
+      "areaNumber": null,
+      "title": "Witchwood - W2",
+      "kind": "outdoor",
+      "status": "planned",
+      "map": null,
+      "planPosition": { "column": -3, "row": 6 }
     }
   ],
   "connections": [
@@ -562,10 +616,80 @@
       "id": "forest-f5-f7",
       "kind": "road",
       "visibility": "public",
-      "status": "planned",
+      "status": "active",
       "endpoints": [
         { "areaId": "briarwell-forest-f5", "transitionId": "west-path", "direction": "west" },
         { "areaId": "briarwell-forest-f7", "transitionId": "east-path", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f6-f7",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f6", "transitionId": "south-path", "direction": "south" },
+        { "areaId": "briarwell-forest-f7", "transitionId": "north-path", "direction": "north" }
+      ]
+    },
+    {
+      "id": "forest-f6-f8",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f6", "transitionId": "west-path", "direction": "west" },
+        { "areaId": "briarwell-forest-f8", "transitionId": "east-path", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f7-f9",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f7", "transitionId": "west-path", "direction": "west" },
+        { "areaId": "briarwell-forest-f9", "transitionId": "east-path", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f8-f9",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f8", "transitionId": "south-path", "direction": "south" },
+        { "areaId": "briarwell-forest-f9", "transitionId": "north-path", "direction": "north" }
+      ]
+    },
+    {
+      "id": "forest-f9-f10",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f9", "transitionId": "south-path", "direction": "south" },
+        { "areaId": "briarwell-forest-f10", "transitionId": "north-path", "direction": "north" }
+      ]
+    },
+    {
+      "id": "forest-f9-witchwood-w1",
+      "kind": "road",
+      "visibility": "public",
+      "status": "planned",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f9", "transitionId": "west-path", "direction": "west" },
+        { "areaId": "briarwell-witchwood-w1", "transitionId": "east-path", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f10-witchwood-w2",
+      "kind": "road",
+      "visibility": "public",
+      "status": "planned",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f10", "transitionId": "west-path", "direction": "west" },
+        { "areaId": "briarwell-witchwood-w2", "transitionId": "east-path", "direction": "east" }
       ]
     },
     {

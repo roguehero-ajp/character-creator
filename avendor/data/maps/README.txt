@@ -49,7 +49,7 @@ become active.
 
 The current graph contains:
 
-  13 road connections
+  28 road connections: 13 around town and 15 through the south outskirts
    1 alley connection
    2 doorway connections
    2 hidden passages: the open window and ancient dwarven chamber
@@ -104,6 +104,8 @@ footprints from the beginning.
 Run after changing the registry or any Briarwell map:
 
   node avendor/tests/briarwell-map-topology.js
+  node avendor/tests/briarwell-route-contract.js
+  node avendor/tests/south-outskirts-contract.js
   node avendor/tests/town-center-footprints.js
   AVENDOR_SKIP_BROWSER=1 node avendor/tests/town-center-smoke.js
 

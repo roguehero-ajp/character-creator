@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f9",
+  "title": "Briarwell Forest - F9",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/f9/background/briarwell-forest-f9-v1.png",
+    "alt": "A broad four-way winter forest junction connecting Forest F8 to the north, Forest F7 to the east, Forest F10 to the south and the darker Witchwood road to the west"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 560, "facing": "south" },
+    "from-north": { "x": 720, "y": 165, "facing": "south" },
+    "from-west": { "x": 150, "y": 515, "facing": "east" },
+    "from-east": { "x": 1295, "y": 515, "facing": "west" },
+    "from-south": { "x": 720, "y": 930, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "north-road",
+      "points": [[595, 0], [850, 0], [900, 430], [540, 430]]
+    },
+    {
+      "id": "four-way-junction",
+      "points": [[0, 340], [500, 340], [590, 295], [860, 295], [955, 340], [1448, 330], [1448, 660], [965, 660], [890, 760], [550, 760], [470, 660], [0, 660]]
+    },
+    {
+      "id": "south-road",
+      "points": [[505, 520], [940, 520], [920, 1086], [520, 1086]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-path",
+      "label": "North road to Forest F8",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f8",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[645, 8], [800, 8], [810, 90], [635, 90]]
+    },
+    {
+      "id": "east-path",
+      "label": "East road to Forest F7",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f7",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1356, 410], [1440, 415], [1440, 590], [1356, 585]]
+    },
+    {
+      "id": "south-path",
+      "label": "South road to Forest F10",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f10",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[610, 1000], [830, 1000], [845, 1078], [595, 1078]]
+    },
+    {
+      "id": "west-path",
+      "label": "West road to Witchwood W1",
+      "direction": "west",
+      "status": "planned",
+      "target": {
+        "areaId": "briarwell-witchwood-w1",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 410], [92, 405], [92, 590], [8, 600]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}

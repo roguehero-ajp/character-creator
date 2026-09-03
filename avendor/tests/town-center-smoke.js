@@ -508,7 +508,7 @@ async function assertBrowser() {
 
     return results;
   });
-  assert(townAudit.length === 38, 'The browser did not load all 38 playable Briarwell maps.');
+  assert(townAudit.length === 43, 'The browser did not load all 43 playable Briarwell maps.');
   townAudit.forEach((area) => {
     assert(area.areaId === area.mapId && area.areaId === area.stageAreaId, `Wrong map mounted for ${area.areaId}.`);
     assert(

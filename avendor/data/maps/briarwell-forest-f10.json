@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f10",
+  "title": "Briarwell Forest - F10",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/f10/background/briarwell-forest-f10-v1.png",
+    "alt": "A broad winter forest wagon road bending between Forest F9 to the north and Witchwood W2 to the west, with the south and east boundaries closed by dense trees, roots and rocks"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 620, "y": 550, "facing": "north" },
+    "from-north": { "x": 735, "y": 165, "facing": "south" },
+    "from-west": { "x": 150, "y": 515, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "north-road",
+      "points": [[590, 0], [865, 0], [945, 420], [500, 460]]
+    },
+    {
+      "id": "west-bend",
+      "points": [[0, 350], [465, 350], [900, 320], [1040, 505], [930, 735], [520, 750], [250, 690], [0, 650]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-path",
+      "label": "North road to Forest F9",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f9",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[655, 8], [820, 8], [830, 90], [645, 90]]
+    },
+    {
+      "id": "west-path",
+      "label": "West road to Witchwood W2",
+      "direction": "west",
+      "status": "planned",
+      "target": {
+        "areaId": "briarwell-witchwood-w2",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 415], [92, 410], [92, 590], [8, 600]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}
