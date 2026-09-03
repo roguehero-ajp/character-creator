@@ -22,3 +22,11 @@ Approved screen relationships:
 All backgrounds are authored at the runtime reference size of 1448 x 1086.
 Collision and transition geometry lives in avendor/data/maps rather than in the
 background PNG files.
+
+Road-art standard for the well-travelled forest:
+
+- Public roads must read as maintained packed-earth routes broad enough for a
+  full-size wagon, with believable clearance and turning space.
+- A background may show exactly one road mouth for each approved route above.
+  Forest, rocks, roots and brush must close every other image-edge opening so
+  no decorative clearing reads as an unregistered exit.

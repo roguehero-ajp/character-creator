@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "id": "briarwell-forest-f3",
   "title": "Briarwell Forest - F3",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
-    "background": "assets/maps/briarwell/south-outskirts/f3/background/briarwell-forest-f3-v1.png",
-    "alt": "A misty forest passage entered from F2 at the northwest and leaving only through the south trail to F4"
+    "background": "assets/maps/briarwell/south-outskirts/f3/background/briarwell-forest-f3-v2.png",
+    "alt": "A broad maintained wagon road through a misty forest passage, entering once from F2 at the northwest and leaving once to F4 at the south"
   },
   "movement": {
     "speedX": 275,
@@ -42,7 +42,7 @@
   "exits": [
     {
       "id": "northwest-path",
-      "label": "Northwest trail to Forest F2",
+      "label": "Northwest road to Forest F2",
       "direction": "northwest",
       "status": "active",
       "target": {
@@ -55,7 +55,7 @@
     },
     {
       "id": "south-path",
-      "label": "South trail to Forest F4",
+      "label": "South road to Forest F4",
       "direction": "south",
       "status": "active",
       "target": {

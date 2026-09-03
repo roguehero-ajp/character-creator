@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "id": "briarwell-forest-f1",
   "title": "Briarwell Forest - F1",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
-    "background": "assets/maps/briarwell/south-outskirts/f1/background/briarwell-forest-f1-v1.png",
-    "alt": "The first forest crossing south of Briarwell, with the South Gate road to the north, the graveyard path to the west and the F2 trail to the south"
+    "background": "assets/maps/briarwell/south-outskirts/f1/background/briarwell-forest-f1-v2.png",
+    "alt": "A maintained wagon-road junction south of Briarwell, with one road north to the South Gate, one west to the graveyard and one south to Forest F2"
   },
   "movement": {
     "speedX": 275,
@@ -26,7 +26,7 @@
   "spawnPoints": {
     "default": { "x": 720, "y": 620, "facing": "south" },
     "from-north": { "x": 720, "y": 170, "facing": "south" },
-    "from-west": { "x": 155, "y": 515, "facing": "east" },
+    "from-west": { "x": 155, "y": 400, "facing": "east" },
     "from-south": { "x": 720, "y": 930, "facing": "north" }
   },
   "walkable": [
@@ -36,7 +36,7 @@
     },
     {
       "id": "crossing",
-      "points": [[0, 320], [560, 300], [1010, 390], [1080, 650], [930, 810], [430, 800], [0, 690]]
+      "points": [[0, 300], [560, 300], [1010, 390], [1080, 650], [930, 810], [430, 800], [300, 650], [0, 500]]
     },
     {
       "id": "south-trail",
@@ -69,11 +69,11 @@
         "returnTransitionId": "east-path"
       },
       "fallbackSpawn": "from-west",
-      "points": [[8, 410], [92, 405], [92, 620], [8, 625]]
+      "points": [[8, 330], [100, 330], [100, 475], [8, 480]]
     },
     {
       "id": "south-path",
-      "label": "South trail to Forest F2",
+      "label": "South road to Forest F2",
       "direction": "south",
       "status": "active",
       "target": {
