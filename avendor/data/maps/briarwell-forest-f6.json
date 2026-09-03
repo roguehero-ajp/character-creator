@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f6",
+  "title": "Briarwell Forest - F6",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/f6/background/briarwell-forest-f6-v1.png",
+    "alt": "A broad winter forest wagon road curving between Forest F8 to the west and Forest F7 to the south, with the north and east boundaries closed by dense trees and rocks"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 560, "facing": "south" },
+    "from-west": { "x": 150, "y": 420, "facing": "east" },
+    "from-south": { "x": 745, "y": 930, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "west-road",
+      "points": [[0, 285], [430, 280], [745, 385], [800, 575], [610, 675], [330, 610], [0, 535]]
+    },
+    {
+      "id": "south-bend",
+      "points": [[390, 310], [950, 300], [1050, 545], [955, 755], [920, 1086], [565, 1086], [540, 750], [430, 610]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "west-path",
+      "label": "West road to Forest F8",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f8",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 340], [92, 335], [92, 505], [8, 515]]
+    },
+    {
+      "id": "south-path",
+      "label": "South road to Forest F7",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f7",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[635, 1000], [855, 1000], [870, 1078], [620, 1078]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}

@@ -44,6 +44,17 @@ function assertConnection(connectionId, left, right) {
   assert(endpointKeys.includes(right), `South-outskirts connection has the wrong second endpoint: ${connectionId}`);
 }
 
+function assertPlannedConnection(connectionId, left, right) {
+  const connection = getConnection(connectionId);
+  assert(connection?.status === 'planned', `South-outskirts connection is not planned: ${connectionId}`);
+  assert(connection.kind === 'road' && connection.visibility === 'public', `Planned south-outskirts connection must be a public road: ${connectionId}`);
+  const endpointKeys = connection.endpoints.map((endpoint) => (
+    `${endpoint.areaId}/${endpoint.transitionId}/${endpoint.direction}`
+  ));
+  assert(endpointKeys.includes(left), `Planned south-outskirts connection has the wrong first endpoint: ${connectionId}`);
+  assert(endpointKeys.includes(right), `Planned south-outskirts connection has the wrong second endpoint: ${connectionId}`);
+}
+
 function count(source, token) {
   return source.split(token).length - 1;
 }
@@ -62,6 +73,11 @@ const southAreaIds = [
   'briarwell-forest-f3',
   'briarwell-forest-f4',
   'briarwell-forest-f5',
+  'briarwell-forest-f6',
+  'briarwell-forest-f7',
+  'briarwell-forest-f8',
+  'briarwell-forest-f9',
+  'briarwell-forest-f10',
   'briarwell-broken-bridge'
 ];
 const expectedVersions = {
@@ -70,7 +86,12 @@ const expectedVersions = {
   'briarwell-forest-f2': '0.3.0',
   'briarwell-forest-f3': '0.2.0',
   'briarwell-forest-f4': '0.2.0',
-  'briarwell-forest-f5': '0.1.0',
+  'briarwell-forest-f5': '0.2.0',
+  'briarwell-forest-f6': '0.1.0',
+  'briarwell-forest-f7': '0.1.0',
+  'briarwell-forest-f8': '0.1.0',
+  'briarwell-forest-f9': '0.1.0',
+  'briarwell-forest-f10': '0.1.0',
   'briarwell-broken-bridge': '0.2.0'
 };
 southAreaIds.forEach((areaId) => {
@@ -80,19 +101,25 @@ southAreaIds.forEach((areaId) => {
   assert(map?.id === areaId && map.version === expectedVersions[areaId], `South-outskirts map identity/version mismatch: ${areaId}`);
 });
 
-const wagonRoadRevisionDirections = {
-  'briarwell-forest-f1': ['north', 'south', 'west'],
-  'briarwell-forest-f2': ['north', 'southeast', 'southwest'],
-  'briarwell-forest-f3': ['northwest', 'south'],
-  'briarwell-forest-f4': ['east', 'north'],
-  'briarwell-broken-bridge': ['east', 'west']
+const wagonRoadContracts = {
+  'briarwell-forest-f1': { artVersion: '-v2.png', directions: ['north', 'south', 'west'] },
+  'briarwell-forest-f2': { artVersion: '-v2.png', directions: ['north', 'southeast', 'southwest'] },
+  'briarwell-forest-f3': { artVersion: '-v2.png', directions: ['northwest', 'south'] },
+  'briarwell-forest-f4': { artVersion: '-v2.png', directions: ['east', 'north'] },
+  'briarwell-forest-f5': { artVersion: '-v2.png', directions: ['northeast', 'west'] },
+  'briarwell-forest-f6': { artVersion: '-v1.png', directions: ['south', 'west'] },
+  'briarwell-forest-f7': { artVersion: '-v1.png', directions: ['east', 'north', 'west'] },
+  'briarwell-forest-f8': { artVersion: '-v1.png', directions: ['east', 'south'] },
+  'briarwell-forest-f9': { artVersion: '-v1.png', directions: ['east', 'north', 'south', 'west'] },
+  'briarwell-forest-f10': { artVersion: '-v1.png', directions: ['north', 'west'] },
+  'briarwell-broken-bridge': { artVersion: '-v2.png', directions: ['east', 'west'] }
 };
-Object.entries(wagonRoadRevisionDirections).forEach(([areaId, directions]) => {
+Object.entries(wagonRoadContracts).forEach(([areaId, contract]) => {
   const map = mapByArea.get(areaId);
-  assert(map.art.background.endsWith('-v2.png'), `Wagon-road revision art is not active: ${areaId}`);
+  assert(map.art.background.endsWith(contract.artVersion), `Approved wagon-road art is not active: ${areaId}`);
   assert(
-    map.exits.map((exit) => exit.direction).sort().join(',') === directions.slice().sort().join(','),
-    `Wagon-road revision must expose exactly one transition per approved direction: ${areaId}`
+    map.exits.map((exit) => exit.direction).sort().join(',') === contract.directions.slice().sort().join(','),
+    `Wagon-road map must expose exactly one transition per approved direction: ${areaId}`
   );
 });
 
@@ -130,6 +157,46 @@ assertConnection(
   'briarwell-forest-f5/northeast-path/northeast'
 );
 assertConnection(
+  'forest-f5-f7',
+  'briarwell-forest-f5/west-path/west',
+  'briarwell-forest-f7/east-path/east'
+);
+assertConnection(
+  'forest-f6-f7',
+  'briarwell-forest-f6/south-path/south',
+  'briarwell-forest-f7/north-path/north'
+);
+assertConnection(
+  'forest-f6-f8',
+  'briarwell-forest-f6/west-path/west',
+  'briarwell-forest-f8/east-path/east'
+);
+assertConnection(
+  'forest-f7-f9',
+  'briarwell-forest-f7/west-path/west',
+  'briarwell-forest-f9/east-path/east'
+);
+assertConnection(
+  'forest-f8-f9',
+  'briarwell-forest-f8/south-path/south',
+  'briarwell-forest-f9/north-path/north'
+);
+assertConnection(
+  'forest-f9-f10',
+  'briarwell-forest-f9/south-path/south',
+  'briarwell-forest-f10/north-path/north'
+);
+assertPlannedConnection(
+  'forest-f9-witchwood-w1',
+  'briarwell-forest-f9/west-path/west',
+  'briarwell-witchwood-w1/east-path/east'
+);
+assertPlannedConnection(
+  'forest-f10-witchwood-w2',
+  'briarwell-forest-f10/west-path/west',
+  'briarwell-witchwood-w2/east-path/east'
+);
+assertConnection(
   'forest-f3-f4',
   'briarwell-forest-f3/south-path/south',
   'briarwell-forest-f4/north-path/north'
@@ -146,17 +213,29 @@ const f4 = getArea('briarwell-forest-f4').planPosition;
 const bridge = getArea('briarwell-broken-bridge').planPosition;
 const f2 = getArea('briarwell-forest-f2').planPosition;
 const f5 = getArea('briarwell-forest-f5').planPosition;
-const f7Area = getArea('briarwell-forest-f7');
 assert(graveyard.column < f1.column && graveyard.row === f1.row, 'The graveyard must remain directly west of F1.');
 assert(bridge.column > f4.column && bridge.row === f4.row, 'The broken bridge must remain directly east of F4.');
 assert(f5.column < f2.column && f5.row > f2.row, 'F5 must remain southwest of F2.');
-assert(
-  f7Area.status === 'planned'
-    && f7Area.map === null
-    && f7Area.planPosition.column < f5.column
-    && f7Area.planPosition.row === f5.row,
-  'F7 must remain a planned screen directly west of F5.'
-);
+const expectedForestPlan = {
+  'briarwell-forest-f6': [-1, 4],
+  'briarwell-forest-f7': [-1, 5],
+  'briarwell-forest-f8': [-2, 4],
+  'briarwell-forest-f9': [-2, 5],
+  'briarwell-forest-f10': [-2, 6],
+  'briarwell-witchwood-w1': [-3, 5],
+  'briarwell-witchwood-w2': [-3, 6]
+};
+Object.entries(expectedForestPlan).forEach(([areaId, [column, row]]) => {
+  const area = getArea(areaId);
+  assert(
+    area?.planPosition?.column === column && area.planPosition.row === row,
+    `Forest plan position changed: ${areaId}`
+  );
+});
+['briarwell-witchwood-w1', 'briarwell-witchwood-w2'].forEach((areaId) => {
+  const area = getArea(areaId);
+  assert(area.status === 'planned' && area.map === null, `Witchwood boundary must remain planned: ${areaId}`);
+});
 
 const graveyardMap = mapByArea.get('briarwell-graveyard');
 assert(
@@ -188,15 +267,30 @@ assert(
   f5Map.exits.length === 2
     && f5Northeast?.status === 'active'
     && f5Northeast.target?.areaId === 'briarwell-forest-f2'
-    && f5West?.status === 'planned'
+    && f5West?.status === 'active'
     && f5West.target?.areaId === 'briarwell-forest-f7',
-  'F5 must connect northeast to F2 and reserve only its west route to F7.'
+  'F5 must connect northeast to F2 and west to F7.'
 );
 assert(
-  f5F7Connection?.status === 'planned'
+  f5F7Connection?.status === 'active'
     && f5F7Connection.endpoints.some((endpoint) => endpoint.direction === 'west')
     && f5F7Connection.endpoints.some((endpoint) => endpoint.direction === 'east'),
-  'The F5-F7 connection must remain a reciprocal planned west/east road.'
+  'The F5-F7 connection must remain a reciprocal active west/east road.'
+);
+
+const f9West = getTransition('briarwell-forest-f9', 'west-path');
+const f10West = getTransition('briarwell-forest-f10', 'west-path');
+assert(
+  f9West?.status === 'planned'
+    && f9West.target?.areaId === 'briarwell-witchwood-w1'
+    && f9West.target?.returnTransitionId === 'east-path',
+  'F9 west must reserve the reciprocal road to Witchwood W1.'
+);
+assert(
+  f10West?.status === 'planned'
+    && f10West.target?.areaId === 'briarwell-witchwood-w2'
+    && f10West.target?.returnTransitionId === 'east-path',
+  'F10 west must reserve the reciprocal road to Witchwood W2.'
 );
 
 const brokenBridgeMap = mapByArea.get('briarwell-broken-bridge');
@@ -218,9 +312,21 @@ assert(
 
 const MapGeometry = loadMapEngine().MapGeometry;
 const bridgeGeometry = new MapGeometry(brokenBridgeMap);
-const f5Geometry = new MapGeometry(f5Map);
 assert(!bridgeGeometry.isWalkable(1100, 540), 'The far bank must not be reachable across the destroyed span.');
-assert(!f5Geometry.isWalkable(720, 900), 'F5 must not expose an accidental south exit below the fallen limbs.');
+const closedBoundaryChecks = {
+  'briarwell-forest-f5': [[720, 900, 'south']],
+  'briarwell-forest-f6': [[720, 100, 'north'], [1350, 500, 'east']],
+  'briarwell-forest-f7': [[720, 900, 'south']],
+  'briarwell-forest-f8': [[720, 100, 'north'], [100, 500, 'west']],
+  'briarwell-forest-f9': [[120, 120, 'northwest corner']],
+  'briarwell-forest-f10': [[1350, 500, 'east'], [720, 900, 'south']]
+};
+Object.entries(closedBoundaryChecks).forEach(([areaId, points]) => {
+  const geometry = new MapGeometry(mapByArea.get(areaId));
+  points.forEach(([x, y, label]) => {
+    assert(!geometry.isWalkable(x, y), `${areaId} must not expose an accidental ${label} route.`);
+  });
+});
 
 const walkTestSource = fs.readFileSync(path.join(avendorRoot, 'js/walk-test.js'), 'utf8');
 assert(count(walkTestSource, "window.addEventListener('keydown'") === 1, 'The walk runtime must register one keydown listener.');
