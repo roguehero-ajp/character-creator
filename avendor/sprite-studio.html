@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Avendor Sprite Studio 0.1</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="css/sprite-studio.css">
+</head>
+<body>
+  <main class="sprite-studio" aria-labelledby="studio-title">
+    <header class="studio-header">
+      <div>
+        <p class="eyebrow">AVENDOR DEVELOPMENT TOOL</p>
+        <h1 id="studio-title">Sprite Studio <span>0.1</span></h1>
+        <p class="subtitle">Female south-east walk posing studio. The painted heroine stays visible; rig math remains hidden underneath.</p>
+      </div>
+      <a class="back-link" href="hero-animation-lab.html">Back to Hero Animation Lab</a>
+    </header>
+
+    <section class="studio-grid">
+      <section class="stage-panel">
+        <div class="toolbar">
+          <button type="button" id="studio-prev">◀ Previous</button>
+          <button type="button" id="studio-play" aria-pressed="false">▶ Play</button>
+          <button type="button" id="studio-next">Next ▶</button>
+          <button type="button" id="studio-duplicate">Duplicate previous</button>
+          <button type="button" id="studio-reset-frame">Reset frame</button>
+        </div>
+
+        <div class="canvas-shell">
+          <div class="canvas-stack">
+            <canvas id="studio-canvas" width="128" height="240" aria-label="Painted heroine pose"></canvas>
+            <canvas id="studio-overlay" width="128" height="240" aria-label="Sprite Studio drag handles"></canvas>
+          </div>
+          <p class="drag-hint"><strong>Drag the pelvis, knees, or boots.</strong> Pin a foot before moving the pelvis to keep it grounded.</p>
+        </div>
+
+        <div class="frame-strip" id="studio-frame-strip" aria-label="Eight frame walk timeline"></div>
+        <p class="status" id="studio-status" role="status" aria-live="polite">Loading Sprite Studio…</p>
+      </section>
+
+      <aside class="editor-panel">
+        <section class="control-section">
+          <h2>Frame</h2>
+          <label><input type="checkbox" id="studio-lock-frame"> Lock selected frame</label>
+          <label><input type="checkbox" id="studio-onion-prev" checked> Ghost previous frame</label>
+          <label><input type="checkbox" id="studio-onion-next" checked> Ghost next frame</label>
+          <label><input type="checkbox" id="studio-show-handles" checked> Show handles</label>
+        </section>
+
+        <section class="control-section">
+          <h2>Foot contact</h2>
+          <label><input type="checkbox" id="studio-lock-left-foot"> Pin screen-left foot</label>
+          <label><input type="checkbox" id="studio-lock-right-foot"> Pin screen-right foot</label>
+          <div class="contact-grid">
+            <div><span>Screen-left</span><strong id="studio-left-foot-status">Travel</strong></div>
+            <div><span>Screen-right</span><strong id="studio-right-foot-status">Travel</strong></div>
+          </div>
+        </section>
+
+        <section class="control-section">
+          <h2>Playback</h2>
+          <label class="slider-row" for="studio-speed">
+            <span>Frame duration</span>
+            <input type="range" id="studio-speed" min="60" max="240" step="5" value="120">
+            <output id="studio-speed-output">120 ms</output>
+          </label>
+        </section>
+
+        <section class="control-section">
+          <h2>Pose data</h2>
+          <div class="button-row">
+            <button type="button" id="studio-copy-json">Copy JSON</button>
+            <button type="button" id="studio-paste-json">Paste JSON</button>
+            <button type="button" id="studio-export-png">Export PNG sheet</button>
+          </div>
+          <textarea id="studio-json" readonly spellcheck="false" aria-label="Sprite Studio pose JSON"></textarea>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script src="js/female-skeletal-walk-rig.js"></script>
+  <script src="js/female-skeletal-walk-rig-se.js"></script>
+  <script src="js/female-painted-walk-rig-se.js"></script>
+  <script src="js/sprite-studio.js"></script>
+</body>
+</html>
