@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "id": "briarwell-broken-bridge",
   "title": "Briarwell Outskirts - Broken Bridge",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
-    "background": "assets/maps/briarwell/south-outskirts/broken-bridge/background/briarwell-broken-bridge-v1.png",
-    "alt": "A destroyed stone bridge east of Forest F4, with the accessible west bank ending at a wide uncrossable river gap and a distant road on the far bank"
+    "background": "assets/maps/briarwell/south-outskirts/broken-bridge/background/briarwell-broken-bridge-v2.png",
+    "alt": "A wagon-wide trade road enters once from Forest F4 on the west bank and ends at a destroyed bridge span, beyond which one road continues toward Bushavic"
   },
   "movement": {
     "speedX": 275,
@@ -31,7 +31,7 @@
   "walkable": [
     {
       "id": "west-bank-road",
-      "points": [[0, 340], [360, 330], [580, 410], [670, 620], [570, 870], [0, 1086]]
+      "points": [[0, 370], [350, 350], [590, 410], [690, 530], [650, 650], [500, 710], [250, 735], [0, 750]]
     },
     {
       "id": "broken-bridge-approach",
@@ -56,7 +56,7 @@
         "returnTransitionId": "east-path"
       },
       "fallbackSpawn": "from-west",
-      "points": [[8, 430], [92, 420], [92, 820], [8, 830]]
+      "points": [[8, 420], [100, 420], [100, 710], [8, 720]]
     },
     {
       "id": "east-road",

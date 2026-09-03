@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "id": "briarwell-forest-f2",
   "title": "Briarwell Forest - F2",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
-    "background": "assets/maps/briarwell/south-outskirts/f2/background/briarwell-forest-f2-v1.png",
-    "alt": "A forest fork south of F1 where a central tree and boulders divide the future southwest trail from the open southeast trail to F3"
+    "background": "assets/maps/briarwell/south-outskirts/f2/background/briarwell-forest-f2-v2.png",
+    "alt": "A maintained wagon-road fork south of F1, with one road north, one southwest to F5 and one southeast to F3 around a central wooded island"
   },
   "movement": {
     "speedX": 275,
@@ -56,7 +56,7 @@
   "exits": [
     {
       "id": "north-path",
-      "label": "North trail to Forest F1",
+      "label": "North road to Forest F1",
       "direction": "north",
       "status": "active",
       "target": {
@@ -69,7 +69,7 @@
     },
     {
       "id": "southeast-path",
-      "label": "Southeast trail to Forest F3",
+      "label": "Southeast road to Forest F3",
       "direction": "southeast",
       "status": "active",
       "target": {
@@ -82,7 +82,7 @@
     },
     {
       "id": "southwest-path",
-      "label": "Southwest trail to Forest F5",
+      "label": "Southwest road to Forest F5",
       "direction": "southwest",
       "status": "active",
       "target": {

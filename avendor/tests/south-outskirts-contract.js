@@ -64,12 +64,36 @@ const southAreaIds = [
   'briarwell-forest-f5',
   'briarwell-broken-bridge'
 ];
+const expectedVersions = {
+  'briarwell-forest-f1': '0.2.0',
+  'briarwell-graveyard': '0.1.0',
+  'briarwell-forest-f2': '0.3.0',
+  'briarwell-forest-f3': '0.2.0',
+  'briarwell-forest-f4': '0.2.0',
+  'briarwell-forest-f5': '0.1.0',
+  'briarwell-broken-bridge': '0.2.0'
+};
 southAreaIds.forEach((areaId) => {
   const area = getArea(areaId);
   const map = mapByArea.get(areaId);
-  const expectedVersion = areaId === 'briarwell-forest-f2' ? '0.2.0' : '0.1.0';
   assert(area?.status === 'playable' && area.kind === 'outdoor', `South-outskirts area is not playable: ${areaId}`);
-  assert(map?.id === areaId && map.version === expectedVersion, `South-outskirts map identity/version mismatch: ${areaId}`);
+  assert(map?.id === areaId && map.version === expectedVersions[areaId], `South-outskirts map identity/version mismatch: ${areaId}`);
+});
+
+const wagonRoadRevisionDirections = {
+  'briarwell-forest-f1': ['north', 'south', 'west'],
+  'briarwell-forest-f2': ['north', 'southeast', 'southwest'],
+  'briarwell-forest-f3': ['northwest', 'south'],
+  'briarwell-forest-f4': ['east', 'north'],
+  'briarwell-broken-bridge': ['east', 'west']
+};
+Object.entries(wagonRoadRevisionDirections).forEach(([areaId, directions]) => {
+  const map = mapByArea.get(areaId);
+  assert(map.art.background.endsWith('-v2.png'), `Wagon-road revision art is not active: ${areaId}`);
+  assert(
+    map.exits.map((exit) => exit.direction).sort().join(',') === directions.slice().sort().join(','),
+    `Wagon-road revision must expose exactly one transition per approved direction: ${areaId}`
+  );
 });
 
 const southGate = getTransition('briarwell-south-gate', 'south-road');
@@ -144,7 +168,7 @@ assert(
 
 const f2Map = mapByArea.get('briarwell-forest-f2');
 assert(
-  f2Map.version === '0.2.0'
+  f2Map.version === '0.3.0'
     && f2Map.exits.map((exit) => exit.direction).sort().join(',') === 'north,southeast,southwest',
   'F2 must expose its active F1, F3 and F5 routes.'
 );
