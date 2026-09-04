@@ -22,6 +22,8 @@ Formal release versioning begins with **v1.0.0**.
 - Opened the complete dark magical forest loop from F15 through Forest F16–F22, including the F19–F16 cross-connection.
 - Gave every dark-forest screen untracked glade art with exits shown only by vegetation clearings and impassable bush on every unlisted edge.
 - Restored F15's source-map north opening into F16 without painting an additional road or trail.
+- Corrected Forest F20 with its source-map northern clearing and opened the reciprocal route into the Ogre's Clearing.
+- Added the Ogre's Clearing as a 2048 x 944 scrollable boss arena, reserving a sprite anchor for the future ogre and the Strength 8 boulder sealing its northern cave.
 
 ## [1.0.0] - 2026-08-11
 

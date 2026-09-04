@@ -8,7 +8,8 @@ identity, availability and approved travel topology. Schema version 2 locks the
 12 numbered surface areas, the unnumbered western road junction, the connected
 15-area sewer network, its hidden dwarven chamber, two building interiors, the
 south-outskirts forest, western farm road, F15 river crossing, Northfield, the
-dark western forest, Witchwood and the three-screen ancient maple.
+dark western forest and scrollable Ogre's Clearing, Witchwood and the three-screen
+ancient maple.
 
 Each entry keeps three different concerns separate:
 
@@ -52,9 +53,10 @@ become active.
 
 The current graph contains:
 
-  51 road connections: 13 around town, 18 through the south outskirts/Witchwood,
-                       8 through the western farm road and 12 through F15, the
-                       dark western forest, Old River Bridge and Northfield
+  52 road connections: 13 around town, 18 through the south outskirts/Witchwood,
+                       8 through the western farm road and 13 through F15, the
+                       dark western forest, Ogre's Clearing, Old River Bridge
+                       and Northfield
    1 alley connection
    2 doorway connections
    2 ancient-maple climb connections
@@ -92,9 +94,11 @@ within the crown to the isolated cowl perch, which has its own safe descent.
 
 Dark-forest connections retain the registry's public outdoor `road` kind for
 route-graph compatibility, but their painted environments are not roads. F16
-through F22 use `*-clearing` transition ids and untracked glade geometry. Only
-the edge clearings listed in BRIARWELL-TOWN-PLAN.md are walkable; every other
-edge is closed by dense vegetation.
+through F22 and the Ogre's Clearing use `*-clearing` transition ids and untracked
+glade geometry. Only the edge clearings listed in BRIARWELL-TOWN-PLAN.md are
+walkable; every other edge is closed by dense vegetation. The Ogre arena is a
+2048 x 944 wide map that uses the existing horizontal camera-scroll contract;
+its planned boss anchor stays separate from the background art.
 
 GROUND CONTACT RULE
 -------------------

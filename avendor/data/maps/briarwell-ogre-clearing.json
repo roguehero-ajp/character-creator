@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-ogre-clearing",
+  "title": "The Ogre's Clearing",
+  "version": "0.1.0",
+  "referenceSize": { "width": 2048, "height": 944 },
+  "art": {
+    "background": "assets/maps/briarwell/dark-forest/ogre/background/briarwell-ogre-clearing-v1.webp",
+    "alt": "A wide untracked dark-forest boss arena, open south toward F20 and sealed at its northern cave by a massive boulder"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 150, "scale": 0.48 },
+      { "y": 330, "scale": 0.62 },
+      { "y": 560, "scale": 0.78 },
+      { "y": 860, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 1024, "y": 790, "facing": "north" },
+    "from-south": { "x": 1024, "y": 790, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "untracked-ogre-arena",
+      "points": [[760, 210], [1288, 210], [1510, 260], [1760, 350], [1900, 470], [1900, 700], [1220, 760], [1150, 944], [898, 944], [828, 760], [148, 700], [148, 470], [280, 350], [540, 260]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "south-clearing",
+      "label": "South clearing to Forest F20",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f20",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-clearing"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[940, 842], [1108, 842], [1108, 944], [940, 944]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "sealed-ogre-cave-boulder",
+      "label": "Boulder sealing the ogre cave",
+      "x": 1024,
+      "y": 220,
+      "radius": 170,
+      "interactionText": "An immense boulder seals the cave mouth. Moving it will require Strength 8."
+    }
+  ],
+  "npcs": [],
+  "bossEncounter": {
+    "id": "ogre-boss",
+    "status": "planned",
+    "anchor": { "x": 1024, "y": 520 }
+  }
+}
