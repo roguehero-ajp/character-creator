@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f22",
+  "title": "Briarwell Forest - F22",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/dark-forest/f22/background/briarwell-forest-f22-v1.webp",
+    "alt": "An untracked westernmost dark forest glade with openings north and east and impenetrable roots and thorn bush to the west and south"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 620, "facing": "north" },
+    "from-east": { "x": 1295, "y": 510, "facing": "west" },
+    "from-north": { "x": 700, "y": 170, "facing": "south" }
+  },
+  "walkable": [
+    {
+      "id": "untracked-forest-glade",
+      "points": [[590, 0], [760, 0], [790, 260], [1200, 300], [1240, 420], [1448, 420], [1448, 590], [1240, 590], [1160, 800], [900, 880], [460, 880], [250, 780], [210, 550], [230, 380], [300, 300], [560, 260]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-clearing",
+      "label": "North clearing to Forest F21",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f21",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-clearing"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[610, 8], [745, 8], [760, 96], [595, 96]]
+    },
+    {
+      "id": "east-clearing",
+      "label": "East clearing to Forest F19",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f19",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-clearing"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1352, 445], [1440, 445], [1440, 575], [1352, 575]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "root-bound-western-wall",
+      "label": "Root-bound western wall",
+      "x": 280,
+      "y": 520,
+      "radius": 125,
+      "interactionText": "The western edge is a single mass of old roots, boulders and living thorn."
+    }
+  ],
+  "npcs": []
+}

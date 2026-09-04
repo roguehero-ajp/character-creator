@@ -49,18 +49,21 @@ function assertConnection(connectionId, status, left, right) {
 
 const mapContracts = {
   'briarwell-forest-f15': {
-    art: 'briarwell-forest-f15-v1.webp',
-    directions: ['east', 'south', 'west'],
+    art: 'briarwell-forest-f15-v2.webp',
+    directions: ['east', 'north', 'south', 'west'],
+    version: '0.2.0',
     position: [-2, -1]
   },
   'briarwell-old-river-bridge': {
     art: 'briarwell-old-river-bridge-v1.webp',
     directions: ['east', 'west'],
+    version: '0.1.0',
     position: [-1, -1]
   },
   'briarwell-northfield': {
     art: 'briarwell-northfield-v1.webp',
     directions: ['northeast', 'west'],
+    version: '0.1.0',
     position: [0, -1]
   }
 };
@@ -69,7 +72,7 @@ Object.entries(mapContracts).forEach(([areaId, contract]) => {
   const area = areas.get(areaId);
   const map = maps.get(areaId);
   assert(area?.status === 'playable' && area.map, `Northern-outskirts area is not playable: ${areaId}`);
-  assert(map?.id === areaId && map.version === '0.1.0', `Northern-outskirts map identity/version mismatch: ${areaId}`);
+  assert(map?.id === areaId && map.version === contract.version, `Northern-outskirts map identity/version mismatch: ${areaId}`);
   assert(map.art.background.endsWith(contract.art), `Canonical northern-outskirts art is not active: ${areaId}`);
   assert(
     map.exits.map((exit) => exit.direction).sort().join(',') === contract.directions.slice().sort().join(','),
@@ -93,10 +96,16 @@ assertConnection(
   'briarwell-forest-f15/south-path/south'
 );
 assertConnection(
+  'forest-f15-f16',
+  'active',
+  'briarwell-forest-f15/north-clearing/north',
+  'briarwell-forest-f16/south-clearing/south'
+);
+assertConnection(
   'forest-f15-f18',
-  'planned',
+  'active',
   'briarwell-forest-f15/west-path/west',
-  'briarwell-forest-f18/east-path/east'
+  'briarwell-forest-f18/east-clearing/east'
 );
 assertConnection(
   'forest-f15-old-river-bridge',
@@ -128,21 +137,25 @@ assert(
 
 const f15 = maps.get('briarwell-forest-f15');
 const f15East = transition('briarwell-forest-f15', 'east-path');
+const f15North = transition('briarwell-forest-f15', 'north-clearing');
 const f15West = transition('briarwell-forest-f15', 'west-path');
 const verticalSpan = (route) => Math.max(...route.points.map(([, y]) => y)) - Math.min(...route.points.map(([, y]) => y));
 assert(
   f15.walkable.some((region) => region.id === 'south-old-wagon-road')
     && f15.walkable.some((region) => region.id === 'east-old-wagon-road')
-    && f15.walkable.some((region) => region.id === 'west-walking-path'),
-  'F15 must distinguish its old wagon road from the western walking path.'
+    && f15.walkable.some((region) => region.id === 'west-walking-path')
+    && f15.walkable.some((region) => region.id === 'north-forest-clearing'),
+  'F15 must distinguish its old wagon road and walking path from the untracked north clearing.'
 );
 assert(
   f15East?.status === 'active'
     && f15East.target?.areaId === 'briarwell-old-river-bridge'
-    && f15West?.status === 'planned'
+    && f15North?.status === 'active'
+    && f15North.target?.areaId === 'briarwell-forest-f16'
+    && f15West?.status === 'active'
     && f15West.target?.areaId === 'briarwell-forest-f18'
     && verticalSpan(f15West) < verticalSpan(f15East),
-  'F15 must keep the eastern wagon road active and the narrower western walking path reserved for F18.'
+  'F15 must keep its eastern wagon road, western walking path and northern forest clearing active.'
 );
 assert(
   f15.interactables.some((feature) => (
@@ -153,11 +166,11 @@ assert(
 );
 
 assert(
-  areas.get('briarwell-forest-f18')?.status === 'planned'
-    && areas.get('briarwell-forest-f18')?.map === null
+  areas.get('briarwell-forest-f18')?.status === 'playable'
+    && areas.get('briarwell-forest-f18')?.map === 'data/maps/briarwell-forest-f18.json'
     && areas.get('briarwell-forest-f18')?.planPosition?.column === -3
     && areas.get('briarwell-forest-f18')?.planPosition?.row === -1,
-  'F18 must remain the planned destination west of F15.'
+  'F18 must be the playable dark-forest threshold west of F15.'
 );
 assert(
   areas.get('briarwell-misty-forest-mf1')?.status === 'planned'
@@ -201,11 +214,11 @@ const f15Geometry = new MapGeometry(f15);
 [
   [720, 1040, 'south wagon road'],
   [1400, 555, 'east wagon road'],
-  [45, 495, 'west walking path']
+  [45, 495, 'west walking path'],
+  [720, 45, 'north forest clearing']
 ].forEach(([x, y, label]) => {
   assert(f15Geometry.isWalkable(x, y), `F15 ${label} is not walkable.`);
 });
-assert(!f15Geometry.isWalkable(720, 45), 'F15 exposes an erroneous north route.');
 
 const bridgeGeometry = new MapGeometry(bridge);
 [

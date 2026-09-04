@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.24.0",
+  "version": "0.25.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -566,13 +566,88 @@
       ]
     },
     {
+      "id": "briarwell-forest-f16",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F16",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f16.json",
+      "planPosition": { "column": -2, "row": -2 },
+      "landmarks": [
+        { "id": "silver-barked-tree", "label": "Leaning silver-barked tree" }
+      ]
+    },
+    {
+      "id": "briarwell-forest-f17",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F17",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f17.json",
+      "planPosition": { "column": -2, "row": -3 },
+      "landmarks": [
+        { "id": "bent-twin-trunks", "label": "Bent twin trunks" }
+      ]
+    },
+    {
       "id": "briarwell-forest-f18",
       "areaNumber": null,
       "title": "Briarwell Forest - F18",
       "kind": "outdoor",
-      "status": "planned",
-      "map": null,
-      "planPosition": { "column": -3, "row": -1 }
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f18.json",
+      "planPosition": { "column": -3, "row": -1 },
+      "landmarks": [
+        { "id": "dark-forest-threshold", "label": "Dark forest threshold" }
+      ]
+    },
+    {
+      "id": "briarwell-forest-f19",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F19",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f19.json",
+      "planPosition": { "column": -3, "row": -2 },
+      "landmarks": [
+        { "id": "lightning-scarred-tree", "label": "Lightning-scarred tree" }
+      ]
+    },
+    {
+      "id": "briarwell-forest-f20",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F20",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f20.json",
+      "planPosition": { "column": -3, "row": -3 },
+      "landmarks": [
+        { "id": "split-glacial-boulder", "label": "Split glacial boulder" }
+      ]
+    },
+    {
+      "id": "briarwell-forest-f21",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F21",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f21.json",
+      "planPosition": { "column": -4, "row": -3 },
+      "landmarks": [
+        { "id": "western-thorn-wall", "label": "Western thorn wall" }
+      ]
+    },
+    {
+      "id": "briarwell-forest-f22",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F22",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f22.json",
+      "planPosition": { "column": -4, "row": -2 },
+      "landmarks": [
+        { "id": "root-bound-western-wall", "label": "Root-bound western wall" }
+      ]
     },
     {
       "id": "briarwell-old-river-bridge",
@@ -925,13 +1000,93 @@
       ]
     },
     {
+      "id": "forest-f15-f16",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f15", "transitionId": "north-clearing", "direction": "north" },
+        { "areaId": "briarwell-forest-f16", "transitionId": "south-clearing", "direction": "south" }
+      ]
+    },
+    {
       "id": "forest-f15-f18",
       "kind": "road",
       "visibility": "public",
-      "status": "planned",
+      "status": "active",
       "endpoints": [
         { "areaId": "briarwell-forest-f15", "transitionId": "west-path", "direction": "west" },
-        { "areaId": "briarwell-forest-f18", "transitionId": "east-path", "direction": "east" }
+        { "areaId": "briarwell-forest-f18", "transitionId": "east-clearing", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f16-f17",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f16", "transitionId": "north-clearing", "direction": "north" },
+        { "areaId": "briarwell-forest-f17", "transitionId": "south-clearing", "direction": "south" }
+      ]
+    },
+    {
+      "id": "forest-f16-f19",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f16", "transitionId": "west-clearing", "direction": "west" },
+        { "areaId": "briarwell-forest-f19", "transitionId": "east-clearing", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f17-f20",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f17", "transitionId": "west-clearing", "direction": "west" },
+        { "areaId": "briarwell-forest-f20", "transitionId": "east-clearing", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f18-f19",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f18", "transitionId": "north-clearing", "direction": "north" },
+        { "areaId": "briarwell-forest-f19", "transitionId": "south-clearing", "direction": "south" }
+      ]
+    },
+    {
+      "id": "forest-f19-f22",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f19", "transitionId": "west-clearing", "direction": "west" },
+        { "areaId": "briarwell-forest-f22", "transitionId": "east-clearing", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f20-f21",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f20", "transitionId": "west-clearing", "direction": "west" },
+        { "areaId": "briarwell-forest-f21", "transitionId": "east-clearing", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f21-f22",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f21", "transitionId": "south-clearing", "direction": "south" },
+        { "areaId": "briarwell-forest-f22", "transitionId": "north-clearing", "direction": "north" }
       ]
     },
     {

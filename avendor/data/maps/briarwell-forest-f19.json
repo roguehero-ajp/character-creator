@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f19",
+  "title": "Briarwell Forest - F19",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/dark-forest/f19/background/briarwell-forest-f19-v1.webp",
+    "alt": "An untracked dark magical forest glade with openings east, south and west and a dense impassable northern boundary"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 620, "facing": "west" },
+    "from-east": { "x": 1295, "y": 510, "facing": "west" },
+    "from-south": { "x": 720, "y": 920, "facing": "north" },
+    "from-west": { "x": 150, "y": 510, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "untracked-forest-glade",
+      "points": [[220, 280], [1228, 280], [1228, 420], [1448, 420], [1448, 590], [1228, 590], [1150, 800], [820, 850], [820, 1086], [625, 1086], [625, 850], [300, 800], [220, 590], [0, 590], [0, 430], [220, 430]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "east-clearing",
+      "label": "East clearing to Forest F16",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f16",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-clearing"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1352, 445], [1440, 445], [1440, 575], [1352, 575]]
+    },
+    {
+      "id": "south-clearing",
+      "label": "South clearing to Forest F18",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f18",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-clearing"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[640, 990], [805, 990], [815, 1078], [630, 1078]]
+    },
+    {
+      "id": "west-clearing",
+      "label": "West clearing to Forest F22",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f22",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-clearing"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 445], [96, 445], [96, 575], [8, 575]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "lightning-scarred-tree",
+      "label": "Lightning-scarred tree",
+      "x": 620,
+      "y": 330,
+      "radius": 115,
+      "interactionText": "The pale split trunk is old, but the wood inside still smells faintly of rain."
+    }
+  ],
+  "npcs": []
+}
