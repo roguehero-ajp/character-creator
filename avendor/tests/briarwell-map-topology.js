@@ -67,16 +67,47 @@ function assertRegionGeometry(areaId, data, collectionName) {
   });
 }
 
-function readPngDimensions(filePath) {
+function readWebpDimensions(bytes, filePath) {
+  const chunk = bytes.subarray(12, 16).toString('ascii');
+  if (chunk === 'VP8X') {
+    return {
+      width: 1 + bytes.readUIntLE(24, 3),
+      height: 1 + bytes.readUIntLE(27, 3)
+    };
+  }
+  if (chunk === 'VP8 ') {
+    assert(bytes.subarray(23, 26).equals(Buffer.from([0x9d, 0x01, 0x2a])), `WebP frame header is invalid: ${filePath}`);
+    return {
+      width: bytes.readUInt16LE(26) & 0x3fff,
+      height: bytes.readUInt16LE(28) & 0x3fff
+    };
+  }
+  if (chunk === 'VP8L') {
+    assert(bytes[20] === 0x2f, `Lossless WebP signature is invalid: ${filePath}`);
+    return {
+      width: 1 + bytes[21] + ((bytes[22] & 0x3f) << 8),
+      height: 1 + (bytes[22] >> 6) + (bytes[23] << 2) + ((bytes[24] & 0x0f) << 10)
+    };
+  }
+  throw new Error(`WebP format is unsupported: ${filePath}/${chunk}`);
+}
+
+function readImageDimensions(filePath) {
   const bytes = fs.readFileSync(filePath);
-  assert(
-    bytes.length >= 24 && bytes.subarray(1, 4).toString('ascii') === 'PNG',
-    `Map art is not a readable PNG: ${filePath}`
-  );
-  return {
-    width: bytes.readUInt32BE(16),
-    height: bytes.readUInt32BE(20)
-  };
+  if (bytes.length >= 24 && bytes.subarray(1, 4).toString('ascii') === 'PNG') {
+    return {
+      width: bytes.readUInt32BE(16),
+      height: bytes.readUInt32BE(20)
+    };
+  }
+  if (
+    bytes.length >= 30
+      && bytes.subarray(0, 4).toString('ascii') === 'RIFF'
+      && bytes.subarray(8, 12).toString('ascii') === 'WEBP'
+  ) {
+    return readWebpDimensions(bytes, filePath);
+  }
+  throw new Error(`Map art is not a readable PNG or WebP image: ${filePath}`);
 }
 
 function loadEngines() {
@@ -105,7 +136,7 @@ function assertPlayableMapGeometry(MapGeometry, areaId, data) {
   const geometry = new MapGeometry(data);
   const transitions = [...data.exits, ...data.portals];
   const artPath = path.join(avendorRoot, data.art.background);
-  const artSize = readPngDimensions(artPath);
+  const artSize = readImageDimensions(artPath);
 
   assert(
     artSize.width === data.referenceSize.width && artSize.height === data.referenceSize.height,
@@ -212,13 +243,13 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   const topology = engine.auditTopology(registry, maps);
 
   assert(registryData.schemaVersion === 2, 'Briarwell must use the route-graph registry schema.');
-  assert(registryData.version === '0.21.0', 'The Forest F5-F10 expansion requires registry version 0.21.0.');
-  assert(registryData.areas.length === 45, 'Briarwell must register every town, sewer, support, F1-F10, graveyard, bridge and planned Witchwood area.');
-  assert(registryData.connections.length === 54, 'Briarwell must preserve all 54 approved internal connections.');
+  assert(registryData.version === '0.22.0', 'The Witchwood and ancient-maple expansion requires registry version 0.22.0.');
+  assert(registryData.areas.length === 49, 'Briarwell must register the town, sewers, support spaces, F1-F11, Witchwood and ancient-maple screens.');
+  assert(registryData.connections.length === 59, 'Briarwell must preserve all 59 approved internal connections.');
   assert(registryData.cityExits.length === 2, 'Briarwell must preserve both roads out of town.');
   assert(
-    Object.keys(maps).length === 43,
-    'Briarwell must load every town, sewer, support-interior and south-outskirts map.'
+    Object.keys(maps).length === 48,
+    'Briarwell must load every town, sewer, support-interior, south-outskirts and Witchwood map.'
   );
   assert(topology.errors.length === 0, topology.errors.join('\n'));
   const unavailableTransitionCount = Object.values(maps)
@@ -313,9 +344,10 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     counts[connection.kind] = (counts[connection.kind] || 0) + 1;
     return counts;
   }, {});
-  assert(kindCounts.road === 28, 'Briarwell must preserve 13 town roads and fifteen south-outskirts road connections.');
+  assert(kindCounts.road === 31, 'Briarwell must preserve 13 town roads and eighteen south-outskirts/Witchwood road connections.');
   assert(kindCounts.alley === 1, 'Briarwell must preserve the Ainsley alley connection.');
   assert(kindCounts.doorway === 2, 'Briarwell must preserve the two Town Center doorways.');
+  assert(kindCounts.climb === 2, 'The ancient maple must preserve both vertical climb connections.');
   assert(kindCounts['secret-passage'] === 2, 'Briarwell must preserve the open-window and dwarven secret passages.');
   assert(kindCounts['sewer-access'] === 4, 'Briarwell must preserve all four sewer entrances.');
   assert(kindCounts['sewer-tunnel'] === 17, 'Briarwell must preserve all 17 internal sewer tunnels.');
@@ -352,7 +384,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const publicReachable = collectReachableAreas(registry, 'briarwell-town-center', false);
   const allReachable = collectReachableAreas(registry, 'briarwell-town-center', true);
-  assert(publicReachable.size === 28, 'The public route graph must connect the town, twelve playable outskirts areas and planned Witchwood W1/W2.');
+  assert(publicReachable.size === 32, 'The public route graph must connect the town, outskirts, Witchwood, ancient maple and planned F11.');
   assert(
     ![...publicReachable].some((areaId) => areaId.startsWith('briarwell-sewer-')),
     'The sewers must not appear in public navigation.'

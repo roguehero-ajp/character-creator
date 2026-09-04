@@ -6,7 +6,12 @@ Formal release versioning begins with **v1.0.0**.
 
 ## [Unreleased]
 
-No changes yet.
+### Avendor
+
+- Opened the mystical Witchwood W1 and W2 screens, with active routes from Forest F9 and F10.
+- Added the ancient maple as three playable climbing screens with progressively harder repeatable Climb checks, safe fall landings, and an isolated cowl perch.
+- Replaced Forest F8 art with a corrected junction that visibly carries the approved road north toward planned Forest F11.
+- Published a project update covering the new Witchwood and ancient-maple route.
 
 ## [1.0.0] - 2026-08-11
 

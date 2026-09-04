@@ -89,9 +89,9 @@ const expectedVersions = {
   'briarwell-forest-f5': '0.2.0',
   'briarwell-forest-f6': '0.1.0',
   'briarwell-forest-f7': '0.1.0',
-  'briarwell-forest-f8': '0.1.0',
-  'briarwell-forest-f9': '0.1.0',
-  'briarwell-forest-f10': '0.1.0',
+  'briarwell-forest-f8': '0.2.0',
+  'briarwell-forest-f9': '0.2.0',
+  'briarwell-forest-f10': '0.2.0',
   'briarwell-broken-bridge': '0.2.0'
 };
 southAreaIds.forEach((areaId) => {
@@ -109,7 +109,7 @@ const wagonRoadContracts = {
   'briarwell-forest-f5': { artVersion: '-v2.png', directions: ['northeast', 'west'] },
   'briarwell-forest-f6': { artVersion: '-v1.png', directions: ['south', 'west'] },
   'briarwell-forest-f7': { artVersion: '-v1.png', directions: ['east', 'north', 'west'] },
-  'briarwell-forest-f8': { artVersion: '-v1.png', directions: ['east', 'south'] },
+  'briarwell-forest-f8': { artVersion: '-v2.webp', directions: ['east', 'north', 'south'] },
   'briarwell-forest-f9': { artVersion: '-v1.png', directions: ['east', 'north', 'south', 'west'] },
   'briarwell-forest-f10': { artVersion: '-v1.png', directions: ['north', 'west'] },
   'briarwell-broken-bridge': { artVersion: '-v2.png', directions: ['east', 'west'] }
@@ -181,17 +181,22 @@ assertConnection(
   'briarwell-forest-f8/south-path/south',
   'briarwell-forest-f9/north-path/north'
 );
+assertPlannedConnection(
+  'forest-f8-f11',
+  'briarwell-forest-f8/north-path/north',
+  'briarwell-forest-f11/south-path/south'
+);
 assertConnection(
   'forest-f9-f10',
   'briarwell-forest-f9/south-path/south',
   'briarwell-forest-f10/north-path/north'
 );
-assertPlannedConnection(
+assertConnection(
   'forest-f9-witchwood-w1',
   'briarwell-forest-f9/west-path/west',
   'briarwell-witchwood-w1/east-path/east'
 );
-assertPlannedConnection(
+assertConnection(
   'forest-f10-witchwood-w2',
   'briarwell-forest-f10/west-path/west',
   'briarwell-witchwood-w2/east-path/east'
@@ -220,6 +225,7 @@ const expectedForestPlan = {
   'briarwell-forest-f6': [-1, 4],
   'briarwell-forest-f7': [-1, 5],
   'briarwell-forest-f8': [-2, 4],
+  'briarwell-forest-f11': [-2, 3],
   'briarwell-forest-f9': [-2, 5],
   'briarwell-forest-f10': [-2, 6],
   'briarwell-witchwood-w1': [-3, 5],
@@ -232,9 +238,14 @@ Object.entries(expectedForestPlan).forEach(([areaId, [column, row]]) => {
     `Forest plan position changed: ${areaId}`
   );
 });
+assert(
+  getArea('briarwell-forest-f11')?.status === 'planned'
+    && getArea('briarwell-forest-f11').map === null,
+  'F11 must remain the approved planned destination of the visible F8 north road.'
+);
 ['briarwell-witchwood-w1', 'briarwell-witchwood-w2'].forEach((areaId) => {
   const area = getArea(areaId);
-  assert(area.status === 'planned' && area.map === null, `Witchwood boundary must remain planned: ${areaId}`);
+  assert(area.status === 'playable' && area.map, `Witchwood screen must be playable: ${areaId}`);
 });
 
 const graveyardMap = mapByArea.get('briarwell-graveyard');
@@ -281,16 +292,16 @@ assert(
 const f9West = getTransition('briarwell-forest-f9', 'west-path');
 const f10West = getTransition('briarwell-forest-f10', 'west-path');
 assert(
-  f9West?.status === 'planned'
+  f9West?.status === 'active'
     && f9West.target?.areaId === 'briarwell-witchwood-w1'
     && f9West.target?.returnTransitionId === 'east-path',
-  'F9 west must reserve the reciprocal road to Witchwood W1.'
+  'F9 west must load Witchwood W1 through its reciprocal east path.'
 );
 assert(
-  f10West?.status === 'planned'
+  f10West?.status === 'active'
     && f10West.target?.areaId === 'briarwell-witchwood-w2'
     && f10West.target?.returnTransitionId === 'east-path',
-  'F10 west must reserve the reciprocal road to Witchwood W2.'
+  'F10 west must load Witchwood W2 through its reciprocal east path.'
 );
 
 const brokenBridgeMap = mapByArea.get('briarwell-broken-bridge');
@@ -317,7 +328,7 @@ const closedBoundaryChecks = {
   'briarwell-forest-f5': [[720, 900, 'south']],
   'briarwell-forest-f6': [[720, 100, 'north'], [1350, 500, 'east']],
   'briarwell-forest-f7': [[720, 900, 'south']],
-  'briarwell-forest-f8': [[720, 100, 'north'], [100, 500, 'west']],
+  'briarwell-forest-f8': [[100, 500, 'west']],
   'briarwell-forest-f9': [[120, 120, 'northwest corner']],
   'briarwell-forest-f10': [[1350, 500, 'east'], [720, 900, 'south']]
 };

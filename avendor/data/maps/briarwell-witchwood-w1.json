@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-witchwood-w1",
+  "title": "Witchwood - W1",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/w1/background/briarwell-witchwood-w1-v2.webp",
+    "alt": "A moonlit Witchwood road winding between carved standing stones, hanging charms, violet mist and glowing mushrooms"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 720, "facing": "north" },
+    "from-east": { "x": 1260, "y": 440, "facing": "west" },
+    "from-south": { "x": 720, "y": 930, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "witchwood-road",
+      "points": [[1210, 190], [1448, 205], [1448, 470], [1180, 500], [980, 580], [900, 680], [870, 1086], [560, 1086], [570, 760], [500, 650], [520, 520], [760, 430], [1010, 360]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "east-path",
+      "label": "East road to Forest F9",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f9",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1360, 265], [1440, 250], [1440, 430], [1350, 450]]
+    },
+    {
+      "id": "south-path",
+      "label": "South road to Witchwood W2",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-witchwood-w2",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[630, 1000], [820, 1000], [830, 1078], [620, 1078]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "witchwood-charms",
+      "label": "Hanging Witchwood charms",
+      "x": 520,
+      "y": 610,
+      "radius": 115,
+      "interactionText": "Feathers, bone and knotted twine turn in a wind you cannot feel."
+    }
+  ],
+  "npcs": []
+}

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-maple-tree-middle",
+  "title": "Witchwood - Ancient Maple Boughs",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/maple-tree/middle/background/briarwell-witchwood-maple-tree-middle-v2.webp",
+    "alt": "A snow-lined natural stair winding through the enormous middle boughs of an ancient maple beneath the moon"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 715, "y": 820, "facing": "north" },
+    "from-base": { "x": 700, "y": 850, "facing": "north" },
+    "from-crown": { "x": 745, "y": 520, "facing": "south" },
+    "middle-fall-landing": { "x": 720, "y": 555, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "middle-bough-path",
+      "points": [[610, 1086], [890, 1086], [940, 850], [875, 690], [925, 525], [845, 360], [900, 150], [830, 0], [625, 0], [650, 180], [570, 340], [625, 520], [545, 700]]
+    }
+  ],
+  "collisions": [],
+  "exits": [],
+  "portals": [
+    {
+      "id": "descend-to-base",
+      "label": "the descent to the roots",
+      "status": "active",
+      "activation": "interact",
+      "target": {
+        "areaId": "briarwell-maple-tree-base",
+        "spawnId": "from-middle",
+        "returnTransitionId": "climb-to-middle"
+      },
+      "fallbackSpawn": "from-base",
+      "points": [[630, 820], [790, 820], [820, 980], [610, 980]],
+      "interactionTarget": { "x": 700, "y": 925 },
+      "radius": 130
+    },
+    {
+      "id": "climb-to-crown",
+      "label": "the climb into the crown",
+      "status": "active",
+      "activation": "interact",
+      "target": {
+        "areaId": "briarwell-maple-tree-crown",
+        "spawnId": "from-middle",
+        "returnTransitionId": "descend-to-middle"
+      },
+      "fallbackSpawn": "from-crown",
+      "points": [[690, 300], [850, 285], [900, 455], [690, 470]],
+      "interactionTarget": { "x": 790, "y": 405 },
+      "radius": 175,
+      "check": {
+        "type": "skill",
+        "skill": "Climb",
+        "modifier": 15,
+        "failureSpawn": "middle-fall-landing",
+        "successText": "You brace between two limbs and climb into the thinner crown above.",
+        "failureText": "Your boot skids across a glazed knot. You drop hard onto the broad middle bough."
+      }
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "middle-bough-foreground",
+      "depthY": 865,
+      "points": [[0, 540], [650, 565], [770, 660], [835, 860], [760, 970], [520, 930], [300, 850], [0, 820]]
+    }
+  ],
+  "interactables": [],
+  "npcs": []
+}

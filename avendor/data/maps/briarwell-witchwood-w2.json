@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-witchwood-w2",
+  "title": "Witchwood - W2",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/w2/background/briarwell-witchwood-w2-v2.webp",
+    "alt": "A three-way Witchwood junction marked by moon-carved stones, hanging bones, cold witch-lights and luminous mushrooms"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 820, "y": 600, "facing": "south" },
+    "from-north": { "x": 680, "y": 170, "facing": "south" },
+    "from-east": { "x": 1270, "y": 420, "facing": "west" },
+    "from-southeast": { "x": 1250, "y": 875, "facing": "northwest" }
+  },
+  "walkable": [
+    {
+      "id": "north-road",
+      "points": [[570, 0], [765, 0], [850, 330], [920, 460], [780, 610], [540, 520], [500, 390]]
+    },
+    {
+      "id": "east-road",
+      "points": [[760, 350], [1448, 225], [1448, 515], [1010, 610], [720, 565]]
+    },
+    {
+      "id": "maple-road",
+      "points": [[610, 470], [1000, 450], [1130, 590], [1190, 750], [1448, 830], [1448, 1086], [1240, 1086], [1080, 875], [850, 735], [600, 660]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-path",
+      "label": "North road to Witchwood W1",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-witchwood-w1",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[610, 8], [745, 8], [760, 90], [595, 90]]
+    },
+    {
+      "id": "east-path",
+      "label": "East road to Forest F10",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f10",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1360, 300], [1440, 285], [1440, 475], [1350, 490]]
+    },
+    {
+      "id": "southeast-path",
+      "label": "Southeast path to the ancient maple",
+      "direction": "southeast",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-maple-tree-base",
+        "spawnId": "from-northwest",
+        "returnTransitionId": "northwest-path"
+      },
+      "fallbackSpawn": "from-southeast",
+      "points": [[1320, 930], [1440, 920], [1440, 1078], [1360, 1078]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "moon-marked-stones",
+      "label": "Moon-marked standing stones",
+      "x": 950,
+      "y": 585,
+      "radius": 120,
+      "interactionText": "The carved crescents hold a pale glow long after you block the moonlight."
+    }
+  ],
+  "npcs": []
+}

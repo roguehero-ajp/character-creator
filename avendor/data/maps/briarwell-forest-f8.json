@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "id": "briarwell-forest-f8",
   "title": "Briarwell Forest - F8",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
-    "background": "assets/maps/briarwell/south-outskirts/f8/background/briarwell-forest-f8-v1.png",
-    "alt": "A broad winter forest wagon road bending between Forest F6 to the east and Forest F9 to the south, with the north and west boundaries closed by snow-dusted trees and roots"
+    "background": "assets/maps/briarwell/south-outskirts/f8/background/briarwell-forest-f8-v2.webp",
+    "alt": "A moonlit winter forest junction with broad wagon roads continuing north toward Forest F11, east toward Forest F6 and south toward Forest F9"
   },
   "movement": {
     "speedX": 275,
@@ -25,21 +25,39 @@
   },
   "spawnPoints": {
     "default": { "x": 720, "y": 580, "facing": "south" },
-    "from-east": { "x": 1295, "y": 470, "facing": "west" },
+    "from-north": { "x": 680, "y": 165, "facing": "south" },
+    "from-east": { "x": 1295, "y": 500, "facing": "west" },
     "from-south": { "x": 720, "y": 930, "facing": "north" }
   },
   "walkable": [
     {
-      "id": "east-road",
-      "points": [[760, 300], [1448, 300], [1448, 635], [910, 655], [720, 535]]
+      "id": "north-road",
+      "points": [[585, 0], [770, 0], [850, 320], [1000, 410], [970, 620], [520, 620], [430, 480], [520, 310]]
     },
     {
-      "id": "south-bend",
-      "points": [[430, 335], [930, 325], [1040, 565], [930, 770], [900, 1086], [545, 1086], [520, 750], [420, 570]]
+      "id": "east-road",
+      "points": [[760, 345], [1448, 330], [1448, 650], [900, 675], [700, 535]]
+    },
+    {
+      "id": "south-road",
+      "points": [[430, 420], [980, 410], [990, 610], [930, 1086], [450, 1086], [500, 680]]
     }
   ],
   "collisions": [],
   "exits": [
+    {
+      "id": "north-path",
+      "label": "North road to Forest F11",
+      "direction": "north",
+      "status": "planned",
+      "target": {
+        "areaId": "briarwell-forest-f11",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[620, 8], [740, 8], [755, 90], [605, 90]]
+    },
     {
       "id": "east-path",
       "label": "East road to Forest F6",
@@ -51,7 +69,7 @@
         "returnTransitionId": "west-path"
       },
       "fallbackSpawn": "from-east",
-      "points": [[1356, 395], [1440, 400], [1440, 570], [1356, 565]]
+      "points": [[1356, 410], [1440, 410], [1440, 590], [1356, 590]]
     },
     {
       "id": "south-path",

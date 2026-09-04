@@ -125,12 +125,25 @@ function assertMapConsistency(MapGeometry, data) {
 
   Object.entries(data.spawnPoints).forEach(([spawnId, spawn]) => {
     assert(map.isWalkable(spawn.x, spawn.y), `Named spawn is blocked: ${data.id}/${spawnId}`);
-    assert(isReachable(reachability, spawn, 18), `Named spawn is isolated from the main play-space: ${data.id}/${spawnId}`);
+    if (spawn.teleportOnly) {
+      assert(
+        data.interactables.some((feature) => !feature.teleportOnly && feature.successSpawn === spawnId),
+        `Teleport-only spawn has no reachable source interaction: ${data.id}/${spawnId}`
+      );
+    } else {
+      assert(isReachable(reachability, spawn, 18), `Named spawn is isolated from the main play-space: ${data.id}/${spawnId}`);
+    }
   });
 
   assertTransitionUsability(map, data, reachability);
 
   data.interactables.forEach((feature) => {
+    if (feature.teleportOnly) {
+      const destination = Object.values(data.spawnPoints)
+        .find((spawn) => spawn.teleportOnly && Math.hypot(spawn.x - feature.x, spawn.y - feature.y) <= feature.radius);
+      assert(destination && map.isWalkable(destination.x, destination.y), `Teleport-only interactable has no landing: ${data.id}/${feature.id}`);
+      return;
+    }
     assert(hasReachableInteractionPoint(map, reachability, feature), `Interactable has no reachable approach: ${data.id}/${feature.id}`);
   });
 
