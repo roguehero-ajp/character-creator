@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f20",
+  "title": "Briarwell Forest - F20",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/dark-forest/f20/background/briarwell-forest-f20-v1.webp",
+    "alt": "An untracked dark magical forest glade open only east and west around a split lichen-lit boulder"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 620, "facing": "east" },
+    "from-east": { "x": 1295, "y": 510, "facing": "west" },
+    "from-west": { "x": 150, "y": 510, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "untracked-forest-glade",
+      "points": [[220, 290], [1220, 290], [1220, 420], [1448, 420], [1448, 590], [1220, 590], [1180, 800], [260, 800], [220, 590], [0, 590], [0, 430], [220, 430]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "east-clearing",
+      "label": "East clearing to Forest F17",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f17",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-clearing"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1352, 445], [1440, 445], [1440, 575], [1352, 575]]
+    },
+    {
+      "id": "west-clearing",
+      "label": "West clearing to Forest F21",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f21",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-clearing"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 445], [96, 445], [96, 575], [8, 575]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "split-glacial-boulder",
+      "label": "Split glacial boulder",
+      "x": 820,
+      "y": 330,
+      "radius": 120,
+      "interactionText": "Blue-green lichen glows in the stone's deep split without giving off any warmth."
+    }
+  ],
+  "npcs": []
+}

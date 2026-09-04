@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f18",
+  "title": "Briarwell Forest - F18",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/dark-forest/f18/background/briarwell-forest-f18-v1.webp",
+    "alt": "The untracked threshold of the dark magical forest with clear openings north and east and impenetrable growth to the west and south"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 620, "facing": "north" },
+    "from-north": { "x": 720, "y": 170, "facing": "south" },
+    "from-east": { "x": 1295, "y": 510, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "untracked-forest-glade",
+      "points": [[640, 0], [800, 0], [820, 260], [1210, 300], [1240, 420], [1448, 420], [1448, 590], [1240, 590], [1180, 790], [920, 880], [500, 880], [280, 780], [220, 600], [220, 400], [300, 300], [625, 260]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-clearing",
+      "label": "North clearing to Forest F19",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f19",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-clearing"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[655, 8], [785, 8], [800, 96], [640, 96]]
+    },
+    {
+      "id": "east-clearing",
+      "label": "East clearing to Forest F15",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f15",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1352, 445], [1440, 445], [1440, 575], [1352, 575]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "dark-forest-threshold",
+      "label": "Dark forest threshold",
+      "x": 360,
+      "y": 600,
+      "radius": 120,
+      "interactionText": "Behind you lies the last worn track. Ahead, the forest floor shows no sign that anyone has passed this way."
+    }
+  ],
+  "npcs": []
+}

@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "id": "briarwell-forest-f15",
   "title": "Briarwell Forest - F15",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
-    "background": "assets/maps/briarwell/northern-outskirts/f15/background/briarwell-forest-f15-v1.webp",
-    "alt": "An old wagon road enters Forest F15 from the south and turns east toward the river while a narrow walking path leaves west toward Forest F18"
+    "background": "assets/maps/briarwell/northern-outskirts/f15/background/briarwell-forest-f15-v2.webp",
+    "alt": "An old wagon road enters Forest F15 from the south and turns east toward the river, a narrow walking path leaves west toward Forest F18, and an untracked forest opening leads north to Forest F16"
   },
   "movement": {
     "speedX": 275,
@@ -25,6 +25,7 @@
   },
   "spawnPoints": {
     "default": { "x": 720, "y": 650, "facing": "east" },
+    "from-north": { "x": 720, "y": 180, "facing": "south" },
     "from-south": { "x": 720, "y": 930, "facing": "north" },
     "from-east": { "x": 1280, "y": 550, "facing": "west" },
     "from-west": { "x": 150, "y": 495, "facing": "east" }
@@ -41,10 +42,27 @@
     {
       "id": "west-walking-path",
       "points": [[0, 430], [560, 445], [675, 500], [655, 575], [540, 550], [0, 545]]
+    },
+    {
+      "id": "north-forest-clearing",
+      "points": [[650, 0], [800, 0], [835, 480], [610, 480]]
     }
   ],
   "collisions": [],
   "exits": [
+    {
+      "id": "north-clearing",
+      "label": "North forest opening to Forest F16",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f16",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-clearing"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[660, 8], [790, 8], [800, 96], [650, 96]]
+    },
     {
       "id": "south-path",
       "label": "Old south road to Forest F14",
@@ -75,14 +93,13 @@
       "id": "west-path",
       "label": "West walking path toward Forest F18",
       "direction": "west",
-      "status": "planned",
+      "status": "active",
       "target": {
         "areaId": "briarwell-forest-f18",
         "spawnId": "from-east",
-        "returnTransitionId": "east-path"
+        "returnTransitionId": "east-clearing"
       },
       "fallbackSpawn": "from-west",
-      "unavailableText": "The narrow western path continues into the mountains, but travel beyond F15 is not open yet.",
       "points": [[8, 445], [96, 445], [96, 545], [8, 545]]
     }
   ],
@@ -95,7 +112,7 @@
       "x": 720,
       "y": 555,
       "radius": 120,
-      "interactionText": "Faded wagon ruts run south and east. The western way was never more than a walking path."
+      "interactionText": "Faded wagon ruts run south and east. The western way was never more than a walking path, while the northern opening shows no track at all."
     }
   ],
   "npcs": []

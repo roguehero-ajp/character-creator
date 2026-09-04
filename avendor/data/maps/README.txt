@@ -7,8 +7,8 @@ briarwell-area-registry.json is the single source of truth for Briarwell area
 identity, availability and approved travel topology. Schema version 2 locks the
 12 numbered surface areas, the unnumbered western road junction, the connected
 15-area sewer network, its hidden dwarven chamber, two building interiors, the
-south-outskirts forest, western farm road, F15 river crossing, Northfield,
-Witchwood and the three-screen ancient maple.
+south-outskirts forest, western farm road, F15 river crossing, Northfield, the
+dark western forest, Witchwood and the three-screen ancient maple.
 
 Each entry keeps three different concerns separate:
 
@@ -52,9 +52,9 @@ become active.
 
 The current graph contains:
 
-  43 road connections: 13 around town, 18 through the south outskirts/Witchwood,
-                       8 through the western farm road and 4 through F15,
-                       the Old River Bridge and Northfield
+  51 road connections: 13 around town, 18 through the south outskirts/Witchwood,
+                       8 through the western farm road and 12 through F15, the
+                       dark western forest, Old River Bridge and Northfield
    1 alley connection
    2 doorway connections
    2 ancient-maple climb connections
@@ -89,6 +89,12 @@ Climb checks. Each check names an authored failureSpawn so a failed attempt land
 the hero safely on the current screen. The three climb modifiers are +30 at the
 roots, +15 in the middle boughs and +0 in the crown. The last success teleports
 within the crown to the isolated cowl perch, which has its own safe descent.
+
+Dark-forest connections retain the registry's public outdoor `road` kind for
+route-graph compatibility, but their painted environments are not roads. F16
+through F22 use `*-clearing` transition ids and untracked glade geometry. Only
+the edge clearings listed in BRIARWELL-TOWN-PLAN.md are walkable; every other
+edge is closed by dense vegetation.
 
 GROUND CONTACT RULE
 -------------------

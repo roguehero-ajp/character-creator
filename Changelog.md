@@ -19,6 +19,9 @@ Formal release versioning begins with **v1.0.0**.
 - Added Forest F15 with old wagon roads south and east, plus a narrower planned walking path west toward Forest F18.
 - Added the intact Old River Bridge as the only safe crossing over the rapid river that feeds Briarwell.
 - Added Northfield as a nearly treeless green rock field, with its future northeast walking path reserved toward Misty Forest MF1.
+- Opened the complete dark magical forest loop from F15 through Forest F16–F22, including the F19–F16 cross-connection.
+- Gave every dark-forest screen untracked glade art with exits shown only by vegetation clearings and impassable bush on every unlisted edge.
+- Restored F15's source-map north opening into F16 without painting an additional road or trail.
 
 ## [1.0.0] - 2026-08-11
 

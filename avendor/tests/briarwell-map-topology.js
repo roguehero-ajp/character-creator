@@ -243,12 +243,12 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   const topology = engine.auditTopology(registry, maps);
 
   assert(registryData.schemaVersion === 2, 'Briarwell must use the route-graph registry schema.');
-  assert(registryData.version === '0.24.0', 'The F15, Old River Bridge and Northfield expansion requires registry version 0.24.0.');
-  assert(registryData.areas.length === 60, 'Briarwell must register the town, sewers, support spaces, forest routes, Northfield, farms, Witchwood and ancient-maple screens.');
-  assert(registryData.connections.length === 71, 'Briarwell must preserve all 71 approved internal connections.');
+  assert(registryData.version === '0.25.0', 'The dark-forest F16-F22 expansion requires registry version 0.25.0.');
+  assert(registryData.areas.length === 66, 'Briarwell must register the town, sewers, support spaces, forest routes, Northfield, farms, Witchwood and ancient-maple screens.');
+  assert(registryData.connections.length === 79, 'Briarwell must preserve all 79 approved internal connections.');
   assert(registryData.cityExits.length === 1, 'Only the blocked road beyond the broken bridge should remain an unresolved city exit.');
   assert(
-    Object.keys(maps).length === 58,
+    Object.keys(maps).length === 65,
     'Briarwell must load every town, sewer, support-interior, forest, farm, Northfield and Witchwood map.'
   );
   assert(topology.errors.length === 0, topology.errors.join('\n'));
@@ -344,7 +344,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     counts[connection.kind] = (counts[connection.kind] || 0) + 1;
     return counts;
   }, {});
-  assert(kindCounts.road === 43, 'Briarwell must preserve all town, forest, Witchwood, farm and northern-field road connections.');
+  assert(kindCounts.road === 51, 'Briarwell must preserve all town, forest, Witchwood, farm and northern-field route connections.');
   assert(kindCounts.alley === 1, 'Briarwell must preserve the Ainsley alley connection.');
   assert(kindCounts.doorway === 2, 'Briarwell must preserve the two Town Center doorways.');
   assert(kindCounts.climb === 2, 'The ancient maple must preserve both vertical climb connections.');
@@ -384,7 +384,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const publicReachable = collectReachableAreas(registry, 'briarwell-town-center', false);
   const allReachable = collectReachableAreas(registry, 'briarwell-town-center', true);
-  assert(publicReachable.size === 43, 'The public route graph must connect the town, outskirts, farms, Witchwood, ancient maple, Northfield and planned northern routes.');
+  assert(publicReachable.size === 49, 'The public route graph must connect the town, outskirts, farms, Witchwood, ancient maple, Northfield and dark forest.');
   assert(
     ![...publicReachable].some((areaId) => areaId.startsWith('briarwell-sewer-')),
     'The sewers must not appear in public navigation.'

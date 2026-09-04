@@ -8,8 +8,8 @@ keeps Jay's numbered layout understandable during art and map production.
 
 | State | Areas |
 |---|---|
-| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F15; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Old River Bridge; Northfield; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
-| Planned | Forest F18 west of F15; Misty Forest MF1 northeast of Northfield; combat resolution for the Area 15 kobolds; inventory awards for the dwarven treasure; open-window traversal |
+| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F22; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Old River Bridge; Northfield; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
+| Planned | Misty Forest MF1 northeast of Northfield; combat resolution for the Area 15 kobolds; inventory awards for the dwarven treasure; open-window traversal |
 
 The complete Briarwell surface and sewer network are now playable. The surface contains the northern circuit
 `1 → 2 → 3 → 4 → 1`, the southern circuit
@@ -17,7 +17,8 @@ The complete Briarwell surface and sewer network are now playable. The surface c
 `1 → 5 → west junction → 12`. Area 11 has finished runtime art and geometry and is
 reachable through the Sewer Area 14 cave; its open-window route still awaits traversal logic.
 The western branch now continues from the junction to F13, north through F14 and
-F15, then east across the Old River Bridge into Northfield. It also runs south
+F15, then east across the Old River Bridge into Northfield. F15 also opens into
+the complete F16–F22 dark-forest loop to its north and west. The road runs south
 through F12, F11 and F8, with one west farm spur at F11, F12 and F13.
 
 ## Numbered surface areas
@@ -67,7 +68,7 @@ broken bridge toward Bushavic remains an unresolved world boundary.
 | F13 | `briarwell-forest-f13` | F12 S, F14 N, Allwood's Gardens W, west junction E |
 | Allwood's Gardens | `briarwell-allwood-gardens` | F13 E only |
 | F14 | `briarwell-forest-f14` | F13 S; old road to F15 N |
-| F15 | `briarwell-forest-f15` | F14 S, Old River Bridge E; planned walking path to F18 W |
+| F15 | `briarwell-forest-f15` | F14 S, Old River Bridge E, F18 W by walking path, F16 N by untracked clearing |
 
 The F11–F14 spine and all three farm approaches are straight wagon roads. Every
 painted edge opening corresponds to the links above. F14's northern road is less
@@ -78,15 +79,38 @@ show that it once carried regular passage through the mountains.
 
 | Area | Stable ID | Approved public links |
 |---|---|---|
-| F15 | `briarwell-forest-f15` | F14 S, Old River Bridge E; planned Forest F18 walking path W |
+| F15 | `briarwell-forest-f15` | F14 S, Old River Bridge E, Forest F18 walking path W, Forest F16 clearing N |
 | Old River Bridge | `briarwell-old-river-bridge` | F15 W, Northfield E |
 | Northfield | `briarwell-northfield` | Old River Bridge W; planned Misty Forest MF1 walking path NE |
 
 F15's south and east branches retain the faded ruts and old stone edging of the
-historic wagon road. Its western branch is deliberately only a walking path. The
-Old River Bridge is intact and wagon-wide, but the rapid river is impassable away
-from its deck. Northfield is open green ground dominated by rock outcrops, with
-only a few distant trees and no invented road mouths.
+historic wagon road. Its western branch is deliberately only a walking path. Its
+northern opening into F16 is rough untracked ground rather than a fourth road.
+The Old River Bridge is intact and wagon-wide, but the rapid river is impassable
+away from its deck. Northfield is open green ground dominated by rock outcrops,
+with only a few distant trees and no invented road mouths.
+
+## Dark western forest
+
+| Area | Stable ID | Approved public links | Closed edges |
+|---|---|---|---|
+| F16 | `briarwell-forest-f16` | F17 N, F15 S, F19 W | E |
+| F17 | `briarwell-forest-f17` | F16 S, F20 W | N, E |
+| F18 | `briarwell-forest-f18` | F19 N, F15 E | S, W |
+| F19 | `briarwell-forest-f19` | F16 E, F18 S, F22 W | N |
+| F20 | `briarwell-forest-f20` | F17 E, F21 W | N, S |
+| F21 | `briarwell-forest-f21` | F20 E, F22 S | N, W |
+| F22 | `briarwell-forest-f22` | F21 N, F19 E | S, W |
+
+These darker-green screens are untravelled magical forest. Their art contains no
+roads, paths, trails, ruts or worn directional ground. Each approved transition
+is communicated only by a local clearing through the edge vegetation. Every
+unlisted edge is continuous impassable bush, roots and rock. F21 and F22 are the
+westernmost points, so their west boundaries are deliberately impenetrable.
+
+There is no F19–F20 connection. The complete navigable loop is
+`F15 → F18 → F19 → F22 → F21 → F20 → F17 → F16 → F15`, with the additional
+cross-connection between F19 and F16.
 
 ## Production order
 
@@ -102,6 +126,7 @@ only a few distant trees and no invented road mouths.
 10. Combat and inventory handoff for the kobold lair and dwarven treasure.
 11. ~~Western farm road through F14, including Donson's, Bayard's and Allwood's.~~ Complete v1.
 12. ~~F15, the Old River Bridge and Northfield.~~ Complete v1.
+13. ~~Dark western forest F16–F22.~~ Complete v1.
 
 Every playable area requires its own runtime map JSON, background art, safe spawn
 points, exact transition triggers, foot-level collisions, depth occluders and a
