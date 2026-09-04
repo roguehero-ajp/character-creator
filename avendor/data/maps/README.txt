@@ -6,7 +6,8 @@ BRIARWELL REGISTRY
 briarwell-area-registry.json is the single source of truth for Briarwell area
 identity, availability and approved travel topology. Schema version 2 locks the
 12 numbered surface areas, the unnumbered western road junction, the connected
-15-area sewer network, its hidden dwarven chamber and two building interiors.
+15-area sewer network, its hidden dwarven chamber, two building interiors, the
+south-outskirts forest, Witchwood and the three-screen ancient maple.
 
 Each entry keeps three different concerns separate:
 
@@ -39,6 +40,7 @@ geometry. Each connection has exactly two unique area/transition endpoints.
   road            Public surface road.
   alley           Public surface alley.
   doorway         Public building entrance.
+  climb           Public vertical traversal between outdoor screens.
   secret-passage  Hidden authored route; never player-facing navigation.
   sewer-access    Hidden surface-to-sewer route.
   sewer-tunnel    Public navigation inside the underground network.
@@ -49,9 +51,10 @@ become active.
 
 The current graph contains:
 
-  28 road connections: 13 around town and 15 through the south outskirts
+  31 road connections: 13 around town and 18 through the south outskirts/Witchwood
    1 alley connection
    2 doorway connections
+   2 ancient-maple climb connections
    2 hidden passages: the open window and ancient dwarven chamber
    4 hidden sewer entrances at Areas 1, 7, 9 and 11
   17 public tunnels inside the sewer network
@@ -77,6 +80,12 @@ Automated topology checks reject duplicate ids/numbers, duplicate route endpoint
 public secret routes, unknown areas, missing playable maps, missing entry spawns,
 one-way active links, registry/map identity mismatches and runtime transitions that
 contradict the approved graph.
+
+Ancient-maple ascents use interacted transitions guarded by repeatable percentile
+Climb checks. Each check names an authored failureSpawn so a failed attempt lands
+the hero safely on the current screen. The three climb modifiers are +30 at the
+roots, +15 in the middle boughs and +0 in the crown. The last success teleports
+within the crown to the isolated cowl perch, which has its own safe descent.
 
 GROUND CONTACT RULE
 -------------------
@@ -106,6 +115,7 @@ Run after changing the registry or any Briarwell map:
   node avendor/tests/briarwell-map-topology.js
   node avendor/tests/briarwell-route-contract.js
   node avendor/tests/south-outskirts-contract.js
+  node avendor/tests/witchwood-maple-tree-contract.js
   node avendor/tests/town-center-footprints.js
   AVENDOR_SKIP_BROWSER=1 node avendor/tests/town-center-smoke.js
 

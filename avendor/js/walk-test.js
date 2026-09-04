@@ -108,24 +108,62 @@
     return minimum + Math.floor(Math.random() * range);
   }
 
+  function moveToLocalSpawn(spawnId) {
+    const spawn = map?.getExactSpawn(spawnId);
+    if (!spawn || !map.isWalkable(spawn.x, spawn.y) || map.getTriggerAt(spawn)) return false;
+    position = { x: spawn.x, y: spawn.y };
+    lastDirection = spawn.facing || lastDirection;
+    lastSafePosition = { ...position, facing: lastDirection };
+    activeTriggerId = null;
+    setPosition();
+    updateInteractionPrompt();
+    return true;
+  }
+
+  function naturalSkillRating(skillName) {
+    const state = window.AvendorPlayerState?.load?.();
+    const skill = window.AvendorPlayerState?.naturalSkills?.(state)
+      ?.find((candidate) => candidate.name === skillName);
+    return Number(skill?.rating) || 1;
+  }
+
   function runTransitionCheck(transition) {
     const check = transition.check;
-    if (!check || isDiscovered(check.discoveryId)) return true;
-    if (check.type !== 'stat') return false;
+    if (!check) return { passed: true, message: '' };
+
+    if (check.type === 'skill') {
+      const rating = naturalSkillRating(check.skill);
+      const chance = Math.max(1, Math.min(99, rating + (Number(check.modifier) || 0)));
+      const roll = randomInt(1, 100);
+      if (roll <= chance) {
+        const message = `${check.successText} ${check.skill} chance ${chance}%; rolled ${roll}.`;
+        setNotice(message, 4600);
+        return { passed: true, message };
+      }
+
+      moveToLocalSpawn(check.failureSpawn || transition.fallbackSpawn);
+      const message = `${check.failureText} ${check.skill} chance ${chance}%; rolled ${roll}.`;
+      setNotice(message, 4600);
+      return { passed: false, message };
+    }
+
+    if (isDiscovered(check.discoveryId)) return { passed: true, message: '' };
+    if (check.type !== 'stat') return { passed: false, message: '' };
 
     const state = window.AvendorPlayerState?.load?.();
     const statValue = Number(state?.stats?.[check.stat]) || 5;
     const roll = randomInt(1, 10);
     const total = statValue + roll;
+    const statLabel = window.AvendorPlayerState?.STAT_LABELS?.[check.stat] || check.stat;
     if (total >= check.target) {
       rememberDiscovery(check.discoveryId);
-      setNotice(`${check.successText} Perception test: ${total}/${check.target}.`, 4200);
+      setNotice(`${check.successText} ${statLabel} test: ${total}/${check.target}.`, 4200);
       updateInteractionPrompt();
-      return false;
+      return { passed: false, message: '' };
     }
 
-    setNotice(`${check.failureText} Perception test: ${total}/${check.target}.`, 3600);
-    return false;
+    setNotice(`${check.failureText} ${statLabel} test: ${total}/${check.target}.`, 3600);
+    return { passed: false, message: '' };
   }
 
   function directionFromVector(dx, dy) {
@@ -204,8 +242,11 @@
     if (nearby.id !== nearbyId) {
       let verb = nearby.type === 'npc' ? 'Talk to' : 'Inspect';
       if (nearby.type === 'transition') {
-        verb = nearby.check && !isDiscovered(nearby.check.discoveryId) ? 'Inspect' : 'Use';
+        if (nearby.check?.type === 'skill') verb = 'Attempt';
+        else verb = nearby.check && !isDiscovered(nearby.check.discoveryId) ? 'Inspect' : 'Use';
       }
+      if (nearby.action === 'climb') verb = 'Attempt';
+      if (nearby.action === 'teleport') verb = 'Use';
       prompt.textContent = `E  ${verb} ${nearby.label}`;
       nearbyId = nearby.id;
     }
@@ -227,8 +268,27 @@
     }
 
     if (nearby.type === 'transition') {
-      if (!runTransitionCheck(nearby)) return;
-      void handleTrigger(nearby);
+      const checkResult = runTransitionCheck(nearby);
+      if (!checkResult.passed) return;
+      void handleTrigger(nearby, checkResult.message);
+      return;
+    }
+
+    if (nearby.action === 'climb') {
+      const checkResult = runTransitionCheck(nearby);
+      if (!checkResult.passed) return;
+      if (!moveToLocalSpawn(nearby.successSpawn)) {
+        setNotice(`${nearby.label} has no safe landing point.`, 3200);
+      }
+      return;
+    }
+
+    if (nearby.action === 'teleport') {
+      if (!moveToLocalSpawn(nearby.successSpawn)) {
+        setNotice(`${nearby.label} has no safe landing point.`, 3200);
+        return;
+      }
+      setNotice(nearby.interactionText || `${nearby.label} used.`, 3200);
       return;
     }
 
@@ -487,7 +547,7 @@
     return `${trigger.label} leads to ${resolution.area.title}, which is planned but not playable yet.`;
   }
 
-  async function handleTrigger(trigger) {
+  async function handleTrigger(trigger, checkMessage = '') {
     if (!map || !registry || transitionLock || activeTriggerId === trigger.id) return;
     transitionLock = true;
     activeTriggerId = trigger.id;
@@ -510,12 +570,15 @@
       }
 
       stage.classList.add('map-transitioning');
-      setNotice(`Travelling to ${resolution.area.title}...`, 2200);
+      setNotice(checkMessage || `Travelling to ${resolution.area.title}...`, checkMessage ? 4600 : 2200);
       await delay(TRANSITION_FADE_MS);
 
       try {
         await loadArea(resolution.targetAreaId, resolution.spawnId);
-        setNotice(`${resolution.area.title} loaded.`, 1800);
+        setNotice(
+          checkMessage ? `${checkMessage} ${resolution.area.title} loaded.` : `${resolution.area.title} loaded.`,
+          checkMessage ? 4600 : 1800
+        );
       } catch (error) {
         console.error(error);
         if (map === sourceMap) returnToSafePosition(trigger);

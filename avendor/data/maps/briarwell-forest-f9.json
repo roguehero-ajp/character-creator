@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-forest-f9",
   "title": "Briarwell Forest - F9",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
     "background": "assets/maps/briarwell/south-outskirts/f9/background/briarwell-forest-f9-v1.png",
@@ -89,7 +89,7 @@
       "id": "west-path",
       "label": "West road to Witchwood W1",
       "direction": "west",
-      "status": "planned",
+      "status": "active",
       "target": {
         "areaId": "briarwell-witchwood-w1",
         "spawnId": "from-east",

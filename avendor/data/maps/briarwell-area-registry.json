@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -475,6 +475,15 @@
       "planPosition": { "column": -2, "row": 4 }
     },
     {
+      "id": "briarwell-forest-f11",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F11",
+      "kind": "outdoor",
+      "status": "planned",
+      "map": null,
+      "planPosition": { "column": -2, "row": 3 }
+    },
+    {
       "id": "briarwell-forest-f9",
       "areaNumber": null,
       "title": "Briarwell Forest - F9",
@@ -497,18 +506,55 @@
       "areaNumber": null,
       "title": "Witchwood - W1",
       "kind": "outdoor",
-      "status": "planned",
-      "map": null,
-      "planPosition": { "column": -3, "row": 5 }
+      "status": "playable",
+      "map": "data/maps/briarwell-witchwood-w1.json",
+      "planPosition": { "column": -3, "row": 5 },
+      "landmarks": [
+        { "id": "witchwood-charms", "label": "Hanging Witchwood charms" }
+      ]
     },
     {
       "id": "briarwell-witchwood-w2",
       "areaNumber": null,
       "title": "Witchwood - W2",
       "kind": "outdoor",
-      "status": "planned",
-      "map": null,
-      "planPosition": { "column": -3, "row": 6 }
+      "status": "playable",
+      "map": "data/maps/briarwell-witchwood-w2.json",
+      "planPosition": { "column": -3, "row": 6 },
+      "landmarks": [
+        { "id": "moon-marked-stones", "label": "Moon-marked standing stones" }
+      ]
+    },
+    {
+      "id": "briarwell-maple-tree-base",
+      "areaNumber": null,
+      "title": "Witchwood - Ancient Maple Roots",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-maple-tree-base.json",
+      "planPosition": { "column": -2, "row": 7 },
+      "landmarks": [
+        { "id": "ancient-maple", "label": "Ancient maple" }
+      ]
+    },
+    {
+      "id": "briarwell-maple-tree-middle",
+      "areaNumber": null,
+      "title": "Witchwood - Ancient Maple Boughs",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-maple-tree-middle.json"
+    },
+    {
+      "id": "briarwell-maple-tree-crown",
+      "areaNumber": null,
+      "title": "Witchwood - Ancient Maple Crown",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-maple-tree-crown.json",
+      "landmarks": [
+        { "id": "grey-cowl", "label": "Grey cowl" }
+      ]
     }
   ],
   "connections": [
@@ -663,6 +709,16 @@
       ]
     },
     {
+      "id": "forest-f8-f11",
+      "kind": "road",
+      "visibility": "public",
+      "status": "planned",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f8", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-forest-f11", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
       "id": "forest-f9-f10",
       "kind": "road",
       "visibility": "public",
@@ -676,7 +732,7 @@
       "id": "forest-f9-witchwood-w1",
       "kind": "road",
       "visibility": "public",
-      "status": "planned",
+      "status": "active",
       "endpoints": [
         { "areaId": "briarwell-forest-f9", "transitionId": "west-path", "direction": "west" },
         { "areaId": "briarwell-witchwood-w1", "transitionId": "east-path", "direction": "east" }
@@ -686,10 +742,50 @@
       "id": "forest-f10-witchwood-w2",
       "kind": "road",
       "visibility": "public",
-      "status": "planned",
+      "status": "active",
       "endpoints": [
         { "areaId": "briarwell-forest-f10", "transitionId": "west-path", "direction": "west" },
         { "areaId": "briarwell-witchwood-w2", "transitionId": "east-path", "direction": "east" }
+      ]
+    },
+    {
+      "id": "witchwood-w1-w2",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-witchwood-w1", "transitionId": "south-path", "direction": "south" },
+        { "areaId": "briarwell-witchwood-w2", "transitionId": "north-path", "direction": "north" }
+      ]
+    },
+    {
+      "id": "witchwood-w2-maple-tree",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-witchwood-w2", "transitionId": "southeast-path", "direction": "southeast" },
+        { "areaId": "briarwell-maple-tree-base", "transitionId": "northwest-path", "direction": "northwest" }
+      ]
+    },
+    {
+      "id": "maple-tree-base-middle",
+      "kind": "climb",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-maple-tree-base", "transitionId": "climb-to-middle" },
+        { "areaId": "briarwell-maple-tree-middle", "transitionId": "descend-to-base" }
+      ]
+    },
+    {
+      "id": "maple-tree-middle-crown",
+      "kind": "climb",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-maple-tree-middle", "transitionId": "climb-to-crown" },
+        { "areaId": "briarwell-maple-tree-crown", "transitionId": "descend-to-middle" }
       ]
     },
     {

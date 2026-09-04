@@ -130,11 +130,30 @@ function assertAreaAccessibility(MapGeometry, area) {
   assert(start, `Playable area has no default spawn: ${area.id}`);
   const reachability = buildReachability(map, start);
 
-  (data.interactables || []).forEach((feature) => assertResolvableInteraction(map, reachability, feature, 'feature'));
+  (data.interactables || []).forEach((feature) => {
+    if (feature.teleportOnly) {
+      const spawn = Object.values(data.spawnPoints || {})
+        .find((candidate) => candidate.teleportOnly && Math.hypot(candidate.x - feature.x, candidate.y - feature.y) <= feature.radius);
+      assert(spawn, `Teleport-only feature has no nearby landing: ${area.id}/${feature.id}`);
+      assert(
+        map.getNearbyInteractable(spawn)?.id === feature.id,
+        `Teleport-only feature does not resolve from its landing: ${area.id}/${feature.id}`
+      );
+      return;
+    }
+    assertResolvableInteraction(map, reachability, feature, 'feature');
+  });
   (data.npcs || []).forEach((npc) => assertResolvableInteraction(map, reachability, npc, 'npc'));
   (data.portals || []).forEach((portal) => assertPortalApproach(map, reachability, portal));
 
   Object.entries(data.spawnPoints || {}).forEach(([spawnId, spawn]) => {
+    if (spawn.teleportOnly) {
+      assert(
+        (data.interactables || []).some((feature) => !feature.teleportOnly && feature.successSpawn === spawnId),
+        `Teleport-only spawn has no reachable source interaction: ${area.id}/${spawnId}`
+      );
+      return;
+    }
     const key = `${Math.round(spawn.x / reachability.step) * reachability.step},${Math.round(spawn.y / reachability.step) * reachability.step}`;
     assert(reachability.seen.has(key), `Named spawn is outside reachable play-space: ${area.id}/${spawnId}`);
   });

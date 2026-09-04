@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-maple-tree-crown",
+  "title": "Witchwood - Ancient Maple Crown",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/maple-tree/crown/background/briarwell-witchwood-maple-tree-crown-v1.webp",
+    "alt": "The high crown of an ancient maple above the Witchwood, with a final snowy climb leading to a grey cowl resting on an isolated perch"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 850, "facing": "north" },
+    "from-middle": { "x": 720, "y": 850, "facing": "north" },
+    "crown-fall-landing": { "x": 835, "y": 625, "facing": "north" },
+    "cowl-perch": { "x": 1135, "y": 330, "facing": "northeast", "teleportOnly": true }
+  },
+  "walkable": [
+    {
+      "id": "lower-crown-path",
+      "points": [[575, 1086], [900, 1086], [980, 860], [930, 700], [850, 560], [700, 615], [640, 810]]
+    },
+    {
+      "id": "cowl-perch",
+      "points": [[1060, 250], [1250, 210], [1320, 320], [1235, 430], [1060, 430]]
+    }
+  ],
+  "collisions": [],
+  "exits": [],
+  "portals": [
+    {
+      "id": "descend-to-middle",
+      "label": "the descent to the middle boughs",
+      "status": "active",
+      "activation": "interact",
+      "target": {
+        "areaId": "briarwell-maple-tree-middle",
+        "spawnId": "from-crown",
+        "returnTransitionId": "climb-to-crown"
+      },
+      "fallbackSpawn": "from-middle",
+      "points": [[630, 820], [800, 820], [830, 980], [610, 980]],
+      "interactionTarget": { "x": 710, "y": 925 },
+      "radius": 130
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "lower-crown-foreground",
+      "depthY": 900,
+      "points": [[0, 760], [590, 760], [760, 825], [900, 930], [860, 1086], [0, 1086]]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "climb-to-cowl",
+      "label": "the final climb to the cowl",
+      "action": "climb",
+      "x": 850,
+      "y": 575,
+      "radius": 150,
+      "successSpawn": "cowl-perch",
+      "check": {
+        "type": "skill",
+        "skill": "Climb",
+        "modifier": 0,
+        "failureSpawn": "crown-fall-landing",
+        "successText": "You cross the exposed limb and haul yourself onto the moonlit perch beside the grey cowl.",
+        "failureText": "The branch rolls under your weight. You catch a lower fork and drop onto the crown's broad landing."
+      }
+    },
+    {
+      "id": "descend-from-cowl",
+      "label": "the lower crown",
+      "action": "teleport",
+      "x": 1135,
+      "y": 345,
+      "radius": 105,
+      "successSpawn": "crown-fall-landing",
+      "teleportOnly": true,
+      "interactionText": "You ease back across the exposed limb to the broad lower fork."
+    }
+  ],
+  "npcs": []
+}

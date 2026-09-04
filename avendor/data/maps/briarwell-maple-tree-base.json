@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-maple-tree-base",
+  "title": "Witchwood - Ancient Maple Roots",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/south-outskirts/maple-tree/base/background/briarwell-witchwood-maple-tree-base-v2.webp",
+    "alt": "The immense roots and climbable lower trunk of an ancient bare maple under a winter moon, with the Witchwood path receding northwest"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 650, "y": 850, "facing": "north" },
+    "from-northwest": { "x": 420, "y": 530, "facing": "southeast" },
+    "from-middle": { "x": 950, "y": 710, "facing": "southwest" },
+    "climb-fall-landing": { "x": 930, "y": 720, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "root-clearing",
+      "points": [[320, 350], [510, 365], [650, 485], [900, 510], [1050, 580], [1210, 720], [1160, 960], [980, 1086], [250, 1086], [120, 900], [160, 650], [240, 480]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "northwest-path",
+      "label": "Northwest path to Witchwood W2",
+      "direction": "northwest",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-witchwood-w2",
+        "spawnId": "from-southeast",
+        "returnTransitionId": "southeast-path"
+      },
+      "fallbackSpawn": "from-northwest",
+      "points": [[285, 365], [455, 370], [510, 450], [345, 500]]
+    }
+  ],
+  "portals": [
+    {
+      "id": "climb-to-middle",
+      "label": "the climb into the middle boughs",
+      "status": "active",
+      "activation": "interact",
+      "target": {
+        "areaId": "briarwell-maple-tree-middle",
+        "spawnId": "from-base",
+        "returnTransitionId": "descend-to-base"
+      },
+      "fallbackSpawn": "from-middle",
+      "points": [[980, 480], [1120, 460], [1160, 625], [1010, 655]],
+      "interactionTarget": { "x": 1040, "y": 585 },
+      "radius": 175,
+      "check": {
+        "type": "skill",
+        "skill": "Climb",
+        "modifier": 30,
+        "failureSpawn": "climb-fall-landing",
+        "successText": "You find a generous chain of knots and handholds and pull yourself above the roots.",
+        "failureText": "A strip of icy bark peels away. You tumble back into the snow beside the roots."
+      }
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "maple-root-front",
+      "depthY": 760,
+      "points": [[800, 410], [1448, 240], [1448, 880], [1260, 900], [1120, 820], [990, 790], [850, 800], [760, 700]]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "ancient-maple",
+      "label": "Ancient maple",
+      "x": 700,
+      "y": 650,
+      "radius": 110,
+      "interactionText": "The bark is furrowed like old stone, but a deliberate ladder of knots continues into the dark above."
+    }
+  ],
+  "npcs": []
+}
