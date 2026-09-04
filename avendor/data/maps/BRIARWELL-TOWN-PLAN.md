@@ -8,8 +8,8 @@ keeps Jay's numbered layout understandable during art and map production.
 
 | State | Areas |
 |---|---|
-| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F22; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Old River Bridge; Northfield; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
-| Planned | Misty Forest MF1 northeast of Northfield; combat resolution for the Area 15 kobolds; inventory awards for the dwarven treasure; open-window traversal |
+| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F22; the Ogre's Clearing; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Old River Bridge; Northfield; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
+| Planned | Ogre boss sprite and combat; traversal into the sealed ogre cave; Misty Forest MF1 northeast of Northfield; combat resolution for the Area 15 kobolds; inventory awards for the dwarven treasure; open-window traversal |
 
 The complete Briarwell surface and sewer network are now playable. The surface contains the northern circuit
 `1 → 2 → 3 → 4 → 1`, the southern circuit
@@ -18,7 +18,8 @@ The complete Briarwell surface and sewer network are now playable. The surface c
 reachable through the Sewer Area 14 cave; its open-window route still awaits traversal logic.
 The western branch now continues from the junction to F13, north through F14 and
 F15, then east across the Old River Bridge into Northfield. F15 also opens into
-the complete F16–F22 dark-forest loop to its north and west. The road runs south
+the complete F16–F22 dark-forest loop to its north and west, with the Ogre's
+Clearing branching north from F20. The road runs south
 through F12, F11 and F8, with one west farm spur at F11, F12 and F13.
 
 ## Numbered surface areas
@@ -52,6 +53,7 @@ isolated on the cliffside and is reached by the hidden open-window passage.
 | `general-store-interior` | Playable empty shop foundation | Active Area 1 front door |
 | `briarwell-old-river-bridge` | Intact historic crossing over the rapid river feeding Briarwell | Forest F15 W, Northfield E |
 | `briarwell-northfield` | Nearly treeless green upland covered with exposed rocks | Old River Bridge W; planned Misty Forest MF1 NE |
+| `briarwell-ogre-clearing` | Wide scrollable boss arena with a future ogre encounter | Forest F20 S; sealed ogre cave boulder N |
 
 The western road is now an active route to Forest F13, and the South Gate road is
 the active start of the F1 forest chain. Only the inaccessible road beyond the
@@ -98,9 +100,10 @@ with only a few distant trees and no invented road mouths.
 | F17 | `briarwell-forest-f17` | F16 S, F20 W | N, E |
 | F18 | `briarwell-forest-f18` | F19 N, F15 E | S, W |
 | F19 | `briarwell-forest-f19` | F16 E, F18 S, F22 W | N |
-| F20 | `briarwell-forest-f20` | F17 E, F21 W | N, S |
+| F20 | `briarwell-forest-f20` | Ogre's Clearing N, F17 E, F21 W | S |
 | F21 | `briarwell-forest-f21` | F20 E, F22 S | N, W |
 | F22 | `briarwell-forest-f22` | F21 N, F19 E | S, W |
+| Ogre's Clearing | `briarwell-ogre-clearing` | F20 S | N cave sealed by boulder; E, W |
 
 These darker-green screens are untravelled magical forest. Their art contains no
 roads, paths, trails, ruts or worn directional ground. Each approved transition
@@ -111,6 +114,13 @@ westernmost points, so their west boundaries are deliberately impenetrable.
 There is no F19–F20 connection. The complete navigable loop is
 `F15 → F18 → F19 → F22 → F21 → F20 → F17 → F16 → F15`, with the additional
 cross-connection between F19 and F16.
+
+The Ogre's Clearing is a 2048 x 944 horizontal arena, wider than the 1448-unit
+camera viewport so it scrolls as the hero crosses the combat floor. Its artwork
+contains no ogre: the future boss remains a separate sprite layer anchored near
+the center of the arena. A massive boulder visibly seals the northern cave and
+currently reports the source-map Strength 8 requirement without exposing a
+premature cave transition.
 
 ## Production order
 
@@ -127,6 +137,7 @@ cross-connection between F19 and F16.
 11. ~~Western farm road through F14, including Donson's, Bayard's and Allwood's.~~ Complete v1.
 12. ~~F15, the Old River Bridge and Northfield.~~ Complete v1.
 13. ~~Dark western forest F16–F22.~~ Complete v1.
+14. ~~Scrollable Ogre clearing and corrected F20 north link.~~ Arena foundation complete v1; boss and cave traversal remain planned.
 
 Every playable area requires its own runtime map JSON, background art, safe spawn
 points, exact transition triggers, foot-level collisions, depth occluders and a

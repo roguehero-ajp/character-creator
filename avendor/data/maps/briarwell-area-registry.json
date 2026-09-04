@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.25.0",
+  "version": "0.26.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -622,7 +622,20 @@
       "map": "data/maps/briarwell-forest-f20.json",
       "planPosition": { "column": -3, "row": -3 },
       "landmarks": [
-        { "id": "split-glacial-boulder", "label": "Split glacial boulder" }
+        { "id": "north-ogre-clearing", "label": "North clearing toward the Ogre area" }
+      ]
+    },
+    {
+      "id": "briarwell-ogre-clearing",
+      "areaNumber": null,
+      "title": "The Ogre's Clearing",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-ogre-clearing.json",
+      "planPosition": { "column": -3, "row": -4 },
+      "landmarks": [
+        { "id": "ogre-boss-arena", "label": "Ogre boss arena" },
+        { "id": "sealed-ogre-cave-boulder", "label": "Boulder sealing the ogre cave" }
       ]
     },
     {
@@ -1077,6 +1090,16 @@
       "endpoints": [
         { "areaId": "briarwell-forest-f20", "transitionId": "west-clearing", "direction": "west" },
         { "areaId": "briarwell-forest-f21", "transitionId": "east-clearing", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f20-ogre-clearing",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f20", "transitionId": "north-clearing", "direction": "north" },
+        { "areaId": "briarwell-ogre-clearing", "transitionId": "south-clearing", "direction": "south" }
       ]
     },
     {

@@ -70,9 +70,10 @@ const mapContracts = {
     art: 'briarwell-forest-f19-v1.webp'
   },
   'briarwell-forest-f20': {
-    directions: ['east', 'west'],
+    directions: ['east', 'north', 'west'],
     position: [-3, -3],
-    art: 'briarwell-forest-f20-v1.webp'
+    art: 'briarwell-forest-f20-v2.webp',
+    version: '0.2.0'
   },
   'briarwell-forest-f21': {
     directions: ['east', 'south'],
@@ -101,7 +102,10 @@ Object.entries(mapContracts).forEach(([areaId, contract]) => {
   const expectedDirections = contract.directions.slice().sort();
 
   assert(area?.status === 'playable' && area.map, `Dark-forest area is not playable: ${areaId}`);
-  assert(map?.id === areaId && map.version === '0.1.0', `Dark-forest map identity/version mismatch: ${areaId}`);
+  assert(
+    map?.id === areaId && map.version === (contract.version || '0.1.0'),
+    `Dark-forest map identity/version mismatch: ${areaId}`
+  );
   assert(map.art.background.endsWith(contract.art), `Canonical dark-forest art is not active: ${areaId}`);
   assert(map.art.alt.toLowerCase().includes('untracked'), `Dark-forest art contract does not forbid visible tracks: ${areaId}`);
   assert(
@@ -151,8 +155,61 @@ Object.entries(mapContracts).forEach(([areaId, contract]) => {
   ['forest-f18-f19', 'briarwell-forest-f18/north-clearing/north', 'briarwell-forest-f19/south-clearing/south'],
   ['forest-f19-f22', 'briarwell-forest-f19/west-clearing/west', 'briarwell-forest-f22/east-clearing/east'],
   ['forest-f20-f21', 'briarwell-forest-f20/west-clearing/west', 'briarwell-forest-f21/east-clearing/east'],
+  ['forest-f20-ogre-clearing', 'briarwell-forest-f20/north-clearing/north', 'briarwell-ogre-clearing/south-clearing/south'],
   ['forest-f21-f22', 'briarwell-forest-f21/south-clearing/south', 'briarwell-forest-f22/north-clearing/north']
 ].forEach(([connectionId, left, right]) => assertConnection(connectionId, left, right));
+
+const ogreArea = areas.get('briarwell-ogre-clearing');
+const ogre = maps.get('briarwell-ogre-clearing');
+const ogreGeometry = new MapGeometry(ogre);
+const boulder = ogre.interactables.find((feature) => feature.id === 'sealed-ogre-cave-boulder');
+
+assert(
+  ogreArea?.status === 'playable'
+    && ogreArea.planPosition?.column === -3
+    && ogreArea.planPosition?.row === -4,
+  "The Ogre's Clearing must be a playable branch directly north of F20."
+);
+assert(
+  ogre?.version === '0.1.0'
+    && ogre.referenceSize.width === 2048
+    && ogre.referenceSize.height === 944
+    && ogre.art.background.endsWith('briarwell-ogre-clearing-v1.webp'),
+  'The Ogre arena must retain its approved wide background and runtime dimensions.'
+);
+assert(
+  ogre.referenceSize.width > 1448,
+  'The Ogre arena must be wider than the horizontal camera viewport.'
+);
+assert(
+  ogre.exits.length === 1
+    && ogre.exits[0].id === 'south-clearing'
+    && ogre.exits[0].target?.areaId === 'briarwell-forest-f20',
+  'The Ogre arena must expose only its reciprocal south clearing to F20.'
+);
+assert(
+  ogreGeometry.isWalkable(300, 560)
+    && ogreGeometry.isWalkable(1748, 560)
+    && ogreGeometry.isWalkable(1024, 520),
+  'The Ogre arena floor must remain broad and open enough for scrolling boss combat.'
+);
+assert(
+  ogreGeometry.getTriggerAt({ x: 1024, y: 900 })?.id === 'south-clearing'
+    && !ogreGeometry.isWalkable(1024, 45),
+  'The arena must open south while the northern cave remains physically sealed.'
+);
+assert(
+  boulder?.interactionText.includes('Strength 8')
+    && ogreGeometry.getNearbyInteractable({ x: 1024, y: 250 })?.id === boulder.id,
+  'The sealed cave boulder must communicate and expose the authored Strength 8 interaction.'
+);
+assert(
+  ogre.npcs.length === 0
+    && ogre.bossEncounter?.id === 'ogre-boss'
+    && ogre.bossEncounter.status === 'planned'
+    && ogreGeometry.isWalkable(ogre.bossEncounter.anchor.x, ogre.bossEncounter.anchor.y),
+  'The future ogre must have a legal planned sprite anchor without being spawned yet.'
+);
 
 const f15 = maps.get('briarwell-forest-f15');
 const f15Geometry = new MapGeometry(f15);
@@ -189,4 +246,4 @@ assert(
   );
 });
 
-console.log('Dark-forest F16-F22 clearing and boundary contracts passed.');
+console.log("Dark-forest F16-F22 and Ogre's Clearing contracts passed.");
