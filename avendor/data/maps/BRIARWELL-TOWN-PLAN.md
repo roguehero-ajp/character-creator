@@ -8,14 +8,16 @@ keeps Jay's numbered layout understandable during art and map production.
 
 | State | Areas |
 |---|---|
-| Playable | All numbered surface Areas 1–12; western junction; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
-| Planned | Combat resolution for the Area 15 kobolds; inventory awards for the dwarven treasure; open-window traversal |
+| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F14 except future F15; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
+| Planned | Forest F15 north of F14; combat resolution for the Area 15 kobolds; inventory awards for the dwarven treasure; open-window traversal |
 
 The complete Briarwell surface and sewer network are now playable. The surface contains the northern circuit
 `1 → 2 → 3 → 4 → 1`, the southern circuit
 `1 → 5 → 7 → 8 → 9 → 6 → 1`, Mayor's Hill from Area 3, and the western branch
 `1 → 5 → west junction → 12`. Area 11 has finished runtime art and geometry and is
 reachable through the Sewer Area 14 cave; its open-window route still awaits traversal logic.
+The western branch now continues from the junction to F13, north through F14 and
+south through F12, F11 and F8, with one west farm spur at F11, F12 and F13.
 
 ## Numbered surface areas
 
@@ -41,14 +43,33 @@ isolated on the cliffside and is reached by the hidden open-window passage.
 
 | Stable ID | Purpose | Links |
 |---|---|---|
-| `briarwell-west-road-junction` | Junction beyond Area 5 | Area 5 E, Area 12 N, road out of Briarwell W |
+| `briarwell-west-road-junction` | Junction beyond Area 5 | Area 5 E, Area 12 N, Forest F13 W |
 | `briarwell-sewer-01`–`briarwell-sewer-15` | Complete numbered underground network | Surface access at Town Center well, Ainsley's, docks and Ms. Blight's cave |
 | `briarwell-sewer-secret` | Perception-gated ancient dwarven chamber | Hidden passage south of Sewer Area 5 |
 | `lodestone-tavern-interior` | Playable empty common-room foundation | Active Area 1 front door |
 | `general-store-interior` | Playable empty shop foundation | Active Area 1 front door |
 
-The western and southern roads leave Briarwell, but their destinations are not yet
-assigned. No provisional world-area identities should be invented for them.
+The western road is now an active route to Forest F13, and the South Gate road is
+the active start of the F1 forest chain. Only the inaccessible road beyond the
+broken bridge toward Bushavic remains an unresolved world boundary.
+
+## Western farm road
+
+| Area | Stable ID | Approved public links |
+|---|---|---|
+| F11 | `briarwell-forest-f11` | F8 S, F12 N, Donson's Farm W |
+| Donson's Farm | `briarwell-donson-farm` | F11 E only |
+| F12 | `briarwell-forest-f12` | F11 S, F13 N, Bayard's Ranch W |
+| Bayard's Ranch | `briarwell-bayard-ranch` | F12 E only |
+| F13 | `briarwell-forest-f13` | F12 S, F14 N, Allwood's Gardens W, west junction E |
+| Allwood's Gardens | `briarwell-allwood-gardens` | F13 E only |
+| F14 | `briarwell-forest-f14` | F13 S; old road toward planned F15 N |
+| F15 | `briarwell-forest-f15` | Planned continuation north of F14 |
+
+The F11–F14 spine and all three farm approaches are straight wagon roads. Every
+painted edge opening corresponds to the links above. F14's northern road is less
+travelled and partly reclaimed by winter growth, but old ruts and stone edging
+show that it once carried regular passage through the mountains.
 
 ## Production order
 
@@ -62,6 +83,7 @@ assigned. No provisional world-area identities should be invented for them.
 8. ~~Final 15-area sewer network, Perception discovery and two-way traversal.~~ Complete v1.
 9. ~~Tavern and General Store interior foundations.~~ Complete v1.
 10. Combat and inventory handoff for the kobold lair and dwarven treasure.
+11. ~~Western farm road through F14, including Donson's, Bayard's and Allwood's.~~ Complete v1.
 
 Every playable area requires its own runtime map JSON, background art, safe spawn
 points, exact transition triggers, foot-level collisions, depth occluders and a

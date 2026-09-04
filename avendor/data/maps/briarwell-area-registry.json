@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -169,7 +169,7 @@
       "kind": "outdoor",
       "status": "playable",
       "map": "data/maps/briarwell-henson-homestead.json",
-      "planPosition": { "column": -2, "row": 0 },
+      "planPosition": { "column": -1, "row": 0 },
       "landmarks": [
         { "id": "henson-home", "label": "Old Man Henson's place" }
       ]
@@ -479,9 +479,88 @@
       "areaNumber": null,
       "title": "Briarwell Forest - F11",
       "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f11.json",
+      "planPosition": { "column": -2, "row": 3 }
+    },
+    {
+      "id": "briarwell-donson-farm",
+      "areaNumber": null,
+      "title": "Briarwell Outskirts - Donson's Farm",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-donson-farm.json",
+      "planPosition": { "column": -3, "row": 3 },
+      "landmarks": [
+        { "id": "donson-house", "label": "Donson farmhouse" },
+        { "id": "donson-barn", "label": "Donson barn" }
+      ]
+    },
+    {
+      "id": "briarwell-forest-f12",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F12",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f12.json",
+      "planPosition": { "column": -2, "row": 2 }
+    },
+    {
+      "id": "briarwell-bayard-ranch",
+      "areaNumber": null,
+      "title": "Briarwell Outskirts - Bayard's Ranch",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-bayard-ranch.json",
+      "planPosition": { "column": -3, "row": 2 },
+      "landmarks": [
+        { "id": "bayard-stable", "label": "Bayard stable" },
+        { "id": "bayard-hitching-rail", "label": "Hitching rail" }
+      ]
+    },
+    {
+      "id": "briarwell-forest-f13",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F13",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f13.json",
+      "planPosition": { "column": -2, "row": 1 }
+    },
+    {
+      "id": "briarwell-allwood-gardens",
+      "areaNumber": null,
+      "title": "Briarwell Outskirts - Allwood's Gardens",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-allwood-gardens.json",
+      "planPosition": { "column": -3, "row": 1 },
+      "landmarks": [
+        { "id": "allwood-cottage", "label": "Allwood cottage" },
+        { "id": "allwood-glasshouses", "label": "Allwood glasshouses" },
+        { "id": "allwood-growing-beds", "label": "Winter growing beds" }
+      ]
+    },
+    {
+      "id": "briarwell-forest-f14",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F14",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f14.json",
+      "planPosition": { "column": -2, "row": 0 },
+      "landmarks": [
+        { "id": "old-mountain-road", "label": "Old mountain road" }
+      ]
+    },
+    {
+      "id": "briarwell-forest-f15",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F15",
+      "kind": "outdoor",
       "status": "planned",
       "map": null,
-      "planPosition": { "column": -2, "row": 3 }
+      "planPosition": { "column": -2, "row": -1 }
     },
     {
       "id": "briarwell-forest-f9",
@@ -712,10 +791,90 @@
       "id": "forest-f8-f11",
       "kind": "road",
       "visibility": "public",
-      "status": "planned",
+      "status": "active",
       "endpoints": [
         { "areaId": "briarwell-forest-f8", "transitionId": "north-path", "direction": "north" },
         { "areaId": "briarwell-forest-f11", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "forest-f11-f12",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f11", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-forest-f12", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "forest-f11-donson-farm",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f11", "transitionId": "west-path", "direction": "west" },
+        { "areaId": "briarwell-donson-farm", "transitionId": "east-road", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f12-f13",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f12", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-forest-f13", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "forest-f12-bayard-ranch",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f12", "transitionId": "west-path", "direction": "west" },
+        { "areaId": "briarwell-bayard-ranch", "transitionId": "east-road", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f13-f14",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f13", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-forest-f14", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "forest-f13-allwood-gardens",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f13", "transitionId": "west-path", "direction": "west" },
+        { "areaId": "briarwell-allwood-gardens", "transitionId": "east-road", "direction": "east" }
+      ]
+    },
+    {
+      "id": "west-road-junction-forest-f13",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-west-road-junction", "transitionId": "west-road", "direction": "west" },
+        { "areaId": "briarwell-forest-f13", "transitionId": "east-path", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f14-f15",
+      "kind": "road",
+      "visibility": "public",
+      "status": "planned",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f14", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-forest-f15", "transitionId": "south-path", "direction": "south" }
       ]
     },
     {
@@ -1150,14 +1309,6 @@
     }
   ],
   "cityExits": [
-    {
-      "id": "west-road-out-of-briarwell",
-      "areaId": "briarwell-west-road-junction",
-      "transitionId": "west-road",
-      "direction": "west",
-      "status": "unassigned",
-      "target": null
-    },
     {
       "id": "broken-bridge-road-to-bushavic",
       "areaId": "briarwell-broken-bridge",

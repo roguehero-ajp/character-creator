@@ -181,7 +181,7 @@ assertConnection(
   'briarwell-forest-f8/south-path/south',
   'briarwell-forest-f9/north-path/north'
 );
-assertPlannedConnection(
+assertConnection(
   'forest-f8-f11',
   'briarwell-forest-f8/north-path/north',
   'briarwell-forest-f11/south-path/south'
@@ -239,9 +239,9 @@ Object.entries(expectedForestPlan).forEach(([areaId, [column, row]]) => {
   );
 });
 assert(
-  getArea('briarwell-forest-f11')?.status === 'planned'
-    && getArea('briarwell-forest-f11').map === null,
-  'F11 must remain the approved planned destination of the visible F8 north road.'
+  getArea('briarwell-forest-f11')?.status === 'playable'
+    && getArea('briarwell-forest-f11').map === 'data/maps/briarwell-forest-f11.json',
+  'F11 must be the playable destination of the visible F8 north road.'
 );
 ['briarwell-witchwood-w1', 'briarwell-witchwood-w2'].forEach((areaId) => {
   const area = getArea(areaId);

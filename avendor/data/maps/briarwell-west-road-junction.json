@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "id": "briarwell-west-road-junction",
   "title": "Briarwell - West Road Junction",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
     "background": "assets/maps/briarwell/west-road-junction/background/briarwell-west-road-junction-v1.png",
-    "alt": "Snowy forest T-junction with a rustic town-boundary fence, open roads west out of Briarwell, east to the town homes and north to Henson's homestead"
+    "alt": "Snowy forest T-junction with a rustic town-boundary fence and open roads west to Forest F13, east to the town homes and north to Henson's homestead"
   },
   "movement": { "speedX": 275, "speedY": 205, "footRadius": 12, "maxStep": 6 },
   "perspective": {
@@ -74,10 +74,14 @@
   "exits": [
     {
       "id": "west-road",
-      "label": "West road out of Briarwell",
+      "label": "West road to Forest F13",
       "direction": "west",
-      "status": "unassigned",
-      "target": null,
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f13",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
       "fallbackSpawn": "from-west",
       "points": [[6, 426], [92, 426], [92, 640], [6, 640]]
     },

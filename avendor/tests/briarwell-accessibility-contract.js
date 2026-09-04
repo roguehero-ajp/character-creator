@@ -162,7 +162,13 @@ function assertAreaAccessibility(MapGeometry, area) {
 function run() {
   const engine = loadEngine();
   const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
-  const playableAreas = registry.areas.filter((area) => area.status === 'playable');
+  const requestedAreaIds = new Set(
+    (process.env.AVENDOR_AREA_FILTER || '').split(',').map((areaId) => areaId.trim()).filter(Boolean)
+  );
+  const playableAreas = registry.areas.filter((area) => (
+    area.status === 'playable'
+      && (!requestedAreaIds.size || requestedAreaIds.has(area.id))
+  ));
   playableAreas.forEach((area) => assertAreaAccessibility(engine.MapGeometry, area));
   console.log(`Briarwell accessibility-contract checks passed for ${playableAreas.length} playable areas.`);
 }

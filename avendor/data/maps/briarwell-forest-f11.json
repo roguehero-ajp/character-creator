@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f11",
+  "title": "Briarwell Forest - F11",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/west-outskirts/f11/background/briarwell-forest-f11-v1.webp",
+    "alt": "A straight snowy north-south wagon road with one west branch toward Donson's Farm and the eastern forest completely closed"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 650, "facing": "north" },
+    "from-north": { "x": 720, "y": 150, "facing": "south" },
+    "from-south": { "x": 720, "y": 930, "facing": "north" },
+    "from-west": { "x": 155, "y": 505, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "north-south-road",
+      "points": [[625, 0], [830, 0], [880, 360], [900, 1086], [520, 1086], [550, 660], [570, 360]]
+    },
+    {
+      "id": "west-farm-road",
+      "points": [[0, 390], [650, 390], [810, 435], [820, 605], [560, 620], [0, 600]]
+    },
+    {
+      "id": "junction-center",
+      "points": [[500, 350], [900, 350], [930, 650], [500, 650]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-path",
+      "label": "North road to Forest F12",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f12",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[650, 8], [805, 8], [815, 90], [640, 90]]
+    },
+    {
+      "id": "south-path",
+      "label": "South road to Forest F8",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f8",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[590, 1000], [830, 1000], [850, 1078], [570, 1078]]
+    },
+    {
+      "id": "west-path",
+      "label": "West road to Donson's Farm",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-donson-farm",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-road"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 430], [96, 430], [96, 575], [8, 575]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}

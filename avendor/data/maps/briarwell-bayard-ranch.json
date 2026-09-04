@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-bayard-ranch",
+  "title": "Briarwell Outskirts - Bayard's Ranch",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/west-outskirts/bayard-ranch/background/briarwell-bayard-ranch-v1.webp",
+    "alt": "A snowy horse ranch with a long stable, ranch house, enclosed corrals and one straight wagon lane entering from the east"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 770, "y": 610, "facing": "north" },
+    "from-east": { "x": 1280, "y": 555, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "ranch-yard",
+      "points": [[300, 300], [1260, 290], [1300, 430], [1300, 650], [1160, 790], [900, 850], [410, 820], [260, 680], [240, 440]]
+    },
+    {
+      "id": "east-wagon-lane",
+      "points": [[820, 450], [1448, 450], [1448, 655], [820, 680]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "bayard-stable-foundation",
+      "points": [[190, 52], [920, 50], [940, 270], [870, 348], [270, 350], [186, 286]]
+    },
+    {
+      "id": "bayard-house-foundation",
+      "points": [[934, 72], [1298, 68], [1316, 300], [1250, 364], [976, 350], [922, 288]]
+    },
+    {
+      "id": "west-corrals",
+      "points": [[0, 196], [286, 190], [320, 350], [320, 600], [236, 686], [0, 674]]
+    },
+    {
+      "id": "south-ranch-fence",
+      "points": [[260, 788], [930, 820], [1170, 766], [1240, 820], [1200, 982], [220, 970]]
+    },
+    {
+      "id": "yard-hitching-rail",
+      "points": [[430, 430], [536, 420], [552, 500], [438, 510]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "east-road",
+      "label": "East road to Forest F12",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f12",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1360, 500], [1440, 500], [1440, 625], [1360, 625]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "bayard-stable-front",
+      "depthY": 356,
+      "points": [[184, 44], [928, 42], [948, 272], [874, 354], [266, 356], [178, 288]]
+    },
+    {
+      "id": "bayard-house-front",
+      "depthY": 370,
+      "points": [[926, 64], [1306, 60], [1324, 304], [1250, 368], [972, 356], [914, 288]]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "bayard-stable",
+      "label": "Bayard stable",
+      "x": 700,
+      "y": 365,
+      "radius": 120,
+      "interactionText": "The long stable is built for hard winters and horses that need room to breathe."
+    },
+    {
+      "id": "bayard-hitching-rail",
+      "label": "Hitching rail",
+      "x": 500,
+      "y": 515,
+      "radius": 95,
+      "interactionText": "The smooth-worn rail has held more reins than its owner could count."
+    }
+  ],
+  "npcs": []
+}

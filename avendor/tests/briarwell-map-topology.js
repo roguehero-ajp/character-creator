@@ -243,13 +243,13 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   const topology = engine.auditTopology(registry, maps);
 
   assert(registryData.schemaVersion === 2, 'Briarwell must use the route-graph registry schema.');
-  assert(registryData.version === '0.22.0', 'The Witchwood and ancient-maple expansion requires registry version 0.22.0.');
-  assert(registryData.areas.length === 49, 'Briarwell must register the town, sewers, support spaces, F1-F11, Witchwood and ancient-maple screens.');
-  assert(registryData.connections.length === 59, 'Briarwell must preserve all 59 approved internal connections.');
-  assert(registryData.cityExits.length === 2, 'Briarwell must preserve both roads out of town.');
+  assert(registryData.version === '0.23.0', 'The western farms and F11-F14 expansion requires registry version 0.23.0.');
+  assert(registryData.areas.length === 56, 'Briarwell must register the town, sewers, support spaces, F1-F15, farms, Witchwood and ancient-maple screens.');
+  assert(registryData.connections.length === 67, 'Briarwell must preserve all 67 approved internal connections.');
+  assert(registryData.cityExits.length === 1, 'Only the blocked road beyond the broken bridge should remain an unresolved city exit.');
   assert(
-    Object.keys(maps).length === 48,
-    'Briarwell must load every town, sewer, support-interior, south-outskirts and Witchwood map.'
+    Object.keys(maps).length === 55,
+    'Briarwell must load every town, sewer, support-interior, forest, western-farm and Witchwood map.'
   );
   assert(topology.errors.length === 0, topology.errors.join('\n'));
   const unavailableTransitionCount = Object.values(maps)
@@ -344,7 +344,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     counts[connection.kind] = (counts[connection.kind] || 0) + 1;
     return counts;
   }, {});
-  assert(kindCounts.road === 31, 'Briarwell must preserve 13 town roads and eighteen south-outskirts/Witchwood road connections.');
+  assert(kindCounts.road === 39, 'Briarwell must preserve all town, forest, Witchwood and western-farm road connections.');
   assert(kindCounts.alley === 1, 'Briarwell must preserve the Ainsley alley connection.');
   assert(kindCounts.doorway === 2, 'Briarwell must preserve the two Town Center doorways.');
   assert(kindCounts.climb === 2, 'The ancient maple must preserve both vertical climb connections.');
@@ -384,7 +384,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const publicReachable = collectReachableAreas(registry, 'briarwell-town-center', false);
   const allReachable = collectReachableAreas(registry, 'briarwell-town-center', true);
-  assert(publicReachable.size === 32, 'The public route graph must connect the town, outskirts, Witchwood, ancient maple and planned F11.');
+  assert(publicReachable.size === 39, 'The public route graph must connect the town, outskirts, western farms, Witchwood, ancient maple and planned F15.');
   assert(
     ![...publicReachable].some((areaId) => areaId.startsWith('briarwell-sewer-')),
     'The sewers must not appear in public navigation.'
@@ -395,9 +395,11 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   );
   assert(allReachable.size === registryData.areas.length, 'Hidden routes must complete the full town graph.');
 
-  const westExit = registry.getCityExitForTransition('briarwell-west-road-junction', 'west-road');
   const bridgeExit = registry.getCityExitForTransition('briarwell-broken-bridge', 'east-road');
-  assert(westExit?.status === 'unassigned' && westExit.target === null, 'The west city exit must stay unassigned.');
+  assert(
+    registry.getCityExitForTransition('briarwell-west-road-junction', 'west-road') === null,
+    'The west junction must no longer be treated as an unresolved city exit.'
+  );
   assert(bridgeExit?.status === 'unassigned' && bridgeExit.target === null, 'The Bushavic road must stay blocked at the broken bridge.');
 
   const workshops = maps['briarwell-northwest-workshops'];
@@ -903,14 +905,17 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const westJunction = maps['briarwell-west-road-junction'];
   assert(westJunction, 'The western junction must load as a playable runtime map.');
-  assert(westJunction.version === '0.1.1', 'The western junction must expose the corrected collision geometry.');
+  assert(westJunction.version === '0.2.0', 'The western junction must expose its active F13 route.');
   assert(westJunction.exits.length === 3, 'The western junction must expose west, east and north roads only.');
   const junctionWest = westJunction.exits.find((exit) => exit.id === 'west-road');
   const junctionEast = westJunction.exits.find((exit) => exit.id === 'east-road');
   const junctionNorth = westJunction.exits.find((exit) => exit.id === 'north-road');
   assert(
-    junctionWest?.status === 'unassigned' && junctionWest.target === null,
-    'The junction west road must remain an explicit target-free city exit.'
+    junctionWest?.status === 'active'
+      && junctionWest.target?.areaId === 'briarwell-forest-f13'
+      && junctionWest.target?.spawnId === 'from-east'
+      && junctionWest.target?.returnTransitionId === 'east-path',
+    'The junction west road must load Forest F13 through its east path.'
   );
   assert(
     junctionEast?.status === 'active'
@@ -927,9 +932,9 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     'The junction north road must load Area 12 through its south road.'
   );
   assert(
-    registry.getCityExitForTransition('briarwell-west-road-junction', 'west-road')?.id
-      === 'west-road-out-of-briarwell',
-    'The junction west road must be claimed by the approved city-exit contract.'
+    registry.getConnectionForTransition('briarwell-west-road-junction', 'west-road')?.id
+      === 'west-road-junction-forest-f13',
+    'The junction west road must be claimed by the active F13 connection.'
   );
   const junctionGeometry = new MapGeometry(westJunction);
   [

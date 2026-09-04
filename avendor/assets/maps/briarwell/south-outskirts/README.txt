@@ -6,7 +6,7 @@ Runtime routes:
 - Main eastern road: South Gate -> F1 -> F2 -> F3 -> F4 -> Broken Bridge.
 - Graveyard spur: F1 -> Graveyard.
 - Western forest: F2 -> F5 -> F7, with F7 north to F6 and west to F9.
-- Western loop: F6 <-> F8 <-> F9 <-> F7, with F8 north toward planned F11.
+- Western loop: F6 <-> F8 <-> F9 <-> F7, with F8 north to playable F11.
 - Southern spur: F9 -> F10.
 - Witchwood loop: F9 west -> W1 -> W2 -> F10 east.
 - Ancient-maple spur: W2 southeast -> roots -> middle boughs -> crown.
@@ -19,8 +19,8 @@ Approved screen relationships:
 - F5 connects northeast to F2 and west to F7.
 - F6 connects west to F8 and south to F7.
 - F7 connects north to F6, west to F9 and east to F5.
-- F8 connects east to F6 and south to F9. Its redrawn screen now exposes the
-  approved north road toward planned F11.
+- F8 connects east to F6, south to F9 and north to F11. Its redrawn screen exposes
+  exactly those three wagon roads.
 - F9 is a four-way junction: north to F8, east to F7, south to F10 and west to W1.
 - F10 connects north to F9 and west to W2.
 - W1 connects east to F9 and south to W2.

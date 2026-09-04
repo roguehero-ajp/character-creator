@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f13",
+  "title": "Briarwell Forest - F13",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/west-outskirts/f13/background/briarwell-forest-f13-v1.webp",
+    "alt": "A precise four-way crossing of straight snowy wagon roads linking the western farms with Briarwell"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 650, "facing": "north" },
+    "from-north": { "x": 720, "y": 150, "facing": "south" },
+    "from-south": { "x": 720, "y": 930, "facing": "north" },
+    "from-west": { "x": 155, "y": 530, "facing": "east" },
+    "from-east": { "x": 1290, "y": 530, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "north-south-road",
+      "points": [[625, 0], [830, 0], [860, 390], [900, 1086], [520, 1086], [560, 390]]
+    },
+    {
+      "id": "east-west-road",
+      "points": [[0, 420], [1448, 420], [1448, 640], [0, 640]]
+    },
+    {
+      "id": "crossroads-center",
+      "points": [[500, 360], [920, 360], [940, 690], [490, 690]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-path",
+      "label": "North road to Forest F14",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f14",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[650, 8], [805, 8], [815, 90], [640, 90]]
+    },
+    {
+      "id": "south-path",
+      "label": "South road to Forest F12",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f12",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[590, 1000], [835, 1000], [850, 1078], [570, 1078]]
+    },
+    {
+      "id": "west-path",
+      "label": "West road to Allwood's Gardens",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-allwood-gardens",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-road"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 455], [96, 455], [96, 610], [8, 610]]
+    },
+    {
+      "id": "east-path",
+      "label": "East road to Briarwell's western junction",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-west-road-junction",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-road"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1352, 455], [1440, 455], [1440, 610], [1352, 610]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}
