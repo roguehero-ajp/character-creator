@@ -159,7 +159,14 @@ function assertMapConsistency(MapGeometry, data) {
 function run() {
   const engine = loadEngine();
   const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
-  const outdoorAreas = registry.areas.filter((area) => area.status === 'playable' && area.kind === 'outdoor');
+  const requestedAreaIds = new Set(
+    (process.env.AVENDOR_AREA_FILTER || '').split(',').map((areaId) => areaId.trim()).filter(Boolean)
+  );
+  const outdoorAreas = registry.areas.filter((area) => (
+    area.status === 'playable'
+      && area.kind === 'outdoor'
+      && (!requestedAreaIds.size || requestedAreaIds.has(area.id))
+  ));
   outdoorAreas.forEach((area) => assertMapConsistency(engine.MapGeometry, loadMap(area)));
   console.log(`Briarwell map-consistency checks passed for ${outdoorAreas.length} outdoor areas.`);
 }

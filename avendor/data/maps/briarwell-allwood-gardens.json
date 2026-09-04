@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-allwood-gardens",
+  "title": "Briarwell Outskirts - Allwood's Gardens",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/west-outskirts/allwood-gardens/background/briarwell-allwood-gardens-v1.webp",
+    "alt": "A walled winter market garden with a cottage, warm glasshouses, orchard and one straight wagon lane entering from the east"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 575, "facing": "north" },
+    "from-east": { "x": 1290, "y": 545, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "garden-courtyard",
+      "points": [[130, 270], [690, 250], [860, 330], [930, 470], [900, 660], [720, 735], [520, 650], [360, 540], [130, 500]]
+    },
+    {
+      "id": "east-wagon-lane",
+      "points": [[520, 430], [1448, 430], [1448, 650], [540, 680]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "allwood-cottage-foundation",
+      "points": [[72, 40], [552, 52], [574, 304], [520, 382], [118, 376], [62, 300]]
+    },
+    {
+      "id": "allwood-glasshouses",
+      "points": [[616, 40], [1320, 62], [1328, 310], [1260, 376], [662, 366], [602, 300]]
+    },
+    {
+      "id": "southwest-growing-beds",
+      "points": [[58, 520], [650, 510], [690, 900], [70, 930]]
+    },
+    {
+      "id": "south-orchard",
+      "points": [[720, 620], [1290, 590], [1320, 980], [700, 980]]
+    },
+    {
+      "id": "garden-compost-bins",
+      "points": [[520, 350], [690, 344], [716, 462], [536, 478]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "east-road",
+      "label": "East road to Forest F13",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f13",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1360, 485], [1440, 485], [1440, 620], [1360, 620]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "allwood-cottage-front",
+      "depthY": 388,
+      "points": [[66, 32], [560, 44], [582, 308], [520, 386], [114, 382], [54, 300]]
+    },
+    {
+      "id": "allwood-glasshouse-fronts",
+      "depthY": 382,
+      "points": [[608, 32], [1328, 54], [1336, 314], [1260, 380], [658, 372], [594, 300]]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "allwood-cottage",
+      "label": "Allwood cottage",
+      "x": 410,
+      "y": 395,
+      "radius": 110,
+      "interactionText": "The cottage stands behind the gardens that keep Fanny Allwood's stall supplied."
+    },
+    {
+      "id": "allwood-glasshouses",
+      "label": "Allwood glasshouses",
+      "x": 960,
+      "y": 390,
+      "radius": 125,
+      "interactionText": "Warm panes protect rows of green life from the winter cold."
+    },
+    {
+      "id": "allwood-growing-beds",
+      "label": "Winter growing beds",
+      "x": 590,
+      "y": 650,
+      "radius": 145,
+      "interactionText": "The beds are orderly enough that every patch of earth seems accounted for."
+    }
+  ],
+  "npcs": []
+}

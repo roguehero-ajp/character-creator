@@ -49,7 +49,7 @@
       "id": "north-path",
       "label": "North road to Forest F11",
       "direction": "north",
-      "status": "planned",
+      "status": "active",
       "target": {
         "areaId": "briarwell-forest-f11",
         "spawnId": "from-south",

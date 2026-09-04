@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-donson-farm",
+  "title": "Briarwell Outskirts - Donson's Farm",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/west-outskirts/donson-farm/background/briarwell-donson-farm-v1.webp",
+    "alt": "A snow-dusted working farm with a warm farmhouse, timber barn, enclosed fields and one straight wagon lane entering from the east"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 760, "y": 650, "facing": "north" },
+    "from-east": { "x": 1270, "y": 560, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "farmyard",
+      "points": [[210, 390], [1220, 380], [1290, 470], [1290, 650], [1160, 820], [940, 880], [330, 865], [180, 760], [150, 560]]
+    },
+    {
+      "id": "east-wagon-lane",
+      "points": [[760, 455], [1448, 455], [1448, 660], [760, 680]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "donson-house-foundation",
+      "points": [[58, 42], [618, 58], [640, 350], [565, 438], [112, 430], [50, 350]]
+    },
+    {
+      "id": "donson-barn-foundation",
+      "points": [[748, 72], [1244, 86], [1268, 394], [1180, 474], [774, 462], [730, 372]]
+    },
+    {
+      "id": "southwest-field-wall",
+      "points": [[0, 430], [172, 420], [206, 540], [190, 770], [330, 860], [310, 930], [0, 930]]
+    },
+    {
+      "id": "south-yard-fence",
+      "points": [[300, 856], [980, 866], [1130, 816], [1230, 850], [1180, 1008], [240, 1008]]
+    },
+    {
+      "id": "yard-woodpile",
+      "points": [[962, 665], [1188, 652], [1210, 775], [984, 792]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "east-road",
+      "label": "East road to Forest F11",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f11",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1360, 500], [1440, 500], [1440, 630], [1360, 630]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "donson-house-front",
+      "depthY": 446,
+      "points": [[52, 34], [624, 50], [648, 352], [570, 444], [108, 436], [44, 352]]
+    },
+    {
+      "id": "donson-barn-front",
+      "depthY": 482,
+      "points": [[740, 64], [1252, 78], [1276, 398], [1180, 480], [770, 470], [722, 372]]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "donson-house",
+      "label": "Donson farmhouse",
+      "x": 470,
+      "y": 455,
+      "radius": 115,
+      "interactionText": "Warm light and the smell of woodsmoke spill from the hardworking Donson home."
+    },
+    {
+      "id": "donson-barn",
+      "label": "Donson barn",
+      "x": 900,
+      "y": 475,
+      "radius": 120,
+      "interactionText": "The barn is orderly, weather-tight and ready for another cold night."
+    }
+  ],
+  "npcs": []
+}

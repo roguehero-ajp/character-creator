@@ -7,7 +7,8 @@ briarwell-area-registry.json is the single source of truth for Briarwell area
 identity, availability and approved travel topology. Schema version 2 locks the
 12 numbered surface areas, the unnumbered western road junction, the connected
 15-area sewer network, its hidden dwarven chamber, two building interiors, the
-south-outskirts forest, Witchwood and the three-screen ancient maple.
+south-outskirts forest, western farm road, Witchwood and the three-screen ancient
+maple.
 
 Each entry keeps three different concerns separate:
 
@@ -27,10 +28,10 @@ AREA STATUS
 Only approved area identities belong in the registry, and only playable entries
 may provide a map path. All Town Center transitions name approved destinations.
 All five of its surface roads and the two building doorways are active.
-The two roads leaving Briarwell remain cityExits
-with status unassigned and target null until their world-map destinations are
-approved. The loader returns the hero to a safe local spawn when a planned,
-unassigned, invalid or failed target is encountered.
+The western road junction now connects directly to playable Forest F13. Only the
+destroyed bridge's far road toward Bushavic remains a cityExit with status
+unassigned and target null. The loader returns the hero to a safe local spawn
+when a planned, unassigned, invalid or failed target is encountered.
 
 APPROVED CONNECTION GRAPH
 -------------------------
@@ -51,7 +52,8 @@ become active.
 
 The current graph contains:
 
-  31 road connections: 13 around town and 18 through the south outskirts/Witchwood
+  39 road connections: 13 around town, 18 through the south outskirts/Witchwood
+                       and 8 through the western farm road
    1 alley connection
    2 doorway connections
    2 ancient-maple climb connections
@@ -59,8 +61,8 @@ The current graph contains:
    4 hidden sewer entrances at Areas 1, 7, 9 and 11
   17 public tunnels inside the sewer network
 
-cityExits separately records the western road beyond the Area 5 junction and the
-south road beyond Area 8. This keeps unresolved world geography out of the town's
+cityExits separately records only the inaccessible road beyond the destroyed
+bridge toward Bushavic. This keeps unresolved world geography out of the town's
 internal connection graph.
 
 TRANSITION CONTRACT
@@ -115,6 +117,7 @@ Run after changing the registry or any Briarwell map:
   node avendor/tests/briarwell-map-topology.js
   node avendor/tests/briarwell-route-contract.js
   node avendor/tests/south-outskirts-contract.js
+  node avendor/tests/west-outskirts-contract.js
   node avendor/tests/witchwood-maple-tree-contract.js
   node avendor/tests/town-center-footprints.js
   AVENDOR_SKIP_BROWSER=1 node avendor/tests/town-center-smoke.js

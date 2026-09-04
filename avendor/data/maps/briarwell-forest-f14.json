@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f14",
+  "title": "Briarwell Forest - F14",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/west-outskirts/f14/background/briarwell-forest-f14-v1.webp",
+    "alt": "A straight wagon road climbing toward snowy mountains, broad and maintained to the south but older, narrower and quieter north toward Forest F15"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 690, "facing": "north" },
+    "from-north": { "x": 720, "y": 150, "facing": "south" },
+    "from-south": { "x": 720, "y": 930, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "old-mountain-road",
+      "points": [[610, 0], [840, 0], [880, 330], [1040, 1086], [400, 1086], [520, 390]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-path",
+      "label": "Old north road toward Forest F15",
+      "direction": "north",
+      "status": "planned",
+      "target": {
+        "areaId": "briarwell-forest-f15",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "unavailableText": "The old mountain road is visible, but travel beyond F14 is not open yet.",
+      "points": [[645, 8], [810, 8], [820, 90], [635, 90]]
+    },
+    {
+      "id": "south-path",
+      "label": "South road to Forest F13",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f13",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[500, 1000], [940, 1000], [980, 1078], [460, 1078]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "old-mountain-road",
+      "label": "Old mountain road",
+      "x": 720,
+      "y": 315,
+      "radius": 105,
+      "interactionText": "Faded ruts and old stone edging mark a road that once carried far more traffic through the mountains."
+    }
+  ],
+  "npcs": []
+}

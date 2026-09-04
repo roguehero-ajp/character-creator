@@ -10,8 +10,12 @@ Formal release versioning begins with **v1.0.0**.
 
 - Opened the mystical Witchwood W1 and W2 screens, with active routes from Forest F9 and F10.
 - Added the ancient maple as three playable climbing screens with progressively harder repeatable Climb checks, safe fall landings, and an isolated cowl perch.
-- Replaced Forest F8 art with a corrected junction that visibly carries the approved road north toward planned Forest F11.
+- Replaced Forest F8 art with a corrected junction that visibly carries the approved road north toward Forest F11.
 - Published a project update covering the new Witchwood and ancient-maple route.
+- Opened the straight western farm-road chain from F8 through Forest F11, F12, F13 and F14.
+- Added Donson's Farm, Bayard's Ranch and Allwood's Gardens as playable single-entrance destinations.
+- Activated the west-road junction's reciprocal route to Forest F13.
+- Preserved F14's quieter historic mountain road as a visible but planned route toward Forest F15.
 
 ## [1.0.0] - 2026-08-11
 
