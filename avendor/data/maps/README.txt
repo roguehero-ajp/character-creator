@@ -7,8 +7,8 @@ briarwell-area-registry.json is the single source of truth for Briarwell area
 identity, availability and approved travel topology. Schema version 2 locks the
 12 numbered surface areas, the unnumbered western road junction, the connected
 15-area sewer network, its hidden dwarven chamber, two building interiors, the
-south-outskirts forest, western farm road, Witchwood and the three-screen ancient
-maple.
+south-outskirts forest, western farm road, F15 river crossing, Northfield,
+Witchwood and the three-screen ancient maple.
 
 Each entry keeps three different concerns separate:
 
@@ -52,8 +52,9 @@ become active.
 
 The current graph contains:
 
-  39 road connections: 13 around town, 18 through the south outskirts/Witchwood
-                       and 8 through the western farm road
+  43 road connections: 13 around town, 18 through the south outskirts/Witchwood,
+                       8 through the western farm road and 4 through F15,
+                       the Old River Bridge and Northfield
    1 alley connection
    2 doorway connections
    2 ancient-maple climb connections
@@ -118,6 +119,7 @@ Run after changing the registry or any Briarwell map:
   node avendor/tests/briarwell-route-contract.js
   node avendor/tests/south-outskirts-contract.js
   node avendor/tests/west-outskirts-contract.js
+  node avendor/tests/northern-outskirts-contract.js
   node avendor/tests/witchwood-maple-tree-contract.js
   node avendor/tests/town-center-footprints.js
   AVENDOR_SKIP_BROWSER=1 node avendor/tests/town-center-smoke.js

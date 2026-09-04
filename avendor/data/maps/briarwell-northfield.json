@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-northfield",
+  "title": "Northfield",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/northern-outskirts/northfield/background/briarwell-northfield-v1.webp",
+    "alt": "A broad green upland field covered with weathered rocks, almost no trees, a western wagon approach and a faint northeast walking path"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 660, "facing": "northeast" },
+    "from-west": { "x": 150, "y": 575, "facing": "east" },
+    "from-northeast": { "x": 1160, "y": 150, "facing": "southwest" }
+  },
+  "walkable": [
+    {
+      "id": "open-rocky-field",
+      "points": [[260, 320], [780, 250], [1120, 330], [1300, 500], [1390, 760], [1360, 950], [1120, 1040], [300, 1040], [100, 930], [80, 650], [300, 480], [500, 360]]
+    },
+    {
+      "id": "west-wagon-approach",
+      "points": [[0, 470], [420, 420], [660, 470], [700, 560], [560, 650], [250, 700], [0, 690]]
+    },
+    {
+      "id": "northeast-walking-path",
+      "points": [[550, 410], [850, 280], [1080, 120], [1110, 0], [1260, 0], [1210, 160], [1020, 330], [750, 500], [560, 520]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "southwest-rock-outcrop",
+      "points": [[0, 725], [210, 700], [430, 770], [465, 900], [430, 1086], [0, 1086]]
+    },
+    {
+      "id": "southeast-rock-outcrop",
+      "points": [[1020, 760], [1220, 700], [1448, 700], [1448, 1086], [980, 1086], [940, 900]]
+    },
+    {
+      "id": "west-middle-outcrop",
+      "points": [[0, 300], [210, 300], [280, 370], [245, 455], [0, 465]]
+    },
+    {
+      "id": "central-upper-rocks",
+      "points": [[430, 150], [760, 150], [820, 250], [750, 340], [500, 335], [410, 255]]
+    },
+    {
+      "id": "east-middle-outcrop",
+      "points": [[840, 500], [1040, 470], [1120, 540], [1060, 640], [860, 630], [800, 560]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "west-road",
+      "label": "West road to the Old River Bridge",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-old-river-bridge",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-road"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 500], [96, 500], [96, 650], [8, 650]]
+    },
+    {
+      "id": "northeast-path",
+      "label": "Northeast walking path toward Misty Forest MF1",
+      "direction": "northeast",
+      "status": "planned",
+      "target": {
+        "areaId": "briarwell-misty-forest-mf1",
+        "spawnId": "from-southwest",
+        "returnTransitionId": "southwest-path"
+      },
+      "fallbackSpawn": "from-northeast",
+      "unavailableText": "The faint trail climbs toward the misted highlands, but the way beyond Northfield is not open yet.",
+      "points": [[1120, 8], [1280, 8], [1300, 85], [1100, 85]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "southwest-rock-outcrop",
+      "depthY": 1010,
+      "debug": false,
+      "points": [[0, 680], [230, 665], [440, 750], [475, 910], [430, 1086], [0, 1086]]
+    },
+    {
+      "id": "southeast-rock-outcrop",
+      "depthY": 1010,
+      "debug": false,
+      "points": [[980, 740], [1200, 680], [1448, 680], [1448, 1086], [950, 1086], [930, 900]]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "northfield-rocks",
+      "label": "Northfield rocks",
+      "x": 900,
+      "y": 545,
+      "radius": 170,
+      "interactionText": "Wind and weather have rounded the exposed stone. Trees find little shelter in Northfield."
+    },
+    {
+      "id": "misty-northeast-trail",
+      "label": "Misty northeast trail",
+      "x": 1050,
+      "y": 300,
+      "radius": 135,
+      "interactionText": "A thin trail picks its way through the rocks toward the mist-shrouded country beyond."
+    }
+  ],
+  "npcs": []
+}

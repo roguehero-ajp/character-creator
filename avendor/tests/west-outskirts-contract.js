@@ -85,7 +85,8 @@ const mapContracts = {
   'briarwell-forest-f14': {
     art: 'briarwell-forest-f14-v1.webp',
     directions: ['north', 'south'],
-    position: [-2, 0]
+    position: [-2, 0],
+    version: '0.2.0'
   }
 };
 
@@ -93,7 +94,10 @@ Object.entries(mapContracts).forEach(([areaId, contract]) => {
   const area = areas.get(areaId);
   const map = maps.get(areaId);
   assert(area?.status === 'playable' && area.map, `West-outskirts area is not playable: ${areaId}`);
-  assert(map?.id === areaId && map.version === '0.1.0', `West-outskirts map identity/version mismatch: ${areaId}`);
+  assert(
+    map?.id === areaId && map.version === (contract.version || '0.1.0'),
+    `West-outskirts map identity/version mismatch: ${areaId}`
+  );
   assert(map.art.background.endsWith(contract.art), `Canonical west-outskirts art is not active: ${areaId}`);
   assert(
     map.exits.map((exit) => exit.direction).sort().join(',') === contract.directions.slice().sort().join(','),
@@ -160,7 +164,7 @@ assertConnection(
 );
 assertConnection(
   'forest-f14-f15',
-  'planned',
+  'active',
   'briarwell-forest-f14/north-path/north',
   'briarwell-forest-f15/south-path/south'
 );
@@ -197,17 +201,17 @@ assert(
   'Henson Homestead must stay north of the west-road junction without overlapping F14.'
 );
 assert(
-  f15?.status === 'planned'
-    && f15.map === null
+  f15?.status === 'playable'
+    && f15.map === 'data/maps/briarwell-forest-f15.json'
     && f15.planPosition?.column === -2
     && f15.planPosition?.row === -1,
-  'F15 must remain the planned destination north of F14.'
+  'F15 must remain the playable destination north of F14.'
 );
 assert(
-  f14North?.status === 'planned'
+  f14North?.status === 'active'
     && f14North.target?.areaId === 'briarwell-forest-f15'
-    && f14North.unavailableText.includes('old mountain road'),
-  'F14 north must reserve the quieter historic mountain road to F15.'
+    && f14North.target?.returnTransitionId === 'south-path',
+  'F14 north must open the quieter historic mountain road to F15.'
 );
 assert(
   maps.get('briarwell-forest-f14').interactables.some((feature) => (

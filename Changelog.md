@@ -15,7 +15,10 @@ Formal release versioning begins with **v1.0.0**.
 - Opened the straight western farm-road chain from F8 through Forest F11, F12, F13 and F14.
 - Added Donson's Farm, Bayard's Ranch and Allwood's Gardens as playable single-entrance destinations.
 - Activated the west-road junction's reciprocal route to Forest F13.
-- Preserved F14's quieter historic mountain road as a visible but planned route toward Forest F15.
+- Opened F14's quieter historic mountain road as an active route into playable Forest F15.
+- Added Forest F15 with old wagon roads south and east, plus a narrower planned walking path west toward Forest F18.
+- Added the intact Old River Bridge as the only safe crossing over the rapid river that feeds Briarwell.
+- Added Northfield as a nearly treeless green rock field, with its future northeast walking path reserved toward Misty Forest MF1.
 
 ## [1.0.0] - 2026-08-11
 

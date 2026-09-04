@@ -10,8 +10,8 @@ Approved route graph:
           |       |       |
        Donson   Bayard  Allwood
 
-F13 also connects east to Briarwell's west-road junction. F14 visibly continues
-north toward planned F15, but that route remains unavailable until F15 is built.
+F13 also connects east to Briarwell's west-road junction. F14 continues north
+along the quieter historic wagon road to playable F15.
 
 Road-art contract:
 
@@ -23,5 +23,8 @@ Road-art contract:
 - F14 shows one straight north/south road. Its southern half is maintained; the
   historic northern continuation is quieter, snowier and less travelled, while
   still reading as an old wagon road rather than a footpath.
+
+F15, the Old River Bridge and Northfield continue beneath the sibling
+northern-outskirts directory.
 
 Runtime geometry and reciprocal transitions live in avendor/data/maps.
