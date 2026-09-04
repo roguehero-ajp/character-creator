@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.23.0",
+  "version": "0.24.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -558,9 +558,56 @@
       "areaNumber": null,
       "title": "Briarwell Forest - F15",
       "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-forest-f15.json",
+      "planPosition": { "column": -2, "row": -1 },
+      "landmarks": [
+        { "id": "old-road-junction", "label": "Old road junction" }
+      ]
+    },
+    {
+      "id": "briarwell-forest-f18",
+      "areaNumber": null,
+      "title": "Briarwell Forest - F18",
+      "kind": "outdoor",
       "status": "planned",
       "map": null,
-      "planPosition": { "column": -2, "row": -1 }
+      "planPosition": { "column": -3, "row": -1 }
+    },
+    {
+      "id": "briarwell-old-river-bridge",
+      "areaNumber": null,
+      "title": "Old River Bridge",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-old-river-bridge.json",
+      "planPosition": { "column": -1, "row": -1 },
+      "landmarks": [
+        { "id": "old-stone-bridge", "label": "Old stone bridge" },
+        { "id": "briarwell-river", "label": "River feeding Briarwell" }
+      ]
+    },
+    {
+      "id": "briarwell-northfield",
+      "areaNumber": null,
+      "title": "Northfield",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-northfield.json",
+      "planPosition": { "column": 0, "row": -1 },
+      "landmarks": [
+        { "id": "northfield-rocks", "label": "Northfield rocks" },
+        { "id": "misty-northeast-trail", "label": "Misty northeast trail" }
+      ]
+    },
+    {
+      "id": "briarwell-misty-forest-mf1",
+      "areaNumber": null,
+      "title": "Misty Forest - MF1",
+      "kind": "outdoor",
+      "status": "planned",
+      "map": null,
+      "planPosition": { "column": 1, "row": -2 }
     },
     {
       "id": "briarwell-forest-f9",
@@ -871,10 +918,50 @@
       "id": "forest-f14-f15",
       "kind": "road",
       "visibility": "public",
-      "status": "planned",
+      "status": "active",
       "endpoints": [
         { "areaId": "briarwell-forest-f14", "transitionId": "north-path", "direction": "north" },
         { "areaId": "briarwell-forest-f15", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "forest-f15-f18",
+      "kind": "road",
+      "visibility": "public",
+      "status": "planned",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f15", "transitionId": "west-path", "direction": "west" },
+        { "areaId": "briarwell-forest-f18", "transitionId": "east-path", "direction": "east" }
+      ]
+    },
+    {
+      "id": "forest-f15-old-river-bridge",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-forest-f15", "transitionId": "east-path", "direction": "east" },
+        { "areaId": "briarwell-old-river-bridge", "transitionId": "west-road", "direction": "west" }
+      ]
+    },
+    {
+      "id": "old-river-bridge-northfield",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-old-river-bridge", "transitionId": "east-road", "direction": "east" },
+        { "areaId": "briarwell-northfield", "transitionId": "west-road", "direction": "west" }
+      ]
+    },
+    {
+      "id": "northfield-misty-forest-mf1",
+      "kind": "road",
+      "visibility": "public",
+      "status": "planned",
+      "endpoints": [
+        { "areaId": "briarwell-northfield", "transitionId": "northeast-path", "direction": "northeast" },
+        { "areaId": "briarwell-misty-forest-mf1", "transitionId": "southwest-path", "direction": "southwest" }
       ]
     },
     {

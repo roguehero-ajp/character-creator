@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-forest-f15",
+  "title": "Briarwell Forest - F15",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/northern-outskirts/f15/background/briarwell-forest-f15-v1.webp",
+    "alt": "An old wagon road enters Forest F15 from the south and turns east toward the river while a narrow walking path leaves west toward Forest F18"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 650, "facing": "east" },
+    "from-south": { "x": 720, "y": 930, "facing": "north" },
+    "from-east": { "x": 1280, "y": 550, "facing": "west" },
+    "from-west": { "x": 150, "y": 495, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "south-old-wagon-road",
+      "points": [[455, 1086], [995, 1086], [920, 650], [855, 535], [615, 535], [555, 650]]
+    },
+    {
+      "id": "east-old-wagon-road",
+      "points": [[610, 455], [1448, 450], [1448, 640], [610, 610]]
+    },
+    {
+      "id": "west-walking-path",
+      "points": [[0, 430], [560, 445], [675, 500], [655, 575], [540, 550], [0, 545]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "south-path",
+      "label": "Old south road to Forest F14",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f14",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[550, 1000], [910, 1000], [950, 1078], [510, 1078]]
+    },
+    {
+      "id": "east-path",
+      "label": "Old east road to the river bridge",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-old-river-bridge",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-road"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1352, 490], [1440, 490], [1440, 620], [1352, 620]]
+    },
+    {
+      "id": "west-path",
+      "label": "West walking path toward Forest F18",
+      "direction": "west",
+      "status": "planned",
+      "target": {
+        "areaId": "briarwell-forest-f18",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "unavailableText": "The narrow western path continues into the mountains, but travel beyond F15 is not open yet.",
+      "points": [[8, 445], [96, 445], [96, 545], [8, 545]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "old-road-junction",
+      "label": "Old road junction",
+      "x": 720,
+      "y": 555,
+      "radius": 120,
+      "interactionText": "Faded wagon ruts run south and east. The western way was never more than a walking path."
+    }
+  ],
+  "npcs": []
+}

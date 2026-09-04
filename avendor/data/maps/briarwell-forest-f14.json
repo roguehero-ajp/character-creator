@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-forest-f14",
   "title": "Briarwell Forest - F14",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
     "background": "assets/maps/briarwell/west-outskirts/f14/background/briarwell-forest-f14-v1.webp",
@@ -38,16 +38,15 @@
   "exits": [
     {
       "id": "north-path",
-      "label": "Old north road toward Forest F15",
+      "label": "Old north road to Forest F15",
       "direction": "north",
-      "status": "planned",
+      "status": "active",
       "target": {
         "areaId": "briarwell-forest-f15",
         "spawnId": "from-south",
         "returnTransitionId": "south-path"
       },
       "fallbackSpawn": "from-north",
-      "unavailableText": "The old mountain road is visible, but travel beyond F14 is not open yet.",
       "points": [[645, 8], [810, 8], [820, 90], [635, 90]]
     },
     {

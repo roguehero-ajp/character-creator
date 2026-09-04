@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-old-river-bridge",
+  "title": "Old River Bridge",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/northern-outskirts/old-river-bridge/background/briarwell-old-river-bridge-v1.webp",
+    "alt": "An intact old stone wagon bridge crosses a rapid whitewater river between Forest F15 and Northfield"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 555, "facing": "east" },
+    "from-west": { "x": 145, "y": 560, "facing": "east" },
+    "from-east": { "x": 1300, "y": 550, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "old-bridge-deck",
+      "points": [[0, 505], [1448, 495], [1448, 610], [0, 620]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "north-stone-parapet",
+      "points": [[190, 460], [1260, 455], [1260, 525], [190, 530]]
+    },
+    {
+      "id": "south-stone-parapet",
+      "points": [[190, 585], [1265, 580], [1265, 660], [190, 665]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "west-road",
+      "label": "West road to Forest F15",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-forest-f15",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 515], [96, 515], [96, 605], [8, 605]]
+    },
+    {
+      "id": "east-road",
+      "label": "East road to Northfield",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-northfield",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-road"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1352, 505], [1440, 505], [1440, 600], [1352, 600]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "south-stone-parapet",
+      "depthY": 665,
+      "debug": false,
+      "points": [[190, 570], [1265, 565], [1265, 665], [190, 665]]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "old-stone-bridge",
+      "label": "Old stone bridge",
+      "x": 500,
+      "y": 555,
+      "radius": 150,
+      "interactionText": "The masonry is ancient and weathered, but the wagon-wide span remains sound."
+    },
+    {
+      "id": "briarwell-river",
+      "label": "River feeding Briarwell",
+      "x": 1000,
+      "y": 390,
+      "radius": 180,
+      "interactionText": "The river tears through the gorge on its way toward Briarwell. A fall here would be unforgiving."
+    }
+  ],
+  "npcs": []
+}
