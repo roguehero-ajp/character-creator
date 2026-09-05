@@ -19,13 +19,14 @@ assert(html.includes('id="geometry-sketch-blocked"'), 'Blocked sketch tool is mi
 assert(html.includes('id="geometry-sketch-occluder"'), 'Occluder sketch tool is missing.');
 assert(html.includes('id="geometry-sketch-animation"'), 'Animation placement sketch tool is missing.');
 assert(html.includes('id="geometry-sketch-animation-label"'), 'Animation placement label input is missing.');
+assert(html.includes('id="geometry-sketch-move-exit"'), 'Move Exit tool is missing.');
 assert(html.includes('id="geometry-sketch-copy"'), 'Geometry sketch export control is missing.');
 assert(html.includes('4 animation'), 'Geometry sketch instructions do not expose the animation shortcut.');
 assert(html.includes('js/geometry-sketch.js'), 'walk-test.html does not load the geometry sketch module.');
 assert(html.includes('css/geometry-sketch.css'), 'walk-test.html does not load geometry sketch styles.');
 
 assert(source.includes("kind = 'walkable'"), 'Geometry sketch does not default to walkable mode.');
-assert(source.includes("nextKind === 'collision' || nextKind === 'occluder' || nextKind === 'animation'"),
+assert(source.includes("const drawKinds = new Set(['walkable', 'collision', 'occluder', 'animation'])"),
   'Geometry sketch does not support all four polygon kinds.');
 assert(source.includes('getDepthY'), 'Geometry sketch does not derive occluder depth from the traced base.');
 assert(source.includes('getBounds'), 'Geometry sketch does not calculate animation bounds and centre.');
@@ -46,6 +47,15 @@ assert(source.includes("areaId: map.data.id"), 'Geometry sketch export does not 
 assert(source.includes("walkTest.setDebug(true)"), 'Geometry sketch does not automatically expose authored map geometry.');
 assert(source.includes("window.dispatchEvent(new Event('blur'))"), 'Geometry sketch does not clear active movement input when editing begins.');
 assert(source.includes("event.stopImmediatePropagation()"), 'Geometry sketch does not suspend hero movement keys while tracing.');
+
+assert(source.includes('drawExitResizeHandles'), 'Move Exit does not draw corner resize handles.');
+assert(source.includes('findExitHandleAt'), 'Move Exit cannot target a corner resize handle.');
+assert(source.includes('resizeExitPoints'), 'Move Exit has no resize transform for exit geometry.');
+assert(source.includes("type: 'exit-resize'"), 'Move Exit does not distinguish resizing from ordinary movement.');
+assert(source.includes('clampExitPoints'), 'Move Exit no longer preserves whole-exit dragging.');
+assert(source.includes("'nwse-resize'"), 'Move Exit does not expose resize cursor feedback.');
+assert(source.includes('drag middle to move'), 'Move Exit does not explain body dragging.');
+assert(source.includes('drag corner to resize'), 'Move Exit does not explain corner resizing.');
 assert(!source.includes('setInterval('), 'Geometry sketch should not introduce an unmanaged timer loop.');
 
 assert(css.includes('.geometry-sketch-layer.show'), 'Geometry sketch canvas has no active display state.');
@@ -55,4 +65,4 @@ assert(css.includes('#geometry-sketch-occluder.selected'), 'Occluder tool has no
 assert(css.includes('#geometry-sketch-animation.selected'), 'Animation placement tool has no distinct visual state.');
 assert(css.includes('.geometry-sketch-animation-label'), 'Animation placement label has no styled editing state.');
 
-console.log('Geometry sketch debugger walkable, blocked, occluder and animation-zone smoke checks passed.');
+console.log('Geometry sketch debugger and Move Exit resize-handle smoke checks passed.');
