@@ -35,6 +35,9 @@
   ]);
   const drawKinds = new Set(['walkable', 'collision', 'occluder', 'animation']);
   const editKinds = new Set(['delete-collision', 'move-exit', 'move-spawn']);
+  const EXIT_HANDLE_HIT_RADIUS = 18;
+  const EXIT_HANDLE_DRAW_RADIUS = 8;
+  const EXIT_MIN_DIMENSION = 12;
 
   let active = false;
   let kind = 'walkable';
@@ -124,6 +127,35 @@
     };
   }
 
+  function getExitBounds(points) {
+    if (!points?.length) return null;
+    const xs = points.map(([x]) => x);
+    const ys = points.map(([, y]) => y);
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const top = Math.min(...ys);
+    const bottom = Math.max(...ys);
+    return {
+      left,
+      right,
+      top,
+      bottom,
+      width: right - left,
+      height: bottom - top
+    };
+  }
+
+  function getExitResizeHandles(points) {
+    const bounds = getExitBounds(points);
+    if (!bounds) return [];
+    return [
+      { key: 'nw', x: bounds.left, y: bounds.top },
+      { key: 'ne', x: bounds.right, y: bounds.top },
+      { key: 'se', x: bounds.right, y: bounds.bottom },
+      { key: 'sw', x: bounds.left, y: bounds.bottom }
+    ];
+  }
+
   function paintPolygon(points, polygonKind, isCurrent = false, label = '', options = {}) {
     if (!points.length) return;
     const { stroke, fill } = paletteForKind(polygonKind);
@@ -203,6 +235,21 @@
     }
   }
 
+  function drawExitResizeHandles(region, index) {
+    getExitResizeHandles(region.points).forEach((handle) => {
+      const highlighted = hoverTarget?.type === 'exit-handle'
+        && hoverTarget.index === index
+        && hoverTarget.handle === handle.key;
+      ctx.beginPath();
+      ctx.arc(handle.x, handle.y, highlighted ? EXIT_HANDLE_DRAW_RADIUS + 2 : EXIT_HANDLE_DRAW_RADIUS, 0, Math.PI * 2);
+      ctx.fillStyle = highlighted ? '#fff3b8' : '#bdeaff';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(4,32,48,.96)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    });
+  }
+
   function drawSpawnMarker(names, spawn, highlighted = false) {
     const label = names.join(' + ');
     ctx.beginPath();
@@ -243,14 +290,15 @@
         );
       });
     } else if (kind === 'move-exit') {
-      editableExits.forEach((region) => {
+      editableExits.forEach((region, index) => {
         paintPolygon(
           region.points.map(([x, y]) => ({ x, y })),
           'exit',
           false,
           region.label || region.id || 'exit',
-          { hideVertices: true, highlighted: hoverTarget?.type === 'exit' && hoverTarget.id === region.id, labelColor: '#bdeaff' }
+          { hideVertices: true, highlighted: hoverTarget?.type === 'exit' && hoverTarget.index === index, labelColor: '#bdeaff' }
         );
+        drawExitResizeHandles(region, index);
       });
     } else if (kind === 'move-spawn') {
       groupedSpawns().forEach((group) => {
@@ -495,6 +543,21 @@
     return null;
   }
 
+  function findExitHandleAt(point) {
+    for (let index = editableExits.length - 1; index >= 0; index -= 1) {
+      const region = editableExits[index];
+      const handle = getExitResizeHandles(region.points)
+        .map((candidate) => ({
+          ...candidate,
+          distance: Math.hypot(point.x - candidate.x, point.y - candidate.y)
+        }))
+        .filter((candidate) => candidate.distance <= EXIT_HANDLE_HIT_RADIUS)
+        .sort((a, b) => a.distance - b.distance)[0];
+      if (handle) return { index, region, handle };
+    }
+    return null;
+  }
+
   function findSpawnAt(point) {
     const groups = groupedSpawns();
     return groups
@@ -517,6 +580,56 @@
     return points.map(([x, y]) => [Math.round(x + safeDx), Math.round(y + safeDy)]);
   }
 
+  function resizeExitPoints(points, handleKey, point) {
+    const map = getMap();
+    const bounds = getExitBounds(points);
+    if (!map || !bounds) return points;
+
+    let left = bounds.left;
+    let right = bounds.right;
+    let top = bounds.top;
+    let bottom = bounds.bottom;
+    const cursorX = Math.max(0, Math.min(map.width, point.x));
+    const cursorY = Math.max(0, Math.min(map.height, point.y));
+
+    if (handleKey.includes('w')) left = Math.min(cursorX, right - EXIT_MIN_DIMENSION);
+    if (handleKey.includes('e')) right = Math.max(cursorX, left + EXIT_MIN_DIMENSION);
+    if (handleKey.includes('n')) top = Math.min(cursorY, bottom - EXIT_MIN_DIMENSION);
+    if (handleKey.includes('s')) bottom = Math.max(cursorY, top + EXIT_MIN_DIMENSION);
+
+    left = Math.max(0, left);
+    right = Math.min(map.width, right);
+    top = Math.max(0, top);
+    bottom = Math.min(map.height, bottom);
+
+    const originalWidth = Math.max(1, bounds.width);
+    const originalHeight = Math.max(1, bounds.height);
+    const nextWidth = right - left;
+    const nextHeight = bottom - top;
+
+    return points.map(([x, y]) => {
+      const ratioX = (x - bounds.left) / originalWidth;
+      const ratioY = (y - bounds.top) / originalHeight;
+      return [
+        Math.round(left + ratioX * nextWidth),
+        Math.round(top + ratioY * nextHeight)
+      ];
+    });
+  }
+
+  function updateExitCursor() {
+    if (kind !== 'move-exit') return;
+    if (dragState?.type === 'exit-resize') {
+      canvas.style.cursor = ['nw', 'se'].includes(dragState.handle) ? 'nwse-resize' : 'nesw-resize';
+      return;
+    }
+    if (hoverTarget?.type === 'exit-handle') {
+      canvas.style.cursor = ['nw', 'se'].includes(hoverTarget.handle) ? 'nwse-resize' : 'nesw-resize';
+      return;
+    }
+    canvas.style.cursor = 'move';
+  }
+
   function beginEditorAction(point, event) {
     if (kind === 'delete-collision') {
       const hit = findCollisionAt(point);
@@ -532,6 +645,21 @@
     }
 
     if (kind === 'move-exit') {
+      const handleHit = findExitHandleAt(point);
+      if (handleHit) {
+        dragState = {
+          type: 'exit-resize',
+          index: handleHit.index,
+          id: handleHit.region.id,
+          handle: handleHit.handle.key,
+          originalPoints: clone(handleHit.region.points)
+        };
+        canvas.setPointerCapture?.(event.pointerId);
+        updateExitCursor();
+        coordsLabel.textContent = `Resizing exit: ${handleHit.region.label || handleHit.region.id || handleHit.index + 1}`;
+        return;
+      }
+
       const hit = findExitAt(point);
       if (!hit) {
         coordsLabel.textContent = 'No exit trigger under cursor';
@@ -570,14 +698,21 @@
   function updateEditorDrag(point) {
     const map = getMap();
     if (!dragState || !map) return;
-    const dx = point.x - dragState.start.x;
-    const dy = point.y - dragState.start.y;
 
-    if (dragState.type === 'exit') {
+    if (dragState.type === 'exit-resize') {
+      editableExits[dragState.index].points = resizeExitPoints(dragState.originalPoints, dragState.handle, point);
+      applyAuthoredEdits();
+      const bounds = getExitBounds(editableExits[dragState.index].points);
+      coordsLabel.textContent = `Exit ${dragState.id || ''} · ${bounds.width} × ${bounds.height}`;
+    } else if (dragState.type === 'exit') {
+      const dx = point.x - dragState.start.x;
+      const dy = point.y - dragState.start.y;
       editableExits[dragState.index].points = clampExitPoints(dragState.originalPoints, dx, dy);
       applyAuthoredEdits();
       coordsLabel.textContent = `Exit ${dragState.id || ''} · Δx ${dx}, Δy ${dy}`;
     } else if (dragState.type === 'spawn') {
+      const dx = point.x - dragState.start.x;
+      const dy = point.y - dragState.start.y;
       dragState.names.forEach((name) => {
         const original = dragState.originals[name];
         editableSpawnPoints[name] = {
@@ -589,6 +724,7 @@
       applyAuthoredEdits();
       coordsLabel.textContent = `Spawn ${dragState.names.join(' + ')} · x ${editableSpawnPoints[dragState.names[0]].x}, y ${editableSpawnPoints[dragState.names[0]].y}`;
     }
+    updateExitCursor();
     draw();
   }
 
@@ -597,8 +733,19 @@
       const hit = findCollisionAt(point);
       hoverTarget = hit ? { type: 'collision', id: hit.region.id } : null;
     } else if (kind === 'move-exit') {
-      const hit = findExitAt(point);
-      hoverTarget = hit ? { type: 'exit', id: hit.region.id } : null;
+      const handleHit = findExitHandleAt(point);
+      if (handleHit) {
+        hoverTarget = {
+          type: 'exit-handle',
+          index: handleHit.index,
+          id: handleHit.region.id,
+          handle: handleHit.handle.key
+        };
+      } else {
+        const hit = findExitAt(point);
+        hoverTarget = hit ? { type: 'exit', index: hit.index, id: hit.region.id } : null;
+      }
+      updateExitCursor();
     } else if (kind === 'move-spawn') {
       const hit = findSpawnAt(point);
       hoverTarget = hit ? { type: 'spawn', id: hit.names.join('|') } : null;
@@ -666,7 +813,15 @@
 
     if (editKinds.has(kind)) {
       updateHoverTarget(point);
-      coordsLabel.textContent = `x ${point.x}, y ${point.y}`;
+      if (kind === 'move-exit' && hoverTarget?.type === 'exit-handle') {
+        const region = editableExits[hoverTarget.index];
+        coordsLabel.textContent = `${region.label || region.id || 'Exit'} · drag corner to resize`;
+      } else if (kind === 'move-exit' && hoverTarget?.type === 'exit') {
+        const region = editableExits[hoverTarget.index];
+        coordsLabel.textContent = `${region.label || region.id || 'Exit'} · drag middle to move`;
+      } else {
+        coordsLabel.textContent = `x ${point.x}, y ${point.y}`;
+      }
       draw();
       return;
     }
@@ -682,6 +837,7 @@
     if (event?.pointerId != null && canvas.hasPointerCapture?.(event.pointerId)) {
       canvas.releasePointerCapture(event.pointerId);
     }
+    updateExitCursor();
     refreshOutput();
     draw();
   }
@@ -693,6 +849,7 @@
     if (!active || dragState) return;
     hoverPoint = null;
     hoverTarget = null;
+    if (kind === 'move-exit') canvas.style.cursor = 'move';
     draw();
   });
 
