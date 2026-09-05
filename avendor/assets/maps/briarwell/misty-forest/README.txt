@@ -6,11 +6,9 @@ directory. Every image is authored at the Avendor reference size of 1448 x 1086.
 
 Approved route graph:
 
-  Northfield <-> MF1 <-> MF2 <-> MF3 <-> Swimmable
+  Northfield <-> MF1 <-> MF2 <-> MF3 <-> Mountain M1
                                       |
-                             future rough climb
-                                      |
-                             Mountain M1 (not built)
+                                      +---- Swimmable
 
 Route-art contract:
 
@@ -18,9 +16,9 @@ Route-art contract:
   rocky highland forest. Its southwest walking trail joins one north trail.
 - MF2 continues that same narrow trail straight north and south while the trees,
   mist and exposed rock steadily increase. It has no side opening.
-- MF3 opens south to MF2 and west toward Swimmable. An old rough trail remains
-  visible climbing north, but rock and scree stop the playable ground before the
-  edge. There is no north transition until Mountain M1 is authored.
+- MF3 opens south to MF2, west toward Swimmable and north along the old rough
+  trail into playable Mountain M1. Broken stone and scree make the climb visibly
+  harsher than the forest trails without blocking its approved edge opening.
 - None of these trails are wagon roads, and no background contains an unlisted
   route or false edge opening.
 

@@ -60,7 +60,8 @@ const mapContracts = {
   },
   'briarwell-misty-forest-mf3': {
     art: 'briarwell-misty-forest-mf3-v1.webp',
-    directions: ['south', 'west'],
+    version: '0.2.0',
+    directions: ['north', 'south', 'west'],
     position: [1, -4]
   },
   'briarwell-swimmable': {
@@ -126,6 +127,12 @@ assertConnection(
   { areaId: 'briarwell-swimmable', transitionId: 'east-path', direction: 'east' }
 );
 assertConnection(
+  'misty-forest-mf3-mountain-m1',
+  'trail',
+  { areaId: 'briarwell-misty-forest-mf3', transitionId: 'north-path', direction: 'north' },
+  { areaId: 'briarwell-mountain-m1', transitionId: 'south-path', direction: 'south' }
+);
+assertConnection(
   'waterfall-swimmable',
   'river-escape',
   { areaId: 'briarwell-waterfall', transitionId: 'southeast-current', direction: 'southeast' },
@@ -135,18 +142,21 @@ assertConnection(
 
 const mf3 = maps.get('briarwell-misty-forest-mf3');
 assert(
-  !mf3.exits.some((exit) => exit.direction === 'north')
-    && mf3.futureConnections?.length === 1
-    && mf3.futureConnections[0].id === 'misty-forest-mf3-mountain-m1'
-    && mf3.futureConnections[0].status === 'art-only',
-  'MF3 must show the future M1 climb without exposing a north transition.'
+  mf3.exits.some((exit) => (
+    exit.id === 'north-path'
+      && exit.target?.areaId === 'briarwell-mountain-m1'
+      && exit.target?.spawnId === 'from-south'
+      && exit.target?.returnTransitionId === 'south-path'
+  ))
+    && !mf3.futureConnections,
+  'MF3 must expose the completed reciprocal climb into Mountain M1.'
 );
 assert(
   mf3.interactables.some((feature) => (
-    feature.id === 'future-mountain-trail'
-      && feature.interactionText.includes('impassable for now')
+    feature.id === 'mountain-trail'
+      && feature.interactionText.includes('Mountain M1')
   )),
-  'MF3 must explain why its visible mountain route cannot yet be climbed.'
+  'MF3 must describe its active mountain route accurately.'
 );
 
 const swimmable = maps.get('briarwell-swimmable');
@@ -234,8 +244,8 @@ const geometrySamples = {
     closed: [[45, 500], [1400, 500]]
   },
   'briarwell-misty-forest-mf3': {
-    open: [[45, 510], [740, 620], [740, 1040], [785, 260]],
-    closed: [[740, 45], [1400, 510]]
+    open: [[45, 510], [740, 620], [740, 1040], [785, 260], [860, 45]],
+    closed: [[1400, 510]]
   },
   'briarwell-swimmable': {
     open: [[1400, 590], [1100, 720], [1040, 720]],
@@ -260,9 +270,10 @@ Object.entries(geometrySamples).forEach(([areaId, samples]) => {
 assert(
   new MapGeometry(maps.get('briarwell-misty-forest-mf1')).getTriggerAt({ x: 790, y: 45 })?.id === 'north-path'
     && new MapGeometry(mf3).getTriggerAt({ x: 45, y: 510 })?.id === 'west-path'
+    && new MapGeometry(mf3).getTriggerAt({ x: 860, y: 45 })?.id === 'north-path'
     && new MapGeometry(swimmable).getTriggerAt({ x: 1400, y: 590 })?.id === 'east-path'
     && new MapGeometry(waterfall).getTriggerAt({ x: 1380, y: 980 })?.id === 'southeast-current',
   'One or more edge openings lack their exact authored transition trigger.'
 );
 
-console.log('Misty Forest MF1-MF3, Swimmable and one-way Waterfall escape contracts passed.');
+console.log('Misty Forest MF1-MF3, active M1 climb, Swimmable and one-way Waterfall escape contracts passed.');

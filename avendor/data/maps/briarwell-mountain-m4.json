@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m4",
+  "title": "Mountain - M4",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m4/background/briarwell-mountain-m4-v1.webp",
+    "alt": "A high snowy mountain shelf forms a three-way junction toward M3, M5 and an ancient dwarven cave"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 590, "facing": "north" },
+    "from-south": { "x": 720, "y": 900, "facing": "north" },
+    "from-west": { "x": 150, "y": 450, "facing": "east" },
+    "from-east": { "x": 1290, "y": 450, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "high-junction-shelf",
+      "points": [[0, 330], [260, 340], [480, 400], [650, 430], [800, 430], [980, 400], [1200, 350], [1448, 330], [1448, 540], [1220, 560], [1000, 610], [800, 630], [600, 620], [420, 580], [240, 540], [0, 540]]
+    },
+    {
+      "id": "south-pass-approach",
+      "points": [[620, 1086], [830, 1086], [820, 900], [810, 740], [800, 610], [620, 610], [610, 760], [600, 920]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "south-path",
+      "label": "South mountain path to Mountain M3",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m3",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[630, 995], [820, 995], [830, 1078], [615, 1078]]
+    },
+    {
+      "id": "west-path",
+      "label": "West mountain path to Mountain M5",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m5",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 370], [100, 370], [100, 520], [8, 520]]
+    },
+    {
+      "id": "east-path",
+      "label": "East mountain path to the Dwarven Cave",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-dwarven-cave",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1348, 370], [1440, 370], [1440, 520], [1348, 520]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "high-mountain-junction",
+      "label": "High mountain junction",
+      "x": 720,
+      "y": 530,
+      "radius": 150,
+      "interactionText": "The high shelf divides three ways: south through the pass, west across the exposed heights, and east toward old worked stone."
+    }
+  ],
+  "npcs": []
+}

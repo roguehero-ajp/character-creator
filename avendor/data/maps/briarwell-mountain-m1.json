@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m1",
+  "title": "Mountain - M1",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m1/background/briarwell-mountain-m1-v1.webp",
+    "alt": "A rough north-south mountain path climbs out of the last snowy conifers into exposed stone"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 730, "y": 650, "facing": "north" },
+    "from-south": { "x": 725, "y": 920, "facing": "north" },
+    "from-north": { "x": 730, "y": 170, "facing": "south" }
+  },
+  "walkable": [
+    {
+      "id": "treeline-mountain-path",
+      "points": [[620, 1086], [850, 1086], [835, 930], [810, 800], [850, 680], [830, 560], [780, 440], [785, 300], [830, 160], [820, 0], [640, 0], [640, 150], [625, 300], [650, 450], [630, 590], [600, 760], [600, 930]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "south-path",
+      "label": "South mountain path to Misty Forest MF3",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-misty-forest-mf3",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[625, 995], [835, 995], [845, 1078], [615, 1078]]
+    },
+    {
+      "id": "north-path",
+      "label": "North mountain path to Mountain M2",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m2",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[650, 8], [810, 8], [825, 105], [640, 105]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "last-mountain-pines",
+      "label": "Last mountain pines",
+      "x": 560,
+      "y": 590,
+      "radius": 145,
+      "interactionText": "The last wind-bent pines cling to the lower slope. Above them, the trail belongs to bare stone and snow."
+    }
+  ],
+  "npcs": []
+}

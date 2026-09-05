@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m3",
+  "title": "Mountain - M3",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m3/background/briarwell-mountain-m3-v1.webp",
+    "alt": "A narrow north-south high mountain pass threads between sheer snowy cliffs and dangerous drop-offs"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 620, "facing": "north" },
+    "from-south": { "x": 715, "y": 920, "facing": "north" },
+    "from-north": { "x": 735, "y": 170, "facing": "south" }
+  },
+  "walkable": [
+    {
+      "id": "narrow-high-pass",
+      "points": [[600, 1086], [845, 1086], [830, 920], [810, 760], [825, 620], [800, 500], [775, 380], [790, 250], [825, 120], [815, 0], [650, 0], [640, 130], [625, 260], [640, 390], [620, 520], [600, 680], [580, 840]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "south-path",
+      "label": "South mountain path to Mountain M2",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m2",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[610, 995], [830, 995], [840, 1078], [595, 1078]]
+    },
+    {
+      "id": "north-path",
+      "label": "North mountain path to Mountain M4",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m4",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[660, 8], [805, 8], [820, 105], [650, 105]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "knife-edge-pass",
+      "label": "Knife-edge pass",
+      "x": 820,
+      "y": 500,
+      "radius": 145,
+      "interactionText": "Loose stone rattles into the mist below. The narrow trail is the only safe line through the cliffs."
+    }
+  ],
+  "npcs": []
+}

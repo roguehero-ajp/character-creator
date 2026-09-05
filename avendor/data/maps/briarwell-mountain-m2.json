@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m2",
+  "title": "Mountain - M2",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m2/background/briarwell-mountain-m2-v1.webp",
+    "alt": "A steeper north-south mountain trail crosses exposed dark rock, sparse scrub and windblown snow"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 620, "facing": "north" },
+    "from-south": { "x": 715, "y": 920, "facing": "north" },
+    "from-north": { "x": 730, "y": 170, "facing": "south" }
+  },
+  "walkable": [
+    {
+      "id": "rocky-ascent",
+      "points": [[610, 1086], [840, 1086], [825, 930], [810, 780], [790, 640], [780, 500], [770, 360], [790, 220], [820, 100], [810, 0], [650, 0], [645, 130], [620, 280], [630, 440], [610, 600], [590, 760], [590, 930]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "south-path",
+      "label": "South mountain path to Mountain M1",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m1",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[615, 995], [830, 995], [840, 1078], [605, 1078]]
+    },
+    {
+      "id": "north-path",
+      "label": "North mountain path to Mountain M3",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m3",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[660, 8], [805, 8], [820, 95], [650, 95]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "wind-scoured-slope",
+      "label": "Wind-scoured slope",
+      "x": 840,
+      "y": 520,
+      "radius": 145,
+      "interactionText": "The wind has stripped this slope to black rock. Only a few stubborn shrubs survive between the stones."
+    }
+  ],
+  "npcs": []
+}
