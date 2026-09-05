@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-northfield",
   "title": "Northfield",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
     "background": "assets/maps/briarwell/northern-outskirts/northfield/background/briarwell-northfield-v1.webp",
@@ -82,14 +82,13 @@
       "id": "northeast-path",
       "label": "Northeast walking path toward Misty Forest MF1",
       "direction": "northeast",
-      "status": "planned",
+      "status": "active",
       "target": {
         "areaId": "briarwell-misty-forest-mf1",
         "spawnId": "from-southwest",
         "returnTransitionId": "southwest-path"
       },
       "fallbackSpawn": "from-northeast",
-      "unavailableText": "The faint trail climbs toward the misted highlands, but the way beyond Northfield is not open yet.",
       "points": [[1120, 8], [1280, 8], [1300, 85], [1100, 85]]
     }
   ],

@@ -8,8 +8,8 @@ keeps Jay's numbered layout understandable during art and map production.
 
 | State | Areas |
 |---|---|
-| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F22; the Ogre's Clearing; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Old River Bridge; Northfield; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
-| Planned | Ogre boss sprite and combat; traversal into the sealed ogre cave; Misty Forest MF1 northeast of Northfield; combat resolution for the Area 15 kobolds; inventory awards for the dwarven treasure; open-window traversal |
+| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F22; the Ogre's Clearing; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Old River Bridge; Northfield; Misty Forest MF1–MF3; Swimmable; Waterfall; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
+| Planned | Mountain M1 and the remaining mountain region; swimming animation and deep-water movement; future mountain-river knockback into Waterfall; Ogre boss sprite and combat; traversal into the sealed ogre cave; combat resolution for the Area 15 kobolds; inventory awards for the dwarven treasure; open-window traversal |
 
 The complete Briarwell surface and sewer network are now playable. The surface contains the northern circuit
 `1 → 2 → 3 → 4 → 1`, the southern circuit
@@ -21,6 +21,11 @@ F15, then east across the Old River Bridge into Northfield. F15 also opens into
 the complete F16–F22 dark-forest loop to its north and west, with the Ogre's
 Clearing branching north from F20. The road runs south
 through F12, F11 and F8, with one west farm spur at F11, F12 and F13.
+Northfield's foot trail now climbs through MF1, MF2 and MF3, then turns west to
+Swimmable. Waterfall is a separate forced-entry screen upstream: its enlarged
+current escapes one way into Swimmable, while its future mountain source remains
+unbuilt. Swimmable's river visibly continues south beyond the screen, but that
+water edge remains non-traversable until swimming is implemented.
 
 ## Numbered surface areas
 
@@ -52,7 +57,12 @@ isolated on the cliffside and is reached by the hidden open-window passage.
 | `lodestone-tavern-interior` | Playable empty common-room foundation | Active Area 1 front door |
 | `general-store-interior` | Playable empty shop foundation | Active Area 1 front door |
 | `briarwell-old-river-bridge` | Intact historic crossing over the rapid river feeding Briarwell | Forest F15 W, Northfield E |
-| `briarwell-northfield` | Nearly treeless green upland covered with exposed rocks | Old River Bridge W; planned Misty Forest MF1 NE |
+| `briarwell-northfield` | Nearly treeless green upland covered with exposed rocks | Old River Bridge W; Misty Forest MF1 NE |
+| `briarwell-misty-forest-mf1` | Lower forest/mountain transition | Northfield SW, MF2 N |
+| `briarwell-misty-forest-mf2` | Rockier middle forest/mountain transition | MF1 S, MF3 N |
+| `briarwell-misty-forest-mf3` | Upper forest/mountain transition and future M1 approach | MF2 S, Swimmable W; rough M1 path visible but blocked N |
+| `briarwell-swimmable` | Broad calmer pool, gravel landing and visible south-flowing outlet below the falls | MF3 E; receives Waterfall current from NW; south water edge is visual only |
+| `briarwell-waterfall` | Immense forced-fall plunge pool | One-way current SE to Swimmable; future mountain knockback entry reserved |
 | `briarwell-ogre-clearing` | Wide scrollable boss arena with a future ogre encounter | Forest F20 S; sealed ogre cave boulder N |
 
 The western road is now an active route to Forest F13, and the South Gate road is
@@ -83,14 +93,32 @@ show that it once carried regular passage through the mountains.
 |---|---|---|
 | F15 | `briarwell-forest-f15` | F14 S, Old River Bridge E, Forest F18 walking path W, Forest F16 clearing N |
 | Old River Bridge | `briarwell-old-river-bridge` | F15 W, Northfield E |
-| Northfield | `briarwell-northfield` | Old River Bridge W; planned Misty Forest MF1 walking path NE |
+| Northfield | `briarwell-northfield` | Old River Bridge W; Misty Forest MF1 walking path NE |
+| MF1 | `briarwell-misty-forest-mf1` | Northfield SW, MF2 N |
+| MF2 | `briarwell-misty-forest-mf2` | MF1 S, MF3 N |
+| MF3 | `briarwell-misty-forest-mf3` | MF2 S, Swimmable W; future Mountain M1 path visible but blocked N |
+| Swimmable | `briarwell-swimmable` | MF3 E; one-way arrival from Waterfall NW |
+| Waterfall | `briarwell-waterfall` | One-way current SE to Swimmable; future forced entry from mountain river |
 
 F15's south and east branches retain the faded ruts and old stone edging of the
 historic wagon road. Its western branch is deliberately only a walking path. Its
 northern opening into F16 is rough untracked ground rather than a fourth road.
 The Old River Bridge is intact and wagon-wide, but the rapid river is impassable
 away from its deck. Northfield is open green ground dominated by rock outcrops,
-with only a few distant trees and no invented road mouths.
+with only a few distant trees and no invented road mouths. Beyond it, MF1–MF3
+are walking trails rather than roads. They grow progressively steeper, rockier
+and mistier as they approach the mountain region.
+
+MF3's northern trail is painted deliberately: it climbs into visibly rough
+terrain, but its walkable polygon stops short of the edge and there is no north
+transition. Mountain M1 will activate that route in a later pass.
+
+Waterfall is not reachable by ordinary travel. It reserves a safe spawn for a
+future forced fall from the mountain river, then permits only a downstream escape
+into Swimmable. Swimmable cannot return upstream. Its broad river visibly flows
+south out of the screen, but that edge has no transition. The deep pool is
+canonically swimmable, while only shoreline, gravel and shallow landing movement
+are active until dedicated swimming animation is authored.
 
 ## Dark western forest
 
@@ -138,8 +166,11 @@ premature cave transition.
 12. ~~F15, the Old River Bridge and Northfield.~~ Complete v1.
 13. ~~Dark western forest F16–F22.~~ Complete v1.
 14. ~~Scrollable Ogre clearing and corrected F20 north link.~~ Arena foundation complete v1; boss and cave traversal remain planned.
+15. ~~Misty Forest MF1–MF3, Swimmable and Waterfall.~~ MF screens complete v1 and river screens complete v2; swimming animation, Mountain M1 and the forced-fall source remain planned.
 
 Every playable area requires its own runtime map JSON, background art, safe spawn
-points, exact transition triggers, foot-level collisions, depth occluders and a
-reciprocal transition test before its registry status changes from `planned` to
-`playable`.
+points, exact transition triggers, foot-level collisions and depth occluders
+before its registry status changes from `planned` to `playable`. Ordinary routes
+also require reciprocal transition tests. Explicit `river-escape` connections
+are directional and instead require a tested source transition and safe arrival
+spawn.

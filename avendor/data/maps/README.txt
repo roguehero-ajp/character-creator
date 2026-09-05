@@ -8,7 +8,8 @@ identity, availability and approved travel topology. Schema version 2 locks the
 12 numbered surface areas, the unnumbered western road junction, the connected
 15-area sewer network, its hidden dwarven chamber, two building interiors, the
 south-outskirts forest, western farm road, F15 river crossing, Northfield, the
-dark western forest and scrollable Ogre's Clearing, Witchwood and the three-screen
+three-screen Misty Forest climb, Swimmable, the one-way Waterfall escape, the dark
+western forest and scrollable Ogre's Clearing, Witchwood and the three-screen
 ancient maple.
 
 Each entry keeps three different concerns separate:
@@ -36,10 +37,13 @@ when a planned, unassigned, invalid or failed target is encountered.
 
 APPROVED CONNECTION GRAPH
 -------------------------
-connections records every approved two-way route independently from runtime map
-geometry. Each connection has exactly two unique area/transition endpoints.
+connections records every approved route independently from runtime map geometry.
+Ordinary connections have two unique area/transition endpoints. A directed river
+escape instead has one source transition followed by one safe destination spawn.
 
   road            Public surface road.
+  trail           Public walking trail that is explicitly not a wagon road.
+  river-escape    Public one-way water route from a source exit to an arrival spawn.
   alley           Public surface alley.
   doorway         Public building entrance.
   climb           Public vertical traversal between outdoor screens.
@@ -53,10 +57,10 @@ become active.
 
 The current graph contains:
 
-  52 road connections: 13 around town, 18 through the south outskirts/Witchwood,
-                       8 through the western farm road and 13 through F15, the
-                       dark western forest, Ogre's Clearing, Old River Bridge
-                       and Northfield
+  51 road connections: the established town, forest, farm, Witchwood, bridge and
+                       Ogre's Clearing routes
+   4 walking trails: Northfield to MF1, MF1 to MF2, MF2 to MF3 and MF3 to Swimmable
+   1 directed river escape: Waterfall downstream into Swimmable
    1 alley connection
    2 doorway connections
    2 ancient-maple climb connections
@@ -74,7 +78,7 @@ Map schemaVersion 2 uses explicit transition targets:
 
   target.areaId              Registered destination identity.
   target.spawnId             Exact entry spawn; required once the target is playable.
-  target.returnTransitionId  Reciprocal exit or portal; required for active links.
+  target.returnTransitionId  Reciprocal exit or portal; required for ordinary active links.
 
 Outdoor exits also declare their geographically meaningful direction. Reciprocal
 screen edges do not have to be mathematical opposites: for example, Town Center's
@@ -83,8 +87,14 @@ northwest road enters the Workshops through that screen's southwest road.
 Every transition must declare an authored fallbackSpawn in its current map.
 Automated topology checks reject duplicate ids/numbers, duplicate route endpoints,
 public secret routes, unknown areas, missing playable maps, missing entry spawns,
-one-way active links, registry/map identity mismatches and runtime transitions that
-contradict the approved graph.
+accidental one-way active links, registry/map identity mismatches and runtime
+transitions that contradict the approved graph.
+
+The deliberate exception is a connection with kind `river-escape` and
+`oneWay: true`. Its first endpoint names the only runtime transition, while its
+second endpoint names a safe arrival spawn. Such a transition must omit
+target.returnTransitionId. Waterfall uses this contract to flow southeast into
+Swimmable without permitting the hero to swim back upstream.
 
 Ancient-maple ascents use interacted transitions guarded by repeatable percentile
 Climb checks. Each check names an authored failureSpawn so a failed attempt lands
@@ -130,6 +140,7 @@ Run after changing the registry or any Briarwell map:
   node avendor/tests/south-outskirts-contract.js
   node avendor/tests/west-outskirts-contract.js
   node avendor/tests/northern-outskirts-contract.js
+  node avendor/tests/misty-forest-river-contract.js
   node avendor/tests/witchwood-maple-tree-contract.js
   node avendor/tests/town-center-footprints.js
   AVENDOR_SKIP_BROWSER=1 node avendor/tests/town-center-smoke.js

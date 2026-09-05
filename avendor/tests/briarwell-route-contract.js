@@ -38,6 +38,20 @@ function assertConnection(connection) {
   const rightTransition = getTransition(right.areaId, right.transitionId);
   if (connection.status !== 'active') return;
   assert(leftTransition, `Missing connection endpoint transition: ${connection.id}/${left.areaId}/${left.transitionId}`);
+
+  if (connection.oneWay === true) {
+    assert(connection.kind === 'river-escape', `Unsupported one-way connection kind: ${connection.id}`);
+    assert(!right.transitionId && right.spawnId, `One-way arrival must name a spawn instead of a transition: ${connection.id}`);
+    assert(maps.get(right.areaId)?.spawnPoints?.[right.spawnId], `One-way arrival spawn is missing: ${connection.id}/${right.areaId}/${right.spawnId}`);
+    assert(leftTransition.status === 'active', `Active one-way route has an inactive source: ${connection.id}/${left.transitionId}`);
+    assert(leftTransition.target?.areaId === right.areaId, `One-way target mismatch: ${connection.id}/${left.areaId}`);
+    assert(leftTransition.target?.spawnId === right.spawnId, `One-way arrival spawn mismatch: ${connection.id}/${left.areaId}`);
+    assert(!leftTransition.target?.returnTransitionId, `One-way route unexpectedly names a return transition: ${connection.id}/${left.areaId}`);
+    assert(oppositeDirection(left.direction) === right.direction, `One-way route directions are inconsistent: ${connection.id}`);
+    assert(routeDirection(leftTransition) === left.direction, `Registry/map world-direction mismatch: ${connection.id}/${left.areaId}`);
+    return;
+  }
+
   assert(rightTransition, `Missing connection endpoint transition: ${connection.id}/${right.areaId}/${right.transitionId}`);
 
   assert(leftTransition.status === 'active', `Active route has inactive endpoint: ${connection.id}/${left.transitionId}`);
@@ -49,8 +63,8 @@ function assertConnection(connection) {
   assert(leftTransition.target?.spawnId === rightTransition.fallbackSpawn, `Arrival spawn does not match reciprocal fallback: ${connection.id}/${left.areaId}`);
   assert(rightTransition.target?.spawnId === leftTransition.fallbackSpawn, `Arrival spawn does not match reciprocal fallback: ${connection.id}/${right.areaId}`);
 
-  if (connection.visibility === 'public' && connection.kind === 'road') {
-    assert(oppositeDirection(left.direction) === right.direction, `Public road directions are not reciprocal: ${connection.id}`);
+  if (connection.visibility === 'public' && ['road', 'trail'].includes(connection.kind)) {
+    assert(oppositeDirection(left.direction) === right.direction, `Public surface-route directions are not reciprocal: ${connection.id}`);
     assert(routeDirection(leftTransition) === left.direction, `Registry/map world-direction mismatch: ${connection.id}/${left.areaId}`);
     assert(routeDirection(rightTransition) === right.direction, `Registry/map world-direction mismatch: ${connection.id}/${right.areaId}`);
   }

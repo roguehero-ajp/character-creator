@@ -15,9 +15,9 @@ Approved route graph:
                          |
                   Old River Bridge <-> Northfield
                                             |
-                               planned northeast path
+                                      northeast trail
                                             |
-                                   planned Misty Forest MF1
+                                      Misty Forest MF1
 
 Route-art contract:
 
@@ -30,7 +30,7 @@ Route-art contract:
   bank creates another route.
 - Northfield is a broad green upland dominated by rocks, with almost no trees.
   It has one western wagon approach from the bridge and one faint northeast
-  walking path reserved for planned Misty Forest MF1. No other edge is open.
+  walking path into playable Misty Forest MF1. No other edge is open.
 
 The darker magical forest from F16 through F22 continues beneath the sibling
 dark-forest folder. Those screens use clear vegetation gaps instead of roads.

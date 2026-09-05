@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -693,9 +693,62 @@
       "areaNumber": null,
       "title": "Misty Forest - MF1",
       "kind": "outdoor",
-      "status": "planned",
-      "map": null,
-      "planPosition": { "column": 1, "row": -2 }
+      "status": "playable",
+      "map": "data/maps/briarwell-misty-forest-mf1.json",
+      "planPosition": { "column": 1, "row": -2 },
+      "landmarks": [
+        { "id": "misty-highland-trail", "label": "Misty highland walking trail" }
+      ]
+    },
+    {
+      "id": "briarwell-misty-forest-mf2",
+      "areaNumber": null,
+      "title": "Misty Forest - MF2",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-misty-forest-mf2.json",
+      "planPosition": { "column": 1, "row": -3 },
+      "landmarks": [
+        { "id": "rocky-mist-trail", "label": "Rocky mist trail" }
+      ]
+    },
+    {
+      "id": "briarwell-misty-forest-mf3",
+      "areaNumber": null,
+      "title": "Misty Forest - MF3",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-misty-forest-mf3.json",
+      "planPosition": { "column": 1, "row": -4 },
+      "landmarks": [
+        { "id": "future-mountain-trail", "label": "Rough future trail toward Mountain M1" },
+        { "id": "river-overlook", "label": "Western river overlook" }
+      ]
+    },
+    {
+      "id": "briarwell-swimmable",
+      "areaNumber": null,
+      "title": "Swimmable",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-swimmable.json",
+      "planPosition": { "column": 0, "row": -4 },
+      "landmarks": [
+        { "id": "swimmable-pool", "label": "Deep swimmable pool" },
+        { "id": "upstream-current", "label": "Impassable upstream current" }
+      ]
+    },
+    {
+      "id": "briarwell-waterfall",
+      "areaNumber": null,
+      "title": "Waterfall",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-waterfall.json",
+      "planPosition": { "column": -1, "row": -5 },
+      "landmarks": [
+        { "id": "waterfall-plunge-pool", "label": "Mountain waterfall plunge pool" }
+      ]
     },
     {
       "id": "briarwell-forest-f9",
@@ -1134,12 +1187,53 @@
     },
     {
       "id": "northfield-misty-forest-mf1",
-      "kind": "road",
+      "kind": "trail",
       "visibility": "public",
-      "status": "planned",
+      "status": "active",
       "endpoints": [
         { "areaId": "briarwell-northfield", "transitionId": "northeast-path", "direction": "northeast" },
         { "areaId": "briarwell-misty-forest-mf1", "transitionId": "southwest-path", "direction": "southwest" }
+      ]
+    },
+    {
+      "id": "misty-forest-mf1-mf2",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-misty-forest-mf1", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-misty-forest-mf2", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "misty-forest-mf2-mf3",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-misty-forest-mf2", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-misty-forest-mf3", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "misty-forest-mf3-swimmable",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-misty-forest-mf3", "transitionId": "west-path", "direction": "west" },
+        { "areaId": "briarwell-swimmable", "transitionId": "east-path", "direction": "east" }
+      ]
+    },
+    {
+      "id": "waterfall-swimmable",
+      "kind": "river-escape",
+      "visibility": "public",
+      "status": "active",
+      "oneWay": true,
+      "endpoints": [
+        { "areaId": "briarwell-waterfall", "transitionId": "southeast-current", "direction": "southeast" },
+        { "areaId": "briarwell-swimmable", "spawnId": "from-waterfall", "direction": "northwest" }
       ]
     },
     {

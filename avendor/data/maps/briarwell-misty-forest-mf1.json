@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-misty-forest-mf1",
+  "title": "Misty Forest - MF1",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/misty-forest/mf1/background/briarwell-misty-forest-mf1-v1.webp",
+    "alt": "A narrow highland walking trail climbs northeast from rocky Northfield and continues north through scattered spruce into the mist"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 600, "y": 600, "facing": "north" },
+    "from-southwest": { "x": 230, "y": 920, "facing": "northeast" },
+    "from-north": { "x": 790, "y": 150, "facing": "south" }
+  },
+  "walkable": [
+    {
+      "id": "misty-highland-trail",
+      "points": [[705, 0], [900, 0], [850, 190], [880, 330], [875, 450], [805, 560], [670, 650], [540, 750], [430, 870], [350, 990], [340, 1086], [0, 1086], [0, 930], [100, 900], [240, 790], [360, 670], [500, 560], [610, 440], [675, 300], [700, 160]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "southwest-path",
+      "label": "Southwest walking trail to Northfield",
+      "direction": "southwest",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-northfield",
+        "spawnId": "from-northeast",
+        "returnTransitionId": "northeast-path"
+      },
+      "fallbackSpawn": "from-southwest",
+      "points": [[8, 985], [270, 985], [300, 1078], [8, 1078]]
+    },
+    {
+      "id": "north-path",
+      "label": "North walking trail to Misty Forest MF2",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-misty-forest-mf2",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[735, 8], [870, 8], [860, 90], [720, 90]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "northfield-threshold",
+      "label": "Northfield threshold",
+      "x": 300,
+      "y": 820,
+      "radius": 125,
+      "interactionText": "Behind you, Northfield opens into bare green rock. Ahead, spruce and mountain mist gather around the climbing trail."
+    },
+    {
+      "id": "misty-highland-trail",
+      "label": "Misty highland trail",
+      "x": 760,
+      "y": 390,
+      "radius": 125,
+      "interactionText": "The narrow trail is travelled on foot, but wagon wheels have never cut ruts into this high ground."
+    }
+  ],
+  "npcs": []
+}

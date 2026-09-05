@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-waterfall",
+  "title": "Waterfall",
+  "version": "0.2.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountain-river/waterfall/background/briarwell-waterfall-v2.webp",
+    "alt": "An immense mountain waterfall fills a dark basalt gorge, crashing into a broad plunge pool whose only escape follows the powerful current southeast toward Swimmable"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 850, "facing": "southeast" },
+    "from-mountain-fall": { "x": 720, "y": 820, "facing": "southeast" },
+    "current-landing": { "x": 720, "y": 850, "facing": "southeast" }
+  },
+  "walkable": [
+    {
+      "id": "rocky-landing-and-outflow",
+      "points": [[500, 825], [650, 785], [830, 770], [980, 790], [1130, 825], [1448, 850], [1448, 1086], [1200, 1086], [1080, 1030], [960, 980], [840, 960], [710, 985], [590, 945], [500, 890], [455, 850]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "southeast-current",
+      "label": "Downstream current toward Swimmable",
+      "direction": "southeast",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-swimmable",
+        "spawnId": "from-waterfall"
+      },
+      "fallbackSpawn": "current-landing",
+      "points": [[1250, 880], [1440, 850], [1440, 1078], [1220, 1078]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "waterfall-plunge-pool",
+      "label": "Waterfall plunge pool",
+      "x": 725,
+      "y": 650,
+      "radius": 190,
+      "interactionText": "The falls offer no path back to the mountains above. The river's only mercy is the current carrying you southeast."
+    }
+  ],
+  "npcs": [],
+  "forcedEntry": {
+    "status": "reserved",
+    "spawnId": "from-mountain-fall",
+    "source": "future mountain-river knockback"
+  },
+  "waterTraversal": {
+    "status": "animation-planned",
+    "mode": "landing-shelf-and-outflow-only",
+    "destinationAreaId": "briarwell-swimmable"
+  }
+}
