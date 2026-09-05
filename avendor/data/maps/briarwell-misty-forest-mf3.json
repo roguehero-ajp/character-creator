@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-misty-forest-mf3",
+  "title": "Misty Forest - MF3",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/misty-forest/mf3/background/briarwell-misty-forest-mf3-v1.webp",
+    "alt": "A rugged trail from the south turns west toward the river while a visible but rough and impassable path climbs north into the mountains"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 740, "y": 620, "facing": "west" },
+    "from-south": { "x": 740, "y": 920, "facing": "north" },
+    "from-west": { "x": 160, "y": 510, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "south-junction-trail",
+      "points": [[610, 1086], [875, 1086], [850, 900], [820, 770], [900, 660], [920, 540], [760, 475], [600, 550], [610, 700], [570, 850]]
+    },
+    {
+      "id": "west-river-trail",
+      "points": [[0, 420], [330, 420], [560, 470], [720, 500], [800, 590], [700, 670], [520, 600], [300, 570], [0, 590]]
+    },
+    {
+      "id": "rough-north-mountain-trail",
+      "points": [[720, 590], [870, 590], [860, 480], [850, 390], [880, 300], [940, 170], [820, 140], [760, 250], [710, 380], [700, 500]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "south-path",
+      "label": "South walking trail to Misty Forest MF2",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-misty-forest-mf2",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[650, 995], [830, 995], [850, 1078], [630, 1078]]
+    },
+    {
+      "id": "west-path",
+      "label": "West walking trail to Swimmable",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-swimmable",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 450], [100, 450], [100, 570], [8, 570]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "future-mountain-trail",
+      "label": "Rough mountain trail",
+      "x": 785,
+      "y": 275,
+      "radius": 145,
+      "interactionText": "An old path climbs north toward the mountains, but broken stone and steep scree make the upper way impassable for now."
+    },
+    {
+      "id": "river-overlook",
+      "label": "River overlook",
+      "x": 350,
+      "y": 500,
+      "radius": 125,
+      "interactionText": "Cold white water flashes between the rocks west of the trail."
+    }
+  ],
+  "npcs": [],
+  "futureConnections": [
+    {
+      "id": "misty-forest-mf3-mountain-m1",
+      "direction": "north",
+      "status": "art-only",
+      "note": "The path is visible but has no transition until Mountain M1 is authored."
+    }
+  ]
+}

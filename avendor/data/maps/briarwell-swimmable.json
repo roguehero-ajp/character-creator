@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-swimmable",
+  "title": "Swimmable",
+  "version": "0.2.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountain-river/swimmable/background/briarwell-swimmable-v2.webp",
+    "alt": "A broad blue-green river surges in from the northwest, widens into a swimmable pool and visibly flows south out of the gorge beside a gravel landing and one walking path east to Misty Forest MF3"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 1100, "y": 720, "facing": "east" },
+    "from-east": { "x": 1280, "y": 600, "facing": "west" },
+    "from-waterfall": { "x": 1040, "y": 720, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "gravel-landing-and-east-path",
+      "points": [[940, 410], [1070, 435], [1210, 490], [1448, 490], [1448, 700], [1300, 700], [1280, 820], [1220, 920], [1150, 1005], [1040, 990], [990, 920], [965, 830], [960, 740], [970, 650], [955, 560]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "east-path",
+      "label": "East walking trail to Misty Forest MF3",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-misty-forest-mf3",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1350, 520], [1440, 520], [1440, 660], [1350, 660]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "upstream-current",
+      "label": "Upstream current",
+      "x": 885,
+      "y": 500,
+      "radius": 175,
+      "interactionText": "The chute from the northwest is far too violent to swim against. Whatever comes over the falls can only travel downstream."
+    },
+    {
+      "id": "swimmable-pool",
+      "label": "Swimmable pool",
+      "x": 870,
+      "y": 700,
+      "radius": 190,
+      "interactionText": "Beyond the dangerous current, the pool is deep and calm enough for a capable swimmer."
+    }
+  ],
+  "npcs": [],
+  "waterTraversal": {
+    "status": "animation-planned",
+    "mode": "shoreline-only",
+    "futureRegion": "deep-swimmable-pool",
+    "arrivalSpawn": "from-waterfall",
+    "southOutflow": {
+      "direction": "south",
+      "status": "visual-only",
+      "transition": null
+    }
+  }
+}

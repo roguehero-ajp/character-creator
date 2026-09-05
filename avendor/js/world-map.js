@@ -6,7 +6,8 @@
   const AREA_KINDS = Object.freeze(['outdoor', 'interior']);
   const REGISTRY_SCHEMA_VERSIONS = Object.freeze([1, 2]);
   const CONNECTION_KINDS = Object.freeze([
-    'road', 'alley', 'doorway', 'climb', 'secret-passage', 'sewer-access', 'sewer-tunnel'
+    'road', 'trail', 'river-escape', 'alley', 'doorway', 'climb',
+    'secret-passage', 'sewer-access', 'sewer-tunnel'
   ]);
   const CONNECTION_VISIBILITIES = Object.freeze(['public', 'hidden']);
   const CONNECTION_STATUSES = Object.freeze(['active', 'planned']);
@@ -135,6 +136,13 @@
           `Connection ${connection.id} cannot connect an area to itself.`
         );
 
+        const isOneWay = connection.oneWay === true;
+        if (connection.kind === 'river-escape') {
+          requireValue(isOneWay, `River escape ${connection.id} must be one-way.`);
+        } else {
+          requireValue(!isOneWay, `Only river escapes may be one-way: ${connection.id}`);
+        }
+
         if (['secret-passage', 'sewer-access'].includes(connection.kind)) {
           requireValue(
             connection.visibility === 'hidden',
@@ -142,33 +150,41 @@
           );
         }
 
-        connection.endpoints.forEach((endpoint) => {
+        connection.endpoints.forEach((endpoint, endpointIndex) => {
           const area = this.getArea(endpoint.areaId);
           requireValue(area, `Connection ${connection.id} names unknown area ${endpoint.areaId}.`);
-          requireValue(
-            isStableId(endpoint.transitionId),
-            `Connection ${connection.id} has an invalid transitionId.`
-          );
-          const key = `${endpoint.areaId}/${endpoint.transitionId}`;
-          requireValue(
-            !this.connectionByEndpoint.has(key),
-            `Transition endpoint belongs to multiple connections: ${key}`
-          );
 
-          if (['road', 'alley'].includes(connection.kind)) {
+          const isOneWayArrival = isOneWay && endpointIndex === 1;
+          if (isOneWayArrival) {
+            requireValue(
+              endpoint.transitionId === undefined && isStableId(endpoint.spawnId),
+              `One-way arrival ${connection.id} requires a spawnId instead of a transitionId.`
+            );
+          } else {
+            requireValue(
+              isStableId(endpoint.transitionId),
+              `Connection ${connection.id} has an invalid transitionId.`
+            );
+            const key = `${endpoint.areaId}/${endpoint.transitionId}`;
+            requireValue(
+              !this.connectionByEndpoint.has(key),
+              `Transition endpoint belongs to multiple connections: ${key}`
+            );
+            this.connectionByEndpoint.set(key, connection);
+          }
+
+          if (['road', 'trail', 'river-escape', 'alley'].includes(connection.kind)) {
             requireValue(area.kind === 'outdoor', `Connection ${connection.id} requires outdoor endpoints.`);
             requireValue(
               OUTDOOR_DIRECTIONS.includes(endpoint.direction),
-              `Connection ${connection.id} endpoint ${key} requires a valid direction.`
+              `Connection ${connection.id} endpoint in ${endpoint.areaId} requires a valid direction.`
             );
           } else if (endpoint.direction !== undefined) {
             requireValue(
               OUTDOOR_DIRECTIONS.includes(endpoint.direction),
-              `Connection ${connection.id} endpoint ${key} has an invalid direction.`
+              `Connection ${connection.id} endpoint in ${endpoint.areaId} has an invalid direction.`
             );
           }
-
-          this.connectionByEndpoint.set(key, connection);
         });
         if (connection.status === 'active') {
           requireValue(
@@ -367,6 +383,7 @@
 
       transitions.forEach((transition) => {
         const label = `${area.id}/${transition.id || '(missing id)'}`;
+        let approvedConnection = null;
         if (!isStableId(transition.id)) {
           errors.push(`Transition id is not stable kebab-case: ${label}`);
         }
@@ -401,6 +418,7 @@
             }
           } else {
             const connection = registry.getConnectionForTransition(area.id, transition.id);
+            approvedConnection = connection;
             if (!connection) {
               errors.push(`Transition is absent from the approved town graph: ${label}`);
             } else {
@@ -409,7 +427,14 @@
               if (transition.target?.areaId !== reciprocal.areaId) {
                 errors.push(`Transition target disagrees with town graph: ${label}`);
               }
-              if (
+              if (connection.oneWay === true) {
+                if (transition.target?.returnTransitionId) {
+                  errors.push(`One-way transition names a returnTransitionId: ${label}`);
+                }
+                if (transition.target?.spawnId !== reciprocal.spawnId) {
+                  errors.push(`One-way arrival spawn disagrees with town graph: ${label}`);
+                }
+              } else if (
                 transition.target?.returnTransitionId
                 && transition.target.returnTransitionId !== reciprocal.transitionId
               ) {
@@ -461,6 +486,14 @@
         if (!targetMap.spawnPoints?.[resolution.spawnId]) {
           errors.push(`Target spawn is missing: ${label} -> ${resolution.area.id}/${resolution.spawnId}`);
         }
+
+        if (approvedConnection?.oneWay === true) {
+          if (resolution.returnTransitionId) {
+            errors.push(`One-way transition has an unexpected returnTransitionId: ${label}`);
+          }
+          return;
+        }
+
         if (!resolution.returnTransitionId) {
           errors.push(`Active transition has no returnTransitionId: ${label}`);
           return;

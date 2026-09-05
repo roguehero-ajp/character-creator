@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-misty-forest-mf2",
+  "title": "Misty Forest - MF2",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/misty-forest/mf2/background/briarwell-misty-forest-mf2-v1.webp",
+    "alt": "A single narrow north-south trail winds between snowy spruce and increasingly steep rock in Misty Forest MF2"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 690, "y": 600, "facing": "north" },
+    "from-south": { "x": 560, "y": 920, "facing": "north" },
+    "from-north": { "x": 760, "y": 150, "facing": "south" }
+  },
+  "walkable": [
+    {
+      "id": "rocky-mist-trail",
+      "points": [[700, 0], [860, 0], [850, 170], [850, 300], [840, 430], [830, 560], [790, 680], [740, 800], [700, 930], [660, 1086], [390, 1086], [430, 930], [470, 800], [520, 670], [590, 540], [620, 420], [650, 300], [670, 150]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "south-path",
+      "label": "South walking trail to Misty Forest MF1",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-misty-forest-mf1",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[430, 995], [640, 995], [650, 1078], [400, 1078]]
+    },
+    {
+      "id": "north-path",
+      "label": "North walking trail to Misty Forest MF3",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-misty-forest-mf3",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[710, 8], [855, 8], [855, 90], [700, 90]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "rocky-mist-trail",
+      "label": "Rocky mist trail",
+      "x": 690,
+      "y": 540,
+      "radius": 130,
+      "interactionText": "The forest is thinning as the exposed stone rises. The same foot trail continues steadily north."
+    }
+  ],
+  "npcs": []
+}

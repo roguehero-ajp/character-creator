@@ -36,9 +36,9 @@ function transition(areaId, transitionId) {
     .find((candidate) => candidate.id === transitionId);
 }
 
-function assertConnection(connectionId, status, left, right) {
+function assertConnection(connectionId, status, left, right, kind = 'road') {
   const record = registry.connections.find((candidate) => candidate.id === connectionId);
-  assert(record?.kind === 'road' && record.visibility === 'public', `Connection is not a public route: ${connectionId}`);
+  assert(record?.kind === kind && record.visibility === 'public', `Connection is not the expected public route: ${connectionId}`);
   assert(record.status === status, `Connection has the wrong status: ${connectionId}`);
   const endpoints = record.endpoints.map((endpoint) => (
     `${endpoint.areaId}/${endpoint.transitionId}/${endpoint.direction}`
@@ -63,7 +63,7 @@ const mapContracts = {
   'briarwell-northfield': {
     art: 'briarwell-northfield-v1.webp',
     directions: ['northeast', 'west'],
-    version: '0.1.0',
+    version: '0.2.0',
     position: [0, -1]
   }
 };
@@ -121,9 +121,10 @@ assertConnection(
 );
 assertConnection(
   'northfield-misty-forest-mf1',
-  'planned',
+  'active',
   'briarwell-northfield/northeast-path/northeast',
-  'briarwell-misty-forest-mf1/southwest-path/southwest'
+  'briarwell-misty-forest-mf1/southwest-path/southwest',
+  'trail'
 );
 
 const f14North = transition('briarwell-forest-f14', 'north-path');
@@ -173,11 +174,11 @@ assert(
   'F18 must be the playable dark-forest threshold west of F15.'
 );
 assert(
-  areas.get('briarwell-misty-forest-mf1')?.status === 'planned'
-    && areas.get('briarwell-misty-forest-mf1')?.map === null
+  areas.get('briarwell-misty-forest-mf1')?.status === 'playable'
+    && areas.get('briarwell-misty-forest-mf1')?.map === 'data/maps/briarwell-misty-forest-mf1.json'
     && areas.get('briarwell-misty-forest-mf1')?.planPosition?.column === 1
     && areas.get('briarwell-misty-forest-mf1')?.planPosition?.row === -2,
-  'Misty Forest MF1 must remain the planned destination northeast of Northfield.'
+  'Misty Forest MF1 must be the playable destination northeast of Northfield.'
 );
 
 const bridge = maps.get('briarwell-old-river-bridge');
@@ -204,9 +205,9 @@ assert(
   'Northfield must remain a nearly treeless green field dominated by rock obstacles.'
 );
 assert(
-  transition('briarwell-northfield', 'northeast-path')?.status === 'planned'
+  transition('briarwell-northfield', 'northeast-path')?.status === 'active'
     && transition('briarwell-northfield', 'northeast-path')?.target?.areaId === 'briarwell-misty-forest-mf1',
-  'Northfield must reserve only its canonical northeast route toward MF1.'
+  'Northfield must expose only its canonical northeast walking route toward MF1.'
 );
 
 const MapGeometry = loadMapEngine().MapGeometry;
@@ -251,4 +252,4 @@ const northfieldGeometry = new MapGeometry(northfield);
   assert(!northfieldGeometry.isWalkable(x, y), `Northfield exposes an erroneous ${direction} route.`);
 });
 
-console.log('F15, Old River Bridge and Northfield route contracts passed.');
+console.log('F15, Old River Bridge, Northfield and the active MF1 approach contracts passed.');
