@@ -25,11 +25,15 @@ Formal release versioning begins with **v1.0.0**.
 - Corrected Forest F20 with its source-map northern clearing and opened the reciprocal route into the Ogre's Clearing.
 - Added the Ogre's Clearing as a 2048 x 944 scrollable boss arena, reserving a sprite anchor for the future ogre and the Strength 8 boulder sealing its northern cave.
 - Opened Misty Forest MF1, MF2 and MF3 as a progressively rockier northbound walking-trail route from Northfield.
-- Added MF3's visible but currently impassable rough mountain trail, reserving the future connection to Mountain M1 without publishing a false exit.
+- Added MF3's rough mountain trail and activated its reciprocal northbound connection into Mountain M1.
 - Added Swimmable as a cold mountain-river pool with one ordinary east trail to MF3 and deep-water movement reserved until swimming animation exists.
 - Added Waterfall as a forced-entry survival screen whose only escape follows a new one-way river connection into Swimmable.
 - Enlarged Waterfall's drop, plunge pool and downstream current so the mountain river dominates the screen.
 - Enlarged Swimmable's river and carried its visible current through the south edge without publishing a premature swimming transition.
+- Opened Mountain M1 through M5 as a continuous rough walking-trail climb from the Misty Forest to the exposed high slopes.
+- Added M4's three-way snowy junction, branching west to M5 and east to the playable Dwarven Cave forecourt while keeping its north edge sealed.
+- Added the ancient descending dwarven entrance as an inspectable landmark, reserving its deeper interior until the hand-drawn cave map is supplied.
+- Reserved M5's visible westward continuation without exposing an erroneous transition before the neighboring mountain areas are authored.
 
 ## [1.0.0] - 2026-08-11
 

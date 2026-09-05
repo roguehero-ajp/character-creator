@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "id": "briarwell-misty-forest-mf3",
   "title": "Misty Forest - MF3",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
     "background": "assets/maps/briarwell/misty-forest/mf3/background/briarwell-misty-forest-mf3-v1.webp",
-    "alt": "A rugged trail from the south turns west toward the river while a visible but rough and impassable path climbs north into the mountains"
+    "alt": "A rugged trail from the south turns west toward the river while a rough but passable path climbs north into the mountains"
   },
   "movement": {
     "speedX": 275,
@@ -26,6 +26,7 @@
   "spawnPoints": {
     "default": { "x": 740, "y": 620, "facing": "west" },
     "from-south": { "x": 740, "y": 920, "facing": "north" },
+    "from-north": { "x": 860, "y": 180, "facing": "south" },
     "from-west": { "x": 160, "y": 510, "facing": "east" }
   },
   "walkable": [
@@ -39,7 +40,7 @@
     },
     {
       "id": "rough-north-mountain-trail",
-      "points": [[720, 590], [870, 590], [860, 480], [850, 390], [880, 300], [940, 170], [820, 140], [760, 250], [710, 380], [700, 500]]
+      "points": [[720, 590], [870, 590], [860, 480], [850, 390], [880, 300], [940, 170], [920, 0], [800, 0], [760, 250], [710, 380], [700, 500]]
     }
   ],
   "collisions": [],
@@ -69,18 +70,31 @@
       },
       "fallbackSpawn": "from-west",
       "points": [[8, 450], [100, 450], [100, 570], [8, 570]]
+    },
+    {
+      "id": "north-path",
+      "label": "Rough mountain trail to Mountain M1",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m1",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[810, 8], [915, 8], [930, 110], [800, 110]]
     }
   ],
   "portals": [],
   "depthOccluders": [],
   "interactables": [
     {
-      "id": "future-mountain-trail",
+      "id": "mountain-trail",
       "label": "Rough mountain trail",
       "x": 785,
       "y": 275,
       "radius": 145,
-      "interactionText": "An old path climbs north toward the mountains, but broken stone and steep scree make the upper way impassable for now."
+      "interactionText": "An old path climbs north through broken stone and steep scree toward Mountain M1."
     },
     {
       "id": "river-overlook",
@@ -91,13 +105,5 @@
       "interactionText": "Cold white water flashes between the rocks west of the trail."
     }
   ],
-  "npcs": [],
-  "futureConnections": [
-    {
-      "id": "misty-forest-mf3-mountain-m1",
-      "direction": "north",
-      "status": "art-only",
-      "note": "The path is visible but has no transition until Mountain M1 is authored."
-    }
-  ]
+  "npcs": []
 }

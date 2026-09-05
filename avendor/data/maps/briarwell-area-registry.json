@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.27.0",
+  "version": "0.28.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -721,7 +721,7 @@
       "map": "data/maps/briarwell-misty-forest-mf3.json",
       "planPosition": { "column": 1, "row": -4 },
       "landmarks": [
-        { "id": "future-mountain-trail", "label": "Rough future trail toward Mountain M1" },
+        { "id": "mountain-trail", "label": "Rough trail toward Mountain M1" },
         { "id": "river-overlook", "label": "Western river overlook" }
       ]
     },
@@ -748,6 +748,80 @@
       "planPosition": { "column": -1, "row": -5 },
       "landmarks": [
         { "id": "waterfall-plunge-pool", "label": "Mountain waterfall plunge pool" }
+      ]
+    },
+    {
+      "id": "briarwell-mountain-m1",
+      "areaNumber": null,
+      "title": "Mountain - M1",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-mountain-m1.json",
+      "planPosition": { "column": 1, "row": -5 },
+      "landmarks": [
+        { "id": "last-mountain-pines", "label": "Last mountain pines" }
+      ]
+    },
+    {
+      "id": "briarwell-mountain-m2",
+      "areaNumber": null,
+      "title": "Mountain - M2",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-mountain-m2.json",
+      "planPosition": { "column": 1, "row": -6 },
+      "landmarks": [
+        { "id": "wind-scoured-slope", "label": "Wind-scoured slope" }
+      ]
+    },
+    {
+      "id": "briarwell-mountain-m3",
+      "areaNumber": null,
+      "title": "Mountain - M3",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-mountain-m3.json",
+      "planPosition": { "column": 1, "row": -7 },
+      "landmarks": [
+        { "id": "knife-edge-pass", "label": "Knife-edge pass" }
+      ]
+    },
+    {
+      "id": "briarwell-mountain-m4",
+      "areaNumber": null,
+      "title": "Mountain - M4",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-mountain-m4.json",
+      "planPosition": { "column": 1, "row": -8 },
+      "landmarks": [
+        { "id": "high-mountain-junction", "label": "High mountain junction" }
+      ]
+    },
+    {
+      "id": "briarwell-mountain-m5",
+      "areaNumber": null,
+      "title": "Mountain - M5",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-mountain-m5.json",
+      "planPosition": { "column": 0, "row": -8 },
+      "landmarks": [
+        { "id": "future-western-route", "label": "Blocked western traverse" },
+        { "id": "exposed-heights", "label": "Exposed heights" }
+      ]
+    },
+    {
+      "id": "briarwell-mountain-dwarven-cave",
+      "areaNumber": null,
+      "title": "Dwarven Cave",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-mountain-dwarven-cave.json",
+      "planPosition": { "column": 2, "row": -8 },
+      "landmarks": [
+        { "id": "deeper-dwarven-cave", "label": "Descending dwarven passage" },
+        { "id": "weathered-dwarven-stonework", "label": "Weathered dwarven stonework" }
       ]
     },
     {
@@ -1234,6 +1308,66 @@
       "endpoints": [
         { "areaId": "briarwell-waterfall", "transitionId": "southeast-current", "direction": "southeast" },
         { "areaId": "briarwell-swimmable", "spawnId": "from-waterfall", "direction": "northwest" }
+      ]
+    },
+    {
+      "id": "misty-forest-mf3-mountain-m1",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-misty-forest-mf3", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-mountain-m1", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "mountain-m1-m2",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-mountain-m1", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-mountain-m2", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "mountain-m2-m3",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-mountain-m2", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-mountain-m3", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "mountain-m3-m4",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-mountain-m3", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-mountain-m4", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "mountain-m4-m5",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-mountain-m4", "transitionId": "west-path", "direction": "west" },
+        { "areaId": "briarwell-mountain-m5", "transitionId": "east-path", "direction": "east" }
+      ]
+    },
+    {
+      "id": "mountain-m4-dwarven-cave",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-mountain-m4", "transitionId": "east-path", "direction": "east" },
+        { "areaId": "briarwell-mountain-dwarven-cave", "transitionId": "west-path", "direction": "west" }
       ]
     },
     {

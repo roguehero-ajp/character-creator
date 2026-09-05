@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m5",
+  "title": "Mountain - M5",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m5/background/briarwell-mountain-m5-v1.webp",
+    "alt": "An exposed east-west mountain traverse crosses a windswept plateau, with a blocked route visible to the west"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 800, "y": 520, "facing": "west" },
+    "from-east": { "x": 1290, "y": 460, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "exposed-western-traverse",
+      "points": [[100, 380], [330, 400], [520, 430], [760, 430], [980, 400], [1200, 370], [1448, 360], [1448, 550], [1240, 560], [1020, 590], [800, 620], [560, 610], [330, 570], [120, 530]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "east-path",
+      "label": "East mountain path to Mountain M4",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m4",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1350, 390], [1440, 380], [1440, 530], [1350, 540]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "future-western-route",
+      "label": "Blocked western traverse",
+      "x": 190,
+      "y": 465,
+      "radius": 130,
+      "interactionText": "The old traverse continues west beyond the broken ledge. Its far side has not yet been charted."
+    },
+    {
+      "id": "exposed-heights",
+      "label": "Exposed heights",
+      "x": 780,
+      "y": 500,
+      "radius": 140,
+      "interactionText": "There is little shelter here. Wind drives loose snow across the bare stone."
+    }
+  ],
+  "npcs": [],
+  "futureConnections": [
+    {
+      "id": "mountain-m5-western-region",
+      "direction": "west",
+      "status": "art-only",
+      "note": "The westward mountain route is visible but remains blocked until the neighboring area is authored."
+    }
+  ]
+}

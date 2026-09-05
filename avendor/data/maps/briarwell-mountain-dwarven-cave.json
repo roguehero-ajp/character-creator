@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-dwarven-cave",
+  "title": "Dwarven Cave",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/dwarven-cave/background/briarwell-dwarven-cave-v1.webp",
+    "alt": "An open mountain forecourt leads from the west to an ancient dwarven doorway descending into the rock"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 560, "facing": "northeast" },
+    "from-west": { "x": 150, "y": 455, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "dwarven-forecourt",
+      "points": [[0, 360], [240, 360], [420, 400], [650, 400], [850, 360], [1040, 320], [1140, 330], [1160, 430], [1060, 470], [1100, 540], [1000, 620], [760, 690], [500, 670], [300, 600], [0, 540]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "west-path",
+      "label": "West mountain path to Mountain M4",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m4",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 390], [100, 390], [100, 520], [8, 520]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "deeper-dwarven-cave",
+      "label": "Descending dwarven passage",
+      "x": 1040,
+      "y": 295,
+      "radius": 170,
+      "interactionText": "Broad stone steps descend beneath an ancient dwarven arch. The deeper halls have not yet been charted."
+    },
+    {
+      "id": "weathered-dwarven-stonework",
+      "label": "Weathered dwarven stonework",
+      "x": 900,
+      "y": 420,
+      "radius": 135,
+      "interactionText": "The fitted blocks are scarred by centuries of frost, but the old masonry has barely shifted."
+    }
+  ],
+  "npcs": [],
+  "futureConnections": [
+    {
+      "id": "dwarven-cave-descent",
+      "direction": "down",
+      "status": "art-only",
+      "note": "The descending entrance is visible but has no portal until the Dwarven Cave interior map is supplied."
+    }
+  ]
+}

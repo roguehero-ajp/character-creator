@@ -10,7 +10,7 @@ identity, availability and approved travel topology. Schema version 2 locks the
 south-outskirts forest, western farm road, F15 river crossing, Northfield, the
 three-screen Misty Forest climb, Swimmable, the one-way Waterfall escape, the dark
 western forest and scrollable Ogre's Clearing, Witchwood and the three-screen
-ancient maple.
+ancient maple, Mountain M1 through M5 and the outdoor Dwarven Cave forecourt.
 
 Each entry keeps three different concerns separate:
 
@@ -59,7 +59,8 @@ The current graph contains:
 
   51 road connections: the established town, forest, farm, Witchwood, bridge and
                        Ogre's Clearing routes
-   4 walking trails: Northfield to MF1, MF1 to MF2, MF2 to MF3 and MF3 to Swimmable
+  10 walking trails: Northfield through MF1-MF3, MF3 to Swimmable, MF3 through
+                     Mountain M1-M4, M4 to M5 and M4 to the Dwarven Cave
    1 directed river escape: Waterfall downstream into Swimmable
    1 alley connection
    2 doorway connections
@@ -110,6 +111,12 @@ walkable; every other edge is closed by dense vegetation. The Ogre arena is a
 2048 x 944 wide map that uses the existing horizontal camera-scroll contract;
 its planned boss anchor stays separate from the background art.
 
+The mountain route is made entirely of rough walking trails. M1-M3 climb north
+from MF3, while M4 forms the only three-way high junction: south to M3, west to
+M5 and east to the outdoor Dwarven Cave forecourt. M4 has no north opening. M5's
+visible westward continuation and the cave's descending interior entrance are
+recorded as art-only future connections, never live transitions.
+
 GROUND CONTACT RULE
 -------------------
 Movement collision and visual occlusion are separate systems.
@@ -141,6 +148,7 @@ Run after changing the registry or any Briarwell map:
   node avendor/tests/west-outskirts-contract.js
   node avendor/tests/northern-outskirts-contract.js
   node avendor/tests/misty-forest-river-contract.js
+  node avendor/tests/mountain-route-contract.js
   node avendor/tests/witchwood-maple-tree-contract.js
   node avendor/tests/town-center-footprints.js
   AVENDOR_SKIP_BROWSER=1 node avendor/tests/town-center-smoke.js
