@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "areaId": "briarwell-tannery-warehouses",
+  "version": "0.1.0",
+  "model": "ground-contact-footprints",
+  "walkable": [
+    {
+      "id": "west-road-basic",
+      "points": [[0,390],[260,390],[360,470],[380,610],[240,660],[0,660]]
+    },
+    {
+      "id": "central-yard-basic",
+      "points": [[220,620],[780,600],[940,520],[1120,520],[1120,760],[1010,820],[940,900],[820,980],[420,980],[320,900],[220,820]]
+    },
+    {
+      "id": "south-road-basic",
+      "points": [[380,880],[920,880],[850,1086],[420,1086]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "west-road",
+      "label": "West road to Town Center",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-town-center",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-road"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[6,450],[92,450],[92,640],[6,640]]
+    },
+    {
+      "id": "south-road",
+      "label": "Downhill road to the docks",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-docks",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-road"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[470,1018],[820,1018],[850,1080],[440,1080]]
+    }
+  ],
+  "spawnPoints": {
+    "default": { "x": 720, "y": 720, "facing": "north" },
+    "from-west": { "x": 120, "y": 460, "facing": "east" },
+    "from-south": { "x": 650, "y": 950, "facing": "north" },
+    "tannery-return": { "x": 720, "y": 680, "facing": "northwest" },
+    "warehouse-return": { "x": 1000, "y": 600, "facing": "north" }
+  },
+  "depthOccluders": []
+}
