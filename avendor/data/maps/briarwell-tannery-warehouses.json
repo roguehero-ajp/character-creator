@@ -2,14 +2,14 @@
   "schemaVersion": 2,
   "id": "briarwell-tannery-warehouses",
   "title": "Briarwell - Tannery and Warehouses",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "referenceSize": {
     "width": 1448,
     "height": 1086
   },
   "art": {
-    "background": "assets/maps/briarwell/tannery-warehouses/background/briarwell-tannery-warehouses-v1.png",
-    "alt": "Snow-dusted Briarwell tannery and warehouse yard with tanning vats, drying hides, warehouse loading doors, and roads toward Town Center and the docks"
+    "background": "assets/maps/briarwell/tannery-warehouses/background/briarwell-tannery-warehouses-v2.jpg",
+    "alt": "Snow-dusted Briarwell tannery and warehouse yard with a clear west road to Town Center, tanning vats and hides, warehouse loading doors, and the downhill docks road"
   },
   "movement": {
     "speedX": 275,
