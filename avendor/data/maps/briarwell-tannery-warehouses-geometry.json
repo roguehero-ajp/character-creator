@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "areaId": "briarwell-tannery-warehouses",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "model": "ground-contact-footprints",
   "walkable": [
     {
@@ -112,6 +112,11 @@
       "id": "occluder-sketch-13",
       "depthY": 827,
       "points": [[149,758],[151,772],[147,772],[139,769],[136,777],[143,788],[145,801],[149,809],[155,794],[192,827],[198,812],[165,788],[163,771]]
+    },
+    {
+      "id": "occluder-sketch-14",
+      "depthY": 547,
+      "points": [[1135,522],[1133,508],[1122,501],[1129,473],[1207,374],[1284,387],[1281,455],[1276,547]]
     }
   ]
 }
