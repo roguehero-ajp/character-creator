@@ -6,6 +6,18 @@
   if (!MapGeometry || MapGeometry.__navigationSidecarPatched) return;
 
   const originalLoad = MapGeometry.load.bind(MapGeometry);
+  const SPAWN_NUDGE_STEP = 12;
+  const SPAWN_NUDGE_LIMIT = 120;
+  const FACING_VECTORS = Object.freeze({
+    north: [0, -1],
+    northeast: [Math.SQRT1_2, -Math.SQRT1_2],
+    east: [1, 0],
+    southeast: [Math.SQRT1_2, Math.SQRT1_2],
+    south: [0, 1],
+    southwest: [-Math.SQRT1_2, Math.SQRT1_2],
+    west: [-1, 0],
+    northwest: [-Math.SQRT1_2, -Math.SQRT1_2]
+  });
 
   function clone(value) {
     return JSON.parse(JSON.stringify(value));
@@ -35,6 +47,41 @@
     return geometry;
   }
 
+  function isSafeSpawn(sceneMap, spawn) {
+    return Boolean(
+      spawn
+      && sceneMap.isWalkable(spawn.x, spawn.y)
+      && !sceneMap.getTriggerAt(spawn)
+    );
+  }
+
+  function repairTriggerOverlap(sceneMap, spawn) {
+    if (!spawn || !sceneMap.getTriggerAt(spawn)) return spawn;
+
+    const [dx, dy] = FACING_VECTORS[spawn.facing] || [0, 0];
+    if (!dx && !dy) return spawn;
+
+    for (let distance = SPAWN_NUDGE_STEP; distance <= SPAWN_NUDGE_LIMIT; distance += SPAWN_NUDGE_STEP) {
+      const candidate = {
+        ...spawn,
+        x: spawn.x + (dx * distance),
+        y: spawn.y + (dy * distance)
+      };
+      if (isSafeSpawn(sceneMap, candidate)) return candidate;
+    }
+
+    return spawn;
+  }
+
+  function repairSpawnPoints(sceneMap) {
+    const spawnPoints = sceneMap.data.spawnPoints || {};
+    const repaired = Object.fromEntries(Object.entries(spawnPoints).map(([id, spawn]) => (
+      [id, repairTriggerOverlap(sceneMap, spawn)]
+    )));
+    sceneMap.data.spawnPoints = repaired;
+    sceneMap.spawnPoints = repaired;
+  }
+
   function applyNavigationOverrides(sceneMap, geometry) {
     if (!geometry) return sceneMap;
 
@@ -58,6 +105,7 @@
       sceneMap.spawnPoints = sceneMap.data.spawnPoints;
     }
 
+    repairSpawnPoints(sceneMap);
     return sceneMap;
   }
 
