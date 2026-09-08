@@ -180,6 +180,14 @@
     });
   }
 
+  function getHeldTankPosition() {
+    if (!aim || tank.flying) return { x: tank.x, y: tank.y };
+    return {
+      x: aim.x,
+      y: Math.min(aim.y, GROUND - 40)
+    };
+  }
+
   function throwTank() {
     if (!aim || tank.flying || !running) return;
 
@@ -194,9 +202,10 @@
 
     const scale = Math.min(pull, MAX_PULL) / pull;
     const boost = steroidTimer > 0 ? 1.42 : 1;
+    const held = getHeldTankPosition();
 
-    tank.x = aim.x;
-    tank.y = aim.y;
+    tank.x = held.x;
+    tank.y = held.y;
     tank.vx = dx * scale * 4.05 * boost;
     tank.vy = dy * scale * 4.05 * boost;
     tank.angular = Math.min(9, 2 + pull / 55);
@@ -297,7 +306,8 @@
     if (aim && !tank.flying && running) {
       const shoulderX = 176;
       const shoulderY = GROUND - 172;
-      desiredArm = Math.atan2(aim.y - shoulderY, aim.x - shoulderX);
+      const held = getHeldTankPosition();
+      desiredArm = Math.atan2(held.y - shoulderY, held.x - shoulderX);
       desiredArm = Math.max(-2.55, Math.min(1.0, desiredArm));
       const pull = Math.min(MAX_PULL, Math.hypot(tank.x - aim.x, tank.y - aim.y));
       const ratio = pull / MAX_PULL;
@@ -677,6 +687,7 @@
     const boost = steroidTimer > 0 ? 1.42 : 1;
     const vx = (dx / len) * pull * 4.05 * boost;
     const vy = (dy / len) * pull * 4.05 * boost;
+    const held = getHeldTankPosition();
 
     ctx.save();
     ctx.setLineDash([11, 9]);
@@ -691,8 +702,8 @@
     ctx.fillStyle = 'rgba(255,255,255,.75)';
     for (let i = 1; i <= 18; i++) {
       const t = i * 0.09;
-      const x = tank.x + vx * t;
-      const y = tank.y + vy * t + 0.5 * GRAVITY * t * t;
+      const x = held.x + vx * t;
+      const y = held.y + vy * t + 0.5 * GRAVITY * t * t;
       if (y > GROUND) break;
       ctx.beginPath();
       ctx.arc(x, y, Math.max(2, 5 - i * 0.18), 0, Math.PI * 2);
@@ -717,7 +728,8 @@
     drawAim();
 
     if (aim && !tank.flying && running) {
-      drawTank({ ...tank, x: aim.x, y: aim.y, angle: -0.08 });
+      const held = getHeldTankPosition();
+      drawTank({ ...tank, x: held.x, y: held.y, angle: -0.08 });
     } else {
       drawTank();
     }
@@ -812,8 +824,6 @@
     } else {
       aim = p;
     }
-
-    aim.y = Math.min(aim.y, GROUND - 58);
   });
 
   canvas.addEventListener('pointerup', () => throwTank());
