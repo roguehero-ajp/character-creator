@@ -55,6 +55,9 @@ button { font: inherit; }
 .hud strong { display: block; margin-top: 2px; font-size: clamp(18px, 3vw, 28px); letter-spacing: .04em; }
 #health { color: var(--danger); white-space: nowrap; }
 .combo-wrap { margin-left: auto; text-align: right; }
+.mission-hud { min-width: 150px; text-align: center; }
+.hud-subline { display: block; margin-top: 2px; color: var(--muted); font: 800 9px/1.2 system-ui, sans-serif; letter-spacing: .08em; white-space: nowrap; }
+.hud-subline b { color: var(--accent); }
 
 .controls {
   position: absolute;
@@ -115,6 +118,17 @@ h1 { margin-bottom: 0; font-size: clamp(48px, 10vw, 88px); line-height: .82; let
 .primary { margin-top: 10px; padding: 15px 24px; border-radius: 12px; font-size: clamp(20px, 5vw, 30px); letter-spacing: .035em; }
 .final-score { font: 800 24px system-ui, sans-serif; }
 
+.results-card { width: min(670px, 94vw); }
+.results-card h2 { margin-bottom: 8px; color: var(--accent); font-size: clamp(36px, 7vw, 64px); }
+.result-stars { margin: 4px 0 18px; color: var(--accent); font-size: clamp(34px, 8vw, 54px); letter-spacing: .08em; text-shadow: 0 4px 18px rgba(255,207,51,.18); }
+.results-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0 auto 16px; font-family: system-ui, sans-serif; }
+.results-grid > div { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: rgba(255,255,255,.045); }
+.results-grid span { display: block; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+.results-grid strong { display: block; margin-top: 3px; font-size: 20px; }
+.result-wide { grid-column: 1 / -1; }
+.next-mission { margin: 0 0 6px; color: var(--muted); font: 700 13px/1.35 system-ui, sans-serif; }
+.next-mission strong { color: var(--text); }
+
 .toast {
   position: absolute;
   z-index: 7;
@@ -136,9 +150,12 @@ h1 { margin-bottom: 0; font-size: clamp(48px, 10vw, 88px); line-height: .82; let
 @media (max-width: 680px) {
   .hud { gap: 5px; }
   .hud-block { min-width: 0; padding: 6px 8px; }
+  .mission-hud { min-width: 112px; }
+  .hud-subline { font-size: 8px; letter-spacing: .04em; }
   .power-button { min-width: 136px; padding: 8px 10px; }
   .power-name { font-size: 15px; }
   .card { border-radius: 18px; }
+  .results-grid > div { padding: 7px 9px; }
 }
 
 @media (orientation: portrait) {
