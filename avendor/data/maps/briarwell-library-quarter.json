@@ -2,14 +2,14 @@
   "schemaVersion": 2,
   "id": "briarwell-library-quarter",
   "title": "Briarwell - Library Quarter",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "referenceSize": {
     "width": 1448,
     "height": 1086
   },
   "art": {
-    "background": "assets/maps/briarwell/library-quarter/background/briarwell-library-quarter-v1.png",
-    "alt": "Snowy Briarwell Library Quarter with a civic library, houses, public roads and a cliffside alley"
+    "background": "assets/maps/briarwell/library-quarter/background/briarwell-library-quarter-v2.png",
+    "alt": "Snowy Briarwell Library Quarter with a civic library, houses, public roads and an uphill road toward Ms. Blight's orphanage"
   },
   "movement": {
     "speedX": 275,
