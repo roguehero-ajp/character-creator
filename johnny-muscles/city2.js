@@ -34,12 +34,25 @@
   const CAMERA_FOLLOW_SCREEN_X = W * 0.58;
   const CAMERA_EASE = 10.5;
 
-  const BUILDINGS = [
-    { x: 520, w: 215, top: 430, label: 'PARKING' },
-    { x: 805, w: 220, top: 350, label: 'OFFICES' },
-    { x: 1095, w: 205, top: 402, label: 'HOTEL' },
-    { x: 1375, w: 235, top: 318, label: 'TOWER' }
+  // Wider gaps than 0.6.0, plus persistent durability/collapse state.
+  const BUILDING_BLUEPRINTS = [
+    { x: 520,  w: 190, top: 430, label: 'PARKING', maxHp: 4 },
+    { x: 835,  w: 195, top: 350, label: 'OFFICES', maxHp: 5 },
+    { x: 1165, w: 185, top: 402, label: 'HOTEL',   maxHp: 4 },
+    { x: 1510, w: 210, top: 318, label: 'TOWER',   maxHp: 6 }
   ];
+
+  const BUILDINGS = BUILDING_BLUEPRINTS.map((b, index) => ({
+    ...b,
+    index,
+    hp: b.maxHp,
+    damageFlash: 0,
+    collapsing: false,
+    collapsed: false,
+    collapseTime: 0,
+    collapseAngle: 0,
+    collapseDir: index % 2 === 0 ? 1 : -1
+  }));
 
   const LEVEL = {
     waves: [
@@ -94,18 +107,30 @@
     flying: false,
     resetTimer: 0,
     hitIds: new Set(),
+    hitBuildingIds: new Set(),
     bounced: false
   };
 
   const johnny = {
     armAngle: -0.75,
-    targetArmAngle: -0.75,
     releaseTimer: 0,
     torsoLean: 0,
-    targetTorsoLean: 0,
-    squat: 0,
-    targetSquat: 0
+    squat: 0
   };
+
+  function resetBuildings() {
+    BUILDINGS.forEach((b, i) => {
+      Object.assign(b, {
+        hp: b.maxHp,
+        damageFlash: 0,
+        collapsing: false,
+        collapsed: false,
+        collapseTime: 0,
+        collapseAngle: 0,
+        collapseDir: i % 2 === 0 ? 1 : -1
+      });
+    });
+  }
 
   function resetTank() {
     Object.assign(tank, {
@@ -120,6 +145,7 @@
       bounced: false
     });
     tank.hitIds.clear();
+    tank.hitBuildingIds.clear();
     aim = null;
     johnny.releaseTimer = 0;
   }
@@ -151,15 +177,8 @@
     waveSpawnTimer = 0;
     intermissionTimer = 1.15;
     waveClearAnnounced = false;
-    Object.assign(johnny, {
-      armAngle: -0.75,
-      targetArmAngle: -0.75,
-      releaseTimer: 0,
-      torsoLean: 0,
-      targetTorsoLean: 0,
-      squat: 0,
-      targetSquat: 0
-    });
+    Object.assign(johnny, { armAngle: -0.75, releaseTimer: 0, torsoLean: 0, squat: 0 });
+    resetBuildings();
     resetTank();
     updateHud();
     steroidButton.disabled = false;
@@ -200,7 +219,8 @@
         throw: [90, 52, 0.12, 'sawtooth'], impact: [72, 38, 0.09, 'square'],
         cat: [430, 240, 0.08, 'triangle'], power: [160, 420, 0.25, 'sawtooth'],
         hurt: [120, 70, 0.22, 'square'], wave: [260, 410, 0.18, 'square'],
-        win: [330, 660, 0.42, 'triangle'], jump: [380, 520, 0.08, 'triangle']
+        win: [330, 660, 0.42, 'triangle'], jump: [380, 520, 0.08, 'triangle'],
+        collapse: [105, 42, 0.48, 'sawtooth']
       }[type] || [120, 80, 0.1, 'sine'];
       osc.type = settings[3];
       osc.frequency.setValueAtTime(settings[0], now);
@@ -219,6 +239,20 @@
       [items[i], items[j]] = [items[j], items[i]];
     }
     return items;
+  }
+
+  function rightmostIntactBuildingIndex() {
+    for (let i = BUILDINGS.length - 1; i >= 0; i--) {
+      if (!BUILDINGS[i].collapsed && !BUILDINGS[i].collapsing) return i;
+    }
+    return -1;
+  }
+
+  function nextIntactBuildingIndex(fromIndex) {
+    for (let i = fromIndex - 1; i >= 0; i--) {
+      if (!BUILDINGS[i].collapsed && !BUILDINGS[i].collapsing) return i;
+    }
+    return -1;
   }
 
   function startNextWave() {
@@ -241,26 +275,18 @@
     const scale = chonker ? 1.5 : 0.9 + Math.random() * 0.22;
     return {
       id: `${performance.now()}-${Math.random()}`,
-      x: 0,
-      y: 0,
-      scale,
+      x: 0, y: 0, scale,
       hp: chonker ? 2 : 1,
       maxHp: chonker ? 2 : 1,
-      chonker,
-      dead: false,
-      resolved: false,
+      chonker, dead: false, resolved: false,
       bob: Math.random() * Math.PI * 2,
-      mode: 'ground',
-      speed: chonker ? 39 : 58 + Math.random() * 20,
-      staticTimer: 0,
-      buildingIndex: -1,
-      jumpTimer: 0,
-      jumpDuration: 0.58,
-      jumpStartX: 0,
-      jumpStartY: 0,
-      jumpEndX: 0,
-      jumpEndY: 0,
-      crouch: 0
+      mode: 'ground', speed: chonker ? 39 : 58 + Math.random() * 20,
+      staticTimer: 0, buildingIndex: -1,
+      jumpTargetIndex: -1,
+      jumpTimer: 0, jumpDuration: 0.58,
+      jumpStartX: 0, jumpStartY: 0,
+      jumpEndX: 0, jumpEndY: 0,
+      crouch: 0, fallVx: 0, fallVy: 0
     };
   }
 
@@ -270,17 +296,24 @@
     const cat = makeCatBase(chonker);
 
     if (kind === 'rooftop') {
-      cat.mode = 'roof';
-      cat.buildingIndex = BUILDINGS.length - 1;
-      const b = BUILDINGS[cat.buildingIndex];
-      cat.x = b.x + b.w - 42 - Math.random() * 75;
-      cat.y = b.top - 22 * cat.scale;
-      const moving = Math.random() < spec.movingFraction;
-      cat.staticTimer = moving ? 0 : 5.0 + Math.random() * 1.5;
-      cat.speed *= 0.72;
+      const startIndex = rightmostIntactBuildingIndex();
+      if (startIndex >= 0) {
+        cat.mode = 'roof';
+        cat.buildingIndex = startIndex;
+        const b = BUILDINGS[startIndex];
+        cat.x = b.x + b.w - 42 - Math.random() * Math.min(75, b.w - 70);
+        cat.y = b.top - 22 * cat.scale;
+        const moving = Math.random() < spec.movingFraction;
+        cat.staticTimer = moving ? 0 : 5.0 + Math.random() * 1.5;
+        cat.speed *= 0.72;
+      } else {
+        cat.mode = 'ground';
+        cat.x = 1760 + Math.random() * 140;
+        cat.y = GROUND - 29 * cat.scale;
+      }
     } else {
       cat.mode = 'ground';
-      cat.x = 1320 + Math.random() * 140;
+      cat.x = 1760 + Math.random() * 140;
       cat.y = GROUND - 29 * cat.scale;
     }
 
@@ -302,6 +335,14 @@
     return cats.reduce((n, cat) => n + (!cat.dead ? 1 : 0), 0);
   }
 
+  function dropCatFromBuilding(cat, b) {
+    cat.mode = 'fall';
+    cat.crouch = 0;
+    cat.staticTimer = 0;
+    cat.fallVx = b.collapseDir * (45 + Math.random() * 45);
+    cat.fallVy = -35 - Math.random() * 55;
+  }
+
   function beginJump(cat) {
     if (cat.chonker) {
       cat.mode = 'descent';
@@ -310,15 +351,24 @@
       addImpact(cat.x, cat.y + 12, true);
       return;
     }
-    const nextIndex = cat.buildingIndex - 1;
+
+    const nextIndex = nextIntactBuildingIndex(cat.buildingIndex);
+    if (nextIndex < 0) {
+      cat.mode = 'descent';
+      cat.crouch = 0;
+      return;
+    }
+
     const next = BUILDINGS[nextIndex];
+    const gap = Math.max(1, cat.x - (next.x + next.w - 34));
     cat.mode = 'jump';
     cat.jumpTimer = 0;
+    cat.jumpTargetIndex = nextIndex;
     cat.jumpStartX = cat.x;
     cat.jumpStartY = cat.y;
     cat.jumpEndX = next.x + next.w - 34;
     cat.jumpEndY = next.top - 22 * cat.scale;
-    cat.jumpDuration = 0.52 + Math.random() * 0.12;
+    cat.jumpDuration = Math.min(0.92, 0.50 + gap / 620);
     cat.crouch = 0;
     beep('jump');
   }
@@ -331,36 +381,54 @@
       cat.x -= cat.speed * dt;
       cat.y = GROUND - 29 * cat.scale;
     } else if (cat.mode === 'roof') {
-      if (cat.staticTimer > 0) {
-        cat.staticTimer -= dt;
-        return;
-      }
       const b = BUILDINGS[cat.buildingIndex];
-      cat.x -= cat.speed * dt;
-      cat.y = b.top - 22 * cat.scale;
-      if (cat.x <= b.x + 28) {
-        cat.x = b.x + 28;
-        if (cat.buildingIndex > 0) {
-          cat.mode = 'windup';
-          cat.jumpTimer = 0.36;
-        } else {
-          cat.mode = 'descent';
+      if (!b || b.collapsed || b.collapsing) {
+        if (b) dropCatFromBuilding(cat, b);
+        else cat.mode = 'descent';
+      } else if (cat.staticTimer > 0) {
+        cat.staticTimer -= dt;
+      } else {
+        cat.x -= cat.speed * dt;
+        cat.y = b.top - 22 * cat.scale;
+        if (cat.x <= b.x + 28) {
+          cat.x = b.x + 28;
+          if (nextIntactBuildingIndex(cat.buildingIndex) >= 0) {
+            cat.mode = 'windup';
+            cat.jumpTimer = 0.42;
+          } else {
+            cat.mode = 'descent';
+          }
         }
       }
     } else if (cat.mode === 'windup') {
-      cat.jumpTimer -= dt;
-      cat.crouch = Math.max(0, Math.min(1, 1 - cat.jumpTimer / 0.36));
-      if (cat.jumpTimer <= 0) beginJump(cat);
+      const b = BUILDINGS[cat.buildingIndex];
+      if (!b || b.collapsed || b.collapsing) {
+        if (b) dropCatFromBuilding(cat, b);
+        else cat.mode = 'descent';
+      } else {
+        cat.jumpTimer -= dt;
+        cat.crouch = Math.max(0, Math.min(1, 1 - cat.jumpTimer / 0.42));
+        if (cat.jumpTimer <= 0) beginJump(cat);
+      }
     } else if (cat.mode === 'jump') {
       cat.jumpTimer += dt;
       const t = Math.min(1, cat.jumpTimer / cat.jumpDuration);
       const eased = t * t * (3 - 2 * t);
+      const gap = Math.abs(cat.jumpEndX - cat.jumpStartX);
+      const arc = Math.min(165, 88 + gap * 0.18);
       cat.x = cat.jumpStartX + (cat.jumpEndX - cat.jumpStartX) * eased;
-      cat.y = cat.jumpStartY + (cat.jumpEndY - cat.jumpStartY) * eased - Math.sin(Math.PI * t) * 92;
+      cat.y = cat.jumpStartY + (cat.jumpEndY - cat.jumpStartY) * eased - Math.sin(Math.PI * t) * arc;
       if (t >= 1) {
-        cat.buildingIndex -= 1;
-        cat.mode = 'roof';
-        cat.staticTimer = 0;
+        const target = BUILDINGS[cat.jumpTargetIndex];
+        if (!target || target.collapsed || target.collapsing) {
+          cat.mode = 'fall';
+          cat.fallVx = -35;
+          cat.fallVy = 25;
+        } else {
+          cat.buildingIndex = cat.jumpTargetIndex;
+          cat.mode = 'roof';
+          cat.staticTimer = 0;
+        }
       }
     } else if (cat.mode === 'descent') {
       cat.x -= 28 * dt;
@@ -369,6 +437,15 @@
         cat.y = GROUND - 29 * cat.scale;
         cat.mode = 'ground';
         cat.speed *= 1.05;
+      }
+    } else if (cat.mode === 'fall') {
+      cat.fallVy += GRAVITY * 0.72 * dt;
+      cat.x += cat.fallVx * dt;
+      cat.y += cat.fallVy * dt;
+      if (cat.y >= GROUND - 29 * cat.scale) {
+        cat.y = GROUND - 29 * cat.scale;
+        cat.mode = 'ground';
+        cat.speed *= 1.08;
       }
     }
 
@@ -470,6 +547,7 @@
     tank.angular = Math.min(9, 2 + pull / 55);
     tank.flying = true;
     tank.hitIds.clear();
+    tank.hitBuildingIds.clear();
     aim = null;
     johnny.releaseTimer = 0.28;
     johnny.armAngle = 0.35;
@@ -488,13 +566,21 @@
     }
   }
 
-  function addImpact(x, y, strong = false) {
+  function addImpact(x, y, strong = false, rubble = false) {
     const count = strong ? 22 : 11;
     for (let i = 0; i < count; i++) {
       const a = Math.random() * Math.PI * 2;
       const s = 70 + Math.random() * (strong ? 300 : 150);
-      particles.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 80,
-        life: 0.35 + Math.random() * 0.5, max: 0.85, size: 3 + Math.random() * 9, dust: false });
+      particles.push({
+        x, y,
+        vx: Math.cos(a) * s,
+        vy: Math.sin(a) * s - 80,
+        life: 0.35 + Math.random() * 0.5,
+        max: 0.85,
+        size: 3 + Math.random() * 9,
+        dust: false,
+        rubble
+      });
     }
     shake = Math.max(shake, strong ? 15 : 7);
   }
@@ -519,6 +605,56 @@
     updateHud();
   }
 
+  function collapseBuilding(b) {
+    if (b.collapsing || b.collapsed) return;
+    b.collapsing = true;
+    b.collapseTime = 0;
+    score += 300;
+    floaters.push({ x: b.x + b.w / 2, y: b.top - 28, text: 'STRUCTURE DOWN +300', life: 1.1 });
+    showToast('BUILDING DOWN!', 900);
+    beep('collapse');
+    shake = Math.max(shake, 18);
+
+    for (const cat of cats) {
+      if (cat.dead) continue;
+      if ((cat.mode === 'roof' || cat.mode === 'windup') && cat.buildingIndex === b.index) {
+        dropCatFromBuilding(cat, b);
+      }
+    }
+  }
+
+  function damageBuilding(b, impactSpeed, hitX, hitY) {
+    if (b.collapsing || b.collapsed || tank.hitBuildingIds.has(b.index)) return;
+    tank.hitBuildingIds.add(b.index);
+
+    let damage = impactSpeed > 700 ? 2 : 1;
+    if (steroidTimer > 0 && impactSpeed > 520) damage += 1;
+    b.hp = Math.max(0, b.hp - damage);
+    b.damageFlash = 0.18;
+    addImpact(hitX, hitY, damage >= 2, true);
+    floaters.push({ x: hitX, y: hitY - 24, text: `BUILDING -${damage}`, life: 0.72 });
+
+    if (b.hp <= 0) collapseBuilding(b);
+    else if (b.hp <= Math.ceil(b.maxHp / 2)) showToast(`${b.label}: STRUCTURAL DAMAGE`, 720);
+  }
+
+  function updateBuildings(dt) {
+    for (const b of BUILDINGS) {
+      if (b.damageFlash > 0) b.damageFlash = Math.max(0, b.damageFlash - dt);
+      if (!b.collapsing) continue;
+      b.collapseTime += dt;
+      const t = Math.min(1, b.collapseTime / 0.95);
+      const eased = t * t * (3 - 2 * t);
+      b.collapseAngle = b.collapseDir * eased * (Math.PI / 2.15);
+      if (t >= 1) {
+        b.collapsing = false;
+        b.collapsed = true;
+        b.collapseAngle = b.collapseDir * Math.PI / 2.15;
+        addImpact(b.x + b.w / 2, GROUND - 16, true, true);
+      }
+    }
+  }
+
   function updateTank(dt) {
     if (!tank.flying) return;
     const prevX = tank.x;
@@ -529,24 +665,28 @@
     tank.angle += tank.angular * dt;
 
     for (const b of BUILDINGS) {
+      if (b.collapsing || b.collapsed) continue;
       const roofY = b.top - 20;
+      const impactSpeed = Math.hypot(tank.vx, tank.vy);
+
       if (tank.vy > 0 && prevY < roofY && tank.y >= roofY && tank.x > b.x - 38 && tank.x < b.x + b.w + 38) {
         tank.y = roofY;
+        damageBuilding(b, impactSpeed, tank.x, tank.y + 20);
         tank.vy *= -0.38;
         tank.vx *= 0.84;
         tank.angular *= 0.72;
         tank.bounced = true;
-        addImpact(tank.x, tank.y + 20, false);
         beep('impact');
       }
+
       if (Math.abs(tank.vx) > 80 && tank.y > b.top + 8 && tank.y < GROUND - 20) {
         const leftHit = prevX < b.x - 28 && tank.x >= b.x - 28;
         const rightHit = prevX > b.x + b.w + 28 && tank.x <= b.x + b.w + 28;
         if (leftHit || rightHit) {
           tank.x = leftHit ? b.x - 30 : b.x + b.w + 30;
+          damageBuilding(b, impactSpeed, tank.x, tank.y);
           tank.vx *= -0.46;
           tank.angular *= -0.7;
-          addImpact(tank.x, tank.y, false);
           beep('impact');
         }
       }
@@ -648,6 +788,7 @@
       if (comboTimer <= 0 && combo !== 1) { combo = 1; updateHud(); }
     }
     updateMission(dt);
+    updateBuildings(dt);
     for (const cat of cats) updateCat(cat, dt);
     updateTank(dt);
     for (const p of particles) { p.life -= dt; p.vy += 420 * dt; p.x += p.vx * dt; p.y += p.vy * dt; }
@@ -692,31 +833,81 @@
     ctx.fillRect(0, GROUND, W, 7);
   }
 
+  function drawBuildingBody(b) {
+    const h = GROUND - b.top;
+    ctx.fillStyle = b.damageFlash > 0 ? '#56434a' : '#262b35';
+    ctx.fillRect(-b.w / 2, -h, b.w, h);
+    ctx.fillStyle = '#3b4250';
+    ctx.fillRect(-b.w / 2 - 6, -h - 12, b.w + 12, 14);
+
+    ctx.fillStyle = 'rgba(255,211,111,.18)';
+    for (let wx = -b.w / 2 + 22; wx < b.w / 2 - 12; wx += 42) {
+      for (let wy = -h + 35; wy < -25; wy += 50) {
+        if (pseudoRandom(Math.floor(wx + wy), b.x) > 0.34) ctx.fillRect(wx, wy, 15, 20);
+      }
+    }
+
+    ctx.fillStyle = 'rgba(255,255,255,.55)';
+    ctx.font = '900 10px system-ui, sans-serif';
+    ctx.fillText(b.label, -b.w / 2 + 12, -h + 22);
+
+    const lost = b.maxHp - b.hp;
+    if (lost > 0 && !b.collapsed) {
+      ctx.strokeStyle = 'rgba(10,10,14,.85)';
+      ctx.lineWidth = 3;
+      for (let i = 0; i < lost + 1; i++) {
+        const sx = -b.w / 2 + 35 + (i * 53) % Math.max(60, b.w - 70);
+        const sy = -h + 45 + (i * 41) % Math.max(70, h - 90);
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.lineTo(sx + 18, sy + 25);
+        ctx.lineTo(sx + 5, sy + 48);
+        ctx.lineTo(sx + 27, sy + 69);
+        ctx.stroke();
+      }
+    }
+
+    if (!b.collapsed) {
+      const barW = Math.min(110, b.w - 36);
+      ctx.fillStyle = 'rgba(0,0,0,.55)';
+      ctx.fillRect(-barW / 2, -h - 31, barW, 6);
+      ctx.fillStyle = b.hp > b.maxHp / 2 ? '#ffd85a' : '#ff6d5f';
+      ctx.fillRect(-barW / 2, -h - 31, barW * (b.hp / b.maxHp), 6);
+    }
+  }
+
   function drawBuildings() {
     for (const b of BUILDINGS) {
-      const h = GROUND - b.top;
-      ctx.fillStyle = '#262b35';
-      ctx.fillRect(b.x, b.top, b.w, h);
-      ctx.fillStyle = '#3b4250';
-      ctx.fillRect(b.x - 6, b.top - 12, b.w + 12, 14);
-      ctx.fillStyle = 'rgba(255,211,111,.18)';
-      for (let wx = b.x + 22; wx < b.x + b.w - 12; wx += 42) {
-        for (let wy = b.top + 35; wy < GROUND - 25; wy += 50) {
-          if (pseudoRandom(Math.floor(wx + wy), b.x) > 0.34) ctx.fillRect(wx, wy, 15, 20);
+      if (b.collapsed) {
+        ctx.save();
+        const rubbleWidth = Math.min(b.w * 1.3, 280);
+        ctx.translate(b.x + b.w / 2 + b.collapseDir * b.w * 0.32, GROUND - 9);
+        ctx.rotate(b.collapseDir * 0.08);
+        ctx.fillStyle = '#30343d';
+        ctx.fillRect(-rubbleWidth / 2, -26, rubbleWidth, 26);
+        ctx.fillStyle = '#484e5a';
+        for (let i = 0; i < 8; i++) {
+          const rx = -rubbleWidth / 2 + 12 + i * (rubbleWidth - 24) / 7;
+          ctx.fillRect(rx, -34 - (i % 3) * 8, 24, 18);
         }
+        ctx.restore();
+        continue;
       }
-      ctx.fillStyle = 'rgba(255,255,255,.55)';
-      ctx.font = '900 10px system-ui, sans-serif';
-      ctx.fillText(b.label, b.x + 12, b.top + 22);
+
+      ctx.save();
+      const pivotX = b.x + b.w / 2;
+      ctx.translate(pivotX, GROUND);
+      ctx.rotate(b.collapseAngle);
+      drawBuildingBody(b);
+
       if (b === BUILDINGS[0]) {
+        const h = GROUND - b.top;
         ctx.strokeStyle = '#606874';
         ctx.lineWidth = 5;
-        for (let y = b.top + 38; y < GROUND - 25; y += 34) {
-          ctx.beginPath(); ctx.moveTo(b.x + 8, y); ctx.lineTo(b.x + 42, y); ctx.stroke();
-        }
-        ctx.beginPath(); ctx.moveTo(b.x + 9, b.top + 28); ctx.lineTo(b.x + 9, GROUND); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(b.x + 42, b.top + 28); ctx.lineTo(b.x + 42, GROUND); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(-b.w / 2 + 9, -h + 28); ctx.lineTo(-b.w / 2 + 9, 0); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(-b.w / 2 + 42, -h + 28); ctx.lineTo(-b.w / 2 + 42, 0); ctx.stroke();
       }
+      ctx.restore();
     }
   }
 
@@ -757,8 +948,10 @@
     ctx.fillStyle = '#1c231d'; ctx.fillRect(-49, 12, 98, 22);
     ctx.fillStyle = '#59664b'; ctx.fillRect(-41, -11, 82, 30);
     ctx.beginPath(); ctx.arc(4, -11, 22, Math.PI, 0); ctx.fill(); ctx.fillRect(12, -18, 71, 8);
-    ctx.fillStyle = '#111'; for (let x = -38; x <= 38; x += 19) { ctx.beginPath(); ctx.arc(x, 24, 9, 0, Math.PI * 2); ctx.fill(); }
-    ctx.fillStyle = '#c8d39e'; ctx.font = '900 10px system-ui, sans-serif'; ctx.fillText('THROW ME', -31, 7); ctx.restore();
+    ctx.fillStyle = '#111';
+    for (let x = -38; x <= 38; x += 19) { ctx.beginPath(); ctx.arc(x, 24, 9, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = '#c8d39e'; ctx.font = '900 10px system-ui, sans-serif'; ctx.fillText('THROW ME', -31, 7);
+    ctx.restore();
   }
 
   function drawCat(cat) {
@@ -815,14 +1008,31 @@
     drawBuildings();
     drawJohnny();
     drawAim();
-    if (aim && !tank.flying && running) { const held = getHeldTankPosition(); drawTank({ ...tank, x: held.x, y: held.y, angle: -0.08 }); } else drawTank();
+    if (aim && !tank.flying && running) {
+      const held = getHeldTankPosition();
+      drawTank({ ...tank, x: held.x, y: held.y, angle: -0.08 });
+    } else drawTank();
     for (const cat of cats) drawCat(cat);
-    for (const p of particles) { ctx.globalAlpha = Math.max(0, p.life / p.max); ctx.fillStyle = p.dust ? '#c8b28a' : '#ffd85a'; ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size); }
+    for (const p of particles) {
+      ctx.globalAlpha = Math.max(0, p.life / p.max);
+      ctx.fillStyle = p.rubble ? '#8e8679' : p.dust ? '#c8b28a' : '#ffd85a';
+      ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+    }
     ctx.globalAlpha = 1;
-    for (const f of floaters) { ctx.globalAlpha = Math.max(0, f.life / 0.9); ctx.fillStyle = '#fff4a5'; ctx.font = '900 24px Impact, system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(f.text, f.x, f.y); }
+    for (const f of floaters) {
+      ctx.globalAlpha = Math.max(0, Math.min(1, f.life / 0.9));
+      ctx.fillStyle = '#fff4a5';
+      ctx.font = '900 24px Impact, system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(f.text, f.x, f.y);
+    }
     ctx.globalAlpha = 1; ctx.textAlign = 'left';
     ctx.restore();
-    if (steroidTimer > 0 && running) { ctx.fillStyle = 'rgba(168,255,88,.10)'; ctx.fillRect(0, 0, W, H); ctx.fillStyle = '#caff8f'; ctx.font = '900 18px system-ui, sans-serif'; ctx.fillText(`STEROIDS: ${steroidTimer.toFixed(1)}s`, 24, H - 24); }
+    if (steroidTimer > 0 && running) {
+      ctx.fillStyle = 'rgba(168,255,88,.10)'; ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = '#caff8f'; ctx.font = '900 18px system-ui, sans-serif';
+      ctx.fillText(`STEROIDS: ${steroidTimer.toFixed(1)}s`, 24, H - 24);
+    }
     ctx.restore();
   }
 
@@ -839,16 +1049,25 @@
     const canvasAspect = W / H;
     const rectAspect = rect.width / rect.height;
     let drawW, drawH, offsetX, offsetY;
-    if (rectAspect > canvasAspect) { drawH = rect.height; drawW = drawH * canvasAspect; offsetX = (rect.width - drawW) / 2; offsetY = 0; }
-    else { drawW = rect.width; drawH = drawW / canvasAspect; offsetX = 0; offsetY = (rect.height - drawH) / 2; }
-    return { x: ((e.clientX - rect.left - offsetX) * W / drawW) + cameraX, y: ((e.clientY - rect.top - offsetY) * H / drawH) };
+    if (rectAspect > canvasAspect) {
+      drawH = rect.height; drawW = drawH * canvasAspect; offsetX = (rect.width - drawW) / 2; offsetY = 0;
+    } else {
+      drawW = rect.width; drawH = drawW / canvasAspect; offsetX = 0; offsetY = (rect.height - drawH) / 2;
+    }
+    return {
+      x: ((e.clientX - rect.left - offsetX) * W / drawW) + cameraX,
+      y: ((e.clientY - rect.top - offsetY) * H / drawH)
+    };
   }
 
   canvas.addEventListener('pointerdown', e => {
     if (!running || tank.flying || gameOver || missionComplete) return;
     e.preventDefault();
     const p = pointerToWorld(e);
-    if (Math.hypot(p.x - tank.x, p.y - tank.y) < 105) { aim = p; canvas.setPointerCapture?.(e.pointerId); }
+    if (Math.hypot(p.x - tank.x, p.y - tank.y) < 105) {
+      aim = p;
+      canvas.setPointerCapture?.(e.pointerId);
+    }
   }, { passive: false });
 
   canvas.addEventListener('pointermove', e => {
@@ -858,7 +1077,9 @@
     const dx = p.x - tank.x;
     const dy = p.y - tank.y;
     const len = Math.hypot(dx, dy);
-    aim = len > MAX_PULL ? { x: tank.x + (dx / len) * MAX_PULL, y: tank.y + (dy / len) * MAX_PULL } : p;
+    aim = len > MAX_PULL
+      ? { x: tank.x + (dx / len) * MAX_PULL, y: tank.y + (dy / len) * MAX_PULL }
+      : p;
   }, { passive: false });
 
   canvas.addEventListener('pointerup', e => { e.preventDefault(); throwTank(); }, { passive: false });
@@ -875,10 +1096,25 @@
     shake = 10;
   });
 
-  muteButton.addEventListener('click', () => { muted = !muted; muteButton.textContent = muted ? '🔇' : '🔊'; });
-  document.getElementById('start').addEventListener('click', () => { titleScreen.classList.remove('visible'); resetGame(); beep('power'); });
-  document.getElementById('restart').addEventListener('click', () => { gameOverScreen.classList.remove('visible'); resetGame(); });
-  document.getElementById('replay').addEventListener('click', () => { missionCompleteScreen.classList.remove('visible'); resetGame(); });
+  muteButton.addEventListener('click', () => {
+    muted = !muted;
+    muteButton.textContent = muted ? '🔇' : '🔊';
+  });
+
+  document.getElementById('start').addEventListener('click', () => {
+    titleScreen.classList.remove('visible');
+    resetGame();
+    beep('power');
+  });
+  document.getElementById('restart').addEventListener('click', () => {
+    gameOverScreen.classList.remove('visible');
+    resetGame();
+  });
+  document.getElementById('replay').addEventListener('click', () => {
+    missionCompleteScreen.classList.remove('visible');
+    resetGame();
+  });
+
   window.addEventListener('keydown', e => {
     if (e.code === 'Space' && titleScreen.classList.contains('visible')) document.getElementById('start').click();
     if (e.code === 'KeyS') steroidButton.click();
