@@ -21,7 +21,6 @@
   const DEFENSE_X = 86;
   const TANK_HOME = { x: 250, y: GROUND - 46 };
 
-  // Camera / aiming pass 0.2
   const MAX_PULL = 360;
   const AIM_CAMERA_BACK = 160;
   const CAMERA_FOLLOW_SCREEN_X = W * 0.58;
@@ -62,6 +61,16 @@
     bounced: false
   };
 
+  const johnny = {
+    armAngle: -0.75,
+    targetArmAngle: -0.75,
+    releaseTimer: 0,
+    torsoLean: 0,
+    targetTorsoLean: 0,
+    squat: 0,
+    targetSquat: 0
+  };
+
   function resetGame() {
     score = 0;
     health = 5;
@@ -77,6 +86,15 @@
     gameOver = false;
     running = true;
     cameraX = 0;
+    Object.assign(johnny, {
+      armAngle: -0.75,
+      targetArmAngle: -0.75,
+      releaseTimer: 0,
+      torsoLean: 0,
+      targetTorsoLean: 0,
+      squat: 0,
+      targetSquat: 0
+    });
     resetTank();
     updateHud();
     steroidButton.disabled = false;
@@ -97,14 +115,12 @@
     });
     tank.hitIds.clear();
     aim = null;
+    johnny.releaseTimer = 0;
   }
 
   function updateHud() {
     scoreEl.textContent = String(score).padStart(6, '0');
-    healthEl.textContent = Array.from(
-      { length: 5 },
-      (_, i) => (i < health ? '♥' : '♡')
-    ).join(' ');
+    healthEl.textContent = Array.from({ length: 5 }, (_, i) => (i < health ? '♥' : '♡')).join(' ');
     comboEl.textContent = `x${combo}`;
   }
 
@@ -155,15 +171,21 @@
       x: W + 60,
       y: GROUND - 29 * scale,
       scale,
-      speed:
-        (chonker ? 36 : 54 + Math.random() * 26) +
-        Math.min(elapsed * 0.3, 40),
+      speed: (chonker ? 36 : 54 + Math.random() * 26) + Math.min(elapsed * 0.3, 40),
       hp,
       maxHp: hp,
       chonker,
       bob: Math.random() * Math.PI * 2,
       dead: false
     });
+  }
+
+  function getHeldTankPosition() {
+    if (!aim || tank.flying) return { x: tank.x, y: tank.y };
+    return {
+      x: aim.x,
+      y: Math.min(aim.y, GROUND - 40)
+    };
   }
 
   function throwTank() {
@@ -180,7 +202,10 @@
 
     const scale = Math.min(pull, MAX_PULL) / pull;
     const boost = steroidTimer > 0 ? 1.42 : 1;
+    const held = getHeldTankPosition();
 
+    tank.x = held.x;
+    tank.y = held.y;
     tank.vx = dx * scale * 4.05 * boost;
     tank.vy = dy * scale * 4.05 * boost;
     tank.angular = Math.min(9, 2 + pull / 55);
@@ -188,8 +213,29 @@
     tank.hitIds.clear();
     aim = null;
 
+    johnny.releaseTimer = 0.28;
+    johnny.armAngle = 0.35;
+    johnny.torsoLean = 0.22;
+    johnny.squat = 0.15;
+    addLaunchDust();
+
     beep('throw');
     if (navigator.vibrate) navigator.vibrate(20);
+  }
+
+  function addLaunchDust() {
+    for (let i = 0; i < 12; i++) {
+      particles.push({
+        x: 142 + (Math.random() - 0.5) * 55,
+        y: GROUND - 8,
+        vx: (Math.random() - 0.5) * 180,
+        vy: -45 - Math.random() * 120,
+        life: 0.28 + Math.random() * 0.32,
+        max: 0.6,
+        size: 5 + Math.random() * 10,
+        dust: true
+      });
+    }
   }
 
   function addImpact(x, y, strong = false) {
@@ -240,23 +286,58 @@
     let target = 0;
 
     if (running && aim && !tank.flying) {
-      // Give the player physical screen space behind the tank while pulling.
-      target = -AIM_CAMERA_BACK;
+      const pull = Math.hypot(tank.x - aim.x, tank.y - aim.y);
+      const ratio = Math.min(1, pull / MAX_PULL);
+      target = -AIM_CAMERA_BACK * (0.35 + 0.65 * ratio);
     } else if (running && tank.flying) {
-      // No positive clamp. If Johnny launches a tank into another postal code,
-      // the camera goes with it.
       target = Math.max(0, tank.x - CAMERA_FOLLOW_SCREEN_X);
     }
 
     const t = 1 - Math.exp(-CAMERA_EASE * dt);
     cameraX += (target - cameraX) * t;
-
     if (Math.abs(cameraX - target) < 0.05) cameraX = target;
+  }
+
+  function updateJohnny(dt) {
+    let desiredArm = -0.75;
+    let desiredLean = 0;
+    let desiredSquat = 0;
+
+    if (aim && !tank.flying && running) {
+      const shoulderX = 176;
+      const shoulderY = GROUND - 172;
+      const held = getHeldTankPosition();
+      desiredArm = Math.atan2(held.y - shoulderY, held.x - shoulderX);
+      desiredArm = Math.max(-2.55, Math.min(1.0, desiredArm));
+      const pull = Math.min(MAX_PULL, Math.hypot(tank.x - aim.x, tank.y - aim.y));
+      const ratio = pull / MAX_PULL;
+      desiredLean = -0.18 * ratio;
+      desiredSquat = 0.14 * ratio;
+    } else if (johnny.releaseTimer > 0) {
+      johnny.releaseTimer = Math.max(0, johnny.releaseTimer - dt);
+      const t = johnny.releaseTimer / 0.28;
+      desiredArm = 0.42 - 1.05 * (1 - t);
+      desiredLean = 0.24 * t;
+      desiredSquat = 0.12 * t;
+    } else if (tank.flying) {
+      desiredArm = -0.28;
+      desiredLean = 0.03;
+      desiredSquat = 0;
+    }
+
+    const ease = 1 - Math.exp(-14 * dt);
+    johnny.targetArmAngle = desiredArm;
+    johnny.targetTorsoLean = desiredLean;
+    johnny.targetSquat = desiredSquat;
+    johnny.armAngle += (johnny.targetArmAngle - johnny.armAngle) * ease;
+    johnny.torsoLean += (johnny.targetTorsoLean - johnny.torsoLean) * ease;
+    johnny.squat += (johnny.targetSquat - johnny.squat) * ease;
   }
 
   function update(dt) {
     if (!running) {
       updateCamera(dt);
+      updateJohnny(dt);
       return;
     }
 
@@ -283,7 +364,6 @@
 
     for (const cat of cats) {
       if (cat.dead) continue;
-
       cat.x -= cat.speed * dt;
       cat.bob += dt * 7;
 
@@ -296,7 +376,6 @@
         beep('hurt');
         showToast('THEY GOT THROUGH!');
         shake = 12;
-
         if (health <= 0) endGame();
       }
     }
@@ -308,18 +387,13 @@
       tank.angle += tank.angular * dt;
 
       const impactSpeed = Math.hypot(tank.vx, tank.vy);
-
       for (const cat of cats) {
         if (cat.dead || tank.hitIds.has(cat.id)) continue;
-
         const r = 37 + 25 * cat.scale;
+
         if (Math.hypot(tank.x - cat.x, tank.y - cat.y) < r) {
           tank.hitIds.add(cat.id);
-
-          const damage =
-            (steroidTimer > 0 ? 2 : 1) +
-            (impactSpeed > 760 ? 1 : 0);
-
+          const damage = (steroidTimer > 0 ? 2 : 1) + (impactSpeed > 760 ? 1 : 0);
           cat.hp -= damage;
           tank.vx *= 0.86;
           tank.vy *= 0.9;
@@ -328,12 +402,7 @@
           if (cat.hp <= 0) {
             killCat(cat, impactSpeed);
           } else {
-            floaters.push({
-              x: cat.x,
-              y: cat.y - 36,
-              text: 'BONK!',
-              life: 0.7
-            });
+            floaters.push({ x: cat.x, y: cat.y - 36, text: 'BONK!', life: 0.7 });
             beep('impact');
           }
         }
@@ -341,7 +410,6 @@
 
       if (tank.y >= GROUND - 22) {
         tank.y = GROUND - 22;
-
         if (Math.abs(tank.vy) > 160 && !tank.bounced) {
           tank.vy *= -0.30;
           tank.vx *= 0.74;
@@ -356,12 +424,7 @@
         }
       }
 
-      // There is deliberately no forward-distance reset anymore.
-      // A backward botch can still be cleaned up, and a landed tank resets normally.
-      if (
-        tank.x < -260 ||
-        (tank.y >= GROUND - 23 && Math.abs(tank.vx) < 14)
-      ) {
+      if (tank.x < -260 || (tank.y >= GROUND - 23 && Math.abs(tank.vx) < 14)) {
         tank.resetTimer += dt;
         if (tank.resetTimer > 0.65) resetTank();
       } else {
@@ -393,6 +456,7 @@
 
     shake *= Math.pow(0.002, dt);
     updateCamera(dt);
+    updateJohnny(dt);
   }
 
   function endGame() {
@@ -415,14 +479,12 @@
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, W, H);
 
-    // The moon barely moves, giving the endless battlefield a little parallax.
     const moonX = 1040 - cameraX * 0.08;
     ctx.fillStyle = 'rgba(230,235,247,.12)';
     ctx.beginPath();
     ctx.arc(moonX, 110, 55, 0, Math.PI * 2);
     ctx.fill();
 
-    // Procedural repeating skyline so a heroic throw never reaches "the edge".
     const buildingWidth = 150;
     const startIndex = Math.floor((cameraX - 250) / buildingWidth);
     const endIndex = Math.ceil((cameraX + W + 250) / buildingWidth);
@@ -436,7 +498,6 @@
 
       ctx.fillStyle = '#313746';
       ctx.fillRect(x, y, w, h);
-
       ctx.fillStyle = 'rgba(255,205,92,.14)';
       for (let wx = x + 18; wx < x + w - 10; wx += 32) {
         for (let wy = y + 25; wy < y + h - 20; wy += 42) {
@@ -454,13 +515,11 @@
 
     ctx.fillStyle = 'rgba(255,255,255,.07)';
     const stripeSpacing = 90;
-    const stripeOffset =
-      -((((cameraX % stripeSpacing) + stripeSpacing) % stripeSpacing));
+    const stripeOffset = -((((cameraX % stripeSpacing) + stripeSpacing) % stripeSpacing));
     for (let x = stripeOffset; x < W + stripeSpacing; x += stripeSpacing) {
       ctx.fillRect(x, GROUND + 63, 46, 4);
     }
 
-    // Draw the defense line only when it is actually within the camera view.
     const defenseScreenX = DEFENSE_X - cameraX;
     if (defenseScreenX > -40 && defenseScreenX < W + 40) {
       ctx.fillStyle = 'rgba(255,77,69,.17)';
@@ -475,9 +534,34 @@
     }
   }
 
+  function drawArm(baseX, baseY, upperLen, foreLen, angle, bent, thickness) {
+    const elbowX = baseX + Math.cos(angle) * upperLen;
+    const elbowY = baseY + Math.sin(angle) * upperLen;
+    const foreAngle = angle + bent;
+    const handX = elbowX + Math.cos(foreAngle) * foreLen;
+    const handY = elbowY + Math.sin(foreAngle) * foreLen;
+
+    ctx.strokeStyle = '#d79a6e';
+    ctx.lineWidth = thickness;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(baseX, baseY);
+    ctx.lineTo(elbowX, elbowY);
+    ctx.lineTo(handX, handY);
+    ctx.stroke();
+
+    ctx.fillStyle = '#d79a6e';
+    ctx.beginPath();
+    ctx.arc(elbowX, elbowY, thickness * 0.42, 0, Math.PI * 2);
+    ctx.arc(handX, handY, thickness * 0.38, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
   function drawJohnny() {
     const x = 142;
-    const y = GROUND - 36;
+    const y = GROUND - 36 + johnny.squat * 22;
+    const lean = johnny.torsoLean;
+    const torsoShift = lean * 42;
 
     ctx.save();
     ctx.translate(x, y);
@@ -487,26 +571,26 @@
       ctx.shadowBlur = 22 + Math.sin(elapsed * 12) * 8;
     }
 
-    ctx.fillStyle = '#d79a6e';
-    ctx.beginPath();
-    ctx.ellipse(0, -162, 28, 34, 0, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.fillStyle = '#59664b';
+    ctx.fillRect(-41, -60 + johnny.squat * 14, 35, 65);
+    ctx.fillRect(6, -60 + johnny.squat * 14, 35, 65);
 
-    ctx.fillStyle = '#2a1c17';
-    ctx.fillRect(-25, -189, 50, 10);
+    ctx.fillStyle = '#222';
+    ctx.fillRect(-44, -3 + johnny.squat * 14, 39, 16);
+    ctx.fillRect(5, -3 + johnny.squat * 14, 39, 16);
+
+    drawArm(-26 + torsoShift * 0.5, -120, 40, 28, -2.3 - lean * 0.5, 0.75, 16);
+
+    ctx.save();
+    ctx.translate(torsoShift, 0);
+    ctx.rotate(lean);
 
     ctx.fillStyle = '#d79a6e';
     ctx.beginPath();
     ctx.ellipse(0, -105, 49, 64, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.beginPath();
-    ctx.ellipse(-49, -112, 22, 48, -0.25, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.ellipse(49, -112, 22, 48, 0.25, 0, Math.PI * 2);
-    ctx.fill();
+    drawArm(27, -118, 52, 46, johnny.armAngle, 0.48, 18);
 
     ctx.strokeStyle = '#9c674d';
     ctx.lineWidth = 5;
@@ -515,18 +599,18 @@
     ctx.lineTo(0, -65);
     ctx.stroke();
 
-    ctx.fillStyle = '#59664b';
-    ctx.fillRect(-41, -60, 35, 65);
-    ctx.fillRect(6, -60, 35, 65);
-
-    ctx.fillStyle = '#222';
-    ctx.fillRect(-44, -3, 39, 16);
-    ctx.fillRect(5, -3, 39, 16);
-
     ctx.fillStyle = '#eee';
     ctx.font = '900 12px system-ui, sans-serif';
     ctx.fillText('JM', -9, -94);
 
+    ctx.fillStyle = '#d79a6e';
+    ctx.beginPath();
+    ctx.ellipse(0, -162, 28, 34, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#2a1c17';
+    ctx.fillRect(-25, -189, 50, 10);
+
+    ctx.restore();
     ctx.restore();
   }
 
@@ -534,28 +618,23 @@
     ctx.save();
     ctx.translate(t.x, t.y);
     ctx.rotate(t.angle);
-
     ctx.fillStyle = '#1c231d';
     ctx.fillRect(-49, 12, 98, 22);
-
     ctx.fillStyle = '#59664b';
     ctx.fillRect(-41, -11, 82, 30);
     ctx.beginPath();
     ctx.arc(4, -11, 22, Math.PI, 0);
     ctx.fill();
     ctx.fillRect(12, -18, 71, 8);
-
     ctx.fillStyle = '#111';
     for (let x = -38; x <= 38; x += 19) {
       ctx.beginPath();
       ctx.arc(x, 24, 9, 0, Math.PI * 2);
       ctx.fill();
     }
-
     ctx.fillStyle = '#c8d39e';
     ctx.font = '900 10px system-ui, sans-serif';
     ctx.fillText('THROW ME', -31, 7);
-
     ctx.restore();
   }
 
@@ -563,29 +642,13 @@
     ctx.save();
     ctx.translate(cat.x, cat.y + Math.sin(cat.bob) * 2);
     ctx.scale(cat.scale, cat.scale);
-
     const wounded = cat.hp < cat.maxHp;
 
     ctx.fillStyle = cat.chonker ? '#3e3344' : '#554358';
-    ctx.beginPath();
-    ctx.ellipse(0, 0, 31, 22, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.arc(-22, -18, 20, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.moveTo(-38, -31);
-    ctx.lineTo(-34, -50);
-    ctx.lineTo(-22, -35);
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.moveTo(-12, -35);
-    ctx.lineTo(-4, -49);
-    ctx.lineTo(0, -29);
-    ctx.fill();
+    ctx.beginPath(); ctx.ellipse(0, 0, 31, 22, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(-22, -18, 20, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(-38, -31); ctx.lineTo(-34, -50); ctx.lineTo(-22, -35); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(-12, -35); ctx.lineTo(-4, -49); ctx.lineTo(0, -29); ctx.fill();
 
     ctx.strokeStyle = '#6fdf78';
     ctx.lineWidth = 6;
@@ -610,7 +673,6 @@
 
     ctx.fillStyle = '#f4dfed';
     ctx.fillRect(-25, -10, 6, 4);
-
     ctx.restore();
   }
 
@@ -625,6 +687,7 @@
     const boost = steroidTimer > 0 ? 1.42 : 1;
     const vx = (dx / len) * pull * 4.05 * boost;
     const vy = (dy / len) * pull * 4.05 * boost;
+    const held = getHeldTankPosition();
 
     ctx.save();
     ctx.setLineDash([11, 9]);
@@ -639,53 +702,44 @@
     ctx.fillStyle = 'rgba(255,255,255,.75)';
     for (let i = 1; i <= 18; i++) {
       const t = i * 0.09;
-      const x = tank.x + vx * t;
-      const y = tank.y + vy * t + 0.5 * GRAVITY * t * t;
-
+      const x = held.x + vx * t;
+      const y = held.y + vy * t + 0.5 * GRAVITY * t * t;
       if (y > GROUND) break;
-
       ctx.beginPath();
       ctx.arc(x, y, Math.max(2, 5 - i * 0.18), 0, Math.PI * 2);
       ctx.fill();
     }
-
     ctx.restore();
   }
 
   function render() {
     ctx.clearRect(0, 0, W, H);
-
     ctx.save();
 
     if (shake > 0.4) {
-      ctx.translate(
-        (Math.random() - 0.5) * shake,
-        (Math.random() - 0.5) * shake
-      );
+      ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
     }
 
-    // Background uses cameraX directly so the skyline can repeat forever.
     drawBackground();
 
-    // Everything below lives in world coordinates.
     ctx.save();
     ctx.translate(-cameraX, 0);
-
     drawJohnny();
     drawAim();
-    drawTank();
+
+    if (aim && !tank.flying && running) {
+      const held = getHeldTankPosition();
+      drawTank({ ...tank, x: held.x, y: held.y, angle: -0.08 });
+    } else {
+      drawTank();
+    }
 
     for (const cat of cats) drawCat(cat);
 
     for (const p of particles) {
       ctx.globalAlpha = Math.max(0, p.life / p.max);
-      ctx.fillStyle = '#ffd85a';
-      ctx.fillRect(
-        p.x - p.size / 2,
-        p.y - p.size / 2,
-        p.size,
-        p.size
-      );
+      ctx.fillStyle = p.dust ? '#c8b28a' : '#ffd85a';
+      ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
     }
     ctx.globalAlpha = 1;
 
@@ -698,10 +752,8 @@
     }
     ctx.globalAlpha = 1;
     ctx.textAlign = 'left';
-
     ctx.restore();
 
-    // Screen-space steroid timer stays pinned to the viewport.
     if (steroidTimer > 0 && running) {
       ctx.fillStyle = 'rgba(168,255,88,.10)';
       ctx.fillRect(0, 0, W, H);
@@ -725,7 +777,6 @@
     const rect = canvas.getBoundingClientRect();
     const canvasAspect = W / H;
     const rectAspect = rect.width / rect.height;
-
     let drawW;
     let drawH;
     let offsetX;
@@ -744,19 +795,14 @@
     }
 
     return {
-      x:
-        (e.clientX - rect.left - offsetX) * W / drawW +
-        cameraX,
-      y:
-        (e.clientY - rect.top - offsetY) * H / drawH
+      x: ((e.clientX - rect.left - offsetX) * W / drawW) + cameraX,
+      y: ((e.clientY - rect.top - offsetY) * H / drawH)
     };
   }
 
   canvas.addEventListener('pointerdown', e => {
     if (!running || tank.flying || gameOver) return;
-
     const p = pointerToWorld(e);
-
     if (Math.hypot(p.x - tank.x, p.y - tank.y) < 105) {
       aim = p;
       canvas.setPointerCapture?.(e.pointerId);
@@ -765,7 +811,6 @@
 
   canvas.addEventListener('pointermove', e => {
     if (!aim || tank.flying) return;
-
     const p = pointerToWorld(e);
     const dx = p.x - tank.x;
     const dy = p.y - tank.y;
@@ -782,20 +827,13 @@
   });
 
   canvas.addEventListener('pointerup', () => throwTank());
-
-  canvas.addEventListener('pointercancel', () => {
-    aim = null;
-  });
+  canvas.addEventListener('pointercancel', () => { aim = null; });
 
   steroidButton.addEventListener('click', () => {
     if (!running || steroidsLeft <= 0) return;
-
     steroidsLeft -= 1;
     steroidTimer = 12;
-    steroidCountEl.textContent =
-      steroidsLeft === 1
-        ? '1 demo dose'
-        : `${steroidsLeft} demo doses`;
+    steroidCountEl.textContent = steroidsLeft === 1 ? '1 demo dose' : `${steroidsLeft} demo doses`;
     steroidButton.disabled = steroidsLeft <= 0;
     showToast('UNREGULATED STRENGTH!');
     beep('power');
@@ -819,13 +857,7 @@
   });
 
   window.addEventListener('keydown', e => {
-    if (
-      e.code === 'Space' &&
-      titleScreen.classList.contains('visible')
-    ) {
-      document.getElementById('start').click();
-    }
-
+    if (e.code === 'Space' && titleScreen.classList.contains('visible')) document.getElementById('start').click();
     if (e.code === 'KeyS') steroidButton.click();
   });
 
