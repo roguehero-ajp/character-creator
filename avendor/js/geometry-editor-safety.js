@@ -4,13 +4,23 @@
   const stage = document.getElementById('walk-stage');
   const help = document.getElementById('walk-help');
   const sceneStatus = document.getElementById('scene-status');
+  const coordsLabel = document.getElementById('geometry-sketch-coords');
+  const output = document.getElementById('geometry-sketch-output');
+  const copyButton = document.getElementById('geometry-sketch-copy');
+  const animationLabelInput = document.getElementById('geometry-sketch-animation-label');
   const walkTest = window.AvendorWalkTest;
+  const geometrySketch = window.AvendorGeometrySketch;
 
   if (!stage || !walkTest) return;
 
   const TEMP_SPAWN_ID = '__geometry-editor-safe-position';
   let wasEditing = stage.classList.contains('geometry-sketch-active');
   let recoveryRunning = false;
+
+  function clone(value) {
+    if (value == null) return value;
+    return JSON.parse(JSON.stringify(value));
+  }
 
   function isSafe(map, point) {
     return Boolean(
@@ -58,6 +68,68 @@
     if (sceneStatus) sceneStatus.textContent = message;
   }
 
+  function buildUnifiedGeometryExport() {
+    if (!geometrySketch?.exportJson) return '';
+
+    let payload;
+    try {
+      payload = JSON.parse(geometrySketch.exportJson() || '{}');
+    } catch (_) {
+      return geometrySketch.exportJson() || '';
+    }
+
+    payload.authoredEdits = payload.authoredEdits || {};
+
+    const deleteEdits = window.AvendorGeometryDeleteTools?.getEdits?.();
+    if (deleteEdits) {
+      payload.authoredEdits.walkable = clone(deleteEdits.walkable || []);
+      payload.authoredEdits.depthOccluders = clone(deleteEdits.depthOccluders || []);
+    }
+
+    const map = walkTest.getMap?.();
+    const portalEdits = window.AvendorGeometryEntranceEditor?.exportPortals?.();
+    if (portalEdits || map?.data?.portals) {
+      payload.authoredEdits.portals = clone(portalEdits || map.data.portals || []);
+    }
+
+    const animationLabel = animationLabelInput?.value.trim();
+    if (animationLabel && Array.isArray(payload.animationZones) && payload.animationZones.length) {
+      payload.animationZones[payload.animationZones.length - 1].label = animationLabel;
+    }
+
+    return JSON.stringify(payload, null, 2);
+  }
+
+  function refreshUnifiedOutput() {
+    const text = buildUnifiedGeometryExport();
+    if (text && output) output.value = text;
+  }
+
+  async function copyUnifiedGeometry(event) {
+    if (!copyButton || event.target !== copyButton) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    const text = buildUnifiedGeometryExport();
+    if (!text) return;
+    if (output) output.value = text;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      if (coordsLabel) coordsLabel.textContent = 'JSON copied with all geometry edits and animation labels';
+    } catch (_) {
+      if (output) {
+        output.focus();
+        output.select();
+        document.execCommand('copy');
+        stage.focus({ preventScroll: true });
+      }
+      if (coordsLabel) coordsLabel.textContent = 'JSON selected/copied';
+    }
+  }
+
   async function recoverHeroIfNeeded() {
     if (recoveryRunning) return;
     const map = walkTest.getMap?.();
@@ -93,6 +165,9 @@
     }
   }
 
+  animationLabelInput?.addEventListener('input', refreshUnifiedOutput);
+  document.addEventListener('click', copyUnifiedGeometry, true);
+
   new MutationObserver(() => {
     const editing = stage.classList.contains('geometry-sketch-active');
     if (wasEditing && !editing) void recoverHeroIfNeeded();
@@ -100,6 +175,7 @@
   }).observe(stage, { attributes: true, attributeFilter: ['class'] });
 
   window.AvendorGeometryEditorSafety = Object.freeze({
-    recoverHeroIfNeeded
+    recoverHeroIfNeeded,
+    exportJson: buildUnifiedGeometryExport
   });
 })();
