@@ -1,0 +1,10 @@
+{
+  "name": "Johnny Muscles: Tank Thrower",
+  "short_name": "Tank Thrower",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#090b11",
+  "theme_color": "#11131a",
+  "orientation": "landscape",
+  "description": "Humanity's last, dumbest hope. Throw tanks at alien parasite cats."
+}
