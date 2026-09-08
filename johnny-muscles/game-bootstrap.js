@@ -2,7 +2,7 @@
   'use strict';
 
   const replacements = [
-    ['const AIM_CAMERA_BACK = 160;', 'const AIM_CAMERA_BACK = 300;'],
+    ['const AIM_CAMERA_BACK = 160;', 'const AIM_CAMERA_BACK = 450;'],
     ['const CAMERA_EASE = 8.5;', 'const CAMERA_EASE = 10.5;'],
     [
       'const ratio = Math.min(1, pull / MAX_PULL);\n      target = -AIM_CAMERA_BACK * (0.35 + 0.65 * ratio);',
