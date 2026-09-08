@@ -6,12 +6,21 @@
   const scoreEl = document.getElementById('score');
   const healthEl = document.getElementById('health');
   const comboEl = document.getElementById('combo');
+  const waveEl = document.getElementById('wave');
+  const remainingEl = document.getElementById('remaining');
   const steroidButton = document.getElementById('steroids');
   const steroidCountEl = document.getElementById('steroid-count');
   const muteButton = document.getElementById('mute');
   const titleScreen = document.getElementById('title-screen');
   const gameOverScreen = document.getElementById('game-over');
+  const missionCompleteScreen = document.getElementById('mission-complete');
   const finalScoreEl = document.getElementById('final-score');
+  const resultStarsEl = document.getElementById('result-stars');
+  const resultScoreEl = document.getElementById('result-score');
+  const resultCatsEl = document.getElementById('result-cats');
+  const resultThrowsEl = document.getElementById('result-throws');
+  const resultComboEl = document.getElementById('result-combo');
+  const resultDefenseEl = document.getElementById('result-defense');
   const toastEl = document.getElementById('toast');
 
   const W = 1280;
@@ -22,18 +31,31 @@
   const TANK_HOME = { x: 250, y: GROUND - 46 };
 
   const MAX_PULL = 360;
-  const AIM_CAMERA_BACK = 160;
+  const AIM_CAMERA_BACK = 450;
   const CAMERA_FOLLOW_SCREEN_X = W * 0.58;
-  const CAMERA_EASE = 8.5;
+  const CAMERA_EASE = 10.5;
+
+  const LEVEL = {
+    id: 'city-1',
+    region: 'CITY',
+    name: 'FIRST CONTACT',
+    objective: 'Hold the defense line through all three waves.',
+    scoreStar: 3000,
+    waves: [
+      { count: 4, spawnGap: 1.0, chonkerChance: 0.0, speedBonus: -4 },
+      { count: 6, spawnGap: 0.88, chonkerChance: 0.08, speedBonus: 2 },
+      { count: 8, spawnGap: 0.76, chonkerChance: 0.16, speedBonus: 8 }
+    ]
+  };
 
   let lastTime = performance.now();
   let running = false;
   let gameOver = false;
+  let missionComplete = false;
   let score = 0;
   let health = 5;
   let combo = 1;
   let comboTimer = 0;
-  let spawnTimer = 0;
   let elapsed = 0;
   let steroidsLeft = 3;
   let steroidTimer = 0;
@@ -43,6 +65,19 @@
   let shake = 0;
   let cameraX = 0;
   let toastTimer = null;
+
+  let currentWave = -1;
+  let waveSpawned = 0;
+  let waveResolved = 0;
+  let waveSpawnTimer = 0;
+  let intermissionTimer = 0;
+  let missionFinishTimer = 0;
+  let waveClearAnnounced = false;
+
+  let catsFlattened = 0;
+  let tanksThrown = 0;
+  let bestCombo = 1;
+  let breaches = 0;
 
   const cats = [];
   const particles = [];
@@ -76,16 +111,29 @@
     health = 5;
     combo = 1;
     comboTimer = 0;
-    spawnTimer = 0.9;
     elapsed = 0;
     steroidsLeft = 3;
     steroidTimer = 0;
+    catsFlattened = 0;
+    tanksThrown = 0;
+    bestCombo = 1;
+    breaches = 0;
     cats.length = 0;
     particles.length = 0;
     floaters.length = 0;
     gameOver = false;
+    missionComplete = false;
     running = true;
     cameraX = 0;
+    missionFinishTimer = 0;
+    waveClearAnnounced = false;
+
+    currentWave = -1;
+    waveSpawned = 0;
+    waveResolved = 0;
+    waveSpawnTimer = 0;
+    intermissionTimer = 1.15;
+
     Object.assign(johnny, {
       armAngle: -0.75,
       targetArmAngle: -0.75,
@@ -95,10 +143,12 @@
       squat: 0,
       targetSquat: 0
     });
+
     resetTank();
     updateHud();
     steroidButton.disabled = false;
     steroidCountEl.textContent = '3 demo doses';
+    showToast('CITY 1: FIRST CONTACT');
   }
 
   function resetTank() {
@@ -118,25 +168,38 @@
     johnny.releaseTimer = 0;
   }
 
+  function activeCats() {
+    return cats.reduce((total, cat) => total + (cat.dead ? 0 : 1), 0);
+  }
+
   function updateHud() {
     scoreEl.textContent = String(score).padStart(6, '0');
     healthEl.textContent = Array.from({ length: 5 }, (_, i) => (i < health ? '♥' : '♡')).join(' ');
     comboEl.textContent = `x${combo}`;
+
+    if (currentWave < 0) {
+      waveEl.textContent = `1/${LEVEL.waves.length}`;
+      remainingEl.textContent = 'INCOMING';
+      return;
+    }
+
+    const wave = LEVEL.waves[currentWave];
+    const unresolved = Math.max(0, wave.count - waveResolved);
+    waveEl.textContent = `${currentWave + 1}/${LEVEL.waves.length}`;
+    remainingEl.textContent = missionComplete ? 'SECURED' : String(unresolved);
   }
 
-  function showToast(text) {
+  function showToast(text, duration = 820) {
     toastEl.textContent = text;
     toastEl.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 820);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
   }
 
   function beep(type = 'impact') {
     if (muted) return;
     try {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       const now = audioCtx.currentTime;
@@ -145,7 +208,9 @@
         impact: [72, 38, 0.09, 'square'],
         cat: [430, 240, 0.08, 'triangle'],
         power: [160, 420, 0.25, 'sawtooth'],
-        hurt: [120, 70, 0.22, 'square']
+        hurt: [120, 70, 0.22, 'square'],
+        wave: [260, 410, 0.18, 'square'],
+        win: [330, 660, 0.42, 'triangle']
       }[type] || [120, 80, 0.1, 'sine'];
 
       osc.type = settings[3];
@@ -161,8 +226,21 @@
     }
   }
 
+  function startNextWave() {
+    currentWave += 1;
+    waveSpawned = 0;
+    waveResolved = 0;
+    waveSpawnTimer = 0.3;
+    waveClearAnnounced = false;
+    const waveNumber = currentWave + 1;
+    showToast(`WAVE ${waveNumber} INCOMING`, 1050);
+    beep('wave');
+    updateHud();
+  }
+
   function spawnCat() {
-    const chonker = Math.random() < Math.min(0.12 + elapsed / 180, 0.28);
+    const wave = LEVEL.waves[currentWave];
+    const chonker = Math.random() < wave.chonkerChance;
     const scale = chonker ? 1.55 : 0.9 + Math.random() * 0.25;
     const hp = chonker ? 2 : 1;
 
@@ -171,25 +249,94 @@
       x: W + 60,
       y: GROUND - 29 * scale,
       scale,
-      speed: (chonker ? 36 : 54 + Math.random() * 26) + Math.min(elapsed * 0.3, 40),
+      speed: (chonker ? 36 : 54 + Math.random() * 24) + wave.speedBonus,
       hp,
       maxHp: hp,
       chonker,
       bob: Math.random() * Math.PI * 2,
-      dead: false
+      dead: false,
+      resolved: false
     });
+
+    waveSpawned += 1;
+    updateHud();
+  }
+
+  function resolveCat(cat, defeated) {
+    if (cat.resolved) return;
+    cat.resolved = true;
+    cat.dead = true;
+    waveResolved += 1;
+    if (defeated) catsFlattened += 1;
+    updateHud();
+  }
+
+  function updateMission(dt) {
+    if (missionComplete || gameOver) return;
+
+    if (currentWave < 0) {
+      intermissionTimer -= dt;
+      if (intermissionTimer <= 0) startNextWave();
+      return;
+    }
+
+    const wave = LEVEL.waves[currentWave];
+
+    if (waveSpawned < wave.count) {
+      waveSpawnTimer -= dt;
+      if (waveSpawnTimer <= 0) {
+        spawnCat();
+        waveSpawnTimer = wave.spawnGap;
+      }
+      return;
+    }
+
+    if (waveResolved < wave.count || activeCats() > 0) return;
+
+    if (currentWave < LEVEL.waves.length - 1) {
+      if (!waveClearAnnounced) {
+        waveClearAnnounced = true;
+        intermissionTimer = 1.65;
+        showToast(`WAVE ${currentWave + 1} CLEAR`, 900);
+        return;
+      }
+      intermissionTimer -= dt;
+      if (intermissionTimer <= 0) startNextWave();
+      return;
+    }
+
+    missionFinishTimer += dt;
+    if (missionFinishTimer >= 0.75) completeMission();
+  }
+
+  function completeMission() {
+    if (missionComplete || gameOver) return;
+    missionComplete = true;
+    running = false;
+    aim = null;
+    comboTimer = 0;
+    updateHud();
+    showToast('AREA SECURED', 1300);
+    beep('win');
+
+    const stars = 1 + (breaches === 0 ? 1 : 0) + (score >= LEVEL.scoreStar ? 1 : 0);
+    resultStarsEl.textContent = `${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}`;
+    resultScoreEl.textContent = score.toLocaleString();
+    resultCatsEl.textContent = String(catsFlattened);
+    resultThrowsEl.textContent = String(tanksThrown);
+    resultComboEl.textContent = `x${bestCombo}`;
+    resultDefenseEl.textContent = breaches === 0 ? 'UNTOUCHED' : `${breaches} BREACH${breaches === 1 ? '' : 'ES'}`;
+
+    setTimeout(() => missionCompleteScreen.classList.add('visible'), 850);
   }
 
   function getHeldTankPosition() {
     if (!aim || tank.flying) return { x: tank.x, y: tank.y };
-    return {
-      x: aim.x,
-      y: Math.min(aim.y, GROUND - 40)
-    };
+    return { x: aim.x, y: Math.min(aim.y, GROUND - 40) };
   }
 
   function throwTank() {
-    if (!aim || tank.flying || !running) return;
+    if (!aim || tank.flying || !running || missionComplete) return;
 
     const dx = tank.x - aim.x;
     const dy = tank.y - aim.y;
@@ -212,6 +359,7 @@
     tank.flying = true;
     tank.hitIds.clear();
     aim = null;
+    tanksThrown += 1;
 
     johnny.releaseTimer = 0.28;
     johnny.armAngle = 0.35;
@@ -250,35 +398,30 @@
         vy: Math.sin(a) * s - 80,
         life: 0.35 + Math.random() * 0.5,
         max: 0.85,
-        size: 3 + Math.random() * 9
+        size: 3 + Math.random() * 9,
+        dust: false
       });
     }
     shake = Math.max(shake, strong ? 15 : 7);
   }
 
   function killCat(cat, impactSpeed) {
-    cat.dead = true;
+    resolveCat(cat, true);
     const base = cat.chonker ? 350 : 120;
     const velocityBonus = Math.floor(Math.min(impactSpeed / 8, 120));
+    bestCombo = Math.max(bestCombo, combo);
     const points = (base + velocityBonus) * combo;
 
     score += points;
     combo = Math.min(combo + 1, 12);
     comboTimer = 2.1;
 
-    floaters.push({
-      x: cat.x,
-      y: cat.y - 20,
-      text: `+${points}`,
-      life: 0.9
-    });
-
+    floaters.push({ x: cat.x, y: cat.y - 20, text: `+${points}`, life: 0.9 });
     addImpact(cat.x, cat.y, cat.chonker || impactSpeed > 620);
     beep('cat');
 
     if (combo === 5) showToast('CAT-ASTROPHE x5');
     if (combo === 10) showToast('TACTICAL GENIUS');
-
     updateHud();
   }
 
@@ -288,7 +431,8 @@
     if (running && aim && !tank.flying) {
       const pull = Math.hypot(tank.x - aim.x, tank.y - aim.y);
       const ratio = Math.min(1, pull / MAX_PULL);
-      target = -AIM_CAMERA_BACK * (0.35 + 0.65 * ratio);
+      const earlyPull = Math.sqrt(ratio);
+      target = -AIM_CAMERA_BACK * (0.30 + 0.70 * earlyPull);
     } else if (running && tank.flying) {
       target = Math.max(0, tank.x - CAMERA_FOLLOW_SCREEN_X);
     }
@@ -322,7 +466,6 @@
     } else if (tank.flying) {
       desiredArm = -0.28;
       desiredLean = 0.03;
-      desiredSquat = 0;
     }
 
     const ease = 1 - Math.exp(-14 * dt);
@@ -342,10 +485,9 @@
     }
 
     elapsed += dt;
+    updateMission(dt);
 
-    if (steroidTimer > 0) {
-      steroidTimer = Math.max(0, steroidTimer - dt);
-    }
+    if (steroidTimer > 0) steroidTimer = Math.max(0, steroidTimer - dt);
 
     if (comboTimer > 0) {
       comboTimer -= dt;
@@ -355,26 +497,20 @@
       }
     }
 
-    spawnTimer -= dt;
-    if (spawnTimer <= 0) {
-      spawnCat();
-      const pressure = Math.max(0.48, 1.48 - elapsed * 0.008);
-      spawnTimer = pressure + Math.random() * 0.55;
-    }
-
     for (const cat of cats) {
       if (cat.dead) continue;
       cat.x -= cat.speed * dt;
       cat.bob += dt * 7;
 
       if (cat.x < DEFENSE_X) {
-        cat.dead = true;
+        breaches += 1;
+        resolveCat(cat, false);
         health -= 1;
         combo = 1;
         comboTimer = 0;
         updateHud();
         beep('hurt');
-        showToast('THEY GOT THROUGH!');
+        showToast('DEFENSE BREACH!');
         shake = 12;
         if (health <= 0) endGame();
       }
@@ -390,7 +526,6 @@
       for (const cat of cats) {
         if (cat.dead || tank.hitIds.has(cat.id)) continue;
         const r = 37 + 25 * cat.scale;
-
         if (Math.hypot(tank.x - cat.x, tank.y - cat.y) < r) {
           tank.hitIds.add(cat.id);
           const damage = (steroidTimer > 0 ? 2 : 1) + (impactSpeed > 760 ? 1 : 0);
@@ -438,21 +573,14 @@
       p.x += p.vx * dt;
       p.y += p.vy * dt;
     }
-
     for (const f of floaters) {
       f.life -= dt;
       f.y -= 48 * dt;
     }
 
-    for (let i = cats.length - 1; i >= 0; i--) {
-      if (cats[i].dead || cats[i].x < -100) cats.splice(i, 1);
-    }
-    for (let i = particles.length - 1; i >= 0; i--) {
-      if (particles[i].life <= 0) particles.splice(i, 1);
-    }
-    for (let i = floaters.length - 1; i >= 0; i--) {
-      if (floaters[i].life <= 0) floaters.splice(i, 1);
-    }
+    for (let i = cats.length - 1; i >= 0; i--) if (cats[i].dead) cats.splice(i, 1);
+    for (let i = particles.length - 1; i >= 0; i--) if (particles[i].life <= 0) particles.splice(i, 1);
+    for (let i = floaters.length - 1; i >= 0; i--) if (floaters[i].life <= 0) floaters.splice(i, 1);
 
     shake *= Math.pow(0.002, dt);
     updateCamera(dt);
@@ -462,7 +590,7 @@
   function endGame() {
     running = false;
     gameOver = true;
-    finalScoreEl.textContent = `Score: ${score.toLocaleString()}`;
+    finalScoreEl.textContent = `Score: ${score.toLocaleString()} · Reached Wave ${Math.max(1, currentWave + 1)}`;
     gameOverScreen.classList.add('visible');
   }
 
@@ -501,9 +629,7 @@
       ctx.fillStyle = 'rgba(255,205,92,.14)';
       for (let wx = x + 18; wx < x + w - 10; wx += 32) {
         for (let wy = y + 25; wy < y + h - 20; wy += 42) {
-          if (pseudoRandom(i + Math.floor(wx + wy), 4) > 0.38) {
-            ctx.fillRect(wx, wy, 11, 15);
-          }
+          if (pseudoRandom(i + Math.floor(wx + wy), 4) > 0.38) ctx.fillRect(wx, wy, 11, 15);
         }
       }
     }
@@ -516,9 +642,7 @@
     ctx.fillStyle = 'rgba(255,255,255,.07)';
     const stripeSpacing = 90;
     const stripeOffset = -((((cameraX % stripeSpacing) + stripeSpacing) % stripeSpacing));
-    for (let x = stripeOffset; x < W + stripeSpacing; x += stripeSpacing) {
-      ctx.fillRect(x, GROUND + 63, 46, 4);
-    }
+    for (let x = stripeOffset; x < W + stripeSpacing; x += stripeSpacing) ctx.fillRect(x, GROUND + 63, 46, 4);
 
     const defenseScreenX = DEFENSE_X - cameraX;
     if (defenseScreenX > -40 && defenseScreenX < W + 40) {
@@ -565,7 +689,6 @@
 
     ctx.save();
     ctx.translate(x, y);
-
     if (steroidTimer > 0) {
       ctx.shadowColor = '#a8ff58';
       ctx.shadowBlur = 22 + Math.sin(elapsed * 12) * 8;
@@ -574,7 +697,6 @@
     ctx.fillStyle = '#59664b';
     ctx.fillRect(-41, -60 + johnny.squat * 14, 35, 65);
     ctx.fillRect(6, -60 + johnny.squat * 14, 35, 65);
-
     ctx.fillStyle = '#222';
     ctx.fillRect(-44, -3 + johnny.squat * 14, 39, 16);
     ctx.fillRect(5, -3 + johnny.squat * 14, 39, 16);
@@ -584,12 +706,10 @@
     ctx.save();
     ctx.translate(torsoShift, 0);
     ctx.rotate(lean);
-
     ctx.fillStyle = '#d79a6e';
     ctx.beginPath();
     ctx.ellipse(0, -105, 49, 64, 0, 0, Math.PI * 2);
     ctx.fill();
-
     drawArm(27, -118, 52, 46, johnny.armAngle, 0.48, 18);
 
     ctx.strokeStyle = '#9c674d';
@@ -602,14 +722,12 @@
     ctx.fillStyle = '#eee';
     ctx.font = '900 12px system-ui, sans-serif';
     ctx.fillText('JM', -9, -94);
-
     ctx.fillStyle = '#d79a6e';
     ctx.beginPath();
     ctx.ellipse(0, -162, 28, 34, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.fillStyle = '#2a1c17';
     ctx.fillRect(-25, -189, 50, 10);
-
     ctx.restore();
     ctx.restore();
   }
@@ -670,7 +788,6 @@
     ctx.arc(-29, -20, 4, 0, Math.PI * 2);
     ctx.arc(-17, -20, 4, 0, Math.PI * 2);
     ctx.fill();
-
     ctx.fillStyle = '#f4dfed';
     ctx.fillRect(-25, -10, 6, 4);
     ctx.restore();
@@ -715,13 +832,9 @@
   function render() {
     ctx.clearRect(0, 0, W, H);
     ctx.save();
-
-    if (shake > 0.4) {
-      ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
-    }
+    if (shake > 0.4) ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
 
     drawBackground();
-
     ctx.save();
     ctx.translate(-cameraX, 0);
     drawJohnny();
@@ -735,7 +848,6 @@
     }
 
     for (const cat of cats) drawCat(cat);
-
     for (const p of particles) {
       ctx.globalAlpha = Math.max(0, p.life / p.max);
       ctx.fillStyle = p.dust ? '#c8b28a' : '#ffd85a';
@@ -761,7 +873,6 @@
       ctx.font = '900 18px system-ui, sans-serif';
       ctx.fillText(`STEROIDS: ${steroidTimer.toFixed(1)}s`, 24, H - 24);
     }
-
     ctx.restore();
   }
 
@@ -777,10 +888,7 @@
     const rect = canvas.getBoundingClientRect();
     const canvasAspect = W / H;
     const rectAspect = rect.width / rect.height;
-    let drawW;
-    let drawH;
-    let offsetX;
-    let offsetY;
+    let drawW; let drawH; let offsetX; let offsetY;
 
     if (rectAspect > canvasAspect) {
       drawH = rect.height;
@@ -801,7 +909,7 @@
   }
 
   canvas.addEventListener('pointerdown', e => {
-    if (!running || tank.flying || gameOver) return;
+    if (!running || tank.flying || gameOver || missionComplete) return;
     const p = pointerToWorld(e);
     if (Math.hypot(p.x - tank.x, p.y - tank.y) < 105) {
       aim = p;
@@ -817,10 +925,7 @@
     const len = Math.hypot(dx, dy);
 
     if (len > MAX_PULL) {
-      aim = {
-        x: tank.x + (dx / len) * MAX_PULL,
-        y: tank.y + (dy / len) * MAX_PULL
-      };
+      aim = { x: tank.x + (dx / len) * MAX_PULL, y: tank.y + (dy / len) * MAX_PULL };
     } else {
       aim = p;
     }
@@ -856,11 +961,17 @@
     resetGame();
   });
 
+  document.getElementById('replay').addEventListener('click', () => {
+    missionCompleteScreen.classList.remove('visible');
+    resetGame();
+  });
+
   window.addEventListener('keydown', e => {
     if (e.code === 'Space' && titleScreen.classList.contains('visible')) document.getElementById('start').click();
     if (e.code === 'KeyS') steroidButton.click();
   });
 
+  updateHud();
   render();
   requestAnimationFrame(frame);
 })();
