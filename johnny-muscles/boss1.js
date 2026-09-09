@@ -54,7 +54,168 @@
 
   function drawBackground(){const sky=ctx.createLinearGradient(0,0,0,GROUND);sky.addColorStop(0,'#171a28');sky.addColorStop(.65,'#494757');sky.addColorStop(1,'#8d6154');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);for(let i=-2;i<10;i++){const x=i*185-(cameraX*.1%185),h=220+pseudoRandom(i,4)*200;ctx.fillStyle=i%2?'#272d37':'#30343e';ctx.fillRect(x,GROUND-h,150,h);}ctx.fillStyle='#403936';ctx.fillRect(0,GROUND,W,H-GROUND);ctx.fillStyle='#615650';ctx.fillRect(0,GROUND,W,7);}
   function drawArena(){for(let x=520;x<1850;x+=420){ctx.fillStyle='#2a2e35';ctx.fillRect(x,GROUND-260,310,260);ctx.fillStyle='rgba(255,214,120,.10)';for(let wx=x+30;wx<x+280;wx+=60)for(let wy=GROUND-220;wy<GROUND-45;wy+=62)if(pseudoRandom(wx+wy,3)>.52)ctx.fillRect(wx,wy,20,26);}ctx.fillStyle='#59664b';for(let i=0;i<4;i++){ctx.save();ctx.translate(1220+i*92,GROUND-34);ctx.rotate((i-1.5)*.12);ctx.fillRect(-38,-12,76,25);ctx.fillStyle='#171b18';ctx.fillRect(-42,10,84,15);ctx.restore();ctx.fillStyle='#59664b';}}
-  function drawBob(){ctx.save();ctx.translate(bossX,GROUND-45);const flash=bossHitFlash>0;ctx.scale(1.6,1.6);ctx.fillStyle=flash?'#f4bd8e':'#b78155';ctx.beginPath();ctx.ellipse(0,-70,58,72,0,0,Math.PI*2);ctx.fill();ctx.fillStyle=flash?'#ffe0b6':'#c99468';ctx.beginPath();ctx.arc(-8,-139,42,0,Math.PI*2);ctx.fill();ctx.fillStyle='#8a5c42';ctx.beginPath();ctx.moveTo(-40,-164);ctx.lineTo(-49,-196);ctx.lineTo(-25,-173);ctx.fill();ctx.beginPath();ctx.moveTo(20,-170);ctx.lineTo(39,-194);ctx.lineTo(42,-159);ctx.fill();ctx.strokeStyle='#5c3d2c';ctx.lineWidth=7;for(const x of [-33,-17,22]){ctx.beginPath();ctx.moveTo(x,-155);ctx.lineTo(x+8,-132);ctx.stroke();}ctx.fillStyle='#2a3a2e';ctx.beginPath();ctx.ellipse(-8,-178,44,17,0,Math.PI,0);ctx.fill();ctx.fillRect(-50,-181,84,13);ctx.fillStyle='#222';ctx.beginPath();ctx.arc(-22,-142,5,0,Math.PI*2);ctx.arc(6,-142,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#7a3a2d';ctx.fillRect(-16,-116,24,8);ctx.fillStyle='#384536';ctx.fillRect(-62,-66,124,52);ctx.fillStyle='#262b28';ctx.fillRect(-58,-20,48,32);ctx.fillRect(12,-20,48,32);ctx.fillStyle='#15171b';ctx.fillRect(-64,4,54,13);ctx.fillRect(12,4,54,13);ctx.strokeStyle='#b78155';ctx.lineWidth=25;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-52,-92);ctx.lineTo(-80,-45);ctx.stroke();ctx.beginPath();ctx.moveTo(52,-92);ctx.lineTo(80,-45);ctx.stroke();ctx.fillStyle='#1f241f';ctx.beginPath();ctx.arc(-82,-42,14,0,Math.PI*2);ctx.arc(82,-42,14,0,Math.PI*2);ctx.fill();if(bossWindup>0){drawTank(ctx,{x:0,y:-225,angle:-.12},'BOB TANK');}ctx.restore();}
+  function drawBob(){
+    ctx.save();
+    ctx.translate(bossX,GROUND-45);
+    const flash=bossHitFlash>0;
+    const skin=flash?'#f4bd8e':'#b78155';
+    const skinLight=flash?'#ffe0b6':'#cf986b';
+    const skinDark=flash?'#d99d76':'#855437';
+    const fur='#8a5c42';
+    const furDark='#55392d';
+    const olive='#354535';
+    const oliveDark='#202821';
+    const oliveLight='#52674a';
+    const ink='#1a1717';
+    ctx.scale(1.6,1.6);
+
+    // Ground shadow: broad enough to sell Bob's planted, heavyweight stance.
+    ctx.save();
+    ctx.globalAlpha=.34;
+    ctx.fillStyle='#090a0b';
+    ctx.beginPath();
+    ctx.ellipse(0,13,73,15,0,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+
+    // Heavy boots and thick trouser legs.
+    ctx.fillStyle=oliveDark;
+    ctx.beginPath();ctx.roundRect(-61,-27,48,39,13);ctx.fill();
+    ctx.beginPath();ctx.roundRect(13,-27,48,39,13);ctx.fill();
+    ctx.fillStyle='#121514';
+    ctx.beginPath();ctx.roundRect(-68,0,57,18,7);ctx.fill();
+    ctx.beginPath();ctx.roundRect(11,0,57,18,7);ctx.fill();
+    ctx.fillStyle='#596058';
+    ctx.fillRect(-62,4,44,4);ctx.fillRect(18,4,44,4);
+
+    // Arms first so the torso overlaps the shoulder roots naturally.
+    ctx.strokeStyle=skin;
+    ctx.lineWidth=31;
+    ctx.lineCap='round';
+    ctx.beginPath();ctx.moveTo(-61,-110);ctx.quadraticCurveTo(-82,-88,-86,-48);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(61,-110);ctx.quadraticCurveTo(82,-88,86,-48);ctx.stroke();
+    ctx.strokeStyle=skinLight;
+    ctx.lineWidth=7;
+    ctx.globalAlpha=.42;
+    ctx.beginPath();ctx.moveTo(-70,-104);ctx.quadraticCurveTo(-83,-82,-84,-60);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(70,-104);ctx.quadraticCurveTo(83,-82,84,-60);ctx.stroke();
+    ctx.globalAlpha=1;
+
+    // Fingerless gloves / enormous fists.
+    ctx.fillStyle=oliveDark;
+    ctx.beginPath();ctx.ellipse(-87,-42,19,17,-.12,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.ellipse(87,-42,19,17,.12,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='#687366';ctx.lineWidth=3;
+    for(const x of [-94,-87,-80]){ctx.beginPath();ctx.moveTo(x,-49);ctx.lineTo(x+1,-38);ctx.stroke();}
+    for(const x of [80,87,94]){ctx.beginPath();ctx.moveTo(x,-49);ctx.lineTo(x-1,-38);ctx.stroke();}
+
+    // Barrel torso: huge shoulders and chest taper into a round powerlifter belly.
+    ctx.fillStyle=skin;
+    ctx.beginPath();
+    ctx.moveTo(-44,-133);
+    ctx.bezierCurveTo(-70,-132,-78,-116,-75,-94);
+    ctx.bezierCurveTo(-72,-78,-69,-62,-64,-45);
+    ctx.bezierCurveTo(-58,-25,-38,-16,0,-16);
+    ctx.bezierCurveTo(38,-16,58,-25,64,-45);
+    ctx.bezierCurveTo(69,-62,72,-78,75,-94);
+    ctx.bezierCurveTo(78,-116,70,-132,44,-133);
+    ctx.bezierCurveTo(29,-139,18,-142,0,-142);
+    ctx.bezierCurveTo(-18,-142,-29,-139,-44,-133);
+    ctx.closePath();ctx.fill();
+
+    // Traps and bull neck.
+    ctx.fillStyle=skinDark;
+    ctx.beginPath();
+    ctx.moveTo(-42,-133);ctx.quadraticCurveTo(-25,-151,-17,-154);
+    ctx.lineTo(17,-154);ctx.quadraticCurveTo(25,-151,42,-133);
+    ctx.quadraticCurveTo(20,-139,0,-137);ctx.quadraticCurveTo(-20,-139,-42,-133);ctx.fill();
+    ctx.fillStyle=skin;
+    ctx.beginPath();ctx.roundRect(-21,-162,42,34,15);ctx.fill();
+
+    // Pecs. Defined, but still sitting on a thick torso instead of a bodybuilder V taper.
+    ctx.fillStyle=skinLight;
+    ctx.globalAlpha=.34;
+    ctx.beginPath();ctx.ellipse(-27,-111,31,20,-.08,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.ellipse(27,-111,31,20,.08,0,Math.PI*2);ctx.fill();
+    ctx.globalAlpha=1;
+    ctx.strokeStyle=skinDark;ctx.lineWidth=3.5;ctx.lineCap='round';
+    ctx.beginPath();ctx.moveTo(-55,-112);ctx.quadraticCurveTo(-28,-125,-3,-111);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(3,-111);ctx.quadraticCurveTo(28,-125,55,-112);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,-127);ctx.lineTo(0,-101);ctx.stroke();
+
+    // "Fat with abs": definition rides over the round belly rather than flattening it.
+    ctx.strokeStyle='#8b593d';ctx.lineWidth=3;ctx.globalAlpha=.8;
+    ctx.beginPath();ctx.moveTo(0,-95);ctx.quadraticCurveTo(-2,-69,0,-39);ctx.stroke();
+    for(const y of [-88,-72,-56]){
+      ctx.beginPath();ctx.moveTo(-26,y);ctx.quadraticCurveTo(-12,y-5,-4,y);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(4,y);ctx.quadraticCurveTo(12,y-5,26,y);ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+    ctx.fillStyle=skinLight;ctx.globalAlpha=.22;
+    ctx.beginPath();ctx.ellipse(0,-48,45,26,0,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+
+    // Military harness, belt and unit tattoo. Canadian without turning him into a flag costume.
+    ctx.strokeStyle=olive;ctx.lineWidth=8;
+    ctx.beginPath();ctx.moveTo(-45,-126);ctx.lineTo(-39,-72);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(45,-126);ctx.lineTo(39,-72);ctx.stroke();
+    ctx.fillStyle=oliveDark;ctx.fillRect(-63,-36,126,14);
+    ctx.fillStyle='#a59055';ctx.fillRect(-10,-38,20,18);
+    ctx.fillStyle=oliveLight;ctx.beginPath();ctx.roundRect(42,-118,18,22,4);ctx.fill();
+    ctx.fillStyle='#b23b35';ctx.font='900 8px system-ui, sans-serif';ctx.textAlign='center';ctx.fillText('CA',51,-103);
+    ctx.save();ctx.translate(-39,-91);ctx.rotate(-.18);ctx.fillStyle='#6c3f31';ctx.font='900 11px Impact, system-ui, sans-serif';ctx.textAlign='center';ctx.fillText('13bn',0,0);ctx.restore();
+
+    // Bobcat head with wide jaw, cheek ruffs and unmistakable ear tufts.
+    ctx.fillStyle=furDark;
+    ctx.beginPath();ctx.moveTo(-38,-178);ctx.lineTo(-55,-205);ctx.lineTo(-27,-188);ctx.closePath();ctx.fill();
+    ctx.beginPath();ctx.moveTo(30,-188);ctx.lineTo(53,-207);ctx.lineTo(43,-175);ctx.closePath();ctx.fill();
+    ctx.fillStyle=fur;
+    ctx.beginPath();ctx.moveTo(-36,-177);ctx.lineTo(-48,-198);ctx.lineTo(-24,-184);ctx.closePath();ctx.fill();
+    ctx.beginPath();ctx.moveTo(28,-185);ctx.lineTo(47,-199);ctx.lineTo(40,-173);ctx.closePath();ctx.fill();
+    ctx.fillStyle=skinLight;
+    ctx.beginPath();
+    ctx.ellipse(-3,-166,43,38,0,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.moveTo(-39,-160);ctx.lineTo(-55,-151);ctx.lineTo(-38,-145);ctx.closePath();ctx.fill();
+    ctx.beginPath();ctx.moveTo(34,-160);ctx.lineTo(53,-151);ctx.lineTo(35,-144);ctx.closePath();ctx.fill();
+
+    // Field cap sits between the ears.
+    ctx.fillStyle=olive;
+    ctx.beginPath();ctx.ellipse(-4,-193,39,12,-.03,Math.PI,0);ctx.fill();
+    ctx.beginPath();ctx.roundRect(-42,-197,74,12,5);ctx.fill();
+    ctx.fillStyle=oliveDark;ctx.beginPath();ctx.ellipse(-2,-185,37,7,0,0,Math.PI);ctx.fill();
+    ctx.fillStyle='#9b873e';ctx.fillRect(-8,-198,8,7);
+
+    // Brow, eyes and muzzle. The brow steepens as Bob gets angrier.
+    const browDrop=bossPhase===1?0:bossPhase===2?2:4;
+    ctx.strokeStyle=ink;ctx.lineWidth=5;ctx.lineCap='round';
+    ctx.beginPath();ctx.moveTo(-28,-172+browDrop);ctx.lineTo(-10,-168);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(20,-172+browDrop);ctx.lineTo(4,-168);ctx.stroke();
+    ctx.fillStyle=bossPhase===3?'#efb44c':'#211d1a';
+    ctx.beginPath();ctx.ellipse(-17,-163,4.5,5,0,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.ellipse(12,-163,4.5,5,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#f1d3ac';
+    ctx.beginPath();ctx.ellipse(-4,-145,26,18,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#442d28';
+    ctx.beginPath();ctx.moveTo(-11,-151);ctx.quadraticCurveTo(-3,-158,5,-151);ctx.quadraticCurveTo(-3,-145,-11,-151);ctx.fill();
+    ctx.strokeStyle=furDark;ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(-4,-145);ctx.lineTo(-4,-136);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(-19,-136);ctx.quadraticCurveTo(-4,-128,12,-136);ctx.stroke();
+
+    // Cheek stripes and whisker dots keep the bobcat identity readable at game scale.
+    ctx.strokeStyle=furDark;ctx.lineWidth=5;
+    for(const y of [-171,-159]){
+      ctx.beginPath();ctx.moveTo(-36,y);ctx.lineTo(-25,y+5);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(31,y);ctx.lineTo(21,y+5);ctx.stroke();
+    }
+    ctx.fillStyle='#6a4938';
+    for(const p of [[-18,-145],[-14,-140],[9,-145],[5,-140]]){ctx.beginPath();ctx.arc(p[0],p[1],1.4,0,Math.PI*2);ctx.fill();}
+
+    // A little scar and tooth make him feel like a recurring nuisance, not a clean mascot.
+    ctx.strokeStyle='#7f4c3d';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(24,-158);ctx.lineTo(31,-148);ctx.moveTo(29,-160);ctx.lineTo(34,-154);ctx.stroke();
+    ctx.fillStyle='#f4ead6';ctx.beginPath();ctx.moveTo(7,-135);ctx.lineTo(13,-135);ctx.lineTo(10,-128);ctx.closePath();ctx.fill();
+
+    if(bossWindup>0){drawTank(ctx,{x:0,y:-225,angle:-.12},'BOB TANK');}
+    ctx.restore();
+  }
   function render(){ctx.clearRect(0,0,W,H);ctx.save();if(shake>.4)ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);drawBackground();ctx.save();ctx.translate(-cameraX,0);drawArena();drawJohnny(ctx,johnny,steroidTimer,elapsed);drawBob();if(tank.ready){drawAim(ctx,tank,aim,steroidTimer);if(aim&&!tank.flying&&running){const h=getHeld();drawTank(ctx,{...tank,x:h.x,y:h.y,angle:-.08});}else drawTank(ctx,tank);}else if(tank.flying)drawTank(ctx,tank);if(incoming.active){drawTank(ctx,incoming,'INCOMING');if(catchHolding){ctx.strokeStyle='#a8ff58';ctx.lineWidth=7;ctx.beginPath();ctx.arc(incoming.x,incoming.y,72+Math.sin(elapsed*10)*8,0,Math.PI*2);ctx.stroke();}}for(const p of particles){ctx.globalAlpha=Math.max(0,p.life/p.max);ctx.fillStyle='#ffd85a';ctx.fillRect(p.x-p.size/2,p.y-p.size/2,p.size,p.size);}ctx.globalAlpha=1;for(const f of floaters){ctx.globalAlpha=Math.max(0,f.life/.9);ctx.fillStyle='#fff4a5';ctx.font='900 26px Impact, system-ui, sans-serif';ctx.textAlign='center';ctx.fillText(f.text,f.x,f.y);}ctx.globalAlpha=1;ctx.textAlign='left';ctx.restore();ctx.restore();}
   function frame(now){const dt=Math.min((now-lastTime)/1000,.033);lastTime=now;update(dt);render();requestAnimationFrame(frame);}
 
