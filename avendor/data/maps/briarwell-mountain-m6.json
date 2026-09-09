@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m6",
+  "title": "Mountain - M6",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m6/background/briarwell-mountain-m6-v1.webp",
+    "alt": "A high mountain shelf bends between a southeast ledge and a southwest trail amid snow-dusted basalt"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 1180, "y": 665, "facing": "west" },
+    "from-southeast": { "x": 1275, "y": 680, "facing": "northwest" },
+    "from-southwest": { "x": 165, "y": 680, "facing": "northeast" }
+  },
+  "walkable": [
+    {
+      "id": "high-bending-shelf",
+      "points": [[0, 585], [170, 530], [295, 445], [430, 390], [585, 405], [735, 460], [900, 500], [1080, 525], [1260, 570], [1448, 620], [1448, 790], [1280, 740], [1090, 690], [900, 655], [720, 625], [555, 590], [415, 570], [300, 605], [175, 690], [0, 760]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "southeast-path",
+      "label": "Southeast path to Rock Ledge Pass",
+      "direction": "southeast",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-rock-ledge-pass",
+        "spawnId": "from-northwest",
+        "returnTransitionId": "northwest-path"
+      },
+      "fallbackSpawn": "from-southeast",
+      "points": [[1348, 615], [1440, 630], [1440, 775], [1348, 750]]
+    },
+    {
+      "id": "southwest-path",
+      "label": "Southwest path to Mountain M7",
+      "direction": "southwest",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m7",
+        "spawnId": "from-northeast",
+        "returnTransitionId": "northeast-path"
+      },
+      "fallbackSpawn": "from-southwest",
+      "points": [[8, 600], [100, 570], [100, 735], [8, 755]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "high-bending-shelf",
+      "label": "High bending shelf",
+      "x": 690,
+      "y": 535,
+      "radius": 145,
+      "interactionText": "The ledge broadens briefly here before the mountain trail bends southwest again."
+    }
+  ],
+  "npcs": []
+}

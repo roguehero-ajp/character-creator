@@ -156,6 +156,7 @@
       this.height = data.referenceSize.height;
       this.walkable = data.walkable || [];
       this.collisions = data.collisions || [];
+      this.hazards = data.hazards || [];
       this.exits = data.exits || [];
       this.portals = data.portals || [];
       this.interactables = data.interactables || [];
@@ -291,6 +292,12 @@
       return exit ? { ...exit, type: 'exit' } : null;
     }
 
+    getHazardAt(position) {
+      const point = [position.x, position.y];
+      const hazard = this.hazards.find((candidate) => pointInPolygon(point, candidate.points));
+      return hazard ? { ...hazard, type: 'hazard' } : null;
+    }
+
     getNearbyInteractable(position) {
       const transitionPortals = this.portals
         .filter((candidate) => candidate.activation === 'interact')
@@ -355,6 +362,9 @@
     ));
     map.collisions.forEach((region) => drawPolygon(
       ctx, region, 'rgba(231, 76, 60, .22)', 'rgba(255, 108, 94, .9)'
+    ));
+    map.hazards.forEach((region) => drawPolygon(
+      ctx, region, 'rgba(243, 156, 18, .28)', 'rgba(255, 190, 72, .95)'
     ));
     map.exits.forEach((region) => drawPolygon(
       ctx, region, 'rgba(52, 152, 219, .30)', 'rgba(105, 205, 255, .95)'

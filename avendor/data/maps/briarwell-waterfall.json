@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell-waterfall",
   "title": "Waterfall",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
     "background": "assets/maps/briarwell/mountain-river/waterfall/background/briarwell-waterfall-v2.webp",
@@ -63,9 +63,10 @@
   ],
   "npcs": [],
   "forcedEntry": {
-    "status": "reserved",
+    "status": "active",
     "spawnId": "from-mountain-fall",
-    "source": "future mountain-river knockback"
+    "source": "Rock Ledge Pass balance-check failure",
+    "sourceAreaId": "briarwell-rock-ledge-pass"
   },
   "waterTraversal": {
     "status": "animation-planned",

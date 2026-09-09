@@ -94,6 +94,22 @@ assert(Math.abs(parseFloat(player.style.left) - (1148 / 1448 * 100)) < 0.001, 'T
 assert(stage.style['--stage-ratio'] === '1448 / 944', 'The wide arena did not preserve its viewport height.');
 
 sceneMap = {
+  width: 2048,
+  height: 944,
+  data: { id: 'briarwell-rock-ledge-pass' },
+  getScale: () => 0.72,
+  getDepth: (y) => 1000 + y
+};
+area = { id: 'briarwell-rock-ledge-pass' };
+heroPosition = { x: 1024, y: 500 };
+frames.shift()(24);
+
+assert(stage.dataset.cameraScroll === 'true', 'Rock Ledge Pass did not enable horizontal camera scrolling.');
+assert(context.window.AvendorKoboldRuntime.getCameraX() === 300, 'Rock Ledge Pass did not center its mid-route camera.');
+assert(Math.abs(parseFloat(stageArt.style.left) + (300 / 1448 * 100)) < 0.001, 'Rock Ledge Pass did not pan its background with the hero.');
+assert(stage.style['--stage-ratio'] === '1448 / 944', 'Rock Ledge Pass did not preserve its shallow viewport height.');
+
+sceneMap = {
   width: 1448,
   height: 1086,
   data: { id: 'briarwell-forest-f20' },
@@ -109,4 +125,4 @@ assert(context.window.AvendorKoboldRuntime.getCameraX() === 0, 'The camera offse
 assert(stageArt.style.left === '0' && stageArt.style.width === '100%', 'Normal-width background sizing was not restored.');
 assert(stage.style['--stage-ratio'] === '1448 / 1086', 'The normal map aspect ratio was not restored.');
 
-console.log("Wide-area camera scrolling passes for the Ogre's Clearing and resets on F20.");
+console.log("Wide-area camera scrolling passes for the Ogre's Clearing and Rock Ledge Pass, then resets on F20.");

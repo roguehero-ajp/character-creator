@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m10",
+  "title": "Mountain - M10",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m10/background/briarwell-mountain-m10-v1.webp",
+    "alt": "A broad mountain shelf turns from the east into a clearly open southbound trail toward Mountain M11"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 780, "y": 565, "facing": "south" },
+    "from-east": { "x": 1280, "y": 515, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "southern-turning-shelf",
+      "points": [[1448, 405], [1260, 420], [1080, 440], [910, 425], [760, 390], [615, 395], [500, 445], [435, 520], [430, 610], [475, 700], [525, 790], [560, 920], [580, 1086], [825, 1086], [820, 925], [805, 800], [785, 700], [790, 625], [850, 575], [960, 550], [1100, 565], [1270, 585], [1448, 610]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "east-path",
+      "label": "East trail to Mountain M9",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m9",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1348, 420], [1440, 415], [1440, 595], [1348, 600]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "future-m11-trail",
+      "label": "South trail toward Mountain M11",
+      "x": 700,
+      "y": 900,
+      "radius": 145,
+      "interactionText": "The mountain trail continues openly south toward Mountain M11. That stretch has not yet been charted."
+    }
+  ],
+  "npcs": [],
+  "futureConnections": [
+    {
+      "id": "mountain-m10-m11",
+      "direction": "south",
+      "status": "art-only",
+      "note": "The southbound trail is visibly open and will become active when Mountain M11 is authored."
+    }
+  ]
+}

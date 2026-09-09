@@ -24,9 +24,10 @@
   const MapGeometry = window.AvendorMapEngine?.MapGeometry;
   const AreaRegistry = window.AvendorWorldMap?.AreaRegistry;
   const Sprite = window.AvendorSpriteEngine?.LayeredSprite;
+  const LedgeHazard = window.AvendorLedgeHazard;
   const WALK_STEP_SECONDS = (window.AvendorSpriteEngine?.WALK_FRAME_MS || 110) / 1000;
-  if (!MapGeometry || !AreaRegistry || !Sprite) {
-    throw new Error('The map, world-map and sprite engines must load before walk-test.js.');
+  if (!MapGeometry || !AreaRegistry || !Sprite || !LedgeHazard) {
+    throw new Error('The map, world-map, sprite and ledge-hazard engines must load before walk-test.js.');
   }
 
   const hero = new Sprite(playerCanvas, { body: 'male' });
@@ -46,6 +47,7 @@
   let lastDirection = 'north';
   let transitionLock = false;
   let activeTriggerId = null;
+  let activeHazardId = null;
   let musicStarted = false;
   let debugVisible = false;
   let nearbyId = null;
@@ -110,18 +112,23 @@
 
   function moveToLocalSpawn(spawnId) {
     const spawn = map?.getExactSpawn(spawnId);
-    if (!spawn || !map.isWalkable(spawn.x, spawn.y) || map.getTriggerAt(spawn)) return false;
+    if (
+      !spawn
+      || !map.isWalkable(spawn.x, spawn.y)
+      || map.getTriggerAt(spawn)
+      || map.getHazardAt(spawn)
+    ) return false;
     position = { x: spawn.x, y: spawn.y };
     lastDirection = spawn.facing || lastDirection;
     lastSafePosition = { ...position, facing: lastDirection };
     activeTriggerId = null;
+    activeHazardId = null;
     setPosition();
     updateInteractionPrompt();
     return true;
   }
 
-  function naturalSkillRating(skillName) {
-    const state = window.AvendorPlayerState?.load?.();
+  function naturalSkillRating(skillName, state = window.AvendorPlayerState?.load?.()) {
     const skill = window.AvendorPlayerState?.naturalSkills?.(state)
       ?.find((candidate) => candidate.name === skillName);
     return Number(skill?.rating) || 1;
@@ -461,6 +468,9 @@
     if (nextMap.getTriggerAt(spawn)) {
       throw new Error(`Spawn overlaps a transition trigger: ${area.id}/${spawnId}`);
     }
+    if (nextMap.getHazardAt(spawn)) {
+      throw new Error(`Spawn overlaps a hazard trigger: ${area.id}/${spawnId}`);
+    }
 
     const [, residents] = await Promise.all([
       preloadMapArt(nextMap),
@@ -478,6 +488,7 @@
     lastDirection = spawn.facing || lastDirection;
     lastSafePosition = { ...position, facing: lastDirection };
     activeTriggerId = null;
+    activeHazardId = null;
     nearbyId = null;
     lastStatusText = '';
 
@@ -502,6 +513,7 @@
       candidate
       && map.isWalkable(candidate.x, candidate.y)
       && !map.getTriggerAt(candidate)
+      && !map.getHazardAt(candidate)
     );
   }
 
@@ -545,6 +557,77 @@
         || `${trigger.label} is not currently passable. The hero returned safely.`;
     }
     return `${trigger.label} leads to ${resolution.area.title}, which is planned but not playable yet.`;
+  }
+
+  async function handleHazard(hazard) {
+    if (!map || transitionLock || activeHazardId === hazard.id) return;
+    transitionLock = true;
+    activeHazardId = hazard.id;
+    keys.clear();
+    hero.setMotion('idle', lastDirection);
+    updateInteractionPrompt();
+
+    const sourceMap = map;
+
+    try {
+      const state = window.AvendorPlayerState?.load?.();
+      const result = LedgeHazard.resolve(hazard.check, {
+        agility: state?.stats?.agility,
+        climb: naturalSkillRating(hazard.check.skill || 'Climb', state),
+        luck: state?.luck
+      });
+      const formula = `Agility × ${result.multiplier} + Climb`;
+
+      if (result.outcome === 'crossed') {
+        setNotice(
+          `${hazard.label}: ${formula} gives ${result.chance}%; rolled ${result.agilityRoll}. You keep your footing.`,
+          4600
+        );
+        return;
+      }
+
+      if (result.outcome === 'caught') {
+        returnToSafePosition(hazard);
+        setNotice(
+          `${hazard.label}: ${formula} gives ${result.chance}%; rolled ${result.agilityRoll}. Your footing slips, but a stroke of luck lets you catch the ledge.`,
+          5200
+        );
+        return;
+      }
+
+      const target = hazard.check?.failureTarget;
+      if (!target?.areaId || !target?.spawnId) {
+        throw new Error(`Hazard has no safe failure destination: ${map.data.id}/${hazard.id}.`);
+      }
+
+      stage.classList.add('map-transitioning');
+      setNotice(
+        `${hazard.label}: ${formula} gives ${result.chance}%; rolled ${result.agilityRoll}. You fall into the mountain river!`,
+        4600
+      );
+      await delay(TRANSITION_FADE_MS);
+
+      try {
+        await loadArea(target.areaId, target.spawnId);
+        setNotice('The current hurls you downstream and over the falls into the Waterfall plunge pool.', 5200);
+      } catch (error) {
+        console.error(error);
+        if (map === sourceMap) returnToSafePosition(hazard);
+        triggerConfusion('The river-fall destination could not be loaded. The hero returned safely.');
+      } finally {
+        stage.classList.remove('map-transitioning');
+        await delay(TRANSITION_FADE_MS);
+      }
+    } catch (error) {
+      console.error(error);
+      if (map === sourceMap) returnToSafePosition(hazard);
+      setNotice('The ledge check could not be resolved. The hero returned safely.', 3200);
+      activeHazardId = null;
+    } finally {
+      transitionLock = false;
+      setPosition();
+      updateInteractionPrompt();
+    }
   }
 
   async function handleTrigger(trigger, checkMessage = '') {
@@ -607,7 +690,7 @@
     debugButton.setAttribute('aria-pressed', String(debugVisible));
     debugButton.textContent = `Map debug: ${debugVisible ? 'on' : 'off'}`;
     if (debugVisible && map) {
-      setNotice('Map debug: green is walkable, red is solid, blue is an outdoor exit, purple is a door, gold dashed shapes are depth occluders and gold dots are resident positions.', 3600);
+      setNotice('Map debug: green is walkable, red is solid, orange is a hazard, blue is an outdoor exit, purple is a door, gold dashed shapes are depth occluders and gold dots are resident positions.', 4200);
     }
   }
 
@@ -637,6 +720,9 @@
       const requestedMovement = dx !== 0 || dy !== 0;
 
       if (requestedMovement) {
+        const occupiedHazard = map.getHazardAt(position);
+        if (!occupiedHazard || occupiedHazard.id !== activeHazardId) activeHazardId = null;
+
         lastDirection = directionFromVector(dx, dy);
         const magnitude = Math.hypot(dx, dy) || 1;
         dx /= magnitude;
@@ -657,12 +743,17 @@
             position = next;
             setPosition();
 
-            const trigger = map.getTriggerAt(position);
-            if (trigger) {
-              void handleTrigger(trigger);
+            const hazard = map.getHazardAt(position);
+            if (hazard) {
+              if (activeHazardId !== hazard.id) void handleHazard(hazard);
             } else {
-              activeTriggerId = null;
-              lastSafePosition = { ...position, facing: lastDirection };
+              const trigger = map.getTriggerAt(position);
+              if (trigger) {
+                void handleTrigger(trigger);
+              } else {
+                activeTriggerId = null;
+                lastSafePosition = { ...position, facing: lastDirection };
+              }
             }
           }
         }
@@ -752,7 +843,7 @@
       setNotice(
         `${currentArea.title} map data loaded. ${map.data.collisions.length} foot-level collision regions, `
         + `${map.data.exits.length} outdoor exits, ${map.data.portals.length} building portals and `
-        + `${map.npcs.length} residents are active.${directEntryWarning}`,
+        + `${map.hazards.length} hazards and ${map.npcs.length} residents are active.${directEntryWarning}`,
         3600
       );
     } catch (error) {

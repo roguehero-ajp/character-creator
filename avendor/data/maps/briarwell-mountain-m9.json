@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m9",
+  "title": "Mountain - M9",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m9/background/briarwell-mountain-m9-v1.webp",
+    "alt": "An exposed east-west trail threads between tall basalt fins above cloud-filled mountain drops"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 535, "facing": "west" },
+    "from-east": { "x": 1285, "y": 535, "facing": "west" },
+    "from-west": { "x": 160, "y": 515, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "basalt-fin-traverse",
+      "points": [[0, 420], [180, 435], [360, 455], [540, 465], [720, 470], [900, 465], [1080, 450], [1260, 425], [1448, 405], [1448, 615], [1260, 630], [1080, 645], [900, 650], [720, 645], [540, 635], [360, 620], [180, 600], [0, 585]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "east-path",
+      "label": "East trail to Mountain M8",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m8",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1348, 420], [1440, 415], [1440, 600], [1348, 615]]
+    },
+    {
+      "id": "west-path",
+      "label": "West trail to Mountain M10",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m10",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 430], [100, 440], [100, 580], [8, 575]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "basalt-fins",
+      "label": "Basalt fins",
+      "x": 735,
+      "y": 540,
+      "radius": 145,
+      "interactionText": "Columns of dark stone split the gale while the old foot trail presses west."
+    }
+  ],
+  "npcs": []
+}

@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "id": "briarwell-mountain-m5",
   "title": "Mountain - M5",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
     "background": "assets/maps/briarwell/mountains/m5/background/briarwell-mountain-m5-v1.webp",
-    "alt": "An exposed east-west mountain traverse crosses a windswept plateau, with a blocked route visible to the west"
+    "alt": "An exposed east-west mountain traverse crosses a windswept plateau between Mountain M4 and Rock Ledge Pass"
   },
   "movement": {
     "speedX": 275,
@@ -25,16 +25,30 @@
   },
   "spawnPoints": {
     "default": { "x": 800, "y": 520, "facing": "west" },
-    "from-east": { "x": 1290, "y": 460, "facing": "west" }
+    "from-east": { "x": 1290, "y": 460, "facing": "west" },
+    "from-west": { "x": 155, "y": 465, "facing": "east" }
   },
   "walkable": [
     {
       "id": "exposed-western-traverse",
-      "points": [[100, 380], [330, 400], [520, 430], [760, 430], [980, 400], [1200, 370], [1448, 360], [1448, 550], [1240, 560], [1020, 590], [800, 620], [560, 610], [330, 570], [120, 530]]
+      "points": [[0, 380], [330, 400], [520, 430], [760, 430], [980, 400], [1200, 370], [1448, 360], [1448, 550], [1240, 560], [1020, 590], [800, 620], [560, 610], [330, 570], [0, 530]]
     }
   ],
   "collisions": [],
   "exits": [
+    {
+      "id": "west-path",
+      "label": "West mountain path to Rock Ledge Pass",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-rock-ledge-pass",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 400], [100, 400], [100, 530], [8, 530]]
+    },
     {
       "id": "east-path",
       "label": "East mountain path to Mountain M4",
@@ -53,12 +67,12 @@
   "depthOccluders": [],
   "interactables": [
     {
-      "id": "future-western-route",
-      "label": "Blocked western traverse",
+      "id": "rock-ledge-approach",
+      "label": "Rock Ledge approach",
       "x": 190,
       "y": 465,
       "radius": 130,
-      "interactionText": "The old traverse continues west beyond the broken ledge. Its far side has not yet been charted."
+      "interactionText": "The exposed traverse narrows westward into Rock Ledge Pass above the mountain river."
     },
     {
       "id": "exposed-heights",
@@ -69,13 +83,5 @@
       "interactionText": "There is little shelter here. Wind drives loose snow across the bare stone."
     }
   ],
-  "npcs": [],
-  "futureConnections": [
-    {
-      "id": "mountain-m5-western-region",
-      "direction": "west",
-      "status": "art-only",
-      "note": "The westward mountain route is visible but remains blocked until the neighboring area is authored."
-    }
-  ]
+  "npcs": []
 }

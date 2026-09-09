@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m7",
+  "title": "Mountain - M7",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m7/background/briarwell-mountain-m7-v1.webp",
+    "alt": "A mountain switchback descends from the northeast through a basalt saddle and leaves west"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 680, "y": 555, "facing": "west" },
+    "from-northeast": { "x": 1305, "y": 190, "facing": "southwest" },
+    "from-west": { "x": 155, "y": 520, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "descending-switchback",
+      "points": [[0, 425], [190, 445], [385, 485], [570, 475], [735, 435], [900, 370], [1045, 295], [1175, 205], [1300, 110], [1400, 35], [1448, 30], [1448, 225], [1370, 260], [1260, 325], [1140, 410], [1020, 500], [880, 570], [735, 620], [570, 660], [390, 625], [195, 580], [0, 590]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "northeast-path",
+      "label": "Northeast path to Mountain M6",
+      "direction": "northeast",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m6",
+        "spawnId": "from-southwest",
+        "returnTransitionId": "southwest-path"
+      },
+      "fallbackSpawn": "from-northeast",
+      "points": [[1340, 38], [1440, 38], [1440, 205], [1375, 235], [1325, 150]]
+    },
+    {
+      "id": "west-path",
+      "label": "West path to Mountain M8",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m8",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 450], [100, 455], [100, 570], [8, 575]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "basalt-switchback",
+      "label": "Basalt switchback",
+      "x": 730,
+      "y": 520,
+      "radius": 145,
+      "interactionText": "The old trail turns sharply around the mountain's dark basalt shoulder."
+    }
+  ],
+  "npcs": []
+}
