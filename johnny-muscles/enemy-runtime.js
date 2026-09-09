@@ -7,6 +7,45 @@
   if (!window.JMEnemyArt) throw new Error('enemy-art.js must load before enemy-runtime.js');
   if (!window.JMTankArt) throw new Error('tank-art.js must load before enemy-runtime.js');
 
+  const JOHNNY_SCALE = 0.50;
+  const JOHNNY_ANCHOR_X = 142;
+  const JOHNNY_ANCHOR_Y = 582;
+  const JOHNNY_OFFSET_X = 24;
+
+  function withJohnnyScale(ctx, draw) {
+    ctx.save();
+    ctx.translate(JOHNNY_OFFSET_X, 0);
+    ctx.translate(JOHNNY_ANCHOR_X, JOHNNY_ANCHOR_Y);
+    ctx.scale(JOHNNY_SCALE, JOHNNY_SCALE);
+    ctx.translate(-JOHNNY_ANCHOR_X, -JOHNNY_ANCHOR_Y);
+    draw();
+    ctx.restore();
+  }
+
+  function drawScaledLegacy(ctx, drawJohnny) {
+    withJohnnyScale(ctx, drawJohnny);
+  }
+
+  function installSharedJohnnyScale() {
+    const S = window.JMShared;
+    if (!S || S.__johnnyScale094Installed) return;
+    const originalDrawJohnny = S.drawJohnny;
+    S.drawJohnny = function scaledJohnny(ctx, ...args) {
+      withJohnnyScale(ctx, () => originalDrawJohnny(ctx, ...args));
+    };
+    S.__johnnyScale094Installed = true;
+  }
+
+  window.JMJohnnyScale = {
+    SCALE: JOHNNY_SCALE,
+    ANCHOR_X: JOHNNY_ANCHOR_X,
+    ANCHOR_Y: JOHNNY_ANCHOR_Y,
+    OFFSET_X: JOHNNY_OFFSET_X,
+    drawLegacy: drawScaledLegacy
+  };
+
+  installSharedJohnnyScale();
+
   function replaceOrThrow(source, regex, replacement, label) {
     const next = source.replace(regex, replacement);
     if (next === source) throw new Error(`Visual patch target not found: ${label}`);
@@ -77,6 +116,16 @@
     return source;
   }
 
+  function patchLegacyJohnnyRenderer(source) {
+    if (core !== 'game.js' && core !== 'city2.js' && core !== 'city3.js') return source;
+    return replaceOrThrow(
+      source,
+      /(\n\s*)drawJohnny\(\);(\n\s*drawAim\(\);)/,
+      `$1window.JMJohnnyScale.drawLegacy(ctx, drawJohnny);$2`,
+      `${core} Johnny render call`
+    );
+  }
+
   function patchEnemyArt(source) {
     if (core === 'game.js') {
       return replaceOrThrow(
@@ -145,11 +194,12 @@
   function patch(source) {
     let next = patchLocalTankRenderer(source);
     next = patchTankCollision(next);
+    next = patchLegacyJohnnyRenderer(next);
     next = patchEnemyArt(next);
     return next;
   }
 
-  fetch(`${core}?rev=0.9.3-core`, { cache: 'no-store' })
+  fetch(`${core}?rev=0.9.4-core`, { cache: 'no-store' })
     .then(response => {
       if (!response.ok) throw new Error(`Could not load ${core}: ${response.status}`);
       return response.text();
