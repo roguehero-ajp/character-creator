@@ -132,6 +132,7 @@
 
     const m = metrics();
     const p = pointerToCanvas(e, m);
+    if (typeof window.JMShouldBypassGrabProxy === 'function' && window.JMShouldBypassGrabProxy(p, e)) return;
     const directDistance = Math.hypot(p.x - TANK_HOME.x, p.y - TANK_HOME.y);
 
     if (directDistance <= DIRECT_TANK_RADIUS) {
