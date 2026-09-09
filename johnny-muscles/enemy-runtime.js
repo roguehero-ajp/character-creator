@@ -11,10 +11,11 @@
   const JOHNNY_ANCHOR_X = 142;
   const JOHNNY_ANCHOR_Y = 582;
   const JOHNNY_OFFSET_X = 24;
+  const JOHNNY_OFFSET_Y = 3;
 
   function withJohnnyScale(ctx, draw) {
     ctx.save();
-    ctx.translate(JOHNNY_OFFSET_X, 0);
+    ctx.translate(JOHNNY_OFFSET_X, JOHNNY_OFFSET_Y);
     ctx.translate(JOHNNY_ANCHOR_X, JOHNNY_ANCHOR_Y);
     ctx.scale(JOHNNY_SCALE, JOHNNY_SCALE);
     ctx.translate(-JOHNNY_ANCHOR_X, -JOHNNY_ANCHOR_Y);
@@ -41,6 +42,7 @@
     ANCHOR_X: JOHNNY_ANCHOR_X,
     ANCHOR_Y: JOHNNY_ANCHOR_Y,
     OFFSET_X: JOHNNY_OFFSET_X,
+    OFFSET_Y: JOHNNY_OFFSET_Y,
     drawLegacy: drawScaledLegacy
   };
 
@@ -199,7 +201,7 @@
     return next;
   }
 
-  fetch(`${core}?rev=0.9.4-core`, { cache: 'no-store' })
+  fetch(`${core}?rev=0.9.5-core`, { cache: 'no-store' })
     .then(response => {
       if (!response.ok) throw new Error(`Could not load ${core}: ${response.status}`);
       return response.text();
