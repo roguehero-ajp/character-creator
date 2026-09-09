@@ -145,6 +145,7 @@ function assertPlayableMapGeometry(MapGeometry, areaId, data) {
   ['walkable', 'collisions', 'exits', 'portals', 'depthOccluders'].forEach((collectionName) => {
     assertRegionGeometry(areaId, data, collectionName);
   });
+  if (data.hazards !== undefined) assertRegionGeometry(areaId, data, 'hazards');
   data.depthOccluders.forEach((region) => {
     assert(
       Number.isFinite(region.depthY)
@@ -156,6 +157,7 @@ function assertPlayableMapGeometry(MapGeometry, areaId, data) {
   Object.entries(data.spawnPoints).forEach(([spawnId, spawn]) => {
     assert(geometry.isWalkable(spawn.x, spawn.y), `Spawn is blocked: ${areaId}/${spawnId}`);
     assert(!geometry.getTriggerAt(spawn), `Spawn overlaps a transition: ${areaId}/${spawnId}`);
+    assert(!geometry.getHazardAt(spawn), `Spawn overlaps a hazard: ${areaId}/${spawnId}`);
   });
 
   transitions.forEach((transition) => {
@@ -246,12 +248,12 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   const topology = engine.auditTopology(registry, maps);
 
   assert(registryData.schemaVersion === 2, 'Briarwell must use the route-graph registry schema.');
-  assert(registryData.version === '0.28.0', 'The mountain-pass expansion requires registry version 0.28.0.');
-  assert(registryData.areas.length === 77, "Briarwell must register the town, sewers, support spaces, forest routes, Ogre's Clearing, Northfield, Misty Forest, river areas, mountains, farms, Witchwood and ancient-maple screens.");
-  assert(registryData.connections.length === 90, 'Briarwell must preserve all 90 approved internal connections.');
+  assert(registryData.version === '0.29.0', 'The western mountain-route expansion requires registry version 0.29.0.');
+  assert(registryData.areas.length === 83, "Briarwell must register the town, sewers, support spaces, forest routes, Ogre's Clearing, Northfield, Misty Forest, river areas, mountains, farms, Witchwood and ancient-maple screens.");
+  assert(registryData.connections.length === 96, 'Briarwell must preserve all 96 approved internal connections.');
   assert(registryData.cityExits.length === 1, 'Only the blocked road beyond the broken bridge should remain an unresolved city exit.');
   assert(
-    Object.keys(maps).length === 77,
+    Object.keys(maps).length === 83,
     "Briarwell must load every town, sewer, support-interior, forest, farm, Ogre's Clearing, Northfield, Misty Forest, river, mountain and Witchwood map."
   );
   assert(topology.errors.length === 0, topology.errors.join('\n'));
@@ -348,7 +350,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     return counts;
   }, {});
   assert(kindCounts.road === 51, "Briarwell must preserve all established town, forest, Ogre's Clearing, Witchwood and farm-road connections.");
-  assert(kindCounts.trail === 10, 'The Northfield, Misty Forest, Swimmable and mountain walking routes must remain trails rather than roads.');
+  assert(kindCounts.trail === 16, 'The Northfield, Misty Forest, Swimmable and mountain walking routes must remain trails rather than roads.');
   assert(kindCounts['river-escape'] === 1, 'Waterfall must retain exactly one directed river escape into Swimmable.');
   assert(kindCounts.alley === 1, 'Briarwell must preserve the Ainsley alley connection.');
   assert(kindCounts.doorway === 2, 'Briarwell must preserve the two Town Center doorways.');
@@ -389,7 +391,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const publicReachable = collectReachableAreas(registry, 'briarwell-town-center', false);
   const allReachable = collectReachableAreas(registry, 'briarwell-town-center', true);
-  assert(publicReachable.size === 59, "The public route graph must connect the town, outskirts, farms, Witchwood, ancient maple, Northfield, Misty Forest, Swimmable, mountains, Dwarven Cave, dark forest and Ogre's Clearing.");
+  assert(publicReachable.size === 65, "The public route graph must connect the town, outskirts, farms, Witchwood, ancient maple, Northfield, Misty Forest, Swimmable, mountains, Dwarven Cave, dark forest and Ogre's Clearing.");
   assert(
     ![...publicReachable].some((areaId) => areaId.startsWith('briarwell-sewer-')),
     'The sewers must not appear in public navigation.'
@@ -401,7 +403,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   assert(
     allReachable.size === registryData.areas.length - 1
       && !allReachable.has('briarwell-waterfall'),
-    'Hidden routes must complete the town graph except for Waterfall, which is deliberately entered only by a future forced fall.'
+    'Hidden routes must complete the town graph except for Waterfall, which is deliberately entered only by a Rock Ledge hazard fall.'
   );
 
   const bridgeExit = registry.getCityExitForTransition('briarwell-broken-bridge', 'east-road');

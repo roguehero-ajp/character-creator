@@ -72,7 +72,7 @@ const mapContracts = {
   },
   'briarwell-waterfall': {
     art: 'briarwell-waterfall-v2.webp',
-    version: '0.2.0',
+    version: '0.3.0',
     directions: ['southeast'],
     position: [-1, -5]
   }
@@ -179,10 +179,12 @@ assert(
   'Swimmable must not expose a return route up the Waterfall current or a premature south-water transition.'
 );
 assert(
-  waterfall.forcedEntry?.status === 'reserved'
+  waterfall.forcedEntry?.status === 'active'
     && waterfall.forcedEntry?.spawnId === 'from-mountain-fall'
+    && waterfall.forcedEntry?.sourceAreaId === 'briarwell-rock-ledge-pass'
+    && waterfall.forcedEntry?.source.includes('Rock Ledge Pass')
     && waterfall.waterTraversal?.status === 'animation-planned',
-  'Waterfall must reserve the future mountain knockback entry and swimming animation handoff.'
+  'Waterfall must accept Rock Ledge falls while preserving the planned swimming-animation handoff.'
 );
 assert(
   waterfallExit?.status === 'active'

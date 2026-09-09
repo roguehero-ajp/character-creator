@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-rock-ledge-pass",
+  "title": "Rock Ledge Pass",
+  "version": "0.1.0",
+  "referenceSize": { "width": 2048, "height": 944 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/rock-ledge-pass/background/briarwell-rock-ledge-pass-v1.webp",
+    "alt": "A long, narrow mountain ledge crosses high above a raging river gorge between an eastern shelf and a northwest pass"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 80, "scale": 0.5 },
+      { "y": 300, "scale": 0.6 },
+      { "y": 540, "scale": 0.74 },
+      { "y": 860, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 1840, "y": 610, "facing": "northwest" },
+    "from-east": { "x": 1840, "y": 610, "facing": "northwest" },
+    "from-northwest": { "x": 235, "y": 165, "facing": "southeast" }
+  },
+  "walkable": [
+    {
+      "id": "narrow-river-ledge",
+      "points": [[0, 0], [180, 0], [230, 70], [310, 145], [410, 225], [525, 280], [650, 325], [800, 350], [940, 390], [1085, 425], [1230, 465], [1380, 505], [1530, 530], [1660, 550], [1780, 565], [1900, 530], [2048, 520], [2048, 700], [1910, 690], [1780, 685], [1640, 655], [1510, 635], [1370, 610], [1225, 570], [1090, 535], [950, 505], [810, 475], [675, 440], [550, 400], [440, 350], [345, 300], [265, 235], [170, 165], [80, 125], [0, 120]]
+    }
+  ],
+  "collisions": [],
+  "hazards": [
+    {
+      "id": "western-ledge-check",
+      "label": "first narrow ledge",
+      "points": [[445, 240], [535, 275], [570, 405], [475, 370]],
+      "check": {
+        "type": "ledge-balance",
+        "stat": "agility",
+        "die": 100,
+        "multiplier": 7,
+        "skill": "Climb",
+        "luckCheck": { "stat": "luck", "die": 10, "operator": "<=" },
+        "failureTarget": { "areaId": "briarwell-waterfall", "spawnId": "from-mountain-fall" }
+      }
+    },
+    {
+      "id": "middle-ledge-check",
+      "label": "exposed middle ledge",
+      "points": [[1010, 390], [1095, 410], [1130, 550], [1035, 530]],
+      "check": {
+        "type": "ledge-balance",
+        "stat": "agility",
+        "die": 100,
+        "multiplier": 6,
+        "skill": "Climb",
+        "luckCheck": { "stat": "luck", "die": 10, "operator": "<=" },
+        "failureTarget": { "areaId": "briarwell-waterfall", "spawnId": "from-mountain-fall" }
+      }
+    },
+    {
+      "id": "eastern-ledge-check",
+      "label": "final icy constriction",
+      "points": [[1535, 500], [1625, 520], [1660, 670], [1560, 650]],
+      "check": {
+        "type": "ledge-balance",
+        "stat": "agility",
+        "die": 100,
+        "multiplier": 7,
+        "skill": "Climb",
+        "luckCheck": { "stat": "luck", "die": 10, "operator": "<=" },
+        "failureTarget": { "areaId": "briarwell-waterfall", "spawnId": "from-mountain-fall" }
+      }
+    }
+  ],
+  "exits": [
+    {
+      "id": "northwest-path",
+      "label": "Northwest ledge to Mountain M6",
+      "direction": "northwest",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m6",
+        "spawnId": "from-southeast",
+        "returnTransitionId": "southeast-path"
+      },
+      "fallbackSpawn": "from-northwest",
+      "points": [[8, 8], [170, 8], [205, 55], [125, 115], [8, 95]]
+    },
+    {
+      "id": "east-path",
+      "label": "East ledge to Mountain M5",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m5",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1950, 535], [2040, 525], [2040, 690], [1950, 685]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "mountain-river-gorge",
+      "label": "Mountain river gorge",
+      "x": 1260,
+      "y": 530,
+      "radius": 115,
+      "interactionText": "The river thunders far below. Anything falling from this ledge would be swept helplessly toward the waterfall."
+    }
+  ],
+  "npcs": []
+}

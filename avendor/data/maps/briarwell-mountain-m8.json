@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m8",
+  "title": "Mountain - M8",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m8/background/briarwell-mountain-m8-v1.webp",
+    "alt": "A wind-scoured east-west ridge runs beneath a towering snow-dusted basalt massif"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 720, "y": 535, "facing": "west" },
+    "from-east": { "x": 1285, "y": 520, "facing": "west" },
+    "from-west": { "x": 160, "y": 520, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "wind-scoured-ridge",
+      "points": [[0, 420], [180, 440], [370, 460], [560, 455], [750, 445], [940, 455], [1140, 445], [1300, 420], [1448, 410], [1448, 620], [1300, 625], [1120, 635], [930, 630], [750, 625], [560, 640], [370, 630], [180, 605], [0, 590]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "east-path",
+      "label": "East ridge to Mountain M7",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m7",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1348, 425], [1440, 420], [1440, 605], [1348, 615]]
+    },
+    {
+      "id": "west-path",
+      "label": "West ridge to Mountain M9",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m9",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 430], [100, 440], [100, 590], [8, 580]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "wind-scoured-ridge",
+      "label": "Wind-scoured ridge",
+      "x": 720,
+      "y": 535,
+      "radius": 145,
+      "interactionText": "Old wagon scars have vanished. Only a narrow foot trail remains across the wind-scoured stone."
+    }
+  ],
+  "npcs": []
+}
