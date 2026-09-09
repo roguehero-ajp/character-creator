@@ -36,7 +36,7 @@
     next = replaceOrThrow(
       next,
       `    if (levelNumber === 4) setTimeout(() => showToast('STOP THE LANDING OR THE SHOCKWAVE HITS JOHNNY!', 1900), 1350);`,
-      `    if (levelNumber === 4) setTimeout(() => showToast('ONLY THE BIG SHOCK CHONKERS MAKE SHOCKWAVES — AND ONLY UP CLOSE!', 2200), 1350);`,
+      `    if (levelNumber === 4) setTimeout(() => showToast('SMALL LEAPERS CAN BE HIT ANYTIME. SHOCK CHONKERS: AIR HITS ONLY!', 2300), 1350);`,
       'Level 4 warning toast'
     );
 
@@ -112,6 +112,13 @@
 
     next = replaceOrThrow(
       next,
+      `      if (a.kind === 'leaper' && LEVEL.airOnly && !a.airborne) {`,
+      `      if (a.kind === 'leaper' && LEVEL.airOnly && !a.airborne && a.chonker) {`,
+      'Shock Chonker ground armor only'
+    );
+
+    next = replaceOrThrow(
+      next,
       `      E.drawGround(ctx, { phase: a.bob });`,
       `      E.drawGround(ctx, { phase: a.bob, chonker: !!a.chonker });`,
       'chonker art'
@@ -134,7 +141,7 @@
     return next;
   }
 
-  fetch(`${CORE}?rev=0.10.1-core`, { cache: 'no-store' })
+  fetch(`${CORE}?rev=0.10.2-core`, { cache: 'no-store' })
     .then(response => {
       if (!response.ok) throw new Error(`Could not load ${CORE}: ${response.status}`);
       return response.text();
