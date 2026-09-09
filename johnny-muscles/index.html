@@ -10,7 +10,7 @@
   <meta http-equiv="Expires" content="0" />
   <title>Johnny Muscles: Tank Thrower</title>
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="style.css?rev=0.5.0" />
+  <link rel="stylesheet" href="style.css?rev=0.9.2" />
 </head>
 <body>
   <main id="game-shell" aria-label="Johnny Muscles: Tank Thrower">
@@ -46,12 +46,15 @@
 
     <section id="title-screen" class="overlay visible">
       <div class="card title-card">
-        <p class="eyebrow">PROTOTYPE 0.8.2 · CITY 1</p>
+        <p class="eyebrow">PROTOTYPE 0.9.2 · CITY 1</p>
         <h1>JOHNNY MUSCLES</h1>
         <h2>FIRST CONTACT</h2>
         <p class="tagline">Mission: Hold the defense line through three infected waves.</p>
         <p class="premise">Alien parasites have mutated Earth's cats. The military has tanks. Johnny has arms. Downtown is about to have a very complicated insurance claim.</p>
-        <button id="start" class="primary" type="button">DEPLOY JOHNNY</button>
+        <div class="button-row">
+          <button id="start" class="primary" type="button">DEPLOY JOHNNY</button>
+          <a class="primary primary-link secondary-action" href="city-enemies.html?build=0.9.2" style="display:inline-block;text-decoration:none">CITY ENEMY INTEL</a>
+        </div>
         <p class="instructions">Touch the tank or the grab point just to its right, drag backward to aim, then release. Clear all three waves before the defense line collapses.</p>
       </div>
     </section>
@@ -78,7 +81,7 @@
           <div class="result-wide"><span>Defense</span><strong id="result-defense">UNTOUCHED</strong></div>
         </div>
         <p class="next-mission">Next assignment: <strong>City 2 · Rooftop Problem</strong></p>
-        <a class="primary" href="city2.html?build=0.8.2" style="display:inline-block;text-decoration:none">CONTINUE TO CITY 2</a>
+        <a class="primary" href="city2.html?build=0.9.2" style="display:inline-block;text-decoration:none">CONTINUE TO CITY 2</a>
         <button id="replay" class="primary" type="button">REPLAY FIRST CONTACT</button>
       </div>
     </section>
@@ -86,8 +89,9 @@
     <div id="toast" class="toast" aria-live="assertive"></div>
   </main>
 
-  <script src="touch-grab.js?rev=0.8.2"></script>
-  <script src="game.js?rev=0.8.2"></script>
-  <script src="music.js?rev=0.8.2"></script>
+  <script src="touch-grab.js?rev=0.9.2"></script>
+  <script src="enemy-art.js?rev=0.9.2"></script>
+  <script src="enemy-runtime.js?rev=0.9.2" data-core="game.js"></script>
+  <script src="music.js?rev=0.9.2"></script>
 </body>
 </html>
