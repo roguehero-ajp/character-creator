@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#11131a" />
+  <title>Johnny Muscles · City Enemy Intel</title>
+  <link rel="stylesheet" href="style.css?rev=0.9.2" />
+  <style>
+    body{min-height:100vh;overflow:auto;background:radial-gradient(circle at 50% -10%,#39425b 0,#1a1e2b 46%,#0f1117 100%);color:#f6f1e7;font-family:system-ui,sans-serif;margin:0}
+    .intel{max-width:1180px;margin:0 auto;padding:32px 18px 46px}
+    .intel-head{text-align:center;margin-bottom:24px}.intel-head .eyebrow{color:#a8ff58;font-weight:900;letter-spacing:.18em}.intel-head h1{font:900 clamp(42px,8vw,88px)/.9 Impact,system-ui,sans-serif;margin:5px 0;text-shadow:0 6px 0 rgba(0,0,0,.28)}
+    .intel-head h2{margin:8px 0 5px;font-size:clamp(20px,3vw,34px);letter-spacing:.12em}.intel-head p{max-width:760px;margin:10px auto;color:#d0d3db}
+    .roster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.enemy{position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:12px;box-shadow:0 20px 50px rgba(0,0,0,.22)}
+    .enemy canvas{display:block;width:100%;aspect-ratio:4/3;background:radial-gradient(circle at 50% 45%,rgba(255,255,255,.08),transparent 62%);border-radius:13px}.tag{position:absolute;top:16px;right:16px;padding:5px 9px;border-radius:999px;background:#303743;color:#fff;font-size:11px;font-weight:900;letter-spacing:.12em}.enemy h3{font:900 26px/1 Impact,system-ui,sans-serif;margin:8px 0 4px;letter-spacing:.03em}.enemy p{margin:0;color:#cdd0d8;font-size:14px;line-height:1.38}.enemy strong{color:#fff}.basic .tag{background:#9f342e}.heavy .tag{background:#a56622}.flying .tag{background:#3b5f9d}.psychic .tag{background:#79429f}.friendly .tag{background:#487a39}.boss .tag{background:#9b2832}
+    .footer{text-align:center;margin-top:26px}.footer p{color:#cdd0d8}.buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:18px}.buttons a{display:inline-block;text-decoration:none}
+    @media(max-width:850px){.roster{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.roster{grid-template-columns:1fr}.intel{padding-top:20px}}
+  </style>
+</head>
+<body>
+  <main class="intel">
+    <header class="intel-head">
+      <p class="eyebrow">CITYSCAPE ENEMY INTEL · 0.9.2</p>
+      <h1>JOHNNY MUSCLES</h1>
+      <h2>KNOW YOUR CATS</h2>
+      <p>Military intelligence has prepared a highly sophisticated threat assessment. Johnny looked at the pictures.</p>
+    </header>
+
+    <section class="roster">
+      <article class="enemy basic"><span class="tag">BASIC</span><canvas width="320" height="240" data-enemy="ground"></canvas><h3>INFESTED CAT</h3><p><strong>Fast · Aggressive · Common</strong><br>A once-normal housecat carrying an alien parasite and several new opinions about municipal infrastructure.</p></article>
+      <article class="enemy heavy"><span class="tag">HEAVY</span><canvas width="320" height="240" data-enemy="chonker"></canvas><h3>CHONKER</h3><p><strong>High health · Slow · Heavy</strong><br>Bigger cat. Bigger parasite. Consider using additional tank.</p></article>
+      <article class="enemy flying"><span class="tag">FLYING</span><canvas width="320" height="240" data-enemy="bat"></canvas><h3>BATCAT</h3><p><strong>Flying · Agile · Hard to lead</strong><br>The parasite has solved aviation. Johnny has solved aviation with ballistics.</p></article>
+      <article class="enemy psychic"><span class="tag">PSYCHIC</span><canvas width="320" height="240" data-enemy="brain"></canvas><h3>BRAINCAT</h3><p><strong>Psychic · Ranged · Keeps distance</strong><br>Watch the purple charge. Its pulse can bend a tank already in flight.</p></article>
+      <article class="enemy friendly"><span class="tag">FRIENDLY</span><canvas width="320" height="240" data-enemy="friendly"></canvas><h3>NORMAL / EVAC CAT</h3><p><strong>Harmless · Non-combatant · Good kitty</strong><br>This is a normal cat. Do not hit it with a tank. We cannot make this clearer.</p></article>
+      <article class="enemy boss"><span class="tag">BOSS</span><canvas width="320" height="240" data-enemy="bob"></canvas><h3>SEARGENT BOB</h3><p><strong>Wild-cat boss · Throws tanks · Zero chill</strong><br>Bob is strong enough to throw tanks back. Unlike Johnny, Bob cannot catch them. Bob can only Bob.</p></article>
+    </section>
+
+    <footer class="footer">
+      <p><strong>CATS TODAY. WORLD DOMINATION TOMORROW.</strong></p>
+      <div class="buttons">
+        <a class="primary" href="./?build=0.9.2">BEGIN CITY CAMPAIGN</a>
+        <a class="primary secondary-action" href="boss1.html?build=0.9.2">REVIEW BOB'S TECHNIQUE</a>
+      </div>
+    </footer>
+  </main>
+  <script src="enemy-art.js?rev=0.9.2"></script>
+  <script>
+    (()=>{const canvases=[...document.querySelectorAll('[data-enemy]')];function frame(){for(const c of canvases)window.JMEnemyArt.drawPreview(c,c.dataset.enemy);requestAnimationFrame(frame);}frame();})();
+  </script>
+</body>
+</html>
