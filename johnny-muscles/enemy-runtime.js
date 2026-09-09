@@ -5,14 +5,79 @@
   const core = current?.dataset?.core;
   if (!core) throw new Error('enemy-runtime.js requires data-core');
   if (!window.JMEnemyArt) throw new Error('enemy-art.js must load before enemy-runtime.js');
+  if (!window.JMTankArt) throw new Error('tank-art.js must load before enemy-runtime.js');
 
   function replaceOrThrow(source, regex, replacement, label) {
     const next = source.replace(regex, replacement);
-    if (next === source) throw new Error(`Enemy art patch target not found: ${label}`);
+    if (next === source) throw new Error(`Visual patch target not found: ${label}`);
     return next;
   }
 
-  function patch(source) {
+  function patchTankCollision(source) {
+    const bonus = window.JMTankArt.HIT_BONUS || 18;
+
+    if (core === 'game.js' || core === 'city2.js') {
+      return replaceOrThrow(
+        source,
+        /const r = 37 \+ 25 \* cat\.scale;/,
+        `const r = 37 + 25 * cat.scale + ${bonus};`,
+        `${core} tank-cat collision`
+      );
+    }
+
+    if (core === 'city3.js') {
+      return replaceOrThrow(
+        source,
+        /const radius = cat\.kind === 'bat' \? 48 \* cat\.scale : 37 \+ 25 \* cat\.scale;/,
+        `const radius = (cat.kind === 'bat' ? 48 * cat.scale : 37 + 25 * cat.scale) + ${bonus};`,
+        'City 3 tank-cat collision'
+      );
+    }
+
+    if (core === 'city4.js') {
+      return replaceOrThrow(
+        source,
+        /const r=\(a\.kind==='friendly'\?34:37\+25\*a\.scale\);/,
+        `const r=(a.kind==='friendly'?34:37+25*a.scale)+${bonus};`,
+        'City 4 tank-actor collision'
+      );
+    }
+
+    if (core === 'city5.js') {
+      return replaceOrThrow(
+        source,
+        /const r=c\.kind==='bat'\?48\*c\.scale:c\.kind==='brain'\?55:37\+25\*c\.scale;/,
+        `const r=(c.kind==='bat'?48*c.scale:c.kind==='brain'?55:37+25*c.scale)+${bonus};`,
+        'City 5 tank-cat collision'
+      );
+    }
+
+    return source;
+  }
+
+  function patchLocalTankRenderer(source) {
+    if (core === 'game.js' || core === 'city2.js') {
+      return replaceOrThrow(
+        source,
+        /  function drawTank\(t = tank\) \{[\s\S]*?\n  \}\n\n  function drawCat\(/,
+        `  function drawTank(t = tank) {\n    window.JMTankArt.drawTank(ctx, t);\n  }\n\n  function drawCat(`,
+        `${core} drawTank`
+      );
+    }
+
+    if (core === 'city3.js') {
+      return replaceOrThrow(
+        source,
+        /  function drawTank\(t = tank\) \{[\s\S]*?\n  \}\n\n  function drawGroundCat\(/,
+        `  function drawTank(t = tank) {\n    window.JMTankArt.drawTank(ctx, t);\n  }\n\n  function drawGroundCat(`,
+        'City 3 drawTank'
+      );
+    }
+
+    return source;
+  }
+
+  function patchEnemyArt(source) {
     if (core === 'game.js') {
       return replaceOrThrow(
         source,
@@ -77,7 +142,14 @@
     throw new Error(`Unsupported enemy runtime core: ${core}`);
   }
 
-  fetch(`${core}?rev=0.9.2-core`, { cache: 'no-store' })
+  function patch(source) {
+    let next = patchLocalTankRenderer(source);
+    next = patchTankCollision(next);
+    next = patchEnemyArt(next);
+    return next;
+  }
+
+  fetch(`${core}?rev=0.9.3-core`, { cache: 'no-store' })
     .then(response => {
       if (!response.ok) throw new Error(`Could not load ${core}: ${response.status}`);
       return response.text();
@@ -96,10 +168,10 @@
       document.body.appendChild(script);
     })
     .catch(error => {
-      console.error('[Johnny Muscles enemy visuals]', error);
+      console.error('[Johnny Muscles visuals]', error);
       const toast = document.getElementById('toast');
       if (toast) {
-        toast.textContent = 'ENEMY ART FAILED TO DEPLOY';
+        toast.textContent = 'VISUAL PASS FAILED TO DEPLOY';
         toast.classList.add('show');
       }
     });
