@@ -34,6 +34,8 @@ Formal release versioning begins with **v1.0.0**.
 - Added M4's three-way snowy junction, branching west to M5 and east to the playable Dwarven Cave forecourt while keeping its north edge sealed.
 - Added the ancient descending dwarven entrance as an inspectable landmark, reserving its deeper interior until the hand-drawn cave map is supplied.
 - Reserved M5's visible westward continuation without exposing an erroneous transition before the neighboring mountain areas are authored.
+- Opened the atmospheric switchback from Mountain M10 through M11–M14, with reciprocal north/south/east/west trail transitions and no added hazards or encounters.
+- Reserved M14's visibly open west trail toward future Mountain M15 without publishing a premature transition.
 
 ## [1.0.0] - 2026-08-11
 
