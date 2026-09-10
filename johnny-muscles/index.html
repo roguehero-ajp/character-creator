@@ -10,7 +10,7 @@
   <meta http-equiv="Expires" content="0" />
   <title>Johnny Muscles: Tank Thrower</title>
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="menu.css?rev=0.11.0" />
+  <link rel="stylesheet" href="menu.css?rev=0.11.2" />
 </head>
 <body>
   <main class="menu-shell" aria-label="Johnny Muscles: Tank Thrower main menu">
@@ -25,34 +25,25 @@
       </div>
 
       <nav class="menu-actions" aria-label="Main menu">
-        <a class="menu-button primary-action" href="city1.html?build=0.11.0">
+        <a class="menu-button primary-action" href="city1.html?build=0.11.2">
           <span class="action-icon" aria-hidden="true">▶</span>
-          <span class="action-copy">
-            <span class="action-title">Start</span>
-            <span class="action-note">Begin at City 1: First Contact</span>
-          </span>
+          <span class="action-copy"><span class="action-title">Start</span><span class="action-note">Begin at City 1: First Contact</span></span>
           <span class="action-arrow" aria-hidden="true">›</span>
         </a>
 
         <button class="menu-button" type="button" data-open-panel="story-panel">
           <span class="action-icon" aria-hidden="true">▤</span>
-          <span class="action-copy">
-            <span class="action-title">The Story</span>
-            <span class="action-note">Comic briefing</span>
-          </span>
+          <span class="action-copy"><span class="action-title">The Story</span><span class="action-note">Comic briefing</span></span>
           <span class="action-arrow" aria-hidden="true">›</span>
         </button>
 
         <button class="menu-button" type="button" data-open-panel="character-panel">
           <span class="action-icon" aria-hidden="true">★</span>
-          <span class="action-copy">
-            <span class="action-title">Character Select</span>
-            <span id="character-status" class="action-note">Active fighter: Johnny Muscles</span>
-          </span>
+          <span class="action-copy"><span class="action-title">Character Select</span><span id="character-status" class="action-note">Active fighter: Johnny Muscles</span></span>
           <span class="action-arrow" aria-hidden="true">›</span>
         </button>
 
-        <p class="version-note">Prototype 0.11.0 · Main Menu Foundation</p>
+        <p class="version-note">Prototype 0.11.2 · Swipe Character Roster</p>
       </nav>
     </section>
   </main>
@@ -60,45 +51,73 @@
   <section id="story-panel" class="panel-layer" data-panel aria-hidden="true" aria-labelledby="story-title">
     <div class="menu-panel" role="dialog" aria-modal="true">
       <div class="panel-head">
-        <div>
-          <p class="panel-kicker">Classified-ish briefing</p>
-          <h2 id="story-title">The Story</h2>
-        </div>
+        <div><p class="panel-kicker">Classified-ish briefing</p><h2 id="story-title">The Story</h2></div>
         <button class="close-button" type="button" data-close-panel aria-label="Close story">×</button>
       </div>
-      <p class="panel-copy">The comic-strip story sequence will live here. The menu and panel are ready for it, but the actual story is deliberately being left blank until it is written.</p>
-      <div class="story-placeholder" aria-label="Future comic panels">
-        <div class="story-frame">Comic panel 1</div>
-        <div class="story-frame">Comic panel 2</div>
-        <div class="story-frame">Comic panel 3</div>
-      </div>
+      <p class="panel-copy">The comic-strip story sequence will live here. The panel is ready, but the actual story is deliberately blank until it is written.</p>
+      <div class="story-placeholder" aria-label="Future comic panels"><div>Comic panel 1</div><div>Comic panel 2</div><div>Comic panel 3</div></div>
     </div>
   </section>
 
   <section id="character-panel" class="panel-layer" data-panel aria-hidden="true" aria-labelledby="character-title">
-    <div class="menu-panel" role="dialog" aria-modal="true">
+    <div class="menu-panel character-panel-dialog" role="dialog" aria-modal="true">
       <div class="panel-head">
-        <div>
-          <p class="panel-kicker">Choose your muscle</p>
-          <h2 id="character-title">Character Select</h2>
-        </div>
+        <div><p class="panel-kicker">Choose your muscle</p><h2 id="character-title">Character Select</h2></div>
         <button class="close-button" type="button" data-close-panel aria-label="Close character select">×</button>
       </div>
+      <p class="panel-copy compact-copy">Swipe left or right across the character sheet. Arrow buttons and keyboard arrows work too.</p>
 
-      <div class="character-card">
-        <div class="character-portrait" role="img" aria-label="Stylized placeholder portrait of Johnny Muscles"></div>
-        <div class="character-copy">
-          <p class="character-status">Available now</p>
-          <h3>Johnny Muscles</h3>
-          <p>Headband. Shades. Arms with a deeply irresponsible relationship to armored vehicles.</p>
-          <button id="select-johnny" class="character-select-button" type="button" aria-pressed="true">Johnny Selected</button>
-        </div>
+      <div class="selector-topline">
+        <span class="selector-pill">Swipe ◀ ▶</span>
+        <span id="character-count" class="selector-counter">1 / 5</span>
       </div>
 
-      <div class="future-slot">Additional playable characters can slot in here later</div>
+      <div class="character-sheet-shell">
+        <button id="character-prev" class="carousel-arrow" type="button" aria-label="Previous character">‹</button>
+
+        <div id="character-sheet" class="character-sheet" tabindex="0" aria-label="Character carousel swipe area">
+          <article class="character-slide is-active" data-character="johnny" data-name="Johnny Muscles" data-status="playable" data-tagline="Tanks. Cats. No problem.">
+            <div class="concept-sheet">
+              <div class="sheet-title-block"><h3>Johnny<br />Muscles</h3><p>Tanks.<br />Cats.<br />No problem.</p></div>
+              <div class="hero-pose" aria-label="Stylized Johnny Muscles full-body pose"><div class="johnny-body"></div></div>
+              <div class="expression-stack" aria-label="Johnny Muscles expression studies">
+                <div class="face-study"><span>Confident</span></div>
+                <div class="face-study shout"><span>Let's go!</span></div>
+                <div class="face-study grin"><span>Cool under fire</span></div>
+              </div>
+              <div class="tank-pose" aria-label="Stylized Johnny Muscles tank throw pose"><div class="thrower"></div><div class="mini-tank"></div><strong>Throw anything.</strong></div>
+              <div class="turnaround"><div class="mini-body"><span>Front</span></div><div class="mini-body side"><span>Side</span></div><div class="mini-body back"><span>Back</span></div></div>
+              <div class="sheet-notes"><strong>Playable now</strong><span>Strong silhouette</span><span>Readable proportions</span><span>Tank-throwing specialist</span></div>
+            </div>
+          </article>
+
+          <article class="character-slide" data-character="rick" data-name="Rick Rampage" data-status="locked" data-tagline="Locked until ready.">
+            <div class="locked-sheet"><div class="locked-silhouette">?</div><div><span class="lock-chip">🔒 Locked</span><h3>Rick Rampage</h3><p>This fighter has been named, but his character build is not ready yet.</p></div></div>
+          </article>
+
+          <article class="character-slide" data-character="holly" data-name="Holly Heatwave" data-status="locked" data-tagline="Locked until ready.">
+            <div class="locked-sheet"><div class="locked-silhouette">?</div><div><span class="lock-chip">🔒 Locked</span><h3>Holly Heatwave</h3><p>This fighter has been named, but her character build is not ready yet.</p></div></div>
+          </article>
+
+          <article class="character-slide" data-character="santa" data-name="Santa" data-status="locked" data-tagline="Locked until ready.">
+            <div class="locked-sheet"><div class="locked-silhouette">?</div><div><span class="lock-chip">🔒 Locked</span><h3>Santa</h3><p>This fighter has been named, but his character build is not ready yet.</p></div></div>
+          </article>
+
+          <article class="character-slide" data-character="grimm" data-name="The Grimm Rapper" data-status="locked" data-tagline="Locked until ready.">
+            <div class="locked-sheet"><div class="locked-silhouette">?</div><div><span class="lock-chip">🔒 Locked</span><h3>The Grimm Rapper</h3><p>This fighter has been named, but the character build is not ready yet.</p></div></div>
+          </article>
+        </div>
+
+        <button id="character-next" class="carousel-arrow" type="button" aria-label="Next character">›</button>
+      </div>
+
+      <div class="selector-footer">
+        <div><p id="selector-name" class="selector-name">Johnny Muscles</p><p id="selector-tagline" class="selector-tagline">Tanks. Cats. No problem.</p></div>
+        <button id="character-select-button" class="character-select-button" type="button" aria-pressed="true">Johnny Selected</button>
+      </div>
     </div>
   </section>
 
-  <script src="menu.js?rev=0.11.0"></script>
+  <script src="menu.js?rev=0.11.2"></script>
 </body>
 </html>
