@@ -1,14 +1,25 @@
 (() => {
   'use strict';
 
+  const STORAGE_KEY = 'johnnyMuscles.selectedCharacter';
   const panels = [...document.querySelectorAll('[data-panel]')];
   const openers = [...document.querySelectorAll('[data-open-panel]')];
   const closers = [...document.querySelectorAll('[data-close-panel]')];
-  const characterButton = document.getElementById('select-johnny');
+  const characterPanel = document.getElementById('character-panel');
   const characterStatus = document.getElementById('character-status');
-  const STORAGE_KEY = 'johnnyMuscles.selectedCharacter';
+  const sheet = document.getElementById('character-sheet');
+  const slides = sheet ? [...sheet.querySelectorAll('.character-slide')] : [];
+  const prevButton = document.getElementById('character-prev');
+  const nextButton = document.getElementById('character-next');
+  const count = document.getElementById('character-count');
+  const name = document.getElementById('selector-name');
+  const tagline = document.getElementById('selector-tagline');
+  const selectButton = document.getElementById('character-select-button');
 
   let lastFocus = null;
+  let currentIndex = 0;
+  let pointerStartX = null;
+  let pointerStartY = null;
 
   function closePanels() {
     panels.forEach(panel => {
@@ -22,8 +33,11 @@
   function openPanel(id, opener) {
     const panel = document.getElementById(id);
     if (!panel) return;
-    closePanels();
     lastFocus = opener || document.activeElement;
+    panels.forEach(item => {
+      item.classList.remove('visible');
+      item.setAttribute('aria-hidden', 'true');
+    });
     panel.classList.add('visible');
     panel.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -31,10 +45,48 @@
     if (firstControl instanceof HTMLElement) firstControl.focus();
   }
 
-  openers.forEach(button => {
-    button.addEventListener('click', () => openPanel(button.dataset.openPanel, button));
-  });
+  function selectedCharacter() {
+    return localStorage.getItem(STORAGE_KEY) || 'johnny';
+  }
 
+  function updateHomeStatus() {
+    if (!characterStatus) return;
+    characterStatus.textContent = selectedCharacter() === 'johnny'
+      ? 'Active fighter: Johnny Muscles'
+      : 'Choose a fighter';
+  }
+
+  function showSlide(nextIndex) {
+    if (!slides.length) return;
+    currentIndex = (nextIndex + slides.length) % slides.length;
+    slides.forEach((slide, index) => slide.classList.toggle('is-active', index === currentIndex));
+
+    const active = slides[currentIndex];
+    const character = active.dataset.character || '';
+    const characterName = active.dataset.name || '';
+    const status = active.dataset.status || 'locked';
+    const characterTagline = active.dataset.tagline || '';
+
+    if (count) count.textContent = `${currentIndex + 1} / ${slides.length}`;
+    if (name) name.textContent = characterName;
+    if (tagline) tagline.textContent = characterTagline;
+
+    if (selectButton) {
+      const playable = status === 'playable';
+      const selected = selectedCharacter() === character;
+      selectButton.disabled = !playable;
+      selectButton.setAttribute('aria-pressed', String(playable && selected));
+      selectButton.textContent = playable
+        ? (selected ? `${characterName} Selected` : `Select ${characterName}`)
+        : 'Locked';
+    }
+  }
+
+  function step(direction) {
+    showSlide(currentIndex + direction);
+  }
+
+  openers.forEach(button => button.addEventListener('click', () => openPanel(button.dataset.openPanel, button)));
   closers.forEach(button => button.addEventListener('click', closePanels));
 
   panels.forEach(panel => {
@@ -43,26 +95,51 @@
     });
   });
 
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && panels.some(panel => panel.classList.contains('visible'))) closePanels();
+  prevButton?.addEventListener('click', () => step(-1));
+  nextButton?.addEventListener('click', () => step(1));
+
+  selectButton?.addEventListener('click', () => {
+    const active = slides[currentIndex];
+    if (!active || active.dataset.status !== 'playable') return;
+    localStorage.setItem(STORAGE_KEY, active.dataset.character || 'johnny');
+    updateHomeStatus();
+    showSlide(currentIndex);
   });
 
-  function renderCharacterSelection() {
-    const selected = localStorage.getItem(STORAGE_KEY) || 'johnny';
-    const isJohnny = selected === 'johnny';
-    if (characterButton) {
-      characterButton.setAttribute('aria-pressed', String(isJohnny));
-      characterButton.textContent = isJohnny ? 'Johnny Selected' : 'Select Johnny';
+  sheet?.addEventListener('pointerdown', event => {
+    pointerStartX = event.clientX;
+    pointerStartY = event.clientY;
+  });
+
+  sheet?.addEventListener('pointerup', event => {
+    if (pointerStartX === null || pointerStartY === null) return;
+    const dx = event.clientX - pointerStartX;
+    const dy = event.clientY - pointerStartY;
+    pointerStartX = null;
+    pointerStartY = null;
+    if (Math.abs(dx) < 42 || Math.abs(dx) <= Math.abs(dy)) return;
+    step(dx < 0 ? 1 : -1);
+  });
+
+  sheet?.addEventListener('pointercancel', () => {
+    pointerStartX = null;
+    pointerStartY = null;
+  });
+
+  document.addEventListener('keydown', event => {
+    const visiblePanel = panels.some(panel => panel.classList.contains('visible'));
+    if (event.key === 'Escape' && visiblePanel) closePanels();
+    if (!characterPanel?.classList.contains('visible')) return;
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      step(-1);
     }
-    if (characterStatus) characterStatus.textContent = isJohnny ? 'Active fighter: Johnny Muscles' : 'Choose a fighter';
-  }
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      step(1);
+    }
+  });
 
-  if (characterButton) {
-    characterButton.addEventListener('click', () => {
-      localStorage.setItem(STORAGE_KEY, 'johnny');
-      renderCharacterSelection();
-    });
-  }
-
-  renderCharacterSelection();
+  updateHomeStatus();
+  showSlide(0);
 })();
