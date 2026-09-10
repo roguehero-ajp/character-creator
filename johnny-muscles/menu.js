@@ -3,7 +3,7 @@
 
   const STORAGE_KEY = 'johnnyMuscles.selectedCharacter';
   const STORY_ART_PARTS = 11;
-  const STORY_ART_REV = '0.11.4';
+  const STORY_ART_REV = '0.11.5';
 
   const panels = [...document.querySelectorAll('[data-panel]')];
   const openers = [...document.querySelectorAll('[data-open-panel]')];
@@ -18,7 +18,6 @@
   const storyStart = document.getElementById('story-start');
   const storyPageCount = document.getElementById('story-page-count');
   const storyArtStatus = document.getElementById('story-art-status');
-  const storyFrames = [...document.querySelectorAll('.story-art-frame')];
   const storyToolbar = document.querySelector('.story-toolbar');
 
   const characterPanel = document.getElementById('character-panel');
@@ -31,6 +30,19 @@
   const name = document.getElementById('selector-name');
   const tagline = document.getElementById('selector-tagline');
   const selectButton = document.getElementById('character-select-button');
+
+  const johnnyConceptSheet = document.querySelector('#character-johnny .concept-sheet');
+  if (johnnyConceptSheet) {
+    johnnyConceptSheet.classList.add('character-comic-card');
+    johnnyConceptSheet.innerHTML = `
+      <div class="story-art-frame story-art-page-4 character-comic-art" role="img" aria-label="Johnny Muscles posing heroically in the final page of the origin comic."></div>
+      <div class="character-comic-caption">
+        <strong>Playable now</strong>
+        <span>Origin comic hero splash</span>
+      </div>`;
+  }
+
+  const storyFrames = [...document.querySelectorAll('.story-art-frame')];
 
   let lastFocus = null;
   let currentIndex = 0;
@@ -88,10 +100,8 @@
     panel.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
 
-    if (panel === storyPanel) {
-      showStoryPage(0);
-      loadStoryArt();
-    }
+    if (panel === storyPanel) showStoryPage(0);
+    if (panel === storyPanel || panel === characterPanel) loadStoryArt();
 
     const heading = panel.querySelector('.panel-head h2');
     if (heading instanceof HTMLElement) heading.focus();
@@ -177,9 +187,7 @@
       else dot.removeAttribute('aria-current');
     });
 
-    if (storyPageCount) {
-      storyPageCount.textContent = `Page ${storyIndex + 1} / ${storyPages.length}`;
-    }
+    if (storyPageCount) storyPageCount.textContent = `Page ${storyIndex + 1} / ${storyPages.length}`;
     if (storyPrev) storyPrev.disabled = storyIndex === 0;
     if (storyNext) storyNext.disabled = storyIndex === storyPages.length - 1;
     if (storyStart) storyStart.hidden = storyIndex !== storyPages.length - 1;
@@ -201,9 +209,7 @@
   function base64ToObjectUrl(base64) {
     const binary = atob(base64);
     const bytes = new Uint8Array(binary.length);
-    for (let index = 0; index < binary.length; index += 1) {
-      bytes[index] = binary.charCodeAt(index);
-    }
+    for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
     return URL.createObjectURL(new Blob([bytes], { type: 'image/webp' }));
   }
 
@@ -229,9 +235,7 @@
 
         const parts = await Promise.all(requests);
         const base64 = parts.join('').replace(/\s+/g, '');
-        if (!base64 || !/^[A-Za-z0-9+/]+=*$/.test(base64)) {
-          throw new Error('Comic art data was incomplete');
-        }
+        if (!base64 || !/^[A-Za-z0-9+/]+=*$/.test(base64)) throw new Error('Comic art data was incomplete');
 
         storyArtObjectUrl = base64ToObjectUrl(base64);
         storyFrames.forEach(frame => {
@@ -246,7 +250,7 @@
         return storyArtObjectUrl;
       } catch (error) {
         console.error('Could not load Johnny Muscles comic art:', error);
-        setTranscriptVisible(true);
+        if (storyPanel?.classList.contains('visible')) setTranscriptVisible(true);
         if (storyArtStatus) {
           storyArtStatus.textContent = 'Comic art unavailable. Text transcript shown.';
           storyArtStatus.className = 'story-art-status error';
@@ -258,10 +262,7 @@
     return storyArtPromise;
   }
 
-  openers.forEach(button => {
-    button.addEventListener('click', () => openPanel(button.dataset.openPanel, button));
-  });
-
+  openers.forEach(button => button.addEventListener('click', () => openPanel(button.dataset.openPanel, button)));
   closers.forEach(button => button.addEventListener('click', () => closePanels()));
 
   panels.forEach(panel => {
