@@ -2,9 +2,24 @@
   'use strict';
 
   const STORAGE_KEY = 'johnnyMuscles.selectedCharacter';
+  const STORY_ART_PARTS = 11;
+  const STORY_ART_REV = '0.11.4';
+
   const panels = [...document.querySelectorAll('[data-panel]')];
   const openers = [...document.querySelectorAll('[data-open-panel]')];
   const closers = [...document.querySelectorAll('[data-close-panel]')];
+
+  const storyPanel = document.getElementById('story-panel');
+  const storyViewport = document.getElementById('story-viewport');
+  const storyPages = storyViewport ? [...storyViewport.querySelectorAll('.story-page')] : [];
+  const storyDots = [...document.querySelectorAll('[data-story-dot]')];
+  const storyPrev = document.getElementById('story-prev');
+  const storyNext = document.getElementById('story-next');
+  const storyStart = document.getElementById('story-start');
+  const storyPageCount = document.getElementById('story-page-count');
+  const storyArtStatus = document.getElementById('story-art-status');
+  const storyFrames = [...document.querySelectorAll('.story-art-frame')];
+
   const characterPanel = document.getElementById('character-panel');
   const characterStatus = document.getElementById('character-status');
   const sheet = document.getElementById('character-sheet');
@@ -18,35 +33,69 @@
 
   let lastFocus = null;
   let currentIndex = 0;
-  let pointerStartX = null;
-  let pointerStartY = null;
+  let characterPointerStartX = null;
+  let characterPointerStartY = null;
+  let storyIndex = 0;
+  let storyPointerStartX = null;
+  let storyPointerStartY = null;
+  let storyArtPromise = null;
+  let storyArtObjectUrl = null;
 
-  function closePanels() {
+  function visiblePanel() {
+    return panels.find(panel => panel.classList.contains('visible')) || null;
+  }
+
+  function focusableElements(panel) {
+    if (!panel) return [];
+    return [...panel.querySelectorAll(
+      'a[href]:not([hidden]), button:not([disabled]):not([hidden]), input:not([disabled]):not([hidden]), select:not([disabled]):not([hidden]), textarea:not([disabled]):not([hidden]), [tabindex]:not([tabindex="-1"]):not([hidden])'
+    )].filter(element => !element.closest('[hidden]'));
+  }
+
+  function closePanels({ restoreFocus = true } = {}) {
+    const returnTarget = lastFocus;
     panels.forEach(panel => {
       panel.classList.remove('visible');
       panel.setAttribute('aria-hidden', 'true');
     });
     document.body.style.overflow = '';
-    if (lastFocus instanceof HTMLElement) lastFocus.focus();
+    lastFocus = null;
+    if (restoreFocus && returnTarget instanceof HTMLElement) returnTarget.focus();
   }
 
   function openPanel(id, opener) {
     const panel = document.getElementById(id);
     if (!panel) return;
+
+    closePanels({ restoreFocus: false });
     lastFocus = opener || document.activeElement;
-    panels.forEach(item => {
-      item.classList.remove('visible');
-      item.setAttribute('aria-hidden', 'true');
-    });
     panel.classList.add('visible');
     panel.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    const firstControl = panel.querySelector('button, a[href], [tabindex]:not([tabindex="-1"])');
-    if (firstControl instanceof HTMLElement) firstControl.focus();
+
+    if (panel === storyPanel) {
+      showStoryPage(0);
+      loadStoryArt();
+    }
+
+    const heading = panel.querySelector('.panel-head h2');
+    if (heading instanceof HTMLElement) heading.focus();
   }
 
   function selectedCharacter() {
-    return localStorage.getItem(STORAGE_KEY) || 'johnny';
+    try {
+      return localStorage.getItem(STORAGE_KEY) || 'johnny';
+    } catch {
+      return 'johnny';
+    }
+  }
+
+  function saveSelectedCharacter(character) {
+    try {
+      localStorage.setItem(STORAGE_KEY, character);
+    } catch {
+      // Selection still works for the current page when storage is unavailable.
+    }
   }
 
   function updateHomeStatus() {
@@ -59,7 +108,13 @@
   function showSlide(nextIndex) {
     if (!slides.length) return;
     currentIndex = (nextIndex + slides.length) % slides.length;
-    slides.forEach((slide, index) => slide.classList.toggle('is-active', index === currentIndex));
+
+    slides.forEach((slide, index) => {
+      const active = index === currentIndex;
+      slide.classList.toggle('is-active', active);
+      slide.hidden = !active;
+      slide.setAttribute('aria-hidden', String(!active));
+    });
 
     const active = slides[currentIndex];
     const character = active.dataset.character || '';
@@ -79,15 +134,110 @@
       selectButton.textContent = playable
         ? (selected ? `${characterName} Selected` : `Select ${characterName}`)
         : 'Locked';
+      selectButton.setAttribute('aria-label', playable
+        ? (selected ? `${characterName} is selected` : `Select ${characterName}`)
+        : `${characterName} is locked`);
     }
   }
 
-  function step(direction) {
+  function stepCharacter(direction) {
     showSlide(currentIndex + direction);
   }
 
-  openers.forEach(button => button.addEventListener('click', () => openPanel(button.dataset.openPanel, button)));
-  closers.forEach(button => button.addEventListener('click', closePanels));
+  function showStoryPage(nextIndex) {
+    if (!storyPages.length) return;
+    storyIndex = Math.max(0, Math.min(nextIndex, storyPages.length - 1));
+
+    storyPages.forEach((page, index) => {
+      const active = index === storyIndex;
+      page.classList.toggle('is-active', active);
+      page.hidden = !active;
+      page.setAttribute('aria-hidden', String(!active));
+    });
+
+    storyDots.forEach((dot, index) => {
+      const active = index === storyIndex;
+      dot.classList.toggle('is-active', active);
+      if (active) dot.setAttribute('aria-current', 'page');
+      else dot.removeAttribute('aria-current');
+    });
+
+    if (storyPageCount) {
+      storyPageCount.textContent = `Page ${storyIndex + 1} / ${storyPages.length}`;
+    }
+    if (storyPrev) storyPrev.disabled = storyIndex === 0;
+    if (storyNext) storyNext.disabled = storyIndex === storyPages.length - 1;
+    if (storyStart) storyStart.hidden = storyIndex !== storyPages.length - 1;
+  }
+
+  function stepStory(direction) {
+    showStoryPage(storyIndex + direction);
+  }
+
+  function base64ToObjectUrl(base64) {
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index += 1) {
+      bytes[index] = binary.charCodeAt(index);
+    }
+    return URL.createObjectURL(new Blob([bytes], { type: 'image/webp' }));
+  }
+
+  async function loadStoryArt() {
+    if (storyArtObjectUrl) return storyArtObjectUrl;
+    if (storyArtPromise) return storyArtPromise;
+
+    storyArtPromise = (async () => {
+      try {
+        if (storyArtStatus) {
+          storyArtStatus.textContent = 'Loading comic art…';
+          storyArtStatus.className = 'story-art-status';
+        }
+
+        const requests = Array.from({ length: STORY_ART_PARTS }, (_, index) => {
+          const part = String(index + 1).padStart(2, '0');
+          return fetch(`story-art/${part}.txt?rev=${STORY_ART_REV}`, { cache: 'force-cache' })
+            .then(response => {
+              if (!response.ok) throw new Error(`Comic art part ${part} returned ${response.status}`);
+              return response.text();
+            });
+        });
+
+        const parts = await Promise.all(requests);
+        const base64 = parts.join('').replace(/\s+/g, '');
+        if (!base64 || !/^[A-Za-z0-9+/]+=*$/.test(base64)) {
+          throw new Error('Comic art data was incomplete');
+        }
+
+        storyArtObjectUrl = base64ToObjectUrl(base64);
+        storyFrames.forEach(frame => {
+          frame.style.backgroundImage = `url("${storyArtObjectUrl}")`;
+        });
+        document.documentElement.classList.add('story-art-ready');
+
+        if (storyArtStatus) {
+          storyArtStatus.textContent = 'Comic art ready';
+          storyArtStatus.className = 'story-art-status ready';
+        }
+        return storyArtObjectUrl;
+      } catch (error) {
+        console.error('Could not load Johnny Muscles comic art:', error);
+        if (storyArtStatus) {
+          storyArtStatus.textContent = 'Comic art unavailable. Full text remains below for screen readers.';
+          storyArtStatus.className = 'story-art-status error';
+        }
+        return null;
+      }
+    })();
+
+    return storyArtPromise;
+  }
+
+  openers.forEach(button => {
+    button.addEventListener('click', () => openPanel(button.dataset.openPanel, button));
+  });
+
+  closers.forEach(button => button.addEventListener('click', () => closePanels()));
 
   panels.forEach(panel => {
     panel.addEventListener('pointerdown', event => {
@@ -95,51 +245,130 @@
     });
   });
 
-  prevButton?.addEventListener('click', () => step(-1));
-  nextButton?.addEventListener('click', () => step(1));
+  prevButton?.addEventListener('click', () => stepCharacter(-1));
+  nextButton?.addEventListener('click', () => stepCharacter(1));
 
   selectButton?.addEventListener('click', () => {
     const active = slides[currentIndex];
     if (!active || active.dataset.status !== 'playable') return;
-    localStorage.setItem(STORAGE_KEY, active.dataset.character || 'johnny');
+    saveSelectedCharacter(active.dataset.character || 'johnny');
     updateHomeStatus();
     showSlide(currentIndex);
   });
 
   sheet?.addEventListener('pointerdown', event => {
-    pointerStartX = event.clientX;
-    pointerStartY = event.clientY;
+    characterPointerStartX = event.clientX;
+    characterPointerStartY = event.clientY;
   });
 
   sheet?.addEventListener('pointerup', event => {
-    if (pointerStartX === null || pointerStartY === null) return;
-    const dx = event.clientX - pointerStartX;
-    const dy = event.clientY - pointerStartY;
-    pointerStartX = null;
-    pointerStartY = null;
+    if (characterPointerStartX === null || characterPointerStartY === null) return;
+    const dx = event.clientX - characterPointerStartX;
+    const dy = event.clientY - characterPointerStartY;
+    characterPointerStartX = null;
+    characterPointerStartY = null;
     if (Math.abs(dx) < 42 || Math.abs(dx) <= Math.abs(dy)) return;
-    step(dx < 0 ? 1 : -1);
+    stepCharacter(dx < 0 ? 1 : -1);
   });
 
   sheet?.addEventListener('pointercancel', () => {
-    pointerStartX = null;
-    pointerStartY = null;
+    characterPointerStartX = null;
+    characterPointerStartY = null;
+  });
+
+  storyPrev?.addEventListener('click', () => stepStory(-1));
+  storyNext?.addEventListener('click', () => stepStory(1));
+  storyDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const index = Number(dot.dataset.storyDot);
+      if (Number.isInteger(index)) showStoryPage(index);
+    });
+  });
+
+  storyViewport?.addEventListener('pointerdown', event => {
+    storyPointerStartX = event.clientX;
+    storyPointerStartY = event.clientY;
+  });
+
+  storyViewport?.addEventListener('pointerup', event => {
+    if (storyPointerStartX === null || storyPointerStartY === null) return;
+    const dx = event.clientX - storyPointerStartX;
+    const dy = event.clientY - storyPointerStartY;
+    storyPointerStartX = null;
+    storyPointerStartY = null;
+    if (Math.abs(dx) < 42 || Math.abs(dx) <= Math.abs(dy)) return;
+    stepStory(dx < 0 ? 1 : -1);
+  });
+
+  storyViewport?.addEventListener('pointercancel', () => {
+    storyPointerStartX = null;
+    storyPointerStartY = null;
   });
 
   document.addEventListener('keydown', event => {
-    const visiblePanel = panels.some(panel => panel.classList.contains('visible'));
-    if (event.key === 'Escape' && visiblePanel) closePanels();
-    if (!characterPanel?.classList.contains('visible')) return;
-    if (event.key === 'ArrowLeft') {
+    const panel = visiblePanel();
+    if (!panel) return;
+
+    if (event.key === 'Escape') {
       event.preventDefault();
-      step(-1);
+      closePanels();
+      return;
     }
-    if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      step(1);
+
+    if (event.key === 'Tab') {
+      const focusable = focusableElements(panel);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+      return;
+    }
+
+    if (panel === storyPanel) {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        stepStory(-1);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        stepStory(1);
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        showStoryPage(0);
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        showStoryPage(storyPages.length - 1);
+      }
+      return;
+    }
+
+    if (panel === characterPanel) {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        stepCharacter(-1);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        stepCharacter(1);
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        showSlide(0);
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        showSlide(slides.length - 1);
+      }
     }
   });
 
+  window.addEventListener('pagehide', () => {
+    if (storyArtObjectUrl) URL.revokeObjectURL(storyArtObjectUrl);
+  }, { once: true });
+
   updateHomeStatus();
   showSlide(0);
+  showStoryPage(0);
 })();
