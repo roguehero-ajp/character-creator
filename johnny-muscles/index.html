@@ -10,7 +10,8 @@
   <meta http-equiv="Expires" content="0" />
   <title>Johnny Muscles: Tank Thrower</title>
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="menu.css?rev=0.11.2" />
+  <link rel="stylesheet" href="menu.css?rev=0.11.4" />
+  <link rel="stylesheet" href="story.css?rev=0.11.4" />
 </head>
 <body>
   <main class="menu-shell" aria-label="Johnny Muscles: Tank Thrower main menu">
@@ -25,7 +26,7 @@
       </div>
 
       <nav class="menu-actions" aria-label="Main menu">
-        <a class="menu-button primary-action" href="city1.html?build=0.11.2">
+        <a class="menu-button primary-action" href="city1.html?build=0.11.4">
           <span class="action-icon" aria-hidden="true">▶</span>
           <span class="action-copy"><span class="action-title">Start</span><span class="action-note">Begin at City 1: First Contact</span></span>
           <span class="action-arrow" aria-hidden="true">›</span>
@@ -33,7 +34,7 @@
 
         <button class="menu-button" type="button" data-open-panel="story-panel">
           <span class="action-icon" aria-hidden="true">▤</span>
-          <span class="action-copy"><span class="action-title">The Story</span><span class="action-note">Comic briefing</span></span>
+          <span class="action-copy"><span class="action-title">The Story</span><span class="action-note">Four-page origin comic</span></span>
           <span class="action-arrow" aria-hidden="true">›</span>
         </button>
 
@@ -43,19 +44,70 @@
           <span class="action-arrow" aria-hidden="true">›</span>
         </button>
 
-        <p class="version-note">Prototype 0.11.2 · Swipe Character Roster</p>
+        <p class="version-note">Prototype 0.11.4 · Origin Comic</p>
       </nav>
     </section>
   </main>
 
   <section id="story-panel" class="panel-layer" data-panel aria-hidden="true" aria-labelledby="story-title">
-    <div class="menu-panel" role="dialog" aria-modal="true">
+    <div class="menu-panel story-panel-dialog" role="dialog" aria-modal="true">
       <div class="panel-head">
-        <div><p class="panel-kicker">Classified-ish briefing</p><h2 id="story-title">The Story</h2></div>
+        <div><p class="panel-kicker">Origin story</p><h2 id="story-title">The Story</h2></div>
         <button class="close-button" type="button" data-close-panel aria-label="Close story">×</button>
       </div>
-      <p class="panel-copy">The comic-strip story sequence will live here. The panel is ready, but the actual story is deliberately blank until it is written.</p>
-      <div class="story-placeholder" aria-label="Future comic panels"><div>Comic panel 1</div><div>Comic panel 2</div><div>Comic panel 3</div></div>
+      <p class="panel-copy story-instructions">Swipe left or right to turn pages. Arrow buttons and keyboard arrows work too.</p>
+
+      <div class="story-toolbar">
+        <span id="story-page-count" class="story-counter">Page 1 / 4</span>
+        <span id="story-art-status" class="story-art-status" aria-live="polite">Loading comic art…</span>
+      </div>
+
+      <div id="story-viewport" class="story-viewport" tabindex="0" aria-label="Johnny Muscles four-page origin comic">
+        <article class="story-page is-active" data-story-page="0">
+          <div class="story-art-frame story-art-page-1" role="img" aria-label="Comic page 1: aliens mistake cats for Earth's dominant species, approach a wide-eyed cat from behind, and giant alien cats begin rampaging through cities."></div>
+          <div class="sr-only">
+            <h3>Page 1</h3>
+            <p>Two tentacle blob aliens discover Earth. One says, “We've found what must be the dominant species! They even have their slave caretakers cleaning their poop.” The other replies, “Perfect! We'll go in through their butts!” A wide-eyed housecat senses an alien behind it. Giant alien cats then rampage through the cities.</p>
+          </div>
+        </article>
+
+        <article class="story-page" data-story-page="1">
+          <div class="story-art-frame story-art-page-2" role="img" aria-label="Comic page 2: the military attacks the alien cats, a soldier reports that bullets do not work, and a mysterious voice says Try tanks."></div>
+          <div class="sr-only">
+            <h3>Page 2</h3>
+            <p>The military rolls in with guns and tanks blazing. A young soldier tells an old general, “General! They're impervious to our bullets!” The general replies, “This is catastrophic! We need a new strategy.” From the darkness, a voice says, “Try tanks.”</p>
+          </div>
+        </article>
+
+        <article class="story-page" data-story-page="2">
+          <div class="story-art-frame story-art-page-3" role="img" aria-label="Comic page 3: Johnny Muscles introduces himself, suggests throwing tanks, then hurls one into an alien cat with a huge explosion."></div>
+          <div class="sr-only">
+            <h3>Page 3</h3>
+            <p>The general asks, “Who in the anabolic window are you, stranger?” The man replies, “I'm Johnny Muscles.” The general says the tanks are not working. Johnny asks, “Have you tried throwing them?” The general replies, “…uh… what?” Johnny throws a tank into an alien cat. Kaboom. Johnny says, “Bring me tanks! I've got some kitties to crush!”</p>
+          </div>
+        </article>
+
+        <article class="story-page" data-story-page="3">
+          <div class="story-art-frame story-art-page-4" role="img" aria-label="Comic page 4: Johnny Muscles poses heroically in a full-page title splash."></div>
+          <div class="sr-only">
+            <h3>Page 4</h3>
+            <p>Johnny Muscles poses heroically. Johnny Muscles: Tank Thrower. Bigger tanks. Smaller kitties. “Let's save this city.”</p>
+          </div>
+        </article>
+      </div>
+
+      <div id="story-dots" class="story-dots" aria-label="Comic pages">
+        <button class="story-dot is-active" type="button" data-story-dot="0" aria-label="Go to page 1" aria-current="page"></button>
+        <button class="story-dot" type="button" data-story-dot="1" aria-label="Go to page 2"></button>
+        <button class="story-dot" type="button" data-story-dot="2" aria-label="Go to page 3"></button>
+        <button class="story-dot" type="button" data-story-dot="3" aria-label="Go to page 4"></button>
+      </div>
+
+      <div class="story-controls">
+        <button id="story-prev" class="story-control secondary" type="button" disabled>Previous</button>
+        <button id="story-next" class="story-control" type="button">Next</button>
+        <a id="story-start" class="story-control story-start" href="city1.html?build=0.11.4" hidden>Start Game</a>
+      </div>
     </div>
   </section>
 
@@ -118,6 +170,6 @@
     </div>
   </section>
 
-  <script src="menu.js?rev=0.11.2"></script>
+  <script src="menu.js?rev=0.11.4"></script>
 </body>
 </html>
