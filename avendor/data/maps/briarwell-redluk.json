@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-redluk",
+  "title": "Redluk",
+  "version": "0.1.0",
+  "referenceSize": { "width": 3072, "height": 944 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/redluk/background/briarwell-redluk-v1.webp",
+    "alt": "An immense iron-red mountain shelf opens east of M15 beneath ranks of dark basalt fissures"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 150, "scale": 0.48 },
+      { "y": 330, "scale": 0.62 },
+      { "y": 560, "scale": 0.78 },
+      { "y": 860, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 180, "y": 350, "facing": "east" },
+    "from-west": { "x": 180, "y": 350, "facing": "east" }
+  },
+  "walkable": [
+    {
+      "id": "redluk-convergence-ground",
+      "points": [[0, 260], [220, 285], [480, 310], [720, 335], [950, 315], [1200, 280], [1500, 260], [1800, 250], [2100, 265], [2360, 285], [2600, 300], [2820, 330], [2970, 360], [3000, 520], [2840, 590], [2600, 620], [2320, 650], [2000, 690], [1650, 720], [1300, 710], [950, 680], [650, 620], [350, 540], [0, 420]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "west-path",
+      "label": "West trail to Mountain M15",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m15",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[0, 260], [110, 275], [110, 430], [0, 420]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "redluk-fissures",
+      "label": "Dark mountain fissures",
+      "x": 1530,
+      "y": 300,
+      "radius": 170,
+      "interactionText": "The mountain is riddled with dark clefts. Loose stone shifts somewhere inside them."
+    }
+  ],
+  "npcs": [],
+  "cinematicEncounter": {
+    "id": "redluk-orc-convergence",
+    "status": "scaffold",
+    "trigger": {
+      "type": "cross-x",
+      "x": 1720,
+      "direction": "east",
+      "oncePerVisit": true
+    },
+    "locksMovement": true,
+    "timing": {
+      "emergeMs": 0,
+      "advanceMs": 1400,
+      "stopMs": 6400,
+      "elderEntryMs": 7600,
+      "completeMs": 11000
+    },
+    "beats": [
+      { "id": "orc-emergence", "atMs": 0, "actorGroup": "orc-ranks", "action": "emerge-from-mountains" },
+      { "id": "closing-in", "atMs": 1400, "actorGroup": "orc-ranks", "action": "close-in-slowly" },
+      { "id": "quiet-stop", "atMs": 6400, "speaker": "elder-orc", "line": "Stop...", "delivery": "very-quiet" },
+      { "id": "orc-halt", "atMs": 6400, "actorGroup": "orc-ranks", "action": "halt" },
+      { "id": "elder-entry", "atMs": 7600, "actor": "elder-orc", "action": "enter" }
+    ],
+    "actors": [
+      { "id": "orc-rank-01", "role": "orc", "spriteStatus": "placeholder", "start": { "x": 1160, "y": 245 }, "halt": { "x": 1370, "y": 560 }, "scale": 0.90 },
+      { "id": "orc-rank-02", "role": "orc", "spriteStatus": "placeholder", "start": { "x": 1340, "y": 220 }, "halt": { "x": 1480, "y": 475 }, "scale": 0.96 },
+      { "id": "orc-rank-03", "role": "orc", "spriteStatus": "placeholder", "start": { "x": 1510, "y": 240 }, "halt": { "x": 1590, "y": 425 }, "scale": 1.02 },
+      { "id": "orc-rank-04", "role": "orc", "spriteStatus": "placeholder", "start": { "x": 1700, "y": 215 }, "halt": { "x": 1715, "y": 395 }, "scale": 1.08 },
+      { "id": "orc-rank-05", "role": "orc", "spriteStatus": "placeholder", "start": { "x": 1920, "y": 235 }, "halt": { "x": 1895, "y": 410 }, "scale": 1.08 },
+      { "id": "orc-rank-06", "role": "orc", "spriteStatus": "placeholder", "start": { "x": 2110, "y": 250 }, "halt": { "x": 2025, "y": 455 }, "scale": 1.02 },
+      { "id": "orc-rank-07", "role": "orc", "spriteStatus": "placeholder", "start": { "x": 2310, "y": 280 }, "halt": { "x": 2145, "y": 525 }, "scale": 0.96 },
+      { "id": "orc-rank-08", "role": "orc", "spriteStatus": "placeholder", "start": { "x": 2490, "y": 315 }, "halt": { "x": 2240, "y": 600 }, "scale": 0.90 }
+    ],
+    "elderOrc": {
+      "id": "elder-orc",
+      "role": "elder-orc",
+      "spriteStatus": "placeholder",
+      "start": { "x": 2620, "y": 245 },
+      "halt": { "x": 2110, "y": 560 },
+      "scale": 1.85,
+      "description": "A terrifyingly old, massively muscled orc who appears as strong as or stronger than most ogres; final character art is pending."
+    }
+  }
+}

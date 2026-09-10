@@ -248,13 +248,13 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   const topology = engine.auditTopology(registry, maps);
 
   assert(registryData.schemaVersion === 2, 'Briarwell must use the route-graph registry schema.');
-  assert(registryData.version === '0.30.0', 'The M11-M14 mountain-route expansion requires registry version 0.30.0.');
-  assert(registryData.areas.length === 87, "Briarwell must register the town, sewers, support spaces, forest routes, Ogre's Clearing, Northfield, Misty Forest, river areas, mountains, farms, Witchwood and ancient-maple screens.");
-  assert(registryData.connections.length === 100, 'Briarwell must preserve all 100 approved internal connections.');
+  assert(registryData.version === '0.31.0', 'The M15 and Redluk mountain-route expansion requires registry version 0.31.0.');
+  assert(registryData.areas.length === 89, "Briarwell must register the town, sewers, support spaces, forest routes, Ogre's Clearing, Northfield, Misty Forest, river areas, mountains, Redluk, farms, Witchwood and ancient-maple screens.");
+  assert(registryData.connections.length === 102, 'Briarwell must preserve all 102 approved internal connections.');
   assert(registryData.cityExits.length === 1, 'Only the blocked road beyond the broken bridge should remain an unresolved city exit.');
   assert(
-    Object.keys(maps).length === 87,
-    "Briarwell must load every town, sewer, support-interior, forest, farm, Ogre's Clearing, Northfield, Misty Forest, river, mountain and Witchwood map."
+    Object.keys(maps).length === 89,
+    "Briarwell must load every town, sewer, support-interior, forest, farm, Ogre's Clearing, Northfield, Misty Forest, river, mountain, Redluk and Witchwood map."
   );
   assert(topology.errors.length === 0, topology.errors.join('\n'));
   const unavailableTransitionCount = Object.values(maps)

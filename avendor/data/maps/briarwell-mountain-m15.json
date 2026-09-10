@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m15",
+  "title": "Mountain - M15",
+  "version": "0.1.0",
+  "referenceSize": { "width": 2048, "height": 944 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m15/background/briarwell-mountain-m15-v1.webp",
+    "alt": "A vast snowy basalt basin forms an open mountain arena between the trails to M14 and Redluk"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 150, "scale": 0.48 },
+      { "y": 330, "scale": 0.62 },
+      { "y": 560, "scale": 0.78 },
+      { "y": 860, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 1024, "y": 610, "facing": "east" },
+    "from-west": { "x": 210, "y": 470, "facing": "east" },
+    "from-east": { "x": 1838, "y": 470, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "open-mountain-arena",
+      "points": [[0, 330], [240, 350], [460, 395], [700, 340], [1024, 270], [1340, 320], [1580, 385], [1810, 360], [2048, 325], [2048, 570], [1810, 580], [1600, 650], [1320, 720], [1024, 735], [740, 710], [480, 650], [240, 590], [0, 535]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "west-path",
+      "label": "West trail to Mountain M14",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m14",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[0, 340], [110, 355], [110, 545], [0, 530]]
+    },
+    {
+      "id": "east-path",
+      "label": "East trail to Redluk",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-redluk",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1938, 340], [2048, 325], [2048, 570], [1938, 555]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "open-boss-basin",
+      "label": "Vast wind-scoured basin",
+      "x": 1024,
+      "y": 590,
+      "radius": 170,
+      "interactionText": "The basin is unnaturally broad and clear, with room for something enormous to move freely."
+    }
+  ],
+  "npcs": [],
+  "bossEncounter": {
+    "id": "mountain-m15-boss",
+    "status": "planned",
+    "anchor": { "x": 1024, "y": 520 }
+  }
+}

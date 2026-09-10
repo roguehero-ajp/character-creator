@@ -129,9 +129,22 @@ const mapContracts = {
     position: [-4, -6]
   },
   'briarwell-mountain-m14': {
-    art: 'briarwell-mountain-m14-v1.webp',
-    directions: ['south'],
+    art: 'briarwell-mountain-m14-v2.webp',
+    version: '0.2.0',
+    directions: ['east', 'south'],
     position: [-4, -7]
+  },
+  'briarwell-mountain-m15': {
+    art: 'briarwell-mountain-m15-v1.webp',
+    directions: ['east', 'west'],
+    position: [-3, -7],
+    size: [2048, 944]
+  },
+  'briarwell-redluk': {
+    art: 'briarwell-redluk-v1.webp',
+    directions: ['west'],
+    position: [-2, -7],
+    size: [3072, 944]
   },
   'briarwell-mountain-dwarven-cave': {
     art: 'briarwell-dwarven-cave-v1.webp',
@@ -245,6 +258,16 @@ assertConnection(
   { areaId: 'briarwell-mountain-m14', transitionId: 'south-path', direction: 'south' }
 );
 assertConnection(
+  'mountain-m14-m15',
+  { areaId: 'briarwell-mountain-m14', transitionId: 'east-path', direction: 'east' },
+  { areaId: 'briarwell-mountain-m15', transitionId: 'west-path', direction: 'west' }
+);
+assertConnection(
+  'mountain-m15-redluk',
+  { areaId: 'briarwell-mountain-m15', transitionId: 'east-path', direction: 'east' },
+  { areaId: 'briarwell-redluk', transitionId: 'west-path', direction: 'west' }
+);
+assertConnection(
   'mountain-m4-dwarven-cave',
   { areaId: 'briarwell-mountain-m4', transitionId: 'east-path', direction: 'east' },
   { areaId: 'briarwell-mountain-dwarven-cave', transitionId: 'west-path', direction: 'west' }
@@ -297,12 +320,50 @@ assert(
 
 const m14 = maps.get('briarwell-mountain-m14');
 assert(
-  m14.exits.length === 1
-    && m14.futureConnections?.length === 1
-    && m14.futureConnections[0].id === 'mountain-m14-m15'
-    && m14.futureConnections[0].direction === 'west'
-    && m14.futureConnections[0].status === 'art-only',
-  'M14 must show an open westbound trail without exposing an unauthored M15 transition.'
+  m14.exits.length === 2
+    && m14.exits.some((exit) => (
+      exit.id === 'east-path'
+        && exit.target?.areaId === 'briarwell-mountain-m15'
+        && exit.target?.spawnId === 'from-west'
+    ))
+    && !m14.futureConnections,
+  'M14 must expose the revised active eastbound route into M15.'
+);
+const m15 = maps.get('briarwell-mountain-m15');
+assert(
+  m15.bossEncounter?.id === 'mountain-m15-boss'
+    && m15.bossEncounter.status === 'planned'
+    && m15.bossEncounter.anchor?.x === 1024
+    && m15.exits.length === 2
+    && !m15.hazards?.length
+    && m15.collisions.length === 0
+    && m15.npcs.length === 0,
+  'M15 must remain a clear, wide traversal arena with its future boss anchor reserved.'
+);
+const redluk = maps.get('briarwell-redluk');
+const redlukEncounter = redluk.cinematicEncounter;
+assert(
+  redluk.exits.length === 1
+    && redluk.exits[0].id === 'west-path'
+    && redlukEncounter?.id === 'redluk-orc-convergence'
+    && redlukEncounter.status === 'scaffold'
+    && redlukEncounter.trigger?.x === 1720
+    && redlukEncounter.locksMovement === true
+    && redlukEncounter.actors?.length === 8
+    && redlukEncounter.actors.every((actor) => actor.spriteStatus === 'placeholder')
+    && redlukEncounter.elderOrc?.spriteStatus === 'placeholder',
+  'Redluk must preserve its sealed east edge and data-driven orc-convergence scaffold.'
+);
+assert(
+  redlukEncounter.beats.some((beat) => (
+    beat.id === 'quiet-stop'
+      && beat.line === 'Stop...'
+      && beat.delivery === 'very-quiet'
+  ))
+    && redlukEncounter.beats.some((beat) => beat.id === 'orc-halt')
+    && redlukEncounter.beats.some((beat) => beat.id === 'elder-entry')
+    && redlukEncounter.elderOrc.description.includes('strong as or stronger than most ogres'),
+  'Redluk must stage the quiet Stop beat, halted ranks and terrifying elder-orc entrance without inventing further dialogue.'
 );
 assert(
   ['briarwell-mountain-m11', 'briarwell-mountain-m12', 'briarwell-mountain-m13', 'briarwell-mountain-m14']
@@ -430,8 +491,16 @@ const geometrySamples = {
     closed: [[1400, 520], [720, 1040]]
   },
   'briarwell-mountain-m14': {
-    open: [[45, 430], [560, 590], [755, 1040]],
-    closed: [[720, 45], [1400, 500]]
+    open: [[760, 1040], [820, 650], [1400, 515]],
+    closed: [[720, 45], [45, 500]]
+  },
+  'briarwell-mountain-m15': {
+    open: [[55, 440], [1024, 610], [1995, 445]],
+    closed: [[1024, 100], [1024, 880]]
+  },
+  'briarwell-redluk': {
+    open: [[55, 345], [900, 520], [1750, 540], [2850, 500]],
+    closed: [[1500, 100], [1500, 880], [3040, 450]]
   },
   'briarwell-mountain-dwarven-cave': {
     open: [[45, 455], [720, 560], [1020, 350]],
@@ -480,6 +549,10 @@ const triggerSamples = [
   ['briarwell-mountain-m13', 45, 555, 'west-path'],
   ['briarwell-mountain-m13', 760, 45, 'north-path'],
   ['briarwell-mountain-m14', 755, 1040, 'south-path'],
+  ['briarwell-mountain-m14', 1400, 515, 'east-path'],
+  ['briarwell-mountain-m15', 55, 440, 'west-path'],
+  ['briarwell-mountain-m15', 1995, 445, 'east-path'],
+  ['briarwell-redluk', 55, 345, 'west-path'],
   ['briarwell-mountain-dwarven-cave', 45, 455, 'west-path']
 ];
 
@@ -488,13 +561,11 @@ triggerSamples.forEach(([areaId, x, y, transitionId]) => {
   assert(trigger?.id === transitionId, `Edge opening lacks its exact trigger: ${areaId}/${transitionId}`);
 });
 
-assert(
-  new MapGeometry(m14).getTriggerAt({ x: 45, y: 430 }) === null,
-  'M14 exposes a transition on its reserved west edge.'
-);
+assert(!new MapGeometry(m14).isWalkable(45, 500), 'M14 leaves its retired west route walkable.');
+assert(!new MapGeometry(redluk).isWalkable(3040, 450), 'Redluk exposes an unapproved eastward route.');
 assert(
   new MapGeometry(dwarvenCave).getNearbyInteractable({ x: 1020, y: 350 })?.id === 'deeper-dwarven-cave',
   'The reachable dwarven descent does not resolve as an interactable landmark.'
 );
 
-console.log('Mountain M1-M14, Rock Ledge Pass and Dwarven Cave route contracts passed.');
+console.log('Mountain M1-M15, Redluk, Rock Ledge Pass and Dwarven Cave route contracts passed.');
