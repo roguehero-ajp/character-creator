@@ -1,10 +1,10 @@
 BRIARWELL MOUNTAIN MAP ART
 ==========================
 
-Canonical runtime backgrounds for Mountain M1 through M14, Rock Ledge Pass and
-the Dwarven Cave forecourt are stored beneath this directory. Mountain screens
-use the standard Avendor reference size of 1448 x 1086. Rock Ledge Pass is a
-2048 x 944 horizontally scrolling exception with deliberately shallow movement.
+Canonical runtime backgrounds for Mountain M1 through M15, Redluk, Rock Ledge
+Pass and the Dwarven Cave forecourt are stored beneath this directory. Most
+mountain screens use the standard Avendor reference size of 1448 x 1086. Rock
+Ledge Pass and M15 are 2048 x 944 horizontal scrolls; Redluk is 3072 x 944.
 
 Approved route graph:
 
@@ -14,9 +14,11 @@ Approved route graph:
                                                                           |
                                                         M10 <-> M9 <-> M8 <-> M7
                                                           |
-                                                         M11       future M15 <-- M14
-                                                          |                       |
+                                                         M11
+                                                          |
                                                          M12 <---------------> M13
+                                                                                 |
+                                                                  M14 <-> M15 <-> Redluk
 
 Route-art contract:
 
@@ -43,8 +45,15 @@ Route-art contract:
 - M11 is a strict north-south climb through a narrow basalt chute. M12 turns
   from its northern approach onto an eastbound, cairn-marked shelf toward M13.
   M13 crosses west-to-north over an exposed cloud-sea saddle into M14.
-- M14 receives M13 from the south. Its west trail toward future M15 is visibly
-  open without a barrier, but remains art-only until M15 is authored.
+- M14 receives M13 from the south and turns east into active M15. Its superseded
+  west opening is sealed by basalt, snow and scree.
+- M15 is a broad 2048 x 944 west-east mountain basin reserved for a future boss
+  battle. The arena itself is currently empty and unobstructed.
+- Redluk is a 3072 x 944 scrolling destination entered from M15 on the west. Its
+  east edge is sealed. Mountain fissures frame a data-driven encounter scaffold:
+  eight placeholder orc ranks emerge and close in, halt at a very quiet
+  "Stop...", and remain still while a larger elder-orc placeholder enters. Final
+  character sprites and the extended in-game movie are intentionally pending.
 - The Dwarven Cave is an outdoor playable forecourt entered only from M4 on the
   west. Its ancient cave mouth visibly descends into the mountain, but remains
   an interactable landmark rather than a portal until the interior map exists.

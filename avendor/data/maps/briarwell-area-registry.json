@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.30.0",
+  "version": "0.31.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -928,7 +928,32 @@
       "map": "data/maps/briarwell-mountain-m14.json",
       "planPosition": { "column": -4, "row": -7 },
       "landmarks": [
-        { "id": "future-m15-trail", "label": "Open west trail toward Mountain M15" }
+        { "id": "wind-scoured-shoulder", "label": "Wind-scoured mountain shoulder" }
+      ]
+    },
+    {
+      "id": "briarwell-mountain-m15",
+      "areaNumber": null,
+      "title": "Mountain - M15",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-mountain-m15.json",
+      "planPosition": { "column": -3, "row": -7 },
+      "landmarks": [
+        { "id": "open-boss-basin", "label": "Vast wind-scoured basin" }
+      ]
+    },
+    {
+      "id": "briarwell-redluk",
+      "areaNumber": null,
+      "title": "Redluk",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-redluk.json",
+      "planPosition": { "column": -2, "row": -7 },
+      "landmarks": [
+        { "id": "redluk-fissures", "label": "Dark mountain fissures" },
+        { "id": "redluk-orc-convergence", "label": "Orc convergence ground", "placement": "encounter" }
       ]
     },
     {
@@ -1578,6 +1603,26 @@
       "endpoints": [
         { "areaId": "briarwell-mountain-m13", "transitionId": "north-path", "direction": "north" },
         { "areaId": "briarwell-mountain-m14", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "mountain-m14-m15",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-mountain-m14", "transitionId": "east-path", "direction": "east" },
+        { "areaId": "briarwell-mountain-m15", "transitionId": "west-path", "direction": "west" }
+      ]
+    },
+    {
+      "id": "mountain-m15-redluk",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-mountain-m15", "transitionId": "east-path", "direction": "east" },
+        { "areaId": "briarwell-redluk", "transitionId": "west-path", "direction": "west" }
       ]
     },
     {

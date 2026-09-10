@@ -34,6 +34,7 @@
   const npcSprites = new Map();
   const areaMapCache = new Map();
   const keys = new Set();
+  const movementLocks = new Set();
   const movementControls = new Set([
     'w', 'a', 's', 'd',
     'arrowup', 'arrowleft', 'arrowdown', 'arrowright'
@@ -489,6 +490,7 @@
     lastSafePosition = { ...position, facing: lastDirection };
     activeTriggerId = null;
     activeHazardId = null;
+    movementLocks.clear();
     nearbyId = null;
     lastStatusText = '';
 
@@ -714,8 +716,22 @@
     return { dx, dy };
   }
 
+  function setMovementLock(lockId, locked = true) {
+    if (typeof lockId !== 'string' || !lockId.trim()) {
+      throw new TypeError('A movement lock requires a stable owner id.');
+    }
+    if (locked) {
+      movementLocks.add(lockId);
+      keys.clear();
+      hero.setMotion('idle', lastDirection);
+    } else {
+      movementLocks.delete(lockId);
+    }
+    return movementLocks.size > 0;
+  }
+
   function tick(now) {
-    if (map && !transitionLock) {
+    if (map && !transitionLock && movementLocks.size === 0) {
       let { dx, dy } = readMovementVector();
       const requestedMovement = dx !== 0 || dy !== 0;
 
@@ -869,7 +885,9 @@
       ...position,
       scale: map ? map.getScale(position.y) : 1
     }),
+    isMovementLocked: () => movementLocks.size > 0,
     loadArea,
+    setMovementLock,
     setBody,
     setDebug
   });

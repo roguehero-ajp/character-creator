@@ -110,6 +110,39 @@ assert(Math.abs(parseFloat(stageArt.style.left) + (300 / 1448 * 100)) < 0.001, '
 assert(stage.style['--stage-ratio'] === '1448 / 944', 'Rock Ledge Pass did not preserve its shallow viewport height.');
 
 sceneMap = {
+  width: 2048,
+  height: 944,
+  data: { id: 'briarwell-mountain-m15' },
+  getScale: () => 0.78,
+  getDepth: (y) => 1000 + y
+};
+area = { id: 'briarwell-mountain-m15' };
+heroPosition = { x: 1748, y: 520 };
+frames.shift()(32);
+
+assert(stage.dataset.cameraScroll === 'true', 'Mountain M15 did not enable horizontal camera scrolling.');
+assert(context.window.AvendorKoboldRuntime.getCameraX() === 600, 'Mountain M15 did not reach its east camera boundary.');
+assert(stage.style['--stage-ratio'] === '1448 / 944', 'Mountain M15 did not preserve its wide-arena viewport height.');
+
+sceneMap = {
+  width: 3072,
+  height: 944,
+  data: { id: 'briarwell-redluk' },
+  getScale: () => 0.78,
+  getDepth: (y) => 1000 + y
+};
+area = { id: 'briarwell-redluk' };
+heroPosition = { x: 2850, y: 520 };
+frames.shift()(40);
+
+assert(stage.dataset.cameraScroll === 'true', 'Redluk did not enable horizontal camera scrolling.');
+assert(context.window.AvendorKoboldRuntime.getCameraX() === 1624, 'Redluk did not reach its sealed east camera boundary.');
+assert(Math.abs(parseFloat(stageArt.style.width) - (3072 / 1448 * 100)) < 0.001, 'Redluk has the wrong rendered panorama width.');
+assert(Math.abs(parseFloat(stageArt.style.left) + (1624 / 1448 * 100)) < 0.001, 'Redluk did not pan across its full panorama.');
+assert(Math.abs(parseFloat(player.style.left) - (1226 / 1448 * 100)) < 0.001, 'The hero was not held inside the Redluk viewport.');
+assert(stage.style['--stage-ratio'] === '1448 / 944', 'Redluk did not preserve its panoramic viewport height.');
+
+sceneMap = {
   width: 1448,
   height: 1086,
   data: { id: 'briarwell-forest-f20' },
@@ -118,11 +151,11 @@ sceneMap = {
 };
 area = { id: 'briarwell-forest-f20' };
 heroPosition = { x: 720, y: 620 };
-frames.shift()(32);
+frames.shift()(48);
 
 assert(stage.dataset.cameraScroll === 'false', 'Leaving the Ogre arena did not disable camera scrolling.');
 assert(context.window.AvendorKoboldRuntime.getCameraX() === 0, 'The camera offset survived into a normal-width map.');
 assert(stageArt.style.left === '0' && stageArt.style.width === '100%', 'Normal-width background sizing was not restored.');
 assert(stage.style['--stage-ratio'] === '1448 / 1086', 'The normal map aspect ratio was not restored.');
 
-console.log("Wide-area camera scrolling passes for the Ogre's Clearing and Rock Ledge Pass, then resets on F20.");
+console.log("Wide-area camera scrolling passes for the Ogre's Clearing, Rock Ledge Pass, M15 and Redluk, then resets on F20.");

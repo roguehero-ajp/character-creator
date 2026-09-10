@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "id": "briarwell-mountain-m14",
   "title": "Mountain - M14",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "referenceSize": { "width": 1448, "height": 1086 },
   "art": {
-    "background": "assets/maps/briarwell/mountains/m14/background/briarwell-mountain-m14-v1.webp",
-    "alt": "A broad wind-scoured mountain shoulder climbs from the south and leaves openly to the west toward Mountain M15"
+    "background": "assets/maps/briarwell/mountains/m14/background/briarwell-mountain-m14-v2.webp",
+    "alt": "A broad snowy basalt shoulder climbs from the south and curves east toward Mountain M15"
   },
   "movement": {
     "speedX": 275,
@@ -24,13 +24,14 @@
     ]
   },
   "spawnPoints": {
-    "default": { "x": 560, "y": 590, "facing": "west" },
-    "from-south": { "x": 755, "y": 930, "facing": "north" }
+    "default": { "x": 820, "y": 650, "facing": "east" },
+    "from-south": { "x": 760, "y": 920, "facing": "north" },
+    "from-east": { "x": 1260, "y": 540, "facing": "west" }
   },
   "walkable": [
     {
       "id": "wind-scoured-shoulder",
-      "points": [[0, 330], [180, 360], [350, 405], [500, 465], [635, 525], [735, 595], [805, 690], [850, 820], [875, 1086], [640, 1086], [625, 920], [600, 800], [555, 700], [485, 625], [375, 570], [220, 520], [0, 490]]
+      "points": [[610, 1086], [620, 930], [640, 800], [650, 690], [700, 600], [820, 520], [1000, 480], [1220, 450], [1448, 425], [1448, 610], [1240, 620], [1050, 650], [910, 700], [850, 760], [870, 900], [920, 1086]]
     }
   ],
   "collisions": [],
@@ -46,28 +47,33 @@
         "returnTransitionId": "north-path"
       },
       "fallbackSpawn": "from-south",
-      "points": [[645, 980], [865, 980], [870, 1078], [640, 1078]]
+      "points": [[625, 980], [900, 980], [915, 1078], [610, 1078]]
+    },
+    {
+      "id": "east-path",
+      "label": "East trail to Mountain M15",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m15",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1350, 430], [1440, 420], [1440, 610], [1350, 600]]
     }
   ],
   "portals": [],
   "depthOccluders": [],
   "interactables": [
     {
-      "id": "future-m15-trail",
-      "label": "West trail toward Mountain M15",
-      "x": 165,
-      "y": 430,
-      "radius": 145,
-      "interactionText": "The high trail continues openly west toward Mountain M15. That stretch has not yet been charted."
+      "id": "wind-scoured-shoulder",
+      "label": "Wind-scoured mountain shoulder",
+      "x": 1020,
+      "y": 610,
+      "radius": 130,
+      "interactionText": "The path levels briefly, then continues east across the high shoulder toward Mountain M15."
     }
   ],
-  "npcs": [],
-  "futureConnections": [
-    {
-      "id": "mountain-m14-m15",
-      "direction": "west",
-      "status": "art-only",
-      "note": "The westbound trail is visibly open and will become active when Mountain M15 is authored."
-    }
-  ]
+  "npcs": []
 }
