@@ -1,0 +1,1 @@
+Johnny Muscles origin comic artwork is stored as sequential Base64 chunks (01.txt through 11.txt) so GitHub's text-file connector can publish the generated WebP without an external image host. menu.js joins the chunks once, decodes them into a local Blob URL, and uses the four quadrants as comic pages. Source artwork revision: 0.11.4.
