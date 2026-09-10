@@ -19,6 +19,7 @@
   const storyPageCount = document.getElementById('story-page-count');
   const storyArtStatus = document.getElementById('story-art-status');
   const storyFrames = [...document.querySelectorAll('.story-art-frame')];
+  const storyToolbar = document.querySelector('.story-toolbar');
 
   const characterPanel = document.getElementById('character-panel');
   const characterStatus = document.getElementById('character-status');
@@ -40,6 +41,20 @@
   let storyPointerStartY = null;
   let storyArtPromise = null;
   let storyArtObjectUrl = null;
+  let transcriptVisible = false;
+
+  const transcriptToggle = (() => {
+    if (!storyToolbar) return null;
+    const button = document.createElement('button');
+    button.id = 'story-transcript-toggle';
+    button.className = 'story-transcript-toggle';
+    button.type = 'button';
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-controls', 'story-viewport');
+    button.textContent = 'Show text transcript';
+    storyToolbar.appendChild(button);
+    return button;
+  })();
 
   function visiblePanel() {
     return panels.find(panel => panel.classList.contains('visible')) || null;
@@ -174,6 +189,15 @@
     showStoryPage(storyIndex + direction);
   }
 
+  function setTranscriptVisible(visible) {
+    transcriptVisible = Boolean(visible);
+    storyViewport?.classList.toggle('story-transcript-visible', transcriptVisible);
+    if (transcriptToggle) {
+      transcriptToggle.setAttribute('aria-expanded', String(transcriptVisible));
+      transcriptToggle.textContent = transcriptVisible ? 'Hide text transcript' : 'Show text transcript';
+    }
+  }
+
   function base64ToObjectUrl(base64) {
     const binary = atob(base64);
     const bytes = new Uint8Array(binary.length);
@@ -222,8 +246,9 @@
         return storyArtObjectUrl;
       } catch (error) {
         console.error('Could not load Johnny Muscles comic art:', error);
+        setTranscriptVisible(true);
         if (storyArtStatus) {
-          storyArtStatus.textContent = 'Comic art unavailable. Full text remains below for screen readers.';
+          storyArtStatus.textContent = 'Comic art unavailable. Text transcript shown.';
           storyArtStatus.className = 'story-art-status error';
         }
         return null;
@@ -278,6 +303,8 @@
 
   storyPrev?.addEventListener('click', () => stepStory(-1));
   storyNext?.addEventListener('click', () => stepStory(1));
+  transcriptToggle?.addEventListener('click', () => setTranscriptVisible(!transcriptVisible));
+
   storyDots.forEach(dot => {
     dot.addEventListener('click', () => {
       const index = Number(dot.dataset.storyDot);
@@ -318,12 +345,17 @@
     if (event.key === 'Tab') {
       const focusable = focusableElements(panel);
       if (!focusable.length) return;
+      const activeIndex = focusable.indexOf(document.activeElement);
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
+
+      if (activeIndex === -1) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && activeIndex === 0) {
         event.preventDefault();
         last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
+      } else if (!event.shiftKey && activeIndex === focusable.length - 1) {
         event.preventDefault();
         first.focus();
       }
