@@ -1,7 +1,7 @@
 BRIARWELL MOUNTAIN MAP ART
 ==========================
 
-Canonical runtime backgrounds for Mountain M1 through M10, Rock Ledge Pass and
+Canonical runtime backgrounds for Mountain M1 through M14, Rock Ledge Pass and
 the Dwarven Cave forecourt are stored beneath this directory. Mountain screens
 use the standard Avendor reference size of 1448 x 1086. Rock Ledge Pass is a
 2048 x 944 horizontally scrolling exception with deliberately shallow movement.
@@ -13,6 +13,10 @@ Approved route graph:
                                                 +---- M5 <-> Rock Ledge <-> M6
                                                                           |
                                                         M10 <-> M9 <-> M8 <-> M7
+                                                          |
+                                                         M11       future M15 <-- M14
+                                                          |                       |
+                                                         M12 <---------------> M13
 
 Route-art contract:
 
@@ -35,9 +39,12 @@ Route-art contract:
 - M6 bends southeast from Rock Ledge Pass and southwest toward M7. M7 turns from
   northeast to west. M8 and M9 are strict east-west high trails with no side
   openings.
-- M10 receives M9 from the east and visibly continues south toward M11. Its
-  south trail has no barrier in the artwork, but remains art-only until M11 is
-  authored.
+- M10 receives M9 from the east and turns south into the active M11 trail.
+- M11 is a strict north-south climb through a narrow basalt chute. M12 turns
+  from its northern approach onto an eastbound, cairn-marked shelf toward M13.
+  M13 crosses west-to-north over an exposed cloud-sea saddle into M14.
+- M14 receives M13 from the south. Its west trail toward future M15 is visibly
+  open without a barrier, but remains art-only until M15 is authored.
 - The Dwarven Cave is an outdoor playable forecourt entered only from M4 on the
   west. Its ancient cave mouth visibly descends into the mountain, but remains
   an interactable landmark rather than a portal until the interior map exists.

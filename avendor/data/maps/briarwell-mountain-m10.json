@@ -25,7 +25,8 @@
   },
   "spawnPoints": {
     "default": { "x": 780, "y": 565, "facing": "south" },
-    "from-east": { "x": 1280, "y": 515, "facing": "west" }
+    "from-east": { "x": 1280, "y": 515, "facing": "west" },
+    "from-south": { "x": 700, "y": 915, "facing": "north" }
   },
   "walkable": [
     {
@@ -47,27 +48,32 @@
       },
       "fallbackSpawn": "from-east",
       "points": [[1348, 420], [1440, 415], [1440, 595], [1348, 600]]
+    },
+    {
+      "id": "south-path",
+      "label": "South trail to Mountain M11",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m11",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[580, 986], [825, 986], [825, 1078], [580, 1078]]
     }
   ],
   "portals": [],
   "depthOccluders": [],
   "interactables": [
     {
-      "id": "future-m11-trail",
-      "label": "South trail toward Mountain M11",
-      "x": 700,
-      "y": 900,
+      "id": "southern-turning-shelf",
+      "label": "Southern turning shelf",
+      "x": 770,
+      "y": 680,
       "radius": 145,
-      "interactionText": "The mountain trail continues openly south toward Mountain M11. That stretch has not yet been charted."
+      "interactionText": "The old foot trail turns sharply south here, climbing into the colder basalt heights."
     }
   ],
-  "npcs": [],
-  "futureConnections": [
-    {
-      "id": "mountain-m10-m11",
-      "direction": "south",
-      "status": "art-only",
-      "note": "The southbound trail is visibly open and will become active when Mountain M11 is authored."
-    }
-  ]
+  "npcs": []
 }

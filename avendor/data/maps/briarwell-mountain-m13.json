@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m13",
+  "title": "Mountain - M13",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m13/background/briarwell-mountain-m13-v1.webp",
+    "alt": "An exposed high saddle carries a rough trail from the west toward a snowy northern climb above the cloud sea"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 650, "y": 520, "facing": "north" },
+    "from-west": { "x": 155, "y": 555, "facing": "east" },
+    "from-north": { "x": 760, "y": 145, "facing": "south" }
+  },
+  "walkable": [
+    {
+      "id": "cloud-sea-saddle",
+      "points": [[0, 470], [175, 475], [345, 465], [500, 425], [615, 365], [690, 295], [705, 175], [660, 0], [880, 0], [890, 170], [920, 290], [900, 390], [840, 470], [765, 520], [640, 575], [500, 620], [335, 655], [165, 665], [0, 650]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "west-path",
+      "label": "West trail to Mountain M12",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m12",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-path"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [[8, 485], [100, 485], [100, 645], [8, 645]]
+    },
+    {
+      "id": "north-path",
+      "label": "North trail to Mountain M14",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m14",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[665, 8], [872, 8], [878, 105], [670, 105]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "cloud-sea-saddle",
+      "label": "Cloud-sea saddle",
+      "x": 660,
+      "y": 510,
+      "radius": 150,
+      "interactionText": "The saddle opens briefly to a pale sea of cloud before the trail turns north again."
+    }
+  ],
+  "npcs": []
+}

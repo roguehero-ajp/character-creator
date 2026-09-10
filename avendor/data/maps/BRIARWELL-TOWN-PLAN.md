@@ -8,8 +8,8 @@ keeps Jay's numbered layout understandable during art and map production.
 
 | State | Areas |
 |---|---|
-| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F22; the Ogre's Clearing; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Old River Bridge; Northfield; Misty Forest MF1–MF3; Mountain M1–M10, Rock Ledge Pass and the Dwarven Cave forecourt; Swimmable; Waterfall; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
-| Planned | Mountain M11 and the region beyond it; the Dwarven Cave interior; swimming animation and deep-water movement; Ogre boss sprite and combat; traversal into the sealed ogre cave; combat resolution for the Area 15 kobolds; inventory awards for the dwarven treasure; open-window traversal |
+| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F22; the Ogre's Clearing; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Old River Bridge; Northfield; Misty Forest MF1–MF3; Mountain M1–M14, Rock Ledge Pass and the Dwarven Cave forecourt; Swimmable; Waterfall; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
+| Planned | Mountain M15 and the region beyond it; the Dwarven Cave interior; swimming animation and deep-water movement; Ogre boss sprite and combat; traversal into the sealed ogre cave; combat resolution for the Area 15 kobolds; inventory awards for the dwarven treasure; open-window traversal |
 
 The complete Briarwell surface and sewer network are now playable. The surface contains the northern circuit
 `1 → 2 → 3 → 4 → 1`, the southern circuit
@@ -24,7 +24,9 @@ through F12, F11 and F8, with one west farm spur at F11, F12 and F13.
 Northfield's foot trail now climbs through MF1, MF2 and MF3. MF3 turns west to
 Swimmable or continues north through Mountain M1, M2 and M3 to the high junction
 at M4. M4 branches east to the outdoor Dwarven Cave forecourt or west through M5,
-Rock Ledge Pass and M6–M10. Rock Ledge Pass is a shallow horizontal scroll with
+Rock Ledge Pass and M6–M10, then south and east through M11–M14. M14's western
+trail visibly continues toward future M15 but is not yet a live transition.
+Rock Ledge Pass is a shallow horizontal scroll with
 three balance checks and an active failure route into Waterfall. Waterfall's
 enlarged current then escapes one way into Swimmable.
 Swimmable's river visibly continues south beyond the screen, but that water edge
@@ -74,7 +76,11 @@ isolated on the cliffside and is reached by the hidden open-window passage.
 | `briarwell-mountain-m7` | Basalt switchback | Mountain M6 NE, Mountain M8 W |
 | `briarwell-mountain-m8` | Wind-scoured ridge | Mountain M7 E, Mountain M9 W |
 | `briarwell-mountain-m9` | Basalt-fin traverse | Mountain M8 E, Mountain M10 W |
-| `briarwell-mountain-m10` | Southern turning shelf | Mountain M9 E; visible open trail toward future Mountain M11 S |
+| `briarwell-mountain-m10` | Southern turning shelf | Mountain M9 E, Mountain M11 S |
+| `briarwell-mountain-m11` | Narrow basalt ascent | Mountain M10 N, Mountain M12 S |
+| `briarwell-mountain-m12` | Wind-scoured elbow and cairn | Mountain M11 N, Mountain M13 E |
+| `briarwell-mountain-m13` | Cloud-sea saddle | Mountain M12 W, Mountain M14 N |
+| `briarwell-mountain-m14` | Wind-scoured high shoulder | Mountain M13 S; visible open trail toward future Mountain M15 W |
 | `briarwell-mountain-dwarven-cave` | Open ancient dwarven forecourt | Mountain M4 W; descending interior entrance visible but inactive |
 | `briarwell-swimmable` | Broad calmer pool, gravel landing and visible south-flowing outlet below the falls | MF3 E; receives Waterfall current from NW; south water edge is visual only |
 | `briarwell-waterfall` | Immense forced-fall plunge pool | Active forced arrival from Rock Ledge Pass; one-way current SE to Swimmable |
@@ -122,7 +128,11 @@ show that it once carried regular passage through the mountains.
 | M7 | `briarwell-mountain-m7` | Mountain M6 NE, Mountain M8 W |
 | M8 | `briarwell-mountain-m8` | Mountain M7 E, Mountain M9 W |
 | M9 | `briarwell-mountain-m9` | Mountain M8 E, Mountain M10 W |
-| M10 | `briarwell-mountain-m10` | Mountain M9 E; Mountain M11 S is visibly open but art-only |
+| M10 | `briarwell-mountain-m10` | Mountain M9 E, Mountain M11 S |
+| M11 | `briarwell-mountain-m11` | Mountain M10 N, Mountain M12 S |
+| M12 | `briarwell-mountain-m12` | Mountain M11 N, Mountain M13 E |
+| M13 | `briarwell-mountain-m13` | Mountain M12 W, Mountain M14 N |
+| M14 | `briarwell-mountain-m14` | Mountain M13 S; Mountain M15 W is visibly open but art-only |
 | Dwarven Cave | `briarwell-mountain-dwarven-cave` | Mountain M4 W; deeper descent is art-only |
 | Swimmable | `briarwell-swimmable` | MF3 E; one-way arrival from Waterfall NW |
 | Waterfall | `briarwell-waterfall` | Forced arrival from Rock Ledge Pass; one-way current SE to Swimmable |
@@ -133,12 +143,13 @@ northern opening into F16 is rough untracked ground rather than a fourth road.
 The Old River Bridge is intact and wagon-wide, but the rapid river is impassable
 away from its deck. Northfield is open green ground dominated by rock outcrops,
 with only a few distant trees and no invented road mouths. Beyond it, MF1–MF3 and
-M1–M10 are walking trails rather than roads. The climb grows progressively steeper
+M1–M14 are walking trails rather than roads. The climb grows progressively steeper
 and rockier above the forest line: M1 keeps the last sparse pines, M2 opens onto
 bare slope, and M3 constricts into a high pass before M4's snowy junction. M4's
 north edge is sealed. M5 now continues west through the scrollable Rock Ledge
-Pass and M6–M10. M10's southward trail is visibly open without a barrier, though
-it has no transition until M11 is authored. East of M4, the Dwarven Cave
+Pass and M6–M10. The active route then switchbacks south through M11 and M12,
+east into M13, and north into M14. M14's westward trail is visibly open without
+a barrier, though it has no transition until M15 is authored. East of M4, the Dwarven Cave
 forecourt is playable, but its descending entrance remains an interactable
 landmark until the interior map is supplied.
 
@@ -197,7 +208,8 @@ premature cave transition.
 14. ~~Scrollable Ogre clearing and corrected F20 north link.~~ Arena foundation complete v1; boss and cave traversal remain planned.
 15. ~~Misty Forest MF1–MF3, Swimmable and Waterfall.~~ MF screens complete v1 and river art complete v2; swimming animation remains planned and the Waterfall forced-fall source is now active.
 16. ~~Mountain M1–M5 and the Dwarven Cave forecourt.~~ Complete v1; the deeper cave interior remains planned.
-17. ~~Rock Ledge Pass and Mountain M6–M10.~~ Complete v1; M10 visibly reserves the open south route to future M11.
+17. ~~Rock Ledge Pass and Mountain M6–M10.~~ Complete v1.
+18. ~~Mountain M11–M14.~~ Complete v1; M10's south route is active and M14 visibly reserves the open west route to future M15.
 
 Every playable area requires its own runtime map JSON, background art, safe spawn
 points, exact transition triggers, foot-level collisions and depth occluders

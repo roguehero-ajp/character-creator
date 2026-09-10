@@ -110,8 +110,28 @@ const mapContracts = {
   },
   'briarwell-mountain-m10': {
     art: 'briarwell-mountain-m10-v1.webp',
-    directions: ['east'],
+    directions: ['east', 'south'],
     position: [-6, -8]
+  },
+  'briarwell-mountain-m11': {
+    art: 'briarwell-mountain-m11-v1.webp',
+    directions: ['north', 'south'],
+    position: [-6, -7]
+  },
+  'briarwell-mountain-m12': {
+    art: 'briarwell-mountain-m12-v1.webp',
+    directions: ['east', 'north'],
+    position: [-6, -6]
+  },
+  'briarwell-mountain-m13': {
+    art: 'briarwell-mountain-m13-v1.webp',
+    directions: ['north', 'west'],
+    position: [-4, -6]
+  },
+  'briarwell-mountain-m14': {
+    art: 'briarwell-mountain-m14-v1.webp',
+    directions: ['south'],
+    position: [-4, -7]
   },
   'briarwell-mountain-dwarven-cave': {
     art: 'briarwell-dwarven-cave-v1.webp',
@@ -205,6 +225,26 @@ assertConnection(
   { areaId: 'briarwell-mountain-m10', transitionId: 'east-path', direction: 'east' }
 );
 assertConnection(
+  'mountain-m10-m11',
+  { areaId: 'briarwell-mountain-m10', transitionId: 'south-path', direction: 'south' },
+  { areaId: 'briarwell-mountain-m11', transitionId: 'north-path', direction: 'north' }
+);
+assertConnection(
+  'mountain-m11-m12',
+  { areaId: 'briarwell-mountain-m11', transitionId: 'south-path', direction: 'south' },
+  { areaId: 'briarwell-mountain-m12', transitionId: 'north-path', direction: 'north' }
+);
+assertConnection(
+  'mountain-m12-m13',
+  { areaId: 'briarwell-mountain-m12', transitionId: 'east-path', direction: 'east' },
+  { areaId: 'briarwell-mountain-m13', transitionId: 'west-path', direction: 'west' }
+);
+assertConnection(
+  'mountain-m13-m14',
+  { areaId: 'briarwell-mountain-m13', transitionId: 'north-path', direction: 'north' },
+  { areaId: 'briarwell-mountain-m14', transitionId: 'south-path', direction: 'south' }
+);
+assertConnection(
   'mountain-m4-dwarven-cave',
   { areaId: 'briarwell-mountain-m4', transitionId: 'east-path', direction: 'east' },
   { areaId: 'briarwell-mountain-dwarven-cave', transitionId: 'west-path', direction: 'west' }
@@ -245,12 +285,32 @@ assert(
 );
 const m10 = maps.get('briarwell-mountain-m10');
 assert(
-  m10.exits.length === 1
-    && m10.futureConnections?.length === 1
-    && m10.futureConnections[0].id === 'mountain-m10-m11'
-    && m10.futureConnections[0].direction === 'south'
-    && m10.futureConnections[0].status === 'art-only',
-  'M10 must show an open southbound trail without exposing an unauthored M11 transition.'
+  m10.exits.length === 2
+    && m10.exits.some((exit) => (
+      exit.id === 'south-path'
+        && exit.target?.areaId === 'briarwell-mountain-m11'
+        && exit.target?.spawnId === 'from-north'
+    ))
+    && !m10.futureConnections,
+  'M10 must expose the completed southbound route into M11.'
+);
+
+const m14 = maps.get('briarwell-mountain-m14');
+assert(
+  m14.exits.length === 1
+    && m14.futureConnections?.length === 1
+    && m14.futureConnections[0].id === 'mountain-m14-m15'
+    && m14.futureConnections[0].direction === 'west'
+    && m14.futureConnections[0].status === 'art-only',
+  'M14 must show an open westbound trail without exposing an unauthored M15 transition.'
+);
+assert(
+  ['briarwell-mountain-m11', 'briarwell-mountain-m12', 'briarwell-mountain-m13', 'briarwell-mountain-m14']
+    .every((areaId) => {
+      const map = maps.get(areaId);
+      return !map.hazards?.length && map.collisions.length === 0 && map.npcs.length === 0;
+    }),
+  'M11-M14 must remain atmospheric traversal screens without hazards, blockers or encounters.'
 );
 
 const dwarvenCave = maps.get('briarwell-mountain-dwarven-cave');
@@ -357,6 +417,22 @@ const geometrySamples = {
     open: [[1400, 515], [780, 565], [700, 1040]],
     closed: [[45, 500], [720, 45], [1400, 900]]
   },
+  'briarwell-mountain-m11': {
+    open: [[735, 45], [875, 555], [795, 1040]],
+    closed: [[45, 500], [1400, 500]]
+  },
+  'briarwell-mountain-m12': {
+    open: [[640, 45], [760, 500], [1400, 575]],
+    closed: [[45, 575], [720, 1040]]
+  },
+  'briarwell-mountain-m13': {
+    open: [[45, 555], [650, 520], [760, 45]],
+    closed: [[1400, 520], [720, 1040]]
+  },
+  'briarwell-mountain-m14': {
+    open: [[45, 430], [560, 590], [755, 1040]],
+    closed: [[720, 45], [1400, 500]]
+  },
   'briarwell-mountain-dwarven-cave': {
     open: [[45, 455], [720, 560], [1020, 350]],
     closed: [[1400, 455], [720, 45], [720, 1040]]
@@ -396,6 +472,14 @@ const triggerSamples = [
   ['briarwell-mountain-m9', 1400, 515, 'east-path'],
   ['briarwell-mountain-m9', 45, 515, 'west-path'],
   ['briarwell-mountain-m10', 1400, 515, 'east-path'],
+  ['briarwell-mountain-m10', 700, 1040, 'south-path'],
+  ['briarwell-mountain-m11', 735, 45, 'north-path'],
+  ['briarwell-mountain-m11', 795, 1040, 'south-path'],
+  ['briarwell-mountain-m12', 640, 45, 'north-path'],
+  ['briarwell-mountain-m12', 1400, 575, 'east-path'],
+  ['briarwell-mountain-m13', 45, 555, 'west-path'],
+  ['briarwell-mountain-m13', 760, 45, 'north-path'],
+  ['briarwell-mountain-m14', 755, 1040, 'south-path'],
   ['briarwell-mountain-dwarven-cave', 45, 455, 'west-path']
 ];
 
@@ -405,12 +489,12 @@ triggerSamples.forEach(([areaId, x, y, transitionId]) => {
 });
 
 assert(
-  new MapGeometry(m10).getTriggerAt({ x: 700, y: 1040 }) === null,
-  'M10 exposes a transition on its reserved south edge.'
+  new MapGeometry(m14).getTriggerAt({ x: 45, y: 430 }) === null,
+  'M14 exposes a transition on its reserved west edge.'
 );
 assert(
   new MapGeometry(dwarvenCave).getNearbyInteractable({ x: 1020, y: 350 })?.id === 'deeper-dwarven-cave',
   'The reachable dwarven descent does not resolve as an interactable landmark.'
 );
 
-console.log('Mountain M1-M10, Rock Ledge Pass and Dwarven Cave route contracts passed.');
+console.log('Mountain M1-M14, Rock Ledge Pass and Dwarven Cave route contracts passed.');

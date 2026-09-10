@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.29.0",
+  "version": "0.30.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -880,7 +880,55 @@
       "map": "data/maps/briarwell-mountain-m10.json",
       "planPosition": { "column": -6, "row": -8 },
       "landmarks": [
-        { "id": "future-m11-trail", "label": "Open south trail toward Mountain M11" }
+        { "id": "southern-turning-shelf", "label": "Southern turning shelf" }
+      ]
+    },
+    {
+      "id": "briarwell-mountain-m11",
+      "areaNumber": null,
+      "title": "Mountain - M11",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-mountain-m11.json",
+      "planPosition": { "column": -6, "row": -7 },
+      "landmarks": [
+        { "id": "narrow-basalt-ascent", "label": "Narrow basalt ascent" }
+      ]
+    },
+    {
+      "id": "briarwell-mountain-m12",
+      "areaNumber": null,
+      "title": "Mountain - M12",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-mountain-m12.json",
+      "planPosition": { "column": -6, "row": -6 },
+      "landmarks": [
+        { "id": "wind-scoured-cairn", "label": "Wind-scoured cairn" }
+      ]
+    },
+    {
+      "id": "briarwell-mountain-m13",
+      "areaNumber": null,
+      "title": "Mountain - M13",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-mountain-m13.json",
+      "planPosition": { "column": -4, "row": -6 },
+      "landmarks": [
+        { "id": "cloud-sea-saddle", "label": "Cloud-sea saddle" }
+      ]
+    },
+    {
+      "id": "briarwell-mountain-m14",
+      "areaNumber": null,
+      "title": "Mountain - M14",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-mountain-m14.json",
+      "planPosition": { "column": -4, "row": -7 },
+      "landmarks": [
+        { "id": "future-m15-trail", "label": "Open west trail toward Mountain M15" }
       ]
     },
     {
@@ -1490,6 +1538,46 @@
       "endpoints": [
         { "areaId": "briarwell-mountain-m9", "transitionId": "west-path", "direction": "west" },
         { "areaId": "briarwell-mountain-m10", "transitionId": "east-path", "direction": "east" }
+      ]
+    },
+    {
+      "id": "mountain-m10-m11",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-mountain-m10", "transitionId": "south-path", "direction": "south" },
+        { "areaId": "briarwell-mountain-m11", "transitionId": "north-path", "direction": "north" }
+      ]
+    },
+    {
+      "id": "mountain-m11-m12",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-mountain-m11", "transitionId": "south-path", "direction": "south" },
+        { "areaId": "briarwell-mountain-m12", "transitionId": "north-path", "direction": "north" }
+      ]
+    },
+    {
+      "id": "mountain-m12-m13",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-mountain-m12", "transitionId": "east-path", "direction": "east" },
+        { "areaId": "briarwell-mountain-m13", "transitionId": "west-path", "direction": "west" }
+      ]
+    },
+    {
+      "id": "mountain-m13-m14",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-mountain-m13", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-mountain-m14", "transitionId": "south-path", "direction": "south" }
       ]
     },
     {

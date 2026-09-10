@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m11",
+  "title": "Mountain - M11",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m11/background/briarwell-mountain-m11-v1.webp",
+    "alt": "A narrow snow-dusted basalt trail winds between open north and south approaches high above the clouds"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 875, "y": 555, "facing": "south" },
+    "from-north": { "x": 735, "y": 155, "facing": "south" },
+    "from-south": { "x": 795, "y": 930, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "narrow-basalt-ascent",
+      "points": [[625, 0], [850, 0], [840, 150], [830, 245], [875, 340], [965, 405], [1080, 470], [1110, 545], [1065, 615], [955, 675], [900, 760], [920, 900], [935, 1086], [665, 1086], [650, 910], [655, 790], [685, 690], [750, 615], [820, 555], [760, 500], [655, 455], [575, 390], [555, 315], [595, 235], [625, 145]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-path",
+      "label": "North trail to Mountain M10",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m10",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[635, 8], [842, 8], [842, 105], [628, 105]]
+    },
+    {
+      "id": "south-path",
+      "label": "South trail to Mountain M12",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m12",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[675, 980], [925, 980], [930, 1078], [670, 1078]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "narrow-basalt-ascent",
+      "label": "Narrow basalt ascent",
+      "x": 875,
+      "y": 555,
+      "radius": 145,
+      "interactionText": "The old foot trail doubles back between dark basalt walls while the wind rises through the chute."
+    }
+  ],
+  "npcs": []
+}

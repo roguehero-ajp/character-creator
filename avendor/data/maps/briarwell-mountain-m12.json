@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-mountain-m12",
+  "title": "Mountain - M12",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/m12/background/briarwell-mountain-m12-v1.webp",
+    "alt": "A wind-scoured mountain trail bends from the north toward an open eastern shelf beside a small stone cairn"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 180, "scale": 0.44 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 680, "scale": 0.76 },
+      { "y": 980, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 760, "y": 500, "facing": "east" },
+    "from-north": { "x": 640, "y": 150, "facing": "south" },
+    "from-east": { "x": 1280, "y": 555, "facing": "west" }
+  },
+  "walkable": [
+    {
+      "id": "wind-scoured-elbow",
+      "points": [[520, 0], [750, 0], [755, 145], [815, 245], [790, 330], [720, 405], [755, 470], [905, 505], [1080, 490], [1260, 500], [1448, 520], [1448, 650], [1270, 635], [1095, 625], [925, 645], [750, 635], [590, 600], [470, 535], [420, 455], [435, 375], [500, 305], [560, 245], [535, 145]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-path",
+      "label": "North trail to Mountain M11",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m11",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[528, 8], [742, 8], [746, 105], [525, 105]]
+    },
+    {
+      "id": "east-path",
+      "label": "East trail to Mountain M13",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-mountain-m13",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-path"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [[1348, 515], [1440, 525], [1440, 642], [1348, 638]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "wind-scoured-cairn",
+      "label": "Wind-scoured cairn",
+      "x": 845,
+      "y": 380,
+      "radius": 130,
+      "interactionText": "A small cairn leans into the prevailing wind, its lower stones rimed with old snow."
+    }
+  ],
+  "npcs": []
+}
