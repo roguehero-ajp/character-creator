@@ -32,13 +32,13 @@
           <span class="action-arrow" aria-hidden="true">›</span>
         </a>
 
-        <button class="menu-button" type="button" data-open-panel="story-panel">
+        <button class="menu-button" type="button" data-open-panel="story-panel" aria-haspopup="dialog" aria-controls="story-panel">
           <span class="action-icon" aria-hidden="true">▤</span>
           <span class="action-copy"><span class="action-title">The Story</span><span class="action-note">Four-page origin comic</span></span>
           <span class="action-arrow" aria-hidden="true">›</span>
         </button>
 
-        <button class="menu-button" type="button" data-open-panel="character-panel">
+        <button class="menu-button" type="button" data-open-panel="character-panel" aria-haspopup="dialog" aria-controls="character-panel">
           <span class="action-icon" aria-hidden="true">★</span>
           <span class="action-copy"><span class="action-title">Character Select</span><span id="character-status" class="action-note">Active fighter: Johnny Muscles</span></span>
           <span class="action-arrow" aria-hidden="true">›</span>
@@ -50,122 +50,122 @@
   </main>
 
   <section id="story-panel" class="panel-layer" data-panel aria-hidden="true" aria-labelledby="story-title">
-    <div class="menu-panel story-panel-dialog" role="dialog" aria-modal="true">
+    <div class="menu-panel story-panel-dialog" role="dialog" aria-modal="true" aria-labelledby="story-title" aria-describedby="story-instructions">
       <div class="panel-head">
-        <div><p class="panel-kicker">Origin story</p><h2 id="story-title">The Story</h2></div>
+        <div><p class="panel-kicker">Origin story</p><h2 id="story-title" tabindex="-1">The Story</h2></div>
         <button class="close-button" type="button" data-close-panel aria-label="Close story">×</button>
       </div>
-      <p class="panel-copy story-instructions">Swipe left or right to turn pages. Arrow buttons and keyboard arrows work too.</p>
+      <p id="story-instructions" class="panel-copy story-instructions">Swipe left or right to turn pages. Arrow buttons and keyboard Left/Right, Home, and End keys work too.</p>
 
       <div class="story-toolbar">
-        <span id="story-page-count" class="story-counter">Page 1 / 4</span>
-        <span id="story-art-status" class="story-art-status" aria-live="polite">Loading comic art…</span>
+        <span id="story-page-count" class="story-counter" role="status" aria-live="polite" aria-atomic="true">Page 1 / 4</span>
+        <span id="story-art-status" class="story-art-status" role="status" aria-live="polite" aria-atomic="true">Loading comic art…</span>
       </div>
 
-      <div id="story-viewport" class="story-viewport" tabindex="0" aria-label="Johnny Muscles four-page origin comic">
-        <article class="story-page is-active" data-story-page="0">
-          <div class="story-art-frame story-art-page-1" role="img" aria-label="Comic page 1: aliens mistake cats for Earth's dominant species, approach a wide-eyed cat from behind, and giant alien cats begin rampaging through cities."></div>
+      <div id="story-viewport" class="story-viewport" tabindex="0" role="region" aria-label="Johnny Muscles four-page origin comic" aria-describedby="story-instructions">
+        <article id="story-page-1" class="story-page is-active" data-story-page="0" role="group" aria-roledescription="comic page" aria-label="Page 1 of 4" aria-hidden="false">
+          <div class="story-art-frame story-art-page-1" aria-hidden="true"></div>
           <div class="sr-only">
             <h3>Page 1</h3>
             <p>Two tentacle blob aliens discover Earth. One says, “We've found what must be the dominant species! They even have their slave caretakers cleaning their poop.” The other replies, “Perfect! We'll go in through their butts!” A wide-eyed housecat senses an alien behind it. Giant alien cats then rampage through the cities.</p>
           </div>
         </article>
 
-        <article class="story-page" data-story-page="1">
-          <div class="story-art-frame story-art-page-2" role="img" aria-label="Comic page 2: the military attacks the alien cats, a soldier reports that bullets do not work, and a mysterious voice says Try tanks."></div>
+        <article id="story-page-2" class="story-page" data-story-page="1" role="group" aria-roledescription="comic page" aria-label="Page 2 of 4" aria-hidden="true" hidden>
+          <div class="story-art-frame story-art-page-2" aria-hidden="true"></div>
           <div class="sr-only">
             <h3>Page 2</h3>
             <p>The military rolls in with guns and tanks blazing. A young soldier tells an old general, “General! They're impervious to our bullets!” The general replies, “This is catastrophic! We need a new strategy.” From the darkness, a voice says, “Try tanks.”</p>
           </div>
         </article>
 
-        <article class="story-page" data-story-page="2">
-          <div class="story-art-frame story-art-page-3" role="img" aria-label="Comic page 3: Johnny Muscles introduces himself, suggests throwing tanks, then hurls one into an alien cat with a huge explosion."></div>
+        <article id="story-page-3" class="story-page" data-story-page="2" role="group" aria-roledescription="comic page" aria-label="Page 3 of 4" aria-hidden="true" hidden>
+          <div class="story-art-frame story-art-page-3" aria-hidden="true"></div>
           <div class="sr-only">
             <h3>Page 3</h3>
-            <p>The general asks, “Who in the anabolic window are you, stranger?” The man replies, “I'm Johnny Muscles.” The general says the tanks are not working. Johnny asks, “Have you tried throwing them?” The general replies, “…uh… what?” Johnny throws a tank into an alien cat. Kaboom. Johnny says, “Bring me tanks! I've got some kitties to crush!”</p>
+            <p>The general asks, “Who in the anabolic window are you, stranger?” The man replies, “I'm Johnny Muscles.” The general says, “Johnny! Our tanks aren't working!” Johnny asks, “Have you tried throwing them?” The general replies, “…uh… what?” Johnny throws a tank into an alien cat. Kaboom. Johnny says, “Bring me tanks! I've got some kitties to crush!”</p>
           </div>
         </article>
 
-        <article class="story-page" data-story-page="3">
-          <div class="story-art-frame story-art-page-4" role="img" aria-label="Comic page 4: Johnny Muscles poses heroically in a full-page title splash."></div>
+        <article id="story-page-4" class="story-page" data-story-page="3" role="group" aria-roledescription="comic page" aria-label="Page 4 of 4" aria-hidden="true" hidden>
+          <div class="story-art-frame story-art-page-4" aria-hidden="true"></div>
           <div class="sr-only">
             <h3>Page 4</h3>
-            <p>Johnny Muscles poses heroically. Johnny Muscles: Tank Thrower. Bigger tanks. Smaller kitties. “Let's save this city.”</p>
+            <p>Johnny Muscles poses heroically. Johnny Muscles: Tank Thrower. Bigger tanks. Smaller kitties. Johnny says, “Let's save this city.”</p>
           </div>
         </article>
       </div>
 
-      <div id="story-dots" class="story-dots" aria-label="Comic pages">
-        <button class="story-dot is-active" type="button" data-story-dot="0" aria-label="Go to page 1" aria-current="page"></button>
-        <button class="story-dot" type="button" data-story-dot="1" aria-label="Go to page 2"></button>
-        <button class="story-dot" type="button" data-story-dot="2" aria-label="Go to page 3"></button>
-        <button class="story-dot" type="button" data-story-dot="3" aria-label="Go to page 4"></button>
+      <div id="story-dots" class="story-dots" aria-label="Choose comic page">
+        <button class="story-dot is-active" type="button" data-story-dot="0" aria-label="Go to comic page 1" aria-controls="story-page-1" aria-current="page"><span aria-hidden="true"></span></button>
+        <button class="story-dot" type="button" data-story-dot="1" aria-label="Go to comic page 2" aria-controls="story-page-2"><span aria-hidden="true"></span></button>
+        <button class="story-dot" type="button" data-story-dot="2" aria-label="Go to comic page 3" aria-controls="story-page-3"><span aria-hidden="true"></span></button>
+        <button class="story-dot" type="button" data-story-dot="3" aria-label="Go to comic page 4" aria-controls="story-page-4"><span aria-hidden="true"></span></button>
       </div>
 
       <div class="story-controls">
-        <button id="story-prev" class="story-control secondary" type="button" disabled>Previous</button>
-        <button id="story-next" class="story-control" type="button">Next</button>
-        <a id="story-start" class="story-control story-start" href="city1.html?build=0.11.4" hidden>Start Game</a>
+        <button id="story-prev" class="story-control secondary" type="button" aria-label="Previous comic page" aria-controls="story-viewport" disabled>Previous</button>
+        <button id="story-next" class="story-control" type="button" aria-label="Next comic page" aria-controls="story-viewport">Next</button>
+        <a id="story-start" class="story-control story-start" href="city1.html?build=0.11.4" aria-label="Start game at City 1: First Contact" hidden>Start Game</a>
       </div>
     </div>
   </section>
 
   <section id="character-panel" class="panel-layer" data-panel aria-hidden="true" aria-labelledby="character-title">
-    <div class="menu-panel character-panel-dialog" role="dialog" aria-modal="true">
+    <div class="menu-panel character-panel-dialog" role="dialog" aria-modal="true" aria-labelledby="character-title" aria-describedby="character-instructions">
       <div class="panel-head">
-        <div><p class="panel-kicker">Choose your muscle</p><h2 id="character-title">Character Select</h2></div>
+        <div><p class="panel-kicker">Choose your muscle</p><h2 id="character-title" tabindex="-1">Character Select</h2></div>
         <button class="close-button" type="button" data-close-panel aria-label="Close character select">×</button>
       </div>
-      <p class="panel-copy compact-copy">Swipe left or right across the character sheet. Arrow buttons and keyboard arrows work too.</p>
+      <p id="character-instructions" class="panel-copy compact-copy">Swipe left or right across the character sheet. Arrow buttons and keyboard Left/Right, Home, and End keys work too.</p>
 
       <div class="selector-topline">
-        <span class="selector-pill">Swipe ◀ ▶</span>
-        <span id="character-count" class="selector-counter">1 / 5</span>
+        <span class="selector-pill" aria-hidden="true">Swipe ◀ ▶</span>
+        <span id="character-count" class="selector-counter" role="status" aria-live="polite" aria-atomic="true">1 / 5</span>
       </div>
 
       <div class="character-sheet-shell">
-        <button id="character-prev" class="carousel-arrow" type="button" aria-label="Previous character">‹</button>
+        <button id="character-prev" class="carousel-arrow" type="button" aria-label="Previous character" aria-controls="character-sheet">‹</button>
 
-        <div id="character-sheet" class="character-sheet" tabindex="0" aria-label="Character carousel swipe area">
-          <article class="character-slide is-active" data-character="johnny" data-name="Johnny Muscles" data-status="playable" data-tagline="Tanks. Cats. No problem.">
+        <div id="character-sheet" class="character-sheet" tabindex="0" role="region" aria-label="Character carousel" aria-describedby="character-instructions">
+          <article id="character-johnny" class="character-slide is-active" data-character="johnny" data-name="Johnny Muscles" data-status="playable" data-tagline="Tanks. Cats. No problem." role="group" aria-roledescription="character" aria-label="Johnny Muscles, playable" aria-hidden="false">
             <div class="concept-sheet">
               <div class="sheet-title-block"><h3>Johnny<br />Muscles</h3><p>Tanks.<br />Cats.<br />No problem.</p></div>
-              <div class="hero-pose" aria-label="Stylized Johnny Muscles full-body pose"><div class="johnny-body"></div></div>
-              <div class="expression-stack" aria-label="Johnny Muscles expression studies">
+              <div class="hero-pose" aria-hidden="true"><div class="johnny-body"></div></div>
+              <div class="expression-stack" aria-hidden="true">
                 <div class="face-study"><span>Confident</span></div>
                 <div class="face-study shout"><span>Let's go!</span></div>
                 <div class="face-study grin"><span>Cool under fire</span></div>
               </div>
-              <div class="tank-pose" aria-label="Stylized Johnny Muscles tank throw pose"><div class="thrower"></div><div class="mini-tank"></div><strong>Throw anything.</strong></div>
-              <div class="turnaround"><div class="mini-body"><span>Front</span></div><div class="mini-body side"><span>Side</span></div><div class="mini-body back"><span>Back</span></div></div>
+              <div class="tank-pose" aria-hidden="true"><div class="thrower"></div><div class="mini-tank"></div><strong>Throw anything.</strong></div>
+              <div class="turnaround" aria-hidden="true"><div class="mini-body"><span>Front</span></div><div class="mini-body side"><span>Side</span></div><div class="mini-body back"><span>Back</span></div></div>
               <div class="sheet-notes"><strong>Playable now</strong><span>Strong silhouette</span><span>Readable proportions</span><span>Tank-throwing specialist</span></div>
             </div>
           </article>
 
-          <article class="character-slide" data-character="rick" data-name="Rick Rampage" data-status="locked" data-tagline="Locked until ready.">
-            <div class="locked-sheet"><div class="locked-silhouette">?</div><div><span class="lock-chip">🔒 Locked</span><h3>Rick Rampage</h3><p>This fighter has been named, but his character build is not ready yet.</p></div></div>
+          <article id="character-rick" class="character-slide" data-character="rick" data-name="Rick Rampage" data-status="locked" data-tagline="Locked until ready." role="group" aria-roledescription="character" aria-label="Rick Rampage, locked" aria-hidden="true" hidden>
+            <div class="locked-sheet"><div class="locked-silhouette" aria-hidden="true">?</div><div><span class="lock-chip">🔒 Locked</span><h3>Rick Rampage</h3><p>This fighter has been named, but his character build is not ready yet.</p></div></div>
           </article>
 
-          <article class="character-slide" data-character="holly" data-name="Holly Heatwave" data-status="locked" data-tagline="Locked until ready.">
-            <div class="locked-sheet"><div class="locked-silhouette">?</div><div><span class="lock-chip">🔒 Locked</span><h3>Holly Heatwave</h3><p>This fighter has been named, but her character build is not ready yet.</p></div></div>
+          <article id="character-holly" class="character-slide" data-character="holly" data-name="Holly Heatwave" data-status="locked" data-tagline="Locked until ready." role="group" aria-roledescription="character" aria-label="Holly Heatwave, locked" aria-hidden="true" hidden>
+            <div class="locked-sheet"><div class="locked-silhouette" aria-hidden="true">?</div><div><span class="lock-chip">🔒 Locked</span><h3>Holly Heatwave</h3><p>This fighter has been named, but her character build is not ready yet.</p></div></div>
           </article>
 
-          <article class="character-slide" data-character="santa" data-name="Santa" data-status="locked" data-tagline="Locked until ready.">
-            <div class="locked-sheet"><div class="locked-silhouette">?</div><div><span class="lock-chip">🔒 Locked</span><h3>Santa</h3><p>This fighter has been named, but his character build is not ready yet.</p></div></div>
+          <article id="character-santa" class="character-slide" data-character="santa" data-name="Santa" data-status="locked" data-tagline="Locked until ready." role="group" aria-roledescription="character" aria-label="Santa, locked" aria-hidden="true" hidden>
+            <div class="locked-sheet"><div class="locked-silhouette" aria-hidden="true">?</div><div><span class="lock-chip">🔒 Locked</span><h3>Santa</h3><p>This fighter has been named, but his character build is not ready yet.</p></div></div>
           </article>
 
-          <article class="character-slide" data-character="grimm" data-name="The Grimm Rapper" data-status="locked" data-tagline="Locked until ready.">
-            <div class="locked-sheet"><div class="locked-silhouette">?</div><div><span class="lock-chip">🔒 Locked</span><h3>The Grimm Rapper</h3><p>This fighter has been named, but the character build is not ready yet.</p></div></div>
+          <article id="character-grimm" class="character-slide" data-character="grimm" data-name="The Grimm Rapper" data-status="locked" data-tagline="Locked until ready." role="group" aria-roledescription="character" aria-label="The Grimm Rapper, locked" aria-hidden="true" hidden>
+            <div class="locked-sheet"><div class="locked-silhouette" aria-hidden="true">?</div><div><span class="lock-chip">🔒 Locked</span><h3>The Grimm Rapper</h3><p>This fighter has been named, but the character build is not ready yet.</p></div></div>
           </article>
         </div>
 
-        <button id="character-next" class="carousel-arrow" type="button" aria-label="Next character">›</button>
+        <button id="character-next" class="carousel-arrow" type="button" aria-label="Next character" aria-controls="character-sheet">›</button>
       </div>
 
       <div class="selector-footer">
         <div><p id="selector-name" class="selector-name">Johnny Muscles</p><p id="selector-tagline" class="selector-tagline">Tanks. Cats. No problem.</p></div>
-        <button id="character-select-button" class="character-select-button" type="button" aria-pressed="true">Johnny Selected</button>
+        <button id="character-select-button" class="character-select-button" type="button" aria-pressed="true" aria-label="Johnny Muscles is selected">Johnny Selected</button>
       </div>
     </div>
   </section>
