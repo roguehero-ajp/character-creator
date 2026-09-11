@@ -2,6 +2,7 @@
   'use strict';
 
   const KEYS = {
+    city1Beaten: 'johnnyMuscles.city1Beaten',
     rickUnlocked: 'johnnyMuscles.rickUnlocked',
     rickIntroSeen: 'johnnyMuscles.rickIntroSeen',
     selectedCharacter: 'johnnyMuscles.selectedCharacter'
@@ -22,7 +23,16 @@
   let startY = null;
   let transcriptVisible = false;
 
-  try { localStorage.setItem(KEYS.rickUnlocked, 'true'); } catch {}
+  function read(key) {
+    try { return localStorage.getItem(key); } catch { return null; }
+  }
+
+  function write(key, value) {
+    try { localStorage.setItem(key, value); return true; } catch { return false; }
+  }
+
+  const unlockEligible = read(KEYS.city1Beaten) === 'true' || read(KEYS.rickUnlocked) === 'true';
+  if (unlockEligible) write(KEYS.rickUnlocked, 'true');
 
   function showPage(index) {
     if (!pages.length) return;
@@ -42,7 +52,10 @@
     if (count) count.textContent = `Page ${pageIndex + 1} / ${pages.length}`;
     if (previous) previous.disabled = pageIndex === 0;
     if (next) next.hidden = pageIndex === pages.length - 1;
-    if (selectRick) selectRick.hidden = pageIndex !== pages.length - 1;
+    if (selectRick) {
+      selectRick.hidden = pageIndex !== pages.length - 1;
+      selectRick.setAttribute('aria-disabled', String(!unlockEligible));
+    }
     if (city2) city2.hidden = pageIndex !== pages.length - 1;
   }
 
@@ -54,17 +67,22 @@
   }
 
   function markSeen({ select = false } = {}) {
-    try {
-      localStorage.setItem(KEYS.rickIntroSeen, 'true');
-      localStorage.setItem(KEYS.rickUnlocked, 'true');
-      if (select) localStorage.setItem(KEYS.selectedCharacter, 'rick');
-    } catch {}
+    if (!unlockEligible) return;
+    write(KEYS.rickIntroSeen, 'true');
+    write(KEYS.rickUnlocked, 'true');
+    if (select) write(KEYS.selectedCharacter, 'rick');
   }
 
   previous?.addEventListener('click', () => showPage(pageIndex - 1));
   next?.addEventListener('click', () => showPage(pageIndex + 1));
   transcriptToggle?.addEventListener('click', () => setTranscript(!transcriptVisible));
-  selectRick?.addEventListener('click', () => markSeen({ select: true }));
+  selectRick?.addEventListener('click', event => {
+    if (!unlockEligible) {
+      event.preventDefault();
+      return;
+    }
+    markSeen({ select: true });
+  });
   city2?.addEventListener('click', () => markSeen());
   dots.forEach(dot => dot.addEventListener('click', () => showPage(Number(dot.dataset.dot))));
 
