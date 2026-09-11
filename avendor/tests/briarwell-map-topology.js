@@ -248,13 +248,13 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   const topology = engine.auditTopology(registry, maps);
 
   assert(registryData.schemaVersion === 2, 'Briarwell must use the route-graph registry schema.');
-  assert(registryData.version === '0.31.0', 'The M15 and Redluk mountain-route expansion requires registry version 0.31.0.');
-  assert(registryData.areas.length === 89, "Briarwell must register the town, sewers, support spaces, forest routes, Ogre's Clearing, Northfield, Misty Forest, river areas, mountains, Redluk, farms, Witchwood and ancient-maple screens.");
-  assert(registryData.connections.length === 102, 'Briarwell must preserve all 102 approved internal connections.');
+  assert(registryData.version === '0.32.0', 'The playable Dwarven Cave expansion requires registry version 0.32.0.');
+  assert(registryData.areas.length === 108, "Briarwell must register the town, sewers, support spaces, forest routes, Ogre's Clearing, Northfield, Misty Forest, river areas, mountains, Redluk, Dwarven Cave, farms, Witchwood and ancient-maple screens.");
+  assert(registryData.connections.length === 123, 'Briarwell must preserve all 123 approved internal connections.');
   assert(registryData.cityExits.length === 1, 'Only the blocked road beyond the broken bridge should remain an unresolved city exit.');
   assert(
-    Object.keys(maps).length === 89,
-    "Briarwell must load every town, sewer, support-interior, forest, farm, Ogre's Clearing, Northfield, Misty Forest, river, mountain, Redluk and Witchwood map."
+    Object.keys(maps).length === 108,
+    "Briarwell must load every town, sewer, support-interior, forest, farm, Ogre's Clearing, Northfield, Misty Forest, river, mountain, Redluk, Dwarven Cave and Witchwood map."
   );
   assert(topology.errors.length === 0, topology.errors.join('\n'));
   const unavailableTransitionCount = Object.values(maps)
@@ -350,17 +350,18 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     return counts;
   }, {});
   assert(kindCounts.road === 51, "Briarwell must preserve all established town, forest, Ogre's Clearing, Witchwood and farm-road connections.");
-  assert(kindCounts.trail === 16, 'The Northfield, Misty Forest, Swimmable and mountain walking routes must remain trails rather than roads.');
+  assert(kindCounts.trail === 22, 'The Northfield, Misty Forest, Swimmable and mountain walking routes must remain trails rather than roads.');
+  assert(kindCounts['cave-passage'] === 20, 'The Dwarven Cave must preserve all 20 public passages.');
   assert(kindCounts['river-escape'] === 1, 'Waterfall must retain exactly one directed river escape into Swimmable.');
   assert(kindCounts.alley === 1, 'Briarwell must preserve the Ainsley alley connection.');
   assert(kindCounts.doorway === 2, 'Briarwell must preserve the two Town Center doorways.');
   assert(kindCounts.climb === 2, 'The ancient maple must preserve both vertical climb connections.');
-  assert(kindCounts['secret-passage'] === 2, 'Briarwell must preserve the open-window and dwarven secret passages.');
+  assert(kindCounts['secret-passage'] === 3, 'Briarwell must preserve the open-window and both dwarven secret passages.');
   assert(kindCounts['sewer-access'] === 4, 'Briarwell must preserve all four sewer entrances.');
   assert(kindCounts['sewer-tunnel'] === 17, 'Briarwell must preserve all 17 internal sewer tunnels.');
   assert(
-    registryData.connections.filter((connection) => connection.visibility === 'hidden').length === 6,
-    'Only the open-window route, four sewer entrances and dwarven chamber should be hidden.'
+    registryData.connections.filter((connection) => connection.visibility === 'hidden').length === 7,
+    'Only the open-window route, four sewer entrances and two dwarven chambers should be hidden.'
   );
 
   const libraryPublic = registry.getConnectionsForArea('briarwell-library-quarter');
@@ -391,7 +392,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const publicReachable = collectReachableAreas(registry, 'briarwell-town-center', false);
   const allReachable = collectReachableAreas(registry, 'briarwell-town-center', true);
-  assert(publicReachable.size === 65, "The public route graph must connect the town, outskirts, farms, Witchwood, ancient maple, Northfield, Misty Forest, Swimmable, mountains, Dwarven Cave, dark forest and Ogre's Clearing.");
+  assert(publicReachable.size === 89, "The public route graph must connect the town, outskirts, farms, Witchwood, ancient maple, Northfield, Misty Forest, Swimmable, mountains, Dwarven Cave, dark forest and Ogre's Clearing.");
   assert(
     ![...publicReachable].some((areaId) => areaId.startsWith('briarwell-sewer-')),
     'The sewers must not appear in public navigation.'

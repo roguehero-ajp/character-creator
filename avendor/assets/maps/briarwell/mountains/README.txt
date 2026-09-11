@@ -2,9 +2,11 @@ BRIARWELL MOUNTAIN MAP ART
 ==========================
 
 Canonical runtime backgrounds for Mountain M1 through M15, Redluk, Rock Ledge
-Pass and the Dwarven Cave forecourt are stored beneath this directory. Most
-mountain screens use the standard Avendor reference size of 1448 x 1086. Rock
-Ledge Pass and M15 are 2048 x 944 horizontal scrolls; Redluk is 3072 x 944.
+Pass and the complete Dwarven Cave are stored beneath this directory. Most
+mountain and cave screens use the standard Avendor reference size of 1448 x
+1086. Rock Ledge Pass and M15 are 2048 x 944 horizontal scrolls; Redluk is 3072
+x 944; the goblin battle chamber is 3072 x 1024; and the cliff vista is a 2048 x
+1152 cinematic image.
 
 Approved route graph:
 
@@ -55,10 +57,21 @@ Route-art contract:
   "Stop...", and remain still while a larger elder-orc placeholder enters. Final
   character sprites and the extended in-game movie are intentionally pending.
 - The Dwarven Cave is an outdoor playable forecourt entered only from M4 on the
-  west. Its ancient cave mouth visibly descends into the mountain, but remains
-  an interactable landmark rather than a portal until the interior map exists.
+  west. Its ancient cave mouth is an active interactive portal into C1.
+- C1-C16 form the exact approved 21-link cave graph. C6's east wall conceals the
+  secret armoury behind 1d100 <= floor(Search / 2). A successful inspection is
+  remembered, so the revealed mechanism can then be used normally.
+- The secret armoury contains a once-rolled chest holding 1-100 silver and 1-100
+  gold, plate mail on an armour rack, a two-handed sword leaning against the
+  wall, and a mace on a rack. Inventory handoff remains pending.
+- C16 enters a 3072 x 1024 scrolling battle chamber containing placeholder
+  staging for five goblins, two hobgoblins and one hobgoblin chieftain.
+- C9 opens southeast onto a playable cliff shelf. Reaching its edge replaces
+  the play view with a 2048 x 1152 panorama of Briarwell and its lake on the
+  left, with exactly two islands, mirrored from the original composition.
 - These are rough mountain walking trails, never wagon roads. Every unlisted
   edge is closed by cliffs, scree, snow or dense highland growth.
 
-Runtime geometry, spawns, transition targets and future-route reservations live
-in avendor/data/maps.
+Runtime geometry, spawns and transition targets live in avendor/data/maps. The
+repeatable cave-map source is data/maps/build-dwarven-cave.mjs, and cave runtime
+staging lives in js/dwarven-cave-runtime.js.

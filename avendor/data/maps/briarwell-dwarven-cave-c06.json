@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-dwarven-cave-c06",
+  "title": "Dwarven Cave - C6",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/dwarven-cave/interior/background/briarwell-dwarven-cave-c06-v1.webp",
+    "alt": "A dwarven mechanism hall has visible passages west and south and a seemingly solid carved east wall"
+  },
+  "movement": {
+    "speedX": 270,
+    "speedY": 202,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 180,
+        "scale": 0.44
+      },
+      {
+        "y": 420,
+        "scale": 0.58
+      },
+      {
+        "y": 680,
+        "scale": 0.76
+      },
+      {
+        "y": 980,
+        "scale": 1
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 170,
+      "y": 515,
+      "facing": "east"
+    },
+    "from-west": {
+      "x": 170,
+      "y": 515,
+      "facing": "east"
+    },
+    "from-south": {
+      "x": 724,
+      "y": 825,
+      "facing": "north"
+    },
+    "from-secret": {
+      "x": 1165,
+      "y": 505,
+      "facing": "west"
+    }
+  },
+  "walkable": [
+    {
+      "id": "central-floor",
+      "points": [
+        [
+          150,
+          300
+        ],
+        [
+          1298,
+          300
+        ],
+        [
+          1360,
+          410
+        ],
+        [
+          1360,
+          700
+        ],
+        [
+          1160,
+          860
+        ],
+        [
+          288,
+          860
+        ],
+        [
+          88,
+          700
+        ],
+        [
+          88,
+          410
+        ]
+      ]
+    },
+    {
+      "id": "west-approach",
+      "points": [
+        [
+          0,
+          330
+        ],
+        [
+          430,
+          330
+        ],
+        [
+          430,
+          690
+        ],
+        [
+          0,
+          690
+        ]
+      ]
+    },
+    {
+      "id": "south-approach",
+      "points": [
+        [
+          483,
+          700
+        ],
+        [
+          965,
+          700
+        ],
+        [
+          903,
+          1086
+        ],
+        [
+          545,
+          1086
+        ]
+      ]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "west-passage",
+      "label": "West passage to Dwarven Cave C5",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-dwarven-cave-c05",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-passage"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [
+        [
+          0,
+          375
+        ],
+        [
+          105,
+          375
+        ],
+        [
+          105,
+          650
+        ],
+        [
+          0,
+          650
+        ]
+      ]
+    },
+    {
+      "id": "south-passage",
+      "label": "South passage to Dwarven Cave C7",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-dwarven-cave-c07",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-passage"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [
+        [
+          590,
+          955
+        ],
+        [
+          858,
+          955
+        ],
+        [
+          858,
+          1086
+        ],
+        [
+          590,
+          1086
+        ]
+      ]
+    }
+  ],
+  "portals": [
+    {
+      "id": "secret-door",
+      "label": "Concealed dwarven mechanism",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-dwarven-cave-secret",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-passage"
+      },
+      "fallbackSpawn": "from-secret",
+      "points": [
+        [
+          1190,
+          270
+        ],
+        [
+          1415,
+          270
+        ],
+        [
+          1415,
+          620
+        ],
+        [
+          1190,
+          620
+        ]
+      ],
+      "activation": "interact",
+      "interactionTarget": {
+        "x": 1270,
+        "y": 430
+      },
+      "radius": 155,
+      "check": {
+        "type": "skill",
+        "skill": "Search",
+        "divisor": 2,
+        "die": 100,
+        "discoveryId": "briarwell-dwarven-cave-c06-secret-door",
+        "successText": "A nearly invisible diamond pivots beneath your fingers. Stone grinds aside, revealing a secret dwarven door.",
+        "failureText": "The east wall is exquisitely fitted. Whatever opens it remains hidden."
+      }
+    }
+  ],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}

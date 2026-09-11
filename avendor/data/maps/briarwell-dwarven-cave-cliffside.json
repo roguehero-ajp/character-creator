@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-dwarven-cave-cliffside",
+  "title": "Dwarven Cave - Cliffside Overlook",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/dwarven-cave/interior/background/briarwell-dwarven-cave-cliffside-v1.webp",
+    "alt": "A broad snowy shelf outside an ancient dwarven arch overlooks the mountains above Briarwell"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 180,
+        "scale": 0.44
+      },
+      {
+        "y": 420,
+        "scale": 0.58
+      },
+      {
+        "y": 680,
+        "scale": 0.76
+      },
+      {
+        "y": 980,
+        "scale": 1
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 360,
+      "y": 430,
+      "facing": "southeast"
+    },
+    "from-cave": {
+      "x": 360,
+      "y": 430,
+      "facing": "southeast"
+    }
+  },
+  "walkable": [
+    {
+      "id": "cliffside-shelf",
+      "points": [
+        [
+          125,
+          270
+        ],
+        [
+          430,
+          260
+        ],
+        [
+          720,
+          300
+        ],
+        [
+          1020,
+          340
+        ],
+        [
+          1260,
+          390
+        ],
+        [
+          1370,
+          480
+        ],
+        [
+          1320,
+          650
+        ],
+        [
+          1120,
+          735
+        ],
+        [
+          810,
+          720
+        ],
+        [
+          500,
+          670
+        ],
+        [
+          250,
+          590
+        ],
+        [
+          110,
+          455
+        ]
+      ]
+    }
+  ],
+  "collisions": [],
+  "exits": [],
+  "portals": [
+    {
+      "id": "northwest-passage",
+      "label": "Northwest arch to Dwarven Cave C9",
+      "direction": "northwest",
+      "status": "active",
+      "activation": "auto",
+      "target": {
+        "areaId": "briarwell-dwarven-cave-c09",
+        "spawnId": "from-cliffside",
+        "returnTransitionId": "southeast-passage"
+      },
+      "fallbackSpawn": "from-cave",
+      "points": [
+        [
+          125,
+          260
+        ],
+        [
+          305,
+          250
+        ],
+        [
+          335,
+          370
+        ],
+        [
+          180,
+          430
+        ]
+      ]
+    }
+  ],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": [],
+  "scenicView": {
+    "id": "briarwell-from-dwarven-cliff",
+    "trigger": {
+      "type": "enter-polygon",
+      "points": [
+        [
+          1010,
+          390
+        ],
+        [
+          1340,
+          420
+        ],
+        [
+          1340,
+          650
+        ],
+        [
+          1040,
+          690
+        ]
+      ]
+    },
+    "image": "assets/maps/briarwell/mountains/dwarven-cave/interior/background/briarwell-dwarven-cave-cliffside-vista-v1.webp",
+    "imageSize": {
+      "width": 2048,
+      "height": 1152
+    },
+    "alt": "A majestic winter panorama from the mountain cliff shows Briarwell on the left beside a broad lake with exactly two islands",
+    "caption": "Briarwell rests far below, beyond the mountain mist."
+  }
+}

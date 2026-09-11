@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-dwarven-cave-battle-chamber",
+  "title": "Dwarven Cave - Goblin Battle Chamber",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 3072,
+    "height": 1024
+  },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/dwarven-cave/interior/background/briarwell-dwarven-cave-battle-chamber-v1.webp",
+    "alt": "An immense torchlit dwarven great hall has become a fortified goblin battle chamber"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 230,
+        "scale": 0.5
+      },
+      {
+        "y": 430,
+        "scale": 0.64
+      },
+      {
+        "y": 650,
+        "scale": 0.8
+      },
+      {
+        "y": 900,
+        "scale": 1
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 180,
+      "y": 570,
+      "facing": "east"
+    },
+    "from-west": {
+      "x": 180,
+      "y": 570,
+      "facing": "east"
+    }
+  },
+  "walkable": [
+    {
+      "id": "great-hall-floor",
+      "points": [
+        [
+          0,
+          285
+        ],
+        [
+          3072,
+          285
+        ],
+        [
+          3072,
+          805
+        ],
+        [
+          2780,
+          830
+        ],
+        [
+          300,
+          830
+        ],
+        [
+          0,
+          805
+        ]
+      ]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "west-passage",
+      "label": "West passage to Dwarven Cave C16",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-dwarven-cave-c16",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-passage"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [
+        [
+          0,
+          390
+        ],
+        [
+          100,
+          390
+        ],
+        [
+          100,
+          700
+        ],
+        [
+          0,
+          700
+        ]
+      ]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "goblin-chieftain-dais",
+      "label": "Goblin chieftain command dais",
+      "x": 2860,
+      "y": 420,
+      "radius": 170,
+      "interactionText": "The ancient dwarven dais has been draped in hides and claimed by the hobgoblin chieftain."
+    }
+  ],
+  "npcs": [],
+  "goblinEncounter": {
+    "id": "dwarven-cave-goblin-force",
+    "status": "scaffold",
+    "combatStatus": "pending",
+    "actors": [
+      {
+        "id": "goblin-01",
+        "variant": "goblin",
+        "spriteStatus": "placeholder",
+        "x": 1480,
+        "y": 535,
+        "scale": 0.82
+      },
+      {
+        "id": "goblin-02",
+        "variant": "goblin",
+        "spriteStatus": "placeholder",
+        "x": 1640,
+        "y": 655,
+        "scale": 0.86
+      },
+      {
+        "id": "goblin-03",
+        "variant": "goblin",
+        "spriteStatus": "placeholder",
+        "x": 1810,
+        "y": 515,
+        "scale": 0.84
+      },
+      {
+        "id": "goblin-04",
+        "variant": "goblin",
+        "spriteStatus": "placeholder",
+        "x": 1980,
+        "y": 660,
+        "scale": 0.9
+      },
+      {
+        "id": "goblin-05",
+        "variant": "goblin",
+        "spriteStatus": "placeholder",
+        "x": 2150,
+        "y": 535,
+        "scale": 0.88
+      },
+      {
+        "id": "hobgoblin-01",
+        "variant": "hobgoblin",
+        "spriteStatus": "placeholder",
+        "x": 2380,
+        "y": 630,
+        "scale": 1.05
+      },
+      {
+        "id": "hobgoblin-02",
+        "variant": "hobgoblin",
+        "spriteStatus": "placeholder",
+        "x": 2550,
+        "y": 510,
+        "scale": 1.08
+      },
+      {
+        "id": "hobgoblin-chieftain",
+        "variant": "chieftain",
+        "spriteStatus": "placeholder",
+        "x": 2810,
+        "y": 520,
+        "scale": 1.24
+      }
+    ]
+  }
+}

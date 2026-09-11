@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.31.0",
+  "version": "0.32.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -965,8 +965,197 @@
       "map": "data/maps/briarwell-mountain-dwarven-cave.json",
       "planPosition": { "column": 2, "row": -8 },
       "landmarks": [
-        { "id": "deeper-dwarven-cave", "label": "Descending dwarven passage" },
+        { "id": "dwarven-cave-descent", "label": "Descending dwarven passage" },
         { "id": "weathered-dwarven-stonework", "label": "Weathered dwarven stonework" }
+      ]
+    },
+    {
+      "id": "briarwell-dwarven-cave-c01",
+      "areaNumber": null,
+      "caveAreaNumber": 1,
+      "title": "Dwarven Cave - C1",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c01.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c02",
+      "areaNumber": null,
+      "caveAreaNumber": 2,
+      "title": "Dwarven Cave - C2",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c02.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c03",
+      "areaNumber": null,
+      "caveAreaNumber": 3,
+      "title": "Dwarven Cave - C3",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c03.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c04",
+      "areaNumber": null,
+      "caveAreaNumber": 4,
+      "title": "Dwarven Cave - C4",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c04.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c05",
+      "areaNumber": null,
+      "caveAreaNumber": 5,
+      "title": "Dwarven Cave - C5",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c05.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c06",
+      "areaNumber": null,
+      "caveAreaNumber": 6,
+      "title": "Dwarven Cave - C6",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c06.json",
+      "landmarks": [
+        { "id": "secret-door", "label": "Concealed dwarven mechanism", "placement": "hidden" }
+      ]
+    },
+    {
+      "id": "briarwell-dwarven-cave-c07",
+      "areaNumber": null,
+      "caveAreaNumber": 7,
+      "title": "Dwarven Cave - C7",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c07.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c08",
+      "areaNumber": null,
+      "caveAreaNumber": 8,
+      "title": "Dwarven Cave - C8",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c08.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c09",
+      "areaNumber": null,
+      "caveAreaNumber": 9,
+      "title": "Dwarven Cave - C9",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c09.json",
+      "landmarks": [
+        { "id": "cliffside-opening", "label": "Cliffside opening above Briarwell" }
+      ]
+    },
+    {
+      "id": "briarwell-dwarven-cave-c10",
+      "areaNumber": null,
+      "caveAreaNumber": 10,
+      "title": "Dwarven Cave - C10",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c10.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c11",
+      "areaNumber": null,
+      "caveAreaNumber": 11,
+      "title": "Dwarven Cave - C11",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c11.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c12",
+      "areaNumber": null,
+      "caveAreaNumber": 12,
+      "title": "Dwarven Cave - C12",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c12.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c13",
+      "areaNumber": null,
+      "caveAreaNumber": 13,
+      "title": "Dwarven Cave - C13",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c13.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c14",
+      "areaNumber": null,
+      "caveAreaNumber": 14,
+      "title": "Dwarven Cave - C14",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c14.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c15",
+      "areaNumber": null,
+      "caveAreaNumber": 15,
+      "title": "Dwarven Cave - C15",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c15.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-c16",
+      "areaNumber": null,
+      "caveAreaNumber": 16,
+      "title": "Dwarven Cave - C16",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-c16.json"
+    },
+    {
+      "id": "briarwell-dwarven-cave-secret",
+      "areaNumber": null,
+      "caveAreaNumber": null,
+      "title": "Dwarven Cave - Secret Armoury",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-secret.json",
+      "landmarks": [
+        { "id": "dwarven-treasure-chest", "label": "Iron-banded dwarven chest" },
+        { "id": "dwarven-plate-mail", "label": "Plate mail on an armour rack" },
+        { "id": "dwarven-two-handed-sword", "label": "Two-handed sword" },
+        { "id": "dwarven-mace", "label": "Mace on a rack" }
+      ]
+    },
+    {
+      "id": "briarwell-dwarven-cave-battle-chamber",
+      "areaNumber": null,
+      "caveAreaNumber": null,
+      "title": "Dwarven Cave - Goblin Battle Chamber",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-battle-chamber.json",
+      "landmarks": [
+        { "id": "goblin-chieftain-dais", "label": "Goblin chieftain command dais", "placement": "encounter" }
+      ]
+    },
+    {
+      "id": "briarwell-dwarven-cave-cliffside",
+      "areaNumber": null,
+      "caveAreaNumber": null,
+      "title": "Dwarven Cave - Cliffside Overlook",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-dwarven-cave-cliffside.json",
+      "landmarks": [
+        { "id": "briarwell-from-dwarven-cliff", "label": "View of Briarwell" }
       ]
     },
     {
@@ -1633,6 +1822,216 @@
       "endpoints": [
         { "areaId": "briarwell-mountain-m4", "transitionId": "east-path", "direction": "east" },
         { "areaId": "briarwell-mountain-dwarven-cave", "transitionId": "west-path", "direction": "west" }
+      ]
+    },
+    {
+      "id": "dwarven-forecourt-c01",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-mountain-dwarven-cave", "transitionId": "dwarven-cave-descent" },
+        { "areaId": "briarwell-dwarven-cave-c01", "transitionId": "west-passage", "direction": "west" }
+      ]
+    },
+    {
+      "id": "dwarven-c01-c02",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c01", "transitionId": "east-passage", "direction": "east" },
+        { "areaId": "briarwell-dwarven-cave-c02", "transitionId": "west-passage", "direction": "west" }
+      ]
+    },
+    {
+      "id": "dwarven-c01-c03",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c01", "transitionId": "south-passage", "direction": "south" },
+        { "areaId": "briarwell-dwarven-cave-c03", "transitionId": "north-passage", "direction": "north" }
+      ]
+    },
+    {
+      "id": "dwarven-c02-c04",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c02", "transitionId": "east-passage", "direction": "east" },
+        { "areaId": "briarwell-dwarven-cave-c04", "transitionId": "west-passage", "direction": "west" }
+      ]
+    },
+    {
+      "id": "dwarven-c02-c10",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c02", "transitionId": "south-passage", "direction": "south" },
+        { "areaId": "briarwell-dwarven-cave-c10", "transitionId": "north-passage", "direction": "north" }
+      ]
+    },
+    {
+      "id": "dwarven-c04-c05",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c04", "transitionId": "north-passage", "direction": "north" },
+        { "areaId": "briarwell-dwarven-cave-c05", "transitionId": "south-passage", "direction": "south" }
+      ]
+    },
+    {
+      "id": "dwarven-c04-c07",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c04", "transitionId": "east-passage", "direction": "east" },
+        { "areaId": "briarwell-dwarven-cave-c07", "transitionId": "west-passage", "direction": "west" }
+      ]
+    },
+    {
+      "id": "dwarven-c05-c06",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c05", "transitionId": "east-passage", "direction": "east" },
+        { "areaId": "briarwell-dwarven-cave-c06", "transitionId": "west-passage", "direction": "west" }
+      ]
+    },
+    {
+      "id": "dwarven-c06-c07",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c06", "transitionId": "south-passage", "direction": "south" },
+        { "areaId": "briarwell-dwarven-cave-c07", "transitionId": "north-passage", "direction": "north" }
+      ]
+    },
+    {
+      "id": "dwarven-c06-secret",
+      "kind": "secret-passage",
+      "visibility": "hidden",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c06", "transitionId": "secret-door", "direction": "east" },
+        { "areaId": "briarwell-dwarven-cave-secret", "transitionId": "west-passage", "direction": "west" }
+      ]
+    },
+    {
+      "id": "dwarven-c07-c08",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c07", "transitionId": "south-passage", "direction": "south" },
+        { "areaId": "briarwell-dwarven-cave-c08", "transitionId": "north-passage", "direction": "north" }
+      ]
+    },
+    {
+      "id": "dwarven-c08-c09",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c08", "transitionId": "south-passage", "direction": "south" },
+        { "areaId": "briarwell-dwarven-cave-c09", "transitionId": "north-passage", "direction": "north" }
+      ]
+    },
+    {
+      "id": "dwarven-c09-c12",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c09", "transitionId": "west-passage", "direction": "west" },
+        { "areaId": "briarwell-dwarven-cave-c12", "transitionId": "east-passage", "direction": "east" }
+      ]
+    },
+    {
+      "id": "dwarven-c09-cliffside",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c09", "transitionId": "southeast-passage", "direction": "southeast" },
+        { "areaId": "briarwell-dwarven-cave-cliffside", "transitionId": "northwest-passage", "direction": "northwest" }
+      ]
+    },
+    {
+      "id": "dwarven-c10-c11",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c10", "transitionId": "south-passage", "direction": "south" },
+        { "areaId": "briarwell-dwarven-cave-c11", "transitionId": "north-passage", "direction": "north" }
+      ]
+    },
+    {
+      "id": "dwarven-c11-c12",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c11", "transitionId": "east-passage", "direction": "east" },
+        { "areaId": "briarwell-dwarven-cave-c12", "transitionId": "west-passage", "direction": "west" }
+      ]
+    },
+    {
+      "id": "dwarven-c03-c13",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c03", "transitionId": "south-passage", "direction": "south" },
+        { "areaId": "briarwell-dwarven-cave-c13", "transitionId": "north-passage", "direction": "north" }
+      ]
+    },
+    {
+      "id": "dwarven-c13-c14",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c13", "transitionId": "west-passage", "direction": "west" },
+        { "areaId": "briarwell-dwarven-cave-c14", "transitionId": "east-passage", "direction": "east" }
+      ]
+    },
+    {
+      "id": "dwarven-c14-c15",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c14", "transitionId": "south-passage", "direction": "south" },
+        { "areaId": "briarwell-dwarven-cave-c15", "transitionId": "north-passage", "direction": "north" }
+      ]
+    },
+    {
+      "id": "dwarven-c15-c16",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c15", "transitionId": "east-passage", "direction": "east" },
+        { "areaId": "briarwell-dwarven-cave-c16", "transitionId": "west-passage", "direction": "west" }
+      ]
+    },
+    {
+      "id": "dwarven-c16-battle-chamber",
+      "kind": "cave-passage",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-dwarven-cave-c16", "transitionId": "east-passage", "direction": "east" },
+        { "areaId": "briarwell-dwarven-cave-battle-chamber", "transitionId": "west-passage", "direction": "west" }
       ]
     },
     {
