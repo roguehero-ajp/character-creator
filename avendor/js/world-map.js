@@ -7,7 +7,7 @@
   const REGISTRY_SCHEMA_VERSIONS = Object.freeze([1, 2]);
   const CONNECTION_KINDS = Object.freeze([
     'road', 'trail', 'river-escape', 'alley', 'doorway', 'climb',
-    'secret-passage', 'sewer-access', 'sewer-tunnel'
+    'cave-passage', 'secret-passage', 'sewer-access', 'sewer-tunnel'
   ]);
   const CONNECTION_VISIBILITIES = Object.freeze(['public', 'hidden']);
   const CONNECTION_STATUSES = Object.freeze(['active', 'planned']);

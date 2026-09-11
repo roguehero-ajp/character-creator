@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-dwarven-cave-c08",
+  "title": "Dwarven Cave - C8",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/dwarven-cave/interior/background/briarwell-dwarven-cave-c08-v1.webp",
+    "alt": "A worn dwarven gallery runs north and south past old braziers"
+  },
+  "movement": {
+    "speedX": 270,
+    "speedY": 202,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 180,
+        "scale": 0.44
+      },
+      {
+        "y": 420,
+        "scale": 0.58
+      },
+      {
+        "y": 680,
+        "scale": 0.76
+      },
+      {
+        "y": 980,
+        "scale": 1
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 724,
+      "y": 235,
+      "facing": "south"
+    },
+    "from-north": {
+      "x": 724,
+      "y": 235,
+      "facing": "south"
+    },
+    "from-south": {
+      "x": 724,
+      "y": 825,
+      "facing": "north"
+    }
+  },
+  "walkable": [
+    {
+      "id": "central-floor",
+      "points": [
+        [
+          150,
+          300
+        ],
+        [
+          1298,
+          300
+        ],
+        [
+          1360,
+          410
+        ],
+        [
+          1360,
+          700
+        ],
+        [
+          1160,
+          860
+        ],
+        [
+          288,
+          860
+        ],
+        [
+          88,
+          700
+        ],
+        [
+          88,
+          410
+        ]
+      ]
+    },
+    {
+      "id": "north-approach",
+      "points": [
+        [
+          545,
+          0
+        ],
+        [
+          903,
+          0
+        ],
+        [
+          965,
+          430
+        ],
+        [
+          483,
+          430
+        ]
+      ]
+    },
+    {
+      "id": "south-approach",
+      "points": [
+        [
+          483,
+          700
+        ],
+        [
+          965,
+          700
+        ],
+        [
+          903,
+          1086
+        ],
+        [
+          545,
+          1086
+        ]
+      ]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-passage",
+      "label": "North passage to Dwarven Cave C7",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-dwarven-cave-c07",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-passage"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [
+        [
+          610,
+          0
+        ],
+        [
+          838,
+          0
+        ],
+        [
+          838,
+          135
+        ],
+        [
+          610,
+          135
+        ]
+      ]
+    },
+    {
+      "id": "south-passage",
+      "label": "South passage to Dwarven Cave C9",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-dwarven-cave-c09",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-passage"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [
+        [
+          590,
+          955
+        ],
+        [
+          858,
+          955
+        ],
+        [
+          858,
+          1086
+        ],
+        [
+          590,
+          1086
+        ]
+      ]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}

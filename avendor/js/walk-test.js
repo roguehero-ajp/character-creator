@@ -140,17 +140,29 @@
     if (!check) return { passed: true, message: '' };
 
     if (check.type === 'skill') {
+      if (isDiscovered(check.discoveryId)) return { passed: true, message: '' };
       const rating = naturalSkillRating(check.skill);
-      const chance = Math.max(1, Math.min(99, rating + (Number(check.modifier) || 0)));
-      const roll = randomInt(1, 100);
+      const divisor = Math.max(1, Number(check.divisor) || 1);
+      const die = Math.max(1, Number(check.die) || 100);
+      const rawChance = Math.floor((rating / divisor) + (Number(check.modifier) || 0));
+      const chance = check.divisor !== undefined || check.die !== undefined
+        ? Math.max(0, Math.min(die, rawChance))
+        : Math.max(1, Math.min(99, rawChance));
+      const roll = randomInt(1, die);
+      const formula = divisor === 1 ? check.skill : `${check.skill} / ${divisor}`;
       if (roll <= chance) {
-        const message = `${check.successText} ${check.skill} chance ${chance}%; rolled ${roll}.`;
+        const message = `${check.successText} ${formula} chance ${chance}%; rolled ${roll}.`;
         setNotice(message, 4600);
+        if (check.discoveryId) {
+          rememberDiscovery(check.discoveryId);
+          updateInteractionPrompt();
+          return { passed: false, message: '' };
+        }
         return { passed: true, message };
       }
 
-      moveToLocalSpawn(check.failureSpawn || transition.fallbackSpawn);
-      const message = `${check.failureText} ${check.skill} chance ${chance}%; rolled ${roll}.`;
+      if (!check.discoveryId) moveToLocalSpawn(check.failureSpawn || transition.fallbackSpawn);
+      const message = `${check.failureText} ${formula} chance ${chance}%; rolled ${roll}.`;
       setNotice(message, 4600);
       return { passed: false, message };
     }
@@ -250,8 +262,10 @@
     if (nearby.id !== nearbyId) {
       let verb = nearby.type === 'npc' ? 'Talk to' : 'Inspect';
       if (nearby.type === 'transition') {
-        if (nearby.check?.type === 'skill') verb = 'Attempt';
-        else verb = nearby.check && !isDiscovered(nearby.check.discoveryId) ? 'Inspect' : 'Use';
+        if (nearby.check?.discoveryId) {
+          verb = isDiscovered(nearby.check.discoveryId) ? 'Use' : 'Inspect';
+        } else if (nearby.check?.type === 'skill') verb = 'Attempt';
+        else verb = 'Use';
       }
       if (nearby.action === 'climb') verb = 'Attempt';
       if (nearby.action === 'teleport') verb = 'Use';
@@ -299,6 +313,17 @@
       setNotice(nearby.interactionText || `${nearby.label} used.`, 3200);
       return;
     }
+
+    const interactionEvent = new CustomEvent('avendor:feature-interaction', {
+      cancelable: true,
+      detail: {
+        feature: nearby,
+        area: currentArea,
+        map: map.data
+      }
+    });
+    window.dispatchEvent(interactionEvent);
+    if (interactionEvent.defaultPrevented) return;
 
     const developmentNotes = {
       'town-well': 'Town well interaction registered. The future sewer entrance is sealed in this map state.',
@@ -887,6 +912,7 @@
     }),
     isMovementLocked: () => movementLocks.size > 0,
     loadArea,
+    setNotice,
     setMovementLock,
     setBody,
     setDebug

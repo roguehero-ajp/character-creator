@@ -148,6 +148,7 @@ const mapContracts = {
   },
   'briarwell-mountain-dwarven-cave': {
     art: 'briarwell-dwarven-cave-v1.webp',
+    version: '0.2.0',
     directions: ['west'],
     position: [2, -8]
   }
@@ -375,21 +376,21 @@ assert(
 );
 
 const dwarvenCave = maps.get('briarwell-mountain-dwarven-cave');
+const dwarvenDescent = dwarvenCave.portals.find((portal) => portal.id === 'dwarven-cave-descent');
 assert(
   dwarvenCave.exits.length === 1
-    && dwarvenCave.portals.length === 0
-    && dwarvenCave.futureConnections?.length === 1
-    && dwarvenCave.futureConnections[0].id === 'dwarven-cave-descent'
-    && dwarvenCave.futureConnections[0].direction === 'down'
-    && dwarvenCave.futureConnections[0].status === 'art-only',
-  'The Dwarven Cave forecourt must not expose the unauthored interior as a portal.'
+    && dwarvenCave.portals.length === 1
+    && dwarvenDescent?.status === 'active'
+    && dwarvenDescent.activation === 'interact'
+    && dwarvenDescent.target?.areaId === 'briarwell-dwarven-cave-c01'
+    && dwarvenDescent.target?.spawnId === 'from-west'
+    && dwarvenDescent.target?.returnTransitionId === 'west-passage'
+    && !dwarvenCave.futureConnections,
+  'The Dwarven Cave forecourt must expose the approved interactive descent into C1.'
 );
 assert(
-  dwarvenCave.interactables.some((feature) => (
-    feature.id === 'deeper-dwarven-cave'
-      && feature.interactionText.includes('not yet been charted')
-  )),
-  'The cave entrance must identify the reserved deeper halls.'
+  dwarvenCave.interactables.some((feature) => feature.id === 'weathered-dwarven-stonework'),
+  'The cave forecourt must retain its weathered dwarven stonework landmark.'
 );
 
 const { AreaRegistry, auditTopology, MapGeometry } = loadEngines();
@@ -564,8 +565,8 @@ triggerSamples.forEach(([areaId, x, y, transitionId]) => {
 assert(!new MapGeometry(m14).isWalkable(45, 500), 'M14 leaves its retired west route walkable.');
 assert(!new MapGeometry(redluk).isWalkable(3040, 450), 'Redluk exposes an unapproved eastward route.');
 assert(
-  new MapGeometry(dwarvenCave).getNearbyInteractable({ x: 1020, y: 350 })?.id === 'deeper-dwarven-cave',
-  'The reachable dwarven descent does not resolve as an interactable landmark.'
+  new MapGeometry(dwarvenCave).getNearbyInteractable({ x: 1040, y: 430 })?.id === 'dwarven-cave-descent',
+  'The reachable dwarven descent does not resolve as an interactive portal.'
 );
 
-console.log('Mountain M1-M15, Redluk, Rock Ledge Pass and Dwarven Cave route contracts passed.');
+console.log('Mountain M1-M15, Redluk, Rock Ledge Pass and Dwarven Cave forecourt route contracts passed.');

@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-dwarven-cave-c13",
+  "title": "Dwarven Cave - C13",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/dwarven-cave/interior/background/briarwell-dwarven-cave-c13-v1.webp",
+    "alt": "A dwarven corner chamber runs north and west toward increasingly warm goblin firelight"
+  },
+  "movement": {
+    "speedX": 270,
+    "speedY": 202,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 180,
+        "scale": 0.44
+      },
+      {
+        "y": 420,
+        "scale": 0.58
+      },
+      {
+        "y": 680,
+        "scale": 0.76
+      },
+      {
+        "y": 980,
+        "scale": 1
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 724,
+      "y": 235,
+      "facing": "south"
+    },
+    "from-north": {
+      "x": 724,
+      "y": 235,
+      "facing": "south"
+    },
+    "from-west": {
+      "x": 170,
+      "y": 515,
+      "facing": "east"
+    }
+  },
+  "walkable": [
+    {
+      "id": "central-floor",
+      "points": [
+        [
+          150,
+          300
+        ],
+        [
+          1298,
+          300
+        ],
+        [
+          1360,
+          410
+        ],
+        [
+          1360,
+          700
+        ],
+        [
+          1160,
+          860
+        ],
+        [
+          288,
+          860
+        ],
+        [
+          88,
+          700
+        ],
+        [
+          88,
+          410
+        ]
+      ]
+    },
+    {
+      "id": "north-approach",
+      "points": [
+        [
+          545,
+          0
+        ],
+        [
+          903,
+          0
+        ],
+        [
+          965,
+          430
+        ],
+        [
+          483,
+          430
+        ]
+      ]
+    },
+    {
+      "id": "west-approach",
+      "points": [
+        [
+          0,
+          330
+        ],
+        [
+          430,
+          330
+        ],
+        [
+          430,
+          690
+        ],
+        [
+          0,
+          690
+        ]
+      ]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "north-passage",
+      "label": "North passage to Dwarven Cave C3",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-dwarven-cave-c03",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-passage"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [
+        [
+          610,
+          0
+        ],
+        [
+          838,
+          0
+        ],
+        [
+          838,
+          135
+        ],
+        [
+          610,
+          135
+        ]
+      ]
+    },
+    {
+      "id": "west-passage",
+      "label": "West passage to Dwarven Cave C14",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-dwarven-cave-c14",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-passage"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [
+        [
+          0,
+          375
+        ],
+        [
+          105,
+          375
+        ],
+        [
+          105,
+          650
+        ],
+        [
+          0,
+          650
+        ]
+      ]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}

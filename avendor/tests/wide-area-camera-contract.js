@@ -143,6 +143,22 @@ assert(Math.abs(parseFloat(player.style.left) - (1226 / 1448 * 100)) < 0.001, 'T
 assert(stage.style['--stage-ratio'] === '1448 / 944', 'Redluk did not preserve its panoramic viewport height.');
 
 sceneMap = {
+  width: 3072,
+  height: 1024,
+  data: { id: 'briarwell-dwarven-cave-battle-chamber' },
+  getScale: () => 0.8,
+  getDepth: (y) => 1000 + y
+};
+area = { id: 'briarwell-dwarven-cave-battle-chamber' };
+heroPosition = { x: 2810, y: 570 };
+frames.shift()(44);
+
+assert(stage.dataset.cameraScroll === 'true', 'The Dwarven Cave battle chamber did not enable horizontal camera scrolling.');
+assert(context.window.AvendorKoboldRuntime.getCameraX() === 1624, 'The Dwarven Cave battle camera did not reach its east boundary.');
+assert(Math.abs(parseFloat(stageArt.style.width) - (3072 / 1448 * 100)) < 0.001, 'The Dwarven Cave battle chamber has the wrong rendered panorama width.');
+assert(stage.style['--stage-ratio'] === '1448 / 1024', 'The Dwarven Cave battle chamber did not preserve its panoramic viewport height.');
+
+sceneMap = {
   width: 1448,
   height: 1086,
   data: { id: 'briarwell-forest-f20' },
@@ -158,4 +174,4 @@ assert(context.window.AvendorKoboldRuntime.getCameraX() === 0, 'The camera offse
 assert(stageArt.style.left === '0' && stageArt.style.width === '100%', 'Normal-width background sizing was not restored.');
 assert(stage.style['--stage-ratio'] === '1448 / 1086', 'The normal map aspect ratio was not restored.');
 
-console.log("Wide-area camera scrolling passes for the Ogre's Clearing, Rock Ledge Pass, M15 and Redluk, then resets on F20.");
+console.log("Wide-area camera scrolling passes for the Ogre's Clearing, Rock Ledge Pass, M15, Redluk and the Dwarven Cave battle chamber, then resets on F20.");

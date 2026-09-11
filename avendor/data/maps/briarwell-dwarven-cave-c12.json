@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-dwarven-cave-c12",
+  "title": "Dwarven Cave - C12",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/briarwell/mountains/dwarven-cave/interior/background/briarwell-dwarven-cave-c12-v1.webp",
+    "alt": "A battered east-west dwarven connector gallery shows signs of frequent goblin traffic"
+  },
+  "movement": {
+    "speedX": 270,
+    "speedY": 202,
+    "footRadius": 12,
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 180,
+        "scale": 0.44
+      },
+      {
+        "y": 420,
+        "scale": 0.58
+      },
+      {
+        "y": 680,
+        "scale": 0.76
+      },
+      {
+        "y": 980,
+        "scale": 1
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 170,
+      "y": 515,
+      "facing": "east"
+    },
+    "from-west": {
+      "x": 170,
+      "y": 515,
+      "facing": "east"
+    },
+    "from-east": {
+      "x": 1278,
+      "y": 515,
+      "facing": "west"
+    }
+  },
+  "walkable": [
+    {
+      "id": "central-floor",
+      "points": [
+        [
+          150,
+          300
+        ],
+        [
+          1298,
+          300
+        ],
+        [
+          1360,
+          410
+        ],
+        [
+          1360,
+          700
+        ],
+        [
+          1160,
+          860
+        ],
+        [
+          288,
+          860
+        ],
+        [
+          88,
+          700
+        ],
+        [
+          88,
+          410
+        ]
+      ]
+    },
+    {
+      "id": "west-approach",
+      "points": [
+        [
+          0,
+          330
+        ],
+        [
+          430,
+          330
+        ],
+        [
+          430,
+          690
+        ],
+        [
+          0,
+          690
+        ]
+      ]
+    },
+    {
+      "id": "east-approach",
+      "points": [
+        [
+          1018,
+          330
+        ],
+        [
+          1448,
+          330
+        ],
+        [
+          1448,
+          690
+        ],
+        [
+          1018,
+          690
+        ]
+      ]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "west-passage",
+      "label": "West passage to Dwarven Cave C11",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-dwarven-cave-c11",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-passage"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [
+        [
+          0,
+          375
+        ],
+        [
+          105,
+          375
+        ],
+        [
+          105,
+          650
+        ],
+        [
+          0,
+          650
+        ]
+      ]
+    },
+    {
+      "id": "east-passage",
+      "label": "East passage to Dwarven Cave C9",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-dwarven-cave-c09",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-passage"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [
+        [
+          1343,
+          375
+        ],
+        [
+          1448,
+          375
+        ],
+        [
+          1448,
+          650
+        ],
+        [
+          1343,
+          650
+        ]
+      ]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [],
+  "npcs": []
+}
