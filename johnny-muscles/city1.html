@@ -44,7 +44,8 @@
     <section id="mission-complete" class="overlay"><div class="card results-card">
       <p class="eyebrow">CITY 1 · MISSION COMPLETE</p><h2>AREA SECURED</h2><div id="result-stars" class="result-stars" aria-label="Mission rating">☆☆☆</div>
       <div class="results-grid"><div><span>Score</span><strong id="result-score">0</strong></div><div><span>Infected Flattened</span><strong id="result-cats">0</strong></div><div><span>Tanks Thrown</span><strong id="result-throws">0</strong></div><div><span>Best Combo</span><strong id="result-combo">x1</strong></div><div class="result-wide"><span>Defense</span><strong id="result-defense">UNTOUCHED</strong></div></div>
-      <p class="next-mission">Next assignment: <strong>City 2 · Rooftop Problem</strong></p><a class="primary" href="city2.html?build=0.9.5" style="display:inline-block;text-decoration:none">CONTINUE TO CITY 2</a><button id="replay" class="primary" type="button">REPLAY FIRST CONTACT</button>
+      <p id="rick-unlock-note" class="next-mission" role="status" aria-live="polite" hidden><strong>NEW HERO UNLOCKED: RICK RAMPAGE!</strong></p>
+      <p class="next-mission">Next assignment: <strong>City 2 · Rooftop Problem</strong></p><a id="city1-continue" class="primary" href="city2.html?build=0.11.6" style="display:inline-block;text-decoration:none">CONTINUE TO CITY 2</a><button id="replay" class="primary" type="button">REPLAY FIRST CONTACT</button>
     </div></section>
 
     <div id="toast" class="toast" aria-live="assertive"></div>
@@ -53,6 +54,7 @@
   <script src="enemy-art.js?rev=0.9.5"></script>
   <script src="tank-art.js?rev=0.9.5"></script>
   <script src="enemy-runtime.js?rev=0.9.5" data-core="game.js"></script>
+  <script src="rick-progression.js?rev=0.11.6"></script>
   <script src="music.js?rev=0.9.5"></script>
 </body>
 </html>
