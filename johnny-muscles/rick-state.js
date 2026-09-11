@@ -10,6 +10,9 @@
   const rickSlide = document.getElementById('character-rick');
   const characterStatus = document.getElementById('character-status');
   const selectButton = document.getElementById('character-select-button');
+  const selectorFooter = document.querySelector('.selector-footer');
+  const sheet = document.getElementById('character-sheet');
+  const characterPanel = document.getElementById('character-panel');
   if (!rickSlide) return;
 
   function read(key) {
@@ -17,7 +20,7 @@
   }
 
   function write(key, value) {
-    try { localStorage.setItem(key, value); } catch {}
+    try { localStorage.setItem(key, value); return true; } catch { return false; }
   }
 
   const unlocked = read(KEYS.rickUnlocked) === 'true' || read(KEYS.city1Beaten) === 'true';
@@ -47,18 +50,74 @@
     if (!characterStatus) return;
     const selected = read(KEYS.selectedCharacter) || 'johnny';
     if (selected === 'rick' && unlocked) characterStatus.textContent = 'Active fighter: Rick Rampage';
-    else if (selected === 'johnny') characterStatus.textContent = 'Active fighter: Johnny Muscles';
+    else characterStatus.textContent = 'Active fighter: Johnny Muscles';
   }
 
-  selectButton?.addEventListener('click', () => requestAnimationFrame(updateHomeStatus));
+  let deployButton = null;
+  if (selectorFooter && selectButton && !document.getElementById('character-deploy-button')) {
+    const actions = document.createElement('div');
+    actions.className = 'character-deploy-actions';
+    selectButton.parentNode.insertBefore(actions, selectButton);
+    actions.appendChild(selectButton);
+
+    deployButton = document.createElement('button');
+    deployButton.id = 'character-deploy-button';
+    deployButton.className = 'character-select-button character-deploy-button';
+    deployButton.type = 'button';
+    actions.appendChild(deployButton);
+  } else {
+    deployButton = document.getElementById('character-deploy-button');
+  }
+
+  function activeSlide() {
+    return sheet?.querySelector('.character-slide.is-active') || null;
+  }
+
+  function syncDeployButton() {
+    if (!deployButton) return;
+    const slide = activeSlide();
+    const playable = slide?.dataset.status === 'playable';
+    const name = slide?.dataset.name || 'Fighter';
+    deployButton.disabled = !playable;
+    deployButton.textContent = playable ? `Deploy ${name}` : 'Fighter Locked';
+    deployButton.setAttribute('aria-label', playable ? `Deploy ${name}` : `${name} is locked and cannot be deployed`);
+  }
+
+  function deployActiveFighter() {
+    const slide = activeSlide();
+    if (!slide || slide.dataset.status !== 'playable') return;
+    const character = slide.dataset.character || 'johnny';
+    write(KEYS.selectedCharacter, character);
+    updateHomeStatus();
+    const destination = read(KEYS.city1Beaten) === 'true' ? 'city2.html?build=0.11.9' : 'city1.html?build=0.11.9';
+    window.location.href = destination;
+  }
+
+  selectButton?.addEventListener('click', () => requestAnimationFrame(() => {
+    updateHomeStatus();
+    syncDeployButton();
+  }));
+  deployButton?.addEventListener('click', deployActiveFighter);
+
+  document.getElementById('character-prev')?.addEventListener('click', () => requestAnimationFrame(syncDeployButton));
+  document.getElementById('character-next')?.addEventListener('click', () => requestAnimationFrame(syncDeployButton));
+  sheet?.addEventListener('pointerup', () => requestAnimationFrame(syncDeployButton));
+  characterPanel?.addEventListener('keydown', event => {
+    if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) requestAnimationFrame(syncDeployButton);
+  });
+
   updateHomeStatus();
+  syncDeployButton();
 
   const params = new URLSearchParams(window.location.search);
   if (params.get('panel') === 'character') {
     const opener = document.querySelector('[data-open-panel="character-panel"]');
     opener?.click();
     if (params.get('character') === 'rick') {
-      requestAnimationFrame(() => document.getElementById('character-next')?.click());
+      requestAnimationFrame(() => {
+        document.getElementById('character-next')?.click();
+        requestAnimationFrame(syncDeployButton);
+      });
     }
   }
 })();
@@ -67,7 +126,7 @@
   'use strict';
   if (document.querySelector('script[data-creator-code-loader]')) return;
   const script = document.createElement('script');
-  script.src = 'creator-code.js?rev=0.11.7';
+  script.src = 'creator-code.js?rev=0.11.9';
   script.defer = true;
   script.dataset.creatorCodeLoader = 'true';
   document.head.appendChild(script);
