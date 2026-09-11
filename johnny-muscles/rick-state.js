@@ -62,3 +62,13 @@
     }
   }
 })();
+
+(() => {
+  'use strict';
+  if (document.querySelector('script[data-creator-code-loader]')) return;
+  const script = document.createElement('script');
+  script.src = 'creator-code.js?rev=0.11.7';
+  script.defer = true;
+  script.dataset.creatorCodeLoader = 'true';
+  document.head.appendChild(script);
+})();
