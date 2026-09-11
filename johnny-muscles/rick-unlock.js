@@ -10,6 +10,7 @@
 
   const comic = document.getElementById('rick-comic');
   const pages = comic ? [...comic.querySelectorAll('.rick-page')] : [];
+  const artImages = comic ? [...comic.querySelectorAll('.rick-page img')] : [];
   const dots = [...document.querySelectorAll('[data-dot]')];
   const previous = document.getElementById('rick-prev');
   const next = document.getElementById('rick-next');
@@ -85,6 +86,10 @@
   });
   city2?.addEventListener('click', () => markSeen());
   dots.forEach(dot => dot.addEventListener('click', () => showPage(Number(dot.dataset.dot))));
+
+  artImages.forEach(image => {
+    image.addEventListener('error', () => setTranscript(true), { once: true });
+  });
 
   comic?.addEventListener('pointerdown', event => {
     startX = event.clientX;
