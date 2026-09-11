@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#11131a" />
+  <meta name="description" content="Rick Rampage joins the fight in Johnny Muscles: Tank Thrower." />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <title>Rick Rampage Unlocked · Johnny Muscles</title>
+  <link rel="stylesheet" href="menu.css?rev=0.11.6" />
+  <link rel="stylesheet" href="rick-unlock.css?rev=0.11.6" />
+</head>
+<body class="rick-unlock-body">
+  <main class="rick-unlock-shell" aria-labelledby="rick-title">
+    <header class="rick-unlock-header">
+      <div>
+        <p class="unlock-kicker">New Ally Unlocked</p>
+        <h1 id="rick-title">Rick Rampage</h1>
+        <p id="rick-instructions" class="unlock-instructions">Swipe left or right to turn pages. Keyboard Left/Right, Home, and End work too.</p>
+      </div>
+      <a class="unlock-close" href="index.html?build=0.11.6" aria-label="Leave Rick Rampage comic and return to main menu">×</a>
+    </header>
+
+    <div class="unlock-toolbar">
+      <span id="rick-page-count" class="unlock-counter" role="status" aria-live="polite" aria-atomic="true">Page 1 / 2</span>
+      <button id="rick-transcript-toggle" class="unlock-transcript-toggle" type="button" aria-expanded="false" aria-controls="rick-comic">Show text transcript</button>
+    </div>
+
+    <section id="rick-comic" class="rick-comic" tabindex="0" role="region" aria-label="Rick Rampage two-page unlock comic" aria-describedby="rick-instructions">
+      <article id="rick-page-1" class="rick-page is-active" data-page="0" role="group" aria-roledescription="comic page" aria-label="Page 1 of 2" aria-hidden="false">
+        <img src="assets/rick-unlock-page-1.webp" alt="" aria-hidden="true" />
+        <div class="rick-transcript sr-only">
+          <h2>Page 1</h2>
+          <p>Rick Rampage casually juggles two cars. An alien chonker cat enters the scene and Rick looks surprised and disgusted. Rick throws both cars at the alien cat and shouts, “Get outta here, you gross alien cats!”</p>
+        </div>
+      </article>
+
+      <article id="rick-page-2" class="rick-page" data-page="1" role="group" aria-roledescription="comic page" aria-label="Page 2 of 2" aria-hidden="true" hidden>
+        <img src="assets/rick-unlock-page-2.webp" alt="" aria-hidden="true" />
+        <div class="rick-transcript sr-only">
+          <h2>Page 2</h2>
+          <p>Rick Rampage and Johnny Muscles clasp hands like two musclebound action heroes. Each has one boot on a knocked-out alien cat. Rick says, “Hey Johnny! I’m Rick Rampage, and I’m gonna drive these things outta here by throwing cars at them!” Johnny replies, “Cool! You’re my best friend Rick Rampage!”</p>
+        </div>
+      </article>
+    </section>
+
+    <div class="unlock-dots" aria-label="Choose comic page">
+      <button class="unlock-dot is-active" type="button" data-dot="0" aria-label="Go to page 1" aria-controls="rick-page-1" aria-current="page"><span aria-hidden="true"></span></button>
+      <button class="unlock-dot" type="button" data-dot="1" aria-label="Go to page 2" aria-controls="rick-page-2"><span aria-hidden="true"></span></button>
+    </div>
+
+    <nav class="unlock-controls" aria-label="Rick Rampage comic controls">
+      <button id="rick-prev" class="unlock-button secondary" type="button" disabled>Previous</button>
+      <button id="rick-next" class="unlock-button" type="button">Next</button>
+      <a id="rick-select" class="unlock-button hero-action" href="index.html?build=0.11.6&panel=character&character=rick" hidden>Select Rick</a>
+      <a id="rick-city2" class="unlock-button secondary hero-action" href="city2.html?build=0.11.6" hidden>Continue to City 2</a>
+    </nav>
+  </main>
+  <script src="rick-unlock.js?rev=0.11.6"></script>
+</body>
+</html>
