@@ -29,7 +29,7 @@
     rickSlide.setAttribute('aria-label', 'Rick Rampage, unlocked and playable');
     rickSlide.innerHTML = `
       <div class="rick-select-card">
-        <img class="rick-select-art" src="assets/rick-rampage-select.webp" alt="Rick Rampage character sheet. Rick is a large muscular Black man with dreadlocks, a green T-shirt, orange camouflage shorts, gloves, and heavy boots. He throws cars at alien cats." />
+        <img class="rick-select-art" src="assets/rick-unlock-page-1.webp?rev=0.11.6" alt="Rick Rampage casually juggles cars, then throws them at a giant alien cat while shouting, Get outta here, you gross alien cats!" />
         <div class="rick-select-caption">
           <strong>Unlocked · Beat City 1</strong>
           <span>“Get outta here, you gross alien cats!”</span>
