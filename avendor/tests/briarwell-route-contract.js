@@ -70,6 +70,27 @@ function assertConnection(connection) {
   }
 }
 
+const registeredEndpoints = new Set(registry.connections.flatMap((connection) => (
+  connection.endpoints.filter((endpoint) => endpoint.transitionId)
+    .map((endpoint) => `${endpoint.areaId}/${endpoint.transitionId}`)
+)));
+maps.forEach((map, areaId) => {
+  transitionsFor(map).filter((transition) => transition.status === 'active').forEach((transition) => {
+    assert(
+      registeredEndpoints.has(`${areaId}/${transition.id}`),
+      `Active map exit is missing from the route registry: ${areaId}/${transition.id}`
+    );
+  });
+});
+
+['library-quarter-tannery-warehouses', 'library-quarter-blight-orphanage'].forEach((id) => {
+  const connection = registry.connections.find((candidate) => candidate.id === id);
+  assert(
+    connection?.kind === 'road' && connection.visibility === 'public' && connection.status === 'active',
+    `The existing Library Quarter road must remain publicly accessible: ${id}`
+  );
+});
+
 registry.connections.forEach(assertConnection);
 
 registry.cityExits.forEach((cityExit) => {
