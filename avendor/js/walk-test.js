@@ -168,6 +168,25 @@
     }
 
     if (isDiscovered(check.discoveryId)) return { passed: true, message: '' };
+    if (check.type === 'stat-minimum') {
+      const state = window.AvendorPlayerState?.load?.();
+      const statValue = Number(state?.stats?.[check.stat]) || 5;
+      const minimum = Math.max(1, Number(check.minimum) || 1);
+      const statLabel = window.AvendorPlayerState?.STAT_LABELS?.[check.stat] || check.stat;
+      if (statValue >= minimum) {
+        const message = `${check.successText} ${statLabel}: ${statValue}/${minimum}.`;
+        if (check.discoveryId) {
+          rememberDiscovery(check.discoveryId);
+          setNotice(message, 4200);
+          updateInteractionPrompt();
+          return { passed: false, message: '' };
+        }
+        return { passed: true, message };
+      }
+
+      setNotice(`${check.failureText} ${statLabel}: ${statValue}/${minimum}.`, 3600);
+      return { passed: false, message: '' };
+    }
     if (check.type !== 'stat') return { passed: false, message: '' };
 
     const state = window.AvendorPlayerState?.load?.();

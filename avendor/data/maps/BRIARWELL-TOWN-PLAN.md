@@ -8,8 +8,8 @@ keeps Jay's numbered layout understandable during art and map production.
 
 | State | Areas |
 |---|---|
-| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F22; the Ogre's Clearing; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Old River Bridge; Northfield; Misty Forest MF1–MF3; Mountain M1–M15, Redluk, Rock Ledge Pass, the Dwarven Cave forecourt, C1–C16, secret armoury, goblin battle chamber and cliffside overlook; Swimmable; Waterfall; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
-| Planned | Final M15 boss encounter; final Redluk orc sprites and expanded in-game movie; final goblin battle sprites and combat; swimming animation and deep-water movement; Ogre boss sprite and combat; traversal into the sealed ogre cave; combat resolution for the Area 15 kobolds; inventory handoff for dwarven treasure and armoury items; open-window traversal |
+| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F22; the Ogre's Clearing and secret Ogre Cave; Haunted Island landing and house exterior; Little Island landing and buried-treasure clearing; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Old River Bridge; Northfield; Misty Forest MF1–MF3; Mountain M1–M15, Redluk, Rock Ledge Pass, the Dwarven Cave forecourt, C1–C16, secret armoury, goblin battle chamber and cliffside overlook; Swimmable; Waterfall; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
+| Planned | Lake-ferry story unlock; haunted-house interior; Little Island buried-cache reward; final M15 boss encounter; final Redluk orc sprites and expanded in-game movie; final goblin battle sprites and combat; swimming animation and deep-water movement; Ogre boss sprite and combat; combat resolution for the Area 15 kobolds; inventory handoff for Ogre Cave and dwarven treasure items; open-window traversal |
 
 The complete Briarwell surface and sewer network are now playable. The surface contains the northern circuit
 `1 → 2 → 3 → 4 → 1`, the southern circuit
@@ -19,7 +19,10 @@ reachable through the Sewer Area 14 cave; its open-window route still awaits tra
 The western branch now continues from the junction to F13, north through F14 and
 F15, then east across the Old River Bridge into Northfield. F15 also opens into
 the complete F16–F22 dark-forest loop to its north and west, with the Ogre's
-Clearing branching north from F20. The road runs south
+Clearing branching north from F20 and its Strength 8 boulder opening the secret
+Ogre Cave. The two lake-island pairs are playable through the development area
+selector; their boat crossings from the docks remain locked to a later story event.
+The road runs south
 through F12, F11 and F8, with one west farm spur at F11, F12 and F13.
 Northfield's foot trail now climbs through MF1, MF2 and MF3. MF3 turns west to
 Swimmable or continues north through Mountain M1, M2 and M3 to the high junction
@@ -94,7 +97,12 @@ isolated on the cliffside and is reached by the hidden open-window passage.
 | `briarwell-dwarven-cave-cliffside` | Mountain shelf and cinematic Briarwell overlook | C9 NW; walking to the edge opens the scenic vista |
 | `briarwell-swimmable` | Broad calmer pool, gravel landing and visible south-flowing outlet below the falls | MF3 E; receives Waterfall current from NW; south water edge is visual only |
 | `briarwell-waterfall` | Immense forced-fall plunge pool | Active forced arrival from Rock Ledge Pass; one-way current SE to Swimmable |
-| `briarwell-ogre-clearing` | Wide scrollable boss arena with a future ogre encounter | Forest F20 S; sealed ogre cave boulder N |
+| `briarwell-ogre-clearing` | Wide scrollable boss arena with a future ogre encounter | Forest F20 S; Strength 8 boulder to Secret Ogre Cave N |
+| `briarwell-ogre-cave` | One-room secret treasure cave | Ogre's Clearing S; fixed chest, frost longsword and metal shield |
+| `briarwell-haunted-island-landing` | Plot-gated boat landing on Haunted Island | Haunted house path N; future ferry to Briarwell docks |
+| `briarwell-haunted-island-house` | Playable haunted-manor exterior | Island landing S; house interior reserved |
+| `briarwell-little-island` | Plot-gated boat landing on Little Island | Buried-treasure clearing N; future ferry to Briarwell docks |
+| `briarwell-little-island-treasure` | Cairn and disturbed-earth cache site | Little Island landing S; reward definition pending |
 
 The western road is now an active route to Forest F13, and the South Gate road is
 the active start of the F1 forest chain. Only the inaccessible road beyond the
@@ -165,9 +173,9 @@ east into M13, north into M14, and east through M15 into Redluk. M15 is a
 3072 x 944 scrolling destination whose far east edge is sealed. Its current
 encounter scaffold stages eight replaceable orc silhouettes closing in, the very
 quiet `Stop...` cue, their immediate halt, and a replaceable elder-orc entrance;
-final character sprites and the expanded in-game movie remain planned. East of M4, the Dwarven Cave
-forecourt is playable, but its descending entrance remains an interactable
-landmark until the interior map is supplied.
+final character sprites and the expanded in-game movie remain planned. East of
+M4, the Dwarven Cave forecourt descends into the complete playable C1–C16 cave
+network, including its secret armoury, goblin chamber and cliffside overlook.
 
 Waterfall is not reachable by ordinary travel. It accepts the active forced fall
 from Rock Ledge Pass, then permits only a downstream escape
@@ -187,7 +195,8 @@ are active until dedicated swimming animation is authored.
 | F20 | `briarwell-forest-f20` | Ogre's Clearing N, F17 E, F21 W | S |
 | F21 | `briarwell-forest-f21` | F20 E, F22 S | N, W |
 | F22 | `briarwell-forest-f22` | F21 N, F19 E | S, W |
-| Ogre's Clearing | `briarwell-ogre-clearing` | F20 S | N cave sealed by boulder; E, W |
+| Ogre's Clearing | `briarwell-ogre-clearing` | F20 S; Secret Ogre Cave N after Strength 8 | E, W |
+| Secret Ogre Cave | `briarwell-ogre-cave` | Ogre's Clearing S | N, E, W |
 
 These darker-green screens are untravelled magical forest. Their art contains no
 roads, paths, trails, ruts or worn directional ground. Each approved transition
@@ -202,9 +211,24 @@ cross-connection between F19 and F16.
 The Ogre's Clearing is a 2048 x 944 horizontal arena, wider than the 1448-unit
 camera viewport so it scrolls as the hero crosses the combat floor. Its artwork
 contains no ogre: the future boss remains a separate sprite layer anchored near
-the center of the arena. A massive boulder visibly seals the northern cave and
-currently reports the source-map Strength 8 requirement without exposing a
-premature cave transition.
+the center of the arena. A massive northern boulder requires Strength 8 and
+persistently opens the active one-room Secret Ogre Cave. Its chest contains one
+emerald, sapphire and ruby plus 30 gold and 40 silver. A magic longsword on the
+ground adds 2 frost damage and inflicts Slow, and a metal shield is also available.
+
+## Lake islands
+
+| Area | Stable ID | Approved public links | Story boundary |
+|---|---|---|---|
+| Haunted Island landing | `briarwell-haunted-island-landing` | Haunted house N | Boat from docks unlocks at a later plot event |
+| Haunted Island house | `briarwell-haunted-island-house` | Island landing S | House interior reserved for future work |
+| Little Island | `briarwell-little-island` | Buried-treasure clearing N | Boat from docks unlocks at a later plot event |
+| Buried treasure | `briarwell-little-island-treasure` | Little Island S | Cache reward remains undefined |
+
+The islands are separate lake destinations with no swimming or direct route
+between them. Their internal north/south paths are active and reciprocal. Until
+the plot unlocks lake travel, all four maps remain available from the development
+area selector so their art, geometry and landmarks can be tested independently.
 
 ## Production order
 
@@ -221,13 +245,14 @@ premature cave transition.
 11. ~~Western farm road through F14, including Donson's, Bayard's and Allwood's.~~ Complete v1.
 12. ~~F15, the Old River Bridge and Northfield.~~ Complete v1.
 13. ~~Dark western forest F16–F22.~~ Complete v1.
-14. ~~Scrollable Ogre clearing and corrected F20 north link.~~ Arena foundation complete v1; boss and cave traversal remain planned.
+14. ~~Scrollable Ogre clearing and corrected F20 north link.~~ Arena foundation complete v1; boss remains planned and the Strength 8 cave route is now active.
 15. ~~Misty Forest MF1–MF3, Swimmable and Waterfall.~~ MF screens complete v1 and river art complete v2; swimming animation remains planned and the Waterfall forced-fall source is now active.
 16. ~~Mountain M1–M5 and the Dwarven Cave forecourt.~~ Complete v1; the descent into C1 is active.
 17. ~~Rock Ledge Pass and Mountain M6–M10.~~ Complete v1.
 18. ~~Mountain M11–M14.~~ Complete v1; M10's south route is active through the M14 shoulder.
 19. ~~Mountain M15 and Redluk.~~ Environment and route foundations complete v1; M14 revised to its approved east link, M15's boss remains planned, and Redluk's orc-convergence movie remains a replaceable scaffold.
 20. ~~Dwarven Cave C1–C16, secret armoury, goblin hall and cliffside overlook.~~ Environment, traversal, discovery, treasure roll, encounter placeholders and scenic vista complete v1; final combat and inventory handoff remain planned.
+21. ~~Secret Ogre Cave and both lake-island pairs.~~ Full-resolution environments, geometry, reciprocal internal routes and Ogre loot persistence complete v1; ferry story unlock, haunted-house interior, buried-cache reward and inventory-system handoff remain planned.
 
 Every playable area requires its own runtime map JSON, background art, safe spawn
 points, exact transition triggers, foot-level collisions and depth occluders

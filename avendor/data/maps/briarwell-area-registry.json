@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.32.0",
+  "version": "0.33.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -133,7 +133,58 @@
       "landmarks": [
         { "id": "docks", "label": "Docks" },
         { "id": "fisherman-house", "label": "Fisherman's house" },
+        { "id": "lake-ferry", "label": "Plot-gated ferry to the two lake islands" },
         { "id": "sewer-access", "label": "Dockside sewer access", "placement": "hidden" }
+      ]
+    },
+    {
+      "id": "briarwell-haunted-island-landing",
+      "areaNumber": null,
+      "title": "Haunted Island - Landing",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-haunted-island-landing.json",
+      "planPosition": { "column": 4, "row": 3 },
+      "landmarks": [
+        { "id": "haunted-island-ferry-landing", "label": "Plot-gated boat landing" },
+        { "id": "north-haunted-path", "label": "Path to the haunted house" }
+      ]
+    },
+    {
+      "id": "briarwell-haunted-island-house",
+      "areaNumber": null,
+      "title": "Haunted Island - House",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-haunted-island-house.json",
+      "planPosition": { "column": 4, "row": 2 },
+      "landmarks": [
+        { "id": "haunted-house-front-door", "label": "Haunted house front door" }
+      ]
+    },
+    {
+      "id": "briarwell-little-island",
+      "areaNumber": null,
+      "title": "Little Island",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-little-island.json",
+      "planPosition": { "column": 5, "row": 4 },
+      "landmarks": [
+        { "id": "little-island-ferry-landing", "label": "Plot-gated boat landing" },
+        { "id": "north-cache-path", "label": "Path to the buried cache" }
+      ]
+    },
+    {
+      "id": "briarwell-little-island-treasure",
+      "areaNumber": null,
+      "title": "Little Island - Buried Treasure",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/briarwell-little-island-treasure.json",
+      "planPosition": { "column": 5, "row": 3 },
+      "landmarks": [
+        { "id": "buried-treasure-marker", "label": "Buried treasure marker" }
       ]
     },
     {
@@ -635,7 +686,21 @@
       "planPosition": { "column": -3, "row": -4 },
       "landmarks": [
         { "id": "ogre-boss-arena", "label": "Ogre boss arena" },
-        { "id": "sealed-ogre-cave-boulder", "label": "Boulder sealing the ogre cave" }
+        { "id": "ogre-cave-boulder", "label": "Strength 8 boulder at the secret Ogre Cave" }
+      ]
+    },
+    {
+      "id": "briarwell-ogre-cave",
+      "areaNumber": null,
+      "title": "Secret Ogre Cave",
+      "kind": "interior",
+      "status": "playable",
+      "map": "data/maps/briarwell-ogre-cave.json",
+      "planPosition": null,
+      "landmarks": [
+        { "id": "ogre-treasure-chest", "label": "Iron-banded ogre chest" },
+        { "id": "ogre-frost-longsword", "label": "Frost-touched magic longsword" },
+        { "id": "ogre-metal-shield", "label": "Metal shield" }
       ]
     },
     {
@@ -1561,6 +1626,36 @@
       "endpoints": [
         { "areaId": "briarwell-forest-f20", "transitionId": "north-clearing", "direction": "north" },
         { "areaId": "briarwell-ogre-clearing", "transitionId": "south-clearing", "direction": "south" }
+      ]
+    },
+    {
+      "id": "ogre-clearing-secret-cave",
+      "kind": "secret-passage",
+      "visibility": "hidden",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-ogre-clearing", "transitionId": "ogre-cave-boulder", "direction": "north" },
+        { "areaId": "briarwell-ogre-cave", "transitionId": "south-cave-mouth", "direction": "south" }
+      ]
+    },
+    {
+      "id": "haunted-island-landing-house",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-haunted-island-landing", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-haunted-island-house", "transitionId": "south-path", "direction": "south" }
+      ]
+    },
+    {
+      "id": "little-island-treasure-path",
+      "kind": "trail",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-little-island", "transitionId": "north-path", "direction": "north" },
+        { "areaId": "briarwell-little-island-treasure", "transitionId": "south-path", "direction": "south" }
       ]
     },
     {

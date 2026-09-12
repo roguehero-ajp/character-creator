@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-little-island-treasure",
+  "title": "Little Island - Buried Treasure",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/lake/little-island-treasure/background/briarwell-little-island-treasure-v1.webp",
+    "alt": "A quiet snowy clearing at the far end of Little Island with a stone cairn marking subtly disturbed earth"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "footRadiusX": 10,
+    "footRadiusY": 6,
+    "slideAngles": [10,20,30,40,50,60,70,80],
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 220, "scale": 0.46 },
+      { "y": 450, "scale": 0.60 },
+      { "y": 740, "scale": 0.82 },
+      { "y": 1040, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 724, "y": 920, "facing": "north" },
+    "from-south": { "x": 724, "y": 920, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "little-island-treasure-clearing",
+      "points": [[618,1086],[560,914],[438,796],[314,680],[238,532],[278,382],[408,254],[590,190],[856,190],[1036,254],[1168,382],[1208,532],[1132,680],[1010,796],[888,914],[832,1086]]
+    }
+  ],
+  "collisions": [],
+  "exits": [
+    {
+      "id": "south-path",
+      "label": "South path to the Little Island landing",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-little-island",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[626,986],[822,986],[850,1086],[598,1086]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "little-island-buried-cache",
+      "label": "Buried treasure marker",
+      "x": 724,
+      "y": 350,
+      "radius": 145,
+      "state": "buried-treasure-reward-pending",
+      "interactionText": "The cairn marks deliberately disturbed earth. Something is buried here, but its contents have not yet been revealed."
+    }
+  ],
+  "npcs": [],
+  "treasureStatus": "reward-definition-pending"
+}

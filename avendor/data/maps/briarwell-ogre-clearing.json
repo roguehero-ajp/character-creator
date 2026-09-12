@@ -25,7 +25,8 @@
   },
   "spawnPoints": {
     "default": { "x": 1024, "y": 790, "facing": "north" },
-    "from-south": { "x": 1024, "y": 790, "facing": "north" }
+    "from-south": { "x": 1024, "y": 790, "facing": "north" },
+    "from-ogre-cave": { "x": 1024, "y": 390, "facing": "south" }
   },
   "walkable": [
     {
@@ -49,18 +50,33 @@
       "points": [[940, 842], [1108, 842], [1108, 944], [940, 944]]
     }
   ],
-  "portals": [],
-  "depthOccluders": [],
-  "interactables": [
+  "portals": [
     {
-      "id": "sealed-ogre-cave-boulder",
-      "label": "Boulder sealing the ogre cave",
-      "x": 1024,
-      "y": 220,
-      "radius": 170,
-      "interactionText": "An immense boulder seals the cave mouth. Moving it will require Strength 8."
+      "id": "ogre-cave-boulder",
+      "label": "Boulder sealing the secret Ogre Cave",
+      "status": "active",
+      "activation": "interact",
+      "target": {
+        "areaId": "briarwell-ogre-cave",
+        "spawnId": "from-clearing",
+        "returnTransitionId": "south-cave-mouth"
+      },
+      "fallbackSpawn": "from-ogre-cave",
+      "points": [[846,170],[1202,170],[1202,360],[846,360]],
+      "interactionTarget": { "x": 1024, "y": 300 },
+      "radius": 175,
+      "check": {
+        "type": "stat-minimum",
+        "stat": "strength",
+        "minimum": 8,
+        "discoveryId": "ogre-cave-boulder-moved",
+        "successText": "With a grinding roar, you force the immense boulder aside.",
+        "failureText": "The boulder refuses to move; Strength 8 is required."
+      }
     }
   ],
+  "depthOccluders": [],
+  "interactables": [],
   "npcs": [],
   "bossEncounter": {
     "id": "ogre-boss",
