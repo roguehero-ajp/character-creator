@@ -73,7 +73,7 @@ const maps = new Map(mapIds.map((areaId) => [areaId, loadMap(areaId)]));
 const { AreaRegistry, MapGeometry } = loadEngines();
 const registry = new AreaRegistry(registryData);
 
-assert(registryData.version === '0.33.0', 'The lake-island and Ogre Cave expansion requires registry version 0.33.0.');
+assert(registryData.version === '0.33.1', 'The public Library Quarter road correction requires registry version 0.33.1.');
 assert(caveRoomIds.every((areaId, index) => (
   registeredAreas.get(areaId)?.kind === 'interior'
     && registeredAreas.get(areaId)?.caveAreaNumber === index + 1

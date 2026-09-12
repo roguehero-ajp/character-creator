@@ -14,8 +14,10 @@ keeps Jay's numbered layout understandable during art and map production.
 The complete Briarwell surface and sewer network are now playable. The surface contains the northern circuit
 `1 → 2 → 3 → 4 → 1`, the southern circuit
 `1 → 5 → 7 → 8 → 9 → 6 → 1`, Mayor's Hill from Area 3, and the western branch
-`1 → 5 → west junction → 12`. Area 11 has finished runtime art and geometry and is
-reachable through the Sewer Area 14 cave; its open-window route still awaits traversal logic.
+`1 → 5 → west junction → 12`. The Library Quarter also connects south to the
+Tannery and Warehouses and northeast to Ms. Blight's Orphanage. Area 11 is publicly
+accessible from the Library Quarter, with an additional hidden connection through
+the Sewer Area 14 cave; its open-window route still awaits traversal logic.
 The western branch now continues from the junction to F13, north through F14 and
 F15, then east across the Old River Bridge into Northfield. F15 also opens into
 the complete F16–F22 dark-forest loop to its north and west, with the Ogre's
@@ -46,18 +48,19 @@ remains non-traversable until swimming is implemented.
 | 1 | `briarwell-town-center` | Lodestone Tavern, General Store, well, fruit vendor | 2 NW, 4 NE, 5 W, 6 E, 8 S | Well to sewers |
 | 2 | `briarwell-northwest-workshops` | Blacksmith top-left, Cooper top-center, houses on left | 1 S, 3 E | — |
 | 3 | `briarwell-brewmaster-row` | Brewmaster bottom-left, houses along top | 2 W, 4 E, 10 N | — |
-| 4 | `briarwell-library-quarter` | Library, houses, cliffside alley | 1 SW, 3 W | Open window to 11 |
+| 4 | `briarwell-library-quarter` | Library, houses, cliffside alley | 1 SW, 3 W, 6 S, 11 NE | Open window to 11 |
 | 5 | `briarwell-western-homes` | My house, other houses, Fletcher | 1 E, 7 S by alley, west road junction W | — |
-| 6 | `briarwell-tannery-warehouses` | Tannery, warehouses | 1 W, 9 S | — |
+| 6 | `briarwell-tannery-warehouses` | Tannery, warehouses | 1 W, 4 N, 9 S | — |
 | 7 | `briarwell-ainsley-church` | Ainsley's House for Unwanted Children, church | 5 N by alley, 8 E | Alley grate to Sewer Area 4 |
 | 8 | `briarwell-south-gate` | Guards, barracks, city gate, house | 1 N, 7 W, 9 E; road out of town S | — |
 | 9 | `briarwell-docks` | Docks, fisherman's house | 6 N, 8 W | Dockside access to Sewer Area 7 |
 | 10 | `briarwell-mayors-hill` | Mayor's house on the hill | 3 S | — |
-| 11 | `briarwell-blight-orphanage` | Ms. Blight's orphanage, barn | None | Open window to Area 4 alley; cave to Sewer Area 14 |
+| 11 | `briarwell-blight-orphanage` | Ms. Blight's orphanage, barn | 4 SW | Open window to Area 4 alley; cave to Sewer Area 14 |
 | 12 | `briarwell-henson-homestead` | Old Man Henson's place | West junction S | — |
 
-Area 7 and Area 11 are deliberately separate entities. Area 11 is physically
-isolated on the cliffside and is reached by the hidden open-window passage.
+Area 7 and Area 11 are deliberately separate entities. Ms. Blight's cliffside
+orphanage is part of the town and has a public road to the Library Quarter.
+Its hidden window passage and sewer cave provide additional routes.
 
 ## Unnumbered support areas
 

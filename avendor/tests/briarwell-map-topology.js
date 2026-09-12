@@ -248,9 +248,9 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   const topology = engine.auditTopology(registry, maps);
 
   assert(registryData.schemaVersion === 2, 'Briarwell must use the route-graph registry schema.');
-  assert(registryData.version === '0.33.0', 'The lake-island and Ogre Cave expansion requires registry version 0.33.0.');
+  assert(registryData.version === '0.33.1', 'The public Library Quarter road correction requires registry version 0.33.1.');
   assert(registryData.areas.length === 113, "Briarwell must register the town, sewers, support spaces, forest routes, Ogre's Clearing and cave, lake islands, Northfield, Misty Forest, river areas, mountains, Redluk, Dwarven Cave, farms, Witchwood and ancient-maple screens.");
-  assert(registryData.connections.length === 126, 'Briarwell must preserve all 126 approved internal connections.');
+  assert(registryData.connections.length === 128, 'Briarwell must preserve all 128 approved internal connections.');
   assert(registryData.cityExits.length === 1, 'Only the blocked road beyond the broken bridge should remain an unresolved city exit.');
   assert(
     Object.keys(maps).length === 113,
@@ -349,7 +349,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     counts[connection.kind] = (counts[connection.kind] || 0) + 1;
     return counts;
   }, {});
-  assert(kindCounts.road === 51, "Briarwell must preserve all established town, forest, Ogre's Clearing, Witchwood and farm-road connections.");
+  assert(kindCounts.road === 53, "Briarwell must preserve all established town, forest, Ogre's Clearing, Witchwood and farm-road connections, including both Library Quarter roads.");
   assert(kindCounts.trail === 24, 'The Northfield, Misty Forest, Swimmable, mountain and island walking routes must remain trails rather than roads.');
   assert(kindCounts['cave-passage'] === 20, 'The Dwarven Cave must preserve all 20 public passages.');
   assert(kindCounts['river-escape'] === 1, 'Waterfall must retain exactly one directed river escape into Swimmable.');
@@ -369,8 +369,20 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     'briarwell-library-quarter',
     { includeHidden: true }
   );
-  assert(libraryPublic.length === 2, 'Area 4 must publicly connect to Town Center and Area 3.');
-  assert(libraryAll.length === 3, 'Area 4 must also retain its hidden window route.');
+  assert(libraryPublic.length === 4, 'Area 4 must publicly connect to Town Center, Brewmaster Row, the Tannery and Ms. Blight\'s.');
+  assert(libraryAll.length === 5, 'Area 4 must also retain its hidden window route.');
+  const libraryRoadTargets = libraryPublic.flatMap((connection) => (
+    connection.endpoints.filter((endpoint) => endpoint.areaId !== 'briarwell-library-quarter')
+      .map((endpoint) => endpoint.areaId)
+  )).sort();
+  assert(
+    libraryPublic.every((connection) => connection.kind === 'road' && connection.status === 'active')
+      && libraryRoadTargets.join('|') === [
+        'briarwell-blight-orphanage', 'briarwell-brewmaster-row',
+        'briarwell-tannery-warehouses', 'briarwell-town-center'
+      ].join('|'),
+    'All four approved Library Quarter destinations must be active public roads.'
+  );
 
   const secret = registry.getConnection('library-quarter-blight-open-window');
   assert(secret?.visibility === 'hidden', "Ms. Blight's window route must not appear in public navigation.");
@@ -392,14 +404,14 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const publicReachable = collectReachableAreas(registry, 'briarwell-town-center', false);
   const allReachable = collectReachableAreas(registry, 'briarwell-town-center', true);
-  assert(publicReachable.size === 89, "The public route graph must connect the town, outskirts, farms, Witchwood, ancient maple, Northfield, Misty Forest, Swimmable, mountains, Dwarven Cave, dark forest and Ogre's Clearing.");
+  assert(publicReachable.size === 90, "The public route graph must connect the town including Ms. Blight's, outskirts, farms, Witchwood, ancient maple, Northfield, Misty Forest, Swimmable, mountains, Dwarven Cave, dark forest and Ogre's Clearing.");
   assert(
     ![...publicReachable].some((areaId) => areaId.startsWith('briarwell-sewer-')),
     'The sewers must not appear in public navigation.'
   );
   assert(
-    !publicReachable.has('briarwell-blight-orphanage'),
-    "Ms. Blight's isolated grounds must not appear in public navigation."
+    publicReachable.has('briarwell-blight-orphanage'),
+    "Ms. Blight's Orphanage must be reachable from Town Center using public roads."
   );
   assert(
     allReachable.size === registryData.areas.length - 5
@@ -507,8 +519,8 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const libraryQuarter = maps['briarwell-library-quarter'];
   assert(libraryQuarter, 'Area 4 must load as a playable runtime map.');
-  assert(libraryQuarter.version === '0.2.0', 'Area 4 must remove the obsolete sewer-grate route.');
-  assert(libraryQuarter.exits.length === 2, 'Area 4 must expose only west and southwest public roads.');
+  assert(libraryQuarter.version === '0.3.0', 'Area 4 must retain the approved traced geometry and new road exits.');
+  assert(libraryQuarter.exits.length === 4, 'Area 4 must expose west, southwest, south and northeast public roads.');
   assert(libraryQuarter.portals.length === 0, 'Area 4 hidden routes must not appear as normal navigation triggers.');
   const libraryWest = libraryQuarter.exits.find((exit) => exit.id === 'west-road');
   const librarySouthwest = libraryQuarter.exits.find((exit) => exit.id === 'southwest-road');
@@ -600,8 +612,8 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const tanneryWarehouses = maps['briarwell-tannery-warehouses'];
   assert(tanneryWarehouses, 'Area 6 must load as a playable runtime map.');
-  assert(tanneryWarehouses.version === '0.1.0', 'Area 6 must start at runtime map version 0.1.0.');
-  assert(tanneryWarehouses.exits.length === 2, 'Area 6 must expose only west and south roads.');
+  assert(tanneryWarehouses.version === '0.2.5', 'Area 6 must retain the approved redraw and Library Quarter route.');
+  assert(tanneryWarehouses.exits.length === 3, 'Area 6 must expose west, south and north roads.');
   const tanneryWest = tanneryWarehouses.exits.find((exit) => exit.id === 'west-road');
   const tannerySouth = tanneryWarehouses.exits.find((exit) => exit.id === 'south-road');
   assert(
@@ -854,14 +866,19 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const blightOrphanage = maps['briarwell-blight-orphanage'];
   assert(blightOrphanage, 'Area 11 must load as a playable runtime map.');
-  assert(blightOrphanage.version === '0.2.0', 'Area 11 must expose the cave access to the sewers.');
+  assert(blightOrphanage.version === '0.2.1', 'Area 11 must retain public Library Quarter access and its sewer cave.');
   assert(
-    blightOrphanage.exits.length === 0
+    blightOrphanage.exits.length === 1
+      && blightOrphanage.exits[0].id === 'southwest-road'
+      && blightOrphanage.exits[0].status === 'active'
+      && blightOrphanage.exits[0].target?.areaId === 'briarwell-library-quarter'
+      && blightOrphanage.exits[0].target?.spawnId === 'from-blight-orphanage'
+      && blightOrphanage.exits[0].target?.returnTransitionId === 'northeast-road'
       && blightOrphanage.portals.length === 1
       && blightOrphanage.portals[0].id === 'sewer-cave'
       && blightOrphanage.portals[0].activation === 'interact'
       && blightOrphanage.portals[0].target?.areaId === 'briarwell-sewer-14',
-    'Area 11 must expose only one interacted cave access to Sewer Area 14.'
+    'Area 11 must expose a public return road to the Library Quarter and one interacted cave access to Sewer Area 14.'
   );
   assert(
     blightOrphanage.interactables.some((feature) => feature.id === 'alley-open-window'),

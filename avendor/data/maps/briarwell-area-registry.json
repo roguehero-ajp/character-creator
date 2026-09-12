@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.33.0",
+  "version": "0.33.1",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
@@ -2237,6 +2237,26 @@
       "endpoints": [
         { "areaId": "briarwell-brewmaster-row", "transitionId": "east-road", "direction": "east" },
         { "areaId": "briarwell-library-quarter", "transitionId": "west-road", "direction": "west" }
+      ]
+    },
+    {
+      "id": "library-quarter-tannery-warehouses",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-library-quarter", "transitionId": "south-road", "direction": "south" },
+        { "areaId": "briarwell-tannery-warehouses", "transitionId": "north-road", "direction": "north" }
+      ]
+    },
+    {
+      "id": "library-quarter-blight-orphanage",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        { "areaId": "briarwell-library-quarter", "transitionId": "northeast-road", "direction": "northeast" },
+        { "areaId": "briarwell-blight-orphanage", "transitionId": "southwest-road", "direction": "southwest" }
       ]
     },
     {
