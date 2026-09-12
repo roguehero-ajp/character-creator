@@ -472,7 +472,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
 
   const brewmasterRow = maps['briarwell-brewmaster-row'];
   assert(brewmasterRow, 'Area 3 must load as a playable runtime map.');
-  assert(brewmasterRow.version === '0.1.0', 'Area 3 must start at runtime map version 0.1.0.');
+  assert(brewmasterRow.version === '0.1.2', 'Area 3 must retain the traced geometry with the duplicate occluder point removed.');
   assert(brewmasterRow.exits.length === 3, 'Area 3 must expose only west, east and north roads.');
   const rowWest = brewmasterRow.exits.find((exit) => exit.id === 'west-road');
   const rowEast = brewmasterRow.exits.find((exit) => exit.id === 'east-road');
