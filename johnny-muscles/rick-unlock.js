@@ -2,7 +2,7 @@
   'use strict';
 
   const KEYS = {
-    city1Beaten: 'johnnyMuscles.city1Beaten',
+    bobBeatenAsJohnny: 'johnnyMuscles.bobBeatenAsJohnny',
     rickUnlocked: 'johnnyMuscles.rickUnlocked',
     rickIntroSeen: 'johnnyMuscles.rickIntroSeen',
     selectedCharacter: 'johnnyMuscles.selectedCharacter'
@@ -17,7 +17,7 @@
   const count = document.getElementById('rick-page-count');
   const transcriptToggle = document.getElementById('rick-transcript-toggle');
   const selectRick = document.getElementById('rick-select');
-  const city2 = document.getElementById('rick-city2');
+  const continueRegion = document.getElementById('rick-city2');
 
   let pageIndex = 0;
   let startX = null;
@@ -32,8 +32,24 @@
     try { localStorage.setItem(key, value); return true; } catch { return false; }
   }
 
-  const unlockEligible = read(KEYS.city1Beaten) === 'true' || read(KEYS.rickUnlocked) === 'true';
-  if (unlockEligible) write(KEYS.rickUnlocked, 'true');
+  function remove(key) {
+    try { localStorage.removeItem(key); } catch { /* Storage unavailable. */ }
+  }
+
+  const bobBeatenAsJohnny = read(KEYS.bobBeatenAsJohnny) === 'true';
+  if (!bobBeatenAsJohnny) {
+    remove(KEYS.rickUnlocked);
+    remove(KEYS.rickIntroSeen);
+    if (read(KEYS.selectedCharacter) === 'rick') write(KEYS.selectedCharacter, 'johnny');
+  }
+
+  const unlockEligible = bobBeatenAsJohnny && read(KEYS.rickUnlocked) === 'true';
+
+  if (continueRegion) {
+    continueRegion.href = 'suburb1.html?build=0.11.11';
+    continueRegion.textContent = 'Continue to the Suburbs';
+    continueRegion.setAttribute('aria-label', 'Continue to the Suburbs');
+  }
 
   function showPage(index) {
     if (!pages.length) return;
@@ -57,7 +73,7 @@
       selectRick.hidden = pageIndex !== pages.length - 1;
       selectRick.setAttribute('aria-disabled', String(!unlockEligible));
     }
-    if (city2) city2.hidden = pageIndex !== pages.length - 1;
+    if (continueRegion) continueRegion.hidden = pageIndex !== pages.length - 1;
   }
 
   function setTranscript(visible) {
@@ -84,7 +100,7 @@
     }
     markSeen({ select: true });
   });
-  city2?.addEventListener('click', () => markSeen());
+  continueRegion?.addEventListener('click', () => markSeen());
   dots.forEach(dot => dot.addEventListener('click', () => showPage(Number(dot.dataset.dot))));
 
   artImages.forEach(image => {
@@ -111,7 +127,7 @@
     else if (event.key === 'ArrowRight') { event.preventDefault(); showPage(pageIndex + 1); }
     else if (event.key === 'Home') { event.preventDefault(); showPage(0); }
     else if (event.key === 'End') { event.preventDefault(); showPage(pages.length - 1); }
-    else if (event.key === 'Escape') { window.location.href = 'index.html?build=0.11.6'; }
+    else if (event.key === 'Escape') { window.location.href = 'index.html?build=0.11.11'; }
   });
 
   showPage(0);
