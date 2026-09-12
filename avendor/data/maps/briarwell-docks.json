@@ -222,7 +222,20 @@
   "interactables": [
     { "id": "fisherman-house", "label": "Fisherman's house", "x": 785, "y": 500, "radius": 145 },
     { "id": "harbor-piers", "label": "Briarwell harbor piers", "x": 610, "y": 760, "radius": 125 },
-    { "id": "west-moored-boat", "label": "Moored harbor boat", "x": 300, "y": 850, "radius": 135, "state": "future-lake-ferry" },
+    {
+      "id": "west-moored-boat",
+      "label": "Lake ferry boat",
+      "x": 300,
+      "y": 850,
+      "radius": 135,
+      "state": "future-lake-ferry",
+      "unlockCondition": "lake-ferry-story-event",
+      "destinations": [
+        { "areaId": "briarwell-haunted-island-landing", "spawnId": "from-boat" },
+        { "areaId": "briarwell-little-island", "spawnId": "from-boat" }
+      ],
+      "interactionText": "The ferry can reach both lake islands once the later crossing is arranged."
+    },
     { "id": "central-fishing-boat", "label": "Fishing boat", "x": 940, "y": 705, "radius": 140 }
   ],
   "npcs": []

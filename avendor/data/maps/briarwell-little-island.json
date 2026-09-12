@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-little-island",
+  "title": "Little Island",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/lake/little-island/background/briarwell-little-island-v1.webp",
+    "alt": "A small windswept winter island with a tied rowboat, a southern pier and one north path toward a hidden cache"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "footRadiusX": 10,
+    "footRadiusY": 6,
+    "slideAngles": [10,20,30,40,50,60,70,80],
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 150, "scale": 0.42 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 720, "scale": 0.80 },
+      { "y": 1040, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 724, "y": 920, "facing": "north" },
+    "from-boat": { "x": 724, "y": 920, "facing": "north" },
+    "from-north": { "x": 724, "y": 145, "facing": "south" }
+  },
+  "walkable": [
+    {
+      "id": "little-island-path-and-pier",
+      "points": [[574,1086],[554,878],[512,748],[418,632],[370,512],[422,390],[530,286],[622,222],[638,0],[808,0],[824,222],[930,286],[1032,390],[1074,512],[1022,632],[934,748],[902,878],[894,1086]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "little-island-landing-barrel",
+      "points": [[806,770],[890,762],[918,844],[894,900],[822,890],[790,828]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "north-path",
+      "label": "North path to the buried treasure clearing",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-little-island-treasure",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[648,0],[798,0],[814,110],[632,110]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "little-island-ferry-landing",
+      "label": "Little Island boat landing",
+      "x": 610,
+      "y": 872,
+      "radius": 132,
+      "state": "story-locked-lake-ferry",
+      "unlockCondition": "lake-ferry-story-event",
+      "interactionText": "The crossing back to Briarwell is not available yet; no ferryman waits at the landing."
+    }
+  ],
+  "npcs": [],
+  "boatAccess": {
+    "status": "story-locked",
+    "unlockCondition": "lake-ferry-story-event",
+    "sourceAreaId": "briarwell-docks",
+    "sourceFeatureId": "west-moored-boat"
+  }
+}

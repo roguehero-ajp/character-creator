@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-haunted-island-landing",
+  "title": "Haunted Island - Landing",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/lake/haunted-island-landing/background/briarwell-haunted-island-landing-v1.webp",
+    "alt": "An eerie winter-lake island landing with a tied rowboat and one worn north path through twisted trees"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "footRadiusX": 10,
+    "footRadiusY": 6,
+    "slideAngles": [10,20,30,40,50,60,70,80],
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 160, "scale": 0.42 },
+      { "y": 420, "scale": 0.58 },
+      { "y": 720, "scale": 0.80 },
+      { "y": 1040, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 724, "y": 920, "facing": "north" },
+    "from-boat": { "x": 724, "y": 920, "facing": "north" },
+    "from-north": { "x": 760, "y": 145, "facing": "south" }
+  },
+  "walkable": [
+    {
+      "id": "haunted-island-path-and-pier",
+      "points": [[574,1086],[560,880],[584,760],[540,652],[528,522],[578,394],[648,302],[664,188],[676,0],[844,0],[854,188],[904,302],[936,394],[922,522],[902,652],[886,760],[900,880],[902,1086]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "landing-barrels",
+      "points": [[786,786],[906,778],[930,876],[894,928],[802,912],[770,842]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "north-path",
+      "label": "North path to the haunted house",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-haunted-island-house",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-path"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [[688,0],[834,0],[850,108],[680,108]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "haunted-island-ferry-landing",
+      "label": "Haunted Island boat landing",
+      "x": 620,
+      "y": 875,
+      "radius": 132,
+      "state": "story-locked-lake-ferry",
+      "unlockCondition": "lake-ferry-story-event",
+      "interactionText": "The crossing back to Briarwell is not available yet; no ferryman waits at the landing."
+    }
+  ],
+  "npcs": [],
+  "boatAccess": {
+    "status": "story-locked",
+    "unlockCondition": "lake-ferry-story-event",
+    "sourceAreaId": "briarwell-docks",
+    "sourceFeatureId": "west-moored-boat"
+  }
+}

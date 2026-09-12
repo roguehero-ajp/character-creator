@@ -248,13 +248,13 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   const topology = engine.auditTopology(registry, maps);
 
   assert(registryData.schemaVersion === 2, 'Briarwell must use the route-graph registry schema.');
-  assert(registryData.version === '0.32.0', 'The playable Dwarven Cave expansion requires registry version 0.32.0.');
-  assert(registryData.areas.length === 108, "Briarwell must register the town, sewers, support spaces, forest routes, Ogre's Clearing, Northfield, Misty Forest, river areas, mountains, Redluk, Dwarven Cave, farms, Witchwood and ancient-maple screens.");
-  assert(registryData.connections.length === 123, 'Briarwell must preserve all 123 approved internal connections.');
+  assert(registryData.version === '0.33.0', 'The lake-island and Ogre Cave expansion requires registry version 0.33.0.');
+  assert(registryData.areas.length === 113, "Briarwell must register the town, sewers, support spaces, forest routes, Ogre's Clearing and cave, lake islands, Northfield, Misty Forest, river areas, mountains, Redluk, Dwarven Cave, farms, Witchwood and ancient-maple screens.");
+  assert(registryData.connections.length === 126, 'Briarwell must preserve all 126 approved internal connections.');
   assert(registryData.cityExits.length === 1, 'Only the blocked road beyond the broken bridge should remain an unresolved city exit.');
   assert(
-    Object.keys(maps).length === 108,
-    "Briarwell must load every town, sewer, support-interior, forest, farm, Ogre's Clearing, Northfield, Misty Forest, river, mountain, Redluk, Dwarven Cave and Witchwood map."
+    Object.keys(maps).length === 113,
+    "Briarwell must load every town, sewer, support-interior, forest, farm, Ogre's Clearing and cave, lake-island, Northfield, Misty Forest, river, mountain, Redluk, Dwarven Cave and Witchwood map."
   );
   assert(topology.errors.length === 0, topology.errors.join('\n'));
   const unavailableTransitionCount = Object.values(maps)
@@ -350,18 +350,18 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     return counts;
   }, {});
   assert(kindCounts.road === 51, "Briarwell must preserve all established town, forest, Ogre's Clearing, Witchwood and farm-road connections.");
-  assert(kindCounts.trail === 22, 'The Northfield, Misty Forest, Swimmable and mountain walking routes must remain trails rather than roads.');
+  assert(kindCounts.trail === 24, 'The Northfield, Misty Forest, Swimmable, mountain and island walking routes must remain trails rather than roads.');
   assert(kindCounts['cave-passage'] === 20, 'The Dwarven Cave must preserve all 20 public passages.');
   assert(kindCounts['river-escape'] === 1, 'Waterfall must retain exactly one directed river escape into Swimmable.');
   assert(kindCounts.alley === 1, 'Briarwell must preserve the Ainsley alley connection.');
   assert(kindCounts.doorway === 2, 'Briarwell must preserve the two Town Center doorways.');
   assert(kindCounts.climb === 2, 'The ancient maple must preserve both vertical climb connections.');
-  assert(kindCounts['secret-passage'] === 3, 'Briarwell must preserve the open-window and both dwarven secret passages.');
+  assert(kindCounts['secret-passage'] === 4, 'Briarwell must preserve the open-window, two dwarven secrets and Ogre Cave passage.');
   assert(kindCounts['sewer-access'] === 4, 'Briarwell must preserve all four sewer entrances.');
   assert(kindCounts['sewer-tunnel'] === 17, 'Briarwell must preserve all 17 internal sewer tunnels.');
   assert(
-    registryData.connections.filter((connection) => connection.visibility === 'hidden').length === 7,
-    'Only the open-window route, four sewer entrances and two dwarven chambers should be hidden.'
+    registryData.connections.filter((connection) => connection.visibility === 'hidden').length === 8,
+    'Only the open-window route, four sewer entrances, two dwarven chambers and Ogre Cave should be hidden.'
   );
 
   const libraryPublic = registry.getConnectionsForArea('briarwell-library-quarter');
@@ -402,9 +402,13 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     "Ms. Blight's isolated grounds must not appear in public navigation."
   );
   assert(
-    allReachable.size === registryData.areas.length - 1
-      && !allReachable.has('briarwell-waterfall'),
-    'Hidden routes must complete the town graph except for Waterfall, which is deliberately entered only by a Rock Ledge hazard fall.'
+    allReachable.size === registryData.areas.length - 5
+      && !allReachable.has('briarwell-waterfall')
+      && !allReachable.has('briarwell-haunted-island-landing')
+      && !allReachable.has('briarwell-haunted-island-house')
+      && !allReachable.has('briarwell-little-island')
+      && !allReachable.has('briarwell-little-island-treasure'),
+    'Hidden routes must complete the town graph except for the one-way Waterfall arrival and the four plot-gated lake-island maps.'
   );
 
   const bridgeExit = registry.getCityExitForTransition('briarwell-broken-bridge', 'east-road');

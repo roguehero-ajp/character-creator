@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-haunted-island-house",
+  "title": "Haunted Island - House",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/lake/haunted-island-house/background/briarwell-haunted-island-house-v1.webp",
+    "alt": "A crooked abandoned manor glows faintly above a snowy haunted-island forecourt with one path returning south"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "footRadiusX": 10,
+    "footRadiusY": 6,
+    "slideAngles": [10,20,30,40,50,60,70,80],
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 320, "scale": 0.48 },
+      { "y": 520, "scale": 0.62 },
+      { "y": 760, "scale": 0.82 },
+      { "y": 1040, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 724, "y": 930, "facing": "north" },
+    "from-south": { "x": 724, "y": 930, "facing": "north" },
+    "house-door-return": { "x": 724, "y": 445, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "haunted-manor-path-and-forecourt",
+      "points": [[634,1086],[606,944],[584,820],[440,730],[330,636],[344,510],[462,406],[586,350],[862,350],[1002,408],[1110,510],[1118,640],[1010,730],[866,820],[842,944],[826,1086]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "haunted-house-foundation",
+      "points": [[430,86],[1018,72],[1112,170],[1090,350],[956,418],[492,418],[354,350],[342,180]]
+    },
+    {
+      "id": "ruined-iron-fence-west",
+      "points": [[182,430],[420,404],[474,494],[444,632],[322,690],[190,620]]
+    },
+    {
+      "id": "ruined-iron-fence-east",
+      "points": [[974,408],[1256,430],[1262,620],[1130,690],[1000,632],[968,498]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "south-path",
+      "label": "South path to the island landing",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-haunted-island-landing",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-path"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [[642,986],[816,986],[842,1086],[620,1086]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [
+    {
+      "id": "haunted-house-front",
+      "depthY": 430,
+      "points": [[336,38],[1118,34],[1144,182],[1104,354],[956,430],[492,430],[342,354],[304,180]]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "haunted-house-front-door",
+      "label": "Haunted house front door",
+      "x": 724,
+      "y": 438,
+      "radius": 148,
+      "state": "future-haunted-house-interior",
+      "interactionText": "The warped front door stands slightly open. The haunted-house interior has yet to be entered."
+    }
+  ],
+  "npcs": []
+}

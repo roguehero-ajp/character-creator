@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 2,
+  "id": "briarwell-ogre-cave",
+  "title": "Secret Ogre Cave",
+  "version": "0.1.0",
+  "referenceSize": { "width": 1448, "height": 1086 },
+  "art": {
+    "background": "assets/maps/briarwell/dark-forest/ogre-cave/background/briarwell-ogre-cave-v1.webp",
+    "alt": "A frost-dark secret ogre cave with an iron-banded chest, a glowing frost longsword and a metal shield beside a broad open floor"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "footRadiusX": 10,
+    "footRadiusY": 6,
+    "slideAngles": [10, 20, 30, 40, 50, 60, 70, 80],
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      { "y": 260, "scale": 0.46 },
+      { "y": 480, "scale": 0.60 },
+      { "y": 760, "scale": 0.82 },
+      { "y": 1040, "scale": 1.0 }
+    ]
+  },
+  "spawnPoints": {
+    "default": { "x": 724, "y": 900, "facing": "north" },
+    "from-clearing": { "x": 724, "y": 900, "facing": "north" }
+  },
+  "walkable": [
+    {
+      "id": "ogre-cave-floor",
+      "points": [[620,1086],[520,930],[348,824],[250,700],[196,532],[238,390],[430,286],[982,266],[1190,306],[1280,420],[1272,594],[1174,714],[1030,816],[878,930],[836,1086]]
+    },
+    {
+      "id": "south-cave-mouth-approach",
+      "points": [[590,900],[858,900],[858,1086],[590,1086]]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "left-ogre-camp",
+      "points": [[120,244],[432,236],[472,314],[438,432],[326,482],[204,450],[124,364]]
+    },
+    {
+      "id": "loot-wall-rocks",
+      "points": [[1010,228],[1360,228],[1378,360],[1326,448],[1248,438],[1190,350],[1070,350]]
+    }
+  ],
+  "exits": [
+    {
+      "id": "south-cave-mouth",
+      "label": "South cave mouth to the Ogre's Clearing",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "briarwell-ogre-clearing",
+        "spawnId": "from-ogre-cave",
+        "returnTransitionId": "ogre-cave-boulder"
+      },
+      "fallbackSpawn": "from-clearing",
+      "points": [[626,990],[822,990],[858,1086],[590,1086]]
+    }
+  ],
+  "portals": [],
+  "depthOccluders": [],
+  "interactables": [
+    {
+      "id": "ogre-treasure-chest",
+      "label": "Iron-banded ogre chest",
+      "x": 1025,
+      "y": 462,
+      "radius": 132,
+      "action": "claim-ogre-cave-chest",
+      "loot": {
+        "once": true,
+        "currency": { "gold": 30, "silver": 40 },
+        "gems": [
+          { "id": "emerald", "quantity": 1 },
+          { "id": "sapphire", "quantity": 1 },
+          { "id": "ruby", "quantity": 1 }
+        ]
+      },
+      "interactionText": "The heavy chest is secured by a simple ogre-sized latch."
+    },
+    {
+      "id": "ogre-frost-longsword",
+      "label": "Frost-touched magic longsword",
+      "x": 1160,
+      "y": 520,
+      "radius": 112,
+      "action": "claim-ogre-frost-longsword",
+      "item": {
+        "id": "ogre-frost-longsword",
+        "type": "weapon",
+        "weaponClass": "longsword",
+        "quantity": 1,
+        "magical": true,
+        "damageBonus": { "amount": 2, "type": "frost" },
+        "onHitEffects": [
+          { "id": "slow", "type": "slow", "stacking": false }
+        ]
+      },
+      "interactionText": "Cold mist clings to the magic blade; every hit adds 2 frost damage and inflicts Slow."
+    },
+    {
+      "id": "ogre-metal-shield",
+      "label": "Metal shield",
+      "x": 1270,
+      "y": 575,
+      "radius": 108,
+      "action": "claim-ogre-metal-shield",
+      "item": {
+        "id": "ogre-metal-shield",
+        "type": "shield",
+        "material": "metal",
+        "quantity": 1
+      },
+      "interactionText": "A sturdy metal shield rests against the cave wall."
+    }
+  ],
+  "npcs": [],
+  "inventoryStatus": "inventory-handoff-pending"
+}

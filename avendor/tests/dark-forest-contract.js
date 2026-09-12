@@ -162,7 +162,7 @@ Object.entries(mapContracts).forEach(([areaId, contract]) => {
 const ogreArea = areas.get('briarwell-ogre-clearing');
 const ogre = maps.get('briarwell-ogre-clearing');
 const ogreGeometry = new MapGeometry(ogre);
-const boulder = ogre.interactables.find((feature) => feature.id === 'sealed-ogre-cave-boulder');
+const boulder = ogre.portals.find((feature) => feature.id === 'ogre-cave-boulder');
 
 assert(
   ogreArea?.status === 'playable'
@@ -199,9 +199,14 @@ assert(
   'The arena must open south while the northern cave remains physically sealed.'
 );
 assert(
-  boulder?.interactionText.includes('Strength 8')
+  boulder?.activation === 'interact'
+    && boulder.status === 'active'
+    && boulder.target?.areaId === 'briarwell-ogre-cave'
+    && boulder.check?.type === 'stat-minimum'
+    && boulder.check.stat === 'strength'
+    && boulder.check.minimum === 8
     && ogreGeometry.getNearbyInteractable({ x: 1024, y: 250 })?.id === boulder.id,
-  'The sealed cave boulder must communicate and expose the authored Strength 8 interaction.'
+  'The cave boulder must expose the active, persistent Strength 8 interaction.'
 );
 assert(
   ogre.npcs.length === 0
