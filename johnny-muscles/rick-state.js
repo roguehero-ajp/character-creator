@@ -3,7 +3,9 @@
 
   const KEYS = {
     city1Beaten: 'johnnyMuscles.city1Beaten',
+    bobBeatenAsJohnny: 'johnnyMuscles.bobBeatenAsJohnny',
     rickUnlocked: 'johnnyMuscles.rickUnlocked',
+    rickIntroSeen: 'johnnyMuscles.rickIntroSeen',
     selectedCharacter: 'johnnyMuscles.selectedCharacter'
   };
 
@@ -23,8 +25,19 @@
     try { localStorage.setItem(key, value); return true; } catch { return false; }
   }
 
-  const unlocked = read(KEYS.rickUnlocked) === 'true' || read(KEYS.city1Beaten) === 'true';
-  if (unlocked) write(KEYS.rickUnlocked, 'true');
+  function remove(key) {
+    try { localStorage.removeItem(key); } catch { /* Storage unavailable. */ }
+  }
+
+  // Repair saves created under the old rule where City 1 unlocked Rick.
+  const bobBeatenAsJohnny = read(KEYS.bobBeatenAsJohnny) === 'true';
+  if (!bobBeatenAsJohnny) {
+    remove(KEYS.rickUnlocked);
+    remove(KEYS.rickIntroSeen);
+    if (read(KEYS.selectedCharacter) === 'rick') write(KEYS.selectedCharacter, 'johnny');
+  }
+
+  const unlocked = bobBeatenAsJohnny && read(KEYS.rickUnlocked) === 'true';
 
   if (unlocked) {
     rickSlide.dataset.status = 'playable';
@@ -32,18 +45,19 @@
     rickSlide.setAttribute('aria-label', 'Rick Rampage, unlocked and playable');
     rickSlide.innerHTML = `
       <div class="rick-select-card">
-        <img class="rick-select-art" src="assets/rick-unlock-page-1.webp?rev=0.11.6" alt="Rick Rampage casually juggles cars, then throws them at a giant alien cat while shouting, Get outta here, you gross alien cats!" />
+        <img class="rick-select-art" src="assets/rick-unlock-page-1.webp?rev=0.11.11" alt="Rick Rampage casually juggles cars, then throws them at a giant alien cat while shouting, Get outta here, you gross alien cats!" />
         <div class="rick-select-caption">
-          <strong>Unlocked · Beat City 1</strong>
+          <strong>Unlocked · Johnny Beat Bob</strong>
           <span>“Get outta here, you gross alien cats!”</span>
         </div>
       </div>`;
   } else {
     const lockedCopy = rickSlide.querySelector('.locked-sheet > div:last-child');
     if (lockedCopy) {
-      lockedCopy.innerHTML = '<span class="lock-chip">🔒 Locked</span><h3>Rick Rampage</h3><p>Rick joins the fight after Johnny secures City 1.</p><span class="rick-lock-rule">Unlock: Beat City 1</span>';
+      lockedCopy.innerHTML = '<span class="lock-chip">🔒 Locked</span><h3>Rick Rampage</h3><p>Rick joins the fight after Johnny defeats Seargent Bob the Bobcat.</p><span class="rick-lock-rule">Unlock: Beat Bob as Johnny</span>';
     }
-    rickSlide.dataset.tagline = 'Unlock: Beat City 1';
+    rickSlide.dataset.tagline = 'Unlock: Beat Bob as Johnny';
+    rickSlide.setAttribute('aria-label', 'Rick Rampage, locked. Unlock by beating Seargent Bob as Johnny');
   }
 
   function updateHomeStatus() {
@@ -89,7 +103,12 @@
     const character = slide.dataset.character || 'johnny';
     write(KEYS.selectedCharacter, character);
     updateHomeStatus();
-    const destination = read(KEYS.city1Beaten) === 'true' ? 'city2.html?build=0.11.9' : 'city1.html?build=0.11.9';
+
+    const destination = bobBeatenAsJohnny
+      ? 'suburb1.html?build=0.11.11'
+      : read(KEYS.city1Beaten) === 'true'
+        ? 'city2.html?build=0.11.11'
+        : 'city1.html?build=0.11.11';
     window.location.href = destination;
   }
 
@@ -126,7 +145,7 @@
   'use strict';
   if (document.querySelector('script[data-creator-code-loader]')) return;
   const script = document.createElement('script');
-  script.src = 'creator-code.js?rev=0.11.9';
+  script.src = 'creator-code.js?rev=0.11.11';
   script.defer = true;
   script.dataset.creatorCodeLoader = 'true';
   document.head.appendChild(script);
