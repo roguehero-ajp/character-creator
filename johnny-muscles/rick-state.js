@@ -6,6 +6,7 @@
     bobBeatenAsJohnny: 'johnnyMuscles.bobBeatenAsJohnny',
     lynnBeaten: 'johnnyMuscles.lynnBeaten',
     munroeBeaten: 'johnnyMuscles.munroeBeaten',
+    shaunBeaten: 'johnnyMuscles.shaunBeaten',
     rickUnlocked: 'johnnyMuscles.rickUnlocked',
     rickIntroSeen: 'johnnyMuscles.rickIntroSeen',
     selectedCharacter: 'johnnyMuscles.selectedCharacter'
@@ -19,17 +20,9 @@
   const characterPanel = document.getElementById('character-panel');
   if (!rickSlide) return;
 
-  function read(key) {
-    try { return localStorage.getItem(key); } catch { return null; }
-  }
-
-  function write(key, value) {
-    try { localStorage.setItem(key, value); return true; } catch { return false; }
-  }
-
-  function remove(key) {
-    try { localStorage.removeItem(key); } catch { /* Storage unavailable. */ }
-  }
+  function read(key) { try { return localStorage.getItem(key); } catch { return null; } }
+  function write(key, value) { try { localStorage.setItem(key, value); return true; } catch { return false; } }
+  function remove(key) { try { localStorage.removeItem(key); } catch { /* Storage unavailable. */ } }
 
   const bobBeatenAsJohnny = read(KEYS.bobBeatenAsJohnny) === 'true';
   if (!bobBeatenAsJohnny) {
@@ -46,7 +39,7 @@
     rickSlide.setAttribute('aria-label', 'Rick Rampage, unlocked and playable');
     rickSlide.innerHTML = `
       <div class="rick-select-card">
-        <img class="rick-select-art" src="assets/rick-unlock-page-1.webp?rev=0.13.0" alt="Rick Rampage casually juggles cars, then throws them at a giant alien cat while shouting, Get outta here, you gross alien cats!" />
+        <img class="rick-select-art" src="assets/rick-unlock-page-1.webp?rev=0.14.0" alt="Rick Rampage casually juggles cars, then throws them at a giant alien cat while shouting, Get outta here, you gross alien cats!" />
         <div class="rick-select-caption">
           <strong>Unlocked · Johnny Beat Bob</strong>
           <span>“Get outta here, you gross alien cats!”</span>
@@ -64,9 +57,11 @@
   function updateHomeStatus() {
     if (!characterStatus) return;
     const selected = read(KEYS.selectedCharacter) || 'johnny';
-    if (selected === 'rick' && unlocked) characterStatus.textContent = 'Active fighter: Rick Rampage';
-    else characterStatus.textContent = 'Active fighter: Johnny Muscles';
+    characterStatus.textContent = selected === 'rick' && unlocked ? 'Active fighter: Rick Rampage' : 'Active fighter: Johnny Muscles';
   }
+
+  const versionNote = document.querySelector('.version-note');
+  if (versionNote) versionNote.textContent = 'Prototype 0.14.0 · World 5: The Badlands';
 
   let deployButton = null;
   if (selectorFooter && selectButton && !document.getElementById('character-deploy-button')) {
@@ -74,7 +69,6 @@
     actions.className = 'character-deploy-actions';
     selectButton.parentNode.insertBefore(actions, selectButton);
     actions.appendChild(selectButton);
-
     deployButton = document.createElement('button');
     deployButton.id = 'character-deploy-button';
     deployButton.className = 'character-select-button character-deploy-button';
@@ -84,10 +78,7 @@
     deployButton = document.getElementById('character-deploy-button');
   }
 
-  function activeSlide() {
-    return sheet?.querySelector('.character-slide.is-active') || null;
-  }
-
+  function activeSlide() { return sheet?.querySelector('.character-slide.is-active') || null; }
   function syncDeployButton() {
     if (!deployButton) return;
     const slide = activeSlide();
@@ -105,24 +96,22 @@
     write(KEYS.selectedCharacter, character);
     updateHomeStatus();
 
-    const destination = read(KEYS.munroeBeaten) === 'true'
-      ? 'mountain1.html?build=0.13.0'
-      : read(KEYS.lynnBeaten) === 'true'
-        ? 'hill1.html?build=0.13.0'
-        : bobBeatenAsJohnny
-          ? 'suburb1.html?build=0.13.0'
-          : read(KEYS.city1Beaten) === 'true'
-            ? 'city2.html?build=0.13.0'
-            : 'city1.html?build=0.13.0';
+    const destination = read(KEYS.shaunBeaten) === 'true'
+      ? 'badlands1.html?build=0.14.0'
+      : read(KEYS.munroeBeaten) === 'true'
+        ? 'mountain1.html?build=0.14.0'
+        : read(KEYS.lynnBeaten) === 'true'
+          ? 'hill1.html?build=0.14.0'
+          : bobBeatenAsJohnny
+            ? 'suburb1.html?build=0.14.0'
+            : read(KEYS.city1Beaten) === 'true'
+              ? 'city2.html?build=0.14.0'
+              : 'city1.html?build=0.14.0';
     window.location.href = destination;
   }
 
-  selectButton?.addEventListener('click', () => requestAnimationFrame(() => {
-    updateHomeStatus();
-    syncDeployButton();
-  }));
+  selectButton?.addEventListener('click', () => requestAnimationFrame(() => { updateHomeStatus(); syncDeployButton(); }));
   deployButton?.addEventListener('click', deployActiveFighter);
-
   document.getElementById('character-prev')?.addEventListener('click', () => requestAnimationFrame(syncDeployButton));
   document.getElementById('character-next')?.addEventListener('click', () => requestAnimationFrame(syncDeployButton));
   sheet?.addEventListener('pointerup', () => requestAnimationFrame(syncDeployButton));
@@ -135,8 +124,7 @@
 
   const params = new URLSearchParams(window.location.search);
   if (params.get('panel') === 'character') {
-    const opener = document.querySelector('[data-open-panel="character-panel"]');
-    opener?.click();
+    document.querySelector('[data-open-panel="character-panel"]')?.click();
     if (params.get('character') === 'rick') {
       requestAnimationFrame(() => {
         document.getElementById('character-next')?.click();
@@ -150,7 +138,7 @@
   'use strict';
   if (document.querySelector('script[data-creator-code-loader]')) return;
   const script = document.createElement('script');
-  script.src = 'creator-code.js?rev=0.13.0';
+  script.src = 'creator-code.js?rev=0.14.0';
   script.defer = true;
   script.dataset.creatorCodeLoader = 'true';
   document.head.appendChild(script);
