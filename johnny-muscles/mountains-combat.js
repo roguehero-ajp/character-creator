@@ -70,11 +70,15 @@
   P.completeMission=function(){if(this.missionComplete)return;this.missionComplete=true;this.running=false;this.aim=null;this.debris.length=0;this.showToast(`${this.LEVEL.title} SECURED`,1300);this.beep('win');const stars=1+(this.breaches===0?1:0)+(this.damageTaken===0?1:0);this.resultStarsEl.textContent='★'.repeat(stars)+'☆'.repeat(3-stars);this.resultScoreEl.textContent=this.score.toLocaleString();this.resultCatsEl.textContent=String(this.flattened);this.resultAvalancheEl.textContent=String(this.avalancheKills);this.resultSpecialEl.textContent=String(this.specialKills);this.resultDefenseEl.textContent=this.damageTaken===0?'UNTOUCHED':`${this.health}/5 HEARTS`;setTimeout(()=>this.missionCompleteScreen.classList.add('visible'),850);};
   P.endGame=function(){if(this.gameOver)return;this.running=false;this.gameOver=true;this.aim=null;this.finalScoreEl.textContent=`Score: ${this.score.toLocaleString()} · Avalanche kills: ${this.avalancheKills}`;this.gameOverScreen.classList.add('visible');};
   P.heldTankPosition=function(){return !this.aim||this.tank.flying?{x:this.tank.x,y:this.tank.y}:{x:this.aim.x,y:Math.min(this.aim.y,this.GROUND-40)};};
-  P.throwTank=function(){if(!this.aim||this.tank.flying||!this.running)return;const dx=this.tank.x-this.aim.x,dy=this.tank.y-this.aim.y,p=Math.hypot(dx,dy);if(p<18){this.aim=null;return;}const sc=Math.min(p,this.MAX_PULL)/p,boost=this.steroidTimer>0?1.42:1,h=this.heldTankPosition();Object.assign(this.tank,{x:h.x,y:h.y,vx:dx*sc*this.F.throwScale*boost,vy:dy*sc*this.F.throwScale*boost,angular:Math.min(9,2+p/55),flying:true,resetTimer:0,bounced:false});this.tank.hitIds.clear();this.aim=null;this.hero.releaseTimer=.28;this.beep('throw');if(navigator.vibrate)navigator.vibrate(20);};
+  P.throwTank=function(){if(!this.aim||this.tank.flying||!this.running)return;const dx=this.tank.x-this.aim.x,dy=this.tank.y-this.aim.y,p=Math.hypot(dx,dy);if(p<18){this.aim=null;return;}const sc=Math.min(p,this.MAX_PULL)/p,boost=this.steroidTimer>0?1.42:1,h=this.heldTankPosition();Object.assign(this.tank,{x:h.x,y:h.y,vx:dx*sc*this.F.throwScale*boost,vy:dy*sc*this.F.throwScale*boost,angular:Math.min(9,2+p/55),flying:true,resetTimer:0,groundedTimer:0,bounced:false});this.tank.hitIds.clear();this.aim=null;this.hero.releaseTimer=.28;this.beep('throw');if(navigator.vibrate)navigator.vibrate(20);};
   P.deflectTank=function(a,label){this.tank.vx*=-.25;this.tank.vy=-Math.abs(this.tank.vy)*.32-90;this.tank.angular*=-1;this.addImpact(a.x,a.y-20,true,'#d9e0e4');this.showToast(label,800);this.beep('ping');};
 
   P.updateTank=function(dt){
-    const t=this.tank;if(!t.flying)return;t.vx+=this.wind*.52*dt;t.vy+=this.GRAVITY*this.F.gravityMultiplier*dt;t.x+=t.vx*dt;t.y+=t.vy*dt;t.angle+=t.angular*dt;
+    const t=this.tank;if(!t.flying)return;
+    const groundBefore=this.terrainY(t.x)-22;
+    const airborne=t.y<groundBefore-2||t.vy<0;
+    if(airborne)t.vx+=this.wind*.52*dt;
+    t.vy+=this.GRAVITY*this.F.gravityMultiplier*dt;t.x+=t.vx*dt;t.y+=t.vy*dt;t.angle+=t.angular*dt;
     for(const shelf of this.shelves)if(!shelf.triggered&&Math.abs(t.x-shelf.x)<72&&t.vy>0&&t.y>this.terrainY(shelf.x)-135)this.triggerAvalanche(shelf,'impact');
     for(const a of this.actors){
       if(a.dead||t.hitIds.has(a.id))continue;const centerY=a.y-(['spotter','cliff'].includes(a.kind)?10:0),radius=(a.kind==='chonker'?72:['spotter','cliff'].includes(a.kind)?52:46)+this.F.collisionBonus;if(Math.hypot(t.x-a.x,t.y-centerY)>=radius)continue;t.hitIds.add(a.id);
@@ -82,7 +86,14 @@
       if(a.kind==='commando'&&a.cover){this.deflectTank(a,'COMMANDO CAT IS BEHIND COVER!');continue;}
       if(a.kind==='snow'&&a.hidden)a.hidden=false;t.vx*=this.F.impactX;t.vy*=this.F.impactY;this.killActor(a,'vehicle');
     }
-    const ground=this.terrainY(t.x)-22;if(t.y>=ground){t.y=ground;const icy=this.isIcyAt(t.x);if(Math.abs(t.vy)>165&&!t.bounced){t.vy*=icy?-.16:this.F.bounceY;t.vx*=icy?.9:this.F.bounceX;t.angular*=.7;t.bounced=true;this.addImpact(t.x,t.y+12,true,icy?'#dff6ff':'#e7d6b4');this.beep(icy?'ice':'impact');}else{t.vy=0;t.vx*=Math.pow(icy?.62:.055,dt);t.angular*=Math.pow(icy?.5:.03,dt);}}
-    if(t.x<-430||t.x>2500||(t.y>=this.terrainY(t.x)-23&&Math.abs(t.vx)<13)){t.resetTimer+=dt;if(t.resetTimer>.62)this.resetTank();}else t.resetTimer=0;
+    let grounded=false;
+    const ground=this.terrainY(t.x)-22;
+    if(t.y>=ground){
+      t.y=ground;const icy=this.isIcyAt(t.x);
+      if(Math.abs(t.vy)>165&&!t.bounced){t.vy*=icy?-.16:this.F.bounceY;t.vx*=icy?.9:this.F.bounceX;t.angular*=.7;t.bounced=true;t.groundedTimer=0;this.addImpact(t.x,t.y+12,true,icy?'#dff6ff':'#e7d6b4');this.beep(icy?'ice':'impact');}
+      else{grounded=true;t.vy=0;t.groundedTimer=(t.groundedTimer||0)+dt;t.vx*=Math.pow(icy?.62:.055,dt);t.angular*=Math.pow(icy?.5:.03,dt);}
+    }else t.groundedTimer=0;
+    if((t.groundedTimer||0)>=1.75){this.resetTank();return;}
+    if(t.x<-430||t.x>2500||(grounded&&Math.abs(t.vx)<13)){t.resetTimer+=dt;if(t.resetTimer>.62)this.resetTank();}else t.resetTimer=0;
   };
 })();
