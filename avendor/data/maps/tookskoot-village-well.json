@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 2,
+  "id": "tookskoot-village-well",
+  "title": "Tookskoot - Village Well",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/tookskoot/village-well/background/tookskoot-village-well-v1.webp",
+    "alt": "A roofed stone drinking-water well with a clear path around every side, enclosed gardens and a single north road back to the market"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "footRadiusX": 10,
+    "footRadiusY": 6,
+    "slideAngles": [10,20,30,40,50,60,70,80],
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 0,
+        "scale": 0.36
+      },
+      {
+        "y": 280,
+        "scale": 0.46
+      },
+      {
+        "y": 500,
+        "scale": 0.66
+      },
+      {
+        "y": 760,
+        "scale": 0.86
+      },
+      {
+        "y": 1086,
+        "scale": 1
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 724,
+      "y": 735,
+      "facing": "north"
+    },
+    "from-north": {
+      "x": 725,
+      "y": 140,
+      "facing": "south"
+    }
+  },
+  "walkable": [
+    {
+      "id": "well-green-and-north-road",
+      "points": [
+        [659,0],
+        [792,0],
+        [809,105],
+        [828,206],
+        [858,304],
+        [995,352],
+        [1136,387],
+        [1230,432],
+        [1265,506],
+        [1232,595],
+        [1167,681],
+        [1060,737],
+        [888,810],
+        [716,830],
+        [541,817],
+        [399,775],
+        [266,714],
+        [207,630],
+        [196,535],
+        [240,464],
+        [338,407],
+        [500,349],
+        [610,294],
+        [634,211],
+        [645,113]
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "well-stone-base-and-planters",
+      "points": [
+        [600,509],
+        [644,491],
+        [766,492],
+        [815,511],
+        [827,536],
+        [858,541],
+        [873,576],
+        [862,613],
+        [819,625],
+        [785,640],
+        [651,640],
+        [606,624],
+        [558,610],
+        [552,565],
+        [576,535]
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "north-road",
+      "label": "North road to the market",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "tookskoot-market",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-road"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [
+        [620,0],
+        [845,0],
+        [845,72],
+        [620,72]
+      ]
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "well-roof-posts-stone-and-planters",
+      "depthY": 640,
+      "points": [
+        [566,373],
+        [594,315],
+        [650,292],
+        [802,324],
+        [851,393],
+        [803,433],
+        [803,492],
+        [826,516],
+        [854,539],
+        [874,579],
+        [861,614],
+        [814,625],
+        [785,640],
+        [650,640],
+        [606,624],
+        [557,612],
+        [551,568],
+        [578,530],
+        [625,507],
+        [625,445],
+        [585,414]
+      ]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "village-well",
+      "label": "Village drinking-water well",
+      "x": 713,
+      "y": 594,
+      "radius": 196,
+      "interactionText": "The bucket brings up clear, cool water. Worn stones show where generations of villagers have gathered around the well."
+    },
+    {
+      "id": "wellside-bench",
+      "label": "Wellside bench",
+      "x": 192,
+      "y": 365,
+      "radius": 142,
+      "interactionText": "A small wooden bench offers a quiet place to rest beside the village green."
+    }
+  ],
+  "portals": [],
+  "npcs": []
+}

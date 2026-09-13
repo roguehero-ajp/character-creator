@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 2,
+  "id": "tookskoot-elder-broo-house",
+  "title": "Tookskoot - Elder Broo's House",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/tookskoot/elder-broo-house/background/tookskoot-elder-broo-house-v1.webp",
+    "alt": "Elder Broo's warm round-door halfling house above an enclosed garden forecourt with one south road to the market"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "footRadiusX": 10,
+    "footRadiusY": 6,
+    "slideAngles": [10,20,30,40,50,60,70,80],
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 0,
+        "scale": 0.36
+      },
+      {
+        "y": 280,
+        "scale": 0.46
+      },
+      {
+        "y": 500,
+        "scale": 0.66
+      },
+      {
+        "y": 760,
+        "scale": 0.86
+      },
+      {
+        "y": 1086,
+        "scale": 1
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 725,
+      "y": 650,
+      "facing": "north"
+    },
+    "from-south": {
+      "x": 710,
+      "y": 960,
+      "facing": "north"
+    }
+  },
+  "walkable": [
+    {
+      "id": "enclosed-forecourt-and-south-road",
+      "points": [
+        [160,522],
+        [213,476],
+        [327,447],
+        [492,450],
+        [596,456],
+        [932,449],
+        [1000,453],
+        [1218,466],
+        [1290,517],
+        [1295,596],
+        [1260,676],
+        [1142,696],
+        [983,737],
+        [940,854],
+        [925,981],
+        [931,1086],
+        [466,1086],
+        [482,1000],
+        [461,879],
+        [470,800],
+        [448,752],
+        [350,718],
+        [215,681],
+        [163,622]
+      ]
+    },
+    {
+      "id": "elder-front-steps",
+      "points": [
+        [577,469],
+        [923,469],
+        [885,375],
+        [627,362],
+        [600,404]
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "west-porch-planter",
+      "points": [
+        [530,423],
+        [574,421],
+        [584,450],
+        [552,464],
+        [523,449]
+      ]
+    },
+    {
+      "id": "east-porch-planter",
+      "points": [
+        [928,411],
+        [973,412],
+        [989,439],
+        [975,458],
+        [935,458],
+        [921,439]
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "south-road",
+      "label": "South road to the market",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "tookskoot-market",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-road"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [
+        [424,1018],
+        [970,1018],
+        [970,1086],
+        [424,1086]
+      ]
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "west-porch-planter",
+      "depthY": 460,
+      "points": [
+        [527,390],
+        [561,377],
+        [584,411],
+        [584,450],
+        [552,464],
+        [523,449]
+      ]
+    },
+    {
+      "id": "east-porch-planter",
+      "depthY": 458,
+      "points": [
+        [923,381],
+        [954,368],
+        [980,386],
+        [989,439],
+        [975,458],
+        [935,458],
+        [921,439]
+      ]
+    },
+    {
+      "id": "south-garden-wall-west",
+      "depthY": 951,
+      "points": [
+        [0,732],
+        [189,744],
+        [348,760],
+        [437,808],
+        [453,863],
+        [456,943],
+        [399,987],
+        [269,995],
+        [0,899]
+      ]
+    },
+    {
+      "id": "south-garden-wall-east",
+      "depthY": 925,
+      "points": [
+        [986,762],
+        [1039,758],
+        [1100,789],
+        [1182,817],
+        [1259,813],
+        [1263,866],
+        [1046,942],
+        [979,920]
+      ]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "elder-broo-front-door",
+      "label": "Elder Broo's front door",
+      "x": 750,
+      "y": 365,
+      "radius": 110,
+      "interactionText": "Elder Broo's carved front door is closed. Warm light shines through the round windows."
+    },
+    {
+      "id": "elder-garden-bench",
+      "label": "Garden bench",
+      "x": 399,
+      "y": 405,
+      "radius": 112,
+      "interactionText": "A well-worn bench rests beneath the old tree, overlooking the quiet forecourt."
+    },
+    {
+      "id": "elder-firewood",
+      "label": "Stacked firewood",
+      "x": 1248,
+      "y": 396,
+      "radius": 100,
+      "interactionText": "A tidy stack of split logs waits beneath the eaves."
+    }
+  ],
+  "portals": [],
+  "npcs": []
+}

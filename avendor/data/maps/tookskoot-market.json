@@ -1,0 +1,322 @@
+{
+  "schemaVersion": 2,
+  "id": "tookskoot-market",
+  "title": "Tookskoot - Halfling Market",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/tookskoot/market/background/tookskoot-market-v1.webp",
+    "alt": "Halfling market stalls around a clear square with exactly three roads: west to the homes, north to Elder Broo and south to the well"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "footRadiusX": 10,
+    "footRadiusY": 6,
+    "slideAngles": [10,20,30,40,50,60,70,80],
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 0,
+        "scale": 0.36
+      },
+      {
+        "y": 280,
+        "scale": 0.46
+      },
+      {
+        "y": 500,
+        "scale": 0.66
+      },
+      {
+        "y": 760,
+        "scale": 0.86
+      },
+      {
+        "y": 1086,
+        "scale": 1
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 724,
+      "y": 580,
+      "facing": "north"
+    },
+    "from-west": {
+      "x": 125,
+      "y": 484,
+      "facing": "east"
+    },
+    "from-north": {
+      "x": 753,
+      "y": 138,
+      "facing": "south"
+    },
+    "from-south": {
+      "x": 703,
+      "y": 968,
+      "facing": "north"
+    }
+  },
+  "walkable": [
+    {
+      "id": "market-square-and-west-south-roads",
+      "points": [
+        [0,410],
+        [180,450],
+        [354,472],
+        [430,447],
+        [429,410],
+        [514,385],
+        [613,355],
+        [842,359],
+        [900,392],
+        [1020,421],
+        [1120,470],
+        [1260,511],
+        [1294,532],
+        [1103,584],
+        [1084,642],
+        [1071,713],
+        [1160,774],
+        [1122,824],
+        [1010,851],
+        [965,890],
+        [939,1018],
+        [930,1086],
+        [405,1086],
+        [447,1000],
+        [484,936],
+        [522,851],
+        [533,809],
+        [489,742],
+        [458,682],
+        [390,636],
+        [320,602],
+        [214,566],
+        [114,527],
+        [0,481]
+      ]
+    },
+    {
+      "id": "north-road",
+      "points": [
+        [650,381],
+        [659,290],
+        [690,163],
+        [708,0],
+        [792,0],
+        [813,152],
+        [802,228],
+        [821,310],
+        [850,381]
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "bread-stall-base",
+      "points": [
+        [195,399],
+        [387,392],
+        [413,429],
+        [366,461],
+        [231,445]
+      ]
+    },
+    {
+      "id": "pottery-stall-base",
+      "points": [
+        [848,329],
+        [1016,345],
+        [1035,383],
+        [970,409],
+        [859,370]
+      ]
+    },
+    {
+      "id": "textile-stall-base",
+      "points": [
+        [1070,413],
+        [1315,458],
+        [1327,504],
+        [1235,515],
+        [1090,468]
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "west-road",
+      "label": "West road to Little Homes",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "tookskoot-little-homes",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-road"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [
+        [0,390],
+        [70,410],
+        [70,544],
+        [0,525]
+      ]
+    },
+    {
+      "id": "north-road",
+      "label": "North road to Elder Broo's house",
+      "direction": "north",
+      "status": "active",
+      "target": {
+        "areaId": "tookskoot-elder-broo-house",
+        "spawnId": "from-south",
+        "returnTransitionId": "south-road"
+      },
+      "fallbackSpawn": "from-north",
+      "points": [
+        [680,0],
+        [835,0],
+        [835,72],
+        [680,72]
+      ]
+    },
+    {
+      "id": "south-road",
+      "label": "South road to the village well",
+      "direction": "south",
+      "status": "active",
+      "target": {
+        "areaId": "tookskoot-village-well",
+        "spawnId": "from-north",
+        "returnTransitionId": "north-road"
+      },
+      "fallbackSpawn": "from-south",
+      "points": [
+        [360,1018],
+        [980,1018],
+        [980,1086],
+        [360,1086]
+      ]
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "bread-stall-canopy",
+      "depthY": 450,
+      "points": [
+        [132,290],
+        [236,232],
+        [402,273],
+        [409,337],
+        [393,433],
+        [366,461],
+        [231,445],
+        [194,409],
+        [185,313],
+        [137,323]
+      ]
+    },
+    {
+      "id": "pottery-stall-canopy",
+      "depthY": 401,
+      "points": [
+        [831,218],
+        [983,178],
+        [1110,244],
+        [1111,293],
+        [1040,313],
+        [1035,383],
+        [970,409],
+        [859,370],
+        [855,259],
+        [833,262]
+      ]
+    },
+    {
+      "id": "cloth-stall-canopy",
+      "depthY": 506,
+      "points": [
+        [1067,275],
+        [1163,240],
+        [1374,281],
+        [1348,323],
+        [1330,505],
+        [1235,515],
+        [1090,468],
+        [1081,320]
+      ]
+    },
+    {
+      "id": "south-road-lantern",
+      "depthY": 1040,
+      "points": [
+        [991,799],
+        [1018,779],
+        [1038,785],
+        [1047,807],
+        [1043,1039],
+        [1002,1043],
+        [1004,860],
+        [946,852],
+        [939,830],
+        [960,822],
+        [994,826]
+      ]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "bread-stall",
+      "label": "Bread stall",
+      "x": 335,
+      "y": 430,
+      "radius": 120,
+      "interactionText": "Round loaves and flour-dusted rolls fill the baskets. Even the smallest loaf smells wonderful."
+    },
+    {
+      "id": "produce-stall",
+      "label": "Produce stall",
+      "x": 565,
+      "y": 363,
+      "radius": 112,
+      "interactionText": "Winter roots, squash and baskets of apples are arranged beneath the russet awning."
+    },
+    {
+      "id": "pottery-stall",
+      "label": "Pottery stall",
+      "x": 934,
+      "y": 373,
+      "radius": 118,
+      "interactionText": "Tiny cups stand beside sturdy jugs. The handles are rather small for your fingers."
+    },
+    {
+      "id": "textile-stall",
+      "label": "Textile stall",
+      "x": 1216,
+      "y": 477,
+      "radius": 135,
+      "interactionText": "Colourful cloth and folded blankets hang beneath the green awning."
+    },
+    {
+      "id": "preserves-stall",
+      "label": "Preserves stall",
+      "x": 1115,
+      "y": 720,
+      "radius": 135,
+      "interactionText": "Sealed jars catch the sunlight. Each batch has been carefully arranged by colour."
+    }
+  ],
+  "portals": [],
+  "npcs": []
+}

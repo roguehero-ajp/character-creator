@@ -248,13 +248,13 @@ function assertBriarwellRegistry(engine, MapGeometry) {
   const topology = engine.auditTopology(registry, maps);
 
   assert(registryData.schemaVersion === 2, 'Briarwell must use the route-graph registry schema.');
-  assert(registryData.version === '0.33.1', 'The public Library Quarter road correction requires registry version 0.33.1.');
-  assert(registryData.areas.length === 113, "Briarwell must register the town, sewers, support spaces, forest routes, Ogre's Clearing and cave, lake islands, Northfield, Misty Forest, river areas, mountains, Redluk, Dwarven Cave, farms, Witchwood and ancient-maple screens.");
-  assert(registryData.connections.length === 128, 'Briarwell must preserve all 128 approved internal connections.');
-  assert(registryData.cityExits.length === 1, 'Only the blocked road beyond the broken bridge should remain an unresolved city exit.');
+  assert(registryData.version === '0.34.0', 'The five Tookskoot screens require registry version 0.34.0.');
+  assert(registryData.areas.length === 118, "Briarwell must register the town, sewers, support spaces, forest routes, Ogre's Clearing and cave, lake islands, Northfield, Misty Forest, river areas, mountains, Redluk, Dwarven Cave, farms, Witchwood, ancient-maple and Tookskoot screens.");
+  assert(registryData.connections.length === 132, 'The 128 existing connections and four Tookskoot village roads must remain registered.');
+  assert(registryData.cityExits.length === 2, 'The broken bridge and the unspecified western Tookskoot road remain unresolved world boundaries.');
   assert(
-    Object.keys(maps).length === 113,
-    "Briarwell must load every town, sewer, support-interior, forest, farm, Ogre's Clearing and cave, lake-island, Northfield, Misty Forest, river, mountain, Redluk, Dwarven Cave and Witchwood map."
+    Object.keys(maps).length === 118,
+    "Briarwell must load every town, sewer, support-interior, forest, farm, Ogre's Clearing and cave, lake-island, Northfield, Misty Forest, river, mountain, Redluk, Dwarven Cave, Witchwood and Tookskoot map."
   );
   assert(topology.errors.length === 0, topology.errors.join('\n'));
   const unavailableTransitionCount = Object.values(maps)
@@ -349,7 +349,7 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     counts[connection.kind] = (counts[connection.kind] || 0) + 1;
     return counts;
   }, {});
-  assert(kindCounts.road === 53, "Briarwell must preserve all established town, forest, Ogre's Clearing, Witchwood and farm-road connections, including both Library Quarter roads.");
+  assert(kindCounts.road === 57, "Briarwell must preserve all established town, forest, Ogre's Clearing, Witchwood and farm-road connections, including both Library Quarter roads and the four Tookskoot roads.");
   assert(kindCounts.trail === 24, 'The Northfield, Misty Forest, Swimmable, mountain and island walking routes must remain trails rather than roads.');
   assert(kindCounts['cave-passage'] === 20, 'The Dwarven Cave must preserve all 20 public passages.');
   assert(kindCounts['river-escape'] === 1, 'Waterfall must retain exactly one directed river escape into Swimmable.');
@@ -414,13 +414,14 @@ function assertBriarwellRegistry(engine, MapGeometry) {
     "Ms. Blight's Orphanage must be reachable from Town Center using public roads."
   );
   assert(
-    allReachable.size === registryData.areas.length - 5
+    allReachable.size === registryData.areas.length - 10
       && !allReachable.has('briarwell-waterfall')
+      && !registryData.areas.filter((area) => area.id.startsWith('tookskoot-')).some((area) => allReachable.has(area.id))
       && !allReachable.has('briarwell-haunted-island-landing')
       && !allReachable.has('briarwell-haunted-island-house')
       && !allReachable.has('briarwell-little-island')
       && !allReachable.has('briarwell-little-island-treasure'),
-    'Hidden routes must complete the town graph except for the one-way Waterfall arrival and the four plot-gated lake-island maps.'
+    'Hidden routes must complete the town graph except for the one-way Waterfall arrival, the four plot-gated lake-island maps, and Tookskoot whose western world endpoint is unspecified.'
   );
 
   const bridgeExit = registry.getCityExitForTransition('briarwell-broken-bridge', 'east-road');

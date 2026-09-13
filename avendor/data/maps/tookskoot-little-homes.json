@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 2,
+  "id": "tookskoot-little-homes",
+  "title": "Tookskoot - Little Homes",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/tookskoot/little-homes/background/tookskoot-little-homes-v1.webp",
+    "alt": "Cosy halfling cottages with round coloured doors and enclosed gardens beside one broad east-west village road"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "footRadiusX": 10,
+    "footRadiusY": 6,
+    "slideAngles": [10,20,30,40,50,60,70,80],
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 0,
+        "scale": 0.36
+      },
+      {
+        "y": 280,
+        "scale": 0.46
+      },
+      {
+        "y": 500,
+        "scale": 0.66
+      },
+      {
+        "y": 760,
+        "scale": 0.86
+      },
+      {
+        "y": 1086,
+        "scale": 1
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 724,
+      "y": 650,
+      "facing": "east"
+    },
+    "from-west": {
+      "x": 125,
+      "y": 505,
+      "facing": "east"
+    },
+    "from-east": {
+      "x": 1310,
+      "y": 548,
+      "facing": "west"
+    }
+  },
+  "walkable": [
+    {
+      "id": "east-west-village-road",
+      "points": [
+        [0,440],
+        [202,490],
+        [319,516],
+        [447,526],
+        [595,536],
+        [751,545],
+        [921,535],
+        [1100,515],
+        [1240,475],
+        [1320,483],
+        [1448,485],
+        [1448,579],
+        [1330,615],
+        [1203,651],
+        [1097,690],
+        [960,742],
+        [816,763],
+        [652,762],
+        [490,703],
+        [318,657],
+        [192,602],
+        [0,528]
+      ]
+    },
+    {
+      "id": "ochre-door-steps",
+      "points": [
+        [340,426],
+        [433,426],
+        [453,532],
+        [326,532]
+      ]
+    },
+    {
+      "id": "green-door-steps",
+      "points": [
+        [867,399],
+        [935,399],
+        [980,498],
+        [945,551],
+        [869,552],
+        [880,479]
+      ]
+    },
+    {
+      "id": "blue-door-steps",
+      "points": [
+        [1260,420],
+        [1360,426],
+        [1370,506],
+        [1235,510]
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "central-garden-wall",
+      "points": [
+        [617,477],
+        [865,478],
+        [868,521],
+        [620,528]
+      ]
+    },
+    {
+      "id": "east-garden-wall",
+      "points": [
+        [988,451],
+        [1160,426],
+        [1173,483],
+        [999,518]
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "west-road",
+      "label": "West road to the village docks",
+      "direction": "west",
+      "status": "active",
+      "target": {
+        "areaId": "tookskoot-docks",
+        "spawnId": "from-east",
+        "returnTransitionId": "east-road"
+      },
+      "fallbackSpawn": "from-west",
+      "points": [
+        [0,430],
+        [72,447],
+        [72,559],
+        [0,541]
+      ]
+    },
+    {
+      "id": "east-road",
+      "label": "East road to the market",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "tookskoot-market",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-road"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [
+        [1380,452],
+        [1448,452],
+        [1448,624],
+        [1380,624]
+      ]
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "west-foreground-fence",
+      "depthY": 655,
+      "points": [
+        [0,538],
+        [84,542],
+        [107,579],
+        [232,609],
+        [329,649],
+        [341,680],
+        [191,634],
+        [0,582]
+      ]
+    },
+    {
+      "id": "east-foreground-fence",
+      "depthY": 685,
+      "points": [
+        [1448,564],
+        [1380,568],
+        [1349,611],
+        [1208,645],
+        [1107,678],
+        [1101,718],
+        [1244,680],
+        [1448,626]
+      ]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "ochre-door-home",
+      "label": "Ochre-door cottage",
+      "x": 385,
+      "y": 422,
+      "radius": 85,
+      "interactionText": "The small round door has been freshly painted. A pair of muddy little boots sits beside the step."
+    },
+    {
+      "id": "green-door-home",
+      "label": "Green-door cottage",
+      "x": 883,
+      "y": 394,
+      "radius": 95,
+      "interactionText": "A warm light falls across the doorstep. The scent of fresh bread drifts from somewhere inside."
+    },
+    {
+      "id": "blue-door-home",
+      "label": "Blue-door cottage",
+      "x": 1321,
+      "y": 418,
+      "radius": 85,
+      "interactionText": "A blue round door sits beneath a low, mossy roof. You would need to duck to step through."
+    },
+    {
+      "id": "little-home-gardens",
+      "label": "Enclosed cottage gardens",
+      "x": 727,
+      "y": 791,
+      "radius": 115,
+      "interactionText": "Low walls shelter the tidy gardens. The main road runs west to the docks and east to the market."
+    }
+  ],
+  "portals": [],
+  "npcs": []
+}
