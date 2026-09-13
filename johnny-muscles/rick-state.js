@@ -8,6 +8,8 @@
     munroeBeaten: 'johnnyMuscles.munroeBeaten',
     shaunBeaten: 'johnnyMuscles.shaunBeaten',
     carlBeaten: 'johnnyMuscles.carlBeaten',
+    theresaBeaten: 'johnnyMuscles.theresaBeaten',
+    dinaBeaten: 'johnnyMuscles.dinaBeaten',
     rickUnlocked: 'johnnyMuscles.rickUnlocked',
     rickIntroSeen: 'johnnyMuscles.rickIntroSeen',
     selectedCharacter: 'johnnyMuscles.selectedCharacter'
@@ -62,7 +64,7 @@
   }
 
   const versionNote = document.querySelector('.version-note');
-  if (versionNote) versionNote.textContent = 'Prototype 0.15.0 · World 6: The Infested Zone';
+  if (versionNote) versionNote.textContent = 'Prototype 0.16.0 · World 7: The Mothership';
 
   let deployButton = null;
   if (selectorFooter && selectButton && !document.getElementById('character-deploy-button')) {
@@ -97,19 +99,23 @@
     write(KEYS.selectedCharacter, character);
     updateHomeStatus();
 
-    const destination = read(KEYS.carlBeaten) === 'true'
-      ? 'infested1.html?build=0.15.0'
-      : read(KEYS.shaunBeaten) === 'true'
-        ? 'badlands1.html?build=0.14.0'
-        : read(KEYS.munroeBeaten) === 'true'
-          ? 'mountain1.html?build=0.14.0'
-          : read(KEYS.lynnBeaten) === 'true'
-            ? 'hill1.html?build=0.14.0'
-            : bobBeatenAsJohnny
-              ? 'suburb1.html?build=0.14.0'
-              : read(KEYS.city1Beaten) === 'true'
-                ? 'city2.html?build=0.14.0'
-                : 'city1.html?build=0.14.0';
+    const destination = read(KEYS.dinaBeaten) === 'true'
+      ? 'boss7.html?build=0.16.0'
+      : read(KEYS.theresaBeaten) === 'true'
+        ? 'mothership1.html?build=0.16.0'
+        : read(KEYS.carlBeaten) === 'true'
+          ? 'infested1.html?build=0.15.0'
+          : read(KEYS.shaunBeaten) === 'true'
+            ? 'badlands1.html?build=0.14.0'
+            : read(KEYS.munroeBeaten) === 'true'
+              ? 'mountain1.html?build=0.14.0'
+              : read(KEYS.lynnBeaten) === 'true'
+                ? 'hill1.html?build=0.14.0'
+                : bobBeatenAsJohnny
+                  ? 'suburb1.html?build=0.14.0'
+                  : read(KEYS.city1Beaten) === 'true'
+                    ? 'city2.html?build=0.14.0'
+                    : 'city1.html?build=0.14.0';
     window.location.href = destination;
   }
 
