@@ -4,6 +4,7 @@
   const KEYS = {
     city1Beaten: 'johnnyMuscles.city1Beaten',
     bobBeatenAsJohnny: 'johnnyMuscles.bobBeatenAsJohnny',
+    lynnBeaten: 'johnnyMuscles.lynnBeaten',
     rickUnlocked: 'johnnyMuscles.rickUnlocked',
     rickIntroSeen: 'johnnyMuscles.rickIntroSeen',
     selectedCharacter: 'johnnyMuscles.selectedCharacter'
@@ -45,7 +46,7 @@
     rickSlide.setAttribute('aria-label', 'Rick Rampage, unlocked and playable');
     rickSlide.innerHTML = `
       <div class="rick-select-card">
-        <img class="rick-select-art" src="assets/rick-unlock-page-1.webp?rev=0.11.11" alt="Rick Rampage casually juggles cars, then throws them at a giant alien cat while shouting, Get outta here, you gross alien cats!" />
+        <img class="rick-select-art" src="assets/rick-unlock-page-1.webp?rev=0.12.0" alt="Rick Rampage casually juggles cars, then throws them at a giant alien cat while shouting, Get outta here, you gross alien cats!" />
         <div class="rick-select-caption">
           <strong>Unlocked · Johnny Beat Bob</strong>
           <span>“Get outta here, you gross alien cats!”</span>
@@ -104,11 +105,13 @@
     write(KEYS.selectedCharacter, character);
     updateHomeStatus();
 
-    const destination = bobBeatenAsJohnny
-      ? 'suburb1.html?build=0.11.11'
-      : read(KEYS.city1Beaten) === 'true'
-        ? 'city2.html?build=0.11.11'
-        : 'city1.html?build=0.11.11';
+    const destination = read(KEYS.lynnBeaten) === 'true'
+      ? 'hill1.html?build=0.12.0'
+      : bobBeatenAsJohnny
+        ? 'suburb1.html?build=0.12.0'
+        : read(KEYS.city1Beaten) === 'true'
+          ? 'city2.html?build=0.12.0'
+          : 'city1.html?build=0.12.0';
     window.location.href = destination;
   }
 
@@ -145,7 +148,7 @@
   'use strict';
   if (document.querySelector('script[data-creator-code-loader]')) return;
   const script = document.createElement('script');
-  script.src = 'creator-code.js?rev=0.11.11';
+  script.src = 'creator-code.js?rev=0.12.0';
   script.defer = true;
   script.dataset.creatorCodeLoader = 'true';
   document.head.appendChild(script);
