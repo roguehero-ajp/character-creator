@@ -22,6 +22,15 @@
     })
   });
 
+  // Tookskoot uses the existing CSS particles and area cleanup; no extra observer or animation loop.
+  const TOOKSKOOT_LIGHTS = Object.freeze({
+    'tookskoot-docks': [[170,236,45],[579,267,46],[783,278,54],[1136,272,56],[1382,284,58],[950,595,54]],
+    'tookskoot-little-homes': [[99,127,48],[455,124,38],[272,356,56],[737,332,58],[1252,337,54],[229,875,74]],
+    'tookskoot-market': [[251,211,48],[956,44,30],[1190,163,48],[1388,182,54],[213,571,62],[972,899,66]],
+    'tookskoot-elder-broo-house': [[750,184,54],[463,256,62],[1119,280,66],[1282,649,68]],
+    'tookskoot-village-well': [[279,259,48],[462,222,46],[993,210,56],[1171,313,48]]
+  });
+
   function ensureStyles() {
     if (document.getElementById(STYLE_ID)) return;
     const style = document.createElement('style');
@@ -512,6 +521,24 @@
     stage.insertBefore(layer, stage.querySelector('.map-debug-layer'));
   }
 
+  function mountTookskoot(layer, areaId) {
+    TOOKSKOOT_LIGHTS[areaId].forEach(([x, y, size], index) => {
+      addParticle(layer, 'dock-lantern-glow', x, y, size, size, {
+        '--light-duration': `${4.6 + (index % 3) * 0.7}s`,
+        '--light-delay': `${-index * 0.8}s`
+      });
+    });
+    if (areaId !== 'tookskoot-docks') return;
+    // These water windows end below the pier and boat hulls; shimmer never crosses the road or deck.
+    addWaterWindow(layer, 0, 89, 100, 11,
+      'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', '12.4s', '-3.1s');
+    addWaterWindow(layer, 80, 76, 20, 13,
+      'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', '10.7s', '-5.4s');
+    addParticle(layer, 'dock-water-ripple', 1010, 934, 174, 46, {
+      '--ripple-duration': '6.2s', '--ripple-delay': '-2.2s'
+    });
+  }
+
   function mountForArea(stage, areaId) {
     ensureStyles();
     stage.querySelectorAll('.environment-animation-layer, .boundary-overlay-layer, .dock-boat-window').forEach((element) => element.remove());
@@ -525,6 +552,12 @@
     if (areaId === 'briarwell-docks') {
       const layer = createEnvironmentLayer(stage, areaId);
       mountDocks(stage, layer);
+      return layer;
+    }
+
+    if (Object.prototype.hasOwnProperty.call(TOOKSKOOT_LIGHTS, areaId)) {
+      const layer = createEnvironmentLayer(stage, areaId);
+      mountTookskoot(layer, areaId);
       return layer;
     }
 

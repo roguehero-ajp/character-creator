@@ -86,7 +86,7 @@ const maps = new Map(newAreaIds.map((areaId) => [areaId, loadMap(areaId)]));
 const { AreaRegistry, auditTopology, MapGeometry } = loadEngines();
 const registry = new AreaRegistry(registryData);
 
-assert(registryData.version === '0.33.1', 'The public Library Quarter road correction requires registry version 0.33.1.');
+assert(registryData.version === '0.34.0', 'The five Tookskoot screens require registry version 0.34.0.');
 newAreaIds.forEach((areaId) => {
   const area = areas.get(areaId);
   const map = maps.get(areaId);

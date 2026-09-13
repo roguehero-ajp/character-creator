@@ -8,7 +8,7 @@ keeps Jay's numbered layout understandable during art and map production.
 
 | State | Areas |
 |---|---|
-| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F22; the Ogre's Clearing and secret Ogre Cave; Haunted Island landing and house exterior; Little Island landing and buried-treasure clearing; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Old River Bridge; Northfield; Misty Forest MF1–MF3; Mountain M1–M15, Redluk, Rock Ledge Pass, the Dwarven Cave forecourt, C1–C16, secret armoury, goblin battle chamber and cliffside overlook; Swimmable; Waterfall; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
+| Playable | All numbered surface Areas 1–12; western junction; Forest F1–F22; the Ogre's Clearing and secret Ogre Cave; Haunted Island landing and house exterior; Little Island landing and buried-treasure clearing; Tookskoot Village Docks, Little Homes, Halfling Market, Elder Broo's House exterior and Village Well; Donson's Farm; Bayard's Ranch; Allwood's Gardens; Old River Bridge; Northfield; Misty Forest MF1–MF3; Mountain M1–M15, Redluk, Rock Ledge Pass, the Dwarven Cave forecourt, C1–C16, secret armoury, goblin battle chamber and cliffside overlook; Swimmable; Waterfall; Witchwood and ancient maple; Sewer Areas 1–15 and the ancient dwarven chamber; Tavern; General Store |
 | Planned | Lake-ferry story unlock; haunted-house interior; Little Island buried-cache reward; final M15 boss encounter; final Redluk orc sprites and expanded in-game movie; final goblin battle sprites and combat; swimming animation and deep-water movement; Ogre boss sprite and combat; combat resolution for the Area 15 kobolds; inventory handoff for Ogre Cave and dwarven treasure items; open-window traversal |
 
 The complete Briarwell surface and sewer network are now playable. The surface contains the northern circuit
@@ -108,8 +108,40 @@ Its hidden window passage and sewer cave provide additional routes.
 | `briarwell-little-island-treasure` | Cairn and disturbed-earth cache site | Little Island landing S; reward definition pending |
 
 The western road is now an active route to Forest F13, and the South Gate road is
-the active start of the F1 forest chain. Only the inaccessible road beyond the
-broken bridge toward Bushavic remains an unresolved world boundary.
+the active start of the F1 forest chain. The inaccessible road beyond the
+broken bridge toward Bushavic and Tookskoot's unspecified western approach remain
+unresolved world boundaries.
+
+## Tookskoot village
+
+The five approved overworld scenes are implemented at 1448 × 1086 with traced
+walkable ground, collision footprints, foreground occlusion and inspection text.
+The docks and homes have one continuous east–west road. The market branches north
+to Elder Broo and south to the well; no east exit is painted or registered there.
+
+| Stable ID | Scene | Village roads |
+|---|---|---|
+| `tookskoot-docks` | Waterfront homes, boats, cargo and a walkable pier | Little Homes E; western world approach unassigned |
+| `tookskoot-little-homes` | Small round-door cottages and enclosed gardens | Docks W; Market E |
+| `tookskoot-market` | Bread, produce, pottery, textiles and preserves stalls | Little Homes W; Elder Broo N; Well S |
+| `tookskoot-elder-broo-house` | Elder Broo's house exterior and enclosed forecourt | Market S only |
+| `tookskoot-village-well` | Clean drinking-water well with room to walk around every side | Market N only |
+
+Every internal road works in both directions. Arrival spawns sit inside the road,
+away from the exit triggers. Water, homes, enclosed gardens, stalls and the well's
+stone base remain blocked. The well roof hides the hero when walking behind it.
+Lantern glow follows the existing day/night system, and bounded harbour shimmer
+uses the existing environment lifecycle without adding timers or observers.
+
+The western road's adjoining world screen was not specified in the approved
+layout. It remains target-free, with a safe return and a clear travel message;
+no ferry, lake-island story lock or invented neighbouring map is attached.
+Use the development area selector or `walk-test.html?area=tookskoot-docks` to enter
+the village. Its five screens are mutually reachable from there.
+
+This completes the five requested exterior maps. House interiors, resident
+sprites, merchant transactions and Elder Broo's dialogue are separate future work.
+The final art prompts and asset paths are in `assets/maps/tookskoot/ART-NOTES.md`.
 
 ## Western farm road
 

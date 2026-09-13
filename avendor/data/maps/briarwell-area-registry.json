@@ -2,12 +2,154 @@
   "schemaVersion": 2,
   "id": "briarwell",
   "title": "Briarwell",
-  "version": "0.33.1",
+  "version": "0.34.0",
   "start": {
     "areaId": "briarwell-town-center",
     "spawnId": "default"
   },
   "areas": [
+    {
+      "id": "tookskoot-docks",
+      "areaNumber": null,
+      "title": "Tookskoot - Village Docks",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/tookskoot-docks.json",
+      "planPosition": {
+        "column": 5,
+        "row": 2
+      },
+      "landmarks": [
+        {
+          "id": "fish-sign",
+          "label": "Fish-emblem harbour sign"
+        },
+        {
+          "id": "moored-rowboat",
+          "label": "Moored rowboat"
+        },
+        {
+          "id": "harbour-cargo",
+          "label": "Dockside cargo"
+        },
+        {
+          "id": "waterfront-homes",
+          "label": "Waterfront homes"
+        }
+      ]
+    },
+    {
+      "id": "tookskoot-little-homes",
+      "areaNumber": null,
+      "title": "Tookskoot - Little Homes",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/tookskoot-little-homes.json",
+      "planPosition": {
+        "column": 6,
+        "row": 2
+      },
+      "landmarks": [
+        {
+          "id": "ochre-door-home",
+          "label": "Ochre-door cottage"
+        },
+        {
+          "id": "green-door-home",
+          "label": "Green-door cottage"
+        },
+        {
+          "id": "blue-door-home",
+          "label": "Blue-door cottage"
+        },
+        {
+          "id": "little-home-gardens",
+          "label": "Enclosed cottage gardens"
+        }
+      ]
+    },
+    {
+      "id": "tookskoot-market",
+      "areaNumber": null,
+      "title": "Tookskoot - Halfling Market",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/tookskoot-market.json",
+      "planPosition": {
+        "column": 7,
+        "row": 2
+      },
+      "landmarks": [
+        {
+          "id": "bread-stall",
+          "label": "Bread stall"
+        },
+        {
+          "id": "produce-stall",
+          "label": "Produce stall"
+        },
+        {
+          "id": "pottery-stall",
+          "label": "Pottery stall"
+        },
+        {
+          "id": "textile-stall",
+          "label": "Textile stall"
+        },
+        {
+          "id": "preserves-stall",
+          "label": "Preserves stall"
+        }
+      ]
+    },
+    {
+      "id": "tookskoot-elder-broo-house",
+      "areaNumber": null,
+      "title": "Tookskoot - Elder Broo's House",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/tookskoot-elder-broo-house.json",
+      "planPosition": {
+        "column": 7,
+        "row": 1
+      },
+      "landmarks": [
+        {
+          "id": "elder-broo-front-door",
+          "label": "Elder Broo's front door"
+        },
+        {
+          "id": "elder-garden-bench",
+          "label": "Garden bench"
+        },
+        {
+          "id": "elder-firewood",
+          "label": "Stacked firewood"
+        }
+      ]
+    },
+    {
+      "id": "tookskoot-village-well",
+      "areaNumber": null,
+      "title": "Tookskoot - Village Well",
+      "kind": "outdoor",
+      "status": "playable",
+      "map": "data/maps/tookskoot-village-well.json",
+      "planPosition": {
+        "column": 7,
+        "row": 3
+      },
+      "landmarks": [
+        {
+          "id": "village-well",
+          "label": "Village drinking-water well"
+        },
+        {
+          "id": "wellside-bench",
+          "label": "Wellside bench"
+        }
+      ]
+    },
     {
       "id": "briarwell-town-center",
       "areaNumber": 1,
@@ -1299,6 +1441,78 @@
   ],
   "connections": [
     {
+      "id": "tookskoot-docks-homes",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        {
+          "areaId": "tookskoot-docks",
+          "transitionId": "east-road",
+          "direction": "east"
+        },
+        {
+          "areaId": "tookskoot-little-homes",
+          "transitionId": "west-road",
+          "direction": "west"
+        }
+      ]
+    },
+    {
+      "id": "tookskoot-homes-market",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        {
+          "areaId": "tookskoot-little-homes",
+          "transitionId": "east-road",
+          "direction": "east"
+        },
+        {
+          "areaId": "tookskoot-market",
+          "transitionId": "west-road",
+          "direction": "west"
+        }
+      ]
+    },
+    {
+      "id": "tookskoot-market-elder",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        {
+          "areaId": "tookskoot-market",
+          "transitionId": "north-road",
+          "direction": "north"
+        },
+        {
+          "areaId": "tookskoot-elder-broo-house",
+          "transitionId": "south-road",
+          "direction": "south"
+        }
+      ]
+    },
+    {
+      "id": "tookskoot-market-well",
+      "kind": "road",
+      "visibility": "public",
+      "status": "active",
+      "endpoints": [
+        {
+          "areaId": "tookskoot-market",
+          "transitionId": "south-road",
+          "direction": "south"
+        },
+        {
+          "areaId": "tookskoot-village-well",
+          "transitionId": "north-road",
+          "direction": "north"
+        }
+      ]
+    },
+    {
       "id": "town-center-northwest-workshops",
       "kind": "road",
       "visibility": "public",
@@ -2581,6 +2795,14 @@
     }
   ],
   "cityExits": [
+    {
+      "id": "tookskoot-west-world-road",
+      "areaId": "tookskoot-docks",
+      "transitionId": "west-road",
+      "direction": "west",
+      "status": "unassigned",
+      "target": null
+    },
     {
       "id": "broken-bridge-road-to-bushavic",
       "areaId": "briarwell-broken-bridge",

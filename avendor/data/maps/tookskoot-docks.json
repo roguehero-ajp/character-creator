@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 2,
+  "id": "tookskoot-docks",
+  "title": "Tookskoot - Village Docks",
+  "version": "0.1.0",
+  "referenceSize": {
+    "width": 1448,
+    "height": 1086
+  },
+  "art": {
+    "background": "assets/maps/tookskoot/docks/background/tookskoot-docks-v1.webp",
+    "alt": "Tookskoot waterfront with small round-door homes, an east-west road, stone dock stairs, moored boats and calm blue water"
+  },
+  "movement": {
+    "speedX": 275,
+    "speedY": 205,
+    "footRadius": 12,
+    "footRadiusX": 10,
+    "footRadiusY": 6,
+    "slideAngles": [10,20,30,40,50,60,70,80],
+    "maxStep": 6,
+    "resolver": "smooth-slide"
+  },
+  "perspective": {
+    "stops": [
+      {
+        "y": 0,
+        "scale": 0.36
+      },
+      {
+        "y": 280,
+        "scale": 0.46
+      },
+      {
+        "y": 500,
+        "scale": 0.66
+      },
+      {
+        "y": 760,
+        "scale": 0.86
+      },
+      {
+        "y": 1086,
+        "scale": 1
+      }
+    ]
+  },
+  "spawnPoints": {
+    "default": {
+      "x": 680,
+      "y": 445,
+      "facing": "east"
+    },
+    "from-west": {
+      "x": 125,
+      "y": 381,
+      "facing": "east"
+    },
+    "from-east": {
+      "x": 1310,
+      "y": 515,
+      "facing": "west"
+    },
+    "pier": {
+      "x": 705,
+      "y": 755,
+      "facing": "north"
+    }
+  },
+  "walkable": [
+    {
+      "id": "east-west-shore-road",
+      "points": [
+        [0,330],
+        [160,356],
+        [306,373],
+        [427,397],
+        [577,414],
+        [780,431],
+        [950,444],
+        [1138,457],
+        [1318,464],
+        [1448,466],
+        [1448,584],
+        [1244,544],
+        [1105,530],
+        [984,520],
+        [919,503],
+        [783,484],
+        [628,476],
+        [483,451],
+        [341,430],
+        [177,413],
+        [0,396]
+      ]
+    },
+    {
+      "id": "stone-dock-stairs",
+      "points": [
+        [790,478],
+        [904,491],
+        [885,548],
+        [875,601],
+        [856,672],
+        [677,678],
+        [718,619],
+        [741,576],
+        [753,533]
+      ]
+    },
+    {
+      "id": "timber-pier-deck",
+      "points": [
+        [677,645],
+        [860,647],
+        [898,696],
+        [864,770],
+        [826,818],
+        [502,818],
+        [569,755],
+        [607,726],
+        [621,680]
+      ]
+    }
+  ],
+  "collisions": [
+    {
+      "id": "stairs-barrel-base",
+      "points": [
+        [859,639],
+        [895,639],
+        [908,664],
+        [898,677],
+        [863,674],
+        [851,657]
+      ]
+    },
+    {
+      "id": "pier-cargo-base",
+      "points": [
+        [808,750],
+        [850,730],
+        [877,744],
+        [869,777],
+        [809,786]
+      ]
+    },
+    {
+      "id": "pier-front-post-base",
+      "points": [
+        [745,812],
+        [783,812],
+        [788,837],
+        [747,841]
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "west-road",
+      "label": "West road beyond Tookskoot",
+      "direction": "west",
+      "status": "unassigned",
+      "target": null,
+      "fallbackSpawn": "from-west",
+      "unavailableText": "The road beyond Tookskoot is not open for travel yet.",
+      "points": [
+        [0,316],
+        [64,330],
+        [64,425],
+        [0,410]
+      ]
+    },
+    {
+      "id": "east-road",
+      "label": "East road to Little Homes",
+      "direction": "east",
+      "status": "active",
+      "target": {
+        "areaId": "tookskoot-little-homes",
+        "spawnId": "from-west",
+        "returnTransitionId": "west-road"
+      },
+      "fallbackSpawn": "from-east",
+      "points": [
+        [1380,440],
+        [1448,454],
+        [1448,610],
+        [1380,593]
+      ]
+    }
+  ],
+  "depthOccluders": [
+    {
+      "id": "stairs-barrel",
+      "depthY": 677,
+      "points": [
+        [864,595],
+        [895,593],
+        [913,645],
+        [906,675],
+        [861,676],
+        [849,653]
+      ]
+    },
+    {
+      "id": "pier-cargo",
+      "depthY": 786,
+      "points": [
+        [808,724],
+        [850,709],
+        [878,729],
+        [875,777],
+        [809,786]
+      ]
+    },
+    {
+      "id": "pier-front-post",
+      "depthY": 840,
+      "points": [
+        [744,724],
+        [756,713],
+        [780,717],
+        [790,737],
+        [785,839],
+        [746,841]
+      ]
+    },
+    {
+      "id": "pier-east-mooring-post",
+      "depthY": 892,
+      "points": [
+        [888,689],
+        [899,679],
+        [926,682],
+        [939,703],
+        [931,891],
+        [886,893]
+      ]
+    }
+  ],
+  "interactables": [
+    {
+      "id": "fish-sign",
+      "label": "Fish-emblem harbour sign",
+      "x": 996,
+      "y": 554,
+      "radius": 155,
+      "interactionText": "A carved fish marks Tookskoot's harbour. The village road continues east past the little homes."
+    },
+    {
+      "id": "moored-rowboat",
+      "label": "Moored rowboat",
+      "x": 800,
+      "y": 800,
+      "radius": 100,
+      "interactionText": "The little rowboat rocks against its mooring, its oars tucked neatly beneath a seat."
+    },
+    {
+      "id": "harbour-cargo",
+      "label": "Dockside cargo",
+      "x": 839,
+      "y": 756,
+      "radius": 95,
+      "interactionText": "Nets, sealed crates and rope are stacked neatly beside the landing."
+    },
+    {
+      "id": "waterfront-homes",
+      "label": "Waterfront homes",
+      "x": 824,
+      "y": 391,
+      "radius": 88,
+      "interactionText": "Round doors and warm windows overlook the harbour. These are private homes."
+    }
+  ],
+  "portals": [],
+  "npcs": []
+}
