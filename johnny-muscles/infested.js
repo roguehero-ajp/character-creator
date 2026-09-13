@@ -8,7 +8,7 @@ const CFG={
 1:{title:'PURPLE HAZE',tag:'STOP THE MUTATION',mechanics:{spores:true},waves:[['alienling','sporeling','alienling','sporeling'],['sporeling','alienling','leaper','alienling','sporeling'],['sporeling','alienling','chonker','sporeling','leaper','alienling']]},
 2:{title:'THE HIVE MIND',tag:'BREAK THE LINK',mechanics:{controllers:true},waves:[['controller','alienling','alienling','sporeling'],['controller','leaper','alienling','controller','sporeling'],['controller','armored','alienling','controller','chonker','leaper']]},
 3:{title:'LIVING GROUND',tag:'USE THE TENDRILS',mechanics:{tendrils:true},waves:[['alienling','leaper','sporeling','alienling'],['armored','alienling','leaper','chonker','sporeling'],['leaper','armored','chonker','alienling','leaper','sporeling']]},
-4:{title:'MUTATION STATION',tag:'BREAK THE PODS',mechanics:{pods:true},waves:[['alienling','alienling','sporeling','alienling'],['alienling','controller','alienling','leaper','alienling'],['alienling','armored','alienling','chonker','controller','alienling']]},
+4:{title:'MUTATION STATION',tag:'BREAK THE PODS',mechanics:{pods:true,controllers:true},waves:[['alienling','alienling','sporeling','alienling'],['alienling','controller','alienling','leaper','alienling'],['alienling','armored','alienling','chonker','controller','alienling']]},
 5:{title:"NO MAN'S LAND",tag:'SURVIVE THE INFESTATION',mechanics:{spores:true,controllers:true,tendrils:true,pods:true},waves:[['controller','alienling','sporeling','leaper'],['armored','controller','alienling','chonker','sporeling'],['controller','armored','chonker','leaper','sporeling','alienling','controller']]}
 }[level];
 
