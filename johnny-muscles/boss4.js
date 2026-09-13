@@ -144,6 +144,7 @@
   }
 
   function choosePosition(exclude=shaun.pos){let n=exclude;while(n===exclude)n=Math.floor(Math.random()*POSITIONS.length);return n;}
+
   function moveShaunTo(index){shaun.pos=index;shaun.x=POSITIONS[index].x;shaun.y=POSITIONS[index].y;}
 
   function deploySmoke(){
@@ -159,6 +160,7 @@
   function finishMortar(){
     const m=mortars[mortars.length-1];
     if(m&&!m.interrupted){addImpact(m.x,GROUND-25,true,'#ffbb63');hurtHero('MORTAR STRIKE!');beep('mortar');}
+    if(m)mortars.pop();
     shaun.state='cover';shaun.exposed=false;shaun.timer=.9;shaun.tacticalLine='BEHIND COVER';shaun.mortarCooldown=3.4-phase*.35;
   }
 
@@ -180,6 +182,7 @@
       shaun.state='sliding';shaun.exposed=true;shaun.tacticalLine='TACTICAL PLAN LOST';shaun.slideVx=-150;shaun.slideVy=-90;showToast('THE AVALANCHE GOT SHAUN TOO!',850);damageShaun(1,'OWN AVALANCHE');
     }
     if(avalancheFront<HERO_X+50&&avalancheFront+430>HERO_X-50){
+      // The command-post debris creates a shelter pocket: phase transition is dramatic, not unavoidable damage.
       showToast(`${F.shortName} DUCKED BEHIND THE SUPPLY CRATE!`,700);
     }
     if(avalancheLife<=0||avalancheFront<-600){avalancheActive=false;shaun.tacticalLine=shaun.state==='sliding'?'TACTICAL PLAN LOST':'EXPOSED';}
@@ -187,19 +190,29 @@
 
   function updateShaun(dt){
     if(victory||gameOver)return;shaun.hitFlash=Math.max(0,shaun.hitFlash-dt);shaun.dodgeCooldown=Math.max(0,shaun.dodgeCooldown-dt);shaun.mortarCooldown-=dt;
+
     if(shaun.state==='sliding'){
       shaun.slideVy+=GRAVITY*.35*dt;shaun.x+=shaun.slideVx*dt;shaun.y+=shaun.slideVy*dt;shaun.slideVx*=Math.pow(.82,dt);
       if(shaun.y>=GROUND-43){shaun.y=GROUND-43;shaun.slideVy=0;shaun.slideVx=-70;if(shaun.x<690){moveShaunTo(0);shaun.state='exposed';shaun.timer=1.1;shaun.tacticalLine='EXPOSED';}}
       return;
     }
-    if(shaun.state==='smoke'){shaun.timer-=dt;if(shaun.timer<=0){shaun.smokeHidden=false;shaun.state='cover';shaun.timer=.6;shaun.tacticalLine='BEHIND COVER';}return;}
-    if(shaun.state==='mortar'){shaun.timer-=dt;if(shaun.timer<=0)finishMortar();return;}
-    if(shaun.state==='cover'){shaun.timer-=dt;if(shaun.timer<=0){shaun.state='exposed';shaun.exposed=true;shaun.timer=1.35-(phase-1)*.12;shaun.tacticalLine='EXPOSED';}return;}
+    if(shaun.state==='smoke'){
+      shaun.timer-=dt;if(shaun.timer<=0){shaun.smokeHidden=false;shaun.state='cover';shaun.timer=.6;shaun.tacticalLine='BEHIND COVER';}return;
+    }
+    if(shaun.state==='mortar'){
+      shaun.timer-=dt;if(shaun.timer<=0)finishMortar();return;
+    }
+    if(shaun.state==='cover'){
+      shaun.timer-=dt;if(shaun.timer<=0){shaun.state='exposed';shaun.exposed=true;shaun.timer=1.35-(phase-1)*.12;shaun.tacticalLine='EXPOSED';}return;
+    }
     if(shaun.state==='exposed'){
       if(tryPredictiveDodge())return;
       shaun.timer-=dt;
       if(shaun.mortarCooldown<=0){callMortar();return;}
-      if(shaun.timer<=0){if(Math.random()<.48&&phase>=2)deploySmoke();else{moveShaunTo(choosePosition());shaun.state='cover';shaun.exposed=false;shaun.timer=.8;shaun.tacticalLine='BEHIND COVER';}}
+      if(shaun.timer<=0){
+        if(Math.random()<.48&&phase>=2)deploySmoke();
+        else{moveShaunTo(choosePosition());shaun.state='cover';shaun.exposed=false;shaun.timer=.8;shaun.tacticalLine='BEHIND COVER';}
+      }
     }
   }
 
@@ -212,7 +225,7 @@
   }
 
   function interruptMortar(){
-    const m=mortars[mortars.length-1];if(m)m.interrupted=true;interrupts++;shaun.mortarCooldown=3.2;showToast('MORTAR CALL INTERRUPTED!',850);damageShaun(1,'INTERRUPT');shaun.state='cover';shaun.exposed=false;shaun.timer=.75;shaun.tacticalLine='BEHIND COVER';updateHud();
+    const m=mortars[mortars.length-1];if(m){m.interrupted=true;mortars.pop();}interrupts++;shaun.mortarCooldown=3.2;showToast('MORTAR CALL INTERRUPTED!',850);damageShaun(1,'INTERRUPT');shaun.state='cover';shaun.exposed=false;shaun.timer=.75;shaun.tacticalLine='BEHIND COVER';updateHud();
   }
 
   function hitShaun(){
