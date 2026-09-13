@@ -35,7 +35,27 @@
     for(let i=this.avalanches.length-1;i>=0;i--)if(this.avalanches[i].life<=0||this.avalanches[i].frontX<-650)this.avalanches.splice(i,1);
   };
 
-  P.updateDebris=function(dt){for(const d of this.debris){d.life-=dt;d.vy+=this.GRAVITY*dt;d.x+=d.vx*dt;d.y+=d.vy*dt;if(!d.hit&&Math.hypot(d.x-this.HERO_HIT_X,d.y-this.HERO_HIT_Y)<65){d.hit=true;d.life=0;this.hurtHero('CLIFF DEBRIS HIT THE HERO!');}if(d.y>=this.terrainY(d.x))d.life=0;}for(let i=this.debris.length-1;i>=0;i--)if(this.debris[i].life<=0)this.debris.splice(i,1);};
+  P.updateDebris=function(dt){
+    for(const d of this.debris){
+      const prevX=d.x,prevY=d.y;
+      d.life-=dt;d.vy+=this.GRAVITY*dt;d.x+=d.vx*dt;d.y+=d.vy*dt;
+      if(!d.hit&&this.tank.flying){
+        const nextTankVY=this.tank.vy+this.GRAVITY*this.F.gravityMultiplier*dt;
+        const nextTankX=this.tank.x+this.tank.vx*dt;
+        const nextTankY=this.tank.y+nextTankVY*dt;
+        const r0x=prevX-this.tank.x,r0y=prevY-this.tank.y,r1x=d.x-nextTankX,r1y=d.y-nextTankY;
+        const drx=r1x-r0x,dry=r1y-r0y,den=drx*drx+dry*dry;
+        const u=den>0?this.S.clamp(-(r0x*drx+r0y*dry)/den,0,1):0;
+        const closest=Math.hypot(r0x+drx*u,r0y+dry*u);
+        if(closest<58+this.F.collisionBonus){
+          d.hit=true;d.life=0;this.addImpact(d.x,d.y,true,'#e7d6b4');this.floaters.push({x:d.x,y:d.y-28,text:'DEBRIS SMASH!',life:.7});this.showToast('DEBRIS COUNTERED!',450);this.beep('impact');continue;
+        }
+      }
+      if(!d.hit&&Math.hypot(d.x-this.HERO_HIT_X,d.y-this.HERO_HIT_Y)<65){d.hit=true;d.life=0;this.hurtHero('CLIFF DEBRIS HIT THE HERO!');}
+      if(d.y>=this.terrainY(d.x))d.life=0;
+    }
+    for(let i=this.debris.length-1;i>=0;i--)if(this.debris[i].life<=0)this.debris.splice(i,1);
+  };
 
   P.updateMission=function(dt){
     if(this.gameOver||this.missionComplete)return;

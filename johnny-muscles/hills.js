@@ -468,11 +468,38 @@
 
   function updateDebris(dt) {
     for (const d of debris) {
+      const prevX = d.x;
+      const prevY = d.y;
       d.life -= dt;
       d.vy += GRAVITY * dt;
       d.x += d.vx * dt;
       d.y += d.vy * dt;
       d.angle += d.angular * dt;
+
+      if (!d.hit && tank.flying) {
+        const nextTankVY = tank.vy + GRAVITY * F.gravityMultiplier * dt;
+        const nextTankX = tank.x + tank.vx * dt;
+        const nextTankY = tank.y + nextTankVY * dt;
+        const r0x = prevX - tank.x;
+        const r0y = prevY - tank.y;
+        const r1x = d.x - nextTankX;
+        const r1y = d.y - nextTankY;
+        const drx = r1x - r0x;
+        const dry = r1y - r0y;
+        const den = drx * drx + dry * dry;
+        const u = den > 0 ? clamp(-(r0x * drx + r0y * dry) / den, 0, 1) : 0;
+        const closest = Math.hypot(r0x + drx * u, r0y + dry * u);
+        if (closest < 58 + F.collisionBonus) {
+          d.hit = true;
+          d.life = 0;
+          addImpact(d.x, d.y, true, '#e7d6b4');
+          floaters.push({ x: d.x, y: d.y - 28, text: 'DEBRIS SMASH!', life: .7 });
+          showToast('DEBRIS COUNTERED!', 450);
+          beep('impact');
+          continue;
+        }
+      }
+
       if (!d.hit && d.x <= HERO_HIT_X + 25 && d.x >= HERO_HIT_X - 55 && Math.abs(d.y - HERO_HIT_Y) < 85) {
         d.hit = true;
         d.life = 0;
