@@ -5,6 +5,7 @@
     city1Beaten: 'johnnyMuscles.city1Beaten',
     bobBeatenAsJohnny: 'johnnyMuscles.bobBeatenAsJohnny',
     lynnBeaten: 'johnnyMuscles.lynnBeaten',
+    munroeBeaten: 'johnnyMuscles.munroeBeaten',
     rickUnlocked: 'johnnyMuscles.rickUnlocked',
     rickIntroSeen: 'johnnyMuscles.rickIntroSeen',
     selectedCharacter: 'johnnyMuscles.selectedCharacter'
@@ -30,7 +31,6 @@
     try { localStorage.removeItem(key); } catch { /* Storage unavailable. */ }
   }
 
-  // Repair saves created under the old rule where City 1 unlocked Rick.
   const bobBeatenAsJohnny = read(KEYS.bobBeatenAsJohnny) === 'true';
   if (!bobBeatenAsJohnny) {
     remove(KEYS.rickUnlocked);
@@ -46,7 +46,7 @@
     rickSlide.setAttribute('aria-label', 'Rick Rampage, unlocked and playable');
     rickSlide.innerHTML = `
       <div class="rick-select-card">
-        <img class="rick-select-art" src="assets/rick-unlock-page-1.webp?rev=0.12.0" alt="Rick Rampage casually juggles cars, then throws them at a giant alien cat while shouting, Get outta here, you gross alien cats!" />
+        <img class="rick-select-art" src="assets/rick-unlock-page-1.webp?rev=0.13.0" alt="Rick Rampage casually juggles cars, then throws them at a giant alien cat while shouting, Get outta here, you gross alien cats!" />
         <div class="rick-select-caption">
           <strong>Unlocked · Johnny Beat Bob</strong>
           <span>“Get outta here, you gross alien cats!”</span>
@@ -105,13 +105,15 @@
     write(KEYS.selectedCharacter, character);
     updateHomeStatus();
 
-    const destination = read(KEYS.lynnBeaten) === 'true'
-      ? 'hill1.html?build=0.12.0'
-      : bobBeatenAsJohnny
-        ? 'suburb1.html?build=0.12.0'
-        : read(KEYS.city1Beaten) === 'true'
-          ? 'city2.html?build=0.12.0'
-          : 'city1.html?build=0.12.0';
+    const destination = read(KEYS.munroeBeaten) === 'true'
+      ? 'mountain1.html?build=0.13.0'
+      : read(KEYS.lynnBeaten) === 'true'
+        ? 'hill1.html?build=0.13.0'
+        : bobBeatenAsJohnny
+          ? 'suburb1.html?build=0.13.0'
+          : read(KEYS.city1Beaten) === 'true'
+            ? 'city2.html?build=0.13.0'
+            : 'city1.html?build=0.13.0';
     window.location.href = destination;
   }
 
@@ -148,7 +150,7 @@
   'use strict';
   if (document.querySelector('script[data-creator-code-loader]')) return;
   const script = document.createElement('script');
-  script.src = 'creator-code.js?rev=0.12.0';
+  script.src = 'creator-code.js?rev=0.13.0';
   script.defer = true;
   script.dataset.creatorCodeLoader = 'true';
   document.head.appendChild(script);
