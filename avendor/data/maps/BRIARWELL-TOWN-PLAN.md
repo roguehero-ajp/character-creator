@@ -136,8 +136,8 @@ uses the existing environment lifecycle without adding timers or observers.
 The western road's adjoining world screen was not specified in the approved
 layout. It remains target-free, with a safe return and a clear travel message;
 no ferry, lake-island story lock or invented neighbouring map is attached.
-Use the development area selector or `walk-test.html?area=tookskoot-docks` to enter
-the village. Its five screens are mutually reachable from there.
+Use `walk-test.html?area=tookskoot-docks` to enter the village directly.
+Its five screens are mutually reachable from there.
 
 This completes the five requested exterior maps. House interiors, resident
 sprites, merchant transactions and Elder Broo's dialogue are separate future work.
