@@ -175,7 +175,7 @@
     if (!aim || tank.flying) return;
     const dx = tank.x - aim.x, dy = tank.y - aim.y;
     const raw = Math.hypot(dx, dy), pull = Math.min(raw, 360), len = raw || 1;
-    const boost = steroidTimer > 0 ? 1.42 : 1;
+    const boost = (steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1);
     const vx = (dx / len) * pull * fighter.throwScale * boost;
     const vy = (dy / len) * pull * fighter.throwScale * boost;
     ctx.save(); ctx.setLineDash([11, 9]); ctx.strokeStyle = steroidTimer > 0 ? '#a8ff58' : '#ffcf33'; ctx.lineWidth = 4;

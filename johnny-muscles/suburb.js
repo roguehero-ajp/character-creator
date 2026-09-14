@@ -99,13 +99,13 @@
   let gameOver = false;
   let missionComplete = false;
   let score = 0;
-  let health = 5;
+  let health = window.JMPowerUps?.getStartingState().health ?? 5;
   let combo = 1;
   let bestCombo = 1;
   let comboTimer = 0;
   let elapsed = 0;
-  let steroidsLeft = 3;
-  let steroidTimer = 0;
+  let steroidsLeft = window.JMPowerUps?.getStartingState().steroids ?? 3;
+  let steroidTimer = window.JMPowerUps?.getStartingState().steroidTimer ?? 0;
   let muted = false;
   let audioCtx = null;
   let aim = null;
@@ -188,15 +188,15 @@
   }
 
   function resetGame() {
-    running = true; gameOver = false; missionComplete = false; score = 0; health = 5; combo = 1; bestCombo = 1; comboTimer = 0;
-    elapsed = 0; steroidsLeft = 3; steroidTimer = 0; aim = null; shake = 0; cameraX = 0; currentWave = -1; queue = [];
+    running = true; gameOver = false; missionComplete = false; score = 0; health = window.JMPowerUps?.getStartingState().health ?? 5; combo = 1; bestCombo = 1; comboTimer = 0;
+    elapsed = 0; steroidsLeft = window.JMPowerUps?.getStartingState().steroids ?? 3; steroidTimer = window.JMPowerUps?.getStartingState().steroidTimer ?? 0; aim = null; shake = 0; cameraX = 0; currentWave = -1; queue = [];
     spawned = 0; resolved = 0; spawnTimer = 0; intermission = 1.1; clearAnnounced = false; finishTimer = 0;
     flattened = 0; airHits = 0; shockwavesTaken = 0; breaches = 0;
     actors.length = 0; shockwaves.length = 0; particles.length = 0; floaters.length = 0;
     Object.assign(johnny, { armAngle: -.75, releaseTimer: 0, torsoLean: 0, squat: 0, catchPose: 0 });
     resetTank();
     steroidButton.disabled = false;
-    steroidCountEl.textContent = '3 demo doses';
+    steroidCountEl.textContent = window.JMPowerUps?.doseLabel(steroidsLeft) ?? '3 doses';
     updateHud();
     showToast(LEVEL.toast, 1250);
     if (levelNumber === 2) setTimeout(() => showToast('NEW THREAT: LEAPER CATS!', 1150), 1350);
@@ -303,7 +303,7 @@
       if (!s.hitJohnny && s.prevRadius < distance && s.radius >= distance) {
         s.hitJohnny = true;
         shockwavesTaken++;
-        health--;
+        health = window.JMPowerUps?.takeDamage(health) ?? (health - 1);
         combo = 1; comboTimer = 0;
         shake = 18;
         addImpact(JOHNNY_HIT_X, GROUND - 40, true, '#f6be67');
@@ -357,7 +357,7 @@
 
     if (a.x < DEFENSE_X) {
       breaches++;
-      health--;
+      health = window.JMPowerUps?.takeDamage(health) ?? (health - 1);
       combo = 1; comboTimer = 0;
       resolveActor(a, false);
       showToast('SUBURBAN BREACH!');
@@ -439,7 +439,7 @@
     const p = Math.hypot(dx, dy);
     if (p < 18) { aim = null; return; }
     const sc = Math.min(p, MAX_PULL) / p;
-    const boost = steroidTimer > 0 ? 1.42 : 1;
+    const boost = (steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1);
     const h = heldTankPosition();
     Object.assign(tank, { x: h.x, y: h.y, vx: dx * sc * 4.05 * boost, vy: dy * sc * 4.05 * boost, angular: Math.min(9, 2 + p / 55), flying: true, bounced: false, resetTimer: 0 });
     tank.hitIds.clear();
@@ -700,7 +700,7 @@
     if (!running || steroidsLeft <= 0) return;
     steroidsLeft--;
     steroidTimer = 12;
-    steroidCountEl.textContent = steroidsLeft === 1 ? '1 demo dose' : `${steroidsLeft} demo doses`;
+    steroidCountEl.textContent = steroidsLeft === 1 ? '1 dose' : `${steroidsLeft} doses`;
     steroidButton.disabled = steroidsLeft <= 0;
     showToast('UNREGULATED STRENGTH!');
     beep('power');

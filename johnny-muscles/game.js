@@ -53,12 +53,12 @@
   let gameOver = false;
   let missionComplete = false;
   let score = 0;
-  let health = 5;
+  let health = window.JMPowerUps?.getStartingState().health ?? 5;
   let combo = 1;
   let comboTimer = 0;
   let elapsed = 0;
-  let steroidsLeft = 3;
-  let steroidTimer = 0;
+  let steroidsLeft = window.JMPowerUps?.getStartingState().steroids ?? 3;
+  let steroidTimer = window.JMPowerUps?.getStartingState().steroidTimer ?? 0;
   let muted = false;
   let audioCtx = null;
   let aim = null;
@@ -108,12 +108,12 @@
 
   function resetGame() {
     score = 0;
-    health = 5;
+    health = window.JMPowerUps?.getStartingState().health ?? 5;
     combo = 1;
     comboTimer = 0;
     elapsed = 0;
-    steroidsLeft = 3;
-    steroidTimer = 0;
+    steroidsLeft = window.JMPowerUps?.getStartingState().steroids ?? 3;
+    steroidTimer = window.JMPowerUps?.getStartingState().steroidTimer ?? 0;
     catsFlattened = 0;
     tanksThrown = 0;
     bestCombo = 1;
@@ -147,7 +147,7 @@
     resetTank();
     updateHud();
     steroidButton.disabled = false;
-    steroidCountEl.textContent = '3 demo doses';
+    steroidCountEl.textContent = window.JMPowerUps?.doseLabel(steroidsLeft) ?? '3 doses';
     showToast('CITY 1: FIRST CONTACT');
   }
 
@@ -348,7 +348,7 @@
     }
 
     const scale = Math.min(pull, MAX_PULL) / pull;
-    const boost = steroidTimer > 0 ? 1.42 : 1;
+    const boost = (steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1);
     const held = getHeldTankPosition();
 
     tank.x = held.x;
@@ -505,7 +505,7 @@
       if (cat.x < DEFENSE_X) {
         breaches += 1;
         resolveCat(cat, false);
-        health -= 1;
+        health = window.JMPowerUps?.takeDamage(health) ?? (health - 1);
         combo = 1;
         comboTimer = 0;
         updateHud();
@@ -973,7 +973,7 @@
     const rawPull = Math.hypot(dx, dy);
     const pull = Math.min(rawPull, MAX_PULL);
     const len = rawPull || 1;
-    const boost = steroidTimer > 0 ? 1.42 : 1;
+    const boost = (steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1);
     const vx = (dx / len) * pull * 4.05 * boost;
     const vy = (dy / len) * pull * 4.05 * boost;
     const held = getHeldTankPosition();
@@ -1110,7 +1110,7 @@
     if (!running || steroidsLeft <= 0) return;
     steroidsLeft -= 1;
     steroidTimer = 12;
-    steroidCountEl.textContent = steroidsLeft === 1 ? '1 demo dose' : `${steroidsLeft} demo doses`;
+    steroidCountEl.textContent = steroidsLeft === 1 ? '1 dose' : `${steroidsLeft} doses`;
     steroidButton.disabled = steroidsLeft <= 0;
     showToast('UNREGULATED STRENGTH!');
     beep('power');

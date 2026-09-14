@@ -149,7 +149,7 @@
     const rawPull = Math.hypot(dx, dy);
     const pull = Math.min(rawPull, MAX_PULL);
     const len = rawPull || 1;
-    const boost = steroidTimer > 0 ? 1.42 : 1;
+    const boost = (steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1);
     const vx = (dx / len) * pull * 4.05 * boost;
     const vy = (dy / len) * pull * 4.05 * boost;
     ctx.save();

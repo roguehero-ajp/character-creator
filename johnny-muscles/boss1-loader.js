@@ -33,9 +33,9 @@
 
   const script = document.createElement('script');
   if (useRickRoutine) {
-    script.src = 'rick-boss1.js?rev=0.11.11';
+    script.src = 'rick-boss1.js?rev=0.17.0';
   } else {
-    script.src = 'enemy-runtime.js?rev=0.11.11';
+    script.src = 'enemy-runtime.js?rev=0.17.0';
     script.dataset.core = 'boss1.js';
   }
   document.body.appendChild(script);

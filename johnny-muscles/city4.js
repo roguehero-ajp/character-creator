@@ -38,8 +38,8 @@
 
   let lastTime = performance.now();
   let running=false, gameOver=false, missionComplete=false;
-  let score=0, health=5, combo=1, bestCombo=1, comboTimer=0, elapsed=0;
-  let steroidsLeft=3, steroidTimer=0, muted=false, audioCtx=null, aim=null, shake=0, cameraX=0, toastTimer=null;
+  let score=0, health = window.JMPowerUps?.getStartingState().health ?? 5, combo=1, bestCombo=1, comboTimer=0, elapsed=0;
+  let steroidsLeft = window.JMPowerUps?.getStartingState().steroids ?? 3, steroidTimer = window.JMPowerUps?.getStartingState().steroidTimer ?? 0, muted=false, audioCtx=null, aim=null, shake=0, cameraX=0, toastTimer=null;
   let currentWave=-1, queue=[], spawned=0, resolved=0, spawnTimer=0, intermission=1.1, clearAnnounced=false, finishTimer=0;
   let infectedFlattened=0, friendliesSafe=0, friendlyBonks=0, breaches=0;
   const actors=[], particles=[], floaters=[];
@@ -67,11 +67,11 @@
   }
   function resetTank(){ Object.assign(tank,{x:TANK_HOME.x,y:TANK_HOME.y,vx:0,vy:0,angle:0,angular:0,flying:false,resetTimer:0,bounced:false}); tank.hitIds.clear(); tank.hitBarricades.clear(); aim=null; johnny.releaseTimer=0; }
   function resetGame(){
-    score=0; health=5; combo=1; bestCombo=1; comboTimer=0; elapsed=0; steroidsLeft=3; steroidTimer=0; aim=null; shake=0; cameraX=0;
+    score=0; health = window.JMPowerUps?.getStartingState().health ?? 5; combo=1; bestCombo=1; comboTimer=0; elapsed=0; steroidsLeft = window.JMPowerUps?.getStartingState().steroids ?? 3; steroidTimer = window.JMPowerUps?.getStartingState().steroidTimer ?? 0; aim=null; shake=0; cameraX=0;
     currentWave=-1; queue=[]; spawned=0; resolved=0; spawnTimer=0; intermission=1.1; clearAnnounced=false; finishTimer=0;
     infectedFlattened=0; friendliesSafe=0; friendlyBonks=0; breaches=0; actors.length=0; particles.length=0; floaters.length=0;
     running=true; gameOver=false; missionComplete=false; Object.assign(johnny,{armAngle:-.75,releaseTimer:0,torsoLean:0,squat:0,catchPose:0}); resetTank();
-    steroidButton.disabled=false; steroidCountEl.textContent='3 demo doses'; updateHud(); showToast('CITY 4: EVACUATION ROUTE',1200);
+    steroidButton.disabled=false; steroidCountEl.textContent = window.JMPowerUps?.doseLabel(steroidsLeft) ?? '3 doses'; updateHud(); showToast('CITY 4: EVACUATION ROUTE',1200);
   }
   function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
   function startWave(){ currentWave++; const s=LEVEL.waves[currentWave]; queue=shuffle([...Array(s.infected).fill('infected'),...Array(s.friendly).fill('friendly')]); spawned=0;resolved=0;spawnTimer=.2;clearAnnounced=false;showToast(`WAVE ${currentWave+1} · KEEP THE ROUTE CLEAR`,1000);beep('wave');updateHud(); }
@@ -104,7 +104,7 @@
         else {a.x+=a.speed*dt; if(a.x>1880){friendliesSafe++;a.dead=true;resolveActor(a);showToast('EVAC CAT SAFE +100',500);score+=100;updateHud();}}
       }else{
         a.x-=a.speed*dt; a.y=GROUND-29*a.scale;
-        if(a.x<DEFENSE_X){breaches++;health--;combo=1;comboTimer=0;a.dead=true;resolveActor(a);showToast('DEFENSE BREACH!');beep('hurt');shake=12;updateHud();if(health<=0)endGame();}
+        if(a.x<DEFENSE_X){breaches++;health = window.JMPowerUps?.takeDamage(health) ?? (health - 1);combo=1;comboTimer=0;a.dead=true;resolveActor(a);showToast('DEFENSE BREACH!');beep('hurt');shake=12;updateHud();if(health<=0)endGame();}
       }
     }
   }
@@ -121,7 +121,7 @@
   function endGame(){running=false;gameOver=true;aim=null;finalScoreEl.textContent=`Score: ${score.toLocaleString()} · Friendly bonks: ${friendlyBonks}`;gameOverScreen.classList.add('visible');}
 
   function getHeldTankPosition(){return !aim||tank.flying?{x:tank.x,y:tank.y}:{x:aim.x,y:Math.min(aim.y,GROUND-40)};}
-  function throwTank(){if(!aim||tank.flying||!running)return;const dx=tank.x-aim.x,dy=tank.y-aim.y,p=Math.hypot(dx,dy);if(p<18){aim=null;return;}const sc=Math.min(p,MAX_PULL)/p,boost=steroidTimer>0?1.42:1,held=getHeldTankPosition();Object.assign(tank,{x:held.x,y:held.y,vx:dx*sc*4.05*boost,vy:dy*sc*4.05*boost,angular:Math.min(9,2+p/55),flying:true,bounced:false});tank.hitIds.clear();tank.hitBarricades.clear();aim=null;johnny.releaseTimer=.28;addImpact(142,GROUND-8,false);beep('throw');if(navigator.vibrate)navigator.vibrate(20);}
+  function throwTank(){if(!aim||tank.flying||!running)return;const dx=tank.x-aim.x,dy=tank.y-aim.y,p=Math.hypot(dx,dy);if(p<18){aim=null;return;}const sc=Math.min(p,MAX_PULL)/p,boost=(steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1),held=getHeldTankPosition();Object.assign(tank,{x:held.x,y:held.y,vx:dx*sc*4.05*boost,vy:dy*sc*4.05*boost,angular:Math.min(9,2+p/55),flying:true,bounced:false});tank.hitIds.clear();tank.hitBarricades.clear();aim=null;johnny.releaseTimer=.28;addImpact(142,GROUND-8,false);beep('throw');if(navigator.vibrate)navigator.vibrate(20);}
   function updateTank(dt){
     if(!tank.flying)return; const prevY=tank.y; tank.vy+=GRAVITY*dt;tank.x+=tank.vx*dt;tank.y+=tank.vy*dt;tank.angle+=tank.angular*dt; const impact=Math.hypot(tank.vx,tank.vy);
     for(let i=0;i<BARRICADES.length;i++){const b=BARRICADES[i];if(tank.hitBarricades.has(i))continue;if(tank.vy>0&&prevY<GROUND-b.h-18&&tank.y>=GROUND-b.h-18&&tank.x>b.x-b.w/2-35&&tank.x<b.x+b.w/2+35){tank.y=GROUND-b.h-18;tank.vy*=-.46;tank.vx*=.88;tank.hitBarricades.add(i);floaters.push({x:tank.x,y:tank.y-20,text:'BANK!',life:.65});beep('impact');}}
@@ -146,7 +146,7 @@
   canvas.addEventListener('pointerdown',e=>{if(!running||tank.flying||gameOver||missionComplete)return;const p=pointerToWorld(canvas,e,cameraX);if(Math.hypot(p.x-tank.x,p.y-tank.y)<105){aim=p;canvas.setPointerCapture?.(e.pointerId);}});
   canvas.addEventListener('pointermove',e=>{if(!aim||tank.flying)return;const p=pointerToWorld(canvas,e,cameraX),dx=p.x-tank.x,dy=p.y-tank.y,len=Math.hypot(dx,dy);aim=len>MAX_PULL?{x:tank.x+dx/len*MAX_PULL,y:tank.y+dy/len*MAX_PULL}:p;});
   canvas.addEventListener('pointerup',()=>throwTank()); canvas.addEventListener('pointercancel',()=>{aim=null;});
-  steroidButton.addEventListener('click',()=>{if(!running||steroidsLeft<=0)return;steroidsLeft--;steroidTimer=12;steroidCountEl.textContent=steroidsLeft===1?'1 demo dose':`${steroidsLeft} demo doses`;steroidButton.disabled=steroidsLeft<=0;showToast('UNREGULATED STRENGTH!');beep('power');});
+  steroidButton.addEventListener('click',()=>{if(!running||steroidsLeft<=0)return;steroidsLeft--;steroidTimer=12;steroidCountEl.textContent=steroidsLeft===1?'1 dose':`${steroidsLeft} doses`;steroidButton.disabled=steroidsLeft<=0;showToast('UNREGULATED STRENGTH!');beep('power');});
   muteButton.addEventListener('click',()=>{muted=!muted;muteButton.textContent=muted?'🔇':'🔊';});
   document.getElementById('start').addEventListener('click',()=>{titleScreen.classList.remove('visible');resetGame();beep('power');});
   document.getElementById('restart').addEventListener('click',()=>{gameOverScreen.classList.remove('visible');resetGame();});
