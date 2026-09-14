@@ -15,6 +15,7 @@
   const previous = document.getElementById('rick-prev');
   const next = document.getElementById('rick-next');
   const count = document.getElementById('rick-page-count');
+  const kicker = document.getElementById('rick-kicker');
   const transcriptToggle = document.getElementById('rick-transcript-toggle');
   const selectRick = document.getElementById('rick-select');
   const continueRegion = document.getElementById('rick-city2');
@@ -44,9 +45,12 @@
   }
 
   const unlockEligible = bobBeatenAsJohnny && read(KEYS.rickUnlocked) === 'true';
+  const firstUnlockViewing = unlockEligible && read(KEYS.rickIntroSeen) !== 'true';
+
+  if (kicker) kicker.textContent = firstUnlockViewing ? 'New Ally Unlocked' : 'World 1 Interlude';
 
   if (continueRegion) {
-    continueRegion.href = 'suburb1.html?build=0.11.11';
+    continueRegion.href = 'suburb1.html?build=0.16.5';
     continueRegion.textContent = 'Continue to the Suburbs';
     continueRegion.setAttribute('aria-label', 'Continue to the Suburbs');
   }
@@ -127,7 +131,7 @@
     else if (event.key === 'ArrowRight') { event.preventDefault(); showPage(pageIndex + 1); }
     else if (event.key === 'Home') { event.preventDefault(); showPage(0); }
     else if (event.key === 'End') { event.preventDefault(); showPage(pages.length - 1); }
-    else if (event.key === 'Escape') { window.location.href = 'index.html?build=0.11.11'; }
+    else if (event.key === 'Escape') { window.location.href = 'index.html?build=0.16.5'; }
   });
 
   showPage(0);
