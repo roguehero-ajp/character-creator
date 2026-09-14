@@ -1,0 +1,176 @@
+.jm-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.jm-powerups-launcher {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  margin: 10px 5px 5px;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 207, 51, .62);
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(180deg, rgba(79, 63, 17, .96), rgba(28, 24, 13, .96));
+  box-shadow: 0 5px 0 #6f5510, 0 9px 18px rgba(0, 0, 0, .35);
+  cursor: pointer;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", system-ui, sans-serif;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.jm-powerups-launcher:active { transform: translateY(3px); box-shadow: 0 2px 0 #6f5510, 0 5px 12px rgba(0, 0, 0, .32); }
+.jm-powerups-launcher:focus-visible,
+.jm-powerups-close:focus-visible,
+.jm-equip-button:focus-visible,
+.jm-acquire-row button:focus-visible,
+.jm-no-powerup:focus-visible,
+.jm-menu-powerups:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.jm-launcher-icon { font-size: 24px; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .45)); }
+.jm-powerups-launcher strong { display: block; color: #ffcf33; font-size: 17px; letter-spacing: .065em; }
+.jm-powerups-launcher small { display: block; max-width: 230px; margin-top: 1px; overflow: hidden; color: #d5d8e0; font: 700 10px/1.2 system-ui, sans-serif; text-overflow: ellipsis; white-space: nowrap; }
+.title-card.jm-has-powerups { max-height: calc(100dvh - 32px); overflow-y: auto; touch-action: pan-y; }
+.menu-shell { overflow-y: auto; }
+
+.jm-powerups-layer {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: none;
+  place-items: center;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  background: rgba(3, 5, 9, .84);
+  backdrop-filter: blur(8px);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  touch-action: pan-y;
+}
+
+.jm-powerups-layer.is-open { display: grid; }
+body.jm-powerups-ready,
+body.jm-powerups-open { touch-action: pan-y; }
+body.jm-powerups-open { overflow: hidden; }
+.jm-powerups-dialog {
+  width: min(980px, 96vw);
+  max-height: min(94dvh, 820px);
+  overflow: auto;
+  padding: clamp(18px, 3vw, 30px);
+  border: 1px solid rgba(255, 207, 51, .35);
+  border-radius: 22px;
+  color: #f7f7fb;
+  background: linear-gradient(180deg, rgba(35, 40, 54, .99), rgba(10, 12, 18, .99));
+  box-shadow: 0 32px 100px rgba(0, 0, 0, .72);
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+.jm-powerups-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+.jm-powerups-head p { margin: 0 0 4px; color: #ffcf33; font-size: 11px; font-weight: 900; letter-spacing: .2em; }
+.jm-powerups-head h2 { margin: 0; font: 900 clamp(30px, 5vw, 52px)/.95 Impact, Haettenschweiler, "Arial Narrow Bold", system-ui, sans-serif; letter-spacing: .035em; }
+.jm-powerups-close {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 255, 255, .08);
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 1;
+}
+.jm-powerups-rule { margin: 10px 0 18px; color: #bec4d2; font-size: 13px; font-weight: 700; }
+.jm-powerups-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.jm-powerup-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, .045);
+  transition: border-color .15s ease, transform .15s ease, background .15s ease;
+}
+.jm-powerup-card.is-selected { border-color: #ffcf33; background: rgba(255, 207, 51, .09); box-shadow: inset 0 0 0 1px rgba(255, 207, 51, .2); }
+.jm-powerup-title { display: flex; align-items: center; gap: 10px; }
+.jm-powerup-title > span { flex: 0 0 auto; font-size: 34px; filter: drop-shadow(0 3px 5px rgba(0, 0, 0, .45)); }
+.jm-powerup-title h3 { margin: 0; color: #fff; font: 900 19px/1 Impact, Haettenschweiler, "Arial Narrow Bold", system-ui, sans-serif; letter-spacing: .025em; }
+.jm-powerup-title strong { display: block; margin-top: 4px; color: #ffcf33; font-size: 11px; line-height: 1.15; }
+.jm-powerup-card > p { flex: 1 1 auto; margin: 12px 0; color: #c7ccd7; font-size: 12px; font-weight: 650; line-height: 1.42; }
+.jm-powerup-count { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; padding: 7px 9px; border-radius: 8px; background: rgba(0, 0, 0, .25); }
+.jm-powerup-count span { color: #aeb5c3; font-size: 9px; font-weight: 900; letter-spacing: .12em; }
+.jm-powerup-count b { color: #fff; font-size: 17px; }
+.jm-equip-button,
+.jm-acquire-row button,
+.jm-no-powerup {
+  border: 0;
+  border-radius: 9px;
+  cursor: pointer;
+  font-weight: 900;
+  -webkit-tap-highlight-color: transparent;
+}
+.jm-equip-button { min-height: 39px; color: #111; background: #ffcf33; }
+.jm-powerup-card.is-selected .jm-equip-button { color: #ffcf33; background: #38301b; box-shadow: inset 0 0 0 1px #ffcf33; }
+.jm-equip-button:disabled { color: #8e95a2; background: #30343d; cursor: default; }
+.jm-acquire-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 7px; }
+.jm-acquire-row button { min-height: 34px; padding: 5px; color: #edf0f6; background: #353b48; font-size: 9px; line-height: 1.15; }
+.jm-acquire-row button:disabled { opacity: .5; cursor: wait; }
+.jm-powerups-footer { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 14px; margin-top: 16px; }
+.jm-no-powerup { min-height: 40px; padding: 8px 14px; color: #e7eaf0; background: #323743; }
+.jm-no-powerup.is-selected { color: #111; background: #ffcf33; }
+#jm-powerups-status { min-height: 18px; margin: 0; color: #bec4d2; font-size: 12px; font-weight: 700; line-height: 1.35; }
+#jm-powerups-status.is-error { color: #ff817a; }
+
+.jm-active-powerup {
+  align-self: center;
+  max-width: min(360px, 38vw);
+  padding: 8px 11px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 207, 51, .52);
+  border-radius: 10px;
+  color: #ffdf72;
+  background: rgba(10, 12, 18, .86);
+  box-shadow: 0 7px 18px rgba(0, 0, 0, .28);
+  font: 800 11px/1.2 system-ui, sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 840px) {
+  .jm-powerups-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .jm-powerups-dialog { max-height: 96dvh; }
+}
+
+@media (max-width: 520px) {
+  .jm-powerups-layer { place-items: stretch; padding: 0; }
+  .jm-powerups-dialog { width: 100%; max-height: 100dvh; border-radius: 0; }
+  .jm-powerups-grid { grid-template-columns: 1fr; }
+  .jm-powerups-footer { grid-template-columns: 1fr; }
+  .jm-powerups-launcher { min-height: 43px; padding: 6px 10px; }
+  .jm-powerups-launcher strong { font-size: 15px; }
+  .jm-active-powerup { max-width: 36vw; font-size: 9px; }
+}
+
+@media (max-height: 560px) and (orientation: landscape) {
+  .jm-powerups-dialog { width: min(1060px, 98vw); max-height: 98dvh; padding: 14px; }
+  .jm-powerups-head h2 { font-size: 30px; }
+  .jm-powerups-rule { margin: 6px 0 10px; }
+  .jm-powerup-card { padding: 10px; }
+  .jm-powerup-title > span { font-size: 25px; }
+  .jm-powerup-title h3 { font-size: 16px; }
+  .jm-powerup-card > p { margin: 7px 0; font-size: 10px; }
+  .jm-powerups-footer { margin-top: 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jm-powerup-card { transition: none; }
+}

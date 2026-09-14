@@ -38,15 +38,15 @@
   let gameOver = false;
   let victory = false;
   let score = 0;
-  let health = 5;
+  let health = window.JMPowerUps?.getStartingState().health ?? 5;
   let bossHealth = BOSS_MAX_HP;
   let bossPhase = 1;
   let bossX = 1050;
   let bossDir = 1;
   let bossHitFlash = 0;
   let elapsed = 0;
-  let steroidsLeft = 3;
-  let steroidTimer = 0;
+  let steroidsLeft = window.JMPowerUps?.getStartingState().steroids ?? 3;
+  let steroidTimer = window.JMPowerUps?.getStartingState().steroidTimer ?? 0;
   let muted = false;
   let audioCtx = null;
   let aim = null;
@@ -145,15 +145,15 @@
     gameOver = false;
     victory = false;
     score = 0;
-    health = 5;
+    health = window.JMPowerUps?.getStartingState().health ?? 5;
     bossHealth = BOSS_MAX_HP;
     bossPhase = 1;
     bossX = 1050;
     bossDir = 1;
     bossHitFlash = 0;
     elapsed = 0;
-    steroidsLeft = 3;
-    steroidTimer = 0;
+    steroidsLeft = window.JMPowerUps?.getStartingState().steroids ?? 3;
+    steroidTimer = window.JMPowerUps?.getStartingState().steroidTimer ?? 0;
     aim = null;
     shake = 0;
     cameraX = 0;
@@ -172,7 +172,7 @@
     Object.assign(rick, { armAngle: -.75, releaseTimer: 0, torsoLean: 0, squat: 0, catchPose: 0 });
     resetCarsReady();
     steroidButton.disabled = false;
-    steroidCountEl.textContent = '3 demo doses';
+    steroidCountEl.textContent = window.JMPowerUps?.doseLabel(steroidsLeft) ?? '3 doses';
     updateHud();
     showToast('BOSS 1: SEARGENT BOB THE BOBCAT', 1400);
   }
@@ -197,7 +197,7 @@
     const p = Math.hypot(dx, dy);
     if (p < 18) { aim = null; return; }
     const sc = Math.min(p, MAX_PULL) / p;
-    const boost = steroidTimer > 0 ? 1.42 : 1;
+    const boost = (steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1);
     const h = getHeldCars();
     Object.assign(cars, {
       x: h.x, y: h.y, vx: dx * sc * CAR_THROW_SCALE * boost, vy: dy * sc * CAR_THROW_SCALE * boost,
@@ -273,7 +273,7 @@
   function hitByTank() {
     incoming.active = false;
     tankHitsTaken += 1;
-    health -= 1;
+    health = window.JMPowerUps?.takeDamage(health) ?? (health - 1);
     shake = 20;
     addImpact(175, GROUND - 90, true);
     showToast('TANKED! HIT THE NEXT ONE WITH THE CARS!', 1100);
@@ -527,7 +527,7 @@
     const raw = Math.hypot(dx, dy);
     const pull = Math.min(raw, MAX_PULL);
     const len = raw || 1;
-    const boost = steroidTimer > 0 ? 1.42 : 1;
+    const boost = (steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1);
     const vx = (dx / len) * pull * CAR_THROW_SCALE * boost;
     const vy = (dy / len) * pull * CAR_THROW_SCALE * boost;
     const held = getHeldCars();
@@ -688,7 +688,7 @@
     if (!running || steroidsLeft <= 0) return;
     steroidsLeft -= 1;
     steroidTimer = 12;
-    steroidCountEl.textContent = steroidsLeft === 1 ? '1 demo dose' : `${steroidsLeft} demo doses`;
+    steroidCountEl.textContent = steroidsLeft === 1 ? '1 dose' : `${steroidsLeft} doses`;
     steroidButton.disabled = steroidsLeft <= 0;
     showToast('UNREGULATED STRENGTH!');
     beep('power');

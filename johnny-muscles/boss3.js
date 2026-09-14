@@ -43,12 +43,12 @@
   let gameOver = false;
   let victory = false;
   let score = 0;
-  let health = 5;
+  let health = window.JMPowerUps?.getStartingState().health ?? 5;
   let bossHealth = BOSS_MAX_HP;
   let bossPhase = 1;
   let elapsed = 0;
-  let steroidsLeft = 3;
-  let steroidTimer = 0;
+  let steroidsLeft = window.JMPowerUps?.getStartingState().steroids ?? 3;
+  let steroidTimer = window.JMPowerUps?.getStartingState().steroidTimer ?? 0;
   let muted = false;
   let audioCtx = null;
   let aim = null;
@@ -153,8 +153,8 @@
   }
 
   function resetFight() {
-    running = true; gameOver = false; victory = false; score = 0; health = 5; bossHealth = BOSS_MAX_HP; bossPhase = 1;
-    elapsed = 0; steroidsLeft = 3; steroidTimer = 0; aim = null; shake = 0; cameraX = 0; bossHitFlash = 0;
+    running = true; gameOver = false; victory = false; score = 0; health = window.JMPowerUps?.getStartingState().health ?? 5; bossHealth = BOSS_MAX_HP; bossPhase = 1;
+    elapsed = 0; steroidsLeft = window.JMPowerUps?.getStartingState().steroids ?? 3; steroidTimer = window.JMPowerUps?.getStartingState().steroidTimer ?? 0; aim = null; shake = 0; cameraX = 0; bossHitFlash = 0;
     rides = 0; pounceHits = 0; directHits = 0; damageTaken = 0; attackCount = 0;
     particles.length = 0; floaters.length = 0;
     Object.assign(hero, { armAngle: -.75, releaseTimer: 0, torsoLean: 0, squat: 0, catchPose: 0 });
@@ -166,7 +166,7 @@
     });
     resetTank();
     steroidButton.disabled = false;
-    steroidCountEl.textContent = '3 demo doses';
+    steroidCountEl.textContent = window.JMPowerUps?.doseLabel(steroidsLeft) ?? '3 doses';
     updateHud();
     showToast('BOSS 3: MAJOR MUNROE THE MOUNTAIN LION', 1500);
     setTimeout(() => showToast(`WARNING: MUNROE MAY BOARD THE ${F.projectileName}.`, 1700), 1550);
@@ -174,7 +174,7 @@
 
   function hurtHero(label) {
     if (gameOver || victory) return;
-    health--;
+    health = window.JMPowerUps?.takeDamage(health) ?? (health - 1);
     damageTaken++;
     shake = 22;
     addImpact(HERO_HIT_X, GROUND - 72, true, '#ffbb63');
@@ -352,7 +352,7 @@
     const p = Math.hypot(dx, dy);
     if (p < 18) { aim = null; return; }
     const sc = Math.min(p, MAX_PULL) / p;
-    const boost = steroidTimer > 0 ? 1.42 : 1;
+    const boost = (steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1);
     const h = heldTankPosition();
     Object.assign(tank, {
       x: h.x, y: h.y,
@@ -459,7 +459,7 @@
     if (!aim || tank.flying) return;
     const dx = tank.x - aim.x, dy = tank.y - aim.y;
     const raw = Math.hypot(dx, dy), pull = Math.min(raw, MAX_PULL), len = raw || 1;
-    const boost = steroidTimer > 0 ? 1.42 : 1;
+    const boost = (steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1);
     const vx = (dx / len) * pull * F.throwScale * boost;
     const vy = (dy / len) * pull * F.throwScale * boost;
     const held = heldTankPosition();
@@ -670,7 +670,7 @@
     if (!running || steroidsLeft <= 0) return;
     steroidsLeft--;
     steroidTimer = 12;
-    steroidCountEl.textContent = steroidsLeft === 1 ? '1 demo dose' : `${steroidsLeft} demo doses`;
+    steroidCountEl.textContent = steroidsLeft === 1 ? '1 dose' : `${steroidsLeft} doses`;
     steroidButton.disabled = steroidsLeft <= 0;
     showToast('UNREGULATED STRENGTH!');
     beep('power');

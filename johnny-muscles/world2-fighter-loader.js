@@ -242,7 +242,7 @@
   patchRickUi();
 
   const script = document.createElement('script');
-  script.src = `${core}?rev=0.11.12`;
+  script.src = `${core}?rev=0.17.0`;
   script.dataset.world2FighterCore = core;
   script.onerror = () => {
     console.error(`[Johnny Muscles World 2] Could not load ${core}`);

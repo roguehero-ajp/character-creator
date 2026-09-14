@@ -10,6 +10,7 @@
   <meta http-equiv="Expires" content="0" />
   <title>Johnny Muscles: Tank Thrower</title>
   <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="power-ups.css?rev=0.17.0" />
   <link rel="stylesheet" href="menu.css?rev=0.11.6" />
   <link rel="stylesheet" href="story.css?rev=0.11.5" />
   <link rel="stylesheet" href="rick-state.css?rev=0.11.9" />
@@ -22,7 +23,7 @@
         <a class="menu-button primary-action" href="city1.html?build=0.14.0"><span class="action-icon" aria-hidden="true">▶</span><span class="action-copy"><span class="action-title">Start</span><span class="action-note">Begin at City 1: First Contact</span></span><span class="action-arrow" aria-hidden="true">›</span></a>
         <button class="menu-button" type="button" data-open-panel="story-panel" aria-haspopup="dialog" aria-controls="story-panel"><span class="action-icon" aria-hidden="true">▤</span><span class="action-copy"><span class="action-title">The Story</span><span class="action-note">Four-page origin comic</span></span><span class="action-arrow" aria-hidden="true">›</span></button>
         <button class="menu-button" type="button" data-open-panel="character-panel" aria-haspopup="dialog" aria-controls="character-panel"><span class="action-icon" aria-hidden="true">★</span><span class="action-copy"><span class="action-title">Character Select</span><span id="character-status" class="action-note">Active fighter: Johnny Muscles</span></span><span class="action-arrow" aria-hidden="true">›</span></button>
-        <p class="version-note">Prototype 0.16.0 · World 7: The Mothership</p>
+        <p class="version-note">Prototype 0.17.0 · World 7 + Power-Up Loadouts</p>
       </nav>
     </section>
   </main>
@@ -49,6 +50,7 @@
     </div><button id="character-next" class="carousel-arrow" type="button" aria-label="Next character" aria-controls="character-sheet">›</button></div><div class="selector-footer"><div><p id="selector-name" class="selector-name">Johnny Muscles</p><p id="selector-tagline" class="selector-tagline">Tanks. Cats. No problem.</p></div><button id="character-select-button" class="character-select-button" type="button" aria-pressed="true" aria-label="Johnny Muscles is selected">Johnny Selected</button></div>
   </div></section>
 
+  <script src="power-ups.js?rev=0.17.0"></script>
   <script src="menu.js?rev=0.11.5"></script>
   <script src="rick-state.js?rev=0.16.0"></script>
 </body>

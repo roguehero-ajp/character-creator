@@ -130,7 +130,7 @@ fetch(BASE,{cache:'no-store'})
         '    const p = Math.hypot(dx, dy);',
         '    if (p < 18) { aim = null; return; }',
         '    const sc = Math.min(p, MAX_PULL) / p;',
-        '    const boost = steroidTimer > 0 ? 1.42 : 1;',
+        '    const boost = (steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1);',
         '    const h = heldTankPosition();',
         '    caughtTank = false;',
         '    Object.assign(tank, {',

@@ -43,12 +43,12 @@
   let gameOver = false;
   let victory = false;
   let score = 0;
-  let health = 5;
+  let health = window.JMPowerUps?.getStartingState().health ?? 5;
   let bossHealth = BOSS_MAX_HP;
   let phase = 1;
   let elapsed = 0;
-  let steroidsLeft = 3;
-  let steroidTimer = 0;
+  let steroidsLeft = window.JMPowerUps?.getStartingState().steroids ?? 3;
+  let steroidTimer = window.JMPowerUps?.getStartingState().steroidTimer ?? 0;
   let muted = false;
   let audioCtx = null;
   let aim = null;
@@ -120,16 +120,16 @@
   function resetTank(){Object.assign(tank,{x:TANK_HOME.x,y:TANK_HOME.y,vx:0,vy:0,angle:0,angular:0,flying:false,resetTimer:0,bounced:false,hitShaun:false});aim=null;hero.releaseTimer=0;}
 
   function resetFight() {
-    running=true;gameOver=false;victory=false;score=0;health=5;bossHealth=BOSS_MAX_HP;phase=1;elapsed=0;steroidsLeft=3;steroidTimer=0;aim=null;shake=0;cameraX=0;
+    running=true;gameOver=false;victory=false;score=0;health = window.JMPowerUps?.getStartingState().health ?? 5;bossHealth=BOSS_MAX_HP;phase=1;elapsed=0;steroidsLeft = window.JMPowerUps?.getStartingState().steroids ?? 3;steroidTimer = window.JMPowerUps?.getStartingState().steroidTimer ?? 0;aim=null;shake=0;cameraX=0;
     wind=-80;windTarget=110;windTimer=4;hits=0;interrupts=0;dodges=0;damageTaken=0;throws=0;introThrowSeen=false;avalancheActive=false;avalancheFront=1700;avalancheLife=0;
     particles.length=0;floaters.length=0;smoke.length=0;mortars.length=0;
     Object.assign(hero,{armAngle:-.75,releaseTimer:0,torsoLean:0,squat:0,catchPose:0});
     Object.assign(shaun,{pos:1,x:POSITIONS[1].x,y:POSITIONS[1].y,state:'cover',timer:1.8,exposed:false,smokeHidden:false,dodgeCooldown:0,mortarCooldown:2.4,hitFlash:0,slideVx:0,slideVy:0,tacticalLine:'BEHIND COVER'});
-    resetTank();steroidButton.disabled=false;steroidCountEl.textContent='3 demo doses';updateHud();
+    resetTank();steroidButton.disabled=false;steroidCountEl.textContent = window.JMPowerUps?.doseLabel(steroidsLeft) ?? '3 doses';updateHud();
     showToast('SPECIAL SOLDIER SHAUN: SUMMIT COMMAND',1400);setTimeout(()=>showToast('TARGET HAS DEPLOYED AN ARMOURED VEHICLE.',1450),1450);
   }
 
-  function hurtHero(label){if(gameOver||victory)return;health--;damageTaken++;shake=22;addImpact(HERO_X,GROUND-72,true,'#ffcfaa');showToast(label,950);beep('hurt');updateHud();if(health<=0)loseFight();}
+  function hurtHero(label){if(gameOver||victory)return;health = window.JMPowerUps?.takeDamage(health) ?? (health - 1);damageTaken++;shake=22;addImpact(HERO_X,GROUND-72,true,'#ffcfaa');showToast(label,950);beep('hurt');updateHud();if(health<=0)loseFight();}
 
   function phaseForHp(){return bossHealth>7?1:bossHealth>4?2:3;}
 
@@ -219,7 +219,7 @@
   function heldTankPosition(){return !aim||tank.flying?{x:tank.x,y:tank.y}:{x:aim.x,y:Math.min(aim.y,GROUND-40)};}
 
   function throwTank(){
-    if(!aim||tank.flying||!running||victory||gameOver)return;const dx=tank.x-aim.x,dy=tank.y-aim.y,p=Math.hypot(dx,dy);if(p<18){aim=null;return;}const sc=Math.min(p,MAX_PULL)/p,boost=steroidTimer>0?1.42:1,h=heldTankPosition();
+    if(!aim||tank.flying||!running||victory||gameOver)return;const dx=tank.x-aim.x,dy=tank.y-aim.y,p=Math.hypot(dx,dy);if(p<18){aim=null;return;}const sc=Math.min(p,MAX_PULL)/p,boost=(steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1),h=heldTankPosition();
     Object.assign(tank,{x:h.x,y:h.y,vx:dx*sc*F.throwScale*boost,vy:dy*sc*F.throwScale*boost,angular:Math.min(9,2+p/55),flying:true,resetTimer:0,bounced:false,hitShaun:false});aim=null;hero.releaseTimer=.28;throws++;beep('throw');
     if(!introThrowSeen){introThrowSeen=true;showToast('...CORRECTION. TARGET HAS PICKED UP THE ARMOURED VEHICLE.',1450);setTimeout(()=>showToast('SHAUN: WHY DOES HE KEEP DOING THAT?',1200),1500);}
   }
@@ -258,7 +258,7 @@
   function winFight(){if(victory)return;victory=true;running=false;aim=null;showToast('SPECIAL SOLDIER SHAUN DEFEATED!',1800);beep('win');const stars=1+(damageTaken===0?1:0)+(interrupts>=1?1:0);resultStarsEl.textContent='★'.repeat(stars)+'☆'.repeat(3-stars);resultScoreEl.textContent=score.toLocaleString();resultHitsEl.textContent=String(hits);resultInterruptsEl.textContent=String(interrupts);resultDodgesEl.textContent=String(dodges);resultDefenseEl.textContent=damageTaken===0?'UNTOUCHED':`${health}/5 HEARTS`;setTimeout(()=>victoryScreen.classList.add('visible'),950);}
 
   function drawAim(){
-    if(!aim||tank.flying)return;const dx=tank.x-aim.x,dy=tank.y-aim.y,raw=Math.hypot(dx,dy),pull=Math.min(raw,MAX_PULL),len=raw||1,boost=steroidTimer>0?1.42:1;const vx=(dx/len)*pull*F.throwScale*boost,vy=(dy/len)*pull*F.throwScale*boost,h=heldTankPosition();
+    if(!aim||tank.flying)return;const dx=tank.x-aim.x,dy=tank.y-aim.y,raw=Math.hypot(dx,dy),pull=Math.min(raw,MAX_PULL),len=raw||1,boost=(steroidTimer > 0 ? 1.42 : 1) * (window.JMPowerUps?.getThrowMultiplier() ?? 1);const vx=(dx/len)*pull*F.throwScale*boost,vy=(dy/len)*pull*F.throwScale*boost,h=heldTankPosition();
     ctx.save();ctx.setLineDash([11,9]);ctx.strokeStyle=steroidTimer>0?'#a8ff58':'#ffcf33';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(tank.x,tank.y);ctx.lineTo(aim.x,aim.y);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='rgba(255,255,255,.75)';
     for(let i=1;i<=18;i++){const tt=i*.09,x=h.x+vx*tt+.5*wind*.45*tt*tt,y=h.y+vy*tt+.5*GRAVITY*F.gravityMultiplier*tt*tt;if(y>GROUND)break;ctx.beginPath();ctx.arc(x,y,Math.max(2,5-i*.18),0,Math.PI*2);ctx.fill();}ctx.restore();
   }
@@ -310,7 +310,7 @@
   canvas.addEventListener('pointerdown',e=>{if(!running||gameOver||victory||tank.flying)return;const p=pointerToWorld(canvas,e,cameraX);if(Math.hypot(p.x-tank.x,p.y-tank.y)<125){aim=p;canvas.setPointerCapture?.(e.pointerId);}});
   canvas.addEventListener('pointermove',e=>{if(!aim||tank.flying)return;const p=pointerToWorld(canvas,e,cameraX),dx=p.x-tank.x,dy=p.y-tank.y,len=Math.hypot(dx,dy);aim=len>MAX_PULL?{x:tank.x+dx/len*MAX_PULL,y:tank.y+dy/len*MAX_PULL}:p;});
   canvas.addEventListener('pointerup',throwTank);canvas.addEventListener('pointercancel',()=>{aim=null;});
-  steroidButton.addEventListener('click',()=>{if(!running||steroidsLeft<=0)return;steroidsLeft--;steroidTimer=12;steroidCountEl.textContent=steroidsLeft===1?'1 demo dose':`${steroidsLeft} demo doses`;steroidButton.disabled=steroidsLeft<=0;showToast('UNREGULATED STRENGTH!');beep('power');});
+  steroidButton.addEventListener('click',()=>{if(!running||steroidsLeft<=0)return;steroidsLeft--;steroidTimer=12;steroidCountEl.textContent=steroidsLeft===1?'1 dose':`${steroidsLeft} doses`;steroidButton.disabled=steroidsLeft<=0;showToast('UNREGULATED STRENGTH!');beep('power');});
   muteButton.addEventListener('click',()=>{muted=!muted;muteButton.textContent=muted?'🔇':'🔊';});
   document.getElementById('start').addEventListener('click',()=>{titleScreen.classList.remove('visible');resetFight();});
   document.getElementById('restart').addEventListener('click',()=>{gameOverScreen.classList.remove('visible');resetFight();});
