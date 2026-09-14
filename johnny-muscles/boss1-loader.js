@@ -40,12 +40,11 @@
   }
   document.body.appendChild(script);
 
-  // Rick is earned only when Johnny defeats Bob. Rick's own rematches never
-  // touch the unlock state.
+  // The Rick introduction comic now plays after every Bob victory, including
+  // Rick rematches. Unlock eligibility itself remains Johnny-only.
   if (useRickRoutine) return;
 
   const missionComplete = document.getElementById('mission-complete');
-  const continueLink = missionComplete?.querySelector('a[href^="suburb1.html"]');
   if (!missionComplete) return;
 
   let handled = false;
@@ -53,17 +52,8 @@
   function handleJohnnyVictory() {
     if (handled || !missionComplete.classList.contains('visible')) return;
     handled = true;
-
-    const savedBobWin = write(KEYS.bobBeatenAsJohnny, 'true');
-    const savedUnlock = write(KEYS.rickUnlocked, 'true');
-    const introSeen = read(KEYS.rickIntroSeen) === 'true';
-
-    if (continueLink && savedBobWin && savedUnlock && !introSeen) {
-      continueLink.href = 'rick-unlock.html?build=0.11.11&from=boss1';
-      continueLink.textContent = 'MEET RICK RAMPAGE';
-      continueLink.setAttribute('aria-label', 'Meet newly unlocked fighter Rick Rampage');
-    }
-
+    write(KEYS.bobBeatenAsJohnny, 'true');
+    write(KEYS.rickUnlocked, 'true');
     observer.disconnect();
   }
 
