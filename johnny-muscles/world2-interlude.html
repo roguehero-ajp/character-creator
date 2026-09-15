@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#11131a" />
+  <meta name="description" content="World 2 interlude: Johnny Muscles and Rick Rampage clear the suburbs and head for the Foothills." />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <title>World 2 Beaten · Johnny Muscles</title>
+  <link rel="stylesheet" href="menu.css?rev=0.18.0" />
+  <link rel="stylesheet" href="rick-unlock.css?rev=0.18.0" />
+  <link rel="stylesheet" href="comic-size.css?rev=0.18.0" />
+</head>
+<body class="rick-unlock-body">
+  <main class="rick-unlock-shell" aria-labelledby="interlude-title">
+    <header class="rick-unlock-header">
+      <div>
+        <p class="unlock-kicker">World 2 Interlude</p>
+        <h1 id="interlude-title">World 2 Beaten!</h1>
+        <p id="interlude-instructions" class="unlock-instructions">Swipe left or right to turn pages. Keyboard Left/Right, Home, and End work too.</p>
+      </div>
+      <a class="unlock-close" href="index.html?build=0.18.0" aria-label="Leave World 2 comic and return to main menu">×</a>
+    </header>
+
+    <div class="unlock-toolbar">
+      <span id="interlude-page-count" class="unlock-counter" role="status" aria-live="polite" aria-atomic="true">Page 1 / 2</span>
+      <button id="interlude-transcript-toggle" class="unlock-transcript-toggle" type="button" aria-expanded="false" aria-controls="interlude-comic">Show text transcript</button>
+    </div>
+
+    <section id="interlude-comic" class="rick-comic" tabindex="0" role="region" aria-label="Two-page World 2 victory comic" aria-describedby="interlude-instructions">
+      <article id="interlude-page-1" class="rick-page is-active" data-page="0" role="group" aria-roledescription="comic page" aria-label="Page 1 of 2" aria-hidden="false">
+        <img alt="" aria-hidden="true" />
+        <div class="rick-transcript sr-only">
+          <h2>Page 1</h2>
+          <p>Johnny hurls a tank into a huge alien chonker with a KABOOSH. Scratching his head, Johnny says, “Holy moly! I don’t think most of these cats even lift!” Rick Rampage throws two cars into another chonker with a BOOF, BOOF. Rick replies, “They sure don’t, Johnny! And they’re gross!”</p>
+        </div>
+      </article>
+
+      <article id="interlude-page-2" class="rick-page" data-page="1" role="group" aria-roledescription="comic page" aria-label="Page 2 of 2" aria-hidden="true" hidden>
+        <img alt="" aria-hidden="true" />
+        <div class="rick-transcript sr-only">
+          <h2>Page 2</h2>
+          <p>Johnny and Rick clasp hands in their triumphant bro shake while standing over defeated alien chonkers. Johnny says, “Let’s go check the houses on the hills!” Rick answers, “Great idea Johnny! You’re my best friend!”</p>
+        </div>
+      </article>
+    </section>
+
+    <div class="unlock-dots" aria-label="Choose comic page">
+      <button class="unlock-dot is-active" type="button" data-dot="0" aria-label="Go to page 1" aria-controls="interlude-page-1" aria-current="page"><span aria-hidden="true"></span></button>
+      <button class="unlock-dot" type="button" data-dot="1" aria-label="Go to page 2" aria-controls="interlude-page-2"><span aria-hidden="true"></span></button>
+    </div>
+
+    <nav class="unlock-controls" aria-label="World 2 comic controls">
+      <button id="interlude-prev" class="unlock-button secondary" type="button" disabled>Previous</button>
+      <button id="interlude-next" class="unlock-button" type="button">Next</button>
+      <a id="interlude-continue" class="unlock-button hero-action" href="hill1.html?build=0.18.0" hidden>Continue to the Foothills</a>
+    </nav>
+  </main>
+
+  <script>
+    window.JM_INTERLUDE = {
+      mime: 'image/webp',
+      pages: [
+        [
+          'interlude-art/world2-page1-01.txt','interlude-art/world2-page1-02.txt','interlude-art/world2-page1-03.txt',
+          'interlude-art/world2-page1-04.txt','interlude-art/world2-page1-05.txt','interlude-art/world2-page1-06.txt',
+          'interlude-art/world2-page1-07.txt','interlude-art/world2-page1-08.txt','interlude-art/world2-page1-09.txt',
+          'interlude-art/world2-page1-10.txt','interlude-art/world2-page1-11.txt'
+        ],
+        [
+          'interlude-art/world2-page2-01.txt','interlude-art/world2-page2-02.txt','interlude-art/world2-page2-03.txt',
+          'interlude-art/world2-page2-04.txt','interlude-art/world2-page2-05.txt','interlude-art/world2-page2-06.txt',
+          'interlude-art/world2-page2-07a.txt','interlude-art/world2-page2-07b.txt','interlude-art/world2-page2-07c.txt',
+          'interlude-art/world2-page2-08a.txt','interlude-art/world2-page2-08b.txt','interlude-art/world2-page2-08c.txt',
+          'interlude-art/world2-page2-09a.txt','interlude-art/world2-page2-09b.txt','interlude-art/world2-page2-09c.txt'
+        ]
+      ]
+    };
+  </script>
+  <script src="world-interlude.js?rev=0.18.0"></script>
+</body>
+</html>
