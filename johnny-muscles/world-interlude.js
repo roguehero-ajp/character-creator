@@ -45,7 +45,7 @@
     if (transcriptToggle) transcriptToggle.textContent = transcriptVisible ? 'Hide text transcript' : 'Show text transcript';
   }
 
-  async function loadPageArt(image, chunks) {
+  async function loadChunkedPageArt(image, chunks) {
     if (!image || !Array.isArray(chunks) || !chunks.length) throw new Error('Comic art manifest is incomplete.');
     const responses = await Promise.all(chunks.map(path => fetch(path, { cache: 'force-cache' })));
     responses.forEach(response => {
@@ -55,10 +55,29 @@
     image.src = `data:${config.mime || 'image/webp'};base64,${base64}`;
   }
 
+  async function loadDirectPageArt(image, source) {
+    if (!image || typeof source !== 'string' || !source) throw new Error('Comic art source is incomplete.');
+    image.src = source;
+  }
+
   async function loadArt() {
     try {
-      if (!Array.isArray(config.pages) || config.pages.length !== artImages.length) throw new Error('Comic page manifest does not match the reader.');
-      await Promise.all(artImages.map((image, index) => loadPageArt(image, config.pages[index])));
+      const usesDirectSources = Array.isArray(config.sources);
+      const usesChunkedPages = Array.isArray(config.pages);
+
+      if (usesDirectSources) {
+        if (config.sources.length !== artImages.length) throw new Error('Comic art source list does not match the reader.');
+        await Promise.all(artImages.map((image, index) => loadDirectPageArt(image, config.sources[index])));
+        return;
+      }
+
+      if (usesChunkedPages) {
+        if (config.pages.length !== artImages.length) throw new Error('Comic page manifest does not match the reader.');
+        await Promise.all(artImages.map((image, index) => loadChunkedPageArt(image, config.pages[index])));
+        return;
+      }
+
+      throw new Error('Comic art configuration is missing.');
     } catch (error) {
       console.error('Johnny Muscles interlude art failed to load.', error);
       setTranscript(true);
