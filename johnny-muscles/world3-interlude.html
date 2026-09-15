@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#11131a" />
+  <meta name="description" content="World 3 interlude: Johnny Muscles and Rick Rampage clear the Foothills and head for the Mountains." />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <title>World 3 Beaten · Johnny Muscles</title>
+  <link rel="stylesheet" href="menu.css?rev=0.18.1" />
+  <link rel="stylesheet" href="rick-unlock.css?rev=0.18.1" />
+  <link rel="stylesheet" href="comic-size.css?rev=0.18.1" />
+</head>
+<body class="rick-unlock-body">
+  <main class="rick-unlock-shell" aria-labelledby="interlude-title">
+    <header class="rick-unlock-header">
+      <div>
+        <p class="unlock-kicker">World 3 Interlude</p>
+        <h1 id="interlude-title">World 3 Beaten!</h1>
+        <p id="interlude-instructions" class="unlock-instructions">Swipe left or right to turn pages. Keyboard Left/Right, Home, and End work too.</p>
+      </div>
+      <a class="unlock-close" href="index.html?build=0.18.1" aria-label="Leave World 3 comic and return to main menu">×</a>
+    </header>
+
+    <div class="unlock-toolbar">
+      <span id="interlude-page-count" class="unlock-counter" role="status" aria-live="polite" aria-atomic="true">Page 1 / 2</span>
+      <button id="interlude-transcript-toggle" class="unlock-transcript-toggle" type="button" aria-expanded="false" aria-controls="interlude-comic">Show text transcript</button>
+    </div>
+
+    <section id="interlude-comic" class="rick-comic" tabindex="0" role="region" aria-label="Two-page World 3 victory comic" aria-describedby="interlude-instructions">
+      <article id="interlude-page-1" class="rick-page is-active" data-page="0" role="group" aria-roledescription="comic page" aria-label="Page 1 of 2" aria-hidden="false">
+        <img alt="" aria-hidden="true" />
+        <div class="rick-transcript sr-only">
+          <h2>Page 1</h2>
+          <p>Rick throws a car at a burrowing alien cat. It hits with a FLUG! Rick looks confused and says, “Holy Toledo Johnny! There sure is a lot of these guys!” Johnny throws a tank at a brain cat. It hits with a THORNK! Johnny responds, “Yep! Let’s go for a mountain climb!”</p>
+        </div>
+      </article>
+
+      <article id="interlude-page-2" class="rick-page" data-page="1" role="group" aria-roledescription="comic page" aria-label="Page 2 of 2" aria-hidden="true" hidden>
+        <img alt="" aria-hidden="true" />
+        <div class="rick-transcript sr-only">
+          <h2>Page 2</h2>
+          <p>Johnny and Rick do their classic bro shake again while stepping on the defeated aliens. Rick says, “I don’t normally do cardio, but anything to get rid of these gross alien cats!” Johnny responds, “Yeah! Let’s do it best friend!”</p>
+        </div>
+      </article>
+    </section>
+
+    <div class="unlock-dots" aria-label="Choose comic page">
+      <button class="unlock-dot is-active" type="button" data-dot="0" aria-label="Go to page 1" aria-controls="interlude-page-1" aria-current="page"><span aria-hidden="true"></span></button>
+      <button class="unlock-dot" type="button" data-dot="1" aria-label="Go to page 2" aria-controls="interlude-page-2"><span aria-hidden="true"></span></button>
+    </div>
+
+    <nav class="unlock-controls" aria-label="World 3 comic controls">
+      <button id="interlude-prev" class="unlock-button secondary" type="button" disabled>Previous</button>
+      <button id="interlude-next" class="unlock-button" type="button">Next</button>
+      <a id="interlude-continue" class="unlock-button hero-action" href="mountain1.html?build=0.18.1" hidden>Continue to the Mountains</a>
+    </nav>
+  </main>
+
+  <script>
+    window.JM_INTERLUDE = {
+      sources: [
+        'assets/world3-victory-page-1.webp',
+        'assets/world3-victory-page-2.webp'
+      ]
+    };
+  </script>
+  <script src="world-interlude.js?rev=0.18.1"></script>
+</body>
+</html>
