@@ -45,9 +45,14 @@
     if (transcriptToggle) transcriptToggle.textContent = transcriptVisible ? 'Hide text transcript' : 'Show text transcript';
   }
 
-  async function loadPageArt(image, chunks) {
-    if (!image || !Array.isArray(chunks) || !chunks.length) throw new Error('Comic art manifest is incomplete.');
-    const responses = await Promise.all(chunks.map(path => fetch(path, { cache: 'force-cache' })));
+  async function loadPageArt(image, source) {
+    if (!image) throw new Error('Comic art image is missing.');
+    if (typeof source === 'string' && source) {
+      image.src = source;
+      return;
+    }
+    if (!Array.isArray(source) || !source.length) throw new Error('Comic art manifest is incomplete.');
+    const responses = await Promise.all(source.map(path => fetch(path, { cache: 'force-cache' })));
     responses.forEach(response => {
       if (!response.ok) throw new Error(`Comic art chunk failed: ${response.status}`);
     });
@@ -92,7 +97,7 @@
     else if (event.key === 'ArrowRight') { event.preventDefault(); showPage(pageIndex + 1); }
     else if (event.key === 'Home') { event.preventDefault(); showPage(0); }
     else if (event.key === 'End') { event.preventDefault(); showPage(pages.length - 1); }
-    else if (event.key === 'Escape') { window.location.href = 'index.html?build=0.18.0'; }
+    else if (event.key === 'Escape') { window.location.href = document.body.dataset.escapeHref || 'index.html?build=0.18.2'; }
   });
 
   showPage(0);
